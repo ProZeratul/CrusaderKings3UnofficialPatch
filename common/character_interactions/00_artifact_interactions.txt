@@ -2738,18 +2738,22 @@ start_stealing_back_artifact = {
 					can_be_claimed_by = scope:actor
 				}
 			}
-			scope:actor = {
-				OR = {
-					employs_court_position = master_thief_camp_officer
-					any_character_active_contract = {
-						has_task_contract_type = laamp_steal_artifact_contract
-						var:task_contract_target ?= scope:recipient
+			#Unop Only show if the recipient actually has artifacts
+			AND = {
+				scope:recipient = { has_any_artifact = yes }
+				scope:actor = {
+					OR = {
+						employs_court_position = master_thief_camp_officer
+						any_character_active_contract = {
+							has_task_contract_type = laamp_steal_artifact_contract
+							var:task_contract_target ?= scope:recipient
+						}
 					}
 				}
 			}
 		}
 	}
-	
+
 	is_highlighted = {
 		always = yes
 	}
@@ -2827,6 +2831,24 @@ start_stealing_back_artifact = {
 				}
 			}
 		}
+
+		#Unop Limit range for landless adventurers
+		trigger_if = {
+			limit = {
+				scope:actor = { is_landless_adventurer = yes }
+				scope:recipient = {
+					NOT = {
+						any_character_artifact = {
+							scope:actor = { has_artifact_claim = prev }
+						}
+					}
+				}
+			}
+			ep3_laamp_diplo_range_trigger = {
+				TARGET = scope:recipient
+				LAAMP = scope:actor
+			}
+		}
 	}
 
 	desc = {
@@ -2857,6 +2879,27 @@ start_stealing_back_artifact = {
 			}
 			scope:actor = {
 				has_artifact_claim = scope:target
+			}
+		}
+
+		#Unop Landless adventurers can only steal masterwork artifacts without a claim or a contract
+		trigger_if = {
+			limit = {
+				scope:actor = {
+					NOR = {
+						has_artifact_claim = scope:target
+						any_character_active_contract = {
+							has_task_contract_type = laamp_steal_artifact_contract
+							var:task_contract_object ?= scope:target
+						}
+					}
+				}
+			}
+			scope:target = {
+				OR = {
+					rarity = common
+					rarity = masterwork
+				}
 			}
 		}
 	}
