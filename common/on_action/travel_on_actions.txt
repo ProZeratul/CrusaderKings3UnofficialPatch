@@ -1591,14 +1591,15 @@ on_visited_ep3_monument = {
 #Used in the debug interaction debug_move_domicile_interaction
 on_travel_relocation_start = {
 	effect = {
-		every_courtier_or_guest = { #take everyone you have with you
-			limit = {
-				NOT = { exists = current_travel_plan }
-			}
-			root.current_travel_plan = {
-				add_companion = prev
-			}
-		}
+		#Unop Disable this, the correct logic is in ep3_contract_event.0002
+		#every_courtier_or_guest = { #take everyone you have with you
+		#	limit = {
+		#		NOT = { exists = current_travel_plan }
+		#	}
+		#	root.current_travel_plan = {
+		#		add_companion = prev
+		#	}
+		#}
 	}
 }
 
