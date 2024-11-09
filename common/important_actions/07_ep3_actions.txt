@@ -38,16 +38,15 @@ action_laamp_apprehension_threat = {
 				is_landless_adventurer = yes
 				domicile.domicile_location.county.holder ?= {
 					OR = {
-						OR = {
-							has_imprisonment_reason = root
-							has_execute_reason = root
-							has_banish_reason = root
+						#Unop Check if they can actually imprison you
+						has_opinion_modifier = {
+							target = root
+							modifier = eviction_ignored_opinion
 						}
 						any_liege_or_above = {
-							OR = {
-								has_imprisonment_reason = root
-								has_execute_reason = root
-								has_banish_reason = root
+							has_opinion_modifier = {
+								target = root
+								modifier = eviction_ignored_opinion
 							}
 						}
 					}
@@ -56,20 +55,20 @@ action_laamp_apprehension_threat = {
 			domicile.domicile_location.county.holder ?= {
 				if = {
 					limit = {
-						OR = {
-							has_imprisonment_reason = root
-							has_execute_reason = root
-							has_banish_reason = root
+						#Unop Check if they can actually imprison you
+						has_opinion_modifier = {
+							target = root
+							modifier = eviction_ignored_opinion
 						}
 					}
 					add_to_list = apprehender_list
 				}
 				every_liege_or_above = {
 					limit = {
-						OR = {
-							has_imprisonment_reason = root
-							has_execute_reason = root
-							has_banish_reason = root
+						#Unop Check if they can actually imprison you
+						has_opinion_modifier = {
+							target = root
+							modifier = eviction_ignored_opinion
 						}
 					}
 					add_to_list = apprehender_list
