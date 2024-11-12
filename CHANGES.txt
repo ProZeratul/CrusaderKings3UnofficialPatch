@@ -1,4 +1,4 @@
-[Unofficial patch] 8.0.9
+[Unofficial patch] 8.0.10
 
 NOTE: Due to 1.13 Roads to power patch, A LOT of game files have changed, so instead of waiting a long time before seeing the patch I'll just make small update in order to get the patch out quicker.
 For now the goal is to not make the game crash while still having the mod enabled !
@@ -57,6 +57,10 @@ common
                 > Add the missing aptitude bonus check for the gardener & chief_eunuch & champion given by court.8311
 
     character_interactions
+        00_artifact_interactions.txt
+            > (LAAMP) "Steal Artifact" - Interaction will only show the interaction if the recipient actually has artifacts
+            > (LAAMP) "Steal Artifact" - Limit range for landless adventurers that don't have claims on an artifact
+            > (LAAMP) "Steal Artifact" - You now need a claim or a contract to steal masterwork artifacts 
         00_scheme_interactions.txt [Removed- Got fix by the devs]
             > Fix abduct interaction not checking the domicile building
         06_ep3_interactions.txt
@@ -78,6 +82,8 @@ common
 
     domiciles
         buildings
+            00_camp_buildings.txt
+                > Remove the unused Private Tents parameter (Baggage train > Private tents)
             00_estate_buildings.txt
                 > Fix estate graphics defaulting to byzantine skin if you have the iranian graphic group
                 > Fix wrong label for the living quarter gold reduction
@@ -92,6 +98,8 @@ common
     important_actions
         00_personal_actions.txt
             > Add an action to display the correct amount of gold you can ransom someone if you have Practiced Kidnappers
+        07_ep3_actions.txt
+            > Fix conditions for the alert that warns you that you can be arrested by the holder of the land (adventurers only)
 
     on_action
         childhood_on_actions.txt
@@ -100,6 +108,8 @@ common
             > Fix building built by norman not increasing the pacification for the harrying_of_the_north (but restrict it to Norman being in England)
         ruler_designer.txt
             > Change the government of newly created character depending of the faith you set
+        travel_on_actions.txt
+            > Disabled the on_travel_relocation_start to let ep3_contract_event.0002 logic (Now prevent army characters from traveling with LAs & ensure prisoners also join the travel, this allows travel_events.2033 to fire)
 
     schemes
         scheme_types
@@ -122,6 +132,7 @@ common
         00_court_position_triggers.txt
             > Add some missing exclusive court/officer position inside court_position_does_not_already_have_a_job_trigger
             > Change can_appoint_char_to_court_position to also check if the employer is actaully employing someone
+            > Fix Scout for Talent event not firing
         20_health_triggers.txt
             > Fix has_high_health_penalty_disease_type_trigger & has_low_health_penalty_disease_type_trigger for elderly/child characters who have consumption or measles 
         00_scheme_triggers.txt
@@ -181,6 +192,8 @@ events
                 > Ensure events that infect you use the proper effect to ensure that you are not immune to the disease and also will launch the physician treatment event & later recovery
         
         ep3
+            ep3_contract_events.txt
+                >  Prevent characters in army from traveling with adventurers, ensure prisoners also travel with you
             ep3_laamp_events.txt
                 > Fix ep3_laamps.5040 wrong scope use to give a nickname to the merchant
                 > Fix ep3_laamps.7003 not registering target location for use in ep3_laamps.7004
@@ -191,6 +204,8 @@ events
                     > Changing the name of all counties of the holder to english ones instead of the one the holder sold you 
             ep3_laamp_decision_event.txt
                 > The first time you enter the barracks as an adventurer, the 6th rule of the fight club is now enforced
+                > Fix AI landless adventurers not visiting settlements
+                > Fix tavern visit event selecting old characters as potential spouse (now must be between 18 & 40 years old)
             ep3_laamp_flavour_ewan_events.txt
                 > Fix ep3_laamp_flavour_ewan.1111 sadistic option stress that was reversed
                 > Fix ep3_laamp_flavour_ewan.3041 character creation that used the wrong scope for culture & faith
@@ -222,6 +237,8 @@ events
         laamp_base_contract_scheme_events.txt
             > Add an exists check to prevent many errors in the log file
             > Fix a wrong scope used for the gold received for the employer in laamp_base_contract_schemes.2002
+            > Fix laamp_base_contract_schemes.3021 balance agent option adding 3 secrecy agent instead of 2 speed & 1 secrecy
+            > Fix laamp_base_contract_schemes.3022 not transfering the captive to the contractor
         
         laamp_base_learning_contract_events.txt
             > Fix laamp_base_learning_contract_events.4001 clearing the wrong flag preventing the language option being selectable after the first event
@@ -270,6 +287,7 @@ gfx
     map\map_object_data: New files for the map_data modifications
 
     portraits
+        accessories
         portrait_modifiers
             00_custom_clothes.txt
                 > Add Western & Mena clothes.
@@ -282,7 +300,8 @@ gfx
                 > Comment a non existing entry for ep3_byzantine_era2_common
             05_cloaks_situational.txt
                 > Force the cloak to be hidden in some cases
-
+            00_custom_special.txt
+                > Put back veils to they can now be hidden in the barbershop
 gui
     shared
         cooltip.gui
