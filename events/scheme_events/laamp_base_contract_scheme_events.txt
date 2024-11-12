@@ -20797,8 +20797,8 @@ laamp_base_contract_schemes.3021 = {
 			add_agent_slot = agent_thug
 			add_agent_slot = agent_muscle
 			# Speed.
-			add_agent_slot = agent_lookout
-			add_agent_slot = agent_decoy
+			add_agent_slot = agent_footpad #Unop Add speed agents (was agent_lookout)
+			add_agent_slot = agent_infiltrator #Unop Add speed agents (was agent_decoy)
 			# Secrecy.
 			add_agent_slot = agent_lookout
 		}
@@ -20900,6 +20900,10 @@ laamp_base_contract_schemes.3022 = {
 
 	immediate = {
 		# Employer outcome.
+		#Unop Release target first to be able to imprison them
+		scope:target = {
+			release_from_prison = yes
+		}
 		imprison_character_effect = {
 			TARGET = scope:target
 			IMPRISONER = scope:employer
