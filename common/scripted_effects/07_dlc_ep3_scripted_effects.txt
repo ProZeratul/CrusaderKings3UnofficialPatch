@@ -7809,6 +7809,7 @@ ep3_story_cycle_admin_eunuch_matching_modifier_effect = {
 }
 
 ep3_story_cycle_admin_eunuch_downgrade_modifier_effect = {
+	top_liege = { save_scope_as = unop_top_liege } #Unop: We need this so the effect parameters to be correctly pointing to the top_liege of current root scope (instead of their potential scope that is something else)
 	save_scope_value_as = {
 		name = modifier_type
 		value = flag:$TYPE$
@@ -7820,7 +7821,7 @@ ep3_story_cycle_admin_eunuch_downgrade_modifier_effect = {
 				limit = { scope:modifier_type = flag:eunuch }
 				progress_towards_rival_effect = {
 					REASON = rival_admin_eunuch
-					CHARACTER = top_liege
+					CHARACTER = scope:unop_top_liege
 					OPINION = default_rival_opinion
 				}
 			}
