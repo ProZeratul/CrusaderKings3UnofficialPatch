@@ -900,8 +900,11 @@ arrange_marriage_interaction = {
 				limit = {
 					exists = scope:secondary_actor
 					scope:actor = scope:secondary_actor
-					is_female = yes
-					is_ai = no
+					#Unop Use correct scope
+					scope:actor = {
+						is_female = yes
+						is_ai = no
+					}
 				}
 				always = yes
 			}
@@ -1286,6 +1289,9 @@ marry_off_interaction = {
 					exists = scope:actor
 					exists = scope:recipient
 					exists = scope:secondary_recipient
+					#Unop Fix prestige loss when marrying off unrelated characters
+					exists = scope:secondary_actor
+					scope:secondary_actor = { is_close_family_of = scope:actor }
 					scope:recipient = {
 						OR = {
 							AND = {
@@ -4238,10 +4244,12 @@ divorce_character_house_head_interaction = {
 	}
 
 	on_decline = {
-		send_interface_toast = {
-			type = event_toast_effect_bad
-			title = divorce_character_rel_head_interaction_decline_notification
-			right_icon = scope:actor.house.house_head
+		scope:actor = { #Unop Use correct scope
+			send_interface_toast = {
+				type = event_toast_effect_bad
+				title = divorce_character_rel_head_interaction_decline_notification
+				right_icon = scope:actor.house.house_head
+			}
 		}
 
 		# If we're a clan this interaction affects unity
@@ -4602,11 +4610,13 @@ divorce_character_rel_head_interaction = {
 	}
 
 	on_decline = {
-		send_interface_toast = {
-			type = event_toast_effect_bad
-			title = divorce_character_rel_head_interaction_decline_notification
+		scope:actor = { #Unop Use correct scope
+			send_interface_toast = {
+				type = event_toast_effect_bad
+				title = divorce_character_rel_head_interaction_decline_notification
 
-			right_icon = scope:actor.faith.religious_head
+				right_icon = scope:actor.faith.religious_head
+			}
 		}
 
 		# If we're a clan this interaction affects unity
@@ -5105,14 +5115,16 @@ divorce_character_dynast_request_rel_head_interaction = {
 	}
 
 	on_decline = {
-		send_interface_toast = {
-			type = event_toast_effect_bad
-			title = divorce_character_dynast_request_rel_head_interaction_decline_notification
+		scope:actor = { #Unop Use correct scope
+			send_interface_toast = {
+				type = event_toast_effect_bad
+				title = divorce_character_dynast_request_rel_head_interaction_decline_notification
 
-			right_icon = scope:actor.faith.religious_head
+				right_icon = scope:actor.faith.religious_head
+			}
 		}
 	}
-	
+
 	# AI
 	ai_targets = {
 		ai_recipients = dynasty
@@ -5214,6 +5226,19 @@ elope_interaction = {
 			can_start_scheme = {
 				type = elope
 				target_character = scope:recipient
+			}
+		}
+		#Unop Limit range for landless adventurers
+		trigger_if = {
+			limit = {
+				scope:actor = {
+					is_landless_adventurer = yes
+				}
+			}
+			#Has to be used instead of diplo range checks in laamp to landed interactions
+			ep3_laamp_diplo_range_trigger = {
+				TARGET = scope:recipient
+				LAAMP = scope:actor
 			}
 		}
 	}
