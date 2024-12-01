@@ -218,7 +218,16 @@ basic_allowed_to_imprison_character_trigger = { #Only to be used in is_shown for
 	save_temporary_scope_as = allowed_imprisoner
 	$CHARACTER$ = {
 		OR = {
-			target_is_liege_or_above = scope:allowed_imprisoner
+			AND = {
+				target_is_liege_or_above = scope:allowed_imprisoner
+				#Unop Not allowed to imprison if foreign court guest
+				trigger_if = {
+					limit = { is_foreign_court_guest = yes }
+					host = {
+						target_is_liege_or_above = scope:allowed_imprisoner
+					}
+				}
+			}
 			is_foreign_court_or_pool_guest_of = scope:allowed_imprisoner
 			AND = {
 				# EP3 EVICTION
