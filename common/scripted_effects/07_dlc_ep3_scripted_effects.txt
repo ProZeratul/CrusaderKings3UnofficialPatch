@@ -908,6 +908,17 @@ ep3_become_landed_transfer_effect = {
 		add_claim_on_loss = yes
 		save_scope_as = title_change
 	}
+	#Unop ck3-tiger Save the highest tier title in the list as scope:target
+	if = {
+		limit = {
+			NOT = { exists = scope:target }
+		}
+		ordered_in_list = {
+			list = $TITLE_LIST$
+			order_by = tier
+			save_temporary_scope_as = target
+		}
+	}
 	scope:target.holder ?= {
 		save_scope_as = old_holder
 		switch = {
@@ -957,7 +968,7 @@ ep3_become_landed_transfer_effect = {
 		}
 	}
 	if = {
-		limit = { has_character_flag = special_laamp_char }
+		limit = { $TITLE_RECEIVER$ = { has_character_flag = special_laamp_char } } #Unop ck3-tiger
 		resolve_title_and_vassal_change = scope:title_change
 		# Then we resolve vassalage separately, so that we can lock in tiers.
 		create_title_and_vassal_change = {
@@ -1596,6 +1607,27 @@ negotiate_settlement_interaction_effect = {
 	}
 	# Effects on land giver
 	scope:actor = {
+		#Unop ck3-tiger Ensure scope:negotiate_settlement_legitimacy_cost exists, see negotiate_settlement_interaction
+		if = {
+			limit = { 
+				NOT = { exists = scope:negotiate_settlement_legitimacy_cost }
+			}
+			save_scope_value_as = {
+				name = negotiate_settlement_legitimacy_cost
+				value = {
+					value = 0
+					every_in_list = {
+						list = offered_titles
+						if = {
+							limit = { tier = tier_county }
+							add = -25
+						}
+						else = { add = -50 }
+					}
+					multiply = scope:actor.highest_held_title_tier
+				}
+			}
+		}
 		add_legitimacy = scope:negotiate_settlement_legitimacy_cost
 		stress_impact = {
 			greedy = minor_stress_impact_gain
@@ -1718,7 +1750,7 @@ ep3_laamp_supporter_invalidated_effect = {
 			send_interface_message = {
 				type = event_landless_adventurer_neutral
 				title = ep3_laamp_sponsor_invalidated_title
-				left_icon = scope:attacker
+				left_icon = scope:adventurer #Unop ck3-tiger
 				right_icon = scope:target
 				remove_variable = adventurer_invasion_supportee
 				remove_variable = adventurer_invasion_target
@@ -1727,7 +1759,7 @@ ep3_laamp_supporter_invalidated_effect = {
 					limit = { exists = var:adventurer_invasion_join_war }
 					set_variable = {
 						name = adventurer_invasion_join_war
-						value = scope:actor
+						value = scope:adventurer #Unop ck3-tiger
 						years = 5
 					}
 				}
@@ -1735,7 +1767,7 @@ ep3_laamp_supporter_invalidated_effect = {
 					limit = { exists = var:adventurer_invasion_request_soldiers }
 					set_variable = {
 						name = adventurer_invasion_request_soldiers
-						value = scope:actor
+						value = scope:adventurer #Unop ck3-tiger
 						years = 5
 					}
 				}
@@ -11280,6 +11312,7 @@ war_task_contracts_completion_effect = {
 					}
 					if = {
 						limit = {
+							exists = scope:winner #Unop ck3-tiger scope:winner doesn't exist if the war ended in white peace or was invalidated
 							task_contract_taker = scope:winner
 						}
 						complete_task_contract = success_standard

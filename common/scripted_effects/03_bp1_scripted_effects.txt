@@ -23,7 +23,7 @@ house_feud_start_effect = {
 				$TARGET$.house.house_head = {
 					any_owned_story = {
 						story_type = story_cycle_house_feud
-						var:house_feud_house ?= root.house
+						var:house_feud_house ?= $ACTOR$.house #Unop: ck3-tiger
 					}
 				}
 			}
@@ -224,7 +224,7 @@ house_feud_start_effect = {
 							$TARGET$.house.house_head = {
 								any_owned_story = {
 									story_type = story_cycle_house_feud
-									var:house_feud_house ?= root.house
+									var:house_feud_house ?= $ACTOR$.house #Unop: ck3-tiger
 								}
 							}
 						}
@@ -1526,7 +1526,7 @@ house_feud_murder_effect = {
 					limit = { is_ai = no }
 					send_interface_message = {
 						type = house_feud_kill_them_message
-						left_icon = scope:killer
+						left_icon = $MURDERER$ #Unop ck3-tiger
 						right_icon = root
 						custom_tooltip = house_feud_tipped_scales_pos_medium
 					}

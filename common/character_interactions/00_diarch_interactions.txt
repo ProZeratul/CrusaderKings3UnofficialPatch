@@ -1189,7 +1189,7 @@ diarch_retract_vassal_interaction = {
 		}
 	}
 	
-	can_send_despite_rejection = yes
+	#can_send_despite_rejection = yes #Unop ck3-tiger
 	
 	# AI
 	ai_targets = { ai_recipients = peer_vassals }
@@ -1609,7 +1609,7 @@ diarch_imprison_interaction = {
 				}
 				if = {
 					limit = { is_landed_or_landless_administrative = yes }
-					depose_effect = { DEPOSER = root }
+					depose_effect = { DEPOSER = scope:actor } #Unop ck3-tiger
 				}
 				if = {
 					limit = {
@@ -8704,7 +8704,7 @@ appoint_vizier_interaction = {
 					exists = scope:actor.house
 					scope:secondary_recipient.house ?= scope:actor.house
 				}
-				add = massive_dynasty_prestige_value
+				add = scope:actor.dynasty.massive_dynasty_prestige_value #Unop ck3-tiger
 			}
 		}
 	}

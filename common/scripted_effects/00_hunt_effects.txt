@@ -336,6 +336,19 @@ end_hunt_mystical_animal_story_cycle_effect = {
 		ANIMAL = scope:activity.var:animal_type
 	}
 	add_stress = medium_stress_loss
+	#Unop ck3-tiger Ensure that scope:story exists
+	if = {
+		limit = {
+			NOT = { exists = scope:story }
+		}
+		random_owned_story = {
+			limit = {
+				story_type = story_cycle_hunt_mystical_animal
+				var:legendary_county ?= scope:activity.activity_location.county
+			}
+			save_temporary_scope_as = story
+		}
+	}
 	scope:story = {
 		hidden_effect = { end_story = yes }
 	}

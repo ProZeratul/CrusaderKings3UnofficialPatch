@@ -1382,7 +1382,7 @@ legendary_adventure = {
 					NOT = { this = house.house_head }
 				}
 				found_cadet_house_decision_effect = {
-					CHARACTER = this
+					CHARACTER = scope:attacker #Unop: ck3-tiger
 					PRESTIGE = 0
 				}
 			}
@@ -1399,8 +1399,9 @@ legendary_adventure = {
 								any_liege_or_above = { this = scope:attacker }
 							}
 						}
+						save_temporary_scope_as = attacker_house_member #Unop: ck3-tiger
 						found_cadet_house_decision_effect = {
-							CHARACTER = this
+							CHARACTER = scope:attacker_house_member #Unop: ck3-tiger
 							PRESTIGE = 0
 						}
 					}

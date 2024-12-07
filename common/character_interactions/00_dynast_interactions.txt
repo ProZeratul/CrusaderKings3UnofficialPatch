@@ -177,14 +177,14 @@ disinherit_interaction = {
 	cost = {
 		renown = {
 			value = {
-				add = medium_dynasty_prestige_value
+				add = scope:actor.dynasty.medium_dynasty_prestige_value #Unop ck3-tiger
 				if = {
 					limit = {
 						scope:recipient = {
 							is_landed_or_landless_administrative = yes
 						}
 					}
-					add = major_dynasty_prestige_value
+					add = scope:actor.dynasty.major_dynasty_prestige_value #Unop ck3-tiger
 				}
 				if = {
 					limit = {
@@ -195,7 +195,7 @@ disinherit_interaction = {
 							}
 						}
 					}
-					add = medium_dynasty_prestige_value
+					add = scope:actor.dynasty.medium_dynasty_prestige_value #Unop ck3-tiger
 				}
 				if = {
 					limit = {
@@ -762,7 +762,7 @@ restore_inheritance_interaction = {
 
 	cost = {
 		renown = {
-			value = medium_dynasty_prestige_value
+			value = scope:actor.dynasty.medium_dynasty_prestige_value #Unop ck3-tiger
 		}
 	}
 	
@@ -899,14 +899,14 @@ denounce_interaction = {
 	cost = {
 		renown = {
 			value = {
-				add = minor_dynasty_prestige_value
+				add = scope:actor.dynasty.minor_dynasty_prestige_value #Unop ck3-tiger
 				if = {
 					limit = {
 						scope:recipient = {
 							is_landed_or_landless_administrative = yes
 						}
 					}
-					add = medium_dynasty_prestige_value
+					add = scope:actor.dynasty.medium_dynasty_prestige_value #Unop ck3-tiger
 				}
 				if = {
 					limit = {
@@ -917,7 +917,7 @@ denounce_interaction = {
 							}
 						}
 					}
-					add = minor_dynasty_prestige_value
+					add = scope:actor.dynasty.minor_dynasty_prestige_value #Unop ck3-tiger
 				}
 			}
 		}
@@ -1140,7 +1140,7 @@ forgive_interaction = {
 
 	cost = {
 		renown = {
-			value = miniscule_dynasty_prestige_value
+			value = scope:actor.dynasty.miniscule_dynasty_prestige_value #Unop ck3-tiger
 		}
 	}
 	
@@ -1534,7 +1534,7 @@ dynast_claim_title_interaction = {
 	target_type = title
 	target_filter = recipient_domain_titles
 	ignores_pending_interaction_block = yes
-	cost = { renown = major_dynasty_prestige_value }
+	cost = { renown = scope:actor.dynasty.major_dynasty_prestige_value } #Unop ck3-tiger
 	is_shown = {
 		NOT = { scope:recipient = scope:actor }
 
@@ -1697,7 +1697,7 @@ dynast_legitimize_bastard_interaction = {
 	auto_accept = yes
 
 	cost = {
-		renown = medium_dynasty_prestige_value
+		renown = scope:actor.dynasty.medium_dynasty_prestige_value #Unop ck3-tiger
 	}
 	
 	on_accept = {
