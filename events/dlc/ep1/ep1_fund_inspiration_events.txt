@@ -4004,11 +4004,11 @@ scripted_effect fund_adventure_inspiration_start_effect = {
 		if = { #Should always exists, but we add this check to avoid the tooltip errors
 			limit = {
 				exists = scope:location
-				exists = scope:location.title_province
+				#exists = scope:location.title_province #Unop ck3-tiger
 			}
 			start_adventure_effect = {
 				ADVENTURER = $ADVENTURER$
-				LOCATION = scope:location.title_province
+				LOCATION = scope:location #Unop ck3-tiger
 			}
 		}
 	}
@@ -16879,7 +16879,7 @@ fund_inspiration.6100 = {
 	desc = fund_inspiration.6100.desc
 	theme = realm
 
-	theme = realm
+	#theme = realm #Unop ck3-tiger Already defined above
 	left_portrait = {
 		character = scope:inspiration_owner
 		animation = worry
@@ -16970,7 +16970,7 @@ fund_inspiration.6101 = {
 	desc = fund_inspiration.6101.desc
 	theme = realm
 
-	theme = realm
+	#theme = realm #Unop ck3-tiger Already defined above
 	left_portrait = {
 		character = scope:inspiration_owner
 		animation = personality_honorable
@@ -17220,12 +17220,13 @@ fund_inspiration.6102 = {
 				ai_rationality = 0.5
 			}
 		}
-		ai_chance = {
-			base = 50
-			ai_value_modifier = {
-				ai_rationality = 0.5
-			}
-		}
+		#Unop ck3-tiger Already defined above
+		#ai_chance = {
+		#	base = 50
+		#	ai_value_modifier = {
+		#		ai_rationality = 0.5
+		#	}
+		#}
 	}
 
 	option = {
@@ -18167,7 +18168,7 @@ fund_inspiration.6301 = {
 			limit = {
 				NOR = {
 					has_trait = compassionate
-					this = inspiration_owner
+					this = scope:inspiration_owner #Unop ck3-tiger
 					is_close_family_of = root
 				}
 			}
