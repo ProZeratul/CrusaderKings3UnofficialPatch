@@ -553,6 +553,8 @@ secrecy_base_value = {
 				}
 			}
 		}
+		#Unop ck3-tiger Save scope:councillor_liege required by spymaster_disrupt_schemes_total_modifier
+		scope:target = { save_temporary_scope_as = councillor_liege }
 		add = {
 			value = scope:target.cp:councillor_spymaster.spymaster_disrupt_schemes_total_modifier
 			multiply = -1
@@ -2581,17 +2583,18 @@ agent_groups_owner_perspective_value = {
 }
 
 agent_groups_target_character_perspective_value = {
-	if = {
-		limit = {
-			scope:scheme ?= {
-				is_scheme_target_type = title
-			}
-		}
-		scope:scheme ?= {
-			scheme_target_title.holder ?= { save_temporary_scope_as = target }
-		}
-	}
-	scope:target = {
+	#Unop ck3-tiger Use scope:temp_target defined by the base value
+	#if = {
+	#	limit = {
+	#		scope:scheme ?= {
+	#			is_scheme_target_type = title
+	#		}
+	#	}
+	#	scope:scheme ?= {
+	#		scheme_target_title.holder ?= { save_temporary_scope_as = target }
+	#	}
+	#}
+	scope:temp_target = {
 		# We need to check the any's here to avoid +0s if there's no valid chars.
 		if = {
 			limit = {
@@ -3021,9 +3024,9 @@ odds_skill_contribution_diplomacy_value = {
 		value = scope:owner.diplomacy
 		desc = scheme_odds.diplomacy.owner
 	}
-	scope:target ?= {
+	scope:temp_target ?= { #Unop ck3-tiger Use scope:temp_target defined by the base value
 		add = {
-			value = scope:target.diplomacy
+			value = scope:temp_target.diplomacy #Unop ck3-tiger
 			desc = scheme_odds.diplomacy.target
 			multiply = -0.5
 		}
@@ -3034,9 +3037,9 @@ odds_skill_contribution_martial_value = {
 		value = scope:owner.martial
 		desc = scheme_odds.martial.owner
 	}
-	scope:target ?= {
+	scope:temp_target ?= { #Unop ck3-tiger Use scope:temp_target defined by the base value
 		add = {
-			value = scope:target.martial
+			value = scope:temp_target.martial #Unop ck3-tiger
 			desc = scheme_odds.martial.target
 			multiply = -0.5
 		}
@@ -3047,9 +3050,9 @@ odds_skill_contribution_stewardship_value = {
 		value = scope:owner.stewardship
 		desc = scheme_odds.stewardship.owner
 	}
-	scope:target ?= {
+	scope:temp_target ?= { #Unop ck3-tiger Use scope:temp_target defined by the base value
 		add = {
-			value = scope:target.stewardship
+			value = scope:temp_target.stewardship #Unop ck3-tiger
 			desc = scheme_odds.stewardship.target
 			multiply = -0.5
 		}
@@ -3060,9 +3063,9 @@ odds_skill_contribution_intrigue_value = {
 		value = scope:owner.intrigue
 		desc = scheme_odds.intrigue.owner
 	}
-	scope:target ?= {
+	scope:temp_target ?= { #Unop ck3-tiger Use scope:temp_target defined by the base value
 		add = {
-			value = scope:target.intrigue
+			value = scope:temp_target.intrigue #Unop ck3-tiger
 			desc = scheme_odds.intrigue.target
 			multiply = -0.5
 		}
@@ -3074,9 +3077,9 @@ odds_skill_contribution_learning_value = {
 		desc = scheme_odds.learning.owner
 	}
 	
-	scope:target ?= {
+	scope:temp_target ?= { #Unop ck3-tiger Use scope:temp_target defined by the base value
 		add = {
-			value = scope:target.learning
+			value = scope:temp_target.learning #Unop ck3-tiger
 			desc = scheme_odds.learning.target
 			multiply = -0.5
 		}
@@ -3087,9 +3090,9 @@ odds_skill_contribution_prowess_value = {
 		value = scope:owner.prowess
 		desc = scheme_odds.prowess.owner
 	}
-	scope:target ?= {
+	scope:temp_target ?= { #Unop ck3-tiger Use scope:temp_target defined by the base value
 		add = {
-			value = scope:target.prowess
+			value = scope:temp_target.prowess #Unop ck3-tiger
 			desc = scheme_odds.prowess.target
 			multiply = -0.5
 		}
@@ -3338,8 +3341,8 @@ odds_seize_realm_scheme_misc_value = {
 				scope:owner = {
 					has_character_modifier = tournament_tailor_mixup_scheme_modifier
 					exists = var:tailor_mixup_house
-					exists = scope:target.holder.house
-					var:tailor_mixup_house = scope:target.holder.house
+					exists = scope:target.house #Unop ck3-tiger
+					var:tailor_mixup_house = scope:target.house #Unop ck3-tiger
 				}
 			}
 			add = 8
@@ -4060,12 +4063,12 @@ odds_raid_estate_scheme_misc_value = {
 			multiply = 2
 		}
 		add = {
-			value = scope:target.holder.influence_level
+			value = scope:temp_target.influence_level #Unop ck3-tiger Use scope:temp_target defined by the base value
 			multiply = -4
 		}
 		if = {
 			limit = {
-				scope:target.holder.house = scope:owner.top_liege.house
+				scope:temp_target.house = scope:owner.top_liege.house #Unop ck3-tiger
 			}
 			add = -12
 		}
@@ -4080,7 +4083,7 @@ odds_raid_estate_scheme_misc_value = {
 		}
 		if = {
 			limit = {
-				scope:target.holder.house = {
+				scope:temp_target.house = { #Unop ck3-tiger
 					is_powerful_family = yes
 					is_dominant_family = no
 				}
@@ -4089,7 +4092,7 @@ odds_raid_estate_scheme_misc_value = {
 		}
 		if = {
 			limit = {
-				scope:target.domicile = {
+				scope:temp_target.domicile ?= { #Unop ck3-tiger
 					OR = {
 						has_domicile_building_or_higher = barracks_01
 						has_domicile_building_or_higher = guardhouse_01
@@ -4102,7 +4105,7 @@ odds_raid_estate_scheme_misc_value = {
 		}
 		if = {
 			limit = {
-				scope:target.domicile = {
+				scope:temp_target.domicile ?= { #Unop ck3-tiger
 					OR = {
 						has_domicile_building_or_higher = barracks_03
 						has_domicile_building_or_higher = guardhouse_03

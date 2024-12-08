@@ -2544,7 +2544,7 @@ hostile_scheme_base_chance_modifier = {
 hostile_scheme_title_base_chance_modifier = {
 	modifier = {
 		add = -20
-		scope:target_title = {
+		scope:target = { #Unop ck3-tiger
 			tier = tier_kingdom
 		}
 		desc = "SCHEME_TARGET_IS_A_KINGDOM"
@@ -2594,7 +2594,7 @@ hostile_scheme_title_base_chance_modifier = {
 				is_landed_or_landless_administrative = no
 			}
 			scope:owner = {
-				exists = scope:target.liege.cp:councillor_spymaster
+				exists = scope:target.holder.liege.cp:councillor_spymaster #Unop ck3-tiger
 				scope:target.holder.liege.cp:councillor_spymaster = this
 			}
 			desc = "SCHEME_I_AM_SPYMASTER_OF_LIEGE_OF_HOLDER"

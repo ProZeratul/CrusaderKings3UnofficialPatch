@@ -367,7 +367,7 @@ share_known_secrets_interaction = {
 		prestige > major_prestige_value
 	}
 	
-	auto_accept = no
+	#auto_accept = no #Unop ck3-tiger Already defined above
 
 	ai_accept = {
 		# AI should accept by default
@@ -4485,23 +4485,30 @@ enforce_truce_interaction = {
 				}
 			}
 			scope:target = { end_war = white_peace }
-			if = {
-				limit = {
-					scope:actor = {
+			scope:actor = { #Unop ck3-tiger Use scope:actor appropriately
+				if = {
+					limit = {
 						any_character_struggle = {
 							involvement = involved
 							activate_struggle_catalyst_secondary_character_involvement_involved_trigger = {
 								CATALYST = catalyst_truce_was_enforced
-								CHAR = scope:target
+								CHAR = scope:recipient #Unop ck3-tiger
 							}
 						}
 					}
-				}
-				every_character_struggle = {
-					involvement = involved
-					activate_struggle_catalyst = {
-						catalyst = catalyst_truce_was_enforced
-						character = scope:actor
+					every_character_struggle = {
+						involvement = involved
+						#Unop Limit to struggles that meet the above condition
+						limit = {
+							activate_struggle_catalyst_secondary_character_involvement_involved_trigger = {
+								CATALYST = catalyst_truce_was_enforced
+								CHAR = scope:recipient
+							}
+						}
+						activate_struggle_catalyst = {
+							catalyst = catalyst_truce_was_enforced
+							character = scope:actor
+						}
 					}
 				}
 

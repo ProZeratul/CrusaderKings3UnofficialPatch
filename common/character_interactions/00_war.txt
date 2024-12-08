@@ -466,7 +466,7 @@ end_war_attacker_victory_interaction = {
 	}
 
 	on_accept = {
-		casus_belli = {
+		scope:war.casus_belli = { #Unop ck3-tiger
 			primary_attacker = {
 				save_scope_as = attacker_winner
 			}
@@ -483,7 +483,9 @@ end_war_attacker_victory_interaction = {
 			}
 		}
 		else = {
-			release_prisoners_of_war_effect = yes
+			scope:war ?= { #Unop ck3-tiger
+				release_prisoners_of_war_effect = yes
+			}
 		}
 
 		# Hostages
@@ -567,7 +569,9 @@ end_war_attacker_victory_interaction = {
 		#Special bookmark event for Aella of Northumbria
 		bookmark_867_northmen_aellas_capture_war_imprisonment_effect = yes
 
-		end_war = attacker
+		scope:war ?= { #Unop ck3-tiger
+			end_war = attacker
+		}
 	}
 
 	on_decline = {
@@ -734,7 +738,7 @@ end_war_attacker_victory_interaction = {
 					}
 					AND = {
 						scope:recipient = { is_ai = yes }
-						primary_attacker = scope:recipient
+						scope:war.casus_belli.primary_attacker = scope:recipient #Unop ck3-tiger
 					}
 					scope:war.casus_belli = { # Conquerors know when to fold
 						primary_attacker = {
@@ -896,7 +900,7 @@ end_war_attacker_white_peace_interaction = {
 	}
 
 	on_accept = {
-		casus_belli = {
+		scope:war.casus_belli = {
 			primary_attacker = {
 				save_scope_as = attacker_white_peace
 			}
@@ -913,7 +917,9 @@ end_war_attacker_white_peace_interaction = {
 			}
 		}
 		else = {
-			release_prisoners_of_war_effect = yes
+			scope:war ?= { #Unop ck3-tiger
+				release_prisoners_of_war_effect = yes
+			}
 		}
 
 		# Hostages
@@ -994,7 +1000,9 @@ end_war_attacker_white_peace_interaction = {
 			}
 		}
 
-		end_war = white_peace
+		scope:war ?= { #Unop ck3-tiger
+			end_war = white_peace
+		}
 	}
 
 	on_decline = {
@@ -1611,8 +1619,8 @@ end_war_attacker_white_peace_interaction = {
 		exists = scope:war
 		scope:war = {
 			has_valid_casus_belli = yes
+			is_white_peace_possible = yes #Unop ck3-tiger
 		}
-		is_white_peace_possible = yes
 	}
 }
 
@@ -1694,7 +1702,7 @@ end_war_attacker_defeat_interaction = {
 	}
 
 	on_accept = {
-		casus_belli = {
+		scope:war.casus_belli = {
 			primary_attacker = {
 				save_scope_as = attacker_loser
 			}
@@ -1712,7 +1720,9 @@ end_war_attacker_defeat_interaction = {
 			}
 		}
 		else = {
-			release_prisoners_of_war_effect = yes
+			scope:war ?= { #Unop ck3-tiger
+				release_prisoners_of_war_effect = yes
+			}
 		}
 		
 		# Hostages
@@ -1795,7 +1805,9 @@ end_war_attacker_defeat_interaction = {
 			}
 		}
 
-		end_war = defender
+		scope:war ?= { #Unop ck3-tiger
+			end_war = defender
+		}
 	}
 	
 	on_decline = {
@@ -1923,7 +1935,7 @@ end_war_attacker_defeat_interaction = {
 			}
 			AND = {
 				scope:recipient = { is_ai = yes }
-				primary_defender = scope:recipient
+				scope:war.casus_belli.primary_defender = scope:recipient #Unop ck3-tiger
 			}
 		}
 	}

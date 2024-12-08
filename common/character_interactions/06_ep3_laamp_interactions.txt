@@ -5,7 +5,7 @@
 
 purchase_land_interaction = {
 	category = interaction_category_laamp
-	interface_priority = 30
+	#interface_priority = 30 #Unop ck3-tiger already defined below
 	icon = purchase_land_interaction
 
 	desc = purchase_land_interaction_desc
@@ -1502,7 +1502,7 @@ negotiate_settlement_interaction = {
 				multiply = scope:actor.highest_held_title_tier
 			}
 		}
-		show_as_tooltip = { negotiate_settlement_interaction_effect = yes }
+		show_as_tooltip = { scope:actor = { negotiate_settlement_interaction_effect = yes } } #Unop ck3-tiger
 		scope:actor = { trigger_event = ep3_laamps.0300 }
 	}
 
@@ -1995,12 +1995,13 @@ negotiate_settlement_interaction = {
 		modifier = { # Defending against a LAAMP
 			any_character_war = {
 				primary_defender = scope:actor
+				save_temporary_scope_as = war #Unop ck3-tiger
 				any_war_attacker = {
 					scope:recipient ?= this
 					is_landless_adventurer = yes
 					NOT = { has_realm_law = camp_purpose_legitimists }
 					# Attacking laamp's troops at least 10% of defender's total troops
-					current_military_strength > war_defender_total_strength_tenth_value
+					current_military_strength > scope:war.war_defender_total_strength_tenth_value #Unop ck3-tiger
 				}
 				OR = {
 					attacker_war_score >= 25
@@ -2014,12 +2015,13 @@ negotiate_settlement_interaction = {
 				every_character_war = {
 					limit = {
 						primary_defender = scope:actor
+						save_temporary_scope_as = war #Unop ck3-tiger
 						any_war_attacker = {
 							scope:recipient ?= this
 							is_landless_adventurer = yes
 							NOT = { has_realm_law = camp_purpose_legitimists }
 							# Attacking laamp's troops at least 10% of defender's total troops
-							current_military_strength > war_defender_total_strength_tenth_value
+							current_military_strength > scope:war.war_defender_total_strength_tenth_value #Unop ck3-tiger
 						}
 					}
 					add = {
@@ -2045,11 +2047,12 @@ negotiate_settlement_interaction = {
 		modifier = { # Attacking a LAAMP
 			any_character_war = {
 				primary_attacker = scope:actor
+				save_temporary_scope_as = war #Unop ck3-tiger
 				any_war_defender = {
 					scope:recipient ?= this
 					is_landless_adventurer = yes
 					# Defending laamp's troops at least 10% of attacker's total troops
-					current_military_strength > war_attacker_total_strength_tenth_value
+					current_military_strength > scope:war.war_attacker_total_strength_tenth_value #Unop ck3-tiger
 				}
 				OR = {
 					defender_war_score >= 25
@@ -2063,11 +2066,12 @@ negotiate_settlement_interaction = {
 				every_character_war = {
 					limit = {
 						primary_attacker = scope:actor
+						save_temporary_scope_as = war #Unop ck3-tiger
 						any_war_defender = {
 							scope:recipient ?= this
 							is_landless_adventurer = yes
 							# Defending laamp's troops at least 10% of attacker's total troops
-							current_military_strength > war_attacker_total_strength_tenth_value
+							current_military_strength > scope:war.war_attacker_total_strength_tenth_value #Unop ck3-tiger
 						}
 					}
 					add = {
@@ -4556,7 +4560,7 @@ reinforce_soldiers_interaction = {
 			custom_tooltip = {
 				text = reinforce_soldiers_option_dread_tt
 				OR = {
-					scope:actor.dread >= reinforce_soldiers_dread_cost_value
+					scope:actor.dread >= scope:actor.reinforce_soldiers_dread_cost_value #Unop ck3-tiger
 					scope:actor = {
 						has_character_modifier = ep3_friend_to_old_soldiers_modifier
 					}

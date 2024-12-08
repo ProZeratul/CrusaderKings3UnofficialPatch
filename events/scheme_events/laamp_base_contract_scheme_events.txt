@@ -11079,11 +11079,11 @@ laamp_base_contract_schemes.1782 = {
 						# Laamps with defences can't be ambushed — partially for verisimilitude, partially just to keep loc variants down.
 						NOT = { has_domicile_building_or_higher = camp_perimeter_01 }
 					}
-					laamp_base_contract_schemes_1782_valid_target_char_trigger = yes
+					holder = { laamp_base_contract_schemes_1782_valid_target_char_trigger = yes } #Unop ck3-tiger
 					NOT = { this.holder = root } #Unop: laamps_tally is a list of Landed_title so this.holder is needed to get a char
 				}
 				save_scope_as = potential_chars_list
-				add_to_list = is_laamp_char_list
+				holder = { add_to_list = is_laamp_char_list } #Unop ck3-tiger is_laamp_char_list should contain characters
 			}
 		}
 		# Aaaand process them to pick out the one we want.

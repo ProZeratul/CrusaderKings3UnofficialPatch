@@ -164,9 +164,9 @@
 			}
 		}
 		# Family Feud
-		house_feud_hostile_scheme_success_modifier = yes
+		house_feud_title_hostile_scheme_success_modifier = yes #Unop ck3-tiger
 		# Diarchs are better at schemes within their liege's realm
-		diarch_scheming_within_realm_bonus_modifier = yes
+		diarch_scheming_title_within_realm_bonus_modifier = yes #Unop ck3-tiger
 		# Modifiers
 		# Land Context
 		modifier = { # Owner's counties outside primary title
@@ -211,7 +211,7 @@
 			desc = SUBSUME_PROVINCE_HELD_COUNTIES_IN_TARGET_DESC
 			add = {
 				value = 0
-				scope:target.holder = {
+				scope:target = { #Unop ck3-target
 					every_de_jure_county = {
 						limit = {
 							county_held_or_vassal_to_target_trigger = { TARGET = scope:owner }
@@ -333,7 +333,7 @@
 		modifier = {
 			scope:owner = {
 				has_character_modifier = united_political_agents_modifier
-				is_vassal_of = scope:target
+				is_vassal_of = scope:target.holder #Unop ck3-tiger
 			}
 			desc = united_political_agents_modifier
 			add = 15
