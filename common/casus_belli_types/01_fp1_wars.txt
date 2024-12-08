@@ -1030,7 +1030,7 @@ fp1_varangian_adventurer_conquest = {
 					NOT = { this = house.house_head }
 				}
 				found_cadet_house_decision_effect = {
-					CHARACTER = this
+					CHARACTER = scope:attacker #Unop: ck3-tiger
 					PRESTIGE = 0
 				}
 			}
@@ -1050,8 +1050,9 @@ fp1_varangian_adventurer_conquest = {
 						order_by = age
 						max = 100	# Basically, all of them.
 						check_range_bounds = no
+						save_temporary_scope_as = attacker_house_member #Unop: ck3-tiger
 						found_cadet_house_decision_effect = {
-							CHARACTER = this
+							CHARACTER = scope:attacker_house_member #Unop: ck3-tiger
 							PRESTIGE = 0
 						}
 					}
