@@ -916,10 +916,10 @@ ep3_become_landed_transfer_effect = {
 		ordered_in_list = {
 			list = $TITLE_LIST$
 			order_by = tier
-			save_temporary_scope_as = target
+			save_temporary_scope_as = target_title
 		}
 	}
-	scope:target.holder ?= {
+	scope:target_title.holder ?= { #Unop ck3-tiger Avoid scope:target as it may override predefined scheme scope
 		save_scope_as = old_holder
 		switch = {
 			trigger = government_has_flag
@@ -4340,7 +4340,7 @@ ep3_dynasty_legacy_add_legitimacy_effect = {
 								title = ep3_dynasty_legacy_add_legitimacy_effect_title
 								desc = ep3_dynasty_legacy_add_legitimacy_effect_desc
 								left_icon = scope:host
-								right_icon = house
+								#right_icon = house #Unop ck3-tiger
 							}
 						}
 					}
