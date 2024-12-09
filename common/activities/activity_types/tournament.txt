@@ -2477,6 +2477,42 @@
 				if = {
 					limit = { this = scope:host }
 					scope:activity = { progress_activity_phase_after = { weeks = tournament_qualification_duration_weeks } }
+					#Unop: Reset the qualified list in order to not get polluted by potential previous phases
+					scope:activity = { 
+						every_guest_subset = { 
+							name = qualified
+							save_temporary_scope_as = unop_clear_qualified
+							scope:activity = {
+								remove_from_guest_subset = { 
+									name = qualified
+									target = scope:unop_clear_qualified 
+								}
+							}
+						}
+						every_guest_subset = { 
+							name = contestant
+							save_temporary_scope_as = unop_clear_contestant
+							scope:activity = {
+								remove_from_guest_subset = { 
+									name = contestant
+									target = scope:unop_clear_contestant
+								}
+							}
+						}
+						every_guest_subset = { 
+							name = spectator
+							save_temporary_scope_as = unop_clear_spectator
+							scope:activity = {
+								remove_from_guest_subset = { 
+									name = spectator
+									target = scope:unop_clear_spectator
+								}
+							}
+						}
+						every_attending_character = {
+							tournament_add_contestant_or_spectator_effect = yes
+						}
+					}
 				}
 			}
 
@@ -3401,7 +3437,7 @@
 
 		# BOARD GAME
 		# contest_board_game_aptitude_value
-		tournament_phase_board_game = {			
+		tournament_phase_board_game = {
 			is_shown = {}
 
 			can_pick = {} #Board games in all different forms were seen all over the globe
@@ -3410,6 +3446,42 @@
 				if = {
 					limit = { this = scope:host }
 					scope:activity = { progress_activity_phase_after = { weeks = tournament_qualification_duration_weeks } }
+					#Unop: Reset the qualified list in order to not get polluted by potential previous phases
+					scope:activity = { 
+						every_guest_subset = { 
+							name = qualified
+							save_temporary_scope_as = unop_clear_qualified
+							scope:activity = {
+								remove_from_guest_subset = { 
+									name = qualified
+									target = scope:unop_clear_qualified 
+								}
+							}
+						}
+						every_guest_subset = { 
+							name = contestant
+							save_temporary_scope_as = unop_clear_contestant
+							scope:activity = {
+								remove_from_guest_subset = { 
+									name = contestant
+									target = scope:unop_clear_contestant
+								}
+							}
+						}
+						every_guest_subset = { 
+							name = spectator
+							save_temporary_scope_as = unop_clear_spectator
+							scope:activity = {
+								remove_from_guest_subset = { 
+									name = spectator
+									target = scope:unop_clear_spectator
+								}
+							}
+						}
+						every_attending_character = {
+							tournament_add_contestant_or_spectator_effect = yes
+						}
+					}
 				}
 			}
 
@@ -3609,6 +3681,42 @@
 				if = {
 					limit = { this = scope:host }
 					scope:activity = { progress_activity_phase_after = { weeks = tournament_qualification_duration_weeks } }
+					#Unop: Reset the qualified list in order to not get polluted by potential previous phases
+					scope:activity = { 
+						every_guest_subset = { 
+							name = qualified
+							save_temporary_scope_as = unop_clear_qualified
+							scope:activity = {
+								remove_from_guest_subset = { 
+									name = qualified
+									target = scope:unop_clear_qualified 
+								}
+							}
+						}
+						every_guest_subset = { 
+							name = contestant
+							save_temporary_scope_as = unop_clear_contestant
+							scope:activity = {
+								remove_from_guest_subset = { 
+									name = contestant
+									target = scope:unop_clear_contestant
+								}
+							}
+						}
+						every_guest_subset = { 
+							name = spectator
+							save_temporary_scope_as = unop_clear_spectator
+							scope:activity = {
+								remove_from_guest_subset = { 
+									name = spectator
+									target = scope:unop_clear_spectator
+								}
+							}
+						}
+						every_attending_character = {
+							tournament_add_contestant_or_spectator_effect = yes
+						}
+					}
 				}
 			}
 
