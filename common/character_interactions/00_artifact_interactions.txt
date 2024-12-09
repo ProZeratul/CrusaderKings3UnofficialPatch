@@ -2881,27 +2881,6 @@ start_stealing_back_artifact = {
 				has_artifact_claim = scope:target
 			}
 		}
-
-		#Unop Landless adventurers can only steal masterwork artifacts without a claim or a contract
-		trigger_if = {
-			limit = {
-				scope:actor = {
-					NOR = {
-						has_artifact_claim = scope:target
-						any_character_active_contract = {
-							has_task_contract_type = laamp_steal_artifact_contract
-							var:task_contract_object ?= scope:target
-						}
-					}
-				}
-			}
-			scope:target = {
-				OR = {
-					rarity = common
-					rarity = masterwork
-				}
-			}
-		}
 	}
 	# Scheme Starter Packages
 	options_heading = schemes.t.agent_packages
