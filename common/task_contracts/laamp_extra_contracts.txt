@@ -280,6 +280,10 @@ laamp_raid_contract = {
 					value = flag:laamp_raid_contract
 				}
 			}
+			#Unop Save war so it could be used in the invalidation event
+			var:task_contract_war ?= {
+				save_scope_as = task_contract_war
+			}
 			if = {
 				limit = {
 					task_contract_employer = {
@@ -559,6 +563,10 @@ laamp_join_war_contract = {
 					name = invalidated_task_contract_type
 					value = flag:laamp_join_war_contract
 				}
+			}
+			#Unop Save war so it could be used in the invalidation event
+			var:task_contract_war ?= {
+				save_scope_as = task_contract_war
 			}
 
 			if = {
@@ -840,6 +848,10 @@ laamp_help_claimant_contract = {
 					name = invalidated_task_contract_type
 					value = flag:laamp_help_claimant_contract
 				}
+			}
+			#Unop Save war so it could be used in the invalidation event
+			var:task_contract_war ?= {
+				save_scope_as = task_contract_war
 			}
 			if = {
 				limit = {
