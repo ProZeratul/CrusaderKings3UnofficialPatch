@@ -686,7 +686,10 @@ bookmaker_cook_the_books = {
 	is_shown = { is_independent_ruler = yes }
 
 	is_valid_showing_failures_only = {
-		NOT = { has_character_flag = cook_the_books_cooldown_flag }
+		#Unop Use scope:liege since the root scope here is the court position holder 
+		scope:liege = {
+			NOT = { has_character_flag = cook_the_books_cooldown_flag }
+		}
 	}
 
 	on_start = {
@@ -774,6 +777,7 @@ charioteer_training = {
 	court_position_types = { charioteer_court_position }
 	
 	# Task is unlocked from the Estate
+	#Unop Add tooltip
 	is_shown = {
 
 	}
@@ -781,7 +785,8 @@ charioteer_training = {
 	is_valid_showing_failures_only = {
 		custom_tooltip = {
 			text = unop_unlock_charioteer_training_task
-			domicile ?= { has_domicile_parameter = estate_charioteer_training_task }
+			#Unop Use scope:liege since the root scope here is the court position holder 
+			scope:liege.domicile ?= { has_domicile_parameter = estate_charioteer_training_task }
 		}
 	}
 	
