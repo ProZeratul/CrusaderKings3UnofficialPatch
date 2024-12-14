@@ -2907,6 +2907,26 @@ ep3_contract_event.0012 = {
 			#Mysterious
 			custom_tooltip = treasure_map_disappeared.tt
 		}
+		#Unop Remove from the war if contract involves a war
+		if = {
+			limit = {
+				OR = {
+					var:invalidated_task_contract_type = flag:laamp_join_war_contract
+					var:invalidated_task_contract_type = flag:laamp_raid_contract
+					var:invalidated_task_contract_type = flag:laamp_help_claimant_contract
+				}
+			}
+			scope:task_contract_war ?= {
+				remove_participant = root
+			}
+		}
+		#Unop Save task contract as it is used by task_contract_invalidated_gold_gain_value
+		random_character_active_contract = {
+			limit = {
+				task_contract_employer = scope:task_contract_employer
+			}
+			save_temporary_scope_as = task_contract
+		}
 		#stuff that would be nice to see in tooltip, but is already executed in on_invalidation
 		show_as_tooltip = {
 			if = {
