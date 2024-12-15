@@ -70,7 +70,7 @@ destination_events.10 = { # A good Caravan Master for hire
 				template = travel_leader_court_position_template
 				age = { 25 45 }
 				gender = root
-				employer = root
+				location = root.capital_province #Unop Don't make them courtier before they are hired
 				faith = root.faith
 				culture = root.culture
 
@@ -85,9 +85,10 @@ destination_events.10 = { # A good Caravan Master for hire
 		name = destination_events.10.a
 		remove_short_term_gold = tiny_gold_value
 		custom_tooltip = destination_events.10.a.tt
-		appoint_court_position = {
-			recipient = scope:travel_leader_character
-			court_position = travel_leader_court_position
+		court_position_grant_effect = { #Unop Use court_position_grant_effect instead of appoint_court_position
+			EMPLOYER = root
+			POS = travel_leader
+			CANDIDATE = scope:travel_leader_character
 		}
 		stress_impact = {
 			paranoid = minor_stress_gain
