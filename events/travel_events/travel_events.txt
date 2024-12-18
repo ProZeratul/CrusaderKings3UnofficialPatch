@@ -264,10 +264,30 @@ travel_events.0060 = {
 				}
 			}
 		}
-		# Recursively trigger event until you're not traveling anymore or you've run out of knights to train
-		trigger_event = {
-			id = travel_events.0060
-			days = { 90 180 }
+
+		#Unop: We need to remove the selected_knight from the list now (if not with a very long travel, the same knight could be selected multiple times)
+		scope:task_contract = {
+			remove_list_variable = {
+				name = knights_to_train
+				target = scope:selected_knight
+			}
+		}
+		#Unop: We now check if there is at least 1 knight to avoid setting up an event that won't be able to fire.
+		if = {
+			limit = {
+				current_travel_plan = {
+					has_variable_list = knights_to_train
+					variable_list_size = {
+						name = knights_to_train 
+						value >= 1
+					}
+				}
+			}
+			# Recursively trigger event until you're not traveling anymore or you've run out of knights to train
+			trigger_event = {
+				id = travel_events.0060
+				days = { 90 180 }
+			}
 		}
 	}
 }
