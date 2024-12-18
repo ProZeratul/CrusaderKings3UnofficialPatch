@@ -2242,9 +2242,9 @@ zealous_missionary_start_decision = {
 		NOT = {
 			is_ai = yes
 			any_player = {
-				OR = {
-					this = location.county.holder
-					this = location.county.holder.top_liege
+				OR = { # Unop: Root added to the 2 check below since the current scope is the player itself
+					this = root.location.county.holder
+					this = root.location.county.holder.top_liege
 				}
 			}
 		}
