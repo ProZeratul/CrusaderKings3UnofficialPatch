@@ -3516,6 +3516,18 @@ scripted_trigger 0040_traveling_towards_treasure_with_domicile_trigger = {
 	}
 }
 
+#Unop Are we actually traveling towards the treasure now (without domicile)?
+scripted_trigger 0040_traveling_towards_treasure_without_domicile_trigger = {
+	has_variable = ep3_laamp_decision_1000_is_excavating
+	current_travel_plan ?= {
+		is_travel_with_domicile = no
+		OR = {
+			next_destination_province = scope:task_contract_destination
+			final_destination_province = scope:task_contract_destination
+		}
+	}
+}
+
 #Your Treasure Map broke!
 ep3_contract_event.0040 = {
 	type = character_event
@@ -3534,7 +3546,7 @@ ep3_contract_event.0040 = {
 		}
 		scope:task_contract = {
 			task_contract_employer = { save_scope_as = task_contract_employer }
-			var:contract_treasure_location = { save_scope_as = treasure_map_contract_destination }
+			var:contract_treasure_location = { save_scope_as = task_contract_destination } #Unop Use the scope checked by the triggers
 		}
 		#Remove treasure map
 		destroy_artifact = scope:decayed_artifact
@@ -3551,7 +3563,7 @@ ep3_contract_event.0040 = {
 		name = ep3_contract_event.0040.a
 		#Haven't paid up?
 		if = {
-			limit = { 0040_traveling_towards_treasure_with_domicile_trigger = no }
+			limit = { 0040_traveling_towards_treasure_without_domicile_trigger = yes } #Unop Only reroute to home if traveling to the treasure location
 			#Then back home we go
 			current_travel_plan ?= { reroute_to_home = yes }
 		}
@@ -3576,6 +3588,8 @@ ep3_contract_event.0040 = {
 			base = 2
 		}
 	}
+	#Unop Remove variable similarly to ep3_contract_event.0041 
+	after = { remove_variable ?= ep3_laamp_decision_1000_is_excavating }
 }
 
 #Employer died or became incapable while in your camp
@@ -3677,13 +3691,20 @@ ep3_contract_event.0041 = {
 				}
 			}
 		}
+		#Unop Reroute to home available only if traveling to the treasure location
+		trigger = {
+			OR = {
+				0040_traveling_towards_treasure_with_domicile_trigger = yes
+				0040_traveling_towards_treasure_without_domicile_trigger = yes
+			}
+		}
 		#No point in traveling without the map
 		current_travel_plan ?= { reroute_to_home = yes }
 	}
 	#Already paid for my domicile to travel. We're continuing!
 	option = {
 		name = travel_danger_events.1011.c
-		trigger = { 0040_traveling_towards_treasure_with_domicile_trigger = yes }
+		trigger = { 0040_traveling_towards_treasure_without_domicile_trigger = no } #Unop Keep up moving available unless traveling to the treasure location without domicile
 	}
 	after = { remove_variable ?= ep3_laamp_decision_1000_is_excavating }
 }
