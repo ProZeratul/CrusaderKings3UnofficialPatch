@@ -774,6 +774,25 @@ contest_events.5030 = {
 	}
 	cooldown = { years = 1 }
 
+	trigger = { #Unop: Needed to not self-select 'root' as the enemy scope
+		scope:activity = {
+			any_guest_subset_current_phase = {
+				name = qualified
+				contest_event_general_contestant_valid_trigger = yes
+			}
+		}
+	}
+	
+	immediate = { #Unop: Needed for the duel in the option A
+		scope:activity = {
+			random_guest_subset_current_phase = {
+				name = qualified
+				limit = { contest_event_general_contestant_valid_trigger = yes }
+				save_scope_as = enemy
+			}
+		}
+	}
+
 	# Push your luck
 	option = {
 		name = contest_events.5030.a
