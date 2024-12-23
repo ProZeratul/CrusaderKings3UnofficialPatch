@@ -4862,6 +4862,10 @@ ep3_laamps.5010 = {
 			is_adult = yes # is an adult
 			age < 65 # but not too old, so wincing in pain isn't just from being real old
 		}
+		#Unop Prevent wasting money on an upgrade that can't be built
+		domicile = {
+			has_ongoing_domicile_construction = no
+		}
 	}
 	
 	immediate = {
@@ -4963,16 +4967,12 @@ ep3_laamps.5010 = {
 				domicile = { has_domicile_building = camp_main_04 }
 			}
 			gold >= scope:gold_cost
-			#Unop Prevent wasting money on an upgrade that can't be built
-			domicile = {
-				has_ongoing_domicile_construction = no
-			}
 		}
 		show_as_unavailable = {
 			NOT = {
 				domicile = { has_domicile_building = camp_main_04 }
 			}
-			#gold <= scope:gold_cost #Unop Also show unavailable with an ongoing construction
+			gold <= scope:gold_cost
 		}
 		custom_tooltip = ep3_laamps.5010.b.tt
 		remove_short_term_gold = scope:gold_cost
