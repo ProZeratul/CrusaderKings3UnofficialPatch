@@ -89,6 +89,15 @@ scripted_effect roll_scheme_success_or_failure_effect = {
 	scope:owner = {
 		if = {
 			limit = { exists = scope:scheme_successful }
+			#Unop Pre-determine success type here to avoid potentially incorrect tooltip in $SUCCESS_EVENT$
+			random_list = {
+				67 = {
+					save_scope_value_as = { name = unop_success_type value = flag:success_standard }
+				}
+				33 = {
+					save_scope_value_as = { name = unop_success_type value = flag:success_critical }
+				}
+			}
 			trigger_event = $SUCCESS_EVENT$
 		}
 		else = { trigger_event = $FAILURE_EVENT$ }
