@@ -1002,7 +1002,7 @@ invite_to_court_interaction = {
  			desc = AI_CAN_BE_PERSUADED_TO_STAY
 			
 			is_pool_guest = no
-			location.province_owner = {
+			location.province_owner ?= { #Unop Handle non-existing scope
 				OR = {
 					any_liege_or_above = { this = scope:actor }
 					this = scope:actor
