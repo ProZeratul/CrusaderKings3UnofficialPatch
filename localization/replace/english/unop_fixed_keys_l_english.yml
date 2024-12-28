@@ -82,7 +82,8 @@
  clear_ground_legendary_hunting_lodge_tt: "You must have completed a Mythical or Illustrious [legend|E] about a beast, or have #V 62#! #EMP Venator or Falconer#! [GetTrait('lifestyle_hunter').GetName( GetNullCharacter )] [trait_level_track_xp|E], or the [GetCultureTradition('tradition_hunters').GetName] or [GetCultureTradition('tradition_ep2_avid_falconers').GetName] [tradition|E]"
  # In fixed keys since it existed, then got removed for unknown reason but is still needed.
  county_chastised_beloved_adventurer_modifier:0 "Chastised Beloved Adventurer"
-
+ # Replace recipient with actor so we have the date until instead of the actual date
+ contact_list_request_interaction.request_tournament_cooldown: "Cannot request another #color_white [GetActivityType( 'activity_tournament' ).GetName]#! until [GetCurrentDateWithDiff( GetVarTimeRemaining( actor.MakeScope, 'laamp_recently_requested_tourney') )|V]"
 
  #Characters were reversed :(
  #rival_conquered_me: "[TARGET_CHARACTER.GetShortUINamePossessive|U] realm was conquered by [CHARACTER.GetShortUIName|U]."
