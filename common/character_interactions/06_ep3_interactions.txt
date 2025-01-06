@@ -9090,12 +9090,15 @@ request_raid_remit_interaction = {
 	send_options_exclusive = no
 
 	on_accept = {
-		if = {
-			limit = { scope:gold = yes }
-			scope:actor = {
-				pay_short_term_gold = {
-					target = scope:recipient
-					gold = scope:actor.minor_gold_value
+		#Unop Only show as tooltip since the gold is paid also in ep3_interactions_events.0421
+		show_as_tooltip = {
+			if = {
+				limit = { scope:gold = yes }
+				scope:actor = {
+					pay_short_term_gold = {
+						target = scope:recipient
+						gold = scope:actor.minor_gold_value
+					}
 				}
 			}
 		}
