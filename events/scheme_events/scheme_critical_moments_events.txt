@@ -4575,8 +4575,16 @@ scheme_critical_moments.8031 = {
 					save_scope_as = scheme_permission
 				}
 				#DISCOVERY ROLL
+				#Unop Calculate discovery chance as 100 - secrecy
+				save_scope_value_as = {
+					name = discovery_chance
+					value = {
+						value = 100
+						subtract = scope:scheme.scheme_secrecy
+					}
+				}
 				random = {
-					chance = scope:scheme.scheme_secrecy
+					chance = scope:discovery_chance #Unop Use correct discovery chance
 					save_scope_value_as = {
 						name = scheme_discovered
 						value = yes
