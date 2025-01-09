@@ -4849,9 +4849,9 @@ scripted_effect tournament_1240_prize_child_effect = {
 	save_scope_as = marriage_prize
 	if = {
 		limit = {
-			exists = mother
-			mother = root
+			exists = father #Unop: Was checking mother to use the father
 			father = {
+				NOT = { this = root } #Unop: To unsure the father is not actual root for opinion loss just after
 				is_alive = yes
 				liege = root
 			}
@@ -4862,6 +4862,7 @@ scripted_effect tournament_1240_prize_child_effect = {
 		limit = {
 			exists = mother
 			mother = {
+				NOT = { this = root } #Unop: To unsure the mother is not actual root for opinion loss just after
 				is_alive = yes
 				liege = root
 			}
