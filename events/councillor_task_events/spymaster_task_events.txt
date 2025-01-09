@@ -193,59 +193,28 @@ spymaster_task.0301 = {
 					}
 				}
 				trigger_event = spymaster_task.0399
-			}
-		}
-		scope:councillor_liege = {
-			if = { #It's someone I care about
-				limit = {
-					OR = {
-						spymaster_find_secrets_secret_holder_is_interesting_to_me_trigger = yes
-						scope:secret_to_reveal = {
-							spymaster_find_secrets_secret_target_is_interesting_to_me_trigger = yes
-						}
-					}
-				}
-				trigger_event = {
-					on_action = task_find_secrets_reveal_selection
-				}
-			}
-			else = { #For everyone else, send a feed message
-				send_interface_message = {
-					type = msg_spymaster_task_good
-					title = spymaster_task.0311.notification
-					desc = {
-						triggered_desc = {
-							trigger = {
-								scope:active_councillor = { intrigue <= average_skill_level }
-							}
-							desc = task_intrigue_good_unskilled_notification_tooltip
-						}
-						triggered_desc = {
-							trigger = {
-								scope:active_councillor = { intrigue > average_skill_level }
-							}
-							desc = task_intrigue_good_skilled_notification_tooltip
-						}
-					}
-					
-					left_icon = scope:secret_holder
-					right_icon = scope:councillor
-					
-					scope:secret_to_reveal = {
-						reveal_to = scope:councillor_liege
-					}
+				#Unop Save an additional scope to be checked later
+				save_temporary_scope_value_as = {
+					name = dont_reveal
+					value = yes
 				}
 			}
 		}
-		scope:councillor = {
-			if = { #Check that the Spymaster doesn't already know the secret
-				limit = {
-					scope:secret_to_reveal = {
-						NOT = { is_known_by = prev }
+		#Unop Don't reveal the secret if should not be discovered
+		if = {
+			limit = {
+				NOT = { exists = scope:dont_reveal }
+			}
+			scope:councillor_liege = {
+				if = { #It's someone I care about
+					limit = {
+						OR = {
+							spymaster_find_secrets_secret_holder_is_interesting_to_me_trigger = yes
+							scope:secret_to_reveal = {
+								spymaster_find_secrets_secret_target_is_interesting_to_me_trigger = yes
+							}
+						}
 					}
-				}
-				if = { #It's the owner of the court or someone else I care about
-					limit = { spymaster_find_secrets_secret_holder_is_interesting_to_me_trigger = yes }
 					trigger_event = {
 						on_action = task_find_secrets_reveal_selection
 					}
@@ -254,13 +223,55 @@ spymaster_task.0301 = {
 					send_interface_message = {
 						type = msg_spymaster_task_good
 						title = spymaster_task.0311.notification
+						desc = {
+							triggered_desc = {
+								trigger = {
+									scope:active_councillor = { intrigue <= average_skill_level }
+								}
+								desc = task_intrigue_good_unskilled_notification_tooltip
+							}
+							triggered_desc = {
+								trigger = {
+									scope:active_councillor = { intrigue > average_skill_level }
+								}
+								desc = task_intrigue_good_skilled_notification_tooltip
+							}
+						}
 						
 						left_icon = scope:secret_holder
-						
-						desc = blank_line
+						right_icon = scope:councillor
 						
 						scope:secret_to_reveal = {
-							reveal_to = scope:councillor
+							reveal_to = scope:councillor_liege
+						}
+					}
+				}
+			}
+			scope:councillor = {
+				if = { #Check that the Spymaster doesn't already know the secret
+					limit = {
+						scope:secret_to_reveal = {
+							NOT = { is_known_by = prev }
+						}
+					}
+					if = { #It's the owner of the court or someone else I care about
+						limit = { spymaster_find_secrets_secret_holder_is_interesting_to_me_trigger = yes }
+						trigger_event = {
+							on_action = task_find_secrets_reveal_selection
+						}
+					}
+					else = { #For everyone else, send a feed message
+						send_interface_message = {
+							type = msg_spymaster_task_good
+							title = spymaster_task.0311.notification
+							
+							left_icon = scope:secret_holder
+							
+							desc = blank_line
+							
+							scope:secret_to_reveal = {
+								reveal_to = scope:councillor
+							}
 						}
 					}
 				}
