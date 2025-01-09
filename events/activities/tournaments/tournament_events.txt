@@ -4927,6 +4927,13 @@ tournament_events.1240 = {
 				any_courtier_or_guest = {
 					house = root.house
 					tournament_1240_prize_child_trigger = yes
+					NOT = { #Unop: Added this to match what is in the immediate block 
+						any_spouse = {
+							count >= 1
+							even_if_dead = yes
+						}
+					}
+					age <= 35
 				}
 			}
 		}
@@ -5144,13 +5151,16 @@ scripted_effect tournament_favor_gift_effect = {
 		name = tournament_favor_offers
 		target = scope:favor_giver
 	}
-	if = {
-		limit = {
-			is_scheming_against = { target = scope:favor_recipient }
-		}
-		random_scheme = {
-			limit = { scheme_target_character = scope:favor_recipient }
-			save_scope_as = favor_scheme
+	#Unop: Since we are currently the 'favor_recipient', we need to be re-scoped to favor_giver, this was checking if the recipient was scheming against itself !
+	scope:favor_giver = {
+		if = {
+			limit = {
+				is_scheming_against = { target = scope:favor_recipient }
+			}
+			random_scheme = {
+				limit = { scheme_target_character = scope:favor_recipient }
+				save_scope_as = favor_scheme
+			}
 		}
 	}
 	custom_tooltip = tournament_events.1251.favor_tt
@@ -8614,6 +8624,7 @@ tournament_events.1312 = {
 						any_title_heir = { scope:foreign_knight_temp ?= this }
 					}
 				}
+				can_be_knight_trigger = { ARMY_OWNER = root } #Unop: To prevent this event to potentially select a non-martial gender as potential knight
 			}
 		}
 		this = scope:host
@@ -8647,6 +8658,7 @@ tournament_events.1312 = {
 							any_title_heir = { this = scope:foreign_knight_temp }
 						}
 					}
+					can_be_knight_trigger = { ARMY_OWNER = root } #Unop: To prevent this event to potentially select a non-martial gender as potential knight
 				}
 				weight = {
 					base = 1
@@ -9931,6 +9943,7 @@ tournament_events.1400 = {
 		scope:activity = {
 			any_guest_subset_current_phase = {
 				name = spectator
+				NOT = { this = root } #Unop: This is needed for AI to not potentially self-select itself as the tall_person
 				is_ai = yes
 				is_healthy = yes
 				is_adult = yes
@@ -9952,6 +9965,7 @@ tournament_events.1400 = {
 				}
 			}
 		}
+		is_in_guest_subset = { name = spectator } #Unop: This event is only for spectators !
 	}
 
 	weight_multiplier = {
@@ -9967,6 +9981,7 @@ tournament_events.1400 = {
 			random_guest_subset_current_phase = {
 				name = spectator
 				limit = {
+					NOT = { this = root } #Unop: This is needed for AI to not potentially self-select itself as the tall_person
 					is_ai = yes
 					is_healthy = yes
 					is_adult = yes
@@ -10599,13 +10614,22 @@ tournament_events.1403 = {
 			}
 		}
 		# TODO_CD_EP2, check for violent tournament. Priests shouldn't care about your Board Game/Recital Tournament
-		scope:host.faith = {
-			NOR = {
-				has_doctrine_parameter = clergy_can_fight
-				has_doctrine_parameter = warmonger
-				has_doctrine_parameter = human_sacrifice_active
+		scope:host = { #Unop: Was missing the culture check for fighting clergy
+			OR = {
+				faith = {
+					NOR = {
+						has_doctrine_parameter = clergy_can_fight
+						has_doctrine_parameter = warmonger
+						has_doctrine_parameter = human_sacrifice_active
+					}
+				}
+				culture = {
+					NOT = {
+						has_cultural_parameter = culture_clergy_can_fight 
+					}
+				}
 			}
-		}
+		} 
 	}
 
 	weight_multiplier = {
@@ -10632,11 +10656,18 @@ tournament_events.1403 = {
 		name = tournament_events.1403.a
 		trigger = {
 			has_trait = zealous
-			faith = {
-				NOR = {
-					has_doctrine_parameter = clergy_can_fight
-					has_doctrine_parameter = warmonger
-					has_doctrine_parameter = human_sacrifice_active
+			OR = { #Unop: Was missing the culture check for fighting clergy
+				faith = {
+					NOR = {
+						has_doctrine_parameter = clergy_can_fight
+						has_doctrine_parameter = warmonger
+						has_doctrine_parameter = human_sacrifice_active
+					}
+				}
+				culture = { 
+					NOT = {
+						has_cultural_parameter = culture_clergy_can_fight 
+					}
 				}
 			}
 		}
