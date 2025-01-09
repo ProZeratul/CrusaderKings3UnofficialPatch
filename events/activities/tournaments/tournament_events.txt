@@ -4573,13 +4573,14 @@ tournament_events.1230 = {
 		}
 	}
 
-	weight_multiplier = {
-		base = 1
-		modifier = {
-			factor = 2
-			has_activity_intent = recruit_knights_intent
-		}
-	}
+	#Unop: disabled since duplicated from above
+	#weight_multiplier = {
+	#	base = 1
+	#	modifier = {
+	#		factor = 2
+	#		has_activity_intent = recruit_knights_intent
+	#	}
+	#}
 
 	option = { # Make champion
 		name = tournament_events.1230.a
@@ -5652,7 +5653,9 @@ tournament_events.1251 = {
 				hidden_effect = {
 					if = {
 						limit = { exists = scope:favor_scheme }
-						add_scheme_modifier = { type = tournament_favor_scheme_modifier }
+						scope:favor_scheme = { #Unop: favor_scheme scope was missing
+							add_scheme_modifier = { type = tournament_favor_scheme_modifier }
+						}
 					}
 				}
 			}
