@@ -6569,11 +6569,13 @@ scripted_effect tournament_1270_versus_effect = {
 		var:contest_qualified_match_$CONTEST$ = { save_scope_as = congratulate_winner }
 	}
 	else = {
-		random_guest_subset = {
-			name = winner
-			phase = tournament_phase_$CONTEST$
-			save_scope_as = congratulate_winner
-			try_to_create_recurring_character_effect = { CHARACTER = root }
+		scope:activity = { #Unop: activity scope was missing
+			random_guest_subset = {
+				name = winner
+				phase = tournament_phase_$CONTEST$
+				save_scope_as = congratulate_winner
+				try_to_create_recurring_character_effect = { CHARACTER = root }
+			}
 		}
 	}
 }
