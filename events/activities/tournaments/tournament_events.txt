@@ -13059,7 +13059,7 @@ tournament_events.6001 = { # Sabotage Outcome
 # 6010-6011
 ##################################################
 
-# TODO_CD_CU: make progress toward intent completion
+# TODO_CD_CU: make progress toward intent completion #Unop: The intent progress is handlded in on_death so this comment is outdated
 
 tournament_events.6010 = {
 	type = activity_event
@@ -13909,7 +13909,10 @@ tournament_events.6014 = { # Second chance - Victim event
 	immediate = {
 		if = {
 			limit = { exists = scope:second_chance_success }
-			death = { death_reason = death_murder }
+			death = { 
+				death_reason = death_murder
+				killer = scope:murder_actor #Unop: The killer is needed to validate the intent
+			}
 		}
 		else = {
 			increase_wounds_effect = { REASON = murder }
