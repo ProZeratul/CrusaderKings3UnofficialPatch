@@ -10614,6 +10614,16 @@ tournament_events.1403 = {
 			}
 		}
 		# TODO_CD_EP2, check for violent tournament. Priests shouldn't care about your Board Game/Recital Tournament
+		# Unop: Implement the check just above
+		scope:activity = {
+			OR = {
+				has_phase = tournament_phase_melee
+				has_phase = tournament_phase_joust
+				has_phase = tournament_phase_wrestling
+				has_phase = tournament_phase_duel
+			}
+		}
+
 		scope:host = { #Unop: Was missing the culture check for fighting clergy
 			OR = {
 				faith = {
