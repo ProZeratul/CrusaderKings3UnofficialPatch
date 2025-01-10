@@ -1600,7 +1600,7 @@ widget = {
 			# Holder opinion of you
 			button = {
 				datacontext = "[Province.GetTitle.GetHolder]"
-				visible = "[And( ActivityPlannerMapIcon.IsSelectingDestinations, And( ActivityType.IsPlannerType('holder'), And( Character.IsValid, Not( Character.IsPlayer ) ) ) ) )]"
+				visible = "[And( ActivityPlannerMapIcon.IsSelectingDestinations, And( ActivityType.IsPlannerType('holder'), And( Character.IsValid, Not( Character.IsPlayer ) ) ) )]"
 
 				parentanchor = hcenter
 				allow_outside = yes
@@ -1639,7 +1639,7 @@ widget = {
 			# Name of special building
 			text_label_center = {
 				allow_outside = yes
-				visible = "[And(ActivityType.IsPlannerType('province'), EqualTo_string( ActivityType.GetKey(), 'activity_journey') ))]"
+				visible = "[And(ActivityType.IsPlannerType('province'), EqualTo_string( ActivityType.GetKey(), 'activity_journey') )]"
 
 				parentanchor = hcenter
 				text = "[Province.GetHolding.GetSpecialBuildingType.GetName]"
@@ -1648,7 +1648,7 @@ widget = {
 			# Special building skills
 			text_label_center = {
 				allow_outside = yes
-				visible = "[And(ActivityType.IsPlannerType('province'), EqualTo_string( ActivityType.GetKey(), 'activity_journey') ))]"
+				visible = "[And(ActivityType.IsPlannerType('province'), EqualTo_string( ActivityType.GetKey(), 'activity_journey') )]"
 			
 				parentanchor = hcenter
 				text = "[Province.Custom('GetSpecialBuildingDiplomacySkill')][Province.Custom('GetSpecialBuildingMartialSkill')][Province.Custom('GetSpecialBuildingLearningSkill')][Province.Custom('GetSpecialBuildingStewardshipSkill')][Province.Custom('GetSpecialBuildingIntrigueSkill')]"
