@@ -15000,6 +15000,9 @@ tournament_events.6500 = {
 		
 		#Standard checks.
 		#TODO NOT TEAM PHASE EXISTS
+		scope:activity = {
+			NOT = { has_current_phase = tournament_phase_melee } #Unop: Implement the comment just above
+		}
 		has_activity_intent = woo_attendee_intent
 		intent_target = { is_alive = yes }
 		activity_is_valid_tournament_contestant = yes
@@ -15016,6 +15019,11 @@ tournament_events.6500 = {
 			target = scope:woo_target
 			modifier = tournament_vowed_to_lose_opinion
 			opinion = 5
+		}
+		#Unop: Set this here instead of in the after that would affect both option
+		set_variable = {
+			name = vowed_to_lose
+			value = scope:woo_target
 		}
 		stress_impact = {
 			stubborn = medium_stress_impact_gain
@@ -15057,10 +15065,11 @@ tournament_events.6500 = {
 	}
 
 	after = {
-		set_variable = {
-			name = vowed_to_lose
-			value = scope:woo_target
-		}
+		#Unop: Set this only if we actually accept to lose in option A
+		#set_variable = {
+		#	name = vowed_to_lose
+		#	value = scope:woo_target
+		#}
 		remove_character_flag = wear_armor
 	}
 }
@@ -15513,8 +15522,8 @@ tournament_events.6514 = {
 	}	
 	left_portrait = {
 		character = scope:woo_target
-		#TODO_CD_EP2 awaiting BP1
-		# animation = eyeroll
+		#Unop: Guess the wait is over since this animation is now used elsewhere too #TODO_CD_EP2 awaiting BP1
+		animation = eyeroll
 	}
 	theme = seduce_scheme
 
