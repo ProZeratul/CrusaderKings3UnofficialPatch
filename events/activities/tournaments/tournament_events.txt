@@ -4573,13 +4573,13 @@ tournament_events.1230 = {
 		}
 	}
 
-	weight_multiplier = {
-		base = 1
-		modifier = {
-			factor = 2
-			has_activity_intent = recruit_knights_intent
-		}
-	}
+	#weight_multiplier = { #Unop ck3-tiger Already defined above 
+	#	base = 1
+	#	modifier = {
+	#		factor = 2
+	#		has_activity_intent = recruit_knights_intent
+	#	}
+	#}
 
 	option = { # Make champion
 		name = tournament_events.1230.a
@@ -5652,7 +5652,9 @@ tournament_events.1251 = {
 				hidden_effect = {
 					if = {
 						limit = { exists = scope:favor_scheme }
-						add_scheme_modifier = { type = tournament_favor_scheme_modifier }
+						scope:favor_scheme = { #Unop ck3-tiger Use correct scope
+							add_scheme_modifier = { type = tournament_favor_scheme_modifier }
+						}
 					}
 				}
 			}
@@ -6650,25 +6652,33 @@ tournament_events.1270 = {
 				trigger = {
 					tournament_past_losing_versus_contestant_trigger = { CONTEST = joust }
 				}
-				tournament_1270_versus_effect = { CONTEST = joust }
+				scope:activity = { #Unop ck3-tiger Use correct scope
+					tournament_1270_versus_effect = { CONTEST = joust }
+				}
 			}
 			10 = {
 				trigger = {
 					tournament_past_losing_versus_contestant_trigger = { CONTEST = wrestling }
 				}
-				tournament_1270_versus_effect = { CONTEST = wrestling }
+				scope:activity = { #Unop ck3-tiger Use correct scope
+					tournament_1270_versus_effect = { CONTEST = wrestling }
+				}
 			}
 			10 = {
 				trigger = {
 					tournament_past_losing_versus_contestant_trigger = { CONTEST = duel }
 				}
-				tournament_1270_versus_effect = { CONTEST = duel }
+				scope:activity = { #Unop ck3-tiger Use correct scope
+					tournament_1270_versus_effect = { CONTEST = duel }
+				}
 			}
 			10 = {
 				trigger = {
 					tournament_past_losing_versus_contestant_trigger = { CONTEST = board_game }
 				}
-				tournament_1270_versus_effect = { CONTEST = board_game }
+				scope:activity = { #Unop ck3-tiger Use correct scope
+					tournament_1270_versus_effect = { CONTEST = board_game }
+				}
 			}
 			50 = {
 				trigger = {
