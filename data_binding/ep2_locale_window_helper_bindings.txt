@@ -1,0 +1,23 @@
+﻿macro = {
+	description = "Yields 'true' if there is NO activity event open and 'activity_locale_view' is set to the specified variable"
+	definition = "CanDisplayLocaleView(ViewVariable)"
+	replace_with = "VariableSystem.HasValue( 'activity_locale_view', ViewVariable )"
+}
+
+macro = {
+	description = "Sets the locale view to specified variable"
+	definition = "SetLocaleView(ViewVariable)"
+	replace_with = "VariableSystem.Set( 'activity_locale_view', ViewVariable ))"
+}
+
+macro = {
+	description = "Sets or toggles the locale view to specified variable"
+	definition = "SetOrToggleLocaleView(ViewVariable)"
+	replace_with = "VariableSystem.SetOrToggle( 'activity_locale_view', ViewVariable ))"
+}
+
+macro = {
+	description = "Is the specified view being displayed"
+	definition = "IsShowingLocaleView(ViewVariable)"
+	replace_with = "VariableSystem.HasValue( 'activity_locale_view', ViewVariable ))"
+}
