@@ -100,7 +100,7 @@ window = {
 					button_tab = {
 						name = "contest_info_contents_tabs_participants"
 						layoutpolicy_horizontal = expanding
-						visible = "[And( Or( Activity.IsPhaseInTheFuture(PlannedActivityPhase.Self), Activity.IsPhaseOngoing(PlannedActivityPhase.Self) ), Not( Activity.IsComplete ) ) )]"
+						visible = "[And( Or( Activity.IsPhaseInTheFuture(PlannedActivityPhase.Self), Activity.IsPhaseOngoing(PlannedActivityPhase.Self) ), Not( Activity.IsComplete ) )]"
 
 						raw_text = "[SelectLocalization( Activity.IsCurrentPhaseActive, 'locale_window_tab_button_qualified', 'locale_window_tab_button_participants' )]"
 
@@ -111,7 +111,7 @@ window = {
 					button_tab = {
 						name = "contest_info_contents_tabs_log"
 						layoutpolicy_horizontal = expanding
-						visible = "[Or( Activity.IsPhaseInThePast(PlannedActivityPhase.Self), Activity.IsComplete ) )]"
+						visible = "[Or( Activity.IsPhaseInThePast(PlannedActivityPhase.Self), Activity.IsComplete )]"
 
 
 						text = locale_window_tab_button_log
@@ -139,7 +139,7 @@ window = {
 					layoutpolicy_horizontal = expanding
 					layoutpolicy_vertical = expanding
 
-					visible = "[And( IsContestInfoTabViewing('overview'), And( Or( Activity.IsPhaseInTheFuture(PlannedActivityPhase.Self), Activity.IsPhaseOngoing(PlannedActivityPhase.Self) ), Not( Activity.IsComplete ) ) ) )]"
+					visible = "[And( IsContestInfoTabViewing('overview'), And( Or( Activity.IsPhaseInTheFuture(PlannedActivityPhase.Self), Activity.IsPhaseOngoing(PlannedActivityPhase.Self) ), Not( Activity.IsComplete ) ) )]"
 				}
 
 				vbox_contest_info_overview_after = {
@@ -147,7 +147,7 @@ window = {
 					layoutpolicy_horizontal = expanding
 					layoutpolicy_vertical = expanding
 
-					visible = "[And( IsContestInfoTabViewing( 'overview' ), Or( Activity.IsPhaseInThePast(PlannedActivityPhase.Self), Activity.IsComplete ) ) )]"
+					visible = "[And( IsContestInfoTabViewing( 'overview' ), Or( Activity.IsPhaseInThePast(PlannedActivityPhase.Self), Activity.IsComplete ) )]"
 				}
 
 				widget_contest_info_participants = {
@@ -294,14 +294,14 @@ types TournamentContestInformationTypes
 					}
 
 					text_single = {
-						visible = "[And( Or( Activity.IsPhaseInTheFuture(PlannedActivityPhase.Self), Activity.IsPhaseOngoing(PlannedActivityPhase.Self) ), Not( Activity.IsComplete ) ) )]"
+						visible = "[And( Or( Activity.IsPhaseInTheFuture(PlannedActivityPhase.Self), Activity.IsPhaseOngoing(PlannedActivityPhase.Self) ), Not( Activity.IsComplete ) )]"
 
 						text = locale_window_your_participation_status_selection
 						default_format = "#weak"
 					}
 
 					text_single = {
-						visible = "[Or( Activity.IsPhaseInThePast(PlannedActivityPhase.Self), Activity.IsComplete ) )]"
+						visible = "[Or( Activity.IsPhaseInThePast(PlannedActivityPhase.Self), Activity.IsComplete )]"
 
 						text = locale_window_your_participation_status_selection_past
 						default_format = "#weak"
@@ -577,7 +577,7 @@ types TournamentContestInformationTypes
 
 	type vbox_contest_info_overview_after = vbox {
 		name = "overview_summary_after"
-		visible = "[Not(IsDataModelEmpty(ActivityLocaleWindow.GetGuestSublist(PlannedActivityPhase.Self, 'winner'))))]"
+		visible = "[Not(IsDataModelEmpty(ActivityLocaleWindow.GetGuestSublist(PlannedActivityPhase.Self, 'winner')))]"
 
 		hbox = {
 			layoutpolicy_horizontal = expanding
@@ -598,7 +598,7 @@ types TournamentContestInformationTypes
 			}
 
 			datacontext_from_model = {
-				datamodel = "[ActivityLocaleWindow.GetGuestSublist(PlannedActivityPhase.Self, 'winner'))]"
+				datamodel = "[ActivityLocaleWindow.GetGuestSublist(PlannedActivityPhase.Self, 'winner')]"
 				index = 0
 			}
 
@@ -1228,8 +1228,8 @@ types TournamentContestInformationTypes
 					raw_text = "[CString.GetString]"
 
 					onclick = "[ActivityLocaleWindow.UpdateGuestSubsetFor(PlannedActivityPhase.Self)]"
-					onclick = "[VariableSystem.Set( 'activity_contest_info_debugview', CString.GetString ))]"
-					down = "[VariableSystem.HasValue( 'activity_contest_info_debugview', CString.GetString ))]"
+					onclick = "[VariableSystem.Set( 'activity_contest_info_debugview', CString.GetString )]"
+					down = "[VariableSystem.HasValue( 'activity_contest_info_debugview', CString.GetString )]"
 				}
 			}
 		}
@@ -1238,7 +1238,7 @@ types TournamentContestInformationTypes
 			layoutpolicy_vertical = expanding
 			layoutpolicy_horizontal = expanding
 
-			visible = "[VariableSystem.Exists( 'activity_contest_info_debugview' ))]"
+			visible = "[VariableSystem.Exists( 'activity_contest_info_debugview' )]"
 
 			blockoverride "scrollbox_content" {
 				fixedgridbox = {
