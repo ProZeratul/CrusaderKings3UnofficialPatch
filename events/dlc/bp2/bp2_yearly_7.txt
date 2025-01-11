@@ -409,6 +409,8 @@ bp2_yearly.7001 = { #Spouse is jealous about a Wet Nurse
 				has_trait = arbitrary
 				has_trait = paranoid
 			}
+			#Unop: Ensure the spouse is not the actual wet nurse (yes this is possible if you are in a clan government)
+			NOT = { this = scope:wet_nurse_temp }
 		}
 	}
 	immediate = {
@@ -441,6 +443,8 @@ bp2_yearly.7001 = { #Spouse is jealous about a Wet Nurse
 						}
 					}
 				}
+				#Unop: Ensure the spouse is not the actual wet nurse (yes this is possible if you are in a clan government)
+				NOT = { this = scope:wet_nurse_temp }
 			}
 			save_scope_as = jealous_spouse
 		}
