@@ -5587,10 +5587,17 @@ hold_court.6000 = {
 			type = favor_hook
 			target = scope:6000_poor
 		}
-		every_sub_realm_county = {
-			limit = {
-				title_province = { hold_court_6000_valid_province_trigger = yes }
-			}
+		#Unop: This event focus on 1 county this should not affect every county in the realm
+		#every_sub_realm_county = {
+		#	limit = {
+		#		title_province = { hold_court_6000_valid_province_trigger = yes }
+		#	}
+		#	add_county_modifier = {
+		#		modifier = invested_in_province_modifier
+		#		years = 10
+		#	}
+		#}
+		scope:6000_province.county = {
 			add_county_modifier = {
 				modifier = invested_in_province_modifier
 				years = 10
@@ -5634,10 +5641,17 @@ hold_court.6000 = {
 	#Option B: less taxes
 	option = {
 		name = hold_court.6000.b
-		every_sub_realm_county = {
-			limit = {
-				title_province = { hold_court_6000_valid_province_trigger = yes }
-			}
+		#Unop: This event focus on 1 county this should not affect every county in the realm
+		#every_sub_realm_county = {
+		#	limit = {
+		#		title_province = { hold_court_6000_valid_province_trigger = yes }
+		#	}
+		#	add_county_modifier = {
+		#		modifier = court_tax_relief_county_modifier
+		#		years = 10
+		#	}
+		#}
+		scope:6000_province.county = {
 			add_county_modifier = {
 				modifier = court_tax_relief_county_modifier
 				years = 10
