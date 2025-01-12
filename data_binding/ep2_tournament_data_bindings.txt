@@ -1,0 +1,233 @@
+﻿macro = {
+	description = "Sets the locale view's contest tab to specified variable"
+	definition = "SetContestInfoTab(ViewVariable)"
+	replace_with = "VariableSystem.Set( 'activity_contest_info_tab', ViewVariable )"
+}
+
+macro = {
+	description = "Clears the locale view's contest tab"
+	definition = "ClearContestInfoTab"
+	replace_with = "VariableSystem.Clear( 'activity_contest_info_tab' )"
+}
+
+macro = {
+	description = "Is the specified view being displayed"
+	definition = "IsContestInfoTabViewing(ViewVariable)"
+	replace_with = "VariableSystem.HasValue( 'activity_contest_info_tab', ViewVariable )"
+}
+
+macro = {
+	description = "Can the player see this log entry? Is the entry an intent entry, if it is: is the Character the local player?"
+	definition = "CanPlayerSeeActivityLogEntry"
+	replace_with = "Or( Not( ActivityLogEntry.HasTag( 'crime' ) ), ObjectsEqual( ActivityLogEntry.GetCharacter, GetPlayer ) )"
+}
+
+macro = {
+	description = "Gets the option category of tournament prizes"
+	definition = "GetTournamentPrizeCategory"
+	replace_with = "GetActivityType( 'activity_tournament' ).GetOptionCategoryByKey( 'tournament_option_prizes' )"
+}
+
+macro = {
+	description = "Get the prize level for the tournament"
+	definition = "GetTournamentPrizeLevel"
+	replace_with = "Activity.GetActiveOptionOfCategory( GetTournamentPrizeCategory ).GetOption"
+}
+
+macro = {
+	description = "Is the character competing"
+	definition = "IsCharacterCompeting"
+	replace_with = "PlannedActivityPhase.IsCharacterInGuestSubset( Character.Self, 'contestant' )"
+}
+
+macro = {
+	description = "Is the character competing"
+	definition = "IsCharacterQualified"
+	replace_with = "PlannedActivityPhase.IsCharacterInGuestSubset( Character.Self, 'qualified' )"
+}
+
+macro = {
+	description = "Does the character have progress to victory?"
+	definition = "CharacterHasPtV"
+	replace_with = "GreaterThan_CFixedPoint( GetCharacterPtV, '(CFixedPoint)0.0' )"
+}
+
+macro = {
+	description = "Does the datacontexted contest match the specified key?"
+	definition = "IsContestType(ContestTypeKey)"
+	replace_with = "EqualTo_string( ActivityPhase.GetKey, ContestTypeKey )"
+}
+
+macro = { 
+	description = "Is the datacontexted contest a bow contest?"
+	definition = "IsBowContest"
+	replace_with = "IsContestType( 'tournament_phase_archery' )"
+}
+
+macro = { 
+	description = "Is the datacontexted contest a foot contest?"
+	definition = "IsFootContest"
+	replace_with = "Or( Or( Or( IsContestType( 'tournament_phase_joust' ), IsContestType( 'tournament_phase_melee' ) ), IsContestType( 'tournament_phase_wrestling' ) ), IsContestType( 'tournament_phase_duel' ) )"
+}
+
+macro = { 
+	description = "Is the datacontexted contest a horse contest?"
+	definition = "IsHorseContest"
+	replace_with = "Or( Or( IsContestType( 'tournament_phase_horse_race' ), IsContestType( 'tournament_phase_joust' ) ), IsContestType( 'tournament_phase_melee' ) )"
+}
+
+macro = { 
+	description = "Is the datacontexted contest a wit contest?"
+	definition = "IsWitContest"
+	replace_with = "Or( IsContestType( 'tournament_phase_recital' ), IsContestType( 'tournament_phase_board_game' ) )"
+}
+
+macro = { 
+	description = "Is the datacontexted contest a team category contest?"
+	definition = "IsContestFormatTeam"
+	replace_with = "IsContestType( 'tournament_phase_melee' )"
+}
+
+macro = { 
+	description = "Is the datacontexted contest a versus format contest?"
+	definition = "IsContestFormatVersus"
+	replace_with = "Or( Or( Or( IsContestType( 'tournament_phase_joust' ) , IsContestType( 'tournament_phase_duel' ) ), IsContestType( 'tournament_phase_wrestling' ) ), IsContestType( 'tournament_phase_board_game' ) )"
+}
+
+macro = {
+	description = "Is the datacontexted contest a turn format contest?"
+	definition = "IsContestFormatTurn"
+	replace_with = "Or( IsContestType( 'tournament_phase_archery' ), IsContestType( 'tournament_phase_recital' ) )"
+}
+
+macro = {
+	description = "Is the datacontexted contest a race format contest?"
+	definition = "IsContestFormatRace"
+	replace_with = "IsContestType( 'tournament_phase_horse_race' )"
+}
+
+macro = { 
+	description = "Is the datacontexted contest a free for all format contest?"
+	definition = "IsContestFormatFFA"
+	replace_with = "Or(IsContestFormatRace, IsContestFormatTurn )"
+}
+
+macro = { 
+	description = "Is the datacontexted contest a martial contest?"
+	definition = "IsMartialContest"
+	replace_with = "And( And( Not( IsContestType( 'tournament_phase_board_game' ) ), Not( IsContestType( 'tournament_phase_recital' ) ) ), Not( IsContestType( 'tournament_phase_horse_race' ) ) )"
+}
+
+macro = {
+	description = "Is the player competing in the upcoming contest?"
+	definition = "IsPlayerCompetingUpcoming"
+	replace_with = "Activity.GetCurrentPhase.IsCharacterInGuestSubset(GetPlayer, 'contestant')"
+}
+
+macro = {
+	description = "Is the player competing in the data contexted phase?"
+	definition = "IsPlayerCompetingInPhase"
+	replace_with = "PlannedActivityPhase.IsCharacterInGuestSubset(GetPlayer, 'contestant')"
+}
+
+macro = {
+	description = "Get the qualification PTV threshold"
+	definition = "GetPtVThreshold"
+	replace_with = "Activity.MakeScope.Var( 'progress_to_victory_threshold' ).GetValue"
+}
+
+macro = {
+	description = "Is the player available to compete in non-martial contest?"
+	definition = "IsPlayerAvailableToCompeteNonMartial"
+	replace_with = "GetScriptedGui( 'tournament_is_player_available_to_compete_non_martial' ).IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )"
+}
+
+macro = {
+	description = "Tooltip for IsPlayerAvailableToCompeteNonMartial"
+	definition = "IsPlayerAvailableToCompeteNonMartialTooltip"
+	replace_with = "GetScriptedGui( 'tournament_is_player_available_to_compete_non_martial' ).BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )"
+}
+
+macro = {
+	description = "Can the player compete in martial contests?"
+	definition = "IsPlayerAvailableToCompeteMartial"
+	replace_with = "GetScriptedGui( 'tournament_is_player_available_to_compete_martial' ).IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )"
+}
+
+macro = {
+	description = "Tooltip for IsPlayerAvailableToCompeteMartial"
+	definition = "IsPlayerAvailableToCompeteMartialTooltip"
+	replace_with = "GetScriptedGui( 'tournament_is_player_available_to_compete_martial' ).BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )"
+}
+
+macro = {
+	description = "Can the player compete in the martial contests hosted by Host?"
+	definition = "CanPlayerCompeteInMartialContest(Host)"
+	replace_with = "GetScriptedGui( 'tournament_is_character_martial_eligible_in_contest' ).IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'host', Host.MakeScope ).End )"
+}
+
+macro = {
+	description = "Tooltip for CanPlayerCompeteInMartialContest"
+	definition = "CanPlayerCompeteInMartialContestTooltip(Host)"
+	replace_with = "GetScriptedGui( 'tournament_is_character_martial_eligible_in_contest' ).BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'host', Host.MakeScope ).End )"
+}
+
+macro = {
+	description = "Get the player's PTV"
+	definition = "GetPlayerPtV"
+	replace_with = "GetPlayer.MakeScope.Var( 'progress_to_victory' ).GetValue"
+}
+
+macro = {
+	description = "Get the character's PTV"
+	definition = "GetCharacterPtV"
+	replace_with = "Character.MakeScope.Var( 'progress_to_victory' ).GetValue"
+}
+
+macro = {
+	description = "Get the target character's PTV"
+	definition = "GetTargetCharacterPtV(Target)"
+	replace_with = "Target.MakeScope.Var( 'progress_to_victory' ).GetValue"
+}
+
+macro = {
+	description = "Gets the datacontext player's PTV against their 1v1 opponent"
+	definition = "GetCharacterContest1v1Opponent(RoundName)"
+	replace_with = "Character.MakeScope.GetVariable( RoundName ).Char"
+}
+
+macro = {
+	description = "Gets the datacontext player's PTV against their 1v1 opponent"
+	definition = "GetCharacterContest1v1OpponentPtV(RoundName)"
+	replace_with = "GetTargetCharacterPtV( GetCharacterContest1v1Opponent( RoundName ) )"
+}
+
+macro = {
+	description = "Gets the script value of the datacontexted character's aptitude for the specified contest"
+	definition = "GetContestAptitude(NamedScriptValue)"
+	replace_with = "GuiScope.SetRoot( Character.MakeScope ).ScriptValue( NamedScriptValue )"
+}
+
+macro = {
+	description = "Gets the script value of the datacontexted character's aptitude for the specified contest"
+	definition = "GetFootContestTypeAptitude"
+	replace_with = "GetContestAptitude( 'contest_type_aptitude_foot' )"
+}
+
+macro = {
+	description = "Gets the script value of the datacontexted character's aptitude for the specified contest"
+	definition = "GetArcheryContestTypeAptitude"
+	replace_with = "GetContestAptitude( 'contest_type_aptitude_archery' )"
+}
+
+macro = {
+	description = "Gets the script value of the datacontexted character's aptitude for the specified contest"
+	definition = "GetHorseContestTypeAptitude"
+	replace_with = "GetContestAptitude( 'contest_type_aptitude_horse' )"
+}
+
+macro = {
+	description = "Gets the script value of the datacontexted character's aptitude for the specified contest"
+	definition = "GetWitContestTypeAptitude"
+	replace_with = "GetContestAptitude( 'contest_type_aptitude_wit' )"
+}
