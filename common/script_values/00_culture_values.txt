@@ -137,13 +137,14 @@ culture_conversion_acceptance_impact = { #The smaller a culture is, the more ups
 	}
 }
 
-declare_war_culture_acceptance_impact = {
-	value = 0
-	scope:defender.primary_title = {
-		subtract = tier
-		add = 1
-	}
-}
+#Unop: Duplicate script just below with the exact same content
+#declare_war_culture_acceptance_impact = {
+#	value = 0
+#	scope:defender.primary_title = {
+#		subtract = tier
+#		add = 1
+#	}
+#}
 
 declare_war_culture_acceptance_impact = {
 	value = 0
@@ -451,6 +452,7 @@ language_soft_cap = {
 		add = {
 			add = learning
 			divide = language_learning_divide_value
+			floor = yes #Unop: To round down the result
 		}
 	}
 	if = {
