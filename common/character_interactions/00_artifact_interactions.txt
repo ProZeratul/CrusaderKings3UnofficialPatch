@@ -325,13 +325,23 @@ gift_artifact_interaction = {
 			# Warning for low opinion gain
 			if = {
 				limit = {
-					scope:target = { artifact_durability <= define:NInventory|ARTIFACT_LOW_DURABILITY }
+					scope:target = {
+						artifact_durability_percent <= { #Unop: Check %durability left instead of fixed durability
+							value = define:NInventory|ARTIFACT_LOW_DURABILITY
+							divide = 100
+						}
+					}
 				}
 				custom_tooltip = artifact_gift_low_durability_tt
 			}
 			if = {
 				limit = {
-					scope:target = { artifact_durability <= define:NInventory|ARTIFACT_VERY_LOW_DURABILITY }
+					scope:target = {
+						artifact_durability_percent <= { #Unop: Check %durability left instead of fixed durability
+							value = define:NInventory|ARTIFACT_VERY_LOW_DURABILITY
+							divide = 100
+						}
+					}
 				}
 				custom_tooltip = artifact_gift_very_low_durability_tt
 			}
@@ -4361,7 +4371,10 @@ destroy_artifact_interaction = {
 			scope:target = {
 				rarity = common
 				artifact_slot_type = miscellaneous
-				artifact_durability <= define:NInventory|ARTIFACT_LOW_DURABILITY
+				artifact_durability_percent <= { #Unop: Check %durability left instead of fixed durability
+					value = define:NInventory|ARTIFACT_LOW_DURABILITY
+					divide = 100
+				}
 			}
 		}
 		modifier = { # Aniconists destroy most things
