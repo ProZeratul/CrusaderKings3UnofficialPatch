@@ -7984,6 +7984,22 @@ fund_inspiration.1071 = {
 				value = yes
 			}
 		}
+		else = {
+			if = {
+				limit = { debug_only = yes }
+				debug_log = "Unop: For fund_inspiration.1071 diagnostic, no var artifact_smith_type defined, fallback on a brooch"
+				debug_log_scopes = yes
+			}
+			create_artifact_brooch_effect = {
+				OWNER = root
+				SMITH = scope:inspiration_owner
+			}
+			save_scope_value_as = {
+				name = brooch
+				value = yes
+			}
+		}
+
 		# Add a dedication to the description - fund_inspiration.7001
 		if = {
 			limit = {
