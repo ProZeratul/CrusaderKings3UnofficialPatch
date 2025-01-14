@@ -7407,7 +7407,17 @@ bp1_yearly.5727 = {
 	option = {
 		name = bp1_yearly.5727.a
 
-		marry = scope:khutulun
+		trigger = { #Unop: We need to ensure we can still marry him/her
+			can_marry_trigger = yes
+		}
+
+		if = { #Unop: Need to matrilineal marry if we are a female ruler
+			limit = { is_female = yes }
+			marry_matrilineal = scope:khutulun
+		}
+		else = {
+			marry = scope:khutulun
+		}
 
 		reverse_add_opinion = {
 			target = scope:khutulun
@@ -7441,6 +7451,7 @@ bp1_yearly.5727 = {
 		trigger = {
 			has_ep2_dlc_trigger = yes
 			is_landed = yes
+			can_marry_trigger = yes #Unop: We need to ensure we can still marry him/her
 		}
 		name = bp1_yearly.5727.c
 		create_grand_wedding_betrothal = {
@@ -7449,6 +7460,8 @@ bp1_yearly.5727 = {
 			HOST = root
 			PROMISEE = scope:khutulun
 		}
+		add_courtier = scope:khutulun #Unop: Since they won't be married right now, we need to ensure khutulun joins our court
+
 		reverse_add_opinion = {
 			target = scope:khutulun
 			modifier = impressed_opinion
