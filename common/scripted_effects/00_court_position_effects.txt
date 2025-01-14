@@ -414,6 +414,7 @@ wet_nurse_title_revoked_effect = {
 						has_relation_friend = prev
 						has_relation_best_friend = prev
 					}
+					NOT = { mother = this } #Unop: Prevent the event to fire if the wet-nurse is the actual mother of the selected child
 				}
 			}
 		}
@@ -423,6 +424,7 @@ wet_nurse_title_revoked_effect = {
 				limit = {
 					is_alive = yes
 					age >= 3
+					is_adult = no #Unop: To be in-ine with the trigger above
 					OR = {
 						opinion = {
 							target = prev
@@ -431,6 +433,7 @@ wet_nurse_title_revoked_effect = {
 						has_relation_friend = prev
 						has_relation_best_friend = prev
 					}
+					NOT = { mother = this } #Unop: Prevent the event to fire if the wet-nurse is the actual mother of the selected child
 				}
 				save_scope_as = nursed_child
 			}
