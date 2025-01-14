@@ -13037,7 +13037,11 @@ bp1_yearly.8131 = {
 
 	immediate = {
 		if = {
-			limit = { exists = scope:spymaster_scope }
+			limit = { 
+				exists = scope:spymaster_scope
+				exists = scope:investigator_scope #Unop: Just to be sure it exists
+				scope:spymaster_scope = scope:investigator_scope #Unop: Only apply the modifier if the spymaster is the investigator
+			}
 			scope:spymaster_scope = {
 				add_character_modifier = {
 					modifier = effective_agents_modifier
@@ -13081,6 +13085,7 @@ bp1_yearly.8131 = {
 			TARGET = scope:murderous_scope
 			IMPRISONER = root
 		}
+		bp1_sycophant_chain_anger_vassals_effect = yes # Remove Placated or add Disgruntled (powerful vassal opinion)
 		stress_impact = {
 			forgiving = minor_stress_impact_gain
 			arbitrary = minor_stress_impact_gain
@@ -13122,7 +13127,7 @@ bp1_yearly.8131 = {
 				modifier = released_attempted_murderer_opinion
 			}
 		}
-		bp1_sycophant_chain_please_vassals_effect = yes # Remove Disgruntled or add Placated (powerful vassal opinion)
+		bp1_sycophant_chain_please_vassals_effect = yes #Unop: Added this since every other "mean action" on the other events options have this
 		bp1_sycophant_chain_downgrade_effect = yes
 		stress_impact = {
 			vengeful = minor_stress_impact_gain
@@ -13201,15 +13206,15 @@ bp1_yearly.8132 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					exists = scope:spymaster_scope
-					scope:spymaster = scope:sycophant_scope
+					exists = scope:investigator_scope #Unop: Changed to be more clear on who's doing what
+					scope:investigator_scope = scope:sycophant_scope #Unop: Changed to be more clear on who's doing what
 				}
 				desc = bp1_yearly.8132.desc.sycophant
 			}
 			triggered_desc = {
 				trigger = {
-					exists = scope:spymaster_scope
-					NOT = { scope:spymaster = scope:sycophant_scope }
+					exists = scope:investigator_scope #Unop: Changed to be more clear on who's doing what
+					NOT = { scope:investigator_scope = scope:sycophant_scope } #Unop: Changed to be more clear on who's doing what
 				}
 				desc = bp1_yearly.8132.desc.spymaster
 			}
