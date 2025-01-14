@@ -12875,12 +12875,13 @@ bp1_yearly.8130 = {
 				desc = bp1_yearly.8130.e.success
 				compare_modifier = {
 					value = scope:duel_value
-					multiplier = -1.5
+					multiplier = 1.5 #Unop This was negative and make no sense that the more intrigue we have, the less success chance there is !
 				}
-				modifier = {
-					scope:spymaster_scope = scope:murderous_scope
-					factor = 0
-				}
+				#Unop: This modifier made sense in the option where the spymaster is the investigator, but in this one OUR char is investigating !
+				#modifier = {
+				#	scope:spymaster_scope = scope:murderous_scope
+				#	factor = 0
+				#}
 				custom_tooltip = bp1_yearly.8130.exposed
 				show_as_tooltip = {
 					add_dread = minor_dread_gain
@@ -12911,6 +12912,10 @@ bp1_yearly.8130 = {
 				custom_tooltip = bp1_yearly.8130.progress
 				show_as_tooltip = {
 					add_prestige = miniscule_prestige_loss
+					add_character_modifier = { #Unop: To be in line with the other options
+						modifier = spyamateur_modifier
+						years = 5
+					}
 				}
 				trigger_event = {
 					id = bp1_yearly.8132
@@ -12959,14 +12964,15 @@ bp1_yearly.8131 = {
 			triggered_desc = {
 				trigger = {
 					exists = scope:spymaster_scope
-					scope:spymaster = scope:sycophant_scope
+					scope:spymaster_scope = scope:sycophant_scope #Unop: The scope was "spymaster" instead of "spymaster_scope"
 				}
 				desc = bp1_yearly.8131.desc.sycophant
 			}
 			triggered_desc = {
 				trigger = {
 					exists = scope:spymaster_scope
-					NOT = { scope:spymaster = scope:sycophant_scope }
+					NOT = { scope:spymaster_scope = scope:sycophant_scope } #Unop: The scope was "spymaster" instead of "spymaster_scope"
+					NOT = { scope:spymaster_scope = scope:murderous_scope } #Unop: If the spymaster if the killer, the text make no sense
 				}
 				desc = bp1_yearly.8131.desc.spymaster
 			}
@@ -13008,9 +13014,11 @@ bp1_yearly.8131 = {
 	lower_right_portrait = {
 		trigger = {
 			exists = scope:spymaster_scope
-			NOT = { scope:spymaster_scope = scope:sycophant_scope  }
+			NOT = { scope:spymaster_scope = scope:sycophant_scope }
+			NOT = { scope:spymaster_scope = scope:investigator_scope } #Unop: Added this to not have a duplicate portrait if the spymaster is also the investigator_scope
+			NOT = { scope:spymaster_scope = scope:murderous_scope } #Unop: Added this to not have a duplicate portrait if the spymaster is also the murderous_scope
 		}
-		character = scope:murderous_scope
+		character = scope:spymaster_scope #Unop: Was murderous_scope but it's already in right_portrait block
 	}
 	lower_left_portrait = {
 		trigger = {
@@ -13222,7 +13230,7 @@ bp1_yearly.8132 = {
 		animation = boredom
 	}
 
-	trigger = {
+	trigger = { #Unop: There should be a on_trigger_fail for this event as if one of them dies, you'll never be notified
 		bp1_sycophant_chain_base_trigger = yes
 		exists = scope:sycophant_scope
 		exists = scope:murderous_scope
@@ -13231,15 +13239,18 @@ bp1_yearly.8132 = {
 
 	immediate = {
 		if = {
-			limit = { exists = scope:spymaster_scope }
-			scope:spymaster_scope = {
+			limit = { exists = scope:investigator_scope } #Unop: If the investigator fail, the modifier is set to him/her
+			scope:investigator_scope = {
 				add_character_modifier = {
 					modifier = spyamateur_modifier
 					years = 5
 				}
 			}
+			if = {
+				limit = { scope:investigator_scope = root } #Unop: If you were the investigator & fail, you also lose prestige
+				add_prestige = miniscule_prestige_loss
+			}
 		}
-		else = { add_prestige = miniscule_prestige_loss }
 		custom_tooltip = bp1_yearly.8130.progress
 		hidden_effect = {
 			scope:sycophant_scheme = {
@@ -13311,7 +13322,7 @@ bp1_yearly.8134 = {
 		character = root
 		animation = worry
 	}
-	lower_right_portrait = { character = scope:sycophant_scope  }
+	lower_right_portrait = { character = scope:sycophant_scope }
 
 	trigger = { bp1_sycophant_chain_base_trigger = yes }
 
