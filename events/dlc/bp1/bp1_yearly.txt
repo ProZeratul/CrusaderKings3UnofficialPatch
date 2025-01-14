@@ -2494,7 +2494,10 @@ bp1_yearly.5306 = {
 		}
 	}
 	after = {
-		remove_character_flag = single_combat_stripped_to_waist
+		if = { #Unop: Since we can die and I do not want the log that the char died during effect
+			limit = { is_alive = yes }
+			remove_character_flag = single_combat_stripped_to_waist
+		}
 	}
 }
 
