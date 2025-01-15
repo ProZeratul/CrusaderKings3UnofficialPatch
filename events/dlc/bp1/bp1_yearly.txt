@@ -12913,10 +12913,6 @@ bp1_yearly.8130 = {
 				custom_tooltip = bp1_yearly.8130.progress
 				show_as_tooltip = {
 					add_prestige = miniscule_prestige_loss
-					add_character_modifier = { #Unop: To be in line with the other options
-						modifier = spyamateur_modifier
-						years = 5
-					}
 				}
 				trigger_event = {
 					id = bp1_yearly.8132
@@ -13245,17 +13241,20 @@ bp1_yearly.8132 = {
 
 	immediate = {
 		if = {
-			limit = { exists = scope:investigator_scope } #Unop: If the investigator fail, the modifier is set to him/her
-			scope:investigator_scope = {
+			limit = { #Unop: Tweak this to ensure the spymaster was the investigator
+				exists = scope:spymaster_scope
+				scope:spymaster_scope = scope:investigator
+			}
+			scope:spymaster_scope = {
 				add_character_modifier = {
 					modifier = spyamateur_modifier
 					years = 5
 				}
 			}
-			if = {
-				limit = { scope:investigator_scope = root } #Unop: If you were the investigator & fail, you also lose prestige
-				add_prestige = miniscule_prestige_loss
-			}
+		}
+		if = {
+			limit = { scope:investigator_scope = root } #Unop: If you were the investigator & fail, you lose prestige
+			add_prestige = miniscule_prestige_loss
 		}
 		custom_tooltip = bp1_yearly.8130.progress
 		hidden_effect = {
