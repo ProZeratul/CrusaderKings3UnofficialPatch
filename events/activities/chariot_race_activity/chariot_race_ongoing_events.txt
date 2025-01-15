@@ -3910,8 +3910,13 @@ chariot_race.4031 = {
 			}
 		}
 		remove_character_flag = is_naked
-		scope:besexed = {
-			remove_character_flag = is_naked
+		if = { #Unop: Check if this scope is alive since if it was pointing to the prostitute it will flood the logs
+			limit = {  
+				scope:besexed = { is_alive = yes }
+			}
+			scope:besexed = {
+				remove_character_flag = is_naked
+			}
 		}
 	}
 }
