@@ -867,7 +867,13 @@ guest_impressed_by_court_artifact = {
 		}
 		
 		scope:host = {
-			save_scope_as = second
+			random_character_artifact = { #Unop: Changed to show the artifact in the activity journal
+				limit = {
+					ep1_artifact_is_court_artifact_trigger = yes
+					is_equipped = yes
+				}
+				save_scope_as = second
+			}
 		}
 		random_attending_character = {
 			limit = {
@@ -882,7 +888,7 @@ guest_impressed_by_court_artifact = {
 			key = guest_impressed_by_court_artifact
 			tags = { pulse_action }
 			character = scope:first
-			target = scope:second
+			artifact = scope:second #Unop: Changed to show the artifact in the activity journal
 			
 			scope:host = {
 				add_prestige = minor_prestige_gain
@@ -1374,6 +1380,9 @@ spouse_insults_host = {
 }
 
 host_gains_diplo_xp = {
+
+	icon = diplomacy #Unop: To have the diplomacy icon showing
+
 	is_valid = {
 		is_current_phase_active = yes
 		scope:host = {
