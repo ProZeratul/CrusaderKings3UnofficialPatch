@@ -476,7 +476,7 @@ feast_main_live_fowl.0006 = {
 
 # Become scarred from the bird peck
 feast_main_live_fowl.1001 = {
-	type = activity_event
+	type = character_event #Unop: made this a character_event (from activity_event) since the activity can be over since it's a followup event
 	title = feast_main_live_fowl.1001.t
 	desc = feast_main_live_fowl.1001.desc
 	theme = feast_activity
@@ -499,6 +499,7 @@ feast_main_live_fowl.1001 = {
 					rank = -1
 				}
 			}
+			remove_character_flag = was_wounded_by_bird_at_feast #Unop: Clear the flag since we do not need it anymore
 		}
 		add_trait = scarred
 		add_trait_xp = {
