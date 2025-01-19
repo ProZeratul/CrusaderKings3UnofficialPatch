@@ -12617,12 +12617,20 @@ court.9000 = {
 			years = 20
 		}
 		custom_tooltip = court_9000.b.tt
+
+		#Unop: This option was fine before RoadsToPower patch:
+		#Unop: now flirty_spouse will start a scheme against itself, it also used to give the knight rude_opinion towards root
+		#Unop: So I just fixed the dual scope:flirty_spouse as I think the idea was to not lose too many opinion
+
 		scope:flirty_spouse = {
 			add_opinion = {
 				target = root
 				modifier = rude_opinion
 				opinion = -20
 			}
+		}
+
+		scope:flirty_knight = { 
 			hidden_effect = {
 				random = {
 					chance = 35
