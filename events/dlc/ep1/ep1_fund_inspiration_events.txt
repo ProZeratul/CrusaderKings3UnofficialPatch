@@ -7984,7 +7984,7 @@ fund_inspiration.1071 = {
 				value = yes
 			}
 		}
-		else = {
+		else = { #Unop: For this effect to be error & future proof we need to have a fallback case
 			if = {
 				limit = { debug_only = yes }
 				debug_log = "Unop: For fund_inspiration.1071 diagnostic, no var artifact_smith_type defined, fallback on a brooch"
@@ -17906,12 +17906,12 @@ fund_inspiration.6300 = {
 			scope:inspiration_owner = {
 				homosexual_poet_trigger = no
 				unloved_poet_trigger = yes
-				#is_attracted_to_gender_of = root
-				#might_cheat_on_every_partner_trigger = yes
+				#is_attracted_to_gender_of = root #Unop: This will be checked in the unop_is_sexually_compatible_with_character just below
+				#might_cheat_on_every_partner_trigger = yes #Unop: This will be checked in the unop_is_sexually_compatible_with_character just below
 				unop_is_sexually_compatible_with_character = { CHARACTER = root DENY_CHASTE = flag:no }
 			}
-			#is_attracted_to_gender_of = scope:inspiration_owner
-			#might_cheat_on_every_partner_trigger = yes
+			#is_attracted_to_gender_of = scope:inspiration_owner #Unop: This will be checked in the unop_is_sexually_compatible_with_character just below
+			#might_cheat_on_every_partner_trigger = yes #Unop: This will be checked in the unop_is_sexually_compatible_with_character just below
 			unop_is_sexually_compatible_with_character = { CHARACTER = scope:inspiration_owner DENY_CHASTE = flag:no }
 		}
 		had_sex_with_effect = {
