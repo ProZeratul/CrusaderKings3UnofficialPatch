@@ -100,13 +100,57 @@ on_holy_order_destroyed = {
 					faith = root
 				}
 				send_interface_toast = {
-					type = holy_order_destroyed
+					type = holy_order_destroyed_message #Unop: Since the original 'holy_order_destroyed' name was changed to be harmonized with the rest
 					title = holy_order.destroyed_title
-					custom_tooltip = holy_order.destroyed_message
+					desc = holy_order.destroyed_message #Unop: Changed from 'custom_tooltip' to actually have the desc message be shown
 					left_icon = scope:title
 					right_icon = scope:leader
 				}
 			}
 		}
+
+		#Fixpack: For the loan, in case the HolyOrder is disbanded we need to end the story & warn the player
+		every_ruler = {
+			if = {
+				limit = {
+					any_owned_story = { story_type = story_cycle_holy_order_loan }
+				}
+				save_scope_as = current_ruler
+				every_owned_story = {
+					limit = { story_type = story_cycle_holy_order_loan }
+					if = {
+						limit = { NOT = { exists = var:holy_order } }
+						scope:current_ruler = {
+							add_character_flag = {
+								flag = should_warn
+								days = 1
+							}
+						}
+						end_story = yes
+					}
+				}
+
+				scope:current_ruler = {
+					if = {
+						limit = { 
+							is_ai = no
+							has_character_flag = should_warn
+						}
+						trigger_event = {
+							id = loan_story.0001
+							days = { 1 3 }
+						}
+						remove_character_flag = should_warn
+					}
+				}
+			}
+		}
+
+		scope:leader = {
+			remove_trait = order_member
+			add_character_modifier = holy_order_experience_modifier
+			#Add memory for the Holy Order being disbanded ?
+		}
+		#/Fixpack
 	}
 }
