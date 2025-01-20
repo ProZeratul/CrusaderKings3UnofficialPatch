@@ -1106,45 +1106,8 @@ windmills_01 = {
 	construction_time = slow_construction_time
 
 	can_construct_potential = {
-		OR = {
-			building_windmills_requirement_terrain = yes
-			AND = {
-				has_building_or_higher = hill_farms_04
-				culture = {
-					has_cultural_parameter = windmills_hill_farms_unlock
-				}
-			}
-		}
+		building_windmills_requirement_terrain = yes
 		building_requirement_castle_city_church = { LEVEL = 01 }
-		trigger_if = {
-			limit = {
-				NOT = {
-					scope:holder.culture = {
-						has_cultural_parameter = next_level_w_mills
-					}
-					culture = {
-						has_cultural_parameter = windmills_hill_farms_unlock
-					}
-				}
-			}
-			scope:holder.culture = {
-				has_innovation = innovation_windmills
-			}
-		}
-		trigger_else = {
-			OR = {
-				scope:holder.culture = {
-					has_cultural_parameter = next_level_w_mills
-					has_innovation = innovation_manorialism
-				}
-				AND = {
-					has_building_or_higher = hill_farms_04
-					culture = {
-						has_cultural_parameter = windmills_hill_farms_unlock
-					}
-				}
-			}
-		}
 	}
 
 	can_construct_showing_failures_only = {
@@ -1156,7 +1119,7 @@ windmills_01 = {
 			limit = {
 				NOT = {
 					scope:holder.culture = {
-					has_cultural_parameter = watermills_windmills_cities
+						has_cultural_parameter = watermills_windmills_cities
 					}
 				}
 			}
@@ -1174,14 +1137,51 @@ windmills_01 = {
 						has_building_or_higher = caravanserai_01
 					}
 					has_building_or_higher = city_01
-				}
-				
+				}				
 			}
 		}	
 	}
+
 	show_disabled = yes
 	
 	can_construct = {
+		trigger_if = {
+			limit = {
+				has_holding_type = city_holding
+			}
+			has_building_or_higher = city_01
+			culture = {
+				has_cultural_parameter = watermills_windmills_cities
+			}				
+			NOR = {
+				has_building_or_higher = watermills_01
+				has_building_or_higher = caravanserai_01
+			}
+		}
+		trigger_else_if = {
+			limit = {
+				OR = {
+					has_holding_type = castle_holding
+					has_holding_type = church_holding
+				}
+			}
+			is_county_capital = yes
+		}
+		OR = {
+			culture = { # Standard unlock from inovation (High medieval)
+				has_innovation = innovation_windmills 
+			} 
+			culture = { # Unlock from culture trad early but still need the previous Civic economic building inovation (Early medieval)
+				has_cultural_parameter = next_level_w_mills 
+				has_innovation = innovation_manorialism
+			}
+			AND = { # Unlock from Culture trad
+				has_building_or_higher = hill_farms_04
+				culture = {
+					has_cultural_parameter = windmills_hill_farms_unlock
+				}
+			}
+		}
 	}
 
 	cost_gold = expensive_building_tier_1_cost
@@ -1243,32 +1243,18 @@ windmills_02 = {
 	}
 	
 	can_construct = {
-		trigger_if = {
-			limit = {
-				NOT = {
-					scope:holder.culture = {
-						has_cultural_parameter = next_level_w_mills
-					}
-					culture = {
-						has_cultural_parameter = windmills_hill_farms_unlock
-					}
-				}
+		OR = {
+			culture = { # Standard unlock from inovation (High medieval)
+				has_innovation = innovation_windmills 
+			} 
+			culture = { # Unlock from culture trad early but still need the previous Civic economic building inovation (Early medieval)
+				has_cultural_parameter = next_level_w_mills 
+				has_innovation = innovation_manorialism
 			}
-			scope:holder.culture = {
-				has_innovation = innovation_windmills
-			}
-		}
-		trigger_else = {
-			OR = {
-				scope:holder.culture = {
-					has_cultural_parameter = next_level_w_mills
-					has_innovation = innovation_manorialism
-				}
-				AND = {
-					has_building_or_higher = hill_farms_04
-					culture = {
-						has_cultural_parameter = windmills_hill_farms_unlock
-					}
+			AND = { # Unlock from Culture trad
+				has_building_or_higher = hill_farms_04
+				culture = {
+					has_cultural_parameter = windmills_hill_farms_unlock
 				}
 			}
 		}
@@ -1318,33 +1304,20 @@ windmills_03 = {
 			}
 		}
 	}
+
 	can_construct = {
-		trigger_if = {
-			limit = {
-				NOT = {
-					scope:holder.culture = {
-						has_cultural_parameter = next_level_w_mills
-					}
-					culture = {
-						has_cultural_parameter = windmills_hill_farms_unlock
-					}
-				}
+		OR = {
+			culture = { # Standard unlock from inovation (High medieval)
+				has_innovation = innovation_windmills 
+			} 
+			culture = { # Unlock from culture trad early but still need the previous Civic economic building inovation (Early medieval)
+				has_cultural_parameter = next_level_w_mills 
+				has_innovation = innovation_manorialism
 			}
-			scope:holder.culture = {
-				has_innovation = innovation_windmills
-			}
-		}
-		trigger_else = {
-			OR = {
-				scope:holder.culture = {
-					has_cultural_parameter = next_level_w_mills
-					has_innovation = innovation_windmills
-				}
-				AND = {
-					has_building_or_higher = hill_farms_04
-					culture = {
-						has_cultural_parameter = windmills_hill_farms_unlock
-					}
+			AND = { # Unlock from Culture trad
+				has_building_or_higher = hill_farms_04
+				culture = {
+					has_cultural_parameter = windmills_hill_farms_unlock
 				}
 			}
 		}
@@ -1390,31 +1363,22 @@ windmills_04 = {
 			}
 		}
 	}
+
 	can_construct = {
-		trigger_if = {
-			limit = {
-				NOT = {
-					scope:holder.culture = {
-						has_cultural_parameter = next_level_w_mills
-					}
-					culture = {
-						has_cultural_parameter = windmills_hill_farms_unlock
-					}
-				}
+		building_requirement_castle_city_church = { LEVEL = 02 }
+
+		OR = {
+			culture = { # Standard unlock from inovation (High medieval)
+				has_innovation = innovation_windmills 
+			} 
+			culture = { # Unlock from culture trad early but still need the previous Civic economic building inovation (Early medieval)
+				has_cultural_parameter = next_level_w_mills 
+				has_innovation = innovation_manorialism
 			}
-			building_requirement_castle_city_church = { LEVEL = 02 }
-		}
-		trigger_else = {
-			OR = {
-				scope:holder.culture = {
-					has_cultural_parameter = next_level_w_mills
-					has_innovation = innovation_windmills
-				}
-				AND = {
-					has_building_or_higher = hill_farms_04
-					culture = {
-						has_cultural_parameter = windmills_hill_farms_unlock
-					}
+			AND = { # Unlock from Culture trad
+				has_building_or_higher = hill_farms_04
+				culture = {
+					has_cultural_parameter = windmills_hill_farms_unlock
 				}
 			}
 		}
