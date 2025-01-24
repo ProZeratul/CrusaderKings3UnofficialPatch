@@ -39,8 +39,10 @@ bishop.1001 = {
 			NOT = { this = root.cp:councillor_court_chaplain }
 			is_ai = yes
 			save_temporary_scope_as = spouse_check
-			relation_with_character_is_incestuous_in_my_faith_trigger = {
-				CHARACTER = scope:spouse_check
+			root = { #Unop: Fix spouse scope checking itself
+				relation_with_character_is_incestuous_in_my_faith_trigger = {
+					CHARACTER = scope:spouse_check
+				}
 			}
 		}
 		cp:councillor_court_chaplain = {
