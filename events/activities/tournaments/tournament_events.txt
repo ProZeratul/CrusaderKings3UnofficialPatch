@@ -14411,47 +14411,50 @@ tournament_events.6051 = { # Sabotage Outcome
 						exists = scope:sabotage_disqualified
 					}
 				}
+				#Unop: Rewrite this a little, the hidden_effect was actually potentially trying to override the decision made by the player in tournament_events.6052
+				#Unop: Seeing the hidden_effect outside of the original IF make me feel that this event was reworked a little
 				scope:host = {
 					if = {
 						limit = { is_ai = yes }
-						random_list = {
-							100 = {							
-								opinion_modifier = {
-									who = scope:host
-									opinion_target = scope:sabotage_target
-								}
-								modifier = {
-									scope:host = scope:sabotage_target
-									add = 200
-								}
-								save_scope_as = sabotage_disqualified
-							}
-							50 = {
-								opinion_modifier = {
-									who = scope:host
-									opinion_target = scope:sabotage_actor
-								}
-								reverse_add_opinion = {
-									target = scope:sabotage_target
-									modifier = tournament_tolerated_sabotage_opinion
-									opinion = -15
+						if = {
+							limit = { this = scope:sabotage_target }
+							hidden_effect = {
+								random = {
+									chance = 75
+									opinion_modifier = {
+										who = scope:host
+										opinion_target = scope:sabotage_actor #Unop: Change from "root" just to be clear
+										multiplier = 0.33
+									}
+									save_scope_as = sabotage_disqualified
 								}
 							}
 						}
-					}
-					hidden_effect = {
-						random = {
-							chance = 50
-							modifier = {
-								scope:host = scope:sabotage_target
-								add = 25
+						else = {
+							random_list = {
+								100 = {
+									opinion_modifier = {
+										who = scope:host
+										opinion_target = scope:sabotage_target
+									}
+									modifier = {
+										scope:host = scope:sabotage_target
+										add = 200
+									}
+									save_scope_as = sabotage_disqualified
+								}
+								50 = {
+									opinion_modifier = {
+										who = scope:host
+										opinion_target = scope:sabotage_actor
+									}
+									reverse_add_opinion = {
+										target = scope:sabotage_target
+										modifier = tournament_tolerated_sabotage_opinion
+										opinion = -15
+									}
+								}
 							}
-							opinion_modifier = {
-								who = scope:host
-								opinion_target = root
-								multiplier = 0.33
-							}
-							save_scope_as = sabotage_disqualified
 						}
 					}
 				}
