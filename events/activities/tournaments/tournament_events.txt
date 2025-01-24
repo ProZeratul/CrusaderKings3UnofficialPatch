@@ -15639,6 +15639,11 @@ tournament_events.6900 = {
 				50 = {
 					scope:activity = {
 						random_attending_character = {
+							limit = { #Unop: We want at least 1 county of this culture to get a faith
+								culture = {
+									culture_number_of_counties > 0 
+								}
+							} 
 							culture = { save_scope_as = attending_culture }
 						}
 					}
