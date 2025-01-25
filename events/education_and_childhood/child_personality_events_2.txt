@@ -1998,6 +1998,9 @@ child_personality.7031 = {
 	theme = education
 	override_background = { reference = bp1_kitchen_western }
 	left_portrait = {
+		trigger = { #Unop: scope:cook can be undefined
+			exists = scope:cook
+		}
 		character = scope:cook
 		triggered_animation = {
 			trigger = {
@@ -2048,7 +2051,7 @@ child_personality.7031 = {
 	}
 	
 	immediate = {
-		scope:cook = { add_character_flag = peasant_outfit } # Unop: Since I cleared it in child_personality.7030 but this current event can only fire if the ward is an AI
+		scope:cook ?= { add_character_flag = peasant_outfit } # Unop: Since I cleared it in child_personality.7030 but this current event can only fire if the ward is an AI
 	}
 
 	option = {
@@ -2158,7 +2161,7 @@ child_personality.7031 = {
 				}
 			}
 		}
-		scope:cook = {
+		scope:cook ?= { # Unop: Cook can be undefiend
 			add_opinion = {
 				target = root
 				modifier = thankful_opinion
