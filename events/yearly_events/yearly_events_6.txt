@@ -536,6 +536,14 @@ yearly.9120 = {
 		is_landed_or_landless_administrative = yes # Need gardens
 		is_adult = yes
 		has_trait = lifestyle_gardener
+
+		# Unop: To prevent Error: Undefined event target 'barony_market'
+		any_held_title = {
+			tier = tier_county
+			any_county_province = {
+				has_holding = yes
+			}
+		}
 	}
 	
 	immediate = {
