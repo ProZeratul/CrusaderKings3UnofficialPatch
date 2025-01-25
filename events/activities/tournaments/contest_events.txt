@@ -12053,17 +12053,18 @@ contest_events.3020 = {
 		name = contest_events.3020.c
 
 		trigger = {
-			is_attracted_to_gender_of = scope:enemy_competitor
+			#is_attracted_to_gender_of = scope:enemy_competitor Unop: Check both char are likely to cheat
+			unop_is_sexually_compatible_with_character = { CHARACTER = scope:enemy_competitor DENY_CHASTE = flag:no }
+			scope:enemy_competitor = { unop_is_sexually_compatible_with_character  = { CHARACTER = root DENY_CHASTE = flag:no } }
 		}
 
 		activity_tournament_change_contestant_score_effect = { SCORE = decrease_miniscule }
-		if = {
-			limit = {
-				scope:enemy_competitor = { is_male = yes }
-			}
-			had_sex_with_unknown_effect = { GENDER = male }
+
+		had_sex_with_effect = { #Unop: This is the "right" effect to be call when there is actually 2 characters
+			CHARACTER = scope:enemy_competitor
+			PREGNANCY_CHANCE = pregnancy_chance
 		}
-		else = { had_sex_with_unknown_effect = { GENDER = female } }
+
 		stress_impact = {
 			lustful = medium_stress_impact_loss
 			rakish = medium_stress_impact_loss
