@@ -1132,7 +1132,7 @@ intrigue_temptation.3011 = { #by Mathilda Bjarnehed
 	# Become lover
 	option = {
 		name = intrigue_temptation.3011.a
-		trigger = { might_cheat_on_every_partner_trigger = yes }
+		trigger = { unop_is_sexually_compatible_with_character = { CHARACTER = scope:bar_servant DENY_CHASTE = flag:no } } #Unop: Better way of checking cheating
 
 		set_relation_lover = { 
 			reason = lover_wingman_introduction 
@@ -1149,6 +1149,9 @@ intrigue_temptation.3011 = { #by Mathilda Bjarnehed
 	# One night stand
 	option = {
 		name = intrigue_temptation.3011.b
+		trigger = { #Unop: As this is actually cheating, we need to ensure it would do it
+			unop_is_sexually_compatible_with_character = { CHARACTER = scope:bar_servant DENY_CHASTE = flag:no }
+		}
 		
 		had_sex_with_effect = {
 			CHARACTER = scope:bar_servant
@@ -1159,7 +1162,7 @@ intrigue_temptation.3011 = { #by Mathilda Bjarnehed
 	# Leave them wanting more
 	option = {
 		name = intrigue_temptation.3011.c
-		trigger = { might_cheat_on_every_partner_trigger = yes }
+		#trigger = { might_cheat_on_every_partner_trigger = yes } #Unop: As this is not cheating, (and it become the only option available, let it be)
 		
 		add_character_modifier = {
 			modifier = unattainable_modifier
