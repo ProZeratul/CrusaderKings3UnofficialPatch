@@ -575,12 +575,12 @@ execute_prisoner_effect = {
 		else_if = {
 			limit = {
 				scope:victim = { target_is_liege_or_above = prev }
-				NOT = { exists = scope:suppress_legitimacy_from_crime }
+				#NOT = { exists = scope:suppress_legitimacy_from_crime } #Unop: Separate this, we will check it just after
 			}
 			add_tyranny = execution_tyranny_gain
 			if = {
-				limit = { has_legitimacy = yes}
-				add_legitimacy = miniscule_legitimacy_loss
+				limit = { NOT = { exists = scope:suppress_legitimacy_from_crime } } #Unop: put this check here that was commented above
+				add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop: Replace add_legitimacy with the proper effect that check many more things than what was checked originally
 			}
 		}
 		else_if = {
@@ -1484,11 +1484,13 @@ rightfully_imprison_character_effect = {
 		if = {
 			limit = {
 				any_scheme = {
+					is_scheme_target_type = character # Unop: To not take other scheme target types.
 					scheme_target_character = scope:new_target
 				}
 			}
 			every_scheme = {
 				limit = {
+					is_scheme_target_type = character # Unop: To not take other scheme target types.
 					scheme_target_character = scope:new_target
 				}
 				end_scheme = yes
