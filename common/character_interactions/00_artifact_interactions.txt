@@ -4389,9 +4389,18 @@ destroy_artifact_interaction = {
 			scope:target = {
 				rarity = common
 				artifact_slot_type = miscellaneous
-				artifact_durability_percent <= { #Unop: Check %durability left instead of fixed durability
-					value = define:NInventory|ARTIFACT_LOW_DURABILITY
-					divide = 100
+				OR = {
+					AND = {
+						artifact_max_durability >= define:NInventory|ARTIFACT_DEFAULT_MAX_DURABILITY
+						artifact_durability <= define:NInventory|ARTIFACT_VERY_LOW_DURABILITY
+					}
+					AND = { #Unop: If the artifact use a custom durability that is below the "default" then we compute the % of durability left instead
+						artifact_max_durability < define:NInventory|ARTIFACT_DEFAULT_MAX_DURABILITY
+						artifact_durability_percent <= { #Unop: Check %durability left instead of fixed durability
+							value = define:NInventory|ARTIFACT_VERY_LOW_DURABILITY
+							divide = 100
+						}
+					}
 				}
 			}
 		}
