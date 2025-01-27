@@ -4887,11 +4887,6 @@ ep3_contract_event.0080 = {
 	option = {
 		name = ep3_contract_event.0080.a
 		custom_tooltip = ep3_contract_event.0080.open_start_generate_claim_interaction
-		open_interaction_window = {
-			interaction = start_generate_claim_interaction
-			actor = root
-			recipient = scope:task_contract_target
-		}	
 		if = {
 			limit = {
 				is_ai = yes
@@ -4909,6 +4904,13 @@ ep3_contract_event.0080 = {
 				AGENT_4 = agent_socialite
 				# Secrecy.
 				AGENT_5 = agent_decoy
+			}
+		}
+		else = {
+			open_interaction_window = {
+				interaction = start_generate_claim_interaction
+				actor = root
+				recipient = scope:task_contract_target
 			}
 		}
 		ai_chance = {
@@ -5884,11 +5886,6 @@ ep3_contract_event.0090 = {
 	option = {
 		name = ep3_contract_event.0090.a
 		custom_tooltip = ep3_contract_event.0090.opens_task_contract_train_knight_interaction
-		open_interaction_window = {
-			interaction = task_contract_train_knight_interaction
-			actor = root
-			recipient = scope:task_contract_employer
-		}	
 		if = {
 			limit = {
 				is_ai = yes
@@ -5898,6 +5895,13 @@ ep3_contract_event.0090 = {
 				actor = root
 				recipient = scope:task_contract_employer
 				execute_threshold = decline
+			}
+		}
+		else = { #Unop: open the interaction for human players (it will throw an error in the logs for an AI)
+			open_interaction_window = {
+				interaction = task_contract_train_knight_interaction
+				actor = root
+				recipient = scope:task_contract_employer
 			}
 		}
 		#AI should always try to complete the contract
