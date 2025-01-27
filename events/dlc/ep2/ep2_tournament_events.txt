@@ -12511,10 +12511,10 @@ ep2_tournament_events.5502 = {
 		scope:activity = {
 			add_activity_log_entry = {
 				key = tournament_plagiarism_log
-				tags = { good }
+				tags = { bad } # Unop: The tag was 'good' ? but the targt got cheating ?
 				score = 5
 				character = root
-				target = scope:versus_contestant
+				target = scope:contestant #Unop: Was versus_contestant but this scope does not exists
 			}
 		}
 	}
@@ -12600,12 +12600,11 @@ ep2_tournament_events.5502 = {
 		scope:contestant = {
 			activity_tournament_change_contestant_score_effect = { SCORE = decrease_medium }
 			add_prestige = minor_prestige_loss
-		}
-
-		progress_towards_rival_effect = {
-			REASON = rival_recital_booing
-			CHARACTER = scope:contestant
-			OPINION = default_rival_opinion
+			progress_towards_rival_effect = { #Unop: This char get mad at you, not the reverse.
+				REASON = rival_recital_booing
+				CHARACTER = root
+				OPINION = default_rival_opinion
+			}
 		}
 
 		stress_impact = {
