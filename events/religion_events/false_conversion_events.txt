@@ -393,7 +393,7 @@ false_conversion.0030 = {
 					save_temporary_scope_as = current_character
 					root.faith = {
 						faith_hostility_level_comparison = {
-							secret_faith <= scope:current_character.faith
+							root.secret_faith <= scope:current_character.faith # Unop: Add the root before secret_faith since we are here inside a faith scope but we need the root char scope
 						}
 					}
 					OR = {
@@ -1222,13 +1222,15 @@ false_conversion.2000 = {
 					AND = {
 						has_character_modifier = stress_frozen_grief
 						OR = {
-							has_memory_type = friend_died
-							has_memory_type = best_friend_died
-							has_memory_type = lover_died
-							has_memory_type = soulmate_died
-							has_memory_type = relative_died
-							has_memory_type = spouse_died
-							has_memory_type = dog_died
+							any_memory = { # Unop: This is needed as we want to check memories
+								has_memory_type = friend_died
+								has_memory_type = best_friend_died
+								has_memory_type = lover_died
+								has_memory_type = soulmate_died
+								has_memory_type = relative_died
+								has_memory_type = spouse_died
+								has_memory_type = dog_died
+							}
 						}
 					}
 				}
