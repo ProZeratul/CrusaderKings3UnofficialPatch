@@ -185,10 +185,15 @@ progress_towards_friend_effect = {
 		}
 		if = {
 			limit = { NOT = { scope:friend_opinion = 0 } }
-			reverse_add_opinion = {
-				target = $CHARACTER$
-				modifier = friendliness_opinion
-				opinion = scope:friend_opinion
+			if = {
+				limit = { #Unop: Added this check to be harmonised with progress_towards_rival_effect
+					$CHARACTER$ = { is_ai = yes }
+				}
+				reverse_add_opinion = {
+					target = $CHARACTER$
+					modifier = friendliness_opinion
+					opinion = scope:friend_opinion
+				}
 			}
 			hidden_effect = {
 				add_opinion = {
