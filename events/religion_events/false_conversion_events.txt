@@ -599,7 +599,8 @@ false_conversion.0030 = {
 		# Piety loss, but not if has false conversion sanction tenet
 		if = {
 			limit = {
-				faith = {
+				exists = secret_faith
+				secret_faith = {
 					NOT = { has_doctrine = tenet_false_conversion_sanction }
 				}
 			}
@@ -1058,6 +1059,7 @@ scripted_trigger false_conversion_2000_is_vulnerable_trigger = {
 			}
 		}
 		has_trait = depressed_1
+		has_trait = depressed_genetic
 	}
 }
 
@@ -1259,7 +1261,14 @@ false_conversion.2000 = {
 			}
 		}
 		else_if = {
-			limit = { scope:vulnerable_relation = { has_trait = depressed_1 } }
+			limit = { 
+				scope:vulnerable_relation = {
+					OR = {
+						has_trait = depressed_1
+						has_trait = depressed_genetic
+					}
+				}
+			}
 			add_character_flag = {
 				flag = false_conversion_2000_depression
 				days = 1
