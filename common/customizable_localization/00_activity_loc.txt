@@ -322,9 +322,39 @@ GetCharacterContestStatus = {
 			is_in_guest_subset = {
 				name = qualified
 			}
-			not = { exists = var:progress_to_victory }
+			NOR = { # Unop: Only show knocked out if we actually got knocked out
+				exists = var:progress_to_victory 
+				has_character_flag = resigned_contest_flag
+				has_character_flag = disqualified_contest_flag 
+			}
 		}
 		localization_key = locale_window_status_knocked_out
+	}
+
+	text = { # Unop: New entry to show that we got disqualified
+		trigger = {
+			involved_activity = {
+				is_current_phase_active = yes
+			}
+			is_in_guest_subset = {
+				name = qualified
+			}
+			has_character_flag = disqualified_contest_flag
+		}
+		localization_key = locale_window_status_discalified
+	}
+
+	text = { # Unop: New entry to show that we resign
+		trigger = {
+			involved_activity = {
+				is_current_phase_active = yes
+			}
+			is_in_guest_subset = {
+				name = qualified
+			}
+			has_character_flag = resigned_contest_flag
+		}
+		localization_key = locale_window_status_resign
 	}
 
 	text = {
