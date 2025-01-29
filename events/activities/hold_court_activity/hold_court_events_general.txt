@@ -4938,7 +4938,10 @@ hold_court.5010 = {
 		}
 		every_sub_realm_county = {
 			custom = every_low_county_control
-			limit = { county_control <= low_county_control }
+			limit = { 
+				county_control <= low_county_control
+				NOT = { this = scope:county } # Unop: As the effect will be applied twice if not excluded
+			}
 			change_county_control = minor_county_control_gain 
 		}
 		stress_impact = {
@@ -4970,7 +4973,10 @@ hold_court.5010 = {
 		}
 		every_sub_realm_county = {
 			custom = every_low_county_control
-			limit = { county_control <= low_county_control }
+			limit = { 
+				county_control <= low_county_control
+				NOT = { this = scope:county } # Unop: As the effect will be applied twice if not excluded
+			}
 			add_county_modifier = {
 				modifier = county_increased_presence_modifier
 				days = 3650
@@ -5056,6 +5062,7 @@ scripted_trigger hold_court_5030_courtier_basic_trigger = {
 	faith = root.faith
 	is_imprisoned = no
 	NOT = { has_trait = incapable }
+	NOT = { has_court_position = court_tutor_court_position } # Unop: Add this so our court tutor is free to be selected for option B 
 	OR = {
 		AND = {
 			OR = {
@@ -5184,7 +5191,7 @@ hold_court.5030 = {
 		#If you're part of the gender minority you get a boost as well
 		if = {
 			limit = {
-				is_male = yes
+				is_female = yes #Unop: I think the idea is that we learn the other gender specific language
 			}
 			add_character_modifier = {
 				modifier = hold_court_written_language_men_modifier
@@ -5231,23 +5238,24 @@ hold_court.5030 = {
 		trigger = {
 			exists = scope:court_tutor
 		}
+		reason = unop_employ_tutor
 		#If you're part of the gender minority you get a boost as well
-		if = {
-			limit = {
-				OR = {
-					AND = {
-						faith = { has_doctrine = doctrine_gender_male_dominated }
-						is_female = yes
-					}
-					AND = {
-						faith = { has_doctrine = doctrine_gender_female_dominated }
-						is_male = yes
-					}
-				}
-			}
+		#if = { #Unop: Disable this if, as the same one in option A was removed during the RoadsToPower/Wandering dlc but left here
+		#	limit = {
+		#		OR = {
+		#			AND = {
+		#				faith = { has_doctrine = doctrine_gender_male_dominated }
+		#				is_female = yes
+		#			}
+		#			AND = {
+		#				faith = { has_doctrine = doctrine_gender_female_dominated }
+		#				is_male = yes
+		#			}
+		#		}
+		#	}
 			if = {
 				limit = {
-					is_male = yes
+					is_female = yes #Unop: I think the idea is that we learn the other gender specific language
 				}
 				add_character_modifier = {
 					modifier = hold_court_written_language_men_advanced_modifier
@@ -5260,7 +5268,7 @@ hold_court.5030 = {
 					years = 20
 				}
 			}
-		}
+		#}
 		#Boost all courtiers of the relevant gender
 		every_courtier = {
 			limit = {
