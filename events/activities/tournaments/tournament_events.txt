@@ -1619,7 +1619,7 @@ tournament_events.0161 = {
 	left_portrait = {
 		character = root
 		triggered_animation = {
-			trigger = { this = scope:marriage_winner }
+			trigger = { scope:marriage_winner ?= this }  # Unop: Change the order & added ?= as this scope can be undefined
 			animation = happiness
 		}
 		animation = thinking
@@ -1633,7 +1633,7 @@ tournament_events.0161 = {
 
 	immediate = {
 		show_as_tooltip = {
-			scope:marriage_winner = {
+			scope:marriage_winner ?= { # Unop: Change this to ?= as this scope can be undefined
 				if = {
 					limit = {
 						OR = {
@@ -1656,11 +1656,20 @@ tournament_events.0161 = {
 	option = {
 		name = tournament_events.0161.b
 		trigger = {
-			any_in_list = {
-				list = bachelors
-				has_opinion_modifier = {
-					target = scope:host
-					modifier = tournament_reneged_marriage_prize_opinion
+			OR = {
+				any_in_list = {
+					list = bachelors
+					has_opinion_modifier = {
+						target = scope:host
+						modifier = tournament_reneged_marriage_prize_opinion
+					}
+				}
+				AND = {
+					NOT = { scope:marriage_winner ?= this }
+					any_in_list = {
+						list = bachelors
+						this = root
+					}
 				}
 			}
 		}
@@ -1672,6 +1681,13 @@ tournament_events.0161 = {
 			NOT = {
 				any_in_list = { list = bachelors }
 			}
+		}
+	}
+
+	option = { # Unop: We need to have an option for the people who participated in the tournament but where not winners because no other option will be available for them
+		name = ep2_wedding.0970.a
+		trigger = {
+			NOT = { scope:marriage_winner ?= this }
 		}
 	}
 }
