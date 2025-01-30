@@ -4217,7 +4217,7 @@ tournament_contest_rewards_split_prize_money_with_liege_effect = {
 			}
 		}
 		# If they like you, they give you most of it.
-		if = {
+		else_if = {
 			limit = {
 				opinion = {
 					target = scope:winner_liege
@@ -4234,7 +4234,7 @@ tournament_contest_rewards_split_prize_money_with_liege_effect = {
 			}
 		}
 		# If they're neutral to dislike, they split it 50:50.
-		if = {
+		else_if = {
 			limit = {
 				opinion = {
 					target = scope:winner_liege
@@ -4323,6 +4323,7 @@ tournament_winner_gold_rewards_effect = {
 			}
 		}
 		add_gold = scope:host.medium_gold_value
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.medium_gold_value }
 	}
 	else_if = {
 		limit = {
