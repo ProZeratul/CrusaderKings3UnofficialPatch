@@ -11539,19 +11539,19 @@ tournament_events.1407 = {
 			NOT = { this = root }
 			involved_activity = scope:activity
 			activity_is_competing_trigger = yes
-			save_temporary_scope_as = competing_family
+			save_temporary_scope_as = temp_competing_family #Unop: In triggers, scope are temporary and should be label as such (to avoid Trying to add the temporary target 'competing_family' which has the same name as a permanent target)
 		}
 		scope:activity = {
 			any_guest_subset_current_phase = { # There is a member of the crowd who dislikes their performance
 				name = spectator
 				NOR = {
 					this = root
-					is_close_family_of = scope:competing_family
-					has_relation_lover = scope:competing_family
-					has_relation_friend = scope:competing_family
-					has_relation_best_friend = scope:competing_family
+					is_close_family_of = scope:temp_competing_family #Unop: use the renamed scope above
+					has_relation_lover = scope:temp_competing_family #Unop: use the renamed scope above
+					has_relation_friend = scope:temp_competing_family #Unop: use the renamed scope above
+					has_relation_best_friend = scope:temp_competing_family #Unop: use the renamed scope above
 					opinion = {
-						target = scope:competing_family
+						target = scope:temp_competing_family #Unop: use the renamed scope above
 						value >= low_positive_opinion
 					}
 				}

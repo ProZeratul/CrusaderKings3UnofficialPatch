@@ -170,6 +170,10 @@ tournament_clear_contest_variables_effect = {
 		limit = { has_character_flag = resigned_contest_flag }
 		remove_character_flag = resigned_contest_flag
 	}
+	if = { #Unop: Remove this flag too
+		limit = { has_character_flag = disqualified_contest_flag }
+		remove_character_flag = disqualified_contest_flag
+	}
 	if = {
 		limit = { has_character_flag = horse_race_mysterious_stranger }
 		remove_character_flag = horse_race_mysterious_stranger
@@ -7901,6 +7905,10 @@ tournament_disburse_contest_prize_tooltip_effect = {
 tournament_pivotal_contestant_scope_effect = {
 	if = {
 		limit = {
+			NOR = { #Unop: So if the char resigned/disqualified it won't be selected
+				has_character_flag = resigned_contest_flag
+				has_character_flag = disqualified_contest_flag
+			}
 			trigger_if = {
 				limit = {
 					scope:activity = {
@@ -7932,6 +7940,10 @@ tournament_pivotal_contestant_scope_effect = {
 			every_guest_subset_current_phase = {
 				name = qualified
 				limit = {
+					NOR = { #Unop: So if the char resigned/disqualified it won't be selected
+						has_character_flag = resigned_contest_flag
+						has_character_flag = disqualified_contest_flag
+					}
 					trigger_if = {
 						limit = { scope:activity.var:contest_versus_progress ?= 2 }
 						is_in_guest_subset = { name = finalist }
