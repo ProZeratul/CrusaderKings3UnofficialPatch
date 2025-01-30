@@ -4294,12 +4294,35 @@ tournament_winner_gold_rewards_effect = {
 			scope:activity = {
 				has_activity_option = {
 					category = tournament_option_prizes
+					option = tournament_prizes_splendid
+				}
+			}
+		}
+		add_gold = scope:host.massive_gold_value
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.massive_gold_value }
+	}
+	else_if = {
+		limit = {
+			scope:activity = {
+				has_activity_option = {
+					category = tournament_option_prizes
+					option = tournament_prizes_very_good
+				}
+			}
+		}
+		add_gold = scope:host.major_gold_value
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.major_gold_value }
+	}
+	else_if = {
+		limit = {
+			scope:activity = {
+				has_activity_option = {
+					category = tournament_option_prizes
 					option = tournament_prizes_good
 				}
 			}
 		}
 		add_gold = scope:host.medium_gold_value
-		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = medium_gold_value }
 	}
 	else_if = {
 		limit = {
@@ -4311,11 +4334,11 @@ tournament_winner_gold_rewards_effect = {
 			}
 		}
 		add_gold = scope:host.minor_gold_value
-		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = minor_gold_value }
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.minor_gold_value }
 	}
 	else = {
 		add_gold = scope:host.tiny_gold_value
-		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = tiny_gold_value }
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.tiny_gold_value }
 	}
 }
 
@@ -4354,12 +4377,36 @@ tournament_second_gold_rewards_effect = {
 			scope:activity = {
 				has_activity_option = {
 					category = tournament_option_prizes
+					option = tournament_prizes_splendid
+				}
+			}
+		}
+		add_gold = scope:host.major_gold_value
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.major_gold_value }
+	}
+	else_if = {
+		limit = {
+			scope:activity = {
+				has_activity_option = {
+					category = tournament_option_prizes
+					option = tournament_prizes_very_good
+				}
+			}
+		}
+		add_gold = scope:host.medium_gold_value
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.medium_gold_value }
+	}
+	else_if = {
+		limit = {
+			scope:activity = {
+				has_activity_option = {
+					category = tournament_option_prizes
 					option = tournament_prizes_good
 				}
 			}
 		}
 		add_gold = scope:host.minor_gold_value
-		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = minor_gold_value }
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.minor_gold_value }
 	}
 	else_if = {
 		limit = {
@@ -4371,7 +4418,7 @@ tournament_second_gold_rewards_effect = {
 			}
 		}
 		add_gold = scope:host.tiny_gold_value
-		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = tiny_gold_value }
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.tiny_gold_value }
 	}
 }
 
@@ -4403,12 +4450,36 @@ tournament_third_gold_rewards_effect = {
 			scope:activity = {
 				has_activity_option = {
 					category = tournament_option_prizes
+					option = tournament_prizes_splendid
+				}
+			}
+		}
+		add_gold = scope:host.medium_gold_value 
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.medium_gold_value  }
+	}
+	else_if = {
+		limit = {
+			scope:activity = {
+				has_activity_option = {
+					category = tournament_option_prizes
+					option = tournament_prizes_very_good
+				}
+			}
+		}
+		add_gold = scope:host.minor_gold_value
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.minor_gold_value }
+	}
+	else_if = {
+		limit = {
+			scope:activity = {
+				has_activity_option = {
+					category = tournament_option_prizes
 					option = tournament_prizes_good
 				}
 			}
 		}
 		add_gold = scope:host.tiny_gold_value
-		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = tiny_gold_value }
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.tiny_gold_value }
 	}
 }
 
@@ -4535,12 +4606,36 @@ tournament_team_winner_gold_rewards_effect = {
 			scope:activity = {
 				has_activity_option = {
 					category = tournament_option_prizes
+					option = tournament_prizes_splendid
+				}
+			}
+		}
+		add_gold = scope:host.major_gold_value
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.major_gold_value }
+	}
+	else_if = {
+		limit = {
+			scope:activity = {
+				has_activity_option = {
+					category = tournament_option_prizes
+					option = tournament_prizes_very_good
+				}
+			}
+		}
+		add_gold = scope:host.medium_gold_value
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.medium_gold_value  }
+	}
+	else_if = {
+		limit = {
+			scope:activity = {
+				has_activity_option = {
+					category = tournament_option_prizes
 					option = tournament_prizes_good
 				}
 			}
 		}
 		add_gold = scope:host.minor_gold_value
-		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = minor_gold_value }
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.minor_gold_value }
 	}
 	else_if = {
 		limit = {
@@ -4552,7 +4647,7 @@ tournament_team_winner_gold_rewards_effect = {
 			}
 		}
 		add_gold = scope:host.tiny_gold_value
-		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = tiny_gold_value }
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.tiny_gold_value }
 	}
 }
 
@@ -6094,6 +6189,7 @@ disburse_xp_and_liege_prestige_effect = {
 					exists = scope:melee_winner
 					exists = scope:duel_winner
 					exists = scope:wrestling_winner
+					exists = scope:joust_winner #Unop: To still gain foot xp in joust as disclaimed by the game
 				}
 			}
 			add_trait_xp = {
@@ -6140,6 +6236,18 @@ disburse_xp_and_liege_prestige_effect = {
 							add = tournament_hastiludes_xp_gain_massive_value
 						}
 						else = { add = tournament_hastiludes_xp_gain_medium_value }
+					}
+					if = { # Unop: Joust, because the game told you that it increase melee xp
+						limit = {
+							scope:activity = {
+								any_guest_subset = { name = qualified phase = tournament_phase_joust this = root }
+							}
+						}
+						if = {
+							limit = { scope:joust_winner ?= this }
+							add = tournament_hastiludes_xp_gain_medium_value
+						}
+						else = { add = tournament_hastiludes_xp_gain_minor_value }
 					}
 				}
 			}
