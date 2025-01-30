@@ -4217,7 +4217,7 @@ tournament_contest_rewards_split_prize_money_with_liege_effect = {
 			}
 		}
 		# If they like you, they give you most of it.
-		else_if = {
+		else_if = { #Unop: This was an if, but it's possible that this trigger is also true ! (so double time the gold)
 			limit = {
 				opinion = {
 					target = scope:winner_liege
@@ -4234,7 +4234,7 @@ tournament_contest_rewards_split_prize_money_with_liege_effect = {
 			}
 		}
 		# If they're neutral to dislike, they split it 50:50.
-		else_if = {
+		else_if = { #Unop: This was an if, but it's possible that this trigger is also true ! (so double or triple time the gold)
 			limit = {
 				opinion = {
 					target = scope:winner_liege
@@ -4290,7 +4290,7 @@ tournament_winner_prestige_rewards_effect = {
 
 tournament_winner_gold_rewards_effect = {
 	if = {
-		limit = {
+		limit = { #Unop: The option tournament_prizes_splendid was not handled and so was the same as the worst option. (should it be more gold than medium ?)
 			scope:activity = {
 				has_activity_option = {
 					category = tournament_option_prizes
@@ -4298,27 +4298,15 @@ tournament_winner_gold_rewards_effect = {
 				}
 			}
 		}
-		add_gold = scope:host.massive_gold_value
-		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.massive_gold_value }
+		add_gold = scope:host.medium_gold_value
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.medium_gold_value }
 	}
 	else_if = {
-		limit = {
+		limit = { #Unop: The option tournament_prizes_very_good was not handled and so was the same as the worst option. (should it be more gold than medium ?)
 			scope:activity = {
 				has_activity_option = {
 					category = tournament_option_prizes
 					option = tournament_prizes_very_good
-				}
-			}
-		}
-		add_gold = scope:host.major_gold_value
-		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.major_gold_value }
-	}
-	else_if = {
-		limit = {
-			scope:activity = {
-				has_activity_option = {
-					category = tournament_option_prizes
-					option = tournament_prizes_good
 				}
 			}
 		}
@@ -4330,16 +4318,28 @@ tournament_winner_gold_rewards_effect = {
 			scope:activity = {
 				has_activity_option = {
 					category = tournament_option_prizes
+					option = tournament_prizes_good
+				}
+			}
+		}
+		add_gold = scope:host.medium_gold_value
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.medium_gold_value } #Unop: minor_gold_value is char scope dependant
+	}
+	else_if = {
+		limit = {
+			scope:activity = {
+				has_activity_option = {
+					category = tournament_option_prizes
 					option = tournament_prizes_normal
 				}
 			}
 		}
 		add_gold = scope:host.minor_gold_value
-		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.minor_gold_value }
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.minor_gold_value } #Unop: minor_gold_value is char scope dependant
 	}
 	else = {
 		add_gold = scope:host.tiny_gold_value
-		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.tiny_gold_value }
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.tiny_gold_value } #Unop: minor_gold_value is char scope dependant
 	}
 }
 
@@ -4374,7 +4374,7 @@ tournament_second_prestige_rewards_effect = {
 
 tournament_second_gold_rewards_effect = {
 	if = {
-		limit = {
+		limit = { #Unop: The option tournament_prizes_splendid was not handled and so was the same as the worst option. (should it be more gold than medium ?)
 			scope:activity = {
 				has_activity_option = {
 					category = tournament_option_prizes
@@ -4382,11 +4382,11 @@ tournament_second_gold_rewards_effect = {
 				}
 			}
 		}
-		add_gold = scope:host.major_gold_value
-		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.major_gold_value }
+		add_gold = scope:host.medium_gold_value
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.medium_gold_value }
 	}
 	else_if = {
-		limit = {
+		limit = { #Unop: The option tournament_prizes_very_good was not handled and so was the same as the worst option. (should it be more gold than medium ?)
 			scope:activity = {
 				has_activity_option = {
 					category = tournament_option_prizes
@@ -4447,7 +4447,7 @@ tournament_third_prestige_rewards_effect = {
 
 tournament_third_gold_rewards_effect = {
 	if = {
-		limit = {
+		limit = { #Unop: The option tournament_prizes_splendid was not handled and so was the same as the worst option.
 			scope:activity = {
 				has_activity_option = {
 					category = tournament_option_prizes
@@ -4459,7 +4459,7 @@ tournament_third_gold_rewards_effect = {
 		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.medium_gold_value  }
 	}
 	else_if = {
-		limit = {
+		limit = { #Unop: The option tournament_prizes_very_good was not handled and so was the same as the worst option.
 			scope:activity = {
 				has_activity_option = {
 					category = tournament_option_prizes
@@ -4603,7 +4603,7 @@ tournament_team_winner_prestige_rewards_effect = {
 
 tournament_team_winner_gold_rewards_effect = {
 	if = {
-		limit = {
+		limit = { #Unop: The option tournament_prizes_splendid was not handled and so was the same as the worst option. (should it be more gold than medium ?)
 			scope:activity = {
 				has_activity_option = {
 					category = tournament_option_prizes
@@ -4611,11 +4611,11 @@ tournament_team_winner_gold_rewards_effect = {
 				}
 			}
 		}
-		add_gold = scope:host.major_gold_value
-		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.major_gold_value }
+		add_gold = scope:host.medium_gold_value
+		tournament_contest_rewards_split_prize_money_with_liege_effect = { AMOUNT = scope:host.medium_gold_value }
 	}
 	else_if = {
-		limit = {
+		limit = { #Unop: The option tournament_prizes_very_good was not handled and so was the same as the worst option.
 			scope:activity = {
 				has_activity_option = {
 					category = tournament_option_prizes
