@@ -3373,21 +3373,10 @@ contest_events.0720 = { # Archery Outcome
 		}
 		triggered_desc = {
 			trigger = {
-				scope:activity = { # Unop: Modify this to handle if you resigned during the contest
-					OR = {
-						any_guest_subset_current_phase = {
-							name = spectator
-							this = root
-						}
-						AND = {
-							root = {
-								is_in_guest_subset = { name = qualified }
-								NOR = {
-									has_character_flag = resigned_contest_flag
-									has_character_flag = disqualified_contest_flag
-								}
-							}
-						}
+				scope:activity = {
+					any_guest_subset_current_phase = {
+						name = spectator
+						this = root
 					}
 				}
 			}
@@ -3404,20 +3393,6 @@ contest_events.0720 = { # Archery Outcome
 	cooldown = { months = 1 }
 
 	immediate = {
-
-		if = { #Unop: In case we resign we need to run this effect that should have been run by contest_events.0710 but since the trigger is invalid, it is not actually running
-			limit = {
-				is_in_guest_subset = { name = qualified }
-				OR = {
-					has_character_flag = resigned_contest_flag
-					has_character_flag = disqualified_contest_flag
-				}
-			}
-			tournament_pivotal_contestant_scope_effect = yes
-			# Determine position of PtV scale
-			tournament_pivotal_ptv_value_effect = yes
-		}
-
 		scope:pivotal_contestant = {
             switch = {
                 trigger = has_character_flag
@@ -10834,11 +10809,6 @@ contest_events.1520 = { # Contestant
 	option = { # Resign
 		name = contest_events.1520.c
 		remove_variable = contest_aptitude
-		remove_variable = progress_to_victory # Unop: this one need to be remove too (to be shown in the UI we are no longuer progressing to victory)
-		add_character_flag = { # Unop: Added this one (just to harmonize things and for ease of search)
-			flag = resigned_contest_flag
-			months = 2
-		}
 		save_scope_as = resign_target
 		scope:activity = {
 			add_activity_log_entry = {
