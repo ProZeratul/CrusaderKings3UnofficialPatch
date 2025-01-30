@@ -173,13 +173,13 @@ tournament_events.8000 = { # Start
 						}
 					}
 					save_scope_as = favor_giver_1
-					hidden_effect = {
+					hidden_effect_new_object = { # Unop: So the log won't complain (Script system error! (while building tooltip/description)) 
 						create_artifact_tournament_favor_effect = {
 							OWNER = scope:favor_giver_1
 							RECIPIENT = root
 						}
+						scope:newly_created_artifact = { save_scope_as = favor_1 }
 					}
-					scope:newly_created_artifact = { save_scope_as = favor_1 }
 				}
 				if = {
 					limit = {
@@ -234,13 +234,13 @@ tournament_events.8000 = { # Start
 							}
 						}
 						save_scope_as = favor_giver_2
-						hidden_effect = {
+						hidden_effect_new_object = { # Unop: So the log won't complain (Script system error! (while building tooltip/description)) 
 							create_artifact_tournament_favor_effect = {
 								OWNER = scope:favor_giver_2
 								RECIPIENT = root
 							}
+							scope:newly_created_artifact = { save_scope_as = favor_2 }
 						}
-						scope:newly_created_artifact = { save_scope_as = favor_2 }
 					}
 				}
 			}
