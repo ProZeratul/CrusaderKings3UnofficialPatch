@@ -94,8 +94,13 @@
 			scope:host.player_heir = { save_scope_as = new_host }
 		}
 		# Otherwise pass to any successor
-		else = {
+		else_if = {
+			limit = { exists = scope:host.primary_heir }
 			scope:host.primary_heir = { save_scope_as = new_host }
+		}
+		else = { #Unop: Investigate this, how is that even possible 
+			debug_log = "Unop: on_host_death Host died without player_heir nor primary_heir. How is this possible ?"
+			debug_log_scopes = yes
 		}
 		set_activity_host = scope:new_host
 		scope:new_host = {
