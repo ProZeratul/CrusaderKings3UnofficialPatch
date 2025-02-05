@@ -11470,9 +11470,36 @@ laamp_as_mercenary_payout_tooltip_effect = {
 						}
 						save_scope_as = laamp_temp
 						save_scope_as = actor
-						save_scope_value_as = {
-							name = war_contribution_value
-							value = "scope:war.war_contribution(scope:laamp_temp)"
+
+						if = {
+							limit = { has_variable = owed_contract_assistance_war }
+							save_scope_value_as = {
+								name = war_contribution_value
+								value = "scope:laamp_temp.var:owed_contract_assistance_war.war_contribution(scope:laamp_temp)"
+							}
+						}
+						else_if = {
+							limit = { has_variable = task_contract_war }
+							save_scope_value_as = {
+								name = war_contribution_value
+								value = "scope:laamp_temp.var:task_contract_war.war_contribution(scope:laamp_temp)"
+							}
+						}
+						else_if = {
+							limit = { exists = scope:war }
+							save_scope_value_as = {
+								name = war_contribution_value
+								value = "scope:war.war_contribution(scope:laamp_temp)"
+							}
+						}
+						else = {
+							debug_log = "Unop: Undefined War scope diag"
+							debug_log_scopes = yes
+							#Unop: I'm sick of this effect flooding the log, making everything way harder to debug !! So it's 0 then
+							save_scope_value_as = {
+								name = war_contribution_value
+								value = 0
+							}
 						}
 						if = {
 							limit = {
@@ -11561,10 +11588,23 @@ laamp_as_mercenary_payout_tooltip_effect = {
 						}
 						save_scope_as = laamp_temp
 						save_scope_as = actor
-						save_scope_value_as = {
-							name = war_contribution_value
-							value = "scope:war.war_contribution(scope:laamp_temp)"
+
+						if = {
+							limit = { exists = scope:war }
+							save_scope_value_as = {
+								name = war_contribution_value
+								value = "scope:war.war_contribution(scope:laamp_temp)"
+							}
 						}
+						else = {
+							debug_log = "Unop: Undefined War scope diag"
+							debug_log_scopes = yes
+							#Unop: I'm sick of this effect flooding the log, making everything way harder to debug !! So it's 0 then
+							save_scope_value_as = {
+								name = war_contribution_value
+								value = 0
+							}
+						}						
 						if = {
 							limit = {
 								any_character_active_contract = {

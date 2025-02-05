@@ -24003,14 +24003,14 @@ laamp_base_contract_schemes.3663 = {
 
 scripted_effect laamp_base_contract_schemes_3781_note_old_rollee_duel_effect = {
 	if = {
-		limit = { scope:secondary_roll = flag:agent_prowess }
+		limit = { scope:secondary_roll ?= flag:agent_prowess } #Unop: secondary_roll can be undefined (Undefined event target 'secondary_roll')
 		save_scope_value_as = {
 			name = old_secondary_roll
 			value = flag:agent_prowess
 		}
 	}
 	else_if = {
-		limit = { scope:secondary_roll = flag:agent_intrigue }
+		limit = { scope:secondary_roll ?= flag:agent_intrigue } #Unop: secondary_roll can be undefined (Undefined event target 'secondary_roll')
 		save_scope_value_as = {
 			name = old_secondary_roll
 			value = flag:agent_intrigue
