@@ -23987,6 +23987,7 @@ hunt.7100 = {
 	type = activity_event
 	title = hunt.7100.t
 	desc = {
+		desc = hunt.7100.opening # Unop: Opening text could be missing in some cases
 		first_valid = {
 			triggered_desc = {
 				trigger = {
@@ -24010,7 +24011,7 @@ hunt.7100 = {
 				}
 				desc = hunt.7100.currentspouse
 			}
-			desc = hunt.7100.opening
+			#desc = hunt.7100.opening # Unop: Put this at the top to be always displayed
 		}
 		desc = hunt.7100.desc
 	}
@@ -27939,7 +27940,7 @@ hunt.9002 = {
 						intent_target = { save_scope_as = murder_target }
 					}
 					else_if = {
-						limit = { has_activity_intent = murder_attendee_intent }
+						limit = { has_activity_intent = woo_attendee_intent } #Unop: Was murder_attendee_intent, probably a copy/paste issue
 						intent_target = { save_scope_as = woo_target }
 					}
 					else_if = {
