@@ -29,7 +29,7 @@
 
 #Sets potential friend + opinion or upgrades potential friend to full friend
 progress_towards_friend_effect = {
-	save_scope_as = root_char # Unop: this is needed for the scope change in the add_activity_log_entry part
+	$CHARACTER$ = { save_scope_as = target_char } # Unop: this is needed for the scope change in the add_activity_log_entry part
 	#If potential friend, set friend!
 	if = {
 		limit = {
@@ -59,7 +59,7 @@ progress_towards_friend_effect = {
 						tags = { good }
 						score = 10
 						character = prev
-						target = scope:root_char #Unop: We need to use a intermediary scope since we are now scoped inside the activity
+						target = scope:target_char #Unop: We need to use a intermediary scope since we are now scoped inside the activity
 					}
 				} # TODO_CD_EP2 make all activities use this without creating duplicate entries
 			}
@@ -85,7 +85,7 @@ progress_towards_friend_effect = {
 						tags = { good }
 						score = 10
 						character = prev
-						target = scope:root_char #Unop: We need to use a intermediary scope since we are now scoped inside the activity
+						target = scope:target_char #Unop: We need to use a intermediary scope since we are now scoped inside the activity
 					}
 				}
 			}
@@ -111,7 +111,7 @@ progress_towards_friend_effect = {
 						tags = { good }
 						score = 10
 						character = prev
-						target = scope:root_char #Unop: We need to use a intermediary scope since we are now scoped inside the activity
+						target = scope:target_char #Unop: We need to use a intermediary scope since we are now scoped inside the activity
 					}
 				}
 			}
@@ -133,7 +133,7 @@ progress_towards_friend_effect = {
 						tags = { good }
 						score = 10
 						character = prev
-						target = scope:root_char #Unop: We need to use a intermediary scope since we are now scoped inside the activity
+						target = scope:target_char #Unop: We need to use a intermediary scope since we are now scoped inside the activity
 					}
 				}
 			}
@@ -209,7 +209,7 @@ progress_towards_friend_effect = {
 
 #Sets potential rival + opinion or upgrades potential rival to full rival
 progress_towards_rival_effect = {
-	save_scope_as = root_char # Unop: this is needed for the scope change in the add_activity_log_entry part
+	$CHARACTER$ = { save_scope_as = target_char } # Unop: this is needed for the scope change in the add_activity_log_entry part
 	# Do we merit an actual rivalry?
 	if = {
 		limit = {
@@ -316,7 +316,7 @@ progress_towards_rival_effect = {
 						tags = { bad }
 						score = 10
 						character = prev
-						target = scope:root_char #Unop: We need to use a intermediary scope since we are now scoped inside the activity
+						target = scope:target_char #Unop: We need to use a intermediary scope since we are now scoped inside the activity
 					}
 				}
 			}
@@ -342,7 +342,7 @@ progress_towards_rival_effect = {
 						tags = { bad }
 						score = 10
 						character = prev
-						target = scope:root_char #Unop: We need to use a intermediary scope since we are now scoped inside the activity
+						target = scope:target_char #Unop: We need to use a intermediary scope since we are now scoped inside the activity
 					}
 				}
 			}
@@ -368,7 +368,7 @@ progress_towards_rival_effect = {
 						tags = { bad }
 						score = 10
 						character = prev
-						target = scope:root_char #Unop: We need to use a intermediary scope since we are now scoped inside the activity
+						target = scope:target_char #Unop: We need to use a intermediary scope since we are now scoped inside the activity
 					}
 				}
 			}
@@ -390,7 +390,7 @@ progress_towards_rival_effect = {
 						tags = { bad }
 						score = 10
 						character = prev
-						target = scope:root_char #Unop: We need to use a intermediary scope since we are now scoped inside the activity
+						target = scope:target_char #Unop: We need to use a intermediary scope since we are now scoped inside the activity
 					}
 				}
 			}
