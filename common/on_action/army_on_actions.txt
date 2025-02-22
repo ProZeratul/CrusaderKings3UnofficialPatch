@@ -242,6 +242,15 @@ on_siege_completion = {
 # scope:previous_controller is the previous controller
 on_siege_looting = {
 	effect = {
+		#Unop: As there is no way to get the "available_loot" and keep this modifier, store this in a variable for the duration of the modifier.
+		#Unop: The goal is to still be able to use in the on_siege_completion just above but there might be other effect/event that would need to check this new variable.
+		scope:barony.title_province = {
+			set_variable = {
+				name = unop_potential_province_loot
+				value = available_loot
+				years = 5
+			}
+		}
 		scope:barony.title_province = {
 			add_province_modifier = {
 				modifier = recently_looted_modifier

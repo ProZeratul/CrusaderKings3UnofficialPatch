@@ -2573,7 +2573,27 @@ task_contract_failure_provisions_gain_minor_value = 0
 
 adventurer_siege_replenish_amount = {
 	value = 0
-	add = scope:barony.title_province.available_loot
+	add = { #Unop: Because the recently_looted_modifier set the available_loot of the province to 0 and I don't know any way to get the potential value of the county I had to find a workaround to still make this work.
+		value = 0
+		if = {
+			limit = {
+				scope:barony.title_province = {
+					has_province_modifier = recently_looted_modifier					
+				}
+			}
+			if = {
+				limit = {
+					scope:barony.title_province = { 
+						has_variable = unop_potential_province_loot 
+					}
+				}
+				add = scope:barony.title_province.var:unop_potential_province_loot
+			}
+		}
+		else = {
+			add = scope:barony.title_province.available_loot
+		}
+	}
 	multiply = {
 		value = 2
 		if = {
@@ -2587,7 +2607,27 @@ adventurer_siege_replenish_amount = {
 
 adventurer_siege_provisions_amount = {
 	value = 0
-	add = scope:barony.title_province.available_loot
+	add = { #Unop: Because the recently_looted_modifier set the available_loot of the province to 0 and I don't know any way to get the potential value of the county I had to find a workaround to still make this work.
+		value = 0
+		if = {
+			limit = {
+				scope:barony.title_province = {
+					has_province_modifier = recently_looted_modifier					
+				}
+			}
+			if = {
+				limit = {
+					scope:barony.title_province = { 
+						has_variable = unop_potential_province_loot 
+					}
+				}
+				add = scope:barony.title_province.var:unop_potential_province_loot
+			}
+		}
+		else = {
+			add = scope:barony.title_province.available_loot
+		}
+	}
 	multiply = 20
 }
 
