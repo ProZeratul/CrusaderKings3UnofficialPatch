@@ -108,8 +108,10 @@ birth.0001 = {
 					trigger = {
 						allow_naming_on_birth_of_child_trigger = { CHILD = scope:child }
 						scope:child = {
-							exists = father
-							father = { is_ai = yes }
+							father ?= {
+								is_ai = yes
+								is_alive = yes
+							}
 							NOT = { has_trait = twin }
 						}
 					}

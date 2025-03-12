@@ -6559,10 +6559,6 @@ fp2_struggle.2004 = {
 		top_liege = root
 
 		realm_size >= minor_realm_size
-		any_sub_realm_county = {
-			NOT = { has_county_modifier = fp2_successful_shipyards_modifier }
-			is_coastal_county = yes
-		}
 
 		exists = cp:councillor_marshal
 		cp:councillor_marshal	= { is_available_ai_adult = yes }
@@ -6570,6 +6566,11 @@ fp2_struggle.2004 = {
 		cp:councillor_steward	= {
 			is_available_ai_adult = yes
 			NOT = { has_character_flag = fp2_2004_critical_success_achieved }
+		}
+
+		any_sub_realm_county = {
+			is_coastal_county = yes
+			NOT = { has_county_modifier = fp2_successful_shipyards_modifier }
 		}
 	}
 

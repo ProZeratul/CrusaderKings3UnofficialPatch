@@ -9889,46 +9889,46 @@ scripted_effect 1033_set_cost_effect = {
 		}
 	}
 	save_scope_value_as = {
-		name = $VALUE_NAME$
-		value = {
-			integer_range = {
-			    min = medium_gold_laamps_value
-			    max = major_gold_laamps_value
-			}
-			#Cheaper out in the wilds
-			if = {
-				limit = { 
-					scope:visiting_location = { has_holding_type = tribal_holding }
-				}
-				multiply = 0.6
-			}
-			if = { #They're stellar? More expensive. :elmofire:
-				limit = { scope:$VALUE_NAME$_sum_skills >= 120 } #Good in all skills?
-				multiply = 8 #20 in all skills
-			}
-			else_if = {
-				limit = { scope:$VALUE_NAME$_sum_skills >= 100 } #Good in four skills?
-				multiply = 5
-			}
-			else_if = {
-				limit = { scope:$VALUE_NAME$_sum_skills >= 80 } #Good in three skills?
-				multiply = 4
-			}
-			else_if = {
-				limit = { scope:$VALUE_NAME$_sum_skills >= 60 } #Good in two skills?
-				multiply = 3
-			}
-			else_if = {
-				limit = { scope:$VALUE_NAME$_sum_skills >= 40 } #Good in one-and-a-half skill? Should be roughly 90-110 gold
-				multiply = 2.5
-			}
-			else_if = {
-				limit = { scope:$VALUE_NAME$_sum_skills >= 20 } #Good in one skill?
-				multiply = 1.5
-			}
-			#Add perk discounts and other things here.
-		}
-	}
+        name = $VALUE_NAME$
+        value = {
+            integer_range = {
+                min = medium_gold_laamps_value
+                max = major_gold_laamps_value
+            }
+            #Cheaper out in the wilds
+            if = {
+                limit = { 
+                    scope:visiting_location = { has_holding_type = tribal_holding }
+                }
+                multiply = 0.6
+            }
+            if = { #They're stellar? More expensive. :elmofire:
+                limit = { scope:$VALUE_NAME$_sum_skills >= 120 } #Good in all skills?
+                multiply = 8 #20 in all skills
+            }
+            else_if = {
+                limit = { scope:$VALUE_NAME$_sum_skills >= 100 } #Good in four skills?
+                multiply = 5
+            }
+            else_if = {
+                limit = { scope:$VALUE_NAME$_sum_skills >= 80 } #Good in three skills?
+                multiply = 4
+            }
+            else_if = {
+                limit = { scope:$VALUE_NAME$_sum_skills >= 60 } #Good in two skills?
+                multiply = 3
+            }
+            else_if = {
+                limit = { scope:$VALUE_NAME$_sum_skills >= 40 } #Good in one-and-a-half skill? Should be roughly 90-110 gold
+                multiply = 2.5
+            }
+            else_if = {
+                limit = { scope:$VALUE_NAME$_sum_skills >= 20 } #Good in one skill?
+                multiply = 1.5
+            }
+            #Add perk discounts and other things here.
+        }
+    }
 }
 
 #This is a remotely interesting character

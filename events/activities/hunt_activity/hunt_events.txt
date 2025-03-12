@@ -18708,9 +18708,26 @@ hunt.4911 = { # Host accident
 #######################
 
 scripted_trigger hunt_4015_basic_check_trigger = {
-	NOT = { this = root }
+	NOR = {
+		this = root
+		has_relation_lover = root
+		has_relation_soulmate = root
+		is_consort_of = root
+		is_close_or_extended_family_of = root
+		has_trait = chaste
+		has_trait = celibate
+	}
 	is_adult = yes
 	is_ai = yes
+	trigger_if = {
+		limit = {
+			OR = {
+				is_married = yes
+				is_concubine = yes
+			}
+		}
+		might_cheat_on_every_partner_trigger = yes
+	}
 }
 
 scripted_trigger hunt_4015_secret_trigger = {
@@ -18747,7 +18764,11 @@ hunt.4015 = {
 				}
 				any_attending_character = {
 					hunt_4015_basic_check_trigger = yes
-					has_trait = lustful
+					OR = {
+						has_trait = lustful
+						has_trait = rakish
+						has_trait = seducer
+					}
 					save_temporary_scope_as = lover_check
 					scope:activity = {
 						any_attending_character = {
@@ -18756,6 +18777,7 @@ hunt.4015 = {
 							save_temporary_scope_as = lover_check_2
 							matching_gender_and_sexuality_trigger = { CHARACTER_1 = scope:lover_check_2 CHARACTER_2 = scope:lover_check }
 							can_set_relation_lover_trigger = { CHARACTER = scope:lover_check }
+							scope:lover_check.attraction >= medium_positive_attraction
 						}
 					}
 				}
@@ -18764,9 +18786,9 @@ hunt.4015 = {
 	}
 
 	weight_multiplier = {
-		base = 0.75
+		base = 0.50
 		modifier = { #more likely to fire if two participants already are lovers
-			add = 0.5
+			add = 0.75
 			scope:activity = {
 				any_attending_character = {
 					hunt_4015_basic_check_trigger = yes
@@ -18836,7 +18858,11 @@ hunt.4015 = {
 				random_attending_character = { #Find your vassal
 					limit = {
 						hunt_4015_basic_check_trigger = yes
-						has_trait = lustful
+						OR = {
+							has_trait = lustful
+							has_trait = rakish
+							has_trait = seducer
+						}
 						save_temporary_scope_as = lover_check
 						scope:activity = {
 							any_attending_character = {
@@ -18845,6 +18871,7 @@ hunt.4015 = {
 								save_temporary_scope_as = lover_check_2
 								matching_gender_and_sexuality_trigger = { CHARACTER_1 = scope:lover_check_2 CHARACTER_2 = scope:lover_check }
 								can_set_relation_lover_trigger = { CHARACTER = scope:lover_check }
+								scope:lover_check.attraction >= medium_positive_attraction
 							}
 						}
 					}

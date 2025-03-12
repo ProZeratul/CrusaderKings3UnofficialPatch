@@ -2235,11 +2235,8 @@ zealous_missionary_start_decision = {
 		has_ep3_dlc_trigger = yes
 		government_has_flag = government_is_landless_adventurer
 		has_character_flag = zealous_missionary_prep
-		NOT = {
+		NOR = {
 			has_character_flag = zealous_missionary_start
-
-		}
-		NOT = {
 			is_ai = yes
 			any_player = {
 				OR = { # Unop: Root added to the 2 check below since the current scope is the player itself
@@ -2251,12 +2248,7 @@ zealous_missionary_start_decision = {
 	}
 
 	is_valid = {
-		custom_tooltip = {
-			text = zealous_missionary_start_decision_other_faith_location
-			NOT = {
-				location.county.faith = root.faith
-			} 
-		}	
+		location.county = { hasan_evangelize_province_trigger = yes }
 	}
 
 	is_valid_showing_failures_only = {

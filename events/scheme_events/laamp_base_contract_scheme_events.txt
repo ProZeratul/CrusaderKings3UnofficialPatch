@@ -8715,6 +8715,7 @@ laamp_base_contract_schemes.1004 = {
 				}
 				hidden_effect = { assign_random_nickname_effect = yes }
 			}
+			add_character_flag = wear_armor
 		}
 		# Ok, now tag them in the contract so we know to invalidate if something happens to land them or they die _except_ after a duel has begun.
 		scope:task_contract = {
@@ -10315,6 +10316,13 @@ laamp_base_contract_schemes.1301 = {
 		animation = aggressive_sword
 	}
 	override_background = { reference = wilderness }
+
+	trigger = {
+		scope:recidivist = {
+			is_alive = yes
+			is_imprisoned = no
+		}
+	}
 
 	immediate = {
 		# One more encounter!
@@ -20797,8 +20805,8 @@ laamp_base_contract_schemes.3021 = {
 			add_agent_slot = agent_thug
 			add_agent_slot = agent_muscle
 			# Speed.
-			add_agent_slot = agent_footpad #Unop Add speed agents (was agent_lookout)
-			add_agent_slot = agent_infiltrator #Unop Add speed agents (was agent_decoy)
+			add_agent_slot = agent_footpad
+			add_agent_slot = agent_infiltrator
 			# Secrecy.
 			add_agent_slot = agent_lookout
 		}

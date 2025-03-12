@@ -1052,7 +1052,10 @@ has_any_gallowsbait_xp_trigger = {
 
 ep3_restored_rome_hard_mode_trigger = {
 	this = title:e_roman_empire.holder
-	any_owned_story = { story_type = ep3_story_cycle_restoring_rome }
+	any_owned_story = {
+		story_type = ep3_story_cycle_restoring_rome
+		has_variable = roman_empire_hard_mode
+	}
 }
 
 faith_is_interesting_heresy_to_state_faith_trigger = {
@@ -1431,24 +1434,35 @@ ep3_adventurer_ai_valid_contract_trigger = {
 
 hasan_evangelize_province_trigger = {
 	save_temporary_scope_as = county
-	AND = {
-		NOT = { faith = root.faith }
-		#faith.religion = root.faith.religion # QA thinks its more fun without this!
-		scope:county = {
-			any_county_province = {
-				barony = {
-					NOT = { is_holy_site_of = scope:county.faith }
-				}
+	scope:county.faith = {
+		# Religion is same as Hasan's (i.e. Muslim)
+		#religion = root.religion # QA thinks its more fun without this!
+		NOR = {
+			# Faith is different from Hasan's
+			custom_tooltip = {
+				text = zealous_missionary_start_decision_other_faith_location
+				this = root.faith
+			}
+			# County is not held by it's Faith's Religious Head
+			custom_tooltip = {
+				text = is_held_by_hof_tt
+				religious_head ?= scope:county.holder
 			}
 		}
-		development_level <= 25
-		custom_tooltip = {
-			text = has_tougher_to_convert_tt
-			NOT = { has_county_modifier = tougher_to_convert }
-		}
-		custom_tooltip = {
-			text = 0_or_below_county_opinion_tt
-			county_opinion <= 0
+	}
+	development_level <= 25
+	custom_tooltip = {
+		text = has_tougher_to_convert_tt
+		NOT = { has_county_modifier = tougher_to_convert }
+	}
+	custom_tooltip = {
+		text = 0_or_below_county_opinion_tt
+		county_opinion <= 0
+	}
+	custom_tooltip = {
+		text = NOT_IS_HOLY_SITE_TRIGGER
+		NOT = {
+			any_direct_de_jure_vassal_title = { is_holy_site_of = scope:county.faith }
 		}
 	}
 }

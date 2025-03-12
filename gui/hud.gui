@@ -1743,7 +1743,7 @@ widget = {
 			datacontext = "[Character.GetLegitimacyType]"
 			datacontext = "[Character.GetLegitimacyLevel]"
 
-			visible = "[And(LegitimacyType.IsValid, GetPlayer.GetGovernment.HasRule( 'legitimacy' ))]"
+			visible = "[And(LegitimacyType.IsValid, Character.GetGovernment.HasRule( 'legitimacy' ))]"
 
 			using = tooltip_ne
 
@@ -3333,6 +3333,9 @@ widget = {
 
 				enabled = "[PlayerCanRaiseAnyRallyPoint]"
 				onclick = "[PlayerRaiseAllRegiments]"
+					onrightclick = "[PlayerRaiseAllRegimentsAtLocation]"
+					button_ignore = none
+
 				clicksound = "event:/SFX/UI/Unit/Army/sfx_ui_raise_army"
 
 				onclick = "[PdxGuiTriggerAllAnimations('button_army')]"
@@ -6196,6 +6199,8 @@ types HUD
 
 	type legitimacy_hud_tooltip = object_tooltip_pop_out
 	{
+		visible = "[And(LegitimacyType.IsValid, Character.GetGovernment.HasRule( 'legitimacy' ))]"
+
 		blockoverride "title_text"
 		{
 			margin = { 0 8 }

@@ -248,18 +248,10 @@ court_position_learning_trigger = { # Is courtier suited to learning positions?
 	}
 }
 
-base_court_position_validity_trigger = {
-	trigger_if = {
-		limit = { exists = liege }
-		liege = $EMPLOYER$ # To ensure invalidation if they leave court
-	}
+base_court_position_validity_trigger = { # would_be_valid_for_court_position ultimately traces back to this, so touch with caution
 	is_imprisoned = no
 	NOT = { is_at_war_with = $EMPLOYER$ }
-	trigger_if = { # Simply so we can have EMPLOYER fed at all times
-		limit = { $EMPLOYER$ ?= { always = yes } }
-	}
 }
-
 royal_architect_validity_trigger = {
 	base_court_position_validity_trigger = { EMPLOYER = $EMPLOYER$ }
 }
@@ -806,9 +798,15 @@ court_position_obligation_hook_salary_trigger = {
 			any_court_position_holder = {
 				type = $POS$_court_position
 				$LIEGE$ = {
-					has_hook_of_type = {
-						type = obligation_hook
-						target = prev
+					OR = {
+						has_hook_of_type = {
+							type = obligation_hook
+							target = prev
+						}
+						has_hook_of_type = {
+							type = strong_obligation_hook
+							target = prev
+						}
 					}
 				}
 			}

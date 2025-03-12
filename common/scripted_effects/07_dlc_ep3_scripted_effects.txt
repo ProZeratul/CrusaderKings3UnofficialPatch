@@ -2759,9 +2759,7 @@ zealous_missionary_conversion_effect = {
 			exists = location.barony.holder
 			government_has_flag = government_is_landless_adventurer 
 			has_character_flag = zealous_missionary_timer
-			NOT = {
-				location.faith ?= root.faith
-			}
+			location.county ?= { hasan_evangelize_province_trigger = yes }
 		}
 		trigger_event = ep3_laamp_decision_event.1103
 	}
@@ -3089,10 +3087,31 @@ create_noble_family_effect = {
 
 	save_scope_as = new_noble_family_holder
 	hidden_effect = { # NF can only be held by house heads
-		house ?= {
-			if = {
-				limit = { house_head != scope:new_noble_family_holder }
-				set_house_head = scope:new_noble_family_holder
+		if = { # Start by checking that we are not the house head already
+			limit = {
+				house ?= {
+					house_head != scope:new_noble_family_holder
+				}
+			}
+			if = { # If not, let's see if it would be reasonable to become house head...
+				limit = {
+					house ?= {
+						house_head ?= {
+							top_liege = scope:new_noble_family_holder.top_liege
+							OR = {
+								is_ruler = no
+								primary_title = {
+									tier <= tier_county
+								}
+							}
+							is_ai = yes #  Don't steal house head from a player
+						}
+					}
+				}
+				house = { set_house_head = scope:new_noble_family_holder }
+			}
+			else = { # ... Otherwise, we create a cadet branch
+				create_cadet_branch = yes
 			}
 		}
 	}
@@ -3469,6 +3488,9 @@ spawn_governance_contract_effect = {
 					is_title_maa_regiment = yes
 					is_raised = no
 					count >= 2
+				}
+				any_neighboring_and_across_water_realm_same_rank_owner = {
+					liege = root.liege
 				}
 			}
 
