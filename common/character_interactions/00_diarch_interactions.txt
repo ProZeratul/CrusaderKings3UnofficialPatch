@@ -36,7 +36,8 @@
 # Diarch (actor) takes a title from a vassal (recipient) of their liege with an optional veto for the liege (third_party).
 diarch_revoke_title_interaction = {
 	category = interaction_category_diarch
-	common_interaction = yes
+	common_interaction = no
+	interface_priority = 35
 	diarch_interaction = yes
 	highlighted_reason = HIGHLIGHTED_CAN_DIARCH_REVOKE
 	notification_text = DIARCH_REVOKE_TITLE_PROPOSAL
@@ -67,7 +68,7 @@ diarch_revoke_title_interaction = {
 	popup_on_receive = yes
 	pause_on_receive = yes
 
-	interface_priority = 60
+	#interface_priority = 60 #Unop: Already declared before
 	ai_min_reply_days = 4
 	ai_max_reply_days = 9
 
@@ -695,6 +696,7 @@ diarch_revoke_title_interaction = {
 diarch_retract_vassal_interaction = {
 	category = interaction_category_diarch
 	diarch_interaction = yes
+	interface_priority = 10
 	highlighted_reason = HIGHLIGHTED_CAN_DIARCH_RETRACT
 	notification_text = RETRACT_VASSAL_PROPOSAL
 	intermediary_notification_text = diarch_interaction_requesting_sign_off.tt
@@ -722,7 +724,7 @@ diarch_retract_vassal_interaction = {
 	popup_on_receive = yes
 	pause_on_receive = yes
 	
-	interface_priority = 55
+	#interface_priority = 55 #Unop: Already declared before
 	ai_min_reply_days = 4
 	ai_max_reply_days = 9
 	
@@ -1334,6 +1336,7 @@ diarch_retract_vassal_interaction = {
 diarch_imprison_interaction = {
 	category = interaction_category_diarch
 	diarch_interaction = yes
+	interface_priority = 16
 	notification_text = DIARCH_IMPRISON_PROPOSAL
 	intermediary_notification_text = diarch_interaction_requesting_sign_off.tt
 	intermediary_breakdown_yes = ANSWER_TRILATERAL_INTERMEDIARY_LIEGE_YES
@@ -1358,7 +1361,7 @@ diarch_imprison_interaction = {
 	popup_on_receive = yes
 	pause_on_receive = yes
 
-	interface_priority = 60
+	#interface_priority = 60 #Unop: Already declared before
 	ai_min_reply_days = 4
 	ai_max_reply_days = 9
 
@@ -2326,6 +2329,7 @@ diarch_subsidise_crown_authority_interaction = {
 diarch_adjust_bureaucracy_interaction = {
 	category = interaction_category_diarch
 	diarch_interaction = yes
+	interface_priority = 9
 	notification_text = {
 		first_valid = {
 			# Decentralise.
@@ -2675,6 +2679,7 @@ diarch_adjust_bureaucracy_interaction = {
 diarch_legal_meddling_interaction = {
 	category = interaction_category_diarch
 	common_interaction = yes
+	interface_priority = 165
 	diarch_interaction = yes
 	icon = vassal_claim_liege_title_interaction
 
@@ -2685,7 +2690,7 @@ diarch_legal_meddling_interaction = {
 	target_filter = recipient_domain_titles
 	popup_on_receive = yes
 
-	interface_priority = 60
+	#interface_priority = 60 #Unop: Already declared before
 
 	is_shown = {
 		# The obvious.
@@ -3086,6 +3091,7 @@ diarch_syphon_treasury_interaction = {
 	category = interaction_category_diarch
 	diarch_interaction = yes
 	icon = icon_gold
+	common_interaction = yes
 
 	desc = diarch_syphon_treasury_interaction_desc
 
@@ -3696,13 +3702,14 @@ diarch_shift_privileges_interaction = {
 	category = interaction_category_diarch
 	diarch_interaction = yes
 	icon = icon_shift_privileges
+	common_interaction = yes
 
 	ai_intermediary_maybe = yes
 	desc = diarch_shift_privileges_interaction_desc
 
 	popup_on_receive = yes
 
-	interface_priority = 60
+	interface_priority = 285
 
 	is_shown = {
 		# The obvious.
@@ -4019,6 +4026,7 @@ diarch_request_imperial_expedition_interaction = {
 	diarch_interaction = yes
 	notification_text = DIARCH_REQUESTS_IMPERIAL_EXPEDITION
 	icon = invasion
+	interface_priority = 5
 
 	desc = diarch_request_imperial_expedition_interaction_desc
 
@@ -4395,6 +4403,7 @@ diarch_demand_despotate_interaction = {
 	diarch_interaction = yes
 	notification_text = DIARCH_DEMANDS_DESPOTATE
 	icon = icon_found_despotate
+	interface_priority = 15
 
 	desc = diarch_demand_despotate_interaction_desc
 
@@ -4846,6 +4855,7 @@ diarch_coup_liege_interaction = {
 	category = interaction_category_diarch
 	diarch_interaction = yes
 	icon = icon_scheme_claim_throne
+	interface_priority = 50
 	pre_answer_no_breakdown_key = diarch_coup_liege_interaction_pre_answer_no_breakdown_key
 	pre_answer_yes_breakdown_key = diarch_coup_liege_interaction_pre_answer_yes_breakdown_key
 
@@ -4886,7 +4896,7 @@ diarch_coup_liege_interaction = {
 		scope:actor.liege = { save_scope_as = recipient }
 	}
 
-	interface_priority = 20
+	#interface_priority = 20 #Unop: Already declared before
 
 	is_shown = {
 		# Diarchy checks for scope:actor.
@@ -5621,7 +5631,7 @@ scapegoat_counterpart_interaction = {
 
 	desc = scapegoat_counterpart_interaction_desc
 
-	interface_priority = 20
+	interface_priority = 25
 
 	is_shown = {
 		# You must be one of the partners in a diarchy.
@@ -8682,7 +8692,7 @@ appoint_vizier_interaction = {
 	is_valid_showing_failures_only = {
 		# You can't already be in a diarchy of any kind.
 		scope:actor = {
-			NOT = { has_active_diarchy = yes }
+			has_active_diarchy = no
 		}
 		# Must be of a decent tier.
 		custom_tooltip = {
@@ -8969,7 +8979,7 @@ appoint_junior_emperor_interaction = {
 		if = {
 			limit = {
 				NOT = {
-					scope:secondary_recipient ?= { valid_junior_emperor_candidate_trigger = yes }
+					scope:secondary_recipient ?= { valid_junior_emperor_candidate_trigger = { LIEGE = scope:actor } }
 				}
 			}
 			clear_saved_scope = secondary_recipient
@@ -8985,19 +8995,19 @@ appoint_junior_emperor_interaction = {
 		# We perform this upon ourselves or our (probable) candidates.
 		OR = {
 			scope:recipient ?= scope:actor
-			scope:secondary_recipient ?= { valid_junior_emperor_candidate_trigger = yes }
+			scope:secondary_recipient ?= { valid_junior_emperor_candidate_trigger = { LIEGE = scope:actor } }
 		}
 	}
 
 	is_valid_showing_failures_only = {
 		# You can't already be in a diarchy of any kind.
 		scope:actor = {
-			NOT = { has_active_diarchy = yes }
+			has_active_diarchy = no
 		}
 		# Make sure we're targeting the right people, since redirects make this a lil slippery.
 		trigger_if = {
 			limit = { exists = scope:secondary_recipient }
-			scope:secondary_recipient = { valid_junior_emperor_candidate_trigger = yes }
+			scope:secondary_recipient = { valid_junior_emperor_candidate_trigger = { LIEGE = scope:actor } }
 		}
 		# Plus the usuals.
 		scope:actor = { is_available_at_peace = yes }
@@ -9183,7 +9193,7 @@ appoint_co_emperor_interaction = {
 	}
 
 	desc = appoint_co_emperor_interaction_desc
-	interface_priority = 20
+	interface_priority = 280
 
 	is_shown = {
 		# Must be able to retain a co-emperor.
@@ -9200,7 +9210,7 @@ appoint_co_emperor_interaction = {
 	is_valid_showing_failures_only = {
 		# You can't already be in a diarchy of any kind.
 		scope:actor = {
-			NOT = { has_active_diarchy = yes }
+			has_active_diarchy = no
 		}
 		# Make sure we're targeting the right people, since redirects make this a lil slippery.
 		trigger_if = {
@@ -9428,12 +9438,12 @@ appoint_co_monarch_interaction = {
 	is_valid_showing_failures_only = {
 		# You can't already be in a diarchy of any kind.
 		scope:actor = {
-			NOT = { has_active_diarchy = yes }
+			has_active_diarchy = no
 		}
 		# Make sure we're targeting the right people, since redirects make this a lil slippery.
 		trigger_if = {
 			limit = { exists = scope:secondary_recipient }
-			scope:secondary_recipient = { valid_co_monarch_candidate_trigger = yes }
+			scope:secondary_recipient = { valid_co_monarch_candidate_trigger = { LIEGE = scope:actor } }
 		}
 		# Plus the usuals.
 		scope:actor = { is_available_at_peace = yes }
@@ -9462,7 +9472,7 @@ appoint_co_monarch_interaction = {
 				## And by that I mean play literal favourites.
 				ordered_in_list = {
 					list = characters
-					limit = { valid_co_monarch_candidate_trigger = yes }
+					limit = { valid_co_monarch_candidate_trigger = { LIEGE = scope:actor } }
 					order_by = "reverse_opinion(scope:actor)"
 					save_scope_as = ai_recipient
 				}
