@@ -5673,24 +5673,11 @@ epidemic_events.5001 = {
 						count >= 1
 						outbreak_intensity <= minor
 					}
+					province_owner = { save_temporary_scope_as = province_owner_temp }
 				}
 			}
 			save_scope_as = epidemic_county
-		}
-
-		scope:epidemic_county = {
-			random_county_province = {
-				limit = {
-					any_province_epidemic = {
-						count >= 1
-						outbreak_intensity <= minor
-						exists = prev.province_owner
-					}
-				}
-				province_owner = {
-					save_scope_as = province_owner
-				}
-			}
+			scope:province_owner_temp = { save_scope_as = province_owner }
 		}
 
 		random_courtier_or_guest = {

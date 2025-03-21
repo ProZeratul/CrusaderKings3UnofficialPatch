@@ -219,7 +219,7 @@ seduce_ongoing.1101 = {
 						75 = {
 							modifier = {
 								add = 100
-								scope:target = { #Unop: We must check if the TARGET is interested, not root !
+								scope:target = {
 									seduce_gift_giving_tapestry_likes_trigger = yes
 								}
 							}
@@ -228,7 +228,7 @@ seduce_ongoing.1101 = {
 						25 = {
 							modifier = {
 								add = 100
-								scope:target = { #Unop: We must check if the TARGET is interested, not root !
+								scope:target = {
 									seduce_gift_giving_tapestry_dislikes_trigger = yes
 								}
 							}
@@ -244,7 +244,7 @@ seduce_ongoing.1101 = {
 						75 = {
 							modifier = {
 								add = 100
-								scope:target = { #Unop: We must check if the TARGET is interested, not root !
+								scope:target = {
 									seduce_gift_giving_horse_likes_trigger = yes
 								}
 							}
@@ -253,7 +253,7 @@ seduce_ongoing.1101 = {
 						25 = {
 							modifier = {
 								add = 100
-								scope:target = { #Unop: We must check if the TARGET is interested, not root !
+								scope:target = {
 									seduce_gift_giving_horse_dislikes_trigger = yes
 								}
 							}
@@ -269,7 +269,7 @@ seduce_ongoing.1101 = {
 						75 = {
 							modifier = {
 								add = 100
-								scope:target = { #Unop: We must check if the TARGET is interested, not root !
+								scope:target = {
 									seduce_gift_giving_tailor_likes_trigger = yes
 								}
 							}
@@ -278,7 +278,7 @@ seduce_ongoing.1101 = {
 						25 = {
 							modifier = {
 								add = 100
-								scope:target = { #Unop: We must check if the TARGET is interested, not root !
+								scope:target = {
 									seduce_gift_giving_tailor_dislikes_trigger = yes
 								}
 							}
@@ -2260,6 +2260,8 @@ seduce_ongoing.3001 = {
 		container = "custom_widgets_container"
 	}
 
+	cooldown = { years = 2 }
+
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }
 		scope:target = {
@@ -2655,6 +2657,8 @@ seduce_ongoing.4001 = {
 		gui = "event_window_widget_scheme"
 		container = "custom_widgets_container"
 	}
+
+	cooldown = { years = 2 }
 
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }
@@ -3215,6 +3219,8 @@ seduce_ongoing.5201 = {
 		container = "custom_widgets_container"
 	}
 
+	cooldown = { years = 2 }
+
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }
 		OR = {
@@ -3638,6 +3644,8 @@ seduce_ongoing.5301 = {
 		container = "custom_widgets_container"
 	}
 
+	cooldown = { years = 2 }
+
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }
 		scope:target = {
@@ -3983,6 +3991,8 @@ seduce_ongoing.6031 = {
 		container = "custom_widgets_container"
 	}
 
+	cooldown = { years = 2 }
+
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }
 		OR = {
@@ -4288,6 +4298,8 @@ seduce_ongoing.1801 = {
 		gui = "event_window_widget_scheme"
 		container = "custom_widgets_container"
 	}
+
+	cooldown = { years = 2 }
 
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }
@@ -4716,6 +4728,8 @@ seduce_ongoing.7001 = {
 		container = "custom_widgets_container"
 	}
 
+	cooldown = { years = 2 }
+
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }
 		scope:target = {
@@ -5016,6 +5030,8 @@ seduce_ongoing.1001 = {
 		gui = "event_window_widget_scheme"
 		container = "custom_widgets_container"
 	}
+
+	cooldown = { years = 2 }
 
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }
@@ -6208,6 +6224,8 @@ seduce_ongoing.1701 = {
 		container = "custom_widgets_container"
 	}
 
+	cooldown = { years = 2 }
+
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }
 		scope:target = {
@@ -6789,6 +6807,8 @@ seduce_ongoing.2001 = {
 		container = "custom_widgets_container"
 	}
 
+	cooldown = { years = 2 }
+
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }
 		seduction_target_is_close_trigger = yes
@@ -6800,7 +6820,7 @@ seduce_ongoing.2001 = {
 			}
 		}
 		scope:scheme = {
-			scheme_agent_charges >= 4
+			scheme_progress >= scheme_progress_50
 		}
 	}
 
@@ -7425,9 +7445,11 @@ seduce_ongoing.4011 = {
 		container = "custom_widgets_container"
 	}
 
+	cooldown = { years = 2 }
+
 	trigger = {
 		scope:scheme = {
-			scheme_agent_charges > 3
+			scheme_progress > scheme_progress_33
 		}
 		is_landed = yes
 		scope:target = {
@@ -7931,6 +7953,8 @@ seduce_ongoing.4101 = {
 		gui = "event_window_widget_scheme"
 		container = "custom_widgets_container"
 	}
+
+	cooldown = { years = 2 }
 
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }
@@ -8694,6 +8718,8 @@ seduce_ongoing.5001 = {
 		container = "custom_widgets_container"
 	}
 
+	cooldown = { years = 2 }
+
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }
 		exists = scope:target.court_owner
@@ -9331,6 +9357,8 @@ seduce_ongoing.5011 = {
 		container = "custom_widgets_container"
 	}
 
+	cooldown = { years = 2 }
+
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }
 		is_healthy = yes
@@ -9367,7 +9395,7 @@ seduce_ongoing.5011 = {
 		modifier = {
 			add = 5
 			scope:scheme = {
-				scheme_progress > 9
+				scheme_progress > scheme_progress_66
 			}
 		}
 	}
@@ -9974,10 +10002,12 @@ seduce_ongoing.5101 = {
 		container = "custom_widgets_container"
 	}
 
+	cooldown = { years = 2 }
+
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }
 		scope:scheme = {
-			scheme_agent_charges >= 2
+			scheme_progress >= scheme_progress_33
 		}
 		scope:target = {
 			is_vassal_of = scope:owner
@@ -10420,6 +10450,8 @@ seduce_ongoing.6001 = {
 		container = "custom_widgets_container"
 	}
 
+	cooldown = { years = 2 }
+
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }
 		exists = scope:target.court_owner
@@ -10532,6 +10564,8 @@ seduce_ongoing.6011 = {
 		container = "custom_widgets_container"
 	}
 
+	cooldown = { years = 2 }
+
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }
 		seduction_target_is_close_trigger = yes
@@ -10626,6 +10660,8 @@ seduce_ongoing.6021 = {
 		gui = "event_window_widget_scheme"
 		container = "custom_widgets_container"
 	}
+
+	cooldown = { years = 2 }
 
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }
@@ -10748,6 +10784,8 @@ seduce_ongoing.6051 = {
 		gui = "event_window_widget_scheme"
 		container = "custom_widgets_container"
 	}
+
+	cooldown = { years = 2 }
 
 	trigger = {
 		NOT = { has_variable = scheme_event_active_flag }

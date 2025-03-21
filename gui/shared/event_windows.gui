@@ -960,6 +960,15 @@ types Events
 								texture = "gfx/interface/icons/court_position_types/court_brewmaster_court_position.dds"
 								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_CHURCH_HOLDING_BREWERY"
 							}
+
+							icon = {
+								name = "has_cultrad_icon"
+								visible = "[ReasonItem.IsFlag( 'has_cultrad' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/character_interactions/icon_culture.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_TRADITIONS"
+							}
+
 							icon = {
 								name = "unop_is_basileus"
 								visible = "[ReasonItem.IsFlag( 'unop_is_basileus' )]"
@@ -1091,10 +1100,19 @@ types Events
 					container = {
 						container = {
 							visible = "[OptionEffectItem.IsTrait]"
+							datacontext = "[OptionEffectItem.GetTrait]"
 							alwaystransparent = yes
 
+							# Needed for tooltipwidget We rely on that the code only shows this icon for Player Character gaining traits
+							datacontext = "[GetPlayer]"
+							datacontext = "[GetPlayer.GetFaith]"						
+
+							tooltipwidget = {
+								using = character_trait_tooltip
+							}
+
 							icon = {
-								datacontext = "[OptionEffectItem.GetTrait]"
+								
 								name = "trait_icon"
 								size = { 34 34 }
 								texture = "[Trait.GetIcon(GetPlayer)]"
