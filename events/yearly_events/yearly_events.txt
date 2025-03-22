@@ -729,7 +729,7 @@ scripted_trigger yearly_0003_valid_child = {
 scripted_trigger yearly_0003_valid_relative = {
 	# Must be available and in our court (so we have control over them)
 	is_available_ai_adult = yes
-	#might_cheat_on_every_partner_trigger = yes
+	#might_cheat_on_every_partner_trigger = yes #Unop
 	NOR = {
 		this = root
 		this = scope:child
@@ -742,6 +742,7 @@ scripted_trigger yearly_0003_valid_relative = {
 
 	# Relative must specifically be able to be in a incestuous relationship with our selected child.
 	save_temporary_scope_as = valid_relative_check
+	#Unop
 	#matching_gender_and_sexuality_trigger = {
 	#	CHARACTER_1 = scope:child
 	#	CHARACTER_2 = scope:valid_relative_check
@@ -958,6 +959,7 @@ yearly.0003 = {
 			}
 		}
 
+		#Unop Add debug logging
 		if = {
 			limit = { NOT = { exists = scope:secret } }
 			debug_log = "Unop: yearly.0003 does not create any secret"

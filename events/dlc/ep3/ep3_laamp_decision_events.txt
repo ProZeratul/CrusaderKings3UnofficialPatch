@@ -10300,9 +10300,9 @@ ep3_laamp_decision_event.1033 = {
 							    		#Create a victim to kill
 								    	create_character = {
 											template = generic_peasant_character
-											culture = scope:visiting_location.culture
-											faith = scope:visiting_location.faith
-											location = scope:visiting_location
+											culture = scope:visiting_location.culture #Unop Use correct scope
+											faith = scope:visiting_location.faith #Unop Use correct scope
+											location = scope:visiting_location #Unop Use correct scope
 											after_creation = { set_to_lowborn = yes }
 											save_scope_as = 1030_previous_victim
 										}
@@ -16577,7 +16577,7 @@ ep3_laamp_decision_event.1053 = {
 			random_pool_character = {
 				province = scope:visiting_location
 				limit = { 1053_random_martial_character_trigger = yes }
-				save_scope_as = laamp_talented_guard # Fix: Save correct scope
+				save_scope_as = laamp_talented_guard # Unop: Save correct scope
 			}
 			#Otherwise create a suiting talented guard
 			if = {
@@ -16625,6 +16625,7 @@ ep3_laamp_decision_event.1053 = {
 			}
 		}
 
+		#Unop Remove their shirts and hats
 		if = { # The first time you go to the garrison, the desc is telling that they are brawling
 			limit = {
 				NOT = { exists = scope:been_to_garrison }
@@ -16759,6 +16760,7 @@ ep3_laamp_decision_event.1053 = {
 		#What was our last location
 		1000_update_last_location_effect = { LOCATION_FLAG = flag:garrison }
 
+		#Unop Put their shirts and hats back on
 		scope:laamp_plain_guard ?= {
 			if = { 
 				limit = { has_character_flag = single_combat_stripped_to_waist }

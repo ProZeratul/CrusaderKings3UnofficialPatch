@@ -2766,7 +2766,7 @@ travel_start_event.1070 = {
 	}
 	#Show our Travel Leader
 	right_portrait = {
-		trigger = { exists = scope:caravaner }
+		trigger = { exists = scope:caravaner } #Unop Use scope:caravaner
 		character = scope:caravaner
 	}
 	#Show our host
@@ -2781,6 +2781,7 @@ travel_start_event.1070 = {
 		involved_activity = { has_activity_type = activity_hunt }
 	}
 	immediate = {
+		#Unop Save scope:caravaner
 		if = {
 			limit = { exists = current_travel_plan.travel_leader }
 			current_travel_plan.travel_leader = { save_scope_as = caravaner }

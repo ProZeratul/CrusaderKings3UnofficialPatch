@@ -341,7 +341,9 @@ marshal_task.0302 = {
 				}
 			}
 		}
+	#} #Unop Remove after
 
+	#after = {
 		scope:commander = {
 			if = {
 				limit = {
@@ -1839,6 +1841,7 @@ marshal_task.2003 = {
 
 scripted_trigger marshal_task_2101_teacher_trigger = {
 	number_of_commander_traits > 0
+	#Unop Rework finding commander and student
 	can_be_commander_now_trigger = { ARMY_OWNER = root }
 	is_available_ai_adult = yes
 	NOT = { this = root.cp:councillor_marshal }
@@ -1866,6 +1869,7 @@ marshal_task.2101 = {
 			martial > mediocre_skill_rating
 		}
 
+		#Unop Rework finding commander and student
 		#First, make a potential teacher list
 		any_courtier = {
 			count = all
@@ -1879,12 +1883,14 @@ marshal_task.2101 = {
 		#Find two candidates
 		any_in_list = {
 			list = possible_commanders
+			#Unop Rework finding commander and student
 			can_be_commander_now_trigger = { ARMY_OWNER = root }
 			marshal_task_2101_teacher_trigger = yes
 			save_temporary_scope_as = teacher
 		}
 		any_in_list = {
 			list = possible_commanders
+			#Unop Rework finding commander and student
 			NOT = { this = scope:teacher }
 			can_be_commander_now_trigger = { ARMY_OWNER = root }
 			marshal_task_2101_commander_trigger = yes #This should ensure there is another possible candidate that is not also the teacher
@@ -1911,6 +1917,7 @@ marshal_task.2101 = {
 			days = marshal_task_side_effect_cooldown
 		}
 
+		#Unop Rework finding commander and student
 		#Build a list of possible characters involved (for teacher slot)
 		every_courtier = {
 			limit = {
@@ -2006,7 +2013,9 @@ marshal_task.2101 = {
 				learn_commander_trait_success_effect = yes
 			}
 		}
+	#} #Unop Remove after
 
+	#after = {
 		scope:commander = {
 			if = {
 				limit = {

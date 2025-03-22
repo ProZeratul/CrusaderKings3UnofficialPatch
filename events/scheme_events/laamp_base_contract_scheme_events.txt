@@ -1351,7 +1351,7 @@ laamp_base_contract_schemes.0034 = {
 			}
 			ordered_in_list = {
 				list = destination_counties_list
-				order_by = "squared_distance(scope:employer.capital_province)"
+				order_by = "squared_distance(scope:employer.capital_province)" #Unop
 				max = 3
 				check_range_bounds = no
 				if = {
@@ -3645,40 +3645,35 @@ scripted_trigger laamp_base_contract_schemes_0551_suitable_courtier_to_challenge
 scripted_effect laamp_base_contract_schemes_0551_process_out_overlapping_candidacies_effect = {
 	if = {
 		limit = {
-			exists = scope:$SKILL_2$_candidate
-			this = scope:$SKILL_2$_candidate
+			scope:$SKILL_2$_candidate ?= this
 			$SKILL_1$ >= $SKILL_2$
 		}
 		clear_saved_scope = $SKILL_2$_candidate
 	}
 	if = {
 		limit = {
-			exists = scope:$SKILL_3$_candidate
-			this = scope:$SKILL_3$_candidate
+			scope:$SKILL_3$_candidate ?= this
 			$SKILL_1$ >= $SKILL_3$
 		}
 		clear_saved_scope = $SKILL_3$_candidate
 	}
 	if = {
 		limit = {
-			exists = scope:$SKILL_4$_candidate
-			this = scope:$SKILL_4$_candidate
+			scope:$SKILL_4$_candidate ?= this
 			$SKILL_1$ >= $SKILL_4$
 		}
 		clear_saved_scope = $SKILL_4$_candidate
 	}
 	if = {
 		limit = {
-			exists = scope:$SKILL_5$_candidate
-			this = scope:$SKILL_5$_candidate
+			scope:$SKILL_5$_candidate ?= this
 			$SKILL_1$ >= $SKILL_5$
 		}
 		clear_saved_scope = $SKILL_5$_candidate
 	}
 	if = {
 		limit = {
-			exists = scope:$SKILL_6$_candidate
-			this = scope:$SKILL_6$_candidate
+			scope:$SKILL_6$_candidate ?= this
 			$SKILL_1$ >= $SKILL_6$
 		}
 		clear_saved_scope = $SKILL_6$_candidate

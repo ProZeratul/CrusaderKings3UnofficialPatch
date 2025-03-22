@@ -22,7 +22,7 @@ diplomatic_intent = {
 
 	# Handle target character invalidation
 	is_target_valid = {
-		NOT = { this = scope:target }
+		NOT = { this = scope:target } #Unop Prevent selecting yourself as intent target
 		scope:target ?= {
 			is_ai = yes
 			is_playable_character = yes
@@ -34,7 +34,7 @@ diplomatic_intent = {
 	}
 
 	on_target_invalidated = {
-		trigger_event = unop.0091
+		trigger_event = unop.0091 #Unop
 	}
 
 	ai_will_do = {
@@ -66,7 +66,7 @@ matchmaking_intent = {
 
 	# Handle target character invalidation
 	is_target_valid = {
-		NOT = { this = scope:target }
+		NOT = { this = scope:target } #Unop Prevent selecting yourself as intent target
 		scope:target = {
 			is_ai = yes
 			is_close_or_extended_family_of = root
@@ -76,7 +76,7 @@ matchmaking_intent = {
 	}
 
 	on_target_invalidated = {
-		trigger_event = unop.0091
+		trigger_event = unop.0091 #Unop
 	}
 
 	ai_will_do = {

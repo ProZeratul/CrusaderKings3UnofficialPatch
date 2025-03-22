@@ -1833,7 +1833,7 @@ laamp_base_learning_contract_events.4005 = {
 	}
 	after = {
 		remove_character_flag ?= is_in_task_contract_event_chain
-		hidden_effect = {
+		hidden_effect = { #Unop Only resume travel plan if paused
 			current_travel_plan ?= {
 				if = {
 					limit = { is_paused = yes }
@@ -2364,10 +2364,11 @@ laamp_base_learning_contract_events.4015 = {
 					faith = root.location.faith
 					trait = devoted
 					save_scope_as = local_clergy
+					#save_scope_as = challenge_character #Unop Move to below
 				}
 			}
 			scope:local_clergy ?= {
-				save_scope_as = challenge_character
+				save_scope_as = challenge_character #Unop Move from above
 				add_character_flag = {
 					flag = used_in_theological_dispute
 					months = 2
@@ -5925,11 +5926,11 @@ scripted_effect 4100_save_background_effect = {
 		limit = { terrain = forest }
 		random_list = {
 			1 = {
-				trigger = { root = { current_season_spring = yes } }
+				trigger = { root = { current_season_spring = yes } } #Unop
 				4100_actual_save_background_effect = { FLAG = foggy_forest }
 			}
 			1 = {
-				trigger = { root = { current_season_autumn = yes } }
+				trigger = { root = { current_season_autumn = yes } } #Unop
 				4100_actual_save_background_effect = { FLAG = managed_forest }
 			}
 			1 = {
@@ -5947,7 +5948,7 @@ scripted_effect 4100_save_background_effect = {
 				4100_actual_save_background_effect = { FLAG = forest_cave }
 			}
 			1 = {
-				trigger = { root = { location_has_winter_trigger = yes } }
+				trigger = { root = { location_has_winter_trigger = yes } } #Unop
 				4100_actual_save_background_effect = { FLAG = snowy_forest }
 			}
 		}
@@ -7604,7 +7605,7 @@ laamp_base_learning_contract_events.4120 = {
 	}
 	after = {
 		remove_character_flag ?= is_in_task_contract_event_chain
-		hidden_effect = {
+		hidden_effect = { #Unop Only resume travel plan if paused
 			current_travel_plan ?= {
 				if = {
 					limit = { is_paused = yes }

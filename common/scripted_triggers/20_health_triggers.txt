@@ -630,7 +630,7 @@ has_high_health_penalty_disease_type_trigger = { # >= 3.5
 		### CONSUMPTION
 		AND = {
 			scope:disease_type = flag:consumption #2.5 + 1 for children + 2 for elderly
-			OR = {
+			OR = { #Unop Add is_adult = no
 				is_adult = no
 				is_old_character = yes
 			}
@@ -643,7 +643,7 @@ has_high_health_penalty_disease_type_trigger = { # >= 3.5
 		### MEASLES
 		AND = {
 			scope:disease_type = flag:measles #3 + 3 for children
-			is_adult = no
+			is_adult = no #Unop Change to is_adult = no
 		}
 		### PNEUMONIA
 		AND = {
@@ -666,7 +666,7 @@ has_low_health_penalty_disease_type_trigger = { # < 3.5
 		### CONSUMPTION
 		AND = {
 			scope:disease_type = flag:consumption #2.5 + 1 for children + 2 for elderly
-			NOR = {
+			NOR = { #Unop Add is_adult = no
 				is_adult = no
 				is_old_character = yes
 			}
@@ -679,7 +679,7 @@ has_low_health_penalty_disease_type_trigger = { # < 3.5
 		### MEASLES
 		AND = {
 			scope:disease_type = flag:measles #3 + 3 for children
-			is_adult = yes
+			is_adult = yes #Unop Change to is_adult = yes
 		}
 		### PNEUMONIA
 		AND = {

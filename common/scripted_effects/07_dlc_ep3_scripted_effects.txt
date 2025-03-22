@@ -2204,11 +2204,11 @@ adventurer_realm_destabilisation_list_effect = {
 							}
 							max = 25
 						}
-						"capital_county.squared_distance(scope:ruler.capital_province)" >= squared_distance_medium
+						"capital_county.squared_distance(scope:ruler.capital_province)" >= squared_distance_medium #Unop
 						capital_county = {
 							save_temporary_scope_value_as = {
 								name = distance
-								value = "squared_distance(scope:ruler.capital_province)"
+								value = "squared_distance(scope:ruler.capital_province)" #Unop
 							}
 						}
 					}
@@ -8090,7 +8090,7 @@ ep3_story_cycle_admin_eunuch_downgrade_modifier_effect = {
 				limit = { scope:modifier_type = flag:eunuch }
 				progress_towards_rival_effect = {
 					REASON = rival_admin_eunuch
-					CHARACTER = scope:unop_top_liege
+					CHARACTER = scope:unop_top_liege #Unop
 					OPINION = default_rival_opinion
 				}
 			}

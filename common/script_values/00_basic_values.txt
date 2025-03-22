@@ -1228,7 +1228,8 @@ crush_opinion_impact = 30
 
 #DYNASTY PRESTIGE
 
-raw_minimum_dynasty_prestige_value = 10 # Found that when doing GW with leisure_palace_01
+#Unop Found that when doing GW with leisure_palace_01
+raw_minimum_dynasty_prestige_value = 10
 raw_miniscule_dynasty_prestige_value = 25
 raw_minor_dynasty_prestige_value = 50
 raw_medium_dynasty_prestige_value = 75
@@ -1241,7 +1242,7 @@ raw_excessive_dynasty_prestige_value = 2500
 raw_struggle_ending_dynasty_prestige_value = 10000
 
 #Note! These are base values, use loss/gain below
-minimum_dynasty_prestige_value = {
+minimum_dynasty_prestige_value = { #Unop
 	value = 10
 	multiply = { value = scale_dynasty_prestige_by_era }
 }
@@ -1271,7 +1272,7 @@ excessive_dynasty_prestige_value = 2500
 scale_dynasty_prestige_by_era = {
 	value = 1
 	if = {
-		limit = { # dynast mean we are inside a Dynasty scope
+		limit = { #Unop dynast mean we are inside a Dynasty scope
 			exists = dynast.culture
 		}
 		dynast.culture = {
@@ -1289,7 +1290,7 @@ scale_dynasty_prestige_by_era = {
 			}
 		}
 	}
-	else_if = {
+	else_if = { #Unop dynasty means we are inside a character scope
 		limit = {
 			exists = dynasty.dynast.culture
 		}
@@ -1310,7 +1311,7 @@ scale_dynasty_prestige_by_era = {
 	}
 }
 
-minimum_dynasty_prestige_loss = {
+minimum_dynasty_prestige_loss = { #Unop
 	value = 0
 	subtract = minimum_dynasty_prestige_value
 }
@@ -1343,7 +1344,7 @@ excessive_dynasty_prestige_loss = {
 	subtract = excessive_dynasty_prestige_value
 }
 
-minimum_dynasty_prestige_gain = { value = minimum_dynasty_prestige_value }
+minimum_dynasty_prestige_gain = { value = minimum_dynasty_prestige_value } #Unop
 miniscule_dynasty_prestige_gain = { value = miniscule_dynasty_prestige_value }
 minor_dynasty_prestige_gain = { value = minor_dynasty_prestige_value }
 medium_dynasty_prestige_gain = { value = medium_dynasty_prestige_value }
@@ -1453,7 +1454,7 @@ gift_artifact_opinion = {
 			}
 		}
 		if = {
-			limit = { 
+			limit = { #Unop Compare to percent instead of value
 				artifact_durability_percent <= {
 					value = define:NInventory|ARTIFACT_LOW_DURABILITY
 					divide = 100
@@ -1462,7 +1463,7 @@ gift_artifact_opinion = {
 			divide = 3 # 1/3 for damaged artifacts
 		}
 		if = {
-			limit = {
+			limit = { #Unop Compare to percent instead of value
 				artifact_durability_percent <= {
 					value = define:NInventory|ARTIFACT_VERY_LOW_DURABILITY
 					divide = 100
