@@ -4112,73 +4112,8 @@ odds_subsume_province_scheme_misc_value = {
 	
 }
 
+#Unop Not used, same name as value below
 # same as odds_raid_estate_scheme_misc_value but target is a title
-odds_dispute_border_scheme_misc_value = {
-	add = {
-		value = 0
-		desc = scheme_odds.misc_modifiers
-		add = {
-			value = scope:owner.influence_level
-			multiply = 2
-		}
-		add = {
-			value = scope:target.influence_level
-			multiply = -4
-		}
-		if = {
-			limit = {
-				scope:target.house = scope:owner.top_liege.house
-			}
-			add = -12
-		}
-		if = {
-			limit = {
-				scope:owner.house = {
-					is_powerful_family = yes
-					is_dominant_family = no
-				}
-			}
-			add = 8
-		}
-		if = {
-			limit = {
-				scope:target.house = {
-					is_powerful_family = yes
-					is_dominant_family = no
-				}
-			}
-			add = -16
-		}
-		if = {
-			limit = {
-				scope:target.domicile ?= {
-					OR = {
-						has_domicile_building_or_higher = barracks_01
-						has_domicile_building_or_higher = guardhouse_01
-						has_domicile_building_or_higher = watchtower_01
-						has_domicile_building_or_higher = estate_main_02
-					}
-				}
-			}
-			add = -4
-		}
-		if = {
-			limit = {
-				scope:target.domicile ?= {
-					OR = {
-						has_domicile_building_or_higher = barracks_03
-						has_domicile_building_or_higher = guardhouse_03
-						has_domicile_building_or_higher = watchtower_03
-						has_domicile_building_or_higher = estate_main_04
-					}
-				}
-			}
-			add = -12
-		}
-	}
-}
-
-#Unop ck3-tiger Duplicated from above
 #odds_dispute_border_scheme_misc_value = {
 #	add = {
 #		value = 0
@@ -4188,12 +4123,12 @@ odds_dispute_border_scheme_misc_value = {
 #			multiply = 2
 #		}
 #		add = {
-#			value = scope:target.holder.influence_level
+#			value = scope:target.influence_level
 #			multiply = -4
 #		}
 #		if = {
 #			limit = {
-#				scope:target.holder.house = scope:owner.top_liege.house
+#				scope:target.house = scope:owner.top_liege.house
 #			}
 #			add = -12
 #		}
@@ -4208,7 +4143,7 @@ odds_dispute_border_scheme_misc_value = {
 #		}
 #		if = {
 #			limit = {
-#				scope:target.holder.house = {
+#				scope:target.house = {
 #					is_powerful_family = yes
 #					is_dominant_family = no
 #				}
@@ -4217,7 +4152,7 @@ odds_dispute_border_scheme_misc_value = {
 #		}
 #		if = {
 #			limit = {
-#				scope:target.holder.domicile ?= {
+#				scope:target.domicile ?= {
 #					OR = {
 #						has_domicile_building_or_higher = barracks_01
 #						has_domicile_building_or_higher = guardhouse_01
@@ -4230,7 +4165,7 @@ odds_dispute_border_scheme_misc_value = {
 #		}
 #		if = {
 #			limit = {
-#				scope:target.holder.domicile ?= {
+#				scope:target.domicile ?= {
 #					OR = {
 #						has_domicile_building_or_higher = barracks_03
 #						has_domicile_building_or_higher = guardhouse_03
@@ -4243,6 +4178,71 @@ odds_dispute_border_scheme_misc_value = {
 #		}
 #	}
 #}
+
+odds_dispute_border_scheme_misc_value = {
+	add = {
+		value = 0
+		desc = scheme_odds.misc_modifiers
+		add = {
+			value = scope:owner.influence_level
+			multiply = 2
+		}
+		add = {
+			value = scope:target.holder.influence_level
+			multiply = -4
+		}
+		if = {
+			limit = {
+				scope:target.holder.house = scope:owner.top_liege.house
+			}
+			add = -12
+		}
+		if = {
+			limit = {
+				scope:owner.house = {
+					is_powerful_family = yes
+					is_dominant_family = no
+				}
+			}
+			add = 8
+		}
+		if = {
+			limit = {
+				scope:target.holder.house = {
+					is_powerful_family = yes
+					is_dominant_family = no
+				}
+			}
+			add = -16
+		}
+		if = {
+			limit = {
+				scope:target.holder.domicile ?= {
+					OR = {
+						has_domicile_building_or_higher = barracks_01
+						has_domicile_building_or_higher = guardhouse_01
+						has_domicile_building_or_higher = watchtower_01
+						has_domicile_building_or_higher = estate_main_02
+					}
+				}
+			}
+			add = -4
+		}
+		if = {
+			limit = {
+				scope:target.holder.domicile ?= {
+					OR = {
+						has_domicile_building_or_higher = barracks_03
+						has_domicile_building_or_higher = guardhouse_03
+						has_domicile_building_or_higher = watchtower_03
+						has_domicile_building_or_higher = estate_main_04
+					}
+				}
+			}
+			add = -12
+		}
+	}
+}
 
 # same as odds_dispute_border_scheme_misc_value but target is a character
 odds_raid_estate_scheme_misc_value = {
