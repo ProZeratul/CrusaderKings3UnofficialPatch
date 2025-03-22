@@ -8795,24 +8795,53 @@ scripted_effect 1031_been_to_effect = {
 		}
 		save_scope_as = been_to_$GUILD$
 	}
-	#Go back to the previous screen
+	# Unop Return to the correct place without checking var:return_from_location
+	# to prevent exiting the event chain prematurely and without cleanup
 	if = {
-		limit = { var:return_from_location ?= flag:tavern }
+		limit = {
+			OR = {
+				flag:$GUILD$ = flag:storyteller
+				flag:$GUILD$ = flag:recruit
+				flag:$GUILD$ = flag:spouse
+				flag:$GUILD$ = flag:hood
+			}
+		}
 		1031_return_to_tavern_effect = yes
 	}
 	#Go back to church grounds
-	if = {
-		limit = { var:return_from_location ?= flag:church_grounds }
+	else_if = {
+		limit = {
+			OR = {
+				flag:$GUILD$ = flag:healer
+				flag:$GUILD$ = flag:church
+				flag:$GUILD$ = flag:garden
+				flag:$GUILD$ = flag:physician
+			}
+		}
 		1041_return_to_church_grounds_effect = yes
 	}
 	#Go back to castle grounds
-	if = {
-		limit = { var:return_from_location ?= flag:castle_grounds }
+	else_if = {
+		limit = {
+			OR = {
+				flag:$GUILD$ = flag:training
+				flag:$GUILD$ = flag:garrison
+				flag:$GUILD$ = flag:reinforcers
+				flag:$GUILD$ = flag:bodyguard
+			}
+		}
 		1051_return_to_castle_effect = yes
 	}
 	#Go back to craftsmen district
-	if = {
-		limit = { var:return_from_location ?= flag:craftsmen }
+	else_if = {
+		limit = {
+			OR = {
+				flag:$GUILD$ = flag:weaponsmith
+				flag:$GUILD$ = flag:armorer
+				flag:$GUILD$ = flag:jeweler
+				flag:$GUILD$ = flag:quartermaster
+			}
+		}
 		1061_return_to_craftsmen_effect = yes
 	}
 }
