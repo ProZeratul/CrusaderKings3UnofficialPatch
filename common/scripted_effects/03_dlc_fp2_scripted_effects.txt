@@ -1166,6 +1166,10 @@ clean_revolt_county_modifiers_from_faction_members_effect = {
 }
 
 generate_troops_from_revolt_county_modifiers_effect = {
+	if = { #Unop ck3-tiger Used by spawn_army below
+		limit = { NOT = { exists = scope:war } }
+		war = { save_temporary_scope_as = war }
+	}
 	if = {
 		limit = {
 			scope:attacker = {
@@ -1497,7 +1501,10 @@ fp2_lyonese_monk_cancel_chain_effect = {
 	}
 	## Or else they're given to the Pope.
 	else_if = {
-		limit = { scope:remove_acolyte = flag:pope }
+		limit = { #Unop ck3-tiger Ensure scope:pope exists
+			scope:remove_acolyte = flag:pope
+			exists = scope:pope
+		}
 		fp2_lyonese_monk_return_territories_effect = yes
 		# So we walk through the narrative...
 		scope:acolyte = {
@@ -1542,7 +1549,7 @@ fp2_border_raid_damage_effect = {
 	change_development_level = fp2_border_raid_development_change_value
 	if = {
 		limit = { exists = scope:raid_province }
-		show_as_tooltip = { destroy_random_building_effect = yes }
+		show_as_tooltip = { scope:raid_province = { destroy_random_building_effect = yes } } #Unop ck3-tiger Use correct scope
 	}
 	scope:attacker = { add_gold = fp2_border_raid_gold_change_value }
 }

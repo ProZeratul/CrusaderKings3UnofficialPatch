@@ -464,7 +464,7 @@ food_taster_validity_trigger = {
 		text = faith_allows_recruitment_court_position
 		trigger_if = {
 			limit = {
-				scope:liege.faith = {
+				$EMPLOYER$.faith = { #Unop ck3-tiger Use EMPLOYER in validity triggers
 					NOT = { has_doctrine = doctrine_clerical_function_recruitment }
 				}
 			}
@@ -1472,7 +1472,7 @@ camp_priest_validity_trigger = {
 	}
 	base_court_position_validity_trigger = { EMPLOYER = $EMPLOYER$ }
 	#have to be the same faith
-	faith = scope:liege.faith
+	faith = $EMPLOYER$.faith #Unop ck3-tiger Use EMPLOYER in validity triggers
 	# Qualifications.
 	OR = {
 		# Skill.

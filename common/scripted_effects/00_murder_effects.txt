@@ -73,6 +73,14 @@ murder_consequences_known_or_exposed_effect = {
 			}
 		}
 		hidden_effect = {
+			#Unop ck3-tiger Save secret scope to be used below
+			random_secret = {
+				limit = {
+					secret_type = secret_murder
+					secret_target = $VICTIM$
+				}
+				save_temporary_scope_as = secret
+			}
 			if = {
 				limit = {
 					OR = {
@@ -94,7 +102,7 @@ murder_consequences_known_or_exposed_effect = {
 					involvement = involved
 					activate_struggle_catalyst_secondary_character_involvement_involved_trigger = {
 						CATALYST = catalyst_discovery_of_very_important_murder
-						CHAR = scope:victim
+						CHAR = $VICTIM$ #Unop ck3-tiger
 					}
 				}
 			}
@@ -105,7 +113,7 @@ murder_consequences_known_or_exposed_effect = {
 				limit = {
 					activate_struggle_catalyst_secondary_character_involvement_involved_trigger = {
 						CATALYST = catalyst_discovery_of_very_important_murder
-						CHAR = scope:victim
+						CHAR = $VICTIM$ #Unop ck3-tiger
 					}
 				}
 				activate_struggle_catalyst = {

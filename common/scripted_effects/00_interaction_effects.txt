@@ -2561,7 +2561,7 @@ revoke_title_interaction_effect = {
 		if = {
 			limit = {
 				scope:hook_liege ?= yes
-				scope:intermediary = { is_alive = yes }
+				scope:intermediary ?= { is_alive = yes } #Unop ck3-tiger Handle non-existing scope
 			}
 			use_hook = scope:intermediary
 		}

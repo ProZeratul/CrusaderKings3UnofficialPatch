@@ -1605,6 +1605,7 @@ peasant_affair.3001 = {
 			}
 		}
 		hidden_effect = {
+			scope:peasant_child = { save_scope_as = legitimized_bastard } #Unop ck3-tiger Moved from below, used in bastard_interaction.0001
 			scope:recipient = {
 				trigger_event = bastard_interaction.0001
 				random_parent = {
@@ -1619,7 +1620,7 @@ peasant_affair.3001 = {
 					limit = {
 						NOT = { any_child = { this = scope:recipient } }
 					}
-					scope:peasant_child = { save_scope_as = legitimized_bastard }
+					#scope:peasant_child = { save_scope_as = legitimized_bastard } #Unop ck3-tiger Moved to above
 					trigger_event = bastard_interaction.0004
 				}
 				every_child = {

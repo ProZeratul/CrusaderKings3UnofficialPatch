@@ -15780,9 +15780,10 @@ end_court_scheme_effect = {
 										}
 									}
 								}
+								save_temporary_scope_as = lover #Unop ck3-tiger
 								lover_breakup_effect = {
 									BREAKER = scope:target
-									LOVER = this
+									LOVER = scope:lover #Unop ck3-tiger
 								}
 							}
 						}
@@ -16237,7 +16238,7 @@ raid_estate_opinion_effect = {
 			limit = {
 				this != $OWNER$
 				this != $TARGET$
-				NOT = { scope:owner.var:raid_estate_permission ?= scope:target.house }
+				NOT = { $OWNER$.var:raid_estate_permission ?= $TARGET$.house } #Unop ck3-tiger
 			}
 			add_opinion = {
 				target = $OWNER$

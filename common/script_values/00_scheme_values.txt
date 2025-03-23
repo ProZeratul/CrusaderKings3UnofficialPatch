@@ -10,25 +10,57 @@ scheme_failed_outcome_setback_value = -7
 
 #Scheme progress changes, 10% of current phase duration max in days
 scheme_progress_gain = {
-	value = scope:scheme.scheme_phase_duration
-	subtract = scope:scheme.scheme_progress
+	if = { #Unop ck3-tiger Use current scope if scope:scheme doesn't exist
+		limit = { exists = scope:scheme }
+		value = scope:scheme.scheme_phase_duration
+		subtract = scope:scheme.scheme_progress
+	}
+	else = {
+		value = scheme_phase_duration
+		subtract = scheme_progress
+	}
 	multiply = 0.1
 }
 scheme_progress_loss = {
-	value = scope:scheme.scheme_phase_duration
-	subtract = scope:scheme.scheme_progress
+	if = { #Unop ck3-tiger Use current scope if scope:scheme doesn't exist
+		limit = { exists = scope:scheme }
+		value = scope:scheme.scheme_phase_duration
+		subtract = scope:scheme.scheme_progress
+	}
+	else = {
+		value = scheme_phase_duration
+		subtract = scheme_progress
+	}
 	multiply = -0.1
 }
 scheme_progress_33 = {
-	value = scope:scheme.scheme_phase_duration
+	if = { #Unop ck3-tiger Use current scope if scope:scheme doesn't exist
+		limit = { exists = scope:scheme }
+		value = scope:scheme.scheme_phase_duration
+	}
+	else = {
+		value = scheme_phase_duration
+	}
 	multiply = 0.33
 }
 scheme_progress_50 = {
-	value = scope:scheme.scheme_phase_duration
+	if = { #Unop ck3-tiger Use current scope if scope:scheme doesn't exist
+		limit = { exists = scope:scheme }
+		value = scope:scheme.scheme_phase_duration
+	}
+	else = {
+		value = scheme_phase_duration
+	}
 	multiply = 0.5
 }
 scheme_progress_66 = {
-	value = scope:scheme.scheme_phase_duration
+	if = { #Unop ck3-tiger Use current scope if scope:scheme doesn't exist
+		limit = { exists = scope:scheme }
+		value = scope:scheme.scheme_phase_duration
+	}
+	else = {
+		value = scheme_phase_duration
+	}
 	multiply = 0.66
 }
 # Secrecy changes
