@@ -9057,10 +9057,10 @@ hold_court.6110 = {
 	}
 
 	after = {
-		scope:6100_vassal_1 = {
+		scope:6110_vassal_1 = { #Unop: Was 6100_vassal_1
 			clear_court_event_participation = yes
 		}
-		scope:6100_vassal_2 = {
+		scope:6110_vassal_2 = { #Unop: Was 6100_vassal_2
 			clear_court_event_participation = yes
 		}
 		scope:6110_rep = {
@@ -9913,7 +9913,10 @@ scripted_trigger hold_court_6140_valid_vassal_trigger = {
 }
 
 scripted_trigger hold_court_6140_europe_trigger = {
-	terrain = forest
+	OR = {
+		terrain = forest
+		terrain = taiga #Unop: Bears are in taiga too
+	}
 	geographical_region = world_europe
 }
 
@@ -13881,6 +13884,7 @@ scripted_trigger hold_court_8050_knight_trigger = {
 	NOT = { has_relation_rival = root }
 	NOT = { is_close_family_of = root }
 	court_position_martial_trigger = { EMPLOYER = root }
+	can_be_knight_trigger = { ARMY_OWNER = root } #Unop: Ensure the selected char can be knighted
 }
 
 scripted_trigger hold_court_8050_vassal_trigger = {
@@ -24734,6 +24738,10 @@ hold_court.8200 = {
 		name = hold_court.8200.c
 		trigger = {
 			NOT = { has_trait = zealous }
+			trigger_if = { #Unop: HoF won't change religion
+				limit = { exists = faith.religious_head }
+				NOT = { root = faith.religious_head }
+			}
 		}
 		if = {
 			limit = { religion = scope:infidel_vassal.religion }

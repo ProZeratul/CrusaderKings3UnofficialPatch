@@ -505,6 +505,7 @@ court.0108 = {
 				has_sexuality = bisexual
 			}
 			has_court_event_flag = no
+			NOT = { has_trait_with_flag = can_not_marry } #Unop: Make sure the selected child CAN marry
 		}
 		any_kingdom = {
 			exists = holder
@@ -581,6 +582,7 @@ court.0108 = {
 						has_sexuality = heterosexual
 						has_sexuality = bisexual
 					}
+					NOT = { has_trait_with_flag = can_not_marry } #Unop: Make sure the selected child CAN marry
 				}
 				save_scope_as = available_child
 				court_event_character_flag_effect = yes
@@ -829,10 +831,10 @@ court.0109 = {
 			add = -0.5
 			court_position:executioner_court_position = { has_trait = callous }
 		}
-		modifier = { 
-			add = 0.5
-			court_position:executioner_court_position = { has_trait = compassionate }
-		}
+		#modifier = { #Unop: This is already evaluated above
+		#	add = 0.5
+		#	court_position:executioner_court_position = { has_trait = compassionate }
+		#}
 	}
 
 	immediate = {
@@ -1659,6 +1661,8 @@ court.2201 = {
 	option = {
 		name = court.2201.a
 
+		trigger = { culture = { NOT = { has_cultural_parameter = cannot_disherit } } } # Unop: Make sure your culture doesn't allow this option
+
 		# Disinherit scope:eldest_heir for free.
 		scope:eldest_heir = {
 			disinherit_effect = { DISINHERITOR = root }
@@ -1744,6 +1748,8 @@ court.2201 = {
 	# Sad to say, scope:younger_heir, GetSheHe makes a good point.
 	option = {
 		name = court.2201.b
+
+		trigger = { culture = { NOT = { has_cultural_parameter = cannot_disherit } } } # Unop: Make sure your culture doesn't allow this option
 
 		# Disinherit scope:younger_heir for free.
 		scope:younger_heir = {
@@ -8841,6 +8847,7 @@ court.8010 = {
 								type = given
 							}
 						}
+						equip_artifact_to_owner_replace = yes
 		        	}
 		        }
 	        }
@@ -8901,6 +8908,7 @@ court.8010 = {
 						type = given
 					}
 				}
+				equip_artifact_to_owner_replace = yes
 	    	}
 	    }
 	    stress_impact = {
@@ -13457,8 +13465,8 @@ court.9300 = {
 				is_available_ai_adult = yes
 				has_court_event_flag = no
 				loves_food_trigger = yes
-				NOR = {
-					this = scope:another_courtier_check
+				NOT = { #Unop: Changed this to a NOT since it is now a single check
+					#this = scope:another_courtier_check # Unop: This is not needed since this current char will be excluded from the random_courtier below
 					is_of_major_interest_to_root_trigger = yes
 				}
 				is_of_minor_interest_to_root_trigger = yes
