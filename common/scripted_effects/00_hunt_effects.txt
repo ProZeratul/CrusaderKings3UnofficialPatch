@@ -369,11 +369,14 @@ end_hunt_mystical_animal_story_cycle_effect = {
 hunt_activity_standard_game_effect = {
 	#Unop ck3-tiger Ensure correct scope for hunt_activity_master_aptitude_positive_modifier
 	if = {
-		limit = { exists = scope:story }
-		scope:story.story_owner = { save_temporary_scope_as = liege }
-	}
-	else = {
-		root = { save_temporary_scope_as = liege }
+		limit = { NOT = { exists = scope:liege } }
+		if = {
+			limit = { exists = scope:story }
+			scope:story.story_owner = { save_temporary_scope_as = liege }
+		}
+		else = {
+			root = { save_temporary_scope_as = liege }
+		}
 	}
 	random_list = {
 		10 = { # Boar
@@ -437,11 +440,14 @@ hunt_activity_standard_game_effect = {
 hunt_activity_deer_game_effect = {
 	#Unop ck3-tiger Ensure correct scope for hunt_activity_master_aptitude_positive_modifier
 	if = {
-		limit = { exists = scope:story }
-		scope:story.story_owner = { save_temporary_scope_as = liege }
-	}
-	else = {
-		root = { save_temporary_scope_as = liege }
+		limit = { NOT = { exists = scope:liege } }
+		if = {
+			limit = { exists = scope:story }
+			scope:story.story_owner = { save_temporary_scope_as = liege }
+		}
+		else = {
+			root = { save_temporary_scope_as = liege }
+		}
 	}
 	random_list = {
 		5 = { # Deer - Europe, Middle East, India, Steppe

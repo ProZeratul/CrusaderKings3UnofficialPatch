@@ -9669,10 +9669,10 @@ laamp_base_contract_schemes.1044 = {
 		}
 		else_if = {
 			limit = { exists = scope:employer.location }
-			scope:employer.location = { save_scope_as = destination_1 }
+			scope:employer.location.county = { save_scope_as = destination_1 } #Unop ck3-tiger Use county as destination
 		}
 		else = {
-			location = { save_scope_as = destination_1 }
+			location.county = { save_scope_as = destination_1 } #Unop ck3-tiger Use county as destination
 		}
 		# Okay, find a suitable destination.
 		scope:destination_1 = {

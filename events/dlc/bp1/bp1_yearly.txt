@@ -12095,8 +12095,10 @@ bp1_yearly.8120 = {
 					is_spouse_of = root
 					is_spouse_of = scope:story.var:sycophant_character
 					this = scope:story.var:sycophant_character
+					has_any_bad_relationship_with_character_trigger = { CHARACTER = root } #Unop Ensure conditions match trigger
 					has_any_bad_relationship_with_character_trigger = { CHARACTER = scope:story.var:sycophant_character }
 				}
+				save_temporary_scope_as = matchmaker_temp #Unop ck3-tiger Used in bp1_yearly_8120_sanity_trigger
 				NOT = {
 					any_known_secret = {
 						secret_type = secret_lover
