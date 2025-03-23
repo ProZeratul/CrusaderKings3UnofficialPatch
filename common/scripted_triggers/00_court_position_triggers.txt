@@ -108,10 +108,6 @@ court_position_does_not_already_have_a_job_trigger = {
 			has_court_position = laureate_camp_officer
 
 			is_councillor = yes
-			is_tax_collector = yes
-
-			#Unop: Eparch is probably one too
-			has_court_position = eparch_court_position
 		}
 	}
 }
@@ -123,7 +119,7 @@ court_position_does_not_already_have_a_job_trigger = {
 # $CHAR$ is the character you wish to appoint
 can_appoint_char_to_court_position = {
 	save_temporary_scope_as = hiring_liege
-	OR = { # This is mandatory because if we already have the maximum position slot (like 1 for most), can_employ WILL return false !
+	OR = { #Unop This is mandatory because if we already have the maximum position slot (like 1 for most), can_employ WILL return false !
 		employs_court_position = $COURT_POS$
 		can_employ_court_position_type = $COURT_POS$
 	}

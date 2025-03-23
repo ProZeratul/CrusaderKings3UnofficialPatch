@@ -1600,7 +1600,7 @@ types DomicileWindowTypes {
 		}
 
 		domicile_building_empty_slot_button = {
-			visible = "[And( And( And( DomicileWindow.IsEditMode, Not( GetVariableSystem.Exists( 'hide_ui' ) ) ), DomicileBuildingSlot.IsFree), Not( DomicileBuildingSlot.IsUnderConstruction ) )]"
+			visible = "[And( And( And( DomicileWindow.IsEditMode, Not( GetVariableSystem.Exists( 'hide_ui' ) ) ), DomicileBuildingSlot.IsFree), Not( DomicileBuildingSlot.IsUnderConstruction ) )]" #Unop Remove closing brace
 			parentanchor = center
 			position = { -30 -30 }
 			enabled = "[DomicileBuildingSlot.IsUnlocked]"
@@ -1619,7 +1619,7 @@ types DomicileWindowTypes {
 		onclick = "[GetVariableSystem.Set( 'show_building_panel', 'true' )]"
 		onclick = "[DomicileWindow.SelectBuildingSlot( DomicileBuildingSlot.Self )]"
 		onclick = "[DomicileWindow.ClearNewBuildingEffectFor( DomicileBuildingSlot.Self )]"
-		alwaystransparent = "[And( And( Not( DomicileBuildingSlot.CanBuild ), DomicileBuildingSlot.IsFree), Not( DomicileBuildingSlot.IsUnderConstruction ) )]"
+		alwaystransparent = "[And( And( Not( DomicileBuildingSlot.CanBuild ), DomicileBuildingSlot.IsFree), Not( DomicileBuildingSlot.IsUnderConstruction ) )]" #Unop Remove closing brace
 
 		allow_outside = yes
 
@@ -2310,7 +2310,7 @@ types DomicileWindowTypes {
 
 						### Locked Internal Slot
 						vbox = {
-							visible = "[Or( Not(DomicileInternalGuiSlot.IsUnlocked), DomicileBuildingSlot.IsUnderConstruction )]"
+							visible = "[Or( Not(DomicileInternalGuiSlot.IsUnlocked), DomicileBuildingSlot.IsUnderConstruction )]" #Unop Remove closing brace
 
 							button = {
 								name = "internal_slot_locked"

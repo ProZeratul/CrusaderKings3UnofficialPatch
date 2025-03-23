@@ -239,7 +239,7 @@ yearly.1001 = { #by Mathilda Bjarnehed
 	#Give in
 	option = {
 		name = yearly.1001.a
-		trigger = {
+		trigger = { #Unop
 			unop_is_sexually_compatible_with_character = { CHARACTER = scope:married_seducer DENY_CHASTE = flag:yes }
 			scope:married_seducer = { unop_is_sexually_compatible_with_character = { CHARACTER = root DENY_CHASTE = flag:yes } }
 		}
@@ -4851,7 +4851,7 @@ scripted_trigger yearly_1060_possible_flirt_trigger = {
 		is_spouse_of = root
 		AND = { #A new possible romantic interest
 			root = {
-				OR = {
+				OR = { #Unop Add unshackled_lust_perk
 					is_attracted_to_gender_of = scope:joker_check
 					has_perk = unshackled_lust_perk
 				}
@@ -4878,7 +4878,7 @@ scripted_trigger yearly_1060_joker_trigger = {
 	}
 	OR = { #They like you or you're pretty
 		AND = {
-			OR = {
+			OR = { #Unop Add unshackled_lust_perk
 				is_attracted_to_gender_of = root
 				has_perk = unshackled_lust_perk
 			}
@@ -4928,7 +4928,7 @@ yearly.1060 = {
 			}
 			triggered_desc = {
 				trigger = {
-					OR = {
+					OR = { #Unop Add unshackled_lust_perk
 						is_attracted_to_gender_of = scope:joker
 						has_perk = unshackled_lust_perk
 					}
@@ -5060,7 +5060,7 @@ yearly.1060 = {
 						factor = 1.5
 					}
 					modifier = {
-						OR = {
+						OR = { #Unop Add unshackled_lust_perk
 							is_attracted_to_gender_of = root
 							has_perk = unshackled_lust_perk
 						}
@@ -5075,7 +5075,7 @@ yearly.1060 = {
 				2 = { #Flirting
 					trigger = {
 						scope:joker = {
-							OR = {
+							OR = { #Unop Add unshackled_lust_perk
 								is_attracted_to_gender_of = root
 								has_perk = unshackled_lust_perk
 							}
@@ -5132,7 +5132,7 @@ yearly.1060 = {
 				modifier = {
 					factor = 0 #Only available if they're into your gender
 					scope:joker = {
-						NOR = {
+						NOR = { #Unop Add unshackled_lust_perk
 							is_attracted_to_gender_of = root
 							has_perk = unshackled_lust_perk
 						}
@@ -5217,7 +5217,7 @@ yearly.1060 = {
 
 		if = {
 			limit = {
-				OR = {
+				OR = { #Unop Add unshackled_lust_perk
 					is_attracted_to_gender_of = scope:joker
 					has_perk = unshackled_lust_perk
 				}
@@ -5258,7 +5258,7 @@ yearly.1060 = {
 				modifier = {
 					factor = 0 #Only available if they're into your gender
 					scope:joker = {
-						NOR = {
+						NOR = { #Unop Add unshackled_lust_perk
 							is_attracted_to_gender_of = root
 							has_perk = unshackled_lust_perk
 						}
@@ -5341,7 +5341,7 @@ yearly.1060 = {
 
 		if = {
 			limit = { 
-				OR = { 
+				OR = { #Unop Add unshackled_lust_perk
 					is_attracted_to_gender_of = scope:joker
 					has_perk = unshackled_lust_perk
 				}
@@ -5381,7 +5381,7 @@ yearly.1060 = {
 		}
 		flavor = yearly.1060.a.tt
 		# Only unlock this if the joke isn't just a joke.
-		trigger = {
+		trigger = { #Unop
 			unop_is_sexually_compatible_with_character = { CHARACTER = scope:joker DENY_CHASTE = flag:yes }
 			scope:joker = { unop_is_sexually_compatible_with_character = { CHARACTER = root DENY_CHASTE = flag:yes } }
 		}
@@ -5411,7 +5411,7 @@ yearly.1060 = {
 					NOR = {
 						has_trait = celibate
 						has_sexuality = asexual
-						NOR = { 
+						NOR = { #Unop Add unshackled_lust_perk
 							is_attracted_to_gender_of = scope:joker
 							has_perk = unshackled_lust_perk
 						}
@@ -5476,7 +5476,7 @@ yearly.1060 = {
 				modifier = {
 					factor = 0 #Only available if they're into your gender
 					scope:joker = {
-						NOR = {
+						NOR = { #Unop Add unshackled_lust_perk
 							is_attracted_to_gender_of = root
 							has_perk = unshackled_lust_perk
 						}
@@ -5577,7 +5577,7 @@ yearly.1060 = {
 
 		if = {
 			limit = {
-				OR = {
+				OR = { #Unop Add unshackled_lust_perk
 					is_attracted_to_gender_of = scope:joker
 					has_perk = unshackled_lust_perk
 				}

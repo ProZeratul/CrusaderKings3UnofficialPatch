@@ -857,6 +857,10 @@ char_interaction.0160 = {
 			}
 			text = char_interaction.0160.a.courtier
 		}
+		#Unop Reverse the order
+		#name = {
+		#	text = char_interaction.0160.a
+		#}
 	}
 }
 
@@ -1310,7 +1314,7 @@ char_interaction.0231 = {
 				limit = {
 					scope:actor = { is_rightful_liege_of = scope:recipient }
 				}
-				scope:actor = { add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } }
+				scope:actor = { add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } } #Unop Use correct effect
 			}
 		}
 		show_as_tooltip = {
@@ -2169,7 +2173,7 @@ char_interaction.0350 = {
 		}
 
 		if = {
-			limit = {
+			limit = { #Unop Add debug log
 				scope:eunuch = { NOT = { has_variable = target_court_position } }
 			}
 			debug_log = "Unop:char_interaction.0350"

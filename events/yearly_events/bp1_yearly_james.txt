@@ -2005,7 +2005,7 @@ bp1_yearly.9015 = {
 		}
 		if = { # I'm not having sexual relations with my clone, become friends
 			limit = {
-				NOR = {
+				NOR = { #Unop Use NOR
 					has_any_scripted_relation = scope:bp1_yearly_9007_doppelganger
 					scope:bp1_yearly_9007_doppelganger = { is_consort_of = root }
 				}
@@ -2312,7 +2312,7 @@ bp1_yearly.9016 = {
 		name = bp1_yearly.9016.a
 		trigger = {
 			NOT = {
-				culture ?= { has_cultural_parameter = cannot_disherit }
+				culture ?= { has_cultural_parameter = cannot_disherit } #Unop Use cultural parameter
 			}
 		}
 		scope:bp1_yearly_9016_uppity_child = {
@@ -2633,7 +2633,7 @@ bp1_yearly.9017 = {
 		name = bp1_yearly.9017.c
 		trigger = {
 			NOT = {
-				culture ?= { has_cultural_parameter = cannot_disherit }
+				culture ?= { has_cultural_parameter = cannot_disherit } #Unop Use cultural parameter
 			}
 		}
 		scope:bp1_yearly_9017_uppity_child = {
@@ -2868,7 +2868,7 @@ bp1_yearly.9018 = {
 				has_trait = callous
 			}
 			NOT = {
-				culture ?= { has_cultural_parameter = cannot_disherit }
+				culture ?= { has_cultural_parameter = cannot_disherit } #Unop Use cultural parameter
 			}
 		}
 		scope:bp1_yearly_9018_illegitimate_child = {
@@ -3764,7 +3764,7 @@ bp1_yearly.9022 = {
 	option = { # Attempt to give up your vice
 		name = bp1_yearly.9022.a
 		if = {
-			limit = { NOT = { has_relation_best_friend = scope:bp1_yearly_9022_friend } }
+			limit = { NOT = { has_relation_best_friend = scope:bp1_yearly_9022_friend  } }
 			set_relation_best_friend = { reason = best_friend_help_overcome_vice copy_reason = friend target = scope:bp1_yearly_9022_friend }
 		}
 		duel = {
@@ -5034,7 +5034,7 @@ bp1_yearly.9029 = {
 	}
 	right_portrait = {
 		character = scope:bp1_yearly_9029_dead_parent
-		animation = personality_compassionate
+		animation = personality_compassionate #Unop Fix animation
 		animate_if_dead = yes
 	}
 
@@ -5463,7 +5463,7 @@ bp1_yearly.9031 = {
 			var:second_ghost = {
 				save_scope_as = bp1_yearly_9031_rival
 				random_close_or_extended_family_member = {
-					limit = { NOT = { this = root } }
+					limit = { NOT = { this = root } } #Unop
 					save_scope_as = bp1_yearly_9031_rival_family
 				}
 			}

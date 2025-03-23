@@ -460,8 +460,8 @@ scheme_critical_moments.0001 = {
 			#TODO_CD_EP3; make this neutral
 			## Hack fix for murder.
 			if = {
-				limit = { scheme_type = murder }
-				root = { remove_character_flag = currently_in_scheme_preparations }
+				limit = { scheme_type = murder } #Unop Use correct scheme type
+				root = { remove_character_flag = currently_in_scheme_preparations } #Unop Use correct scope
 				roll_critical_moment_options_06_agent_types_effect = {
 					# Success results event.
 					OUTPUT_EVENT = scheme_critical_moments.1001
@@ -488,7 +488,7 @@ scheme_critical_moments.0001 = {
 			## Hack fix for seduction.
 			if = {
 				limit = { scheme_type = seduce }
-				root = { remove_character_flag = currently_in_scheme_preparations }
+				root = { remove_character_flag = currently_in_scheme_preparations } #Unop use correct scope
 				roll_critical_moment_options_07_agent_types_effect = {
 					# Success results event.
 					OUTPUT_EVENT = scheme_critical_moments.1011
@@ -4823,6 +4823,7 @@ scheme_critical_moments.8031 = {
 										has_domicile_building_or_higher = vineyard_01
 										has_domicile_building_or_higher = olive_01
 										has_domicile_building_or_higher = silk_01
+										#Unop Add missing domicile buildings
 										has_domicile_building_or_higher = market_01
 										has_domicile_building_or_higher = courtyard_01
 									}
@@ -5196,6 +5197,7 @@ scripted_effect raid_estate_success_effect = {
 				flag:vineyard = { ep3_raid_insight_effect = { TYPE = vineyard } }
 				flag:olive = { ep3_raid_insight_effect = { TYPE = olive } }
 				flag:silk = { ep3_raid_insight_effect = { TYPE = silk } }
+				#Unop Add missing domicile buildings
 				flag:market = { ep3_raid_insight_effect = { TYPE = market } }
 				flag:courtyard = { ep3_raid_insight_effect = { TYPE = courtyard } }
 			}

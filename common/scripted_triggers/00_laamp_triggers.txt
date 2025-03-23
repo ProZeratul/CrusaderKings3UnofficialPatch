@@ -565,7 +565,7 @@ laamp_base_0011_valid_potential_rival_trigger = {
 
 # Search for counties that could be affected by the modifiers we apply at the conclusion of the contract.
 laamp_base_1001_valid_neighbouring_county_trigger = {
-	holder = scope:scheme.task_contract.task_contract_employer
+	holder = scope:scheme.task_contract.task_contract_employer #Unop Use correct scope
 	county_control < full_county_control
 }
 
@@ -631,7 +631,7 @@ council_task_contract_valid_employer_trigger = {
 # Travel Triggers
 
 is_laamp_exiled_from_province_trigger = {
-	$PROVINCE$.county.holder ?= { # Fix to keep log quiet
+	$PROVINCE$.county.holder ?= { #Unop Fix to keep log quiet
 		is_laamp_exiled_from_holder_or_liege_trigger = { LAAMP = $LAAMP$ }
 	}
 }

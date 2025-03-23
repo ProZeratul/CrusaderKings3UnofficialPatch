@@ -2775,7 +2775,7 @@ laamp_base_2011_actual_surveyable_holdings_per_tier_value = {
 	value = sub_realm_size
 	every_sub_realm_barony = {
 		limit = {
-			exists = holder
+			exists = holder #Unop
 			holder.highest_held_title_tier = tier_barony
 			NOT = { this = root.domicile.domicile_location.county } #Unop: Added the .county to prevent error: (left was 'landed_title', right was 'province')
 		}
@@ -3716,14 +3716,14 @@ ep3_foreign_ruler_interest_in_coup_value = {
 
 ep3_distance_to_comparator_claim = {
 	value = 0
-	add = "title_capital_county.squared_distance(scope:comparator.capital_province)"
+	add = "title_capital_county.squared_distance(scope:comparator.capital_province)" #Unop
 	abs = yes
 	multiply = -1
 }
 
 ep3_distance_to_comparator_capital_county = {
 	value = 0
-	add = "squared_distance(scope:comparator.capital_province)"
+	add = "squared_distance(scope:comparator.capital_province)" #Unop
 	abs = yes
 	multiply = -1
 }

@@ -1617,8 +1617,8 @@ ep3_laamps.0100 = {
 		}
 	}
 
+	#Unop Finally, courtiers are sometimes going walk about, so make sure they're all in the right spot.
 	after = {
-		# Finally, courtiers are sometimes going walk about, so make sure they're all in the right spot.
 		hidden_effect = {
 			every_courtier = { set_location_to_default = yes }
 			every_prisoner = { set_location_to_default = yes }
@@ -5953,7 +5953,7 @@ ep3_laamps.5030 = {
 			}
 		}
 
-		reason = unop_house_known
+		reason = unop_house_known #Unop
 
 		flavor = ep3_laamps.5030.b.tt
 
@@ -8631,7 +8631,7 @@ ep3_laamps.7004 = {
 		}
 		title:c_zichia = {
 			add_to_list = landed_titles
-			add_to_list = purchased_titles
+			add_to_list = purchased_titles #Unop
 		}
 		scope:zichia = {
 			every_county_province = { # Unop: So only the baronnies in the county we purchase are renamed.
@@ -8713,19 +8713,38 @@ ep3_laamps.7004 = {
 			}
 		}
 
+		hidden_effect = {
+			## Administrative.
+			if = {
+				limit = {
+					scope:new_liege ?= { government_has_flag = government_is_administrative }
+				}
+				change_government = administrative_government
+			}
+			## Clan.
+			else_if = {
+				limit = {
+					scope:new_liege ?= { government_has_flag = government_is_clan }
+				}
+				change_government = clan_government
+			}
+			## Tribal.
+			else_if = {
+				limit = {
+					scope:new_liege ?= { government_has_flag = government_is_tribal }
+				}
+				change_government = tribal_government
+			}
+			## Else feudal.
+			else = { change_government = feudal_government }
+		}
+
 		scope:zichia = {
-			custom_tooltip = {
+			custom_tooltip = { #Unop Add tooltip
 				text = unop.7004
 				set_title_name = c_new_england
 			}
 			set_color_from_title = title:k_england
-		}
-
-		hidden_effect = {
-			every_in_list = {
-				list = zichia_names
-				new_england_holding_names_effect = yes
-			}
 		}
 
 		stress_impact = {
