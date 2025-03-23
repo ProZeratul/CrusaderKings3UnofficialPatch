@@ -14,25 +14,23 @@
 }
 
 reduce_partition_succession_law_effect = {
-	holder = { #Unop all this need a char scope to be run be currently we are in the primary_title
-		if = {
-			limit = {
-				has_realm_law = single_heir_succession_law
-			}
-			add_realm_law = high_partition_succession_law
+	if = {
+		limit = {
+			has_realm_law = single_heir_succession_law
 		}
-		else_if = {
-			limit = {
-				has_realm_law = high_partition_succession_law
-			}
-		add_realm_law = partition_succession_law
+		add_realm_law = high_partition_succession_law
+	}
+	else_if = {
+		limit = {
+			has_realm_law = high_partition_succession_law
 		}
-		else_if = {
-			limit = {
-				has_realm_law = partition_succession_law
-			}
-			add_realm_law = confederate_partition_succession_law
+	add_realm_law = partition_succession_law
+	}
+	else_if = {
+		limit = {
+			has_realm_law = partition_succession_law
 		}
+		add_realm_law = confederate_partition_succession_law
 	}
 }
 
