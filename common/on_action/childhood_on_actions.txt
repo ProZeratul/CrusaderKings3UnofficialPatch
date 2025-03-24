@@ -166,7 +166,7 @@ on_16th_birthday = {
 	trigger = { age = 16 }
 
 	events = {
-		coming_of_age.1337 				#Fixpack: Workaround to retrieve the correct education focus that could be lost because of invalidation
+		coming_of_age.1337 				#Unop: Workaround to retrieve the correct education focus that could be lost because of invalidation
 		childhood_education.9103		# To make sure that every child gets a education
 		child_personality.4011			# To make sure everyone gets a sexuality
 		childhood.0900					# victim transforms into opinion modifier on adulthood
@@ -177,7 +177,7 @@ on_16th_birthday = {
 		coming_of_age.0003				# Martial
 		coming_of_age.0004				# Intrigue
 		coming_of_age.0005				# Diplomacy
-		coming_of_age.1338 				#Fixpack: Last event before giving up to give the correct education (should only fire for invalidated education)
+		coming_of_age.1338 				#Unop: Last event before giving up to give the correct education (should only fire for invalidated education)
 		delay = { days = 2 }
 		childhood_education.0005		# To remove education focus
 		childhood_education.0006		# To remove stray guardians
@@ -315,6 +315,116 @@ on_birthday_education_events = {
 	trigger = {
 		is_adult = no
 		age >= childhood_education_start_age
+	}
+
+	effect = {
+		# Chance to gain extra skills if you have a Court Tutor teaching
+		if = {
+			limit = {
+				court_owner.court_position:court_tutor_court_position ?= {
+					has_variable = court_tutor_teach_kids
+				}
+			}
+			court_owner.court_position:court_tutor_court_position ?= {
+				save_scope_as = court_tutor_scope
+			}
+			random = {
+				chance = {
+					value = 5
+					add = {
+						value = "scope:court_tutor_scope.aptitude(court_tutor_court_position)"
+						multiply = 15
+					}
+				}
+				if = {
+					limit = {
+						scope:court_tutor_scope = {
+							aptitude = {
+								court_position = court_tutor_court_position
+								value >= 3
+							}
+						}
+					}
+					save_scope_value_as = {
+						name = skill_boost
+						value = {
+							integer_range = {
+								min = 1
+								max = 2
+							}
+						}
+					}
+				}
+				else = {
+					save_scope_value_as = {
+						name = skill_boost
+						value = 1
+					}
+				}
+				random_list = {
+					1 = {
+						court_owner ?= {
+							send_interface_toast = {
+								type = event_royal_court_good_with_text
+								title = court_tutor_teach_kids_title
+								desc = court_tutor_teach_kids_notification_desc
+								left_icon = root
+								right_icon = scope:target_character
+
+								prev = {
+									add_martial_skill = scope:skill_boost
+								}
+							}
+						}
+					}
+					1 = {
+						court_owner ?= {
+							send_interface_toast = {
+								type = event_royal_court_good_with_text
+								title = court_tutor_teach_kids_title
+								desc = court_tutor_teach_kids_notification_desc
+								left_icon = root
+								right_icon = scope:target_character
+
+								prev = {
+									add_learning_skill = scope:skill_boost
+								}
+							}
+						}
+					}
+					1 = {
+						court_owner ?= {
+							send_interface_toast = {
+								type = event_royal_court_good_with_text
+								title = court_tutor_teach_kids_title
+								desc = court_tutor_teach_kids_notification_desc
+								left_icon = root
+								right_icon = scope:target_character
+
+								prev = {
+									add_diplomacy_skill = scope:skill_boost
+								}
+							}
+						}
+					}
+					1 = {
+						court_owner ?= {
+							send_interface_toast = {
+								type = event_royal_court_good_with_text
+								title = court_tutor_teach_kids_title
+								desc = court_tutor_teach_kids_notification_desc
+								left_icon = root
+								right_icon = scope:target_character
+
+								prev = {
+									add_stewardship_skill = scope:skill_boost
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	events = {

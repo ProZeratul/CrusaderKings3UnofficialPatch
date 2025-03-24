@@ -1656,7 +1656,7 @@ tournament_events.0161 = {
 	option = {
 		name = tournament_events.0161.b
 		trigger = {
-			OR = {
+			OR = { #Unop Add second check
 				any_in_list = {
 					list = bachelors
 					has_opinion_modifier = {
@@ -4589,15 +4589,6 @@ tournament_events.1230 = {
 		}
 	}
 
-	#Unop: disabled since duplicated from above
-	#weight_multiplier = {
-	#	base = 1
-	#	modifier = {
-	#		factor = 2
-	#		has_activity_intent = recruit_knights_intent
-	#	}
-	#}
-
 	option = { # Make champion
 		name = tournament_events.1230.a
 		trigger = {
@@ -4867,7 +4858,7 @@ scripted_effect tournament_1240_prize_child_effect = {
 		limit = {
 			exists = father #Unop: Was checking mother to use the father
 			father = {
-				NOT = { this = root } #Unop: To unsure the father is not actual root for opinion loss just after
+				NOT = { this = root } #Unop: To ensure the father is not actual root for opinion loss just after
 				is_alive = yes
 				liege = root
 			}
@@ -4878,7 +4869,7 @@ scripted_effect tournament_1240_prize_child_effect = {
 		limit = {
 			exists = mother
 			mother = {
-				NOT = { this = root } #Unop: To unsure the mother is not actual root for opinion loss just after
+				NOT = { this = root } #Unop: To ensure the mother is not actual root for opinion loss just after
 				is_alive = yes
 				liege = root
 			}
@@ -5167,16 +5158,13 @@ scripted_effect tournament_favor_gift_effect = {
 		name = tournament_favor_offers
 		target = scope:favor_giver
 	}
-	#Unop: Since we are currently the 'favor_recipient', we need to be re-scoped to favor_giver, this was checking if the recipient was scheming against itself !
-	scope:favor_giver = {
-		if = {
-			limit = {
-				is_scheming_against = { target = scope:favor_recipient }
-			}
-			random_scheme = {
-				limit = { scheme_target_character = scope:favor_recipient }
-				save_scope_as = favor_scheme
-			}
+	if = {
+		limit = {
+			is_scheming_against = { target = scope:favor_recipient }
+		}
+		random_scheme = {
+			limit = { scheme_target_character = scope:favor_recipient }
+			save_scope_as = favor_scheme
 		}
 	}
 	custom_tooltip = tournament_events.1251.favor_tt
@@ -5680,7 +5668,7 @@ tournament_events.1251 = {
 				hidden_effect = {
 					if = {
 						limit = { exists = scope:favor_scheme }
-						scope:favor_scheme = { #Unop: favor_scheme scope was missing
+						scope:favor_scheme = {
 							add_scheme_modifier = { type = tournament_favor_scheme_modifier }
 						}
 					}
@@ -9717,6 +9705,7 @@ tournament_events.1332 = {
 	trigger = {
 		this = scope:host
 		any_powerful_vassal = {
+			is_ai = yes
 			involved_activity = scope:activity
 			activity_is_competing_trigger = yes
 		}
@@ -9725,6 +9714,7 @@ tournament_events.1332 = {
 	immediate = {
 		random_powerful_vassal = {
 			limit = {
+				is_ai = yes
 				involved_activity = scope:activity
 				activity_is_competing_trigger = yes
 			}

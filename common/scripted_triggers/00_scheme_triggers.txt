@@ -65,10 +65,10 @@ can_start_hostile_scheme_against_trigger = {
 agent_valid_to_be_discovered_by_spymaster = {
 	trigger_if = {
 		limit = {
-			exists = scope:target_character.court_owner.cp:councillor_spymaster
+			exists = scope:target_character.court_owner.cp:councillor_spymaster #Unop Use correct scope
 		}
 		NOT = {
-			this = scope:target_character.court_owner.cp:councillor_spymaster
+			this = scope:target_character.court_owner.cp:councillor_spymaster #Unop Use correct scope
 		}
 	}
 	NOT = {
@@ -76,15 +76,15 @@ agent_valid_to_be_discovered_by_spymaster = {
 	}
 	trigger_if = {
 		limit = {
-			exists = scope:target_character.court_owner
+			exists = scope:target_character.court_owner #Unop Use correct scope
 		}
 		NOR = {
 			reverse_has_opinion_modifier = {
-				target = scope:target_character.court_owner
+				target = scope:target_character.court_owner #Unop Use correct scope
 				modifier = scheming_against_me
 			}
 			reverse_has_opinion_modifier = {
-				target = scope:target_character.court_owner
+				target = scope:target_character.court_owner #Unop Use correct scope
 				modifier = schemed_against_me
 			}
 		}
@@ -277,7 +277,7 @@ build_murder_targets_trigger = {
 					any_tax_collector_vassal = {
 						this = root
 					}
-					OR = {
+					OR = { #Unop Instead of VALUE >= 4
 						check_tax_collector_aptitude = {
 							CHARACTER = this
 							VALUE = 4
@@ -706,7 +706,8 @@ scheme_apa_apply_positive_progress_trigger = {
 
 scheme_apa_apply_negative_progress_trigger = {
 	NOT = { has_variable = scheme_pulse_action_on_cooldown }
-	scheme_progress >= 3
+	save_temporary_scope_as = scheme
+	scheme_progress > scheme_progress_33
 }
 
 ##################################################

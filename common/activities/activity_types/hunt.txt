@@ -69,7 +69,7 @@
 					is_ai = no
 					is_alive = yes
 					NOR = {
-						this = scope:invalidated_culprit
+						this ?= scope:invalidated_culprit
 						this = scope:activity.activity_host
 					}
 				}
@@ -159,6 +159,9 @@
 			else_if = { # No one shows up
 				limit = {
 					has_attending_activity_guests = no
+					NOT = {
+						scope:host = { has_character_flag = no_claims_to_land }
+					}
 				}
 				scope:activity = {
 					activity_type = { save_scope_as = activity_type }
@@ -166,7 +169,15 @@
 				}
 				scope:host = { trigger_event = activity_system.0100 }
 			}
-			else_if = { # Host dead (but not from hunt events)
+			else_if = { # You don't have hunting rights
+				limit = { var:hunt_invalidated ?= flag:landless }
+				save_scope_as = landless_invalidation
+				every_in_list = {
+					list = attendees
+					trigger_event = hunt.0080
+				}
+			}
+			else_if = { #Unop Host dead (but not from hunt events)
 				limit = { scope:host = { is_alive = no } }
 				every_in_list = {
 					list = attendees
@@ -258,12 +269,12 @@
 				value = hunt_activity_base_cost
 				multiply = activity_cost_scale_by_era
 			}
-			
-			# Options 
-			add = { # Attendants 
-				value = 0 # Local Game Keepers Cost 
-				add = 10 # Search Parties Cost 
-				add = 35 # Flushing Gangs Cost 
+
+			# Options
+			add = { # Attendants
+				value = 0 # Local Game Keepers Cost
+				add = 10 # Search Parties Cost
+				add = 35 # Flushing Gangs Cost
 				# Scale option costs by tier and era
 				multiply = activity_cost_scale_by_tier
 				multiply = activity_cost_scale_by_era
@@ -301,19 +312,19 @@
 					value = 0.5
 				}
 			}
-			
-			
+
+
 			# Adventurer
 			if = {
 				limit = { is_landless_adventurer = yes }
 				multiply = 0.25
 			}
-			
+
 			# Make it a multiple of 5 (rounded up)
 			divide = 5
 			ceiling = yes
 			multiply = 5
-			
+
 			if = {
 				limit = {
 					has_character_flag = free_hunt
@@ -365,7 +376,7 @@
 
 	ai_will_do = {
 		value = 0
-		
+
 		# Base
 		add = {
 			value = -10
@@ -509,7 +520,7 @@
 		# Court
 		if = {
 			limit = {
-				has_royal_court = yes 
+				has_royal_court = yes
 				has_court_type = court_warlike
 			}
 			add = {
@@ -1008,8 +1019,6 @@
 	# PARAMETERS
 	###################
 
-	is_grand_activity = no
-
 	is_single_location = yes
 
 	###################
@@ -1388,7 +1397,7 @@
 		environment = "environment_travel_bridge"
 		ambience = "event:/SFX/Events/Backgrounds/mountains_day"
 	}
-	
+
 	background = { # Farmland, settled
 		trigger = {
 			NOT = { scope:host.location = scope:activity.activity_location }
@@ -1543,7 +1552,7 @@
 			}
 		}
 		texture = "gfx/interface/illustrations/event_scenes/bp1_wetlands.dds"
-		environment = "environment_event_bp1_wetlands" 
+		environment = "environment_event_bp1_wetlands"
 		ambience = "event:/SFX/Events/Backgrounds/deciduous_forest_day"
 	}
 
@@ -1631,7 +1640,7 @@
 		environment = "environment_hunt_snowy_forest"
 		ambience = "event:/SFX/Events/Backgrounds/mountains_day"
 	}
-	
+
 	background = { # Mountains
 		trigger = {
 			activity_location = { graphical_wilderness_mountains_trigger = yes }
@@ -1679,7 +1688,7 @@
 
 	background = { # Camp
 		texture = "gfx/interface/illustrations/event_scenes/ep2_hunt_poachers_camp.dds"
-		environment = "environment_event_forest_pine" 
+		environment = "environment_event_forest_pine"
 		ambience = "event:/SFX/Events/Backgrounds/coniferous_forest_day"
 	}
 
@@ -1693,7 +1702,7 @@
 	window_characters = {
 		hunter = {
 			camera = camera_event_center
-			
+
 			effect = {
 				if = {
 					limit = {
@@ -1954,7 +1963,7 @@
 
 		host = {
 			camera = camera_event_center
-			
+
 			effect = {
 				if = {
 					limit = {
@@ -2061,10 +2070,10 @@
 				animation = idle
 			}
 		}
-		
+
 		travel_host = {
 			camera = camera_activity_horse
-			
+
 			effect = {
 				if = {
 					limit = {
@@ -2090,7 +2099,7 @@
 
 		master_of_hunt = {
 			camera = camera_event_center
-			
+
 			effect = {
 				scope:host.court_position:master_of_hunt_court_position ?= {
 					if = {
@@ -2120,7 +2129,7 @@
 
 		animal_slayer = {
 			camera = camera_event_center
-			
+
 			effect = {
 				if = {
 					limit = {
@@ -2140,7 +2149,7 @@
 
 		hunter = {
 			camera = camera_event_center
-			
+
 			effect = {
 				if = {
 					limit = {
@@ -2333,7 +2342,7 @@
 
 		hunter = {
 			camera = camera_event_center
-			
+
 			effect = {
 				if = {
 					limit = {
@@ -2614,7 +2623,7 @@
 			            desc = "ai_sociability"
 			        }
 			        add = {
-			            value = ai_boldness 
+			            value = ai_boldness
 			            multiply = -0.25
 			            desc = "ai_boldness"
 			        }
@@ -3012,7 +3021,7 @@
 				is_shown = { has_dlc_feature = advanced_activities }
 
 				# Entourage option grabbing suitable bodyguards & maybe someone from court who really likes you, + randos.
-				travel_entourage_selection = { 
+				travel_entourage_selection = {
 					weight = hunt_entourage_base_set_weighting_value
 					max = 5
    					invite_rule_order = 2
@@ -3055,7 +3064,7 @@
 				}
 			}
 			hunt_party_size_normal = {
-				
+
 				is_valid = {
 					trigger_if = {
 						limit = {
@@ -3127,7 +3136,7 @@
 			}
 			hunt_party_size_many = {
 				is_shown = { has_dlc_feature = advanced_activities }
-				
+
 				is_valid = {
 					trigger_if = {
 						limit = {
@@ -3446,8 +3455,8 @@
 			3 = activity_invite_rule_close_family
 			3 = activity_invite_rule_extended_family
 			4 = activity_invite_rule_guests
-			
-			# MP 
+
+			# MP
 			6 = activity_invite_mp
 		}
 		defaults = {
@@ -3487,9 +3496,9 @@
 	guest_join_chance = {
 		base = 10
 		base_activity_modifier = yes
-		
+
 		# Scripted Modifiers
-		activity_guest_shared_ai_accept_modifier = yes 
+		activity_guest_shared_ai_accept_modifier = yes
 		activity_guest_hunt_ai_accept_modifier = yes
 	}
 
@@ -3617,7 +3626,7 @@
 					any_attending_character = {
 						location = root.location
 						save_temporary_scope_as = potential_moh
-						
+
 					}
 				}
 				can_appoint_char_to_court_position = { CHAR = scope:potential_moh COURT_POS = master_of_hunt_court_position }

@@ -373,7 +373,7 @@ epidemic_events.0110 = {
 			limit = {
 				has_legitimacy = yes
 			}
-			add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+			add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 		}
 		ai_chance = {
 			base = 50
@@ -936,7 +936,7 @@ epidemic_events.1010 = {
 				years = 10
 			}
 		}
-		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 		stress_impact = {
 			callous = minor_stress_impact_loss
 			cynical = minor_stress_impact_gain
@@ -1712,7 +1712,7 @@ epidemic_events.1050 = {
 					send_interface_toast = {
 						title = epidemic_events.1050.b.tt.failure
 						left_icon = scope:chaplain
-						add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+						add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 						every_sub_realm_county = {
 							custom = every_infected_county
 							limit = {
@@ -1766,7 +1766,7 @@ epidemic_events.1050 = {
 				years = 10
 			}
 		}
-		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 		stress_impact = {
 			diligent = minor_stress_impact_gain
 			just = minor_stress_impact_gain
@@ -2185,7 +2185,7 @@ epidemic_events.1061 = {
 				years = 10
 			}
 		}
-		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 		stress_impact = {
 			lazy = minor_stress_impact_gain
 			paranoid = medium_stress_impact_gain
@@ -2654,7 +2654,7 @@ epidemic_events.1063 = {
 				years = 10
 			}
 		}
-		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 		stress_impact = {
 			base = minor_stress_impact_gain
 			cynical = minor_stress_impact_loss # Am I *really* a sinner tho?
@@ -2704,7 +2704,7 @@ epidemic_events.1063 = {
 				send_interface_toast = {
 					title = epidemic_events.1063.c.failure
 					left_icon = root
-					add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+					add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 					every_sub_realm_county = {
 						custom = every_infected_county
 						limit = {
@@ -2855,7 +2855,7 @@ epidemic_events.1064 = {
 				years = 15
 			}
 		}
-		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 		stress_impact = {
 			trusting = minor_stress_impact_gain
 			paranoid = minor_stress_impact_gain
@@ -2905,7 +2905,7 @@ epidemic_events.1064 = {
 				send_interface_toast = {
 					title = epidemic_events.1064.c.failure
 					left_icon = root
-					add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+					add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 					every_sub_realm_county = {
 						custom = every_infected_county
 						limit = {
@@ -3155,7 +3155,7 @@ epidemic_events.1065 = {
 			has_trait = august
 		}
 		add_prestige = major_prestige_loss
-		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 		upgrade_to_friend_effect = {
 			CHARACTER = scope:shamed_buddy
 			REASON = friend_walk_of_shame
@@ -3201,7 +3201,7 @@ epidemic_events.1066 = {
 	cooldown = { years = 5 }
 
 	immediate = {
-		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 	}
 
 	option = { # Forbid the expulsion
@@ -3557,7 +3557,7 @@ epidemic_events.1068 = {
 			OPINION = default_rival_opinion
 			REASON = rival_refused_to_help_my_loans
 		}
-		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 		stress_impact = {
 			lazy = minor_stress_impact_loss
 			just = minor_stress_impact_gain
@@ -5080,9 +5080,10 @@ epidemic_events.3010 = {
 		location = {
 			any_province_epidemic = {
 				count >= 1
-				save_temporary_scope_as = temp_epidemic_scope
+				save_temporary_scope_as = temp_epidemic_scope #Unop Check if can contract disease
 			}
 		}
+		#Unop Check if can contract disease
 		unop_can_contract_disease_trigger = { DISEASE = scope:temp_epidemic_scope.epidemic_type.epidemic_trait }
 	}
 
@@ -5095,6 +5096,7 @@ epidemic_events.3010 = {
 				save_scope_as = epidemic_scope
 			}
 		}
+		#Unop Remove sick_peasant
 		#hidden_effect = {
 		#	create_character = {
 		#		template = peasant_character
@@ -5221,6 +5223,7 @@ epidemic_events.3010 = {
 	}
 	
 	after = {
+		#Unop Remove sick_peasant
 		#hidden_effect = {
 		#	if = {
 		#		limit = { is_ai = yes }
@@ -5592,7 +5595,7 @@ epidemic_events.5000 = {
 
 		if = {
 			limit = { has_legitimacy = yes }
-			add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+			add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 		}
 
 		stress_impact = {
@@ -5673,24 +5676,11 @@ epidemic_events.5001 = {
 						count >= 1
 						outbreak_intensity <= minor
 					}
+					province_owner = { save_temporary_scope_as = province_owner_temp }
 				}
 			}
 			save_scope_as = epidemic_county
-		}
-
-		scope:epidemic_county = {
-			random_county_province = {
-				limit = {
-					any_province_epidemic = {
-						count >= 1
-						outbreak_intensity <= minor
-						exists = prev.province_owner
-					}
-				}
-				province_owner = {
-					save_scope_as = province_owner
-				}
-			}
+			scope:province_owner_temp = { save_scope_as = province_owner }
 		}
 
 		random_courtier_or_guest = {
@@ -5802,7 +5792,7 @@ epidemic_events.5001 = {
 			OPINION = default_rival_opinion
 		}
 
-		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 
 		stress_impact = {
 			base = medium_stress_impact_loss
@@ -5874,7 +5864,7 @@ epidemic_events.5001 = {
 			target = scope:courtier
 		}
 
-		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 
 		stress_impact = {
 			diligent = minor_stress_impact_gain
@@ -6109,7 +6099,7 @@ epidemic_events.5002 = {
 					title = epidemic_events.5002.b.failure
 					left_icon = root
 					right_icon = scope:steward
-					add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+					add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 					scope:coastal_province = {
 						add_province_modifier = {
 							modifier = contaminated_beaches
@@ -6124,7 +6114,7 @@ epidemic_events.5002 = {
 					title = epidemic_events.5002.b.criticalfailure
 					left_icon = root
 					right_icon = scope:steward
-					add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+					add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 
 					scope:coastal_province = {
 						add_province_modifier = {
@@ -6774,7 +6764,7 @@ epidemic_events.5004 = {
 					title = epidemic_events.5004.b.failure
 					left_icon = root
 					right_icon = scope:peasant_1
-					add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+					add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 					scope:location = {
 						add_province_modifier = {
 							modifier = fears_ignored
@@ -6825,7 +6815,7 @@ epidemic_events.5004 = {
 				years = 15
 			}
 		}
-		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 
 		stress_impact = {
 			shy = minor_stress_impact_loss
@@ -7097,7 +7087,10 @@ epidemic_events.5005 = {
 			opinion = -10
 			target = scope:steward
 		}
-		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+		if = {
+			limit = { has_legitimacy = yes }
+			add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
+		}
 
 		stress_impact = {
 			paranoid = medium_stress_impact_gain
@@ -7540,7 +7533,7 @@ epidemic_events.5007 = {
 			opinion = -20
 			target = scope:accuser
 		}
-		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 
 		scope:accuser = {
 			progress_towards_rival_effect = {
@@ -7649,7 +7642,7 @@ epidemic_events.5007 = {
 					title = epidemic_events.5007.c.failure
 					left_icon = root
 					right_icon = scope:herbalist
-					add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+					add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 
 					scope:herbalist = {
 						add_trait = witch
@@ -7877,7 +7870,7 @@ epidemic_events.5008 = {
 			modifier = absent_ruler
 			years = 10
 		}
-		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 
 		stress_impact = {
 			base = major_stress_impact_loss
@@ -7930,7 +7923,7 @@ epidemic_events.5008 = {
 			modifier = hiding_from_epidemic
 			years = 10
 		}
-		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 
 		stress_impact = {
 			impatient = minor_stress_impact_gain
@@ -8381,7 +8374,7 @@ epidemic_events.5010 = {
 
 	option = { # Be sad
 		name = epidemic_events.5010.b
-		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 		random_list = {
 			1 = {
 				send_interface_toast = {
@@ -8569,7 +8562,7 @@ epidemic_events.5901 = {
 			}
 		}
 
-		if = {
+		if = { #Unop Check if can contract disease, use correct effect
 			limit = { can_contract_disease_trigger = { DISEASE = bubonic_plague } }
 			random = {
 				chance = 10
@@ -8583,7 +8576,7 @@ epidemic_events.5901 = {
 		}
 
 		scope:physician = {
-			if = {
+			if = { #Unop Check if can contract disease, use correct effect
 				limit = { can_contract_disease_trigger = { DISEASE = bubonic_plague } }
 				random = {
 					chance = 10
@@ -9151,7 +9144,7 @@ epidemic_events.5904 = {
 						title = epidemic_events.5904.c.tt.failure
 						left_icon = root
 						right_icon = scope:doomsday_preacher
-						add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+						add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 						scope:doomsday_province = {
 							add_province_modifier = {
 								modifier = mass_panic
@@ -9181,7 +9174,7 @@ epidemic_events.5904 = {
 
 	option = { # Bah, nobody will take them seriously
 		name = epidemic_events.5904.d
-		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+		add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 		scope:doomsday_province = {
 			random = {
 				chance = 15
@@ -9382,7 +9375,7 @@ epidemic_events.5905 = {
 						title = epidemic_events.5905.b.tt.failure
 						left_icon = root
 						right_icon = scope:peasant
-						add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+						add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 						scope:province = {
 							hidden_effect = {
 								every_neighboring_province = {
@@ -9429,7 +9422,7 @@ epidemic_events.5905 = {
 
 		random = {
 			chance = 50
-			add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+			add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 			scope:province = {
 				add_province_modifier = {
 					modifier = uncaring_ruler
@@ -9571,7 +9564,7 @@ epidemic_events.5906 = {
 					title = epidemic_events.5906.a.tt.failure
 					left_icon = root
 					right_icon = scope:flagellant
-					add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss }
+					add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_loss } #Unop Use correct effect
 					scope:doomsday_province = {
 						add_province_modifier = {
 							modifier = unrestrained_flagellants
@@ -9636,7 +9629,7 @@ epidemic_events.5906 = {
 			IMPRISONER = root
 		}
 
-		scope:doomsday_province = {
+		scope:doomsday_province = { #Unop
 			random = {
 				chance = 50
 				add_province_modifier = {

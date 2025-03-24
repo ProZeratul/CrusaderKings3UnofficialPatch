@@ -2880,7 +2880,7 @@ legend_spread_events.8122 = {
 		name = legend_spread_events.8122.a
 		trigger = {
 			exists = scope:distant_liege
-			exists = scope:distant_knight
+			exists = scope:distant_knight #Unop check distant_knight scope
 		}
 		custom_tooltip = legend_quality_if_wins_tt
 		configure_start_single_combat_effect = {
@@ -3705,7 +3705,7 @@ legend_spread_events.8160 = {
 			has_character_flag = legend_spread_events_8160
 		}
 		promoted_legend = {
-			has_legend_chapter = extra_deed
+			has_legend_chapter = extra_deed #Unop Use correct chapter
 		}
 	}
 
@@ -3727,7 +3727,7 @@ legend_spread_events.8160 = {
 				value = scope:soulmate
 			}
 			set_legend_chapter = {
-				name = extra_deed
+				name = extra_deed #Unop Use correct chapter
 				localization_key = legend_chapter_love
 			}
 		}
@@ -4001,10 +4001,10 @@ legend_spread_events.8172 = {
 	right_portrait = {
 		character = scope:old_you
 		animation = personality_zealous
-		outfit_tags = { no_clothes nightgown }
+		outfit_tags = { nightgown }
 		hide_info = yes
 	}
-	override_effect_2d = { reference = fog }
+	override_effect_2d = { reference = fog } #Unop Fix syntax
 	cooldown = { years = 5 }
 
 	trigger = {
@@ -4020,7 +4020,7 @@ legend_spread_events.8172 = {
 
 	immediate = {
 		promoted_legend = { save_scope_as = legend }
-		hidden_effect_new_object = {
+		hidden_effect_new_object = { #Unop prevent tooltip errors
 			create_character = {
 				template = bp1_doppelganger_template
 				dynasty = none

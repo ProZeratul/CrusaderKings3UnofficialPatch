@@ -23,7 +23,7 @@ scripted_effect contest_winner_dedicate_victory_effect = {
 					opinion = -15
 				}
 			}
-			stress_impact = {
+			stress_impact = { #Unop Move stress impact here
 				shy = medium_stress_impact_gain
 			}
 		}
@@ -12122,7 +12122,7 @@ contest_events.3020 = {
 # A commoner runs onto the tracks, naked.
 # by James Beaumont
 scripted_trigger 3030_would_streak_trigger = {
-	is_adult = yes #Unop: No child for that
+	is_physically_able_adult = yes
 	is_ai = yes #Unop: Ensure no player actually get taken for this
 	OR = {
 		has_trait = lustful
@@ -12165,10 +12165,6 @@ contest_events.3030 = {
 	right_portrait = {
 		character = scope:naked_peasant
 		animation = happiness
-		triggered_outfit = {
-			remove_default_outfit = no
-			outfit_tags = { no_clothes }
-		}
 	}
 	cooldown = { years = 1 }
 
@@ -12209,6 +12205,9 @@ contest_events.3030 = {
 				trait = deviant
 				save_scope_as = naked_peasant
 			}
+		}
+		scope:naked_peasant = {
+			add_character_flag = is_naked
 		}
 	}
 
@@ -12473,6 +12472,11 @@ contest_events.3030 = {
 		}
 		ai_chance = {
 			base = 10
+		}
+	}
+	after = {
+		scope:naked_peasant = {
+			remove_character_flag = is_naked
 		}
 	}
 }

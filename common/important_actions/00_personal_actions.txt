@@ -2,7 +2,7 @@
 	type = alert
 
 	check_create_action = {
-		
+
 		if = {
 			limit = {
 				health <= death_chance_dying_health
@@ -12,7 +12,7 @@
 				actor = root
 			}
 		}
-		
+
 	}
 
 	effect = {
@@ -44,6 +44,19 @@ action_can_assign_guardian = {
 					is_character_interaction_valid = {
 						recipient = prev
 						interaction = educate_child_interaction
+					}
+				}
+				trigger_if = {
+					limit = {
+						root.primary_title ?= {
+							place_in_line_of_succession = {
+								target = prev
+								value >= 3
+							}
+						}
+					}
+					NOT = {
+						exists = root.court_position:court_tutor_court_position
 					}
 				}
 			}
@@ -97,6 +110,7 @@ action_can_assign_guardian = {
 action_can_ransom = {
 	combine_into_one = yes
 	check_create_action = {
+		#Unop Limit to rulers without fp1_pillage_legacy_3
 		if = {
 			limit = {
 				OR = {
@@ -141,7 +155,7 @@ action_can_ransom = {
 					recipient = this
 				}
 			}
-		}		
+		}
 	}
 
 	effect = {
@@ -153,6 +167,7 @@ action_can_ransom = {
 	}
 }
 
+#Unop Add action_can_ransom_increased
 action_can_ransom_increased = {
 	combine_into_one = yes
 	check_create_action = {
@@ -195,7 +210,7 @@ action_can_ransom_increased = {
 					recipient = this
 				}
 			}
-		}		
+		}
 	}
 
 	effect = {
@@ -211,7 +226,7 @@ action_should_pay_ransom = {
 	combine_into_one = yes
 	is_dangerous = yes
 	check_create_action = {
-		every_close_family_member = { 
+		every_close_family_member = {
 			limit = {
 				is_imprisoned = yes
 				root.primary_title ?= {
@@ -270,7 +285,7 @@ action_vassal_ransom_gives_hook = {
 			}
 		}
 	}
-	
+
 	unimportant = {
 		always = yes
 	}
@@ -305,7 +320,7 @@ action_can_vassalize = {
 				recipient = this
 			}
 		}
-		
+
 	}
 
 	effect = {
@@ -388,7 +403,7 @@ action_can_potentially_propose_alliance_to_family_member = {
 						is_character_interaction_valid = {
 							recipient = prev
 							interaction = negotiate_alliance_interaction
-						} 
+						}
 						NOT = {
 							is_character_interaction_potentially_accepted = {
 								recipient = prev
@@ -410,7 +425,7 @@ action_can_potentially_propose_alliance_to_family_member = {
 							is_character_interaction_valid = {
 								recipient = prev
 								interaction = negotiate_alliance_interaction
-							} 
+							}
 							NOT = {
 								is_character_interaction_potentially_accepted = {
 									recipient = prev
@@ -515,7 +530,7 @@ action_can_ask_hof_for_money = {
 action_can_ask_hof_for_claim = {
 	priority = 900
 	combine_into_one = yes
-	
+
 	check_create_action = {
 		if = {
 			limit = {

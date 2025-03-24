@@ -20,7 +20,7 @@ destination_events.10 = { # A good Caravan Master for hire
 	}
 
 	lower_right_portrait = scope:travel_leader_character
-	
+
 	trigger = {
 		has_lifestyle = wanderer_lifestyle
 		any_councillor = {
@@ -51,6 +51,13 @@ destination_events.10 = { # A good Caravan Master for hire
 	}
 
 	immediate = {
+		#if = { #Unop: Disable this if since this scope is no longer needed
+		#	limit = { employs_court_position = travel_leader_court_position }
+		#	random_court_position_holder = {
+		#		limit = { has_court_position = travel_leader_court_position }
+		#		save_scope_as = current_travel_leader
+		#	}
+		#}
 		if = {
 			limit = {
 				NOT = { exists = scope:provider_character }
@@ -70,7 +77,8 @@ destination_events.10 = { # A good Caravan Master for hire
 				template = travel_leader_court_position_template
 				age = { 25 45 }
 				gender = root
-				location = root.capital_province #Unop Don't make them courtier before they are hired
+				#employer = root  #Unop: Don't make them courtier before they are hired
+				location = root.capital_province #Unop: Make sure they are at the same location as our current char
 				faith = root.faith
 				culture = root.culture
 
@@ -81,7 +89,7 @@ destination_events.10 = { # A good Caravan Master for hire
 		}
 	}
 
-	option = { 
+	option = {
 		name = destination_events.10.a
 		remove_short_term_gold = tiny_gold_value
 		custom_tooltip = destination_events.10.a.tt
@@ -137,7 +145,7 @@ destination_events.20 = { # Preparing for an excursion
 	}
 
 	override_background = { reference = bp1_wine_cellar }
-	
+
 	trigger = {
 		has_lifestyle = wanderer_lifestyle
 		any_councillor = {
@@ -174,7 +182,7 @@ destination_events.20 = { # Preparing for an excursion
 		}
 	}
 
-	option = { 
+	option = {
 		name = destination_events.20.a
 		add_character_modifier = destination_excursion_safety_modifier
 		ai_chance = {
@@ -213,9 +221,9 @@ destination_events.30 = { # The Journey to <Special Building>
 
 	override_background = {
 		trigger = {
-			scope:journey_province = { 
+			scope:journey_province = {
 				OR = {
-					has_holding_type = city_holding 
+					has_holding_type = city_holding
 					has_holding_type = tribal_holding
 					has_holding_type = castle_holding
 				}
@@ -225,27 +233,27 @@ destination_events.30 = { # The Journey to <Special Building>
 	}
 	override_background = {
 		trigger = {
-			scope:journey_province = { 
-				has_holding_type = church_holding 
+			scope:journey_province = {
+				has_holding_type = church_holding
 				barony = { is_holy_site = yes }
 			}
 		}
-		reference = holy_site_scope 
+		reference = holy_site_scope
 	}
 	override_background = {
 		trigger = {
-			scope:journey_province = { 
-				has_holding_type = church_holding 
+			scope:journey_province = {
+				has_holding_type = church_holding
 				barony = { is_holy_site = no }
 			}
 		}
-		reference = temple 
+		reference = temple
 	}
 
 	override_effect_2d = {
 		reference = legend_glow
 	}
-	
+
 	trigger = {
 		is_ai = no
 		has_lifestyle = wanderer_lifestyle
@@ -321,7 +329,7 @@ destination_events.30 = { # The Journey to <Special Building>
 		}
 	}
 
-	option = { 
+	option = {
 		name = destination_events.30.a
 		custom_tooltip = destination_events.30.a.tt
 	}
@@ -343,7 +351,7 @@ destination_events.40 = { # Remember the language of <X>?
 		character = scope:teacher_character
 		animation = happy_teacher
 	}
-	
+
 	trigger = {
 		has_lifestyle = wanderer_lifestyle
 		has_variable_list = visited_poi
@@ -396,7 +404,7 @@ destination_events.40 = { # Remember the language of <X>?
 		}
 	}
 
-	option = { 
+	option = {
 		name = destination_events.40.a
 		remove_short_term_gold = minor_gold_value
 		start_scheme = {

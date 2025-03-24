@@ -457,6 +457,7 @@ create_landless_adventurer_title_effect = {
 				scope:adventurer_creation_reason = flag:deposition
 				scope:adventurer_creation_reason = flag:conquest
 				scope:adventurer_creation_reason = flag:exile
+				NOT = { this = $FLAVOR_CHAR$ }
 			}
 		}
 		add_opinion = {
@@ -2203,11 +2204,11 @@ adventurer_realm_destabilisation_list_effect = {
 							}
 							max = 25
 						}
-						"capital_county.squared_distance(scope:ruler.capital_province)" >= squared_distance_medium
+						"capital_county.squared_distance(scope:ruler.capital_province)" >= squared_distance_medium #Unop
 						capital_county = {
 							save_temporary_scope_value_as = {
 								name = distance
-								value = "squared_distance(scope:ruler.capital_province)"
+								value = "squared_distance(scope:ruler.capital_province)" #Unop
 							}
 						}
 					}
@@ -2759,9 +2760,7 @@ zealous_missionary_conversion_effect = {
 			exists = location.barony.holder
 			government_has_flag = government_is_landless_adventurer 
 			has_character_flag = zealous_missionary_timer
-			NOT = {
-				location.faith ?= root.faith
-			}
+			location.county ?= { hasan_evangelize_province_trigger = yes }
 		}
 		trigger_event = ep3_laamp_decision_event.1103
 	}
@@ -3071,6 +3070,13 @@ absolve_crusaders_of_gallowsbait_effect = {
 	}
 }
 
+temporarily_lock_visit_settlement_effect = {
+	set_variable = {
+		name = ep3_laamp_decision_1000_is_visiting
+		days = visit_settlement_lock_days
+	}
+}
+
 ##################################################
 # Admin Government
 ##################################################
@@ -3089,10 +3095,31 @@ create_noble_family_effect = {
 
 	save_scope_as = new_noble_family_holder
 	hidden_effect = { # NF can only be held by house heads
-		house ?= {
-			if = {
-				limit = { house_head != scope:new_noble_family_holder }
-				set_house_head = scope:new_noble_family_holder
+		if = { # Start by checking that we are not the house head already
+			limit = {
+				house ?= {
+					house_head != scope:new_noble_family_holder
+				}
+			}
+			if = { # If not, let's see if it would be reasonable to become house head...
+				limit = {
+					house ?= {
+						house_head ?= {
+							top_liege = scope:new_noble_family_holder.top_liege
+							OR = {
+								is_ruler = no
+								primary_title = {
+									tier <= tier_county
+								}
+							}
+							is_ai = yes #  Don't steal house head from a player
+						}
+					}
+				}
+				house = { set_house_head = scope:new_noble_family_holder }
+			}
+			else = { # ... Otherwise, we create a cadet branch
+				create_cadet_branch = yes
 			}
 		}
 	}
@@ -3469,6 +3496,9 @@ spawn_governance_contract_effect = {
 					is_title_maa_regiment = yes
 					is_raised = no
 					count >= 2
+				}
+				any_neighboring_and_across_water_realm_same_rank_owner = {
+					liege = root.liege
 				}
 			}
 
@@ -4162,6 +4192,190 @@ generate_governance_outcome_effect = {
 					add = 1
 				}
 			}
+		}
+	}
+}
+
+remove_other_eparch_modifiers_effect = {
+	hidden_effect = { # No need to show this
+		# Let's check for the county opinion modifier first
+		scope:liege ?= {
+			# We check and scope to all counties to make sure we remove any stray modifiers in case the capital is moved, etc.
+			if = {
+				limit = {
+					any_realm_county = {
+						any_county_province = {
+							has_province_modifier = ep3_eparch_county_opinion_modifier
+						}
+					}
+				}
+				every_realm_county = {
+					limit = {
+						any_county_province = {
+							has_province_modifier = ep3_eparch_county_opinion_modifier
+						}
+					}
+					every_county_province = {
+						limit = {
+							has_province_modifier = ep3_eparch_county_opinion_modifier
+						}
+						remove_province_modifier = ep3_eparch_county_opinion_modifier
+					}
+				}
+			}
+		}
+		
+		# Next is the troop modifier
+		scope:liege ?= {
+			# We check and scope to all counties to make sure we remove any stray modifiers in case the capital is moved, etc.
+			if = {
+				limit = {
+					any_realm_county = {
+						any_county_province = {
+							has_province_modifier = ep3_eparch_troops_modifier
+						}
+					}
+				}
+				every_realm_county = {
+					limit = {
+						any_county_province = {
+							has_province_modifier = ep3_eparch_troops_modifier
+						}
+					}
+					every_county_province = {
+						limit = {
+							has_province_modifier = ep3_eparch_troops_modifier
+						}
+						remove_province_modifier = ep3_eparch_troops_modifier
+					}
+				}
+			}
+		}
+		
+		# Next is the county control modifier
+		scope:liege ?= {
+			# We check and scope to all counties to make sure we remove any stray modifiers in case the capital is moved, etc.
+			if = {
+				limit = {
+					any_realm_county = {
+						any_county_province = {
+							has_province_modifier = ep3_eparch_control_modifier
+						}
+					}
+				}
+				every_realm_county = {
+					limit = {
+						any_county_province = {
+							has_province_modifier = ep3_eparch_control_modifier
+						}
+					}
+					every_county_province = {
+						limit = {
+							has_province_modifier = ep3_eparch_control_modifier
+						}
+						remove_province_modifier = ep3_eparch_control_modifier
+					}
+				}
+			}
+		}
+		
+		# And finally, the development modifier
+		scope:liege ?= {
+			# We check and scope to all counties to make sure we remove any stray modifiers in case the capital is moved, etc.
+			if = {
+				limit = {
+					any_realm_county = {
+						any_county_province = {
+							has_province_modifier = ep3_eparch_development_modifier
+						}
+					}
+				}
+				every_realm_county = {
+					limit = {
+						any_county_province = {
+							has_province_modifier = ep3_eparch_development_modifier
+						}
+					}
+					every_county_province = {
+						limit = {
+							has_province_modifier = ep3_eparch_development_modifier
+						}
+						remove_province_modifier = ep3_eparch_development_modifier
+					}
+				}
+			}
+		}
+	}
+}
+
+eparch_neglecting_duty_effect = {
+	custom_tooltip = {
+		text = eparch_neglecting_duty_warning_tt
+		
+		# We check if you have neglected duties in the past
+		if = {
+			limit = {
+				exists = var:eparch_neglecting_duty
+			}
+			# If you have, let's first increase the variable
+			change_variable = { name = eparch_neglecting_duty add = 5 }
+			
+			# Then check if the liege notices and decide to take action
+			random = {
+				chance = {
+					# Base value - Increases with each neglecting action
+					value = var:eparch_neglecting_duty
+					
+					# Add the difference in intrigue skill
+					add = {
+						value = liege.intrigue
+						subtract = intrigue
+					}
+					
+					# Add the difference in influence level
+					add = {
+						value = liege.influence_level
+						subtract = influence_level
+						multiply = 5
+					}
+					
+					# Lower the chance if you belong to a powerful or dominant family
+					if = {
+						limit = {
+							house ?= { is_powerful_family = yes }
+						}
+						subtract = 10
+					}
+					if = {
+						limit = {
+							house ?= { is_dominant_family = yes }
+						}
+						subtract = 20
+					}
+					
+					min = 5
+					max = 90
+				}
+				
+				# The liege have noticed - We reduce the variable slightly as a result (but never below 0)
+				if = {
+					limit = {
+						exists = var:eparch_neglecting_duty
+						var:eparch_neglecting_duty >= 20
+					}
+					change_variable = { name = eparch_neglecting_duty subtract = 20 }
+				}
+				else = {
+					set_variable = { name = eparch_neglecting_duty value = 0 }
+				}
+				
+				liege = {
+					trigger_event = { id = ep3_eparch_event.9000 days = { 10 90 } }
+				}
+			}
+		}
+		else = { # If you haven't, we'll set the variable and give you a free pass (you only get it for your very first time though)
+			set_variable = { name = eparch_neglecting_duty value = 0 }
 		}
 	}
 }
@@ -7876,7 +8090,7 @@ ep3_story_cycle_admin_eunuch_downgrade_modifier_effect = {
 				limit = { scope:modifier_type = flag:eunuch }
 				progress_towards_rival_effect = {
 					REASON = rival_admin_eunuch
-					CHARACTER = scope:unop_top_liege
+					CHARACTER = scope:unop_top_liege #Unop
 					OPINION = default_rival_opinion
 				}
 			}
@@ -10922,6 +11136,7 @@ create_artifact_court_icon_large_effect = {
 	# Get the character the artifact is being made for.
 	$OWNER$ = { save_scope_as = owner }
 	$PAINTER$ = { save_scope_as = painter }
+	unop_save_adventurer_location_effect = yes
 
 	hidden_effect_new_object = {
 		# Get artifact quality, wealth, and materials
@@ -11005,6 +11220,7 @@ create_artifact_court_icon_small_effect = {
 	# Get the character the artifact is being made for.
 	$OWNER$ = { save_scope_as = owner }
 	$PAINTER$ = { save_scope_as = painter }
+	unop_save_adventurer_location_effect = yes
 
 	hidden_effect_new_object = {
 		# Get artifact quality, wealth, and materials
@@ -11088,6 +11304,7 @@ create_artifact_trinket_icon_effect = {
 	# Get the character the artifact is being made for.
 	$OWNER$ = { save_scope_as = owner }
 	$PAINTER$ = { save_scope_as = painter }
+	unop_save_adventurer_location_effect = yes
 
 	hidden_effect_new_object = {
 		# Get artifact quality, wealth, and materials
@@ -11437,23 +11654,18 @@ laamp_as_mercenary_payout_effect = {
 }
 
 laamp_as_mercenary_payout_tooltip_effect = {
-	war ?= { save_scope_as = war } #Unop: This new effect NEEDS the scope:war to exists. Root should be a casus_belly scope
-	if = {
-		limit = { NOT = { exists = scope:war } }
-		debug_log = "Unop: Undefined War scope diag"
-		debug_log_scopes = yes
-	}
-
+	save_scope_as = war
 	show_as_tooltip = {
 		scope:defender = {
 			if = {
 				limit = {
+					exists = scope:war
 					any_war_ally = {
 						is_landless_adventurer = yes
 						OR = {
 							any_character_active_contract = {
 								has_task_contract_type = laamp_join_war_contract
-								var:task_contract_war = scope:war
+								var:task_contract_war ?= scope:war
 							}
 							AND = {
 								has_variable = owed_contract_assistance_gold
@@ -11470,37 +11682,10 @@ laamp_as_mercenary_payout_tooltip_effect = {
 						}
 						save_scope_as = laamp_temp
 						save_scope_as = actor
-
-						if = {
-							limit = { has_variable = owed_contract_assistance_war }
-							save_scope_value_as = {
-								name = war_contribution_value
-								value = "scope:laamp_temp.var:owed_contract_assistance_war.war_contribution(scope:laamp_temp)"
-							}
-						}
-						else_if = {
-							limit = { has_variable = task_contract_war }
-							save_scope_value_as = {
-								name = war_contribution_value
-								value = "scope:laamp_temp.var:task_contract_war.war_contribution(scope:laamp_temp)"
-							}
-						}
-						else_if = {
-							limit = { exists = scope:war }
 							save_scope_value_as = {
 								name = war_contribution_value
 								value = "scope:war.war_contribution(scope:laamp_temp)"
 							}
-						}
-						else = {
-							debug_log = "Unop: Undefined War scope diag"
-							debug_log_scopes = yes
-							#Unop: I'm sick of this effect flooding the log, making everything way harder to debug !! So it's 0 then
-							save_scope_value_as = {
-								name = war_contribution_value
-								value = 0
-							}
-						}
 						if = {
 							limit = {
 								any_character_active_contract = {
@@ -11566,6 +11751,7 @@ laamp_as_mercenary_payout_tooltip_effect = {
 		scope:attacker = {
 			if = {
 				limit = {
+					exists = scope:war
 					any_war_ally = {
 						is_landless_adventurer = yes
 						OR = {
@@ -11588,23 +11774,10 @@ laamp_as_mercenary_payout_tooltip_effect = {
 						}
 						save_scope_as = laamp_temp
 						save_scope_as = actor
-
-						if = {
-							limit = { exists = scope:war }
 							save_scope_value_as = {
 								name = war_contribution_value
 								value = "scope:war.war_contribution(scope:laamp_temp)"
 							}
-						}
-						else = {
-							debug_log = "Unop: Undefined War scope diag"
-							debug_log_scopes = yes
-							#Unop: I'm sick of this effect flooding the log, making everything way harder to debug !! So it's 0 then
-							save_scope_value_as = {
-								name = war_contribution_value
-								value = 0
-							}
-						}						
 						if = {
 							limit = {
 								any_character_active_contract = {
@@ -12539,16 +12712,16 @@ ep3_increase_resistance_large_effect = {
 ep3_decrease_pacification_effect = {
 	save_scope_as = origin_char
 	if = {
-		limit = { scope:story.var:pacification > 0 }
+		limit = { scope:story.var:pacification != 0 }
 		scope:story = {
 			change_variable = {
 				name = pacification
 				add = -1
 			}
 		}
-		change_variable = {
+		set_variable = {
 			name = pacification_gui
-			add = -1
+			value = scope:story.var:pacification
 		}
 		if = { #Display in green if Anglo-Saxon
 			limit = {
@@ -12619,16 +12792,16 @@ ep3_decrease_pacification_effect = {
 ep3_decrease_resistance_effect = {
 	save_scope_as = origin_char
 	if = {
-		limit = { scope:story.var:pacification > 0 }
+		limit = { scope:story.var:pacification != 0 }
 		scope:story = {
 			change_variable = {
 				name = resistance
 				add = -1
 			}
 		}
-		change_variable = {
+		set_variable = {
 			name = resistance_gui
-			add = -1
+			value = scope:story.var:resistance
 		}
 		if = { #Display in red if Anglo-Saxon
 			limit = {
@@ -12723,7 +12896,10 @@ depose_effect = {
 		save_scope_as = winner
 	}
 	every_held_title = { add_to_list = target_titles }
-	trigger_event = ep3_laamps.0002
+	trigger_event = {
+		id = ep3_laamps.0002
+		days = 1
+	}
 }
 
 # Effect for handling players and AI continuing as landless if banished

@@ -394,6 +394,7 @@ ep3_story_cycle_violet_poet.0003 = {
 	option = { #Choose heir 1
 		name = ep3_story_cycle_violet_poet.0003.a
 
+		#set_designated_heir = scope:heir1 #Unop Move set_designated_heir
 		if = {
 			limit = {
 				scope:heir1 = {
@@ -407,7 +408,7 @@ ep3_story_cycle_violet_poet.0003 = {
 			CHILD = scope:heir1
 			ADOPTER = root
 		}
-		set_designated_heir = scope:heir1
+		set_designated_heir = scope:heir1 #Unop Move set_designated_heir
 		
 		stress_impact = {
 			base = miniscule_stress_impact_loss
@@ -421,6 +422,7 @@ ep3_story_cycle_violet_poet.0003 = {
 	option = { #Choose heir 2
 		name = ep3_story_cycle_violet_poet.0003.b
 
+		#set_designated_heir = scope:heir2 #Unop Move set_designated_heir
 		if = {
 			limit = {
 				scope:heir2 = {
@@ -434,7 +436,7 @@ ep3_story_cycle_violet_poet.0003 = {
 			CHILD = scope:heir2
 			ADOPTER = root
 		}
-		set_designated_heir = scope:heir2
+		set_designated_heir = scope:heir2 #Unop Move set_designated_heir
 
 		stress_impact = {
 			base = miniscule_stress_impact_gain
@@ -448,6 +450,7 @@ ep3_story_cycle_violet_poet.0003 = {
 	option = { #Choose heir 3
 		name = ep3_story_cycle_violet_poet.0003.c
 
+		#set_designated_heir = scope:heir3 #Unop Move set_designated_heir
 		if = {
 			limit = {
 				scope:heir3 = {
@@ -461,7 +464,7 @@ ep3_story_cycle_violet_poet.0003 = {
 			CHILD = scope:heir3
 			ADOPTER = root
 		}
-		set_designated_heir = scope:heir3
+		set_designated_heir = scope:heir3 #Unop Move set_designated_heir
 
 		stress_impact = {
 			base = miniscule_stress_impact_gain
@@ -1193,9 +1196,11 @@ ep3_story_cycle_violet_poet.1015 = {
 					title = ep3_story_cycle_violet_poet.1015.a.failure
 					left_icon = root
 					right_icon = scope:stranger
-
-					scope:stranger = {
-						move_to_pool = yes
+					
+					hidden_effect = {
+						scope:stranger = {
+							move_to_pool = yes
+						}
 					}
 
 					add_stress = minor_stress_gain

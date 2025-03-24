@@ -247,7 +247,7 @@ activity_system.0090 = {
 
 # Intent Target Invalidated
 activity_system.0091 = {
-	orphan = yes
+	orphan = yes #Unop Replaced by unop.0091
 	type = activity_event
 	title = activity_system.0091.t
 	desc = activity_system.0091.desc
@@ -276,7 +276,7 @@ activity_system.0091 = {
 }
 
 activity_system.0092 = {
-	orphan = yes
+	orphan = yes #Unop Replaced by unop.0091
 	type = activity_event
 	title = activity_system.0091.t
 	desc = activity_system.0091.desc
@@ -544,7 +544,7 @@ activity_system.0310 = {
 
 	immediate = {
 		# Save scopes about the activity so they can be passed on to the follow-up event if needed
-		scope:target_activity.activity_host = {
+		scope:target_activity.activity_host = { #Unop Use correct scope
 			save_scope_as = target_activity_host
 		}
 		involved_activity = { save_scope_as = target_activity }
@@ -566,7 +566,7 @@ activity_system.0310 = {
 	option = { # Leave and go home
 		# Reuses name from 0300
 		name = activity_system.0300.b
-		custom_tooltip = {
+		custom_tooltip = { #Unop Use tooltip correctly
 			text =  activity_system.0310.b.tt
 			current_travel_plan = { cancel_travel_plan = yes }
 		}
@@ -646,9 +646,7 @@ activity_system.0330 = {
 	option = {
 		name = activity_system.0330.a 
 		show_as_tooltip = {
-			current_travel_plan = {
-				reroute_to_home = yes
-			}
+			return_home = yes
 		}
 	}
 }
@@ -677,9 +675,7 @@ activity_system.0331 = {
 	option = {
 		name = activity_system.0331.a 
 		show_as_tooltip = {
-			current_travel_plan = {
-				reroute_to_home = yes
-			}
+			return_home = yes
 		}
 	}
 }
@@ -724,7 +720,7 @@ activity_system.0400 = {
 	immediate = {
 		scope:activity.activity_host ?= { save_scope_as = host }
 		current_travel_plan.travel_leader ?= { save_scope_as = travel_leader }
-		if = {
+		if = { #Unop Set unop_days_late
 			limit = { scope:estimated_arrival_diff_days < 0 }
 			save_scope_value_as = {
 				name = unop_days_late
@@ -748,9 +744,7 @@ activity_system.0400 = {
 		involved_activity ?= {
 			root = { remove_from_activity = involved_activity }
 		}
-		current_travel_plan = {
-			reroute_to_home = yes
-		}
+		return_home = yes
 	}
 }
 
@@ -819,9 +813,7 @@ activity_system.0500 = {
 	option = { 
 		name = activity_system.0500.a
 		show_as_tooltip = {
-			current_travel_plan = {
-				reroute_to_home = yes
-			}
+			return_home = yes
 		}
 	}
 }
@@ -873,9 +865,7 @@ activity_system.0551 = {
 	option = { 
 		name = activity_system.0551.a
 		show_as_tooltip = {
-			current_travel_plan = {
-				reroute_to_home = yes
-			}
+			return_home = yes
 		}
 	}
 }

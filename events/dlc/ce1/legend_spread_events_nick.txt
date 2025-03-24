@@ -5385,12 +5385,18 @@ legend_spread_events.5305 = {
 		highest_held_title_tier > tier_barony
 		any_neighboring_realm_same_rank_owner = {
 			is_available_healthy_ai_adult = yes
-			promoted_legend ?= {
+			promoted_legend ?= { #Unop Check correct conditions
 				NOT = { legend_owner ?= root }
 			}
+			#save_temporary_scope_as = potential_promoter_temp
 		}
 		promoted_legend ?= {
 			legend_owner = root
+			#any_legend_promoter = {
+			#	NOT = {
+			#		this = scope:potential_promoter_temp
+			#	}
+			#}
 		}
 	}
 
@@ -5398,7 +5404,7 @@ legend_spread_events.5305 = {
 		random_neighboring_realm_same_rank_owner = {
 			limit = {
 				is_available_healthy_ai_adult = yes
-				promoted_legend ?= {
+				promoted_legend ?= { #Unop Check correct conditions
 					NOT = { legend_owner ?= root }
 				}
 			}
@@ -5690,8 +5696,10 @@ legend_spread_events.5310 = {
 		}
 		any_neighboring_top_liege_realm_owner = {
 			is_available_healthy_ai_adult = yes
-			promoted_legend ?= {
-				NOT = { legend_owner ?= root }
+			NOT = {
+				promoted_legend ?= {
+					legend_owner = root
+				}
 			}
 		}
 
@@ -5711,8 +5719,10 @@ legend_spread_events.5310 = {
 		random_neighboring_top_liege_realm_owner = {
 			limit = {
 				is_available_healthy_ai_adult = yes
-				promoted_legend ?= {
-					NOT = { legend_owner ?= root }
+				NOT = {
+					promoted_legend ?= {
+						legend_owner = root
+					}
 				}
 			}
 

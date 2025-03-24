@@ -727,7 +727,7 @@
 	# PARAMETERS
 	###################
 
-	is_grand_activity = yes
+	activity_group_type = grand
 
 	is_single_location = yes
 
@@ -2055,6 +2055,7 @@
 			on_end = {
 				if = {
 					limit = { this = scope:activity.activity_host }
+					#Unop Add debug log
 					if = {
 						limit = {
 							NOT = {
@@ -2275,6 +2276,7 @@
 			on_end = {
 				if = {
 					limit = { this = scope:host }
+					#Unop Add debug log
 					if = {
 						limit = {
 							NOT = {
@@ -2535,6 +2537,7 @@
 			on_end = {
 				if = {
 					limit = { this = scope:host }
+					#Unop Add debug log
 					if = {
 						limit = {
 							NOT = {
@@ -2831,6 +2834,7 @@
 			on_end = {
 				if = {
 					limit = { this = scope:host }
+					#Unop Add debug log
 					if = {
 						limit = {
 							NOT = {
@@ -3085,6 +3089,7 @@
 			on_end = {
 				if = {
 					limit = { this = scope:host }
+					#Unop Add debug log
 					if = {
 						limit = {
 							NOT = {
@@ -3280,6 +3285,7 @@
 			on_end = {
 				if = {
 					limit = { this = scope:host }
+					#Unop Add debug log
 					if = {
 						limit = {
 							NOT = {
@@ -3506,6 +3512,7 @@
 			on_end = {
 				if = {
 					limit = { this = scope:host }
+					#Unop Add debug log
 					if = {
 						limit = {
 							NOT = {
@@ -3748,6 +3755,7 @@
 			on_end = {
 				if = {
 					limit = { this = scope:host }
+					#Unop Add debug log
 					if = {
 						limit = {
 							NOT = {
@@ -4069,7 +4077,7 @@
    		   government_has_flag = government_is_mercenary
    		   add = -5000
    		}
-		modifier = { # To simulate the is_pool_guest = no that was in can_be_activity_guest
+		modifier = { #Unop To simulate the is_pool_guest = no that was in can_be_activity_guest
 			is_pool_guest = yes
 			add = -5000
 		}
@@ -4121,7 +4129,7 @@
 	###################
 
 	pulse_actions = {
-		entries = { guest_friendship guest_insulted tournament_guest_ptv_small tournament_acclaimed_participant tournament_entry_fee tournament_win_memory tournament_studied_techniques tournament_knight_skill spouse_skill_diplomacy_improves spouse_gives_hook relation_gains_friend host_gains_diplo_xp host_gains_steward_xp host_gains_intrigue_xp }
+		entries = { guest_friendship guest_insulted tournament_guest_ptv_small tournament_acclaimed_participant tournament_entry_fee tournament_win_memory tournament_studied_techniques tournament_knight_skill spouse_skill_diplomacy_improves spouse_gives_hook relation_gains_friend host_gains_diplo_xp host_gains_steward_xp host_gains_intrigue_xp tournament_learned_from_knight tournament_game_of_rhetoric tournament_equipment_improved tournament_relaxed_in_tavern tournament_explored_village tournament_prayed_temple tournament_host_feted tournament_host_gifted tournament_tilting_demonstration tournament_archery_arrow_split tournament_recital_successful_verse tournament_joust_lance_broken tournament_joust_unhorsed tournament_horse_stumbles }
 		chance_of_no_event = 3
 	}
 

@@ -22,7 +22,7 @@ ransom_interaction_effect = {
 				scope:imprisoner.dynasty ?= { has_dynasty_perk = fp1_pillage_legacy_3 }
 				scope:payer.gold >= scope:prisoner.increased_ransom_cost_value
 			}
-			save_scope_value_as = { name = extortionate_gold value = yes }
+			save_scope_value_as = { name = extortionate_gold value = yes } #Unop Use correct value
 		}
 		else_if = {
 			limit = {
@@ -30,7 +30,7 @@ ransom_interaction_effect = {
 				scope:payer.gold < scope:prisoner.increased_ransom_cost_value
 				scope:payer.gold >= 1
 			}
-			save_scope_value_as = { name = extortionate_current_gold value = yes }
+			save_scope_value_as = { name = extortionate_current_gold value = yes } #Unop Use correct value
 		}
 		else_if = {
 			limit = { scope:payer.gold >= scope:prisoner.ransom_cost_value }
@@ -616,7 +616,10 @@ execute_prisoner_effect = {
 			if = {
 				limit = {
 					exists = scope:victim.liege
-					NOT = { scope:victim.liege = scope:victim }
+					NOR = {
+						scope:victim.liege = scope:victim
+						scope:victim.liege = scope:executioner
+					}
 				}
 				scope:victim.liege = {
 					add_opinion = {

@@ -87,7 +87,7 @@ scripted_effect start_contract_travel_with_domicile = {
 		travel_with_domicile = yes
 		return_trip = no
 		on_arrival_destinations = all
-	}	
+	}
 }
 
 #taking a transport contract - triggered after you take a transport contract
@@ -281,7 +281,7 @@ ep3_contract_event.0001 = {
 	lower_right_portrait = {
 		trigger = {
 			NOR = {
-				scope:task_contract_object ?= scope:task_contract_target 
+				scope:task_contract_object ?= scope:task_contract_target
 				scope:task_contract_object ?= scope:task_contract_employer
 			}
 		}
@@ -290,7 +290,7 @@ ep3_contract_event.0001 = {
 	#character you have to go to, if exists
 	lower_left_portrait = {
 		trigger = {
-			exists = scope:task_contract_target 
+			exists = scope:task_contract_target
 			NOT = { scope:task_contract_target = scope:task_contract_employer }
 		}
 		character = scope:task_contract_target
@@ -602,7 +602,7 @@ ep3_contract_event.0002 = {
 				root.current_travel_plan = {
 					#Treasure Map Contract
 					trigger_if = {
-						limit = { 
+						limit = {
 							scope:temp_contract = { exists = var:contract_treasure_location }
 						}
 						OR = {
@@ -818,7 +818,7 @@ ep3_contract_event.0004 = {
 				limit = {
 					faith != scope:defender.faith
 				}
-				add_piety = minor_piety_gain 
+				add_piety = minor_piety_gain
 			}
 		}
 	}
@@ -926,7 +926,7 @@ ep3_contract_event.0006 = {
         position = lower_center_portrait
 	}
 	override_background = {
-		trigger = { 
+		trigger = {
 			scope:task_contract_destination = {
 				has_holding_type = castle_holding
 			}
@@ -934,7 +934,7 @@ ep3_contract_event.0006 = {
 		reference = corridor_night
 	}
 	override_background = {
-		trigger = { 
+		trigger = {
 			scope:task_contract_destination = {
 				has_holding_type = city_holding
 			}
@@ -942,7 +942,7 @@ ep3_contract_event.0006 = {
 		reference = market
 	}
 	override_background = {
-		trigger = { 
+		trigger = {
 			scope:task_contract_destination = {
 				has_holding_type = church_holding
 			}
@@ -950,7 +950,7 @@ ep3_contract_event.0006 = {
 		reference = temple
 	}
 	override_background = {
-		trigger = { 
+		trigger = {
 			scope:task_contract_destination = {
 				NOR = {
 					has_holding_type = castle_holding
@@ -1663,7 +1663,7 @@ scripted_effect change_treasure_type = {
 		}
 		else_if = {
 			limit = { has_variable = iron_crown }
-			reforge_artifact = { type = helmet }				
+			reforge_artifact = { type = helmet }
 		}
 		else_if = {
 			limit = { artifact_type = pedestal }
@@ -1673,7 +1673,7 @@ scripted_effect change_treasure_type = {
 	}
 }
 
-#Treasure Hunting Contract - event triggered if you find an artifact in previous event ep3_contract_event.0006 to decide if you want to keep the artifact for yourself or complete the contract 
+#Treasure Hunting Contract - event triggered if you find an artifact in previous event ep3_contract_event.0006 to decide if you want to keep the artifact for yourself or complete the contract
 ep3_contract_event.0007 = {
 	type = character_event
 	title = ep3_contract_event.0007.t
@@ -1761,11 +1761,11 @@ ep3_contract_event.0007 = {
 				desc = ep3_contract_event.0007.desc_church_intimidate
 			}
 			triggered_desc = {
-				trigger = { scope:success_reason = flag:library } 
+				trigger = { scope:success_reason = flag:library }
 				desc = ep3_contract_event.0007.desc_library
 			}
 			triggered_desc = {
-				trigger = { scope:success_reason = flag:explore } 
+				trigger = { scope:success_reason = flag:explore }
 				desc = ep3_contract_event.0007.desc_explore
 			}
 		}
@@ -1806,7 +1806,7 @@ ep3_contract_event.0007 = {
 	}
 
 	override_background = {
-		trigger = { 
+		trigger = {
 			OR = {
 				scope:success_reason = flag:library
 				scope:success_reason = flag:explore
@@ -1815,7 +1815,7 @@ ep3_contract_event.0007 = {
 		reference = wilderness
 	}
 	override_background = {
-		trigger = { 
+		trigger = {
 			scope:task_contract_destination = {
 				has_holding_type = castle_holding
 			}
@@ -1823,7 +1823,7 @@ ep3_contract_event.0007 = {
 		reference = corridor_night
 	}
 	override_background = {
-		trigger = { 
+		trigger = {
 			scope:task_contract_destination = {
 				has_holding_type = city_holding
 			}
@@ -1831,7 +1831,7 @@ ep3_contract_event.0007 = {
 		reference = market
 	}
 	override_background = {
-		trigger = { 
+		trigger = {
 			scope:task_contract_destination = {
 				has_holding_type = church_holding
 			}
@@ -1839,7 +1839,7 @@ ep3_contract_event.0007 = {
 		reference = temple
 	}
 	override_background = {
-		trigger = { 
+		trigger = {
 			scope:task_contract_destination = {
 				NOR = {
 					has_holding_type = castle_holding
@@ -1873,7 +1873,7 @@ ep3_contract_event.0007 = {
 		}
 		if = {
 			limit = {
-				scope:success_reason = flag:city	
+				scope:success_reason = flag:city
 			}
 			change_treasure_type = yes
 			scope:newly_created_artifact = {
@@ -2281,7 +2281,7 @@ ep3_contract_event.0011 = {
 					first_valid = {
 						triggered_desc = {
 							trigger = {
-								scope:task_contract.var:escorted_story ?= { story_type = story_cycle_pet_dog } 
+								scope:task_contract.var:escorted_story ?= { story_type = story_cycle_pet_dog }
 								scope:hates_pets ?= yes
 							}
 							desc = ep3_contract_event.0011.desc_animal_dog_hate
@@ -2330,7 +2330,7 @@ ep3_contract_event.0011 = {
 	}
 	lower_left_portrait = {
 		trigger = {
-			exists = scope:task_contract_object 
+			exists = scope:task_contract_object
 			NOR = {
 				scope:task_contract_target = scope:task_contract_object
 				scope:task_contract_employer = scope:task_contract_object
@@ -2409,7 +2409,7 @@ ep3_contract_event.0011 = {
 							scope:task_contract_employer = {
 								save_scope_as = ward_liege
 							}
-							trigger_event = { on_action = on_ward_arrive_at_guardian }	
+							trigger_event = { on_action = on_ward_arrive_at_guardian }
 						}
 					}
 					scope:task_contract_object = {
@@ -2641,7 +2641,7 @@ ep3_contract_event.0011 = {
 					scope:task_contract.var:task_contract_employer = {
 						save_scope_as = ward_liege
 					}
-					trigger_event = { on_action = on_ward_arrive_at_guardian }	
+					trigger_event = { on_action = on_ward_arrive_at_guardian }
 				}
 				save_scope_value_as = {
 					name = ward_limit
@@ -2676,7 +2676,7 @@ ep3_contract_event.0011 = {
 					save_temporary_scope_as = temp_contract
 					task_contract_taker ?= {
 						this = root
-					}				
+					}
 					root.current_travel_plan = {
 						any_future_path_location = {
 							this = scope:temp_contract.task_contract_destination
@@ -2712,7 +2712,7 @@ ep3_contract_event.0011 = {
 					save_temporary_scope_as = temp_contract
 					task_contract_taker ?= {
 						this = root
-					}				
+					}
 					root.current_travel_plan = {
 						any_future_path_location = {
 							this = scope:temp_contract.task_contract_destination
@@ -2899,7 +2899,7 @@ ep3_contract_event.0012 = {
 			}
 			#Remove the employer from your camp
 			if = {
-				limit = { 
+				limit = {
 					scope:task_contract_employer = { is_courtier_of = root }
 				}
 				remove_courtier_or_guest = scope:task_contract_employer
@@ -2998,7 +2998,7 @@ ep3_contract_event.0012 = {
 			}
 			text = ep3_contract_event.0012.b
 		}
-		current_travel_plan ?= { reroute_to_home = yes }
+		return_home = yes
 		ai_chance = {
 			base = 10
 		}
@@ -3075,7 +3075,7 @@ ep3_contract_event.0013 = {
 					divide = 100
 					min = minor_piety_gain
 					max = massive_piety_gain
-				} 
+				}
 			}
 		}
 		ai_chance = {
@@ -3496,7 +3496,7 @@ ep3_contract_event.0030 = {
 			opinion = -10
 			target = scope:task_contract_employer
 		}
-		
+
 		#AI should always try to complete the contract
 		ai_chance = {
 			base = 0
@@ -3565,7 +3565,7 @@ ep3_contract_event.0040 = {
 		if = {
 			limit = { 0040_traveling_towards_treasure_without_domicile_trigger = yes } #Unop Only reroute to home if traveling to the treasure location
 			#Then back home we go
-			current_travel_plan ?= { reroute_to_home = yes }
+			return_home = yes
 		}
 		else = {
 			#Keep doing what you're doing
@@ -3588,7 +3588,7 @@ ep3_contract_event.0040 = {
 			base = 2
 		}
 	}
-	#Unop Remove variable similarly to ep3_contract_event.0041 
+	#Unop Remove variable similarly to ep3_contract_event.0041
 	after = { remove_variable ?= ep3_laamp_decision_1000_is_excavating }
 }
 
@@ -3599,15 +3599,15 @@ ep3_contract_event.0041 = {
 		first_valid = {
 			#Dead
 			triggered_desc = {
-				trigger = { 
-					scope:task_contract_employer = { is_alive = no } 
+				trigger = {
+					scope:task_contract_employer = { is_alive = no }
 				}
 				desc = ep3_contract_event.0041.t_dead
 			}
 			#Incapable
 			triggered_desc = {
-				trigger = { 
-					scope:task_contract_employer = { has_trait = incapable } 
+				trigger = {
+					scope:task_contract_employer = { has_trait = incapable }
 				}
 				desc = ep3_contract_event.0041.t_incapable
 			}
@@ -3617,15 +3617,15 @@ ep3_contract_event.0041 = {
 		first_valid = {
 			#Dead
 			triggered_desc = {
-				trigger = { 
-					scope:task_contract_employer = { is_alive = no } 
+				trigger = {
+					scope:task_contract_employer = { is_alive = no }
 				}
 				desc = ep3_contract_event.0041.desc_dead
 			}
 			#Incapable
 			triggered_desc = {
-				trigger = { 
-					scope:task_contract_employer = { has_trait = incapable } 
+				trigger = {
+					scope:task_contract_employer = { has_trait = incapable }
 				}
 				desc = ep3_contract_event.0041.desc_incapable
 			}
@@ -3679,13 +3679,13 @@ ep3_contract_event.0041 = {
 			first_valid = {
 				triggered_desc = {
 					trigger = {
-						scope:task_contract_employer = { is_alive = no } 
+						scope:task_contract_employer = { is_alive = no }
 					}
 					desc = ep3_contract_event.0041.a.flavor_dead
 				}
 				triggered_desc = {
-					trigger = { 
-						scope:task_contract_employer = { has_trait = incapable } 
+					trigger = {
+						scope:task_contract_employer = { has_trait = incapable }
 					}
 					desc = ep3_contract_event.0041.a.flavor_incapable
 				}
@@ -3699,7 +3699,7 @@ ep3_contract_event.0041 = {
 			}
 		}
 		#No point in traveling without the map
-		current_travel_plan ?= { reroute_to_home = yes }
+		return_home = yes
 	}
 	#Already paid for my domicile to travel. We're continuing!
 	option = {
@@ -3744,7 +3744,7 @@ ep3_contract_event.0043 = {
 	left_portrait = {
 		character = root
 		triggered_animation = {
-			trigger = { 
+			trigger = {
 				has_trait = gallowsbait
 				has_trait = greedy
 			}
@@ -3802,7 +3802,7 @@ ep3_contract_event.0043 = {
 
 #Pre-filter because on_arrival_event doesn't respect event triggers :scree:
 ep3_contract_event.0044 = {
-	hidden = yes 
+	hidden = yes
 
 	immediate = {
 		if = {
@@ -3851,7 +3851,7 @@ ep3_contract_event.0045 = {
 			}
 			#Nice view - oasis
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					exists = scope:treasure_riches_in_scenery
 					exists = scope:is_dry_region
 				}
@@ -3859,7 +3859,7 @@ ep3_contract_event.0045 = {
 			}
 			#Nice view - spring
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					exists = scope:treasure_riches_in_scenery
 					NOT = { exists = scope:is_dry_region }
 				}
@@ -3878,7 +3878,7 @@ ep3_contract_event.0045 = {
 			exists = scope:treasure_riches_in_scenery
 			NOT = { exists = scope:is_dry_region }
 		}
-		reference = ce1_legendary_spring 
+		reference = ce1_legendary_spring
 	}
 	#The desert version
 	override_background = {
@@ -3886,7 +3886,7 @@ ep3_contract_event.0045 = {
 			exists = scope:treasure_riches_in_scenery
 			exists = scope:is_dry_region
 		}
-		reference = ce1_legendary_oasis 
+		reference = ce1_legendary_oasis
 	}
 	#A cave!
 	override_background = {
@@ -3952,7 +3952,7 @@ ep3_contract_event.0045 = {
 			1 = {
 				trigger = { is_ai = no }
 				#What artifact?
-				hidden_effect_new_object = { 
+				hidden_effect_new_object = {
 					generate_historical_artifact_based_on_location_effect = { LOCATION = scope:excavation_location }
 					scope:newly_created_artifact = { save_scope_as = treasure_artifact_historical }
 				}
@@ -3967,9 +3967,9 @@ ep3_contract_event.0045 = {
 						value = scope:excavation_location
 					}
 					if = {
-						limit = { 
+						limit = {
 							exists = var:treasure_map_historical_artifact
-							exists = var:treasure_map_historical_artifact_location 
+							exists = var:treasure_map_historical_artifact_location
 						}
 						#To prevent 'unused except in loc' errors :catto:
 					}
@@ -4083,7 +4083,7 @@ ep3_contract_event.0045 = {
 					}
 				}
 			}
-			#Poor amount of gold 
+			#Poor amount of gold
 			30 = {
 				save_scope_as = treasure_gold_poor
 				save_scope_value_as = {
@@ -4102,7 +4102,7 @@ ep3_contract_event.0045 = {
 				}
 			}
 			#Nice view
-			30 = { 
+			30 = {
 				trigger = {
 					NOT = { has_character_modifier = divine_springs_modifier }
 				}
@@ -4126,7 +4126,7 @@ ep3_contract_event.0045 = {
 					}
 				}
 				else = {
-					stress_impact = { 
+					stress_impact = {
 						base = medium_stress_impact_loss
 						zealous = minor_stress_impact_loss
 					}
@@ -4300,13 +4300,13 @@ ep3_contract_event.0045 = {
 					reforge_artifact = { type = regalia }
 				}
 				else_if = {
-					limit = { 
+					limit = {
 						OR = {
 							has_variable = iron_crown
 							has_variable = crown_of_justinian
 						}
 					}
-					reforge_artifact = { type = helmet }			
+					reforge_artifact = { type = helmet }
 				}
 				else_if = {
 					limit = { has_variable = angelica_ring }
@@ -4321,7 +4321,7 @@ ep3_contract_event.0045 = {
 					reforge_artifact = { type = necklace }
 				}
 				else_if = {
-					limit = { 
+					limit = {
 						OR = {
 							artifact_type = pedestal
 							artifact_type = sculpture
@@ -4373,7 +4373,7 @@ ep3_contract_event.0045 = {
 					exists = scope:treasure_gold_great
 				}
 			}
-			#Shame on you	
+			#Shame on you
 			laamp_rewards_apply_criminal_xp_effect = {
 				TRACK = thief
 				XP_MIN = gallowsbait_xp_minor_gain
@@ -4389,7 +4389,7 @@ ep3_contract_event.0045 = {
 		}
 		#Or not
 		else = {
-			#Ehh petty theft	
+			#Ehh petty theft
 			laamp_rewards_apply_criminal_xp_effect = {
 				TRACK = thief
 				XP_MIN = gallowsbait_xp_minor_gain
@@ -4432,7 +4432,7 @@ ep3_contract_event.0050 = {
 						exists = scope:treasure_gold_great
 						exists = scope:treasure_gold_mediocre
 						exists = scope:treasure_gold_poor
-					} 
+					}
 				}
 				desc = ep3_contract_event.0050.desc_gold
 			}
@@ -4506,10 +4506,10 @@ ep3_contract_event.0050 = {
 #To remove the variable for those who go into the travel planner but then decide not to travel to the Excavation Site
 ep3_contract_event.0055 = {
 	hidden = yes
-	
+
 	trigger = { has_variable = ep3_laamp_decision_1000_is_planning_excavation_trip }
 
-	immediate = { 
+	immediate = {
 		remove_variable ?= ep3_laamp_decision_1000_is_planning_excavation_trip
 		#Is it our active contract?
 		random_character_task_contract = {
@@ -4595,7 +4595,7 @@ ep3_contract_event.0060 = {
 			add_attacker = root
 		}
 
-		
+
 		#AI should always try to complete the contract
 		ai_chance = {
 			base = 20
@@ -4777,7 +4777,7 @@ ep3_contract_event.0070 = {
 		}
 		show_as_tooltip = {
 			custom_tooltip = task_contract_tab_success
-			
+
 			create_title_and_vassal_change = {
 				type = granted
 				save_scope_as = title_change_vassal
@@ -4820,7 +4820,7 @@ ep3_contract_event.0070 = {
 			view = factions_window
 			player = root
 		}
-		
+
 		#AI should always try to complete the contract
 		ai_chance = {
 			base = 20
@@ -4877,12 +4877,12 @@ ep3_contract_event.0080 = {
 
 	trigger = {
 	}
-	
+
 	immediate = {
 		set_contract_scopes_effect = yes
 		set_council_scopes_effect = yes
 	}
-	
+
 	#Open intetactin to fabricate claim
 	option = {
 		name = ep3_contract_event.0080.a
@@ -4906,7 +4906,7 @@ ep3_contract_event.0080 = {
 				AGENT_5 = agent_decoy
 			}
 		}
-		else = {
+		else = { #Unop: open the interaction for human players (it will throw an error in the logs for an AI)
 			open_interaction_window = {
 				interaction = start_generate_claim_interaction
 				actor = root
@@ -4949,12 +4949,12 @@ ep3_contract_event.0082 = {
 
 	trigger = {
 	}
-	
+
 	immediate = {
 		set_contract_scopes_effect = yes
 		set_council_scopes_effect = yes
 	}
-	
+
 	#help at the location
 	option = {
 		name = ep3_contract_event.0082.a
@@ -5030,7 +5030,7 @@ scripted_effect protect_county_from_conversion_effect = {
 	}
 	scope:task_contract_councillor = {
 		start_default_task = yes
-	}	
+	}
 }
 
 # Fight Faith conversion - deal with it at location
@@ -5043,7 +5043,7 @@ ep3_contract_event.0083 = {
 		reference = temple_scope
 	}
    	override_effect_2d = {
-   		reference = smoke	
+   		reference = smoke
    	}
 	left_portrait = {
 		character = root
@@ -5062,12 +5062,12 @@ ep3_contract_event.0083 = {
 
 	trigger = {
 	}
-	
+
 	immediate = {
 		set_contract_scopes_effect = yes
 		set_council_scopes_effect = yes
 	}
-	
+
 	#capture the chaplain
 	option = {
 		name = ep3_contract_event.0083.a
@@ -5124,7 +5124,7 @@ ep3_contract_event.0083 = {
 			lazy = minor_stress_impact_gain
 			calm = minor_stress_impact_gain
 		}
-		
+
 		ai_chance = {
 			base = 100
 		}
@@ -5171,14 +5171,14 @@ ep3_contract_event.0083 = {
 					value = scope:duel_value
 					multiplier = -3.5
 					min = 5
-				}	
+				}
 			}
 		}
 		stress_impact = {
 			wrathful = minor_stress_impact_loss
 			craven = minor_stress_impact_gain
 		}
-		
+
 		ai_chance = {
 			base = 10
 			modifier = {
@@ -5232,7 +5232,7 @@ ep3_contract_event.0083 = {
 					value = scope:duel_value
 					multiplier = -3.5
 					min = 5
-				}	
+				}
 			}
 		}
 		stress_impact = {
@@ -5360,7 +5360,7 @@ ep3_contract_event.0084 = {
 
 	trigger = {
 	}
-	
+
 	immediate = {
 		set_contract_scopes_effect = yes
 		set_council_scopes_effect = yes
@@ -5587,7 +5587,7 @@ ep3_contract_event.0085 = {
 
 	trigger = {
 	}
-	
+
 	immediate = {
 		set_contract_scopes_effect = yes
 		set_council_scopes_effect = yes
@@ -5886,6 +5886,12 @@ ep3_contract_event.0090 = {
 	option = {
 		name = ep3_contract_event.0090.a
 		custom_tooltip = ep3_contract_event.0090.opens_task_contract_train_knight_interaction
+		#Unop Open the interaction only for the human player below
+		#open_interaction_window = {
+		#	interaction = task_contract_train_knight_interaction
+		#	actor = root
+		#	recipient = scope:task_contract_employer
+		#}	
 		if = {
 			limit = {
 				is_ai = yes
@@ -6108,7 +6114,7 @@ ep3_contract_event.0091 = {
 	lower_center_portrait = {
 		character = scope:task_contract_councillor_liege
 	}
-	
+
 	immediate = {
 		set_contract_scopes_effect = yes
 		set_council_scopes_effect = yes
@@ -6430,7 +6436,7 @@ ep3_contract_event.0091 = {
 							add = {
 								value = root.ai_boldness
 								divide = 10
-							}		
+							}
 							min = 1
 							max = 4
 						}
@@ -6545,7 +6551,7 @@ ep3_contract_event.0091 = {
 				#open the interaction for human players
 				else = {
 					open_interaction_window = {
-						interaction = task_contract_train_knight_interaction 
+						interaction = task_contract_train_knight_interaction
 						actor = root
 						recipient = scope:task_contract_employer
 					}
@@ -6732,7 +6738,7 @@ ep3_contract_event.0092 = {
 				on_arrival_destinations = all_but_last
 			}
 		}
-		
+
 		#AI should always try to complete the contract
 		ai_chance = {
 			base = 20
@@ -6757,7 +6763,7 @@ ep3_contract_event.0092 = {
 			travel_with_domicile = yes
 			return_trip = no
 		}
-		
+
 		#AI shouldn't move camps in events
 		ai_chance = {
 			base = 0
@@ -6904,7 +6910,7 @@ ep3_contract_event.0093 = {
 			remove_list_variable = {
 				name = corrupt_counties
 				target = scope:corrupt_province.county
-			}		
+			}
 		}
 		#find a local peasant
 		random_pool_character = {
@@ -7313,7 +7319,7 @@ ep3_contract_event.0094 = {
 			}
 		}
 		custom_tooltip = ep3_contract_event.0094.travel_without_domicile
-		
+
 		#AI should always try to complete the contract
 		ai_chance = {
 			base = 20
@@ -7340,7 +7346,7 @@ ep3_contract_event.0094 = {
 		}
 		custom_tooltip = ep3_contract_event.0094.travel_with_domicile
 		custom_tooltip = ep3_contract_event.0001.with_domicile.tt
-		
+
 		#AI shouldn't move their camp in events
 		ai_chance = {
 			base = 0
@@ -7388,9 +7394,7 @@ ep3_contract_event.0094 = {
 				complete_task_contract = success_standard
 			}
 		}
-		current_travel_plan = {
-			reroute_to_home = yes
-		}
+		return_home = yes
 		stress_impact = {
 			ambitious = minor_stress_impact_gain
 			lazy = minor_stress_impact_loss
@@ -7508,9 +7512,7 @@ ep3_contract_event.0095 = {
 		scope:task_contract = {
 			complete_task_contract = failure_standard
 		}
-		current_travel_plan = {
-			reroute_to_home = yes
-		}
+		return_home = yes
 		stress_impact = {
 			craven = minor_stress_impact_gain
 			lazy = minor_stress_impact_gain
@@ -7548,9 +7550,7 @@ ep3_contract_event.0095 = {
 		scope:task_contract = {
 			complete_task_contract = failure_standard
 		}
-		current_travel_plan = {
-			reroute_to_home = yes
-		}
+		return_home = yes
 		stress_impact = {
 			craven = minor_stress_impact_loss
 			lazy = minor_stress_impact_loss
@@ -7596,9 +7596,7 @@ ep3_contract_event.0095 = {
 				}
 			}
 		}
-		current_travel_plan = {
-			reroute_to_home = yes
-		}
+		return_home = yes
 		stress_impact = {
 			honest = minor_stress_impact_gain
 			brave = minor_stress_impact_gain
@@ -7700,7 +7698,7 @@ ep3_contract_event.0510 = {
 	lower_right_portrait = {
 		character = scope:task_contract_employer
 	}
-	
+
 	immediate = {
 		set_contract_scopes_effect = yes
 		set_council_scopes_effect = yes
@@ -7725,7 +7723,7 @@ ep3_contract_event.0510 = {
 		duel = {
 			skills = { diplomacy learning }
 			target = scope:peasant
-			
+
 			50 = { #You win the debate
 				desc = ep3_contract_event.0510.a.success
 				compare_modifier = {
@@ -7793,7 +7791,7 @@ ep3_contract_event.0510 = {
 		duel = {
 			skills = { diplomacy prowess }
 			target = scope:peasant
-			
+
 			30 = { #You win the 'debate'
 				desc = ep3_contract_event.0510.b.success
 				compare_modifier = {
@@ -7987,7 +7985,7 @@ ep3_contract_event.0520 = {
 		}
 		animation = anger
 	}
-	
+
 	immediate = {
 		set_contract_scopes_effect = yes
 		set_council_scopes_effect = yes
@@ -8213,7 +8211,7 @@ ep3_contract_event.0560 = {
 		character = scope:councillor
 		animation = drink_goblet
 	}
-	
+
 	immediate = {
 		set_contract_scopes_effect = yes
 		location = {
@@ -8237,7 +8235,7 @@ ep3_contract_event.0560 = {
 		duel = {
 			skills = { prowess martial }
 			target = scope:councillor
-			
+
 			30 = { #You break in and kill everyone inside
 				desc = ep3_contract_event.0560.a.success
 				compare_modifier = {
@@ -8321,7 +8319,7 @@ ep3_contract_event.0560 = {
 		duel = {
 			skills = { prowess intrigue }
 			target = scope:councillor
-			
+
 			40 = { #It works perfectly
 				desc = ep3_contract_event.0560.b.success
 				compare_modifier = {
@@ -8394,7 +8392,7 @@ ep3_contract_event.0560 = {
 		duel = {
 			skill = intrigue
 			value = very_high_skill_rating
-			
+
 			20 = { #It works perfectly
 				desc = ep3_contract_event.0560.c.critsuccess
 				compare_modifier = {
@@ -8481,7 +8479,7 @@ ep3_contract_event.0560 = {
 		duel = {
 			skills = { intrigue learning }
 			target = scope:councillor
-			
+
 			25 = { #It works perfectly
 				desc = ep3_contract_event.0560.d.critsuccess
 				compare_modifier = {
@@ -8495,7 +8493,7 @@ ep3_contract_event.0560 = {
 				scope:task_contract_employer = {
 					fire_councillor = scope:councillor
 				}
-				scope:councillor = { 
+				scope:councillor = {
 					if = {
 						limit = {
 							is_landed = no
@@ -8537,8 +8535,8 @@ ep3_contract_event.0560 = {
 				scope:task_contract_employer = {
 					fire_councillor = scope:councillor
 				}
-				scope:councillor = { 
-					increase_wounds_no_death_effect = { REASON = fight } 
+				scope:councillor = {
+					increase_wounds_no_death_effect = { REASON = fight }
 					if = {
 						limit = {
 							is_landed = no
@@ -8655,7 +8653,7 @@ ep3_contract_event.0565 = {
 			}
 			animation = steward
 		}
-		outfit_tags = { no_clothes nightgown }
+		outfit_tags = { nightgown }
 		animation = stress
 	}
 	right_portrait = {
@@ -8803,7 +8801,7 @@ ep3_contract_event.0570 = {
 	lower_right_portrait = {
 		character = scope:prisonguard
 	}
-	
+
 	immediate = {
 		set_contract_scopes_effect = yes
 		save_scope_as = root_for_loc
@@ -8877,7 +8875,7 @@ ep3_contract_event.0570 = {
 		duel = {
 			skill = intrigue
 			value = decent_skill_rating
-			
+
 			50 = { #The distraction works
 				desc = ep3_contract_event.0570.b.success
 				compare_modifier = {
@@ -9123,7 +9121,7 @@ ep3_contract_event.0575 = {
 					}
 				}
 			}
-		}		
+		}
 	}
 
 	option = {
@@ -9182,7 +9180,7 @@ ep3_contract_event.0580 = {
 	lower_center_portrait = {
 		character = scope:task_contract_employer
 	}
-	
+
 	immediate = {
 		set_contract_scopes_effect = yes
 		scope:task_contract_employer = {
@@ -9281,7 +9279,7 @@ ep3_contract_event.0580 = {
 		duel = {
 			skill = intrigue
 			value = decent_skill_rating
-			
+
 			50 = { #You learn their secret
 				desc = ep3_contract_event.0580.a.success
 				compare_modifier = {
@@ -9346,7 +9344,7 @@ ep3_contract_event.0580 = {
 		duel = {
 			skills = { diplomacy intrigue }
 			target = scope:task_contract_employer
-			
+
 			50 = { #Your lie works
 				desc = ep3_contract_event.0580.b.success
 				compare_modifier = {
@@ -9413,7 +9411,7 @@ ep3_contract_event.0580 = {
 			duel = {
 				skill = prowess
 				target = scope:secret_haver
-				
+
 				50 = { #Your intimidation works
 					desc = ep3_contract_event.0580.c.success
 					compare_modifier = {
@@ -9467,7 +9465,7 @@ ep3_contract_event.0580 = {
 			duel = {
 				skill = prowess
 				target = scope:secret_haver
-				
+
 				10 = { #Your intimidation works
 					desc = ep3_contract_event.0580.c.success
 					compare_modifier = {
@@ -9522,7 +9520,7 @@ ep3_contract_event.0580 = {
 						days = 1
 					}
 				}
-			}		
+			}
 		}
 
 		stress_impact = {
@@ -9574,7 +9572,7 @@ ep3_contract_event.0581 = {
 	lower_center_portrait = {
 		character = scope:task_contract_employer
 	}
-	
+
 	immediate = {
 		set_contract_scopes_effect = yes
 		scope:task_contract_employer = {
@@ -9718,7 +9716,7 @@ ep3_contract_event.0585 = {
 		}
 		animation = anger
 	}
-	
+
 	immediate = {
 		set_contract_scopes_effect = yes
 		if = {
@@ -9828,7 +9826,7 @@ ep3_contract_event.0590 = {
 	lower_center_portrait = {
 		character = scope:task_contract_employer
 	}
-	
+
 	immediate = {
 		set_contract_scopes_effect = yes
 		scope:task_contract_employer = {
@@ -9856,7 +9854,7 @@ ep3_contract_event.0590 = {
 		duel = {
 			skill = prowess
 			target = scope:heir
-			
+
 			50 = { #Stabby stab
 				desc = ep3_contract_event.0590.a.success
 				compare_modifier = {
@@ -9896,7 +9894,7 @@ ep3_contract_event.0590 = {
 					add_character_modifier = {
 						modifier = ep3_under_suspicion_modifier
 						years = 5
-					}				
+					}
 				}
 				trigger_event = {
 					id = ep3_contract_event.0595
@@ -9926,7 +9924,7 @@ ep3_contract_event.0590 = {
 		duel = {
 			skills = { prowess intrigue }
 			value = decent_skill_rating
-			
+
 			50 = { #Get bonked, nerd
 				desc = ep3_contract_event.0590.b.success
 				compare_modifier = {
@@ -10002,7 +10000,7 @@ ep3_contract_event.0590 = {
 		duel = {
 			skill = diplomacy
 			target = scope:heir
-			
+
 			50 = { #You persuade them to leave
 				desc = ep3_contract_event.0590.c.success
 				compare_modifier = {
@@ -10064,7 +10062,7 @@ ep3_contract_event.0590 = {
 					days = 1
 				}
 			}
-		}		
+		}
 
 		stress_impact = {
 			sadistic = major_stress_impact_gain
@@ -10125,7 +10123,7 @@ ep3_contract_event.0591 = {
 	lower_center_portrait = {
 		character = scope:task_contract_employer
 	}
-	
+
 	immediate = {
 		set_contract_scopes_effect = yes
 
@@ -10184,7 +10182,7 @@ ep3_contract_event.0595 = {
 		character = scope:task_contract_employer
 		animation = anger
 	}
-	
+
 	immediate = {
 		set_contract_scopes_effect = yes
 		scope:task_contract = {

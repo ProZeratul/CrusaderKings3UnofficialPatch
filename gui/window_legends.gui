@@ -337,30 +337,6 @@ window = {
                     }
 				}
 			}
-
-			hbox_single_court_position_card = {
-				datacontext = "[GetCourtPositionType( 'chronicler_court_position' )]"
-				visible = "[And( CourtPositionType.IsShown(GetPlayer), And( GetPlayer.IsValid, Or( PdxGuiTabs.IsTabSet( 'seeds' ), PdxGuiTabs.IsTabSet( 'realm' ) ) ) )]"
-				oncreate = "[BindFoldOutContext]"
-				oncreate = "[PdxGuiFoldOut.Unfold]"
-
-				layoutpolicy_horizontal = expanding
-				margin = { 4 8 }
-				margin_top = 12
-
-				blockoverride "header_pre_contents"
-				{
-					hbox = {
-						margin = { 5 2 }
-
-						button_expand_fold_out = {}
-					}
-				}
-				blockoverride "card_visible"
-				{
-					visible = "[PdxGuiFoldOut.IsUnfolded]"
-				}
-			}
 		}
 	}
 }

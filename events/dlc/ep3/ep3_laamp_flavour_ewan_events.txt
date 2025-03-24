@@ -10495,6 +10495,8 @@ scripted_trigger ep3_laamp_flavour_ewan_2021_valid_courtier_for_own_marriage_pre
 	is_attracted_to_gender_of = $TARGET$
 	$TARGET$ = { is_attracted_to_gender_of = prev }
 	allowed_to_marry_character_gender_trigger = { CHARACTER = $TARGET$ }
+	# Avoid pairing up people that are already somehow related to each other
+	NOT = { is_close_or_extended_family_of = $TARGET$ }
 	# Ensure our ages aren't too far apart — not that this couldn't happen, but huge age gaps are a big verisimilitude problem for many players.
 	age >= {
 		value = $TARGET$.age
@@ -14308,7 +14310,7 @@ scripted_effect ep3_laamp_flavour_ewan_3041_sort_partisan_titles_list_effect = {
 			# And stuff adjacent to the capital, just to cluster the effects in large realms.
 			modifier = {
 				add = 100
-				kingdom.title_capital_county = scope:former_title.title_capital_county
+				kingdom.title_capital_county = scope:former_title.title_capital_county #Unop Use title_capital_county
 			}
 		}
 		add_to_list = partisan_titles_list
@@ -14460,8 +14462,8 @@ ep3_laamp_flavour_ewan.3041 = {
 		# Create a commander for the troops.
 		create_character = {
 			template = new_commander_character
-			culture = scope:former_title.title_capital_county.culture
-			faith = scope:former_title.title_capital_county.faith
+			culture = scope:former_title.title_capital_county.culture #Unop Use title_capital_county
+			faith = scope:former_title.title_capital_county.faith #Unop Use title_capital_county
 			location = root.location
 			gender_female_chance = root_soldier_female_chance
 			dynasty = none
@@ -14523,7 +14525,7 @@ ep3_laamp_flavour_ewan.3041 = {
 				}
 			}
 			location = root.location
-			origin = scope:former_title.title_capital_county.title_province
+			origin = scope:former_title.title_capital_county.title_province #Unop Use title_capital_county
 		}
 
 		# No stress here.
@@ -17839,7 +17841,7 @@ ep3_laamp_flavour_ewan.4041 = {
 							limit = { location = prev.location }
 							death = { death_reason = death_consumed_by_earthquake }
 						}
-						prev.location.county = {
+						prev.location.county = { #Unop Use correct scope
 							change_development_level = {
 								integer_range = {
 									min = -35
@@ -21733,7 +21735,7 @@ ep3_laamp_flavour_ewan.9511 = {
 					create_character = {
 						employer = root
 						age = {
-							value = {
+							value = { #Unop Use value
 								value = scope:visitor.age
 								add = {
 									integer_range = {
@@ -22263,7 +22265,7 @@ scripted_effect ep3_laamp_flavour_ewan_9521_change_visitor_culture_effect = {
 		culture = { save_scope_as = old_culture }
 		random_list = {
 			100 = {
-				trigger = {
+				trigger = { #Unop We are in character scope here
 					NOT = { this.culture = host.culture }
 				}
 				set_culture = host.culture
@@ -22273,7 +22275,7 @@ scripted_effect ep3_laamp_flavour_ewan_9521_change_visitor_culture_effect = {
 				}
 			}
 			100 = {
-				trigger = {
+				trigger = { #Unop We are in character scope here
 					NOT = { this.culture = host.capital_county.culture }
 				}
 				set_culture = host.capital_county.culture
@@ -22339,7 +22341,7 @@ scripted_effect ep3_laamp_flavour_ewan_9521_apply_ethos_skill_bonuses_effect = {
 		}
 	}
 	## Then apply them.
-	scope:visitor.culture = {
+	scope:visitor.culture = { #Unop Apply to scope:visitor, not root
 		switch = {
 			trigger = has_cultural_pillar
 			ethos_bellicose = {
@@ -22526,7 +22528,7 @@ scripted_effect ep3_laamp_flavour_ewan_9522_change_visitor_faith_effect = {
 		faith = { save_scope_as = old_faith }
 		random_list = {
 			100 = {
-				trigger = {
+				trigger = { #Unop We are in character scope here
 					NOT = { this.faith = host.faith }
 				}
 				set_character_faith = host.faith
@@ -22536,7 +22538,7 @@ scripted_effect ep3_laamp_flavour_ewan_9522_change_visitor_faith_effect = {
 				}
 			}
 			100 = {
-				trigger = {
+				trigger = { #Unop We are in character scope here
 					NOT = { this.faith = host.capital_county.faith }
 				}
 				set_character_faith = host.capital_county.faith
