@@ -6,6 +6,12 @@ This repo contains the code for the mod Crusader Kings 3 Unofficial Patch (https
 
 The master branch contains the most up-to-date code from the mod and you can find all the releases in https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/releases
 
+## Manual installation
+
+You can manually install the mod:
+  - In the assets of https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/releases download the CK3_FixPack-X.Y.ZZ.zip file
+  - Unzip the content inside C:\Users\XYZ\Documents\Paradox Interactive\Crusader Kings III\mod
+
 ## Compatibility
 
 The current version is currently compatible with 1.15.0
