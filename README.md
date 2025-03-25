@@ -11,6 +11,7 @@ The master branch contains the most up-to-date code from the mod and you can fin
 You can manually install the mod:
   - In the assets of https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/releases download the CK3_FixPack-X.Y.ZZ.zip file
   - Unzip the content inside C:\Users\XYZ\Documents\Paradox Interactive\Crusader Kings III\mod
+  - You should now see the mod in the game launcher
 
 ## Compatibility
 
