@@ -21,4 +21,6 @@ The mod MUST be the first in your mods list, if you have other mods, loading thi
 
 ## Localization
 
-This mod is only available in English. For other languages, you'll have to use one of the mod that translate it. It's not that I don't want to do it, it's just that I don't have time/knowledge to maintain every language.
+- This mod once included other languages, this is not the case anymore and will only fix english version.
+- If you are using another language, you may encounter raw key as I had to add new ones here & there.
+- If you want to make a localized version of this mod, feel free to do it. the only thing you have to do is to translate the files in the localization\replace\english folder
