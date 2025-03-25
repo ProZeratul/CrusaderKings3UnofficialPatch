@@ -12,8 +12,11 @@ The current version is currently compatible with 1.15.0
 You can find previous version in the releases page
 
 The mod MUST be the first in your mods list, if you have other mods, loading this mod MUST BE at the very top.
+
 => Because of the nature of this mod, I have to edit base game file, this is the source of many conflict with other mods editing the same files to add content to the game.
+
 => By loading this one first you are telling the game engine "this mod has a lesser priority if another one edit the same file".
+
 => This should resolve compatibility issues, BUT you can encounter bugs that sould be fixed by this.
 
 ## Localization
