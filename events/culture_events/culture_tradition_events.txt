@@ -393,40 +393,40 @@ culture_tradition_events.0100 = {
 				has_variable = recently_asked_to_remove_marriage_tradition
 			}
 		}
-		OR = {
-			AND = {
-				faith = {
-					has_doctrine = doctrine_polygamy
-				}
-				culture = {
-					OR = {
-						has_cultural_tradition = tradition_monogamous
-						has_cultural_tradition = tradition_concubines
-					}
-				}
-			}
+		OR = { # As per rite tenet, only Monogamy faith are bothered by polygamy search: ## Monogamy doesn't like polygamy
+			#AND = { #Unop: Per rite tenet, if the HoF has the polygamy doctrine, they do not care if you have less spouses
+			#	faith = {
+			#		has_doctrine = doctrine_polygamy
+			#	}
+			#	culture = {
+			#		OR = {
+			#			has_cultural_tradition = tradition_monogamous
+			#			has_cultural_tradition = tradition_concubines
+			#		}
+			#	}
+			#}
 			AND = {
 				faith = {
 					has_doctrine = doctrine_monogamy
 				}
 				culture = {
-					OR = {
+					#OR = {
 						has_cultural_tradition = tradition_polygamous
-						has_cultural_tradition = tradition_concubines
-					}
+					#	#has_cultural_tradition = tradition_concubines
+					#}
 				}
 			}
-			AND = {
-				faith = {
-					has_doctrine = doctrine_concubines
-				}
-				culture = {
-					OR = {
-						has_cultural_tradition = tradition_monogamous
-						has_cultural_tradition = tradition_polygamous
-					}
-				}
-			}
+			#AND = { #Unop: Disable the concubines check to be in line with the "rite" tenet that allows a different stance on concubines
+			#	faith = {
+			#		has_doctrine = doctrine_concubines
+			#	}
+			#	culture = {
+			#		OR = {
+			#			has_cultural_tradition = tradition_monogamous
+			#			has_cultural_tradition = tradition_polygamous
+			#		}
+			#	}
+			#}
 		}
 		culture = {
 			calc_culture_dominant_religion = { save_temporary_scope_as = dominant_religion }
