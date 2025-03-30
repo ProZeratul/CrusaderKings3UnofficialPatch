@@ -1315,17 +1315,25 @@ scripted_effect fp3_research_completion_effect = {
 		}
 		1 = { # Critical Success: Unlock Innovation
 			trigger = {
-				trigger_if = {
-					limit = {
-						NOT = { culture = { has_innovation = fp3_innovation_mural_sextant } }
+				OR = {
+					trigger_if = {
+						limit = {
+							NOT = { culture = { has_innovation = fp3_innovation_mural_sextant } }
+						}
+						culture = { has_cultural_era_or_later = culture_era_early_medieval }
 					}
-					culture = { has_cultural_era_or_later = culture_era_early_medieval }
-				}
-				trigger_if = {
-					limit = {
-						NOT = { culture = { has_innovation = fp3_innovation_fritware } }
+					trigger_else = {
+						always = no
 					}
-					culture = { has_cultural_era_or_later = culture_era_late_medieval }
+					trigger_if = {
+						limit = {
+							NOT = { culture = { has_innovation = fp3_innovation_fritware } }
+						}
+						culture = { has_cultural_era_or_later = culture_era_late_medieval }
+					}
+					trigger_else = {
+						always = no
+					}
 				}
 			}
 			modifier = {
