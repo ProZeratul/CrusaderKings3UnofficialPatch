@@ -14261,8 +14261,12 @@ hold_court.8050 = {
 					has_court_position = bodyguard_court_position
 				}
 			}
+			unop_can_appoint_char_to_court_position = { #Unop: Actually ensure they can be a bodyguard before showing the option.
+				CHAR = scope:knight
+				COURT_POS = bodyguard
+			}
 		}
-		highlight_portrait = scope:bodyguard
+		#highlight_portrait = scope:bodyguard #Unop: Since bodyguard can be undefined, commented it, so it won't output errors in logs
 		scope:vassal = {
 			add_opinion = {
 				modifier = grateful_opinion
@@ -14313,9 +14317,9 @@ hold_court.8050 = {
 		}
 		if = {
 			limit = {
-				can_appoint_char_to_court_position = {
+				unop_can_appoint_char_to_court_position = { #Unop: Use this trigger that does not assume the char is already in your court
 					CHAR = scope:knight
-					COURT_POS = bodyguard_court_position
+					COURT_POS = bodyguard
 				}
 			}
 			court_position_grant_effect = {
