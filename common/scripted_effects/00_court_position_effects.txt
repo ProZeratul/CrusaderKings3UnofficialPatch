@@ -541,22 +541,51 @@ court_position_grant_effect = { # Give position, and revoke old holder's if they
 	}
 	$EMPLOYER$ = {
 		if = {
-			limit = { 
-				scope:old_holder ?= { has_court_position = bodyguard_court_position }
-				any_court_position_holder = {
-					type = bodyguard_court_position
-					has_court_position = bodyguard_court_position
-					count > 1
+			limit = { exists = scope:old_holder }
+			if = {
+				limit = { 
+					scope:old_holder = { has_court_position = bodyguard_court_position }
+				}
+				if = { 
+					limit = {
+						any_court_position_holder = {
+							type = bodyguard_court_position
+							has_court_position = bodyguard_court_position
+							count > 1
+						}
+					}
+					send_interface_toast = {
+						title = move_and_grant_court_position_effect_tooltip
+						left_icon = $CANDIDATE$
+						right_icon = scope:old_holder
+						replace_court_position = {
+							recipient = $CANDIDATE$
+							holder = scope:old_holder
+							court_position = court_jester_court_position
+						}
+					}
+				}
+				else = {
+					send_interface_toast = {
+						title = move_and_grant_court_position_effect_tooltip
+						left_icon = $CANDIDATE$
+						appoint_court_position = {
+							recipient = $CANDIDATE$
+							court_position = court_jester_court_position
+						}
+					}
 				}
 			}
-			send_interface_toast = {
-				title = move_and_grant_court_position_effect_tooltip
-				left_icon = $CANDIDATE$
-				right_icon = scope:old_holder
-				replace_court_position = {
-					recipient = $CANDIDATE$
-					holder = scope:old_holder
-					court_position = $POS$_court_position
+			else = {
+				send_interface_toast = {
+					title = move_and_grant_court_position_effect_tooltip
+					left_icon = $CANDIDATE$
+					right_icon = scope:old_holder
+					replace_court_position = {
+						recipient = $CANDIDATE$
+						holder = scope:old_holder
+						court_position = court_jester_court_position
+					}
 				}
 			}
 		}
@@ -1138,6 +1167,20 @@ court_position_generator_effect = {
 				EMPLOYER = $EMPLOYER$
 			}
 		}
+		2 = { #Unop: added the BREWMASTER
+			trigger = {
+				court_position_generator_pickable_trigger = { POS = court_brewmaster EMPLOYER = $EMPLOYER$ }
+			}
+			court_position_generator_shared_modifier = {
+				POS = court_brewmaster
+				EMPLOYER = $EMPLOYER$
+			}
+			court_position_generator_variable_effect = {
+				VAR = $VAR$
+				POS = court_brewmaster
+				EMPLOYER = $EMPLOYER$
+			}
+		}
 	}
 }
 
@@ -1272,6 +1315,10 @@ court_position_generator_assignment_effect = {
 		# Akolouthos
 		flag:akolouthos = {
 			court_position_grant_effect = { POS = akolouthos CANDIDATE = $CANDIDATE$ EMPLOYER = $EMPLOYER$ }
+		}
+		# Brewmaster #Unop: Added Brewmaster
+		flag:court_brewmaster = {
+			court_position_grant_effect = { POS = court_brewmaster CANDIDATE = $CANDIDATE$ EMPLOYER = $EMPLOYER$ }
 		}
 	}
 }

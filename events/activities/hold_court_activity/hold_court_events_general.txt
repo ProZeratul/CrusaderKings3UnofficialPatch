@@ -2167,7 +2167,7 @@ hold_court.3040 = {
 			}
 		}
 
-		hidden_effect = { add_courtier = scope:potential_jester } # So they're considered valid for the position
+		#hidden_effect = { add_courtier = scope:potential_jester } # So they're considered valid for the position #Unop: Not needed anymore
 
 		random_vassal = {
 			limit = {
@@ -14261,9 +14261,11 @@ hold_court.8050 = {
 					has_court_position = bodyguard_court_position
 				}
 			}
-			unop_can_appoint_char_to_court_position = { #Unop: Actually ensure they can be a bodyguard before showing the option.
-				CHAR = scope:knight
-				COURT_POS = bodyguard
+			scope:knight = { #Unop: Actually ensure they can be a bodyguard before showing the option.
+				would_be_valid_for_court_position = {
+					court_position = bodyguard_court_position
+					employer = root
+				}
 			}
 		}
 		#highlight_portrait = scope:bodyguard #Unop: Since bodyguard can be undefined, commented it, so it won't output errors in logs
@@ -14317,9 +14319,9 @@ hold_court.8050 = {
 		}
 		if = {
 			limit = {
-				unop_can_appoint_char_to_court_position = { #Unop: Use this trigger that does not assume the char is already in your court
+				can_appoint_char_to_court_position = {
 					CHAR = scope:knight
-					COURT_POS = bodyguard
+					COURT_POS = bodyguard_court_position
 				}
 			}
 			court_position_grant_effect = {
@@ -18796,6 +18798,14 @@ hold_court.8110 = {
 
 	option = { # Make them a jester
 		name = hold_court.8110.d
+		trigger = {
+			scope:peasant = { #Unop: Actually ensure they can be a jester before showing the option.
+				would_be_valid_for_court_position = {
+					court_position = court_jester_court_position
+					employer = root
+				}
+			}
+		}
 		scope:peasant = {
 			hidden_effect = { set_employer = root }
 			add_opinion = {
