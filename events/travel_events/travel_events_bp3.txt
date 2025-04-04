@@ -1573,6 +1573,7 @@ travel_events_bp3.30 = { # The Mercenaries of <X>
 				}
 			}
 		}
+		add_character_flag = temporary_court_position_cost_removal #Unop: Put this here instead of the option so the tooltip will show that replacement have no cost
 	}
 
 	option = {
@@ -1657,27 +1658,21 @@ travel_events_bp3.30 = { # The Mercenaries of <X>
 			max = 100
 		}
 
-		show_as_tooltip = {
+		#show_as_tooltip = {
 			if = {
 				limit = {
 					is_valid_to_hire_court_position_type = bodyguard_court_position
 				}
-				appoint_court_position = {
-					recipient = scope:soldier_character
-					court_position = bodyguard_court_position
-				}
+				court_position_grant_effect = { POS = bodyguard CANDIDATE = scope:soldier_character EMPLOYER = root }
 			}
 			else_if = {
 				limit = {
 					is_valid_to_hire_court_position_type = master_of_arms_camp_officer
 				}
-				appoint_court_position = {
-					recipient = scope:soldier_character
-					court_position = master_of_arms_camp_officer
-				}
+				camp_officer_grant_effect = { POS = master_of_arms CANDIDATE = scope:soldier_character EMPLOYER = root }
 			}
-		}
-		custom_tooltip = will_have_excellent_aptitude
+		#}
+		#custom_tooltip = will_have_excellent_aptitude
 
 		scope:soldier_character = {
 			add_opinion = {
@@ -1689,58 +1684,58 @@ travel_events_bp3.30 = { # The Mercenaries of <X>
 
 		hidden_effect = {
 			scope:soldier_character = { add_to_court_and_entourage_effect = yes }
-			if = {
-				limit = {
-					is_valid_to_hire_court_position_type = bodyguard_court_position
-					any_court_position_holder = {
-					 	count <= 1
-					 	has_court_position = bodyguard_court_position
-					}
-				}
-				appoint_court_position = {
-					recipient = scope:soldier_character
-					court_position = bodyguard_court_position
-				}
-			}
-			else_if = {
-				limit = {
-					is_valid_to_hire_court_position_type = bodyguard_court_position
-					any_court_position_holder = {
-					 	count > 1
-					 	has_court_position = bodyguard_court_position
-					}
-				}
-				add_character_flag = temporary_court_position_cost_removal
-				replace_court_position = {
-					recipient = scope:soldier_character
-					holder = court_position:bodyguard_court_position
-					court_position = bodyguard_court_position
-				}
-				remove_character_flag = temporary_court_position_cost_removal
-			}
-			else_if = {
-				limit = {
-					is_valid_to_hire_court_position_type = master_of_arms_camp_officer
-					NOT = { employs_court_position = master_of_arms_camp_officer }
-				}
-				appoint_court_position = {
-					recipient = scope:soldier_character
-					court_position = master_of_arms_camp_officer
-				}
-			}
-			else_if = {
-				limit = {
-					is_valid_to_hire_court_position_type = master_of_arms_camp_officer
-					employs_court_position = master_of_arms_camp_officer
-				}
-				add_character_flag = temporary_court_position_cost_removal
-				replace_court_position = {
-					recipient = scope:soldier_character
-					holder = court_position:master_of_arms_camp_officer
-					court_position = master_of_arms_camp_officer
-				}
-				remove_character_flag = temporary_court_position_cost_removal
-			}
+		#	if = {
+		#		limit = {
+		#			is_valid_to_hire_court_position_type = bodyguard_court_position
+		#			any_court_position_holder = {
+		#			 	count <= 1
+		#			 	has_court_position = bodyguard_court_position
+		#			}
+		#		}
+		#		appoint_court_position = {
+		#			recipient = scope:soldier_character
+		#			court_position = bodyguard_court_position
+		#		}
+		#	}
+		#	else_if = {
+		#		limit = {
+		#			is_valid_to_hire_court_position_type = bodyguard_court_position
+		#			any_court_position_holder = {
+		#			 	count > 1
+		#			 	has_court_position = bodyguard_court_position
+		#			}
+		#		}
+		#		add_character_flag = temporary_court_position_cost_removal
+		#		replace_court_position = {
+		#			recipient = scope:soldier_character
+		#			holder = court_position:bodyguard_court_position
+		#			court_position = bodyguard_court_position
+		#		}
+		#		remove_character_flag = temporary_court_position_cost_removal
+		#	}
+		#	else_if = {
+		#		limit = {
+		#			is_valid_to_hire_court_position_type = master_of_arms_camp_officer
+		#			NOT = { employs_court_position = master_of_arms_camp_officer }
+		#		}
+		#		appoint_court_position = {
+		#			recipient = scope:soldier_character
+		#			court_position = master_of_arms_camp_officer
+		#		}
+		#	}
+		#	else_if = {
+		#		limit = {
+		#			is_valid_to_hire_court_position_type = master_of_arms_camp_officer
+		#			employs_court_position = master_of_arms_camp_officer
+		#		}
+		#		add_character_flag = temporary_court_position_cost_removal
+		#		replace_court_position = {
+		#			recipient = scope:soldier_character
+		#			holder = court_position:master_of_arms_camp_officer
+		#			court_position = master_of_arms_camp_officer
+		#		}
+		#		remove_character_flag = temporary_court_position_cost_removal
+		#	}
 		}
 
 		stress_impact = {
@@ -1830,6 +1825,7 @@ travel_events_bp3.30 = { # The Mercenaries of <X>
 				silent_dissapear_ai_if_not_hired = yes
 			}
 		}
+		remove_character_flag = temporary_court_position_cost_removal #Unop: Since the add of this flag is now in the immediate, we need to be sure it's cleared everytime
 	}
 }
 
