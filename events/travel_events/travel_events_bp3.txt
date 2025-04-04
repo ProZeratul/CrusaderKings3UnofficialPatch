@@ -1658,6 +1658,9 @@ travel_events_bp3.30 = { # The Mercenaries of <X>
 			max = 100
 		}
 
+		hidden_effect = { #Unop: Put this here, so the char will be joigning the court & travel without errors in the logs (since the court_position_grant_effect also add the char to the court)
+			scope:soldier_character = { add_to_court_and_entourage_effect = yes }
+		}
 		#show_as_tooltip = {
 			if = {
 				limit = {
@@ -1682,8 +1685,8 @@ travel_events_bp3.30 = { # The Mercenaries of <X>
 			}
 		}
 
-		hidden_effect = {
-			scope:soldier_character = { add_to_court_and_entourage_effect = yes }
+		#hidden_effect = {
+		#	scope:soldier_character = { add_to_court_and_entourage_effect = yes }
 		#	if = {
 		#		limit = {
 		#			is_valid_to_hire_court_position_type = bodyguard_court_position
@@ -1736,7 +1739,7 @@ travel_events_bp3.30 = { # The Mercenaries of <X>
 		#		}
 		#		remove_character_flag = temporary_court_position_cost_removal
 		#	}
-		}
+		#}
 
 		stress_impact = {
 			paranoid = medium_stress_gain
