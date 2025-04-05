@@ -18815,25 +18815,10 @@ hold_court.8110 = {
 				opinion = -10
 			}
 		}
-		if = {
-			limit = { exists = scope:old_holder }
-			replace_court_position = {
-				recipient = scope:peasant
-				holder = scope:old_holder
-				court_position = court_jester_court_position
-			}
-		}
-		else = {
-			if = {
-				limit = {
-					NOT = { employs_court_position = court_jester_court_position }
-				}
-				court_position_grant_effect = {
-					EMPLOYER = root
-					POS = court_jester
-					CANDIDATE = scope:peasant
-				}
-			}
+		court_position_grant_effect = { #Unop: This effect properly handle everything (from tooltip to existing CP owner) so use it !
+			EMPLOYER = root
+			CANDIDATE = scope:peasant
+			POS = court_jester
 		}
 		scope:peasant_holding.county = {
 			add_county_modifier = {

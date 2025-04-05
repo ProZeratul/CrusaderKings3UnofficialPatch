@@ -1,4 +1,4 @@
-version="8.0.21"
+version="8.0.22"
 tags={
 	"Fixes"
 }
