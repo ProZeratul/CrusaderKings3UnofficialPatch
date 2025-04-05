@@ -11655,16 +11655,16 @@ court.8160 = {
 		else_if = {
 			limit = { #Unop: 1 bodyguard, fill the other with either the champion or the akolouthos
 				any_court_position_holder = {
-        			type = bodyguard_court_position
-        			count < 2
-        		}
+					type = bodyguard_court_position
+					count < 2
+				}
 			}
 			if = {
 				limit = { NOT = { employs_court_position = champion_court_position } }
 				court_position_grant_effect = { POS = champion CANDIDATE = scope:knight_2 EMPLOYER = root }
 			}
 			else = {
-       	 		court_position_grant_effect = { POS = akolouthos CANDIDATE = scope:knight_2 EMPLOYER = root }
+				court_position_grant_effect = { POS = akolouthos CANDIDATE = scope:knight_2 EMPLOYER = root }
 			}
 			court_position_grant_effect = { POS = bodyguard CANDIDATE = scope:knight_1 EMPLOYER = root }
 		}
