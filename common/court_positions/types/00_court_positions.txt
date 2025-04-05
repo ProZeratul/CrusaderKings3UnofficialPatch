@@ -3958,19 +3958,26 @@ akolouthos_court_position = { # Captain of the Varangians
 		if = {
 			limit = {
 				has_character_flag = competing_knight_position
-				OR = {
-					any_court_position_holder = {
-						type = bodyguard_court_position
-						has_character_flag = competing_knight_position
-					}
-					any_court_position_holder = {
-						type = champion_court_position
-						has_character_flag = competing_knight_position
+				save_temporary_scope_as = unop_temp_employee #Unop Fix this aptitude check by ensuring we are looking at the liege court
+				employer ?= {
+					OR = {
+						any_court_position_holder = {
+							type = bodyguard_court_position
+							has_character_flag = competing_knight_position
+							NOT = { this = scope:unop_temp_employee }
+						}
+						any_court_position_holder = {
+							type = champion_court_position
+							has_character_flag = competing_knight_position
+							NOT = { this = scope:unop_temp_employee }
+						}
 					}
 				}
 			}
-			add = 30
-			desc = competing_knight_position_desc
+			add = { #Unop: Fix the value/desc block so it is shown in the tooltip UI of aptitude
+				value = 30
+				desc = competing_knight_position_desc
+			}
 		}
 		add = court_position_aptitude_traveling_friends_value
 		add = court_position_aptitude_family_business_value
@@ -8279,19 +8286,26 @@ champion_court_position = {
 		if = {
 			limit = {
 				has_character_flag = competing_knight_position
-				OR = {
-					any_court_position_holder = {
-						type = bodyguard_court_position
-						has_character_flag = competing_knight_position
-					}
-					any_court_position_holder = {
-						type = akolouthos_court_position
-						has_character_flag = competing_knight_position
+				save_temporary_scope_as = unop_temp_employee
+				employer ?= {
+					OR = {
+						any_court_position_holder = {
+							type = bodyguard_court_position
+							has_character_flag = competing_knight_position
+							NOT = { this = scope:unop_temp_employee }
+						}
+						any_court_position_holder = {
+							type = akolouthos_court_position
+							has_character_flag = competing_knight_position
+							NOT = { this = scope:unop_temp_employee }
+						}
 					}
 				}
 			}
-			add = 30
-			desc = competing_knight_position_desc
+			add = {
+				value = 30
+				desc = competing_knight_position_desc
+			}
 		}
 		add = court_position_aptitude_traveling_friends_value
 		add = court_position_aptitude_family_business_value
@@ -12849,24 +12863,31 @@ bodyguard_court_position = {
 		if = {
 			limit = {
 				has_character_flag = competing_knight_position
-				OR = {
-					any_court_position_holder = {
-						type = bodyguard_court_position
-						has_character_flag = competing_knight_position
-						NOT = { this = prev }
-					}
-					any_court_position_holder = {
-						type = champion_court_position
-						has_character_flag = competing_knight_position
-					}
-					any_court_position_holder = {
-						type = akolouthos_court_position
-						has_character_flag = competing_knight_position
+				save_temporary_scope_as = unop_temp_employee
+				employer ?= {
+					OR = {
+						any_court_position_holder = {
+							type = bodyguard_court_position
+							has_character_flag = competing_knight_position
+							NOT = { this = scope:unop_temp_employee }
+						}
+						any_court_position_holder = {
+							type = champion_court_position
+							has_character_flag = competing_knight_position
+							NOT = { this = scope:unop_temp_employee }
+						}
+						any_court_position_holder = {
+							type = akolouthos_court_position
+							has_character_flag = competing_knight_position
+							NOT = { this = scope:unop_temp_employee }
+						}
 					}
 				}
 			}
-			add = 30
-			desc = competing_knight_position_desc
+			add = {
+				value = 30
+				desc = competing_knight_position_desc
+			}
 		}
 		# Estate bonus
 		if = {
