@@ -368,7 +368,11 @@
 				text = activity_hunt_location_legendary_sighting_tt
 				county = {
 					has_county_modifier = hunt_sighting_legendary_modifier
-					var:sighting_owner ?= scope:host
+					#var:sighting_owner ?= scope:host
+					trigger_if = { #Unop: If a county don't have the sighting_owner, then it's open-bar (since it MUST exists)
+						limit = { has_variable = sighting_owner }
+						var:sighting_owner = scope:host
+					}
 				}
 			}
 		}
@@ -1029,26 +1033,54 @@
 	ai_province_filter = domicile_domain
 
 	province_description = {
-		desc = activity_hunt_province_desc
+		#desc = activity_hunt_province_desc
+		triggered_desc = {
+			trigger = {
+				scope:special_option ?= flag:hunt_type_standard
+			}
+			desc = activity_hunt_province_desc_standard
+		}
+		triggered_desc = {
+			trigger = {
+				scope:special_option ?= flag:hunt_type_falconry
+			}
+			desc = activity_hunt_province_desc_falconry
+		}
+		triggered_desc = {
+			trigger = {
+				scope:special_option ?= flag:hunt_type_legendary
+			}
+			desc = activity_hunt_province_desc_legendary
+		}
+		desc = activity_hunt_province_desc_influence
 		# +++ / triple plus good
 		triggered_desc = {
 			trigger = {
 				scope:special_option ?= flag:hunt_type_standard
-				county ?= { has_county_modifier = hunt_sighting_standard_modifier }
+				county ?= {
+					has_county_modifier = hunt_sighting_standard_modifier
+					var:sighting_owner ?= scope:host
+				}
 			}
 			desc = activity_hunt_province_desc_standard_sighting
 		}
 		triggered_desc = {
 			trigger = {
 				scope:special_option ?= flag:hunt_type_standard
-				county ?= { has_county_modifier = hunt_sighting_dangerous_modifier }
+				county ?= {
+					has_county_modifier = hunt_sighting_dangerous_modifier
+					var:sighting_owner ?= scope:host
+				}
 			}
 			desc = activity_hunt_province_desc_dangerous_sighting
 		}
 		triggered_desc = {
 			trigger = {
 				scope:special_option ?= flag:hunt_type_falconry
-				county ?= { has_county_modifier = hunt_sighting_falconry_modifier }
+				county ?= {
+					has_county_modifier = hunt_sighting_falconry_modifier
+					var:sighting_owner ?= scope:host
+				}
 			}
 			desc = activity_hunt_province_desc_falconry_sighting
 		}
@@ -1316,11 +1348,15 @@
 							county = { has_county_modifier = hunt_sighting_standard_modifier }
 							county = { has_county_modifier = hunt_sighting_dangerous_modifier }
 						}
+						county ?= { var:sighting_owner ?= scope:host }
 						scope:special_option ?= flag:hunt_type_standard
 					}
 					# Falconry
 					AND = {
-						county = { has_county_modifier = hunt_sighting_falconry_modifier }
+						county = {
+							has_county_modifier = hunt_sighting_falconry_modifier
+							var:sighting_owner ?= scope:host
+						}
 						scope:special_option ?= flag:hunt_type_falconry
 					}
 				}
@@ -3386,8 +3422,33 @@
 									name = hunt_success
 									value = flag:yes
 								}
+
+								#Unop: Make sure we have the scope:story defined to end it later with end_hunt_mystical_animal_story_cycle_effect = yes
+								if = {
+									limit = { NOT = { exists = scope:story } }
+									scope:host = {
+										if = {
+											limit = { any_owned_story = { story_type = story_cycle_hunt_mystical_animal } }
+											random_owned_story = {
+												limit = { story_type = story_cycle_hunt_mystical_animal }
+												save_scope_as = story
+											}
+										}
+										else = {
+											debug_log = "Unop: Hunt mystical animal ended but root have no story for it ?"
+											debug_log_scopes = yes
+										}
+									}
+								}
+
 								# Create trophy artifact
 								save_scope_as = impressive_trophy
+
+								#Unop: Create the artifact here so it can be used in the artifact line of the log entry
+								scope:host = {
+									unop_hunt_create_legendary_trophy_effect = yes #Made with end_hunt_mystical_animal_story_cycle_effect code
+								}
+
 								add_activity_log_entry = {
 									key = hunt_completed_success_log
 									score = 80
@@ -3540,15 +3601,22 @@
 								has_county_modifier = hunt_sighting_standard_modifier
 								has_county_modifier = hunt_sighting_dangerous_modifier
 							}
+							var:sighting_owner ?= scope:host
 						}
 					}
 					AND = {
 						has_activity_option = { category = special_type option = hunt_type_legendary }
-						activity_location.county = { has_county_modifier = hunt_sighting_legendary_modifier }
+						activity_location.county = {
+							has_county_modifier = hunt_sighting_legendary_modifier
+							var:sighting_owner ?= scope:host
+						}
 					}
 					AND = {
 						has_activity_option = { category = special_type option = hunt_type_falconry }
-						activity_location.county = { has_county_modifier = hunt_sighting_falconry_modifier }
+						activity_location.county = {
+							has_county_modifier = hunt_sighting_falconry_modifier
+							var:sighting_owner ?= scope:host
+						}
 					}
 				}
 			}
