@@ -56,3 +56,44 @@
 		base = 0
 	}
 }
+
+unop_debug_travel_stuck_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+
+	decision_group_type = debug
+
+	desc = unop_debug_travel_stuck_decision_desc
+	selection_tooltip = unop_debug_travel_stuck_decision_tooltip
+
+	ai_check_interval = 0
+
+	is_shown = {
+		current_travel_plan ?= {
+			is_completed = no
+    		is_paused = yes
+
+			#final_destination_arrival_days = 1 # I had cases where this was 1 or 0
+			next_destination_arrival_days >= 1
+			next_destination_progress = 1
+			current_location = final_destination_province
+		}
+	}
+	
+	effect = {
+		current_travel_plan ?= {
+			resume_travel_plan = yes 
+		}
+	}
+
+	# TODO ?
+	ai_potential = {
+		always = no
+	}
+
+	# TODO ?
+	ai_will_do = {
+		base = 0
+	}
+}
