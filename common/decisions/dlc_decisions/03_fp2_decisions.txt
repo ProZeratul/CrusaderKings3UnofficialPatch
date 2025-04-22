@@ -339,7 +339,12 @@ struggle_iberia_ending_compromise_decision = {
 				any_county_in_region = {
 					region = world_europe_west_iberia
 					percent > fp2_struggle_compromise_uninvolved_percent_decimal_value
-					holder.top_liege = { fp2_character_interloper_in_struggle_trigger = yes }
+					holder.top_liege = {
+						OR = { #Unop: The game was not also checking the uninvolved characters
+							fp2_character_interloper_in_struggle_trigger = yes
+							fp2_character_uninvolved_in_struggle_trigger = yes
+						}
+					}
 				}
 			}
 		}
