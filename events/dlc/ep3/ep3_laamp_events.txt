@@ -1052,7 +1052,10 @@ ep3_laamps.0030 = {
 		# Transfer landed titles
 		every_held_title = {
 			limit = {
-				is_landless_type_title = no
+				OR = {
+					is_landless_type_title = no
+					is_nomad_title = yes
+				}
 				tier > tier_barony
 			}
 			add_to_list = target_titles
@@ -6712,6 +6715,7 @@ ep3_laamps.5045 = {
 					highest_held_title_tier > tier_duchy
 					any_held_title = {
 						tier = tier_county
+						is_landless_type_title = no
 						count >= 1
 					}
 				}
@@ -6721,6 +6725,7 @@ ep3_laamps.5045 = {
 					limit = {
 						tier = tier_county
 						holder = scope:local_lord
+						is_landless_type_title = no
 					}
 					#Least developed county as a rough approximation of backwaters
 					order_by = {
@@ -8697,6 +8702,10 @@ ep3_laamps.7004 = {
 				save_scope_as = new_liege #Unop: So we actually become a vassal of the holder.
 				switch = {
 					trigger = government_has_flag
+					government_is_nomadic = {
+						root = { change_government = nomad_government }
+					}
+	
 					government_is_administrative = {
 						root = { change_government = administrative_government }
 					}
@@ -8714,8 +8723,25 @@ ep3_laamps.7004 = {
 		}
 
 		hidden_effect = {
-			## Administrative.
+			## Nomad.
 			if = {
+				limit = {
+					OR = {
+						government_has_flag = government_is_nomadic
+						scope:new_liege ?= { government_has_flag = government_is_nomadic }
+						scope:old_government ?= flag:nomad
+						scope:new_capital.capital_province = {
+							OR = {
+								has_holding_type = nomad_holding
+								has_holding_type = herder_holding
+							}
+						}
+					}
+				}
+				change_government = nomad_government
+			}
+			## Administrative.
+			else_if = {
 				limit = {
 					scope:new_liege ?= { government_has_flag = government_is_administrative }
 				}

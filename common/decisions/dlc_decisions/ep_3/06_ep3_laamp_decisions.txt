@@ -35,6 +35,7 @@ become_landless_adventurer_decision = {
 		OR = {
 			culture = { has_cultural_parameter = unlock_voluntary_laampdom }
 			faith = { has_doctrine_parameter = unlock_voluntary_laampdom_faith }
+			has_trait = nomadic_philosophy
 		}
 		save_temporary_scope_as = potential_laamp_temp
 		can_be_combatant_based_on_gender_trigger = { ARMY_OWNER = scope:potential_laamp_temp } # Registered fighting license
@@ -62,6 +63,12 @@ become_landless_adventurer_decision = {
 		OR = {
 			culture = { has_cultural_parameter = unlock_voluntary_laampdom }
 			faith = { has_doctrine_parameter = unlock_voluntary_laampdom_faith }
+			has_trait = nomadic_philosophy
+			custom_tooltip = {
+				text = nomadic_government_tt
+				government_has_flag = government_is_nomadic
+			}
+			
 		}
 	}
 
