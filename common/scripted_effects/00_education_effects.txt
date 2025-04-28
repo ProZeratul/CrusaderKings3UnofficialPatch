@@ -263,9 +263,9 @@ education_point_acquisition_support_effect = {
 	else_if = {
 		limit = {
 			exists = court_owner
-			court_owner = { employs_court_position = court_tutor_court_position	}		
+			court_owner = { employs_court_position = court_tutor_court_position	}
 		}
-		court_owner = { 
+		court_owner = {
 			random_court_position_holder = {
 				type = court_tutor_court_position
 				save_scope_as = educator
@@ -431,6 +431,7 @@ education_complete_notification_effect = {
 		}
 		random_relation = {
 			type = guardian
+			save_scope_as = current_guardian #Unop: Ensure to have the correct char later for remove_guardian_effect
 			if = {
 				limit = { this = { is_parent_of = root } }
 				save_scope_as = parent_guardian
@@ -510,7 +511,7 @@ education_complete_notification_effect = {
 			hidden_effect = { # Hidden to avoid duplicate effect messages
 				#Relationship back-up clean-up
 				remove_guardian_effect = {
-					GUARDIAN = this
+					GUARDIAN = scope:current_guardian
 					WARD = scope:educated_child
 					RETURN_WARD = no
 					HIDE_OPINION = no
@@ -2918,9 +2919,18 @@ dynasty_perk_secondary_education_trait_effect = {
 		}
 
 		# Assign a trait, chance based on the development of the location
-		set_variable = {
-			name = chance_for_extra_trait
-			value = location.county.development_level
+		if = { #Unop: If the child is traveling, we look at the departure location instead of the current one (since the current location could be a swamp with 0 development)
+			limit = { exists = current_travel_plan }
+			set_variable = {
+				name = chance_for_extra_trait
+				value = current_travel_plan.departure_location.county.development_level
+			}
+		}
+		else = {
+			set_variable = {
+				name = chance_for_extra_trait
+				value = location.county.development_level
+			}
 		}
 
 		random_list = {

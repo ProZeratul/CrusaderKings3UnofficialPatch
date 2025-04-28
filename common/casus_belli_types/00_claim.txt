@@ -146,6 +146,63 @@
 				}
 			}
 		}
+		trigger_if = {
+			limit = { scope:claimant = { is_ai = yes } } #Unop: Just in case the 'allowed_for_character_display_regardless' is not working for AI
+			#Under Byzantine law, a ruler must be unblemished
+			trigger_if = {
+				limit = {
+					scope:defender.culture = { has_cultural_parameter = physical_disfigurement_blocks_inheritance }
+				}
+				scope:claimant = {
+					custom_description = {
+						text = "byzantine_claimant_is_disfigured"
+						object = scope:claimant
+						is_eunuch_trigger = no
+						NOR = {
+							has_trait = incapable
+							has_trait = blind
+							has_trait = disfigured
+							has_trait = maimed
+							has_trait = one_eyed
+							has_trait = one_legged
+							has_trait = clubfooted
+							has_trait = hunchbacked
+							has_trait = dwarf
+						}
+					}
+				}
+			}
+			#Under Byzantine law, a ruler must be able to produce children.
+			trigger_if = {
+				limit = {
+					scope:defender.culture = { has_cultural_parameter = physical_disfigurement_blocks_inheritance }
+				}
+				scope:claimant = {
+					custom_description = {
+						text = "byzantine_claimant_is_celibate"
+						object = scope:defender
+						is_eunuch_trigger = no
+						NOR = {
+							has_trait = celibate
+						}
+					}
+				}
+			}
+		}
+	}
+
+	allowed_for_character_display_regardless = {
+		#If you're landless, you need the Legitimist camp purpose
+		trigger_if = {
+			limit = {
+				scope:attacker = {
+					government_has_flag = government_is_landless_adventurer
+				}
+			}
+			scope:attacker = {
+				has_realm_law = camp_purpose_legitimists
+			}
+		}
 		#Under Byzantine law, a ruler must be unblemished
 		trigger_if = {
 			limit = {
@@ -188,20 +245,6 @@
 		}
 	}
 
-	allowed_for_character_display_regardless = {
-		#If you're landless, you need the Legitimist camp purpose
-		trigger_if = {
-			limit = {
-				scope:attacker = {
-					government_has_flag = government_is_landless_adventurer
-				}
-			}
-			scope:attacker = {
-				has_realm_law = camp_purpose_legitimists
-			}
-		}
-	}
-
 	cost = {
 		piety = {
 			value = 0
@@ -231,15 +274,15 @@
 					scope:attacker = {
 						if = {
 							limit = { has_legitimacy_flag = reduced_claim_cb_cost }
-							add = 0.5 
+							add = 0.5
 						}
 						else_if = {
 							limit = { has_legitimacy_flag = very_reduced_claim_cb_cost }
-							add = 0.25 
+							add = 0.25
 						}
 						else_if = {
 							limit = { has_legitimacy_flag = extra_reduced_claim_cb_cost }
-							add = 0.15 
+							add = 0.15
 						}
 						else = {
 							add = 1
@@ -306,18 +349,18 @@
 					}
 				}
 			}
-			AND = { 
-				NOT = { scope:claimant = scope:attacker } 
+			AND = {
+				NOT = { scope:claimant = scope:attacker }
 				scope:claimant = {
 					OR = {
-						is_alive = no 
-						NOR = { 
-							is_vassal_or_below_of = scope:attacker 
-							is_courtier_of = scope:attacker 
+						is_alive = no
+						NOR = {
+							is_vassal_or_below_of = scope:attacker
+							is_courtier_of = scope:attacker
 						}
 					}
 				}
-			} 
+			}
 		}
 	}
 
@@ -325,7 +368,7 @@
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					NOT = { scope:claimant = scope:attacker } 
+					NOT = { scope:claimant = scope:attacker }
 					scope:claimant = { is_alive = no }
 				}
 				desc = msg_claim_war_invalidated_claimant_unavailable_dead_message
@@ -333,11 +376,11 @@
 			triggered_desc = {
 				trigger = {
 					scope:claimant = {
-						NOR = { 
-							this = scope:attacker 
-							NOR = { 
-								is_vassal_or_below_of = scope:attacker 
-								is_courtier_of = scope:attacker 
+						NOR = {
+							this = scope:attacker
+							NOR = {
+								is_vassal_or_below_of = scope:attacker
+								is_courtier_of = scope:attacker
 							}
 						}
 					}
@@ -347,7 +390,7 @@
 			desc = msg_claim_war_invalidated_message
 		}
 	}
-	
+
 	on_invalidated = {
 	}
 
@@ -405,7 +448,7 @@
 				}
 			}
 		}
-	
+
 		scope:attacker = { show_pow_release_message_effect = yes }
 
 		# Legitimacy
@@ -442,7 +485,7 @@
 
 		# EP3 Laamp possibility warning
 		scope:defender = { ep3_war_loss_adventurer_tt_effect = yes }
-		
+
 		# Create a claim CB which is executed to handle title/vassal changes, in addition to being used to calculate Prestige awards for war participants.
 		setup_claim_cb = {
 			titles = target_titles
@@ -525,7 +568,7 @@
 			}
 			desc = claim_cb_white_peace_desc
 		}
-		
+
 	}
 
 	on_white_peace = {
@@ -601,7 +644,7 @@
 
 		# Truce
 		add_truce_white_peace_effect = yes
-		
+
 		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
 		laamp_as_mercenary_payout_tooltip_effect = yes
 	}
@@ -622,12 +665,12 @@
 			}
 			desc = claim_cb_defeat_desc
 		}
-		
+
 	}
 
 	on_defeat = {
 		scope:attacker = { show_pow_release_message_effect = yes }
-		
+
 		# Legitimacy
 		add_legitimacy_attacker_defeat_effect = yes
 
@@ -718,7 +761,7 @@
 	should_show_war_goal_subview = yes
 
 	attacker_wargoal_percentage = 0.8
-	
+
 	max_defender_score_from_occupation = 150
 	max_attacker_score_from_occupation = 150
 
