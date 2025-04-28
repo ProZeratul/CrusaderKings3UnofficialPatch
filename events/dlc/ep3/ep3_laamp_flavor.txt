@@ -784,7 +784,6 @@ ep3_laamp_flavor.0050 = {
 	left_portrait = {
 		character = scope:necromancer
 		animation = page_flipping
-		outfit_tags = { monk_outfit }
 	}
 	override_background = {	reference = bp1_bonfire }
 
@@ -799,7 +798,7 @@ ep3_laamp_flavor.0050 = {
 		is_landless_adventurer = yes
 		is_adult = yes
 		is_available_allow_travelling = yes
-		faith =  { religion_tag = christianity_religion }
+		faith = { religion_tag = christianity_religion }
 		location.faith = { religion_tag = christianity_religion }
 		NOR = {
 			has_trait = witch
@@ -826,6 +825,12 @@ ep3_laamp_flavor.0050 = {
 			location = root.location
 			gender = male
 			save_scope_as = necromancer
+		}
+		hidden_effect = {
+			scope:necromancer = {
+				add_trait = devoted
+				remove_character_flag = need_priest_outfit
+			}
 		}
 		if = {
 			limit = {

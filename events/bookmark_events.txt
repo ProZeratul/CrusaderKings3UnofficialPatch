@@ -1951,44 +1951,92 @@ bookmark.1073 = {
 			}
 			add_realm_law = camp_purpose_mercenaries
 		}
-		spawn_army = {
-			name = event_troop_default_name
-			men_at_arms = {
-				type = horse_archers
-				stacks = 2
+		if = {
+			limit = {
+				has_mpo_dlc_trigger = yes
 			}
-			men_at_arms = {
-				type = light_horsemen
-				stacks = 2
+			spawn_army = {
+				name = event_troop_default_name
+				men_at_arms = {
+					type = horse_archers
+					stacks = 2
+				}
+				men_at_arms = {
+					type = steppe_raiders
+					stacks = 2
+				}
+				men_at_arms = {
+					type = heavy_horse_archers
+					stacks = 2
+				}
+				location = root.location
+				origin = root.location
 			}
-			men_at_arms = {
-				type = light_footmen
-				stacks = 2
+		}
+		else = {
+			spawn_army = {
+				name = event_troop_default_name
+				men_at_arms = {
+					type = horse_archers
+					stacks = 2
+				}
+				men_at_arms = {
+					type = steppe_raiders
+					stacks = 2
+				}
+				men_at_arms = {
+					type = heavy_horse_archers
+					stacks = 2
+				}
+				location = root.location
+				origin = root.location
 			}
-			location = root.location
-			origin = root.location
 		}
 	}
 
 	option = {
 		name = bookmark.1073.a
 		add_prestige_level = 1
-		spawn_army = {
-			name = event_troop_default_name
-			men_at_arms = {
-				type = horse_archers
-				stacks = 2
+		if = {
+			limit = {
+				has_mpo_dlc_trigger = yes
 			}
-			men_at_arms = {
-				type = light_horsemen
-				stacks = 2
+			spawn_army = {
+				name = event_troop_default_name
+				men_at_arms = {
+					type = horse_archers
+					stacks = 2
+				}
+				men_at_arms = {
+					type = steppe_raiders
+					stacks = 2
+				}
+				men_at_arms = {
+					type = heavy_horse_archers
+					stacks = 2
+				}
+				location = root.location
+				origin = root.location
 			}
-			men_at_arms = {
-				type = light_footmen
-				stacks = 2
+		}
+		else = {
+			spawn_army = {
+				name = event_troop_default_name
+				men_at_arms = {
+					type = horse_archers
+					stacks = 2
+				}
+				men_at_arms = {
+					type = light_horsemen
+					stacks = 2
+				}
+				men_at_arms = {
+					type = light_footmen
+					stacks = 2
+				}
+				location = root.location
+				origin = root.location
 			}
-			location = root.location
-			origin = root.location
 		}
 		ai_chance = {
 			base = 90

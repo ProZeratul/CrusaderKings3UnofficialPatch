@@ -191,7 +191,15 @@ spouse_manages_feast_splendidly = {
 			character = scope:first
 			
 			scope:province.county = {
-				change_development_progress_with_overflow = 20
+				if = {
+					limit = {
+						uses_county_fertility = yes 
+					}
+					change_county_fertility = 8
+				}
+				else = {
+					change_development_progress_with_overflow = 20
+				}
 			}
 			scope:host = {
 				if = {
@@ -1469,7 +1477,15 @@ host_gains_steward_xp = {
 			}
 			
 			scope:province.county = {
-				change_development_progress_with_overflow = 5
+				if = {
+					limit = {
+						uses_county_fertility = yes 
+					}
+					change_county_fertility = 2
+				}
+				else = {
+					change_development_progress_with_overflow = 5
+				}
 			}
 		}
 	}

@@ -869,10 +869,13 @@
 						desc = court_event_discount_desc
 					}
 				}
-				#Adventurer
+				#Adventurer & Nomads
 				if = {
 					limit = {
-						is_landless_adventurer = yes
+						OR = {
+							is_landless_adventurer = yes
+							government_has_flag = government_is_nomadic
+						}
 						has_perk = clerical_justifications_perk
 					}
 					multiply = {
@@ -2624,6 +2627,20 @@
 		ambience = "event:/DLC/EP3/SFX/Events/Event_Images/ep3_evn_eventimage_hagia_sophia"
 	}
 	#Generic holy sites
+	background = {
+		trigger = {
+			scope:host = {
+				OR = {
+					religion = religion:tengrism_religion
+					religion = religion:magyar_religion
+					religion = religion:siberian_religion
+				}
+			}
+		}
+		texture = "gfx/interface/illustrations/event_scenes/mpo_temple_steppe.dds"
+		environment = "environment_mpo_temple_steppe" 
+		ambience = "event:/DLC/CE2/Events/Event_Images/mpo_temple_steppe"
+	}
 	background = {
 		trigger = { scope:host.religion = religion:zoroastrianism_religion }
 		texture = "gfx/interface/illustrations/event_scenes/fp3_temple.dds"

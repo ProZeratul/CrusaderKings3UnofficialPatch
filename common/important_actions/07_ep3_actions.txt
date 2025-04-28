@@ -114,7 +114,10 @@ action_laamp_camp_purpose = {
 	}
 
 	effect = {
-		open_view = my_realm
+		open_view_data = {
+			view = my_realm
+			data = flag:bookmark_domain
+		}
 	}
 }
 
@@ -262,7 +265,7 @@ action_primary_heir_not_inheriting_held_admin_title = {
 					is_landless_type_title = no
 					is_noble_family_title = no
 					OR = {
-						current_heir = {
+						current_heir ?= {
 							OR = {
 								is_lowborn = yes
 								house ?= { this != scope:holder_temp.house }
