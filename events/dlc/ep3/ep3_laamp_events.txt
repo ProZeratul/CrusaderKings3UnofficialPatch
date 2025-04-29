@@ -8157,17 +8157,19 @@ ep3_laamps.7001 = {
 
 		ep3_increase_resistance_effect = { AMOUNT = harrying_medium_increase_value }
 
-		random = {
-			chance = {
-				value = 5
-				if = {
-					limit = { is_ai = no }
-					add = 95
+		hidden_effect = { #Unop: So it's not displayed an empty 100% chance of nothing
+			random = {
+				chance = {
+					value = 5
+					if = {
+						limit = { is_ai = no }
+						add = 95
+					}
 				}
-			}
-			trigger_event = {
-				id = ep3_laamps.7002
-				days = { 150 200 }
+				trigger_event = {
+					id = ep3_laamps.7002
+					days = { 150 200 }
+				}
 			}
 		}
 
