@@ -24,6 +24,7 @@ invite_agent_to_scheme_interaction = {
 						always = scope:de_jure_title
 						always = scope:claimed_title
 						always = scope:piety
+						always = scope:herd
 						var:devotee_agent_var ?= scope:actor #Unop: So your devotee will not vanish if they should have been convinced
 					}
 				}
@@ -53,6 +54,7 @@ invite_agent_to_scheme_interaction = {
 						always = scope:de_jure_title
 						always = scope:claimed_title
 						always = scope:piety
+						always = scope:herd
 					}
 				}
 				custom_tooltip = offer_bribes.tt.window_jump_fix
@@ -157,7 +159,7 @@ invite_agent_to_scheme_interaction = {
 						type = council_rights
 						level = 1
 					}
-					set_vassal_contract_modification_blocked = yes
+					set_subject_contract_modification_blocked = yes
 				}
 			}
 			create_title_and_vassal_change = {
@@ -205,6 +207,40 @@ invite_agent_to_scheme_interaction = {
 					}
 				}
 				scope:recipient = { add_piety = piety_bribe_value }
+			}
+			# Herd
+			if = {
+				limit = { always = scope:herd }
+				if = {
+					limit = {
+						scope:recipient.domicile ?= {
+							herd > 0
+						}
+					}
+					scope:actor = {
+						pay_herd = {
+							target = scope:recipient
+							value = domicile.herd_bribe_value
+						}
+					}
+				}
+				else = {
+					scope:actor = { custom_tooltip = scheme_change_herd_value }
+					hidden_effect = {
+						scope:actor.domicile = {
+							change_herd = {
+								value = herd_bribe_value
+								multiply = -1
+							}
+						}
+						scope:recipient = {
+							add_gold = {
+								value = herd_bribe_value
+								multiply = 0.1
+							}
+						}
+					}
+				}
 			}
 		}
 		# Stress.
@@ -540,7 +576,10 @@ invite_agent_to_scheme_interaction = {
 			custom_tooltip = {
 				text = council_rights.tt.already_has_council_rights
 				scope:recipient = {
-					NOT = { vassal_contract_has_flag = can_demand_council_seat }
+					NOR = {
+						vassal_contract_has_flag = can_demand_council_seat
+						vassal_contract_has_flag = can_demand_kurultai_seat
+					}
 				}
 			}
 			would_agent_accept_petty_bribes_against_target_trigger = yes
@@ -631,6 +670,38 @@ invite_agent_to_scheme_interaction = {
 			would_agent_accept_petty_bribes_against_target_trigger = yes
 		}
 		localization = SCHEME_AGENT_CLAIMED_TITLE
+	}
+	# Nomad Chars
+	## Use Herd
+	send_option = {
+		flag = herd
+		is_shown = {
+			# We don't show bribes for schemes where agents will always auto-accept or else deny.
+			NAND = {
+				scope:scheme = { is_scheme_category = contract }
+				scope:recipient = { is_courtier_of = scope:actor }
+			}
+			scope:actor = {
+				government_has_flag = government_is_nomadic
+				is_ai = no
+			}
+			scope:recipient = {
+				government_has_flag = government_is_nomadic
+				exists = domicile
+			}
+		}
+		is_valid = {
+			scope:actor.domicile.herd >= herd_bribe_value
+			would_agent_accept_petty_bribes_against_target_trigger = yes
+		}
+		localization = SCHEME_AGENT_HERD
+		current_description = {
+			# Triggered desc so that we don't get a weird double tooltip.
+			triggered_desc = {
+				trigger = { scope:actor.domicile.herd >= herd_bribe_value }
+				desc = SCHEME_AGENT_HERD_VALID
+			}
+		}
 	}
 	# Cofaithists
 	## Piety
