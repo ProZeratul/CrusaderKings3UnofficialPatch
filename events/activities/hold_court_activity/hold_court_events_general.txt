@@ -18217,7 +18217,15 @@ hold_court.8100 = {
 		name = hold_court.8100.c
 		trigger = {
 			scope:ward = { is_lowborn = yes }
+			#Unop: Taken from adopt_interaction is_shown conditions
+			OR = {
+				# Cultures that default with this tradition should still be able to adopt
+				root.culture = { has_cultural_parameter = allows_adoption }
+				has_trait = compassionate
+			}		
+			NOT = { has_game_rule = no_adoption }
 		}
+		#reason = culture
 		scope:ward = {
 			if = {
 				limit = {

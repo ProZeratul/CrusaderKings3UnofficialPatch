@@ -8630,8 +8630,18 @@ ep3_laamps.7004 = {
 	}
 
 	immediate = {
-		scope:zichia.holder.top_liege = {
-			save_scope_as = title_holder
+		if = {
+			limit = {
+				scope:zichia.holder.top_liege.government_has_flag = government_is_herder
+			}
+			scope:zichia.holder.suzerain = {
+				save_scope_as = title_holder
+			}
+		}
+		else = {
+			scope:zichia.holder.top_liege = {
+				save_scope_as = title_holder
+			}
 		}
 		hidden_effect = {
 			add_unpressed_claim = title:c_zichia
@@ -8645,13 +8655,15 @@ ep3_laamps.7004 = {
 				barony = { add_to_list = zichia_names }
 			}
 		}
+		scope:title_holder = { save_scope_as = recipient }
+		root = { save_scope_as = actor }
 	}
 
 	option = { #OK, I'll pay
 		name = ep3_laamps.7004.a
 		# Unop: Setup all required scope for the purchase land effect
-		root = { save_scope_as = actor }
-		scope:target.holder = { save_scope_as = recipient }
+		#root = { save_scope_as = actor }
+		#scope:target.holder = { save_scope_as = recipient }
 		#scope:landed_titles = { save_scope_as = purchased_titles }
 		scope:zichia = { save_scope_as = new_primary_title }
 		save_scope_value_as = {
@@ -8677,10 +8689,12 @@ ep3_laamps.7004 = {
 		}
 
 		# Unop: Will be handled by the effect
-		#pay_short_term_gold = {
-		#	target = scope:title_holder
-		#	gold = 100
-		#}
+		show_as_tooltip = {
+			pay_short_term_gold = {
+				target = scope:recipient
+				gold = 100
+			}
+		}
 
 		# Unop: Will handled by the effect
 		#hidden_effect = { #For tooltip reasons
@@ -8707,7 +8721,9 @@ ep3_laamps.7004 = {
 					government_is_nomadic = {
 						root = { change_government = nomad_government }
 					}
-	
+					government_is_herder = {
+						root = { change_government = nomad_government }
+					}
 					government_is_administrative = {
 						root = { change_government = administrative_government }
 					}
@@ -8729,15 +8745,16 @@ ep3_laamps.7004 = {
 			if = {
 				limit = {
 					OR = {
-						government_has_flag = government_is_nomadic
+						#government_has_flag = government_is_nomadic
 						scope:new_liege ?= { government_has_flag = government_is_nomadic }
-						scope:old_government ?= flag:nomad
-						scope:new_capital.capital_province = {
-							OR = {
-								has_holding_type = nomad_holding
-								has_holding_type = herder_holding
-							}
-						}
+						scope:new_liege ?= { government_has_flag = government_is_herder }
+						#scope:old_government ?= flag:nomad
+						#scope:new_capital.capital_province = {
+						#	OR = {
+						#		has_holding_type = nomad_holding
+						#		has_holding_type = herder_holding
+						#	}
+						#}
 					}
 				}
 				change_government = nomad_government
