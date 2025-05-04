@@ -188,7 +188,7 @@ add_law_of_the_land_title_succession_law_if_appropriate_effect = {
 			tier = tier_county
 			NOT = { has_title_law = law_of_the_land_succession_law }
 			title_province ?= {
-				holding_type = {
+				holding_type ?= { #Unop Fix missing scope errors
 					has_required_heir_governments = yes
 					NOT = {
 						any_required_heir_government_type = {

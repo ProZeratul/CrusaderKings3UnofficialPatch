@@ -105,6 +105,7 @@ court_position_does_not_already_have_a_job_trigger = {
 			has_court_position = travel_leader_court_position
 			has_court_position = wet_nurse_court_position
 			has_court_position = akolouthos_court_position
+			is_councillor = yes
 
 			#Unop: Missing entries for court positions:
 			has_court_position = court_artificer_court_position
@@ -144,8 +145,6 @@ court_position_does_not_already_have_a_job_trigger = {
 			has_court_position = master_of_spoils_camp_officer
 			has_court_position = camp_priest_camp_officer
 			has_court_position = laureate_camp_officer
-
-			is_councillor = yes
 
 			#Unop: Should tax collector & eparch also be there ? IMHO those 2 are probably way busier & have a lot more to do than a cave hermit (disabled for now as the trigger should be updated accordingly)
 			#is_tax_collector = yes
@@ -216,6 +215,7 @@ can_appoint_char_to_any_court_position = {
 		can_appoint_char_to_court_position = { CHAR = $CHAR$ COURT_POS = yurtchi_court_position }
 		can_appoint_char_to_court_position = { CHAR = $CHAR$ COURT_POS = cherbi_court_position }
 		can_appoint_char_to_court_position = { CHAR = $CHAR$ COURT_POS = yeke_jarquchi_court_position }
+		can_appoint_char_to_court_position = { CHAR = $CHAR$ COURT_POS = foreign_emissary_court_position } #Unop Added
 		can_appoint_char_to_court_position = { CHAR = $CHAR$ COURT_POS = keeper_of_the_horses_court_position }
 	}
 }
@@ -632,7 +632,7 @@ chief_qadi_validity_trigger = {
 			limit = { $EMPLOYER$.faith = { has_doctrine = doctrine_gender_male_dominated } }
 			is_male = yes
 		}
-		trigger_if = {
+		trigger_else_if = { #Unop Use trigger_else_if
 			limit = { $EMPLOYER$.faith = { has_doctrine = doctrine_gender_female_dominated } }
 			is_female = yes
 		}

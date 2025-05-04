@@ -123,17 +123,19 @@ dynasty_of_many_crowns_effects = {
 					has_domicile_parameter = nomad_yurt_dynasty_many_crowns_bonus
 				}
 			}
-			every_dynasty_member = {
-				limit = {
-					government_has_flag = nomadic_government
-					primary_title ?= {
-						tier >= tier_kingdom
-					} 
-				}
-				domicile ?= {
-					change_herd = {
-						value = 1000
-						multiply = prev.primary_title.tier
+			dynasty = { #Unop ck3-tiger Fix scope
+				every_dynasty_member = {
+					limit = {
+						government_has_flag = government_is_nomadic #Unop ck3-tiger Fix flag name
+						primary_title ?= {
+							tier >= tier_kingdom
+						} 
+					}
+					domicile ?= {
+						change_herd = {
+							value = 1000
+							multiply = prev.primary_title.tier
+						}
 					}
 				}
 			}
