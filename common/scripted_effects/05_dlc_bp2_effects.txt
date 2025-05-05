@@ -1136,6 +1136,12 @@ adopt_effect = {
 		}
 		# Your other children hate this
 		every_child = {
+			limit = { #Unop: So now the children that you just adopt won't be mad at you & the content children won't be either (to respect the custom)
+				NOR = { 
+					this = $CHILD$ 
+					has_trait = content
+				}
+			}
 			custom = every_non_content_child
 			add_opinion = {
 				modifier = angry_opinion
