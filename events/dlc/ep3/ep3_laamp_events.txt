@@ -8632,7 +8632,9 @@ ep3_laamps.7004 = {
 	immediate = {
 		if = {
 			limit = {
-				scope:zichia.holder.top_liege.government_has_flag = government_is_herder
+				scope:zichia.holder.top_liege = {
+					government_has_flag = government_is_herder 
+				}
 			}
 			scope:zichia.holder.suzerain = {
 				save_scope_as = title_holder
@@ -8655,15 +8657,14 @@ ep3_laamps.7004 = {
 				barony = { add_to_list = zichia_names }
 			}
 		}
-		scope:title_holder = { save_scope_as = recipient }
 		root = { save_scope_as = actor }
+		scope:title_holder = { save_scope_as = recipient }
 	}
 
 	option = { #OK, I'll pay
 		name = ep3_laamps.7004.a
 		# Unop: Setup all required scope for the purchase land effect
-		#root = { save_scope_as = actor }
-		#scope:target.holder = { save_scope_as = recipient }
+
 		#scope:landed_titles = { save_scope_as = purchased_titles }
 		scope:zichia = { save_scope_as = new_primary_title }
 		save_scope_value_as = {
