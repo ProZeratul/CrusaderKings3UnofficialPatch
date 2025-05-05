@@ -18081,6 +18081,16 @@ hold_court.8100 = {
 				}
 			}
 		}
+		if = {
+			limit = { NOT = { root = scope:ward.host } }
+			root = {
+				hidden_effect = {
+					add_visiting_courtier = scope:ward 
+				}
+			}
+		}
+		root = { save_scope_as = actor }
+		scope:ward = { save_scope_as = recipient }
 		# Trigger next event in chain.
 		hold_court_queue_next_event_effect = yes
 	}
@@ -18218,16 +18228,29 @@ hold_court.8100 = {
 		trigger = {
 			scope:ward = { is_lowborn = yes }
 			#Unop: Taken from adopt_interaction is_shown conditions
-			OR = {
-				# Cultures that default with this tradition should still be able to adopt
-				root.culture = { has_cultural_parameter = allows_adoption }
-				has_trait = compassionate
-			}		
-			NOT = { has_game_rule = no_adoption }
+			#unop_can_adopt_trigger = yes #Unop: After some thoughts, I think it's best to leave the option being selectable
+			NOT = { has_game_rule = no_adoption } #Unop: Unless you actually turned it off !
 		}
-		#reason = culture
-		scope:ward = {
-			if = {
+
+		#Unop: Rewrite this to be harmonized with the adoption interaction effect
+		adopt_effect = {
+			CHILD = scope:ward
+			ADOPTER = root
+		}
+		create_character_memory = {
+			type = adopted_a_child
+			participants = {
+				child = scope:ward
+			}
+		}
+		scope:recipient = {
+			create_character_memory = {
+				type = was_adopted
+				participants = {
+					parent = scope:actor
+				}
+			}
+			if = { #Unop: This should normally be given when the ward comes of age, leaving it since it was part of the initial effect
 				limit = {
 					can_add_hook = {
 						target = scope:ward
@@ -18239,6 +18262,13 @@ hold_court.8100 = {
 					type = loyalty_hook
 				}
 			}
+			set_relation_guardian = root
+			add_opinion = {
+				modifier = grateful_child
+				target = root
+				opinion = 40
+			}
+			add_character_modifier = { modifier = hold_court_8100_adopted_modifier }
 			hidden_effect = {
 				if = {
 					limit = {
@@ -18247,21 +18277,21 @@ hold_court.8100 = {
 					set_employer = root
 				}
 			}
-			set_relation_guardian = root
-			if = {
-				limit = {
-					root = { is_male = yes }
-				}
-				set_father = root
-			}
-			else = { set_mother = root }
-			set_house = root.house
-			add_opinion = {
-				modifier = grateful_child
-				target = root
-				opinion = 40
-			}
-			add_character_modifier = { modifier = hold_court_8100_adopted_modifier }
+			#set_relation_guardian = root
+			#if = {
+			#	limit = {
+			#		root = { is_male = yes }
+			#	}
+			#	set_father = root
+			#}
+			#else = { set_mother = root }
+			#set_house = root.house
+			#add_opinion = {
+			#	modifier = grateful_child
+			#	target = root
+			#	opinion = 40
+			#}
+			#add_character_modifier = { modifier = hold_court_8100_adopted_modifier }
 		}
 		scope:advocate = {
 			if = {
@@ -18295,22 +18325,22 @@ hold_court.8100 = {
 				}
 			}
 		}
-		every_child = {
-			custom = hold_court.8100.c.tt_child
-			limit = {
-				NOT = { this = scope:ward }
-			}
-			add_opinion = {
-				target = root
-				modifier = envy_opinion
-				opinion = -20
-			}
-			add_opinion = {
-				target = scope:ward
-				modifier = envy_opinion
-				opinion = -40
-			}
-		}
+		#every_child = { #Unop: Commented this since the adopt effect take care of this already
+		#	custom = hold_court.8100.c.tt_child
+		#	limit = {
+		#		NOT = { this = scope:ward }
+		#	}
+		#	add_opinion = {
+		#		target = root
+		#		modifier = envy_opinion
+		#		opinion = -20
+		#	}
+		#	add_opinion = {
+		#		target = scope:ward
+		#		modifier = envy_opinion
+		#		opinion = -40
+		#	}
+		#}
 		stress_impact = {
 			arrogant = medium_stress_impact_gain
 			callous = medium_stress_impact_gain
@@ -18487,6 +18517,9 @@ hold_court.8100 = {
 				target = root
 				modifier = disappointed_opinion
 				opinion = -20
+			}
+			hidden_effect = {
+				return_to_court = yes
 			}
 		}
 		scope:advocate = {
