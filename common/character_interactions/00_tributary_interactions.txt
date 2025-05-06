@@ -1066,10 +1066,12 @@ release_tributary_interaction = {
 
 	auto_accept = yes
 	on_accept = {
-		add_truce_one_way = {
-			character = scope:recipient
-			years = 5
-			name = TRUCE_TRIBUTARY_RELEASED
+		scope:actor = { #Unop ck3-tiger Fix scope
+			add_truce_one_way = {
+				character = scope:recipient
+				years = 5
+				name = TRUCE_TRIBUTARY_RELEASED
+			}
 		}
 		scope:recipient = {
 			end_tributary = yes
@@ -1541,9 +1543,10 @@ offer_courtier_interaction = {
 	on_accept = {
 		scope:secondary_actor = {
 			add_opinion = {
-				target = scope:recipient
-				modifier = piqued_opinion
-				opinion = 10
+				#Unop Make consistent with demand_courtier interaction
+				target = scope:actor
+				modifier = annoyed_opinion
+				opinion = -10
 			}
 		}
 		scope:recipient = {
@@ -1569,7 +1572,7 @@ offer_courtier_interaction = {
 			}
 			add_opinion = {
 				target = scope:actor
-				modifier = grateful_opinion
+				modifier = unop_offer_courtier_opinion #Unop Use custom non-stacking opinion, as for other gifts
 				opinion = 10
 			}
 		}
