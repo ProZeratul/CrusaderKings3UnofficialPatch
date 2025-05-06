@@ -1541,6 +1541,19 @@ offer_courtier_interaction = {
 	}
 	
 	on_accept = {
+		#Unop Warning for multiple courtier offers
+		if = {
+			limit = {
+				scope:recipient = {
+					has_opinion_modifier = {
+						target = scope:actor
+						modifier = unop_offer_courtier_opinion
+					}
+				}
+			}
+			custom_tooltip = ALREADY_OFFERED_COURTIER_WARNING
+		}
+
 		scope:secondary_actor = {
 			add_opinion = {
 				#Unop Make consistent with demand_courtier interaction

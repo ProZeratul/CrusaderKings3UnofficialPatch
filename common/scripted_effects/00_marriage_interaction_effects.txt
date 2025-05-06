@@ -587,6 +587,19 @@ concubine_on_accept_effect = {
 
 #This effect has some small differences to the previous one since this one involves one extra person (the one you give a concubine to)
 concubine_offer_on_accept_effect = {
+	#Unop Warning for multiple concubine offers
+	if = {
+		limit = {
+			scope:recipient = {
+				has_opinion_modifier = {
+					target = scope:actor
+					modifier = unop_offer_concubine_opinion
+				}
+			}
+		}
+		custom_tooltip = ALREADY_OFFERED_CONCUBINE_WARNING
+	}
+
 	scope:secondary_actor = {
 		trigger_event = marriage_interaction.0040
 		if = {
