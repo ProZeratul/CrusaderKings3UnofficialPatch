@@ -2454,7 +2454,7 @@ activity_improve_relations_intent_effect = {
 				}
 			}
 			impose_obedience_intent = {
-				scope:opinion_target = {
+				$CHARACTER$ = { #Unop ck3-tiger Fix scope
 					add_opinion = {
 						target = scope:host
 						modifier = obedience_opinion
@@ -2845,7 +2845,7 @@ hunt_wound_tooltip_effect = {
 			add_trait_force_tooltip = wounded_1
 		}
 		if = {
-			limit = { scope:severe = yes }
+			limit = { scope:severe ?= yes } #Unop ck3-tiger Fix missing scope
 			switch = {
 				trigger = scope:wound
 				flag:wound = {}
