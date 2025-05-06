@@ -830,6 +830,18 @@ ep3_become_landed_transfer_no_ennobled_modifier_effect = {
 		order_by = tier
 		save_scope_as = new_primary_title
 	}
+	#Unop ck3-tiger Determine scope:new_capital if not set as it is used below
+	if = {
+		limit = {
+			NOT = { exists = scope:new_capital }
+		}
+		ordered_in_list = {
+			list = $TITLE_LIST$
+			limit = { tier = tier_county }
+			order_by = development_level
+			save_scope_as = new_capital
+		}
+	}
 	resolve_title_and_vassal_change = scope:title_change
 	# Change liege
 	create_title_and_vassal_change = {
@@ -856,7 +868,7 @@ ep3_become_landed_transfer_no_ennobled_modifier_effect = {
 					government_has_flag = government_is_nomadic
 					scope:new_liege ?= { government_has_flag = government_is_nomadic }
 					scope:old_government ?= flag:nomad
-					scope:new_capital.capital_province = {
+					scope:new_capital.title_province = { #Unop ck3-tiger Fix scope
 						OR = {
 							has_holding_type = nomad_holding
 							has_holding_type = herder_holding
