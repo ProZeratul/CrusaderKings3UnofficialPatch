@@ -8663,7 +8663,7 @@ ep3_laamps.7004 = {
 
 	option = { #OK, I'll pay
 		name = ep3_laamps.7004.a
-		# Unop: Setup all required scope for the purchase land effect
+		#Unop: Heavilly reworked this option to use the dedicated "purchase_land_interaction_effect" that handle all cases that this option is doing. Also the tooltip option is now reliable & clean.
 
 		#scope:landed_titles = { save_scope_as = purchased_titles }
 		scope:zichia = { save_scope_as = new_primary_title }
@@ -8795,7 +8795,7 @@ ep3_laamps.7004 = {
 
 		stress_impact = {
 			ambitious = minor_stress_impact_loss
-			greedy = minor_stress_impact_gain #Unop: Changed to minor since purchase_land_interaction_effect is already applying a stress effect
+			greedy = minor_stress_impact_gain #Unop: Changed to minor since purchase_land_interaction_effect is already applying a minor stress effect (so in the end it's the same as before)
 		}
 
 		ai_chance = { #50% chance for AI
