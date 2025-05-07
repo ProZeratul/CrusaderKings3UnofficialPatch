@@ -75,7 +75,17 @@ mena = {
 			}
 			exists = capital_county
 			capital_county.culture = {
-				has_graphical_steppe_culture_group_trigger = yes
+				#has_graphical_steppe_culture_group_trigger = yes #Unop This trigger is used in the OR below
+				OR = {
+					has_graphical_steppe_culture_group_trigger = yes
+					has_graphical_mena_culture_group_trigger = yes
+					has_graphical_iranian_culture_group_trigger = yes
+					has_graphical_african_culture_group_trigger = yes				
+					AND = {
+						has_graphical_iberian_culture_group_trigger  = yes
+						prev.religion = religion:islam_religion
+					}
+				}
 			}
 		}
 		trigger_else = {
@@ -83,9 +93,8 @@ mena = {
 			exists = capital_county
 			OR = {
 				capital_county = {
-					culture = { #Unop: The trigger below need to be scoped to the culture
-						has_graphical_steppe_culture_group_trigger = yes
-					}
+					#has_graphical_steppe_culture_group_trigger = yes #Unop This trigger is used correctly below
+					culture = { has_graphical_steppe_culture_group_trigger = yes }
 					title_province ?= {
 						has_holding = yes
 						NOT = {
