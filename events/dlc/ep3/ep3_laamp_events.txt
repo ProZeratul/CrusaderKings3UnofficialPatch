@@ -8630,8 +8630,20 @@ ep3_laamps.7004 = {
 	}
 
 	immediate = {
-		scope:zichia.holder.top_liege = {
-			save_scope_as = title_holder
+		if = {
+			limit = {
+				scope:zichia.holder.top_liege = {
+					government_has_flag = government_is_herder 
+				}
+			}
+			scope:zichia.holder.suzerain = {
+				save_scope_as = title_holder
+			}
+		}
+		else = {
+			scope:zichia.holder.top_liege = {
+				save_scope_as = title_holder
+			}
 		}
 		hidden_effect = {
 			add_unpressed_claim = title:c_zichia
@@ -8645,13 +8657,14 @@ ep3_laamps.7004 = {
 				barony = { add_to_list = zichia_names }
 			}
 		}
+		root = { save_scope_as = actor }
+		scope:title_holder = { save_scope_as = recipient }
 	}
 
 	option = { #OK, I'll pay
 		name = ep3_laamps.7004.a
-		# Unop: Setup all required scope for the purchase land effect
-		root = { save_scope_as = actor }
-		scope:target.holder = { save_scope_as = recipient }
+		#Unop: Heavilly reworked this option to use the dedicated "purchase_land_interaction_effect" that handle all cases that this option is doing. Also the tooltip option is now reliable & clean.
+
 		#scope:landed_titles = { save_scope_as = purchased_titles }
 		scope:zichia = { save_scope_as = new_primary_title }
 		save_scope_value_as = {
@@ -8677,10 +8690,12 @@ ep3_laamps.7004 = {
 		}
 
 		# Unop: Will be handled by the effect
-		#pay_short_term_gold = {
-		#	target = scope:title_holder
-		#	gold = 100
-		#}
+		show_as_tooltip = {
+			pay_short_term_gold = {
+				target = scope:recipient
+				gold = 100
+			}
+		}
 
 		# Unop: Will handled by the effect
 		#hidden_effect = { #For tooltip reasons
@@ -8707,7 +8722,9 @@ ep3_laamps.7004 = {
 					government_is_nomadic = {
 						root = { change_government = nomad_government }
 					}
-	
+					government_is_herder = {
+						root = { change_government = nomad_government }
+					}
 					government_is_administrative = {
 						root = { change_government = administrative_government }
 					}
@@ -8731,6 +8748,7 @@ ep3_laamps.7004 = {
 					OR = {
 						government_has_flag = government_is_nomadic
 						scope:new_liege ?= { government_has_flag = government_is_nomadic }
+						scope:new_liege ?= { government_has_flag = government_is_herder }
 						scope:old_government ?= flag:nomad
 						scope:new_capital.title_province = { #Unop ck3-tiger
 							OR = {
@@ -8777,7 +8795,7 @@ ep3_laamps.7004 = {
 
 		stress_impact = {
 			ambitious = minor_stress_impact_loss
-			greedy = minor_stress_impact_gain #Unop: Changed to minor since purchase_land_interaction_effect is already applying a stress effect
+			greedy = minor_stress_impact_gain #Unop: Changed to minor since purchase_land_interaction_effect is already applying a minor stress effect (so in the end it's the same as before)
 		}
 
 		ai_chance = { #50% chance for AI
