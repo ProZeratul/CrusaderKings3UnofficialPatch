@@ -1588,6 +1588,13 @@
 					}
 				}
 			}
+			#Unop Use the hook on the recipient
+			scope:actor = {
+				if = {
+					limit = { scope:hook = yes }
+					use_hook = scope:recipient
+				}
+			}
 		}
 	}
 
@@ -2415,6 +2422,11 @@ inspire_conversion_interaction = {
 					}
 				}
 			}
+			#Unop Use the hook on the recipient
+			if = {
+				limit = { scope:hook = yes }
+				use_hook = scope:recipient
+			}
 		}
 	}
 
@@ -2979,9 +2991,9 @@ migration_interaction = {
 		}
 		# Relative Herd
 		modifier = {
-			trigger_if = {
+			#trigger_if = { #Unop ck3-tiger
 				exists = scope:recipient.domicile # Herders won't have a domicile
-			}
+			#}
 			add = 25
 			domicile.herd >= scope:recipient.domicile.herd
 			desc = MIGRATION_INTERACTION_HERD_ACCEPTANCE
@@ -2997,9 +3009,9 @@ migration_interaction = {
 		}
 		modifier = {
 			add = 50
-			trigger_if = {
+			#trigger_if = { #Unop ck3-tiger
 				exists = situation:the_great_steppe
-			}
+			#}
 			scope:actor = {
 				this = situation:the_great_steppe.situation_top_herd
 			}
@@ -4665,7 +4677,7 @@ mpo_ask_for_herd_interaction = {
 				is_imprisoned = yes
 				is_at_war = yes
 				is_a_faction_member = yes
-				custom_description = {
+				custom_tooltip = { #Unop ck3-tiger No trigger localization
 					text = ask_for_herd_not_enough_herd
 					domicile.herd < scope:recipient.domicile.ask_for_herd_base_value
 					government_has_flag = government_is_nomadic
@@ -4873,7 +4885,9 @@ mpo_ask_for_herd_interaction = {
 								}
 							}
 							scope:actor = {
-								change_herd = major_herd_gain
+								domicile = { #Unop ck3-tiger Fix scope
+									change_herd = major_herd_gain
+								}
 								add_legitimacy = minor_legitimacy_loss
 							}
 							scope:recipient.primary_title = {
@@ -4921,6 +4935,11 @@ mpo_ask_for_herd_interaction = {
 						}
 					}
 				}
+			}
+			#Unop Use the hook on the recipient
+			if = {
+				limit = { scope:hook = yes }
+				use_hook = scope:recipient
 			}
 		}
 	}
@@ -5145,6 +5164,11 @@ mpo_demand_obedience_interaction = {
 						}
 					}
 				}
+			}
+			#Unop Use the hook on the recipient
+			if = {
+				limit = { scope:hook = yes }
+				use_hook = scope:recipient
 			}
 		}
 	}
@@ -6810,7 +6834,7 @@ mpo_retrieve_land_from_herder_interaction = {
 	popup_on_receive = yes
 	pause_on_receive = yes
 
-	interface_priority = 60
+	#interface_priority = 60 #Unop ck3-tiger Duplicate
 	ai_min_reply_days = 4
 	ai_max_reply_days = 9
 
@@ -6934,6 +6958,13 @@ mpo_retrieve_land_from_herder_interaction = {
 			}
 			scope:actor = { remove_character_flag = flag_hostile_actions_disabled_delay }
 		}
+		#Unop Use the hook on the recipient
+		scope:actor = {
+			if = {
+				limit = { scope:hook = yes }
+				use_hook = scope:recipient
+			}
+		}
 	}
 
 	auto_accept = yes
@@ -7043,6 +7074,11 @@ mpo_vassal_to_tributary_interaction = {
 			}
 		}
 		scope:actor = {
+			#Unop Use the hook on the recipient
+			if = {
+				limit = { scope:hook = yes }
+				use_hook = scope:recipient
+			}
 			trigger_event = mpo_interactions_events.0010
 		}
 	}
