@@ -982,9 +982,14 @@ faiths_are_in_orthodox_christianity_group = {
 		$FAITH_1$ = faith:iconoclast
 		$FAITH_1$ = faith:bogomilist
 		$FAITH_1$ = faith:paulician
-		AND = {
-			$FAITH_1$ = faith:bosnian_church
-			scope:heretic_capital.title_province = { geographical_region = world_europe_south_east }
+		trigger_if = {
+			limit = {
+				exists = scope:heretic_capital
+			}
+			AND = {
+				$FAITH_1$ = faith:bosnian_church
+				scope:heretic_capital.title_province = { geographical_region = world_europe_south_east }
+			}
 		}
 	}
 	OR = {
@@ -992,11 +997,16 @@ faiths_are_in_orthodox_christianity_group = {
 		$FAITH_2$ = faith:iconoclast
 		$FAITH_2$ = faith:bogomilist
 		$FAITH_2$ = faith:paulician
-		$FAITH_2$ = faith:bosnian_church
+		#$FAITH_2$ = faith:bosnian_church #Unop: Since this is checked just below it doesn't make sense to be checked here (and by comparing the other triggers)
 		$FAITH_2$ = faith:cainitism
-		AND = {
-			$FAITH_1$ = faith:bosnian_church
-			scope:heretic_capital.title_province = { geographical_region = world_europe_south_east }
+		trigger_if = {
+			limit = {
+				exists = scope:heretic_capital
+			}
+			AND = {
+				$FAITH_2$ = faith:bosnian_church #Fix: The Faith parameter that was checking $FAITH_1$
+				scope:heretic_capital.title_province = { geographical_region = world_europe_south_east }
+			}
 		}
 	}
 }
