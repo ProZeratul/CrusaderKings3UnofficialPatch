@@ -1491,13 +1491,16 @@ can_afford_create_head_of_faith_title_cost_trigger = {
 		}
 		piety >= major_piety_value
 	}
-	trigger_else = {
+	trigger_else_if = { #Unop: Made this a trigger_else_if
 		limit = {
 			faith = {
 				has_doctrine_parameter = spiritual_head_of_faith
 			}
 		}
 		gold >= medium_gold_max_value
+	}
+	trigger_else = { #Unop: Fallback case
+		always = yes
 	}
 }
 
