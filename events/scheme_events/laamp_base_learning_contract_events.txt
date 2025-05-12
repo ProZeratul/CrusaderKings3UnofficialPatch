@@ -21,7 +21,7 @@
 scripted_trigger 4001_option_is_available_trigger = {
 	#Do we have an additional language available?
 	trigger_if = {
-		limit = { 
+		limit = {
 			$TRAIT$ = no
 			$LANGUAGE$ = yes
 		}
@@ -81,7 +81,7 @@ scripted_trigger 4001_option_is_available_trigger = {
 				4001_trait_option_is_available_trigger = { TRAIT = theologian }
 				4001_trait_option_is_available_trigger = { TRAIT = physician }
 				4001_trait_option_is_available_trigger = { TRAIT = mystic }
-				4001_trait_option_is_available_trigger = { TRAIT = herbalist }	
+				4001_trait_option_is_available_trigger = { TRAIT = herbalist }
 			}
 		}
 	}
@@ -110,10 +110,10 @@ scripted_trigger 4001_better_option_is_available_trigger = {
 			4001_option_is_available_trigger = { TRAIT = no LANGUAGE = yes }
 		}
 		trigger_if = {
-			limit = { 
+			limit = {
 				exists = scope:lifestyle_trait
 				NOT = { scope:lifestyle_trait = flag:none }
-			}	
+			}
 			4001_option_is_available_trigger = { TRAIT = yes LANGUAGE = no }
 		}
 		trigger_if = {
@@ -275,7 +275,7 @@ laamp_base_learning_contract_events.4001 = {
 				desc = laamp_base_learning_contract_events.4001.t.learning
 			}
 		}
-	}	
+	}
 	window = big_event_window
 	desc = {
 		#Which occurrence is this?
@@ -304,7 +304,7 @@ laamp_base_learning_contract_events.4001 = {
 		#Do we have a secret?
 		first_valid = {
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					4001_final_shot_trigger = no
 					4001_secret_is_active_trigger = yes
 				}
@@ -331,7 +331,7 @@ laamp_base_learning_contract_events.4001 = {
 				}
 				desc = laamp_base_learning_contract_events.4001.outro.01
 			}
-		}	
+		}
 	}
 	theme = learning
 	#Random attendee of the employer
@@ -342,7 +342,7 @@ laamp_base_learning_contract_events.4001 = {
 			animation = stressed_teacher
 		}
 		triggered_animation = {
-			trigger = { 
+			trigger = {
 				OR = {
 					learning < average_skill_rating
 					4001_final_shot_trigger = yes
@@ -400,7 +400,7 @@ laamp_base_learning_contract_events.4001 = {
 							scope:task_contract = { has_variable = used_diplomacy_topic_var }
 						}
 					}
-					modifier = { 
+					modifier = {
 						highest_skill = diplomacy
 						add = 5
 					}
@@ -409,7 +409,7 @@ laamp_base_learning_contract_events.4001 = {
 							name = passage_topic
 							value = flag:diplomacy_topic
 						}
-						set_variable = used_diplomacy_topic_var 
+						set_variable = used_diplomacy_topic_var
 					}
 					#Got any trait to help us out?
 					random_list = {
@@ -446,7 +446,7 @@ laamp_base_learning_contract_events.4001 = {
 				#Martial
 				10 = {
 					trigger = {
-						NOT = { 
+						NOT = {
 							scope:task_contract = { has_variable = used_martial_topic_var }
 						}
 					}
@@ -459,7 +459,7 @@ laamp_base_learning_contract_events.4001 = {
 							name = passage_topic
 							value = flag:martial_topic
 						}
-						set_variable = used_martial_topic_var 
+						set_variable = used_martial_topic_var
 					}
 					#Got any trait to help us out?
 					random_list = {
@@ -511,7 +511,7 @@ laamp_base_learning_contract_events.4001 = {
 									has_trait = cautious_leader
 									has_trait = organizer
 									has_trait = winter_soldier
-								}  
+								}
 							}
 							save_scope_value_as = {
 								name = lifestyle_trait
@@ -523,7 +523,7 @@ laamp_base_learning_contract_events.4001 = {
 				#Stewardship
 				10 = {
 					trigger = {
-						NOT = { 
+						NOT = {
 							scope:task_contract = { has_variable = used_stewardship_topic_var }
 						}
 					}
@@ -536,7 +536,7 @@ laamp_base_learning_contract_events.4001 = {
 							name = passage_topic
 							value = flag:stewardship_topic
 						}
-						set_variable = used_stewardship_topic_var 
+						set_variable = used_stewardship_topic_var
 					}
 					#Got any trait to help us out?
 					random_list = {
@@ -573,7 +573,7 @@ laamp_base_learning_contract_events.4001 = {
 				#Intrigue
 				10 = {
 					trigger = {
-						NOT = { 
+						NOT = {
 							scope:task_contract = { has_variable = used_intrigue_topic_var }
 						}
 					}
@@ -586,7 +586,7 @@ laamp_base_learning_contract_events.4001 = {
 							name = passage_topic
 							value = flag:intrigue_topic
 						}
-						set_variable = used_intrigue_topic_var 
+						set_variable = used_intrigue_topic_var
 					}
 					#Got any trait to help us out?
 					random_list = {
@@ -616,7 +616,7 @@ laamp_base_learning_contract_events.4001 = {
 				#Learning
 				10 = {
 					trigger = {
-						NOT = { 
+						NOT = {
 							scope:task_contract = { has_variable = used_learning_topic_var }
 						}
 					}
@@ -629,7 +629,7 @@ laamp_base_learning_contract_events.4001 = {
 							name = passage_topic
 							value = flag:learning_topic
 						}
-						set_variable = used_learning_topic_var 
+						set_variable = used_learning_topic_var
 					}
 					#Got any trait to help us out?
 					random_list = {
@@ -687,7 +687,7 @@ laamp_base_learning_contract_events.4001 = {
 						NOT = { exists = scope:additional_language_culture }
 					}
 					random_culture_global = {
-						limit = { 
+						limit = {
 							root = { knows_language_of_culture = prev }
 							NOT = { this = root.culture }
 						}
@@ -805,7 +805,7 @@ laamp_base_learning_contract_events.4001 = {
 						4001_trait_option_is_available_trigger = { TRAIT = reveler }
 					}
 				}
-			}	
+			}
 		}
 		show_as_unavailable = { scope:task_contract.var:passage_topic ?= flag:diplomacy_topic }
 		flavor = {
@@ -820,7 +820,7 @@ laamp_base_learning_contract_events.4001 = {
 			switch = {
 				trigger = scope:lifestyle_trait
 				flag:diplomat = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_diplomat_trait_var
 							value = flag:yes
@@ -828,7 +828,7 @@ laamp_base_learning_contract_events.4001 = {
 					}
 				}
 				flag:family_first = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_family_first_trait_var
 							value = flag:yes
@@ -836,7 +836,7 @@ laamp_base_learning_contract_events.4001 = {
 					}
 				}
 				flag:august = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_august_trait_var
 							value = flag:yes
@@ -844,7 +844,7 @@ laamp_base_learning_contract_events.4001 = {
 					}
 				}
 				flag:reveler = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_reveler_trait_var
 							value = flag:yes
@@ -853,7 +853,7 @@ laamp_base_learning_contract_events.4001 = {
 				}
 			}
 		}
-		#Ye be dim, aight?	
+		#Ye be dim, aight?
 		if = {
 			limit = { learning <= average_skill_rating }
 			4001_duel_generic_effect = {
@@ -918,9 +918,9 @@ laamp_base_learning_contract_events.4001 = {
 						4001_trait_option_is_available_trigger = { TRAIT = blademaster }
 					}
 				}
-			}		
+			}
 		}
-		show_as_unavailable = { 
+		show_as_unavailable = {
 			scope:task_contract.var:passage_topic ?= flag:martial_topic
 			NOT = { scope:lifestyle_trait = flag:commander }
 		}
@@ -936,7 +936,7 @@ laamp_base_learning_contract_events.4001 = {
 			switch = {
 				trigger = scope:lifestyle_trait
 				flag:strategist = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_strategist_trait_var
 							value = flag:yes
@@ -944,7 +944,7 @@ laamp_base_learning_contract_events.4001 = {
 					}
 				}
 				flag:overseer = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_overseer_trait_var
 							value = flag:yes
@@ -952,7 +952,7 @@ laamp_base_learning_contract_events.4001 = {
 					}
 				}
 				flag:gallant = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_gallant_trait_var
 							value = flag:yes
@@ -960,7 +960,7 @@ laamp_base_learning_contract_events.4001 = {
 					}
 				}
 				flag:blademaster = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_blademaster_trait_var
 							value = flag:yes
@@ -969,7 +969,7 @@ laamp_base_learning_contract_events.4001 = {
 				}
 			}
 		}
-		#Ye be dim, aight?	
+		#Ye be dim, aight?
 		if = {
 			limit = { learning <= average_skill_rating }
 			4001_duel_generic_effect = {
@@ -1036,7 +1036,7 @@ laamp_base_learning_contract_events.4001 = {
 				}
 			}
 		}
-		show_as_unavailable = { 
+		show_as_unavailable = {
 			scope:task_contract.var:passage_topic ?= flag:martial_topic
 			scope:lifestyle_trait = flag:commander
 		}
@@ -1049,14 +1049,14 @@ laamp_base_learning_contract_events.4001 = {
 		reason = has_commander_trait
 		if = {
 			limit = { exists = scope:lifestyle_trait }
-			scope:task_contract = { 
+			scope:task_contract = {
 				set_variable = {
 					name = used_commander_trait_var
 					value = flag:yes
 				}
 			}
 		}
-		#Ye be dim, aight?	
+		#Ye be dim, aight?
 		if = {
 			limit = { learning <= average_skill_rating }
 			4001_duel_generic_effect = {
@@ -1138,7 +1138,7 @@ laamp_base_learning_contract_events.4001 = {
 			switch = {
 				trigger = scope:lifestyle_trait
 				flag:architect = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_architect_trait_var
 							value = flag:yes
@@ -1146,7 +1146,7 @@ laamp_base_learning_contract_events.4001 = {
 					}
 				}
 				flag:administrator = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_administrator_trait_var
 							value = flag:yes
@@ -1154,7 +1154,7 @@ laamp_base_learning_contract_events.4001 = {
 					}
 				}
 				flag:avaricious = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_avaricious_trait_var
 							value = flag:yes
@@ -1162,7 +1162,7 @@ laamp_base_learning_contract_events.4001 = {
 					}
 				}
 				flag:gardener = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_gardener_trait_var
 							value = flag:yes
@@ -1171,7 +1171,7 @@ laamp_base_learning_contract_events.4001 = {
 				}
 			}
 		}
-		#Ye be dim, aight?	
+		#Ye be dim, aight?
 		if = {
 			limit = { learning <= average_skill_rating }
 			4001_duel_generic_effect = {
@@ -1237,7 +1237,7 @@ laamp_base_learning_contract_events.4001 = {
 						4001_trait_option_is_available_trigger = { TRAIT = torturer }
 					}
 				}
-			}	
+			}
 		}
 		show_as_unavailable = { scope:task_contract.var:passage_topic ?= flag:intrigue_topic }
 		flavor = {
@@ -1252,7 +1252,7 @@ laamp_base_learning_contract_events.4001 = {
 			switch = {
 				trigger = scope:lifestyle_trait
 				flag:schemer = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_schemer_trait_var
 							value = flag:yes
@@ -1260,7 +1260,7 @@ laamp_base_learning_contract_events.4001 = {
 					}
 				}
 				flag:seducer = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_seducer_trait_var
 							value = flag:yes
@@ -1268,7 +1268,7 @@ laamp_base_learning_contract_events.4001 = {
 					}
 				}
 				flag:torturer = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_torturer_trait_var
 							value = flag:yes
@@ -1277,7 +1277,7 @@ laamp_base_learning_contract_events.4001 = {
 				}
 			}
 		}
-		#Ye be dim, aight?	
+		#Ye be dim, aight?
 		if = {
 			limit = { learning <= average_skill_rating }
 			4001_duel_generic_effect = {
@@ -1372,7 +1372,7 @@ laamp_base_learning_contract_events.4001 = {
 					}
 				}
 			}
-			
+
 		}
 		show_as_unavailable = { scope:task_contract.var:passage_topic ?= flag:learning_topic }
 		flavor = {
@@ -1387,7 +1387,7 @@ laamp_base_learning_contract_events.4001 = {
 			switch = {
 				trigger = scope:lifestyle_trait
 				flag:whole_of_body = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_whole_of_body_trait_var
 							value = flag:yes
@@ -1395,7 +1395,7 @@ laamp_base_learning_contract_events.4001 = {
 					}
 				}
 				flag:scholar = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_scholar_trait_var
 							value = flag:yes
@@ -1403,7 +1403,7 @@ laamp_base_learning_contract_events.4001 = {
 					}
 				}
 				flag:theologian = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_theologian_trait_var
 							value = flag:yes
@@ -1411,7 +1411,7 @@ laamp_base_learning_contract_events.4001 = {
 					}
 				}
 				flag:physician = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_physician_trait_var
 							value = flag:yes
@@ -1419,7 +1419,7 @@ laamp_base_learning_contract_events.4001 = {
 					}
 				}
 				flag:mystic = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_mystic_trait_var
 							value = flag:yes
@@ -1427,7 +1427,7 @@ laamp_base_learning_contract_events.4001 = {
 					}
 				}
 				flag:herbalist = {
-					scope:task_contract = { 
+					scope:task_contract = {
 						set_variable = {
 							name = used_herbalist_trait_var
 							value = flag:yes
@@ -1436,7 +1436,7 @@ laamp_base_learning_contract_events.4001 = {
 				}
 			}
 		}
-		#Ye be dim, aight?	
+		#Ye be dim, aight?
 		if = {
 			limit = { learning <= average_skill_rating }
 			4001_duel_generic_effect = {
@@ -1490,7 +1490,7 @@ laamp_base_learning_contract_events.4001 = {
 				custom_tooltip = {
 					text = laamp_base_learning_contract_events.4001.c.tt.used
 					4001_option_is_available_trigger = { TRAIT = no LANGUAGE = yes }
-				}	
+				}
 			}
 			trigger_else_if = {
 				limit = {
@@ -1513,7 +1513,7 @@ laamp_base_learning_contract_events.4001 = {
 			}
 		}
 		reason = language
-		scope:task_contract = { 
+		scope:task_contract = {
 			set_variable = {
 				name = used_additional_language_var
 				value = flag:yes
@@ -1594,7 +1594,7 @@ laamp_base_learning_contract_events.4001 = {
 		if = {
 			limit = {
 				learning > average_skill_rating
-				4001_better_option_is_available_trigger = yes 
+				4001_better_option_is_available_trigger = yes
 			}
 			stress_impact = { base = medium_stress_impact_loss }
 		}
@@ -1613,7 +1613,7 @@ laamp_base_learning_contract_events.4001 = {
 	#Final Shot: Bruteforce - triggered if you have 1 shot left and less than 2 score (3 is qualified success)
 	option = {
 		name = laamp_base_learning_contract_events.4001.e
-		trigger = { 
+		trigger = {
 			OR = {
 				4001_final_shot_trigger = yes
 				4001_shoddy_situation_trigger = yes
@@ -1660,7 +1660,7 @@ laamp_base_learning_contract_events.4001 = {
 			#Reset the topic
 			scope:task_contract = {
 				set_variable = {
-					name = passage_topic
+					name = passage_topic #Unop: Was used_additional_language_var but it's not the desired flag reset
 					value = flag:none
 				}
 			}
@@ -1831,9 +1831,9 @@ laamp_base_learning_contract_events.4005 = {
 			base = 100
 		}
 	}
-	after = { 
-		remove_character_flag ?= is_in_task_contract_event_chain 
-		hidden_effect = {
+	after = {
+		remove_character_flag ?= is_in_task_contract_event_chain
+		hidden_effect = { #Unop Only resume travel plan if paused
 			current_travel_plan ?= {
 				if = {
 					limit = { is_paused = yes }
@@ -1873,7 +1873,7 @@ laamp_base_learning_contract_events.4011 = {
 	immediate = {
 		random_courtier = {
 			limit = {
-				NOT = { 
+				NOT = {
 					has_any_bad_relationship_with_character_trigger = { CHARACTER = root }
 				}
 				is_available_allow_travelling = yes
@@ -1976,7 +1976,7 @@ scripted_effect 4014_show_score_effect = {
 }
 
 #Kick off featuring your Employer
-laamp_base_learning_contract_events.4014 = { 
+laamp_base_learning_contract_events.4014 = {
 	type = character_event
 	title = laamp_base_learning_contract_events.4014.t
 	window = big_event_window
@@ -2088,9 +2088,9 @@ scripted_effect 4015_mayor_success_effect = {
 				}
 				add_contact = scope:local_holder
 			}
-			
+
 		}
-	}	
+	}
 }
 
 scripted_effect 4015_failure_effect = {
@@ -2125,7 +2125,7 @@ laamp_base_learning_contract_events.4015 = {
 				desc = laamp_base_learning_contract_events.4015.desc.surroundings.market
 			}
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					scope:task_contract.var:background ?= flag:temple
 					location = { 4015_not_worship_indoors_trigger = yes }
 				}
@@ -2189,9 +2189,9 @@ laamp_base_learning_contract_events.4015 = {
 		desc = boilerplate.paragraph
 		first_valid = {
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					exists = scope:camp_priest
-					scope:task_contract = { 
+					scope:task_contract = {
 						has_variable = used_priest_count_var
 						var:used_priest_count_var >= scope:task_contract.var:win_t2_threshold
 					}
@@ -2199,9 +2199,9 @@ laamp_base_learning_contract_events.4015 = {
 				desc = laamp_base_learning_contract_events.4015.desc.outro_priest.exhausted
 			}
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					exists = scope:camp_priest
-					scope:task_contract = { 
+					scope:task_contract = {
 						has_variable = used_priest_count_var
 						var:used_priest_count_var >= scope:task_contract.var:win_t1_threshold
 					}
@@ -2213,16 +2213,16 @@ laamp_base_learning_contract_events.4015 = {
 				desc = laamp_base_learning_contract_events.4015.desc.outro_priest
 			}
 			desc = laamp_base_learning_contract_events.4015.desc.outro
-		}	
+		}
 	}
 	theme = stewardship
 	left_portrait = {
 		trigger = { exists = scope:camp_priest }
 		character = scope:camp_priest
 		triggered_animation = {
-			trigger = { 
+			trigger = {
 				exists = scope:camp_priest
-				scope:task_contract = { 
+				scope:task_contract = {
 					has_variable = used_priest_count_var
 					var:used_priest_count_var >= scope:task_contract.var:win_t2_threshold
 				}
@@ -2230,9 +2230,9 @@ laamp_base_learning_contract_events.4015 = {
 			animation = stress
 		}
 		triggered_animation = {
-			trigger = { 
+			trigger = {
 				exists = scope:camp_priest
-				scope:task_contract = { 
+				scope:task_contract = {
 					has_variable = used_priest_count_var
 					var:used_priest_count_var >= scope:task_contract.var:win_t1_threshold
 				}
@@ -2246,7 +2246,7 @@ laamp_base_learning_contract_events.4015 = {
 		animation = storyteller
 	}
 	right_portrait = {
-		character = scope:challenge_character	
+		character = scope:challenge_character
 		camera = camera_event_scheme_far_right
 		triggered_animation = {
 			trigger = { scope:local_mood = flag:disapproval }
@@ -2281,7 +2281,7 @@ laamp_base_learning_contract_events.4015 = {
 		}
 		#We're probs not indoors
 		override_background = {
-			trigger = { 
+			trigger = {
 				scope:task_contract.var:background ?= flag:temple
 				location = { 4015_not_worship_indoors_trigger = yes }
 			}
@@ -2315,13 +2315,13 @@ laamp_base_learning_contract_events.4015 = {
 			trigger = { scope:task_contract.var:background ?= flag:relaxing_room }
 			reference = relaxing_room
 		}
-		
+
 	trigger = { scope:task_contract.var:opportunities_left_tally > 0 }
 	immediate = {
 		#Find a Baron to use
 		if = {
 			limit = {
-				location.barony.holder ?= { 
+				location.barony.holder ?= {
 					highest_held_title_tier = tier_barony
 					is_available_ai_adult = yes
 				}
@@ -2364,16 +2364,17 @@ laamp_base_learning_contract_events.4015 = {
 					faith = root.location.faith
 					trait = devoted
 					save_scope_as = local_clergy
+					#save_scope_as = challenge_character #Unop Move to below
 				}
 			}
 			scope:local_clergy ?= {
-				save_scope_as = challenge_character
+				save_scope_as = challenge_character #Unop Move from above
 				add_character_flag = {
 					flag = used_in_theological_dispute
 					months = 2
 				}
 			}
-		}	
+		}
 		#For background
 		scope:challenge_character = {
 			if = {
@@ -2423,7 +2424,7 @@ laamp_base_learning_contract_events.4015 = {
 						name = local_mood
 						value = flag:disapproval
 					}
-				}	
+				}
 				else_if = {
 					limit = {
 						has_any_bad_relationship_with_character_trigger = { CHARACTER = scope:employer }
@@ -2508,7 +2509,7 @@ laamp_base_learning_contract_events.4015 = {
 						value = flag:admiration
 					}
 				}
-				100 = {	
+				100 = {
 					trigger = {
 						trigger_if = {
 							limit = {
@@ -2558,11 +2559,11 @@ laamp_base_learning_contract_events.4015 = {
 				trigger = {
 					NOT = { exists = scope:local_holder }
 					trigger_if = {
-						limit = { 
-							scope:task_contract = { has_variable = background }	
+						limit = {
+							scope:task_contract = { has_variable = background }
 						}
 						NOT = { scope:task_contract.var:background ?= flag:alley }
-					}	
+					}
 				}
 				#No repeat backgrounds, pls
 				scope:task_contract = {
@@ -2576,8 +2577,8 @@ laamp_base_learning_contract_events.4015 = {
 				trigger = {
 					NOT = { exists = scope:local_holder }
 					trigger_if = {
-						limit = { 
-							scope:task_contract = { has_variable = background }	
+						limit = {
+							scope:task_contract = { has_variable = background }
 						}
 						NOT = { scope:task_contract.var:background = flag:market }
 					}
@@ -2592,8 +2593,8 @@ laamp_base_learning_contract_events.4015 = {
 			100 = {
 				trigger = {
 					trigger_if = {
-						limit = { 
-							scope:task_contract = { has_variable = background }	
+						limit = {
+							scope:task_contract = { has_variable = background }
 						}
 						NOT = { scope:task_contract.var:background = flag:temple }
 					}
@@ -2608,8 +2609,8 @@ laamp_base_learning_contract_events.4015 = {
 			100 = {
 				trigger = {
 					trigger_if = {
-						limit = { 
-							scope:task_contract = { has_variable = background }	
+						limit = {
+							scope:task_contract = { has_variable = background }
 						}
 						NOT = { scope:task_contract.var:background = flag:study }
 					}
@@ -2624,8 +2625,8 @@ laamp_base_learning_contract_events.4015 = {
 			100 = {
 				trigger = {
 					trigger_if = {
-						limit = { 
-							scope:task_contract = { has_variable = background }	
+						limit = {
+							scope:task_contract = { has_variable = background }
 						}
 						NOT = { scope:task_contract.var:background = flag:physician }
 					}
@@ -2641,8 +2642,8 @@ laamp_base_learning_contract_events.4015 = {
 				trigger = {
 					location = { is_coastal = yes }
 					trigger_if = {
-						limit = { 
-							scope:task_contract = { has_variable = background }	
+						limit = {
+							scope:task_contract = { has_variable = background }
 						}
 						NOT = { scope:task_contract.var:background = flag:docks }
 					}
@@ -2658,8 +2659,8 @@ laamp_base_learning_contract_events.4015 = {
 				trigger = {
 					exists = scope:local_holder
 					trigger_if = {
-						limit = { 
-							scope:task_contract = { has_variable = background }	
+						limit = {
+							scope:task_contract = { has_variable = background }
 						}
 						NOT = { scope:task_contract.var:background = flag:council_chamber }
 					}
@@ -2675,8 +2676,8 @@ laamp_base_learning_contract_events.4015 = {
 				trigger = {
 					exists = scope:local_holder
 					trigger_if = {
-						limit = { 
-							scope:task_contract = { has_variable = background }	
+						limit = {
+							scope:task_contract = { has_variable = background }
 						}
 						NOT = { scope:task_contract.var:background = flag:corridor }
 					}
@@ -2692,8 +2693,8 @@ laamp_base_learning_contract_events.4015 = {
 				trigger = {
 					exists = scope:local_holder
 					trigger_if = {
-						limit = { 
-							scope:task_contract = { has_variable = background }	
+						limit = {
+							scope:task_contract = { has_variable = background }
 						}
 						NOT = { scope:task_contract.var:background = flag:relaxing_room }
 					}
@@ -2728,7 +2729,7 @@ laamp_base_learning_contract_events.4015 = {
 		#Check for religious traits that the holder doesn't have and that we haven't used them previously
 		random_list = {
 			25 = {
-				trigger = { 
+				trigger = {
 					has_trait = crusader_king
 					NOR = {
 						scope:task_contract = { has_variable = used_crusader_king_trait_var }
@@ -2741,7 +2742,7 @@ laamp_base_learning_contract_events.4015 = {
 				}
 			}
 			10 = {
-				trigger = { 
+				trigger = {
 					has_trait = pilgrim
 					has_trait_xp = {
 						trait = pilgrim
@@ -2749,7 +2750,7 @@ laamp_base_learning_contract_events.4015 = {
 					}
 					NOR = {
 						scope:task_contract = { has_variable = used_pilgrim_trait_var }
-						scope:challenge_character ?= { 
+						scope:challenge_character ?= {
 							has_trait = pilgrim
 							has_trait_xp = {
 								trait = pilgrim
@@ -2764,7 +2765,7 @@ laamp_base_learning_contract_events.4015 = {
 				}
 			}
 			10 = {
-				trigger = { 
+				trigger = {
 					has_trait = faith_warrior
 					NOR = {
 						scope:task_contract = { has_variable = used_faith_warrior_trait_var }
@@ -2777,7 +2778,7 @@ laamp_base_learning_contract_events.4015 = {
 				}
 			}
 			10 = {
-				trigger = { 
+				trigger = {
 					has_trait = chakravarti
 					NOR = {
 						scope:task_contract = { has_variable = used_chakravarti_trait_var }
@@ -2790,7 +2791,7 @@ laamp_base_learning_contract_events.4015 = {
 				}
 			}
 			25 = {
-				trigger = { 
+				trigger = {
 					has_trait = saint
 					NOR = {
 						scope:task_contract = { has_variable = used_saint_trait_var }
@@ -2803,7 +2804,7 @@ laamp_base_learning_contract_events.4015 = {
 				}
 			}
 			25 = {
-				trigger = { 
+				trigger = {
 					has_trait = savior
 					NOR = {
 						scope:task_contract = { has_variable = used_savior_trait_var }
@@ -2816,7 +2817,7 @@ laamp_base_learning_contract_events.4015 = {
 				}
 			}
 			10 = {
-				trigger = { 
+				trigger = {
 					has_trait = sayyid
 					NOR = {
 						scope:task_contract = { has_variable = used_sayyid_trait_var }
@@ -2829,7 +2830,7 @@ laamp_base_learning_contract_events.4015 = {
 				}
 			}
 			10 = {
-				trigger = { 
+				trigger = {
 					has_trait = saoshyant
 					NOR = {
 						scope:task_contract = { has_variable = used_saoshyant_trait_var }
@@ -2842,7 +2843,7 @@ laamp_base_learning_contract_events.4015 = {
 				}
 			}
 			10 = {
-				trigger = { 
+				trigger = {
 					has_trait = paragon
 					NOR = {
 						scope:task_contract = { has_variable = used_paragon_trait_var }
@@ -2911,14 +2912,14 @@ laamp_base_learning_contract_events.4015 = {
 						value = {
 							add = minor_piety_gain
 							if = {
-								limit = { 
+								limit = {
 									scope:task_contract = { has_variable = used_learning_count_var }
 								}
 								multiply = {
 									value = scope:task_contract.var:used_learning_count_var
 									add = 1
 								}
-							}		
+							}
 							min = minor_piety_gain
 						}
 					}
@@ -2950,7 +2951,7 @@ laamp_base_learning_contract_events.4015 = {
 		}
 		# The AI always plays it risky.
 		ai_chance = { base = 50 }
-	}	
+	}
 	#Dynamic: Got Devotion Level to invoke? 100% / 25/75% / 50/50%
 	option = {
 		name = laamp_base_learning_contract_events.4015.b
@@ -3058,14 +3059,14 @@ laamp_base_learning_contract_events.4015 = {
 			value = {
 				add = miniscule_prestige_gain
 				if = {
-					limit = { 
+					limit = {
 						scope:task_contract = { has_variable = used_trait_count_var }
 					}
 					multiply = {
 						value = scope:task_contract.var:used_trait_count_var
 						add = 1
 					}
-				}		
+				}
 				min = miniscule_prestige_gain
 			}
 		}
@@ -3173,7 +3174,7 @@ laamp_base_learning_contract_events.4015 = {
 							}
 						}
 					}
-				}	
+				}
 			}
 			0 = {
 				desc = laamp_base_learning_contract_events.4015.d.failure.tt
@@ -3390,7 +3391,7 @@ laamp_base_learning_contract_events.4017 = {
 					}
 				}
 				#Else we should have 1 out of 2 for a Qualified Success
-				else = { add_stress = medium_stress_impact_gain }	
+				else = { add_stress = medium_stress_impact_gain }
 			}
 		}
 		#*shrug*
@@ -3439,7 +3440,7 @@ laamp_base_learning_contract_events.4017 = {
 			base = 100
 		}
 	}
-	after = { 
+	after = {
 		remove_character_flag ?= is_in_task_contract_event_chain
 		#Carry on
 		hidden_effect = { current_travel_plan ?= { resume_travel_plan = yes } }
@@ -3499,7 +3500,7 @@ scripted_effect 4021_variable_setup_effect = {
 scripted_effect 4021_roll_for_prefered_topic_effect = {
 	random_list = {
 		10 = {
-			trigger = { 
+			trigger = {
 				root = { 4025_is_skilled_in_diplomacy_trigger = yes }
 				#Don't roll the same topic again
 				trigger_if = {
@@ -3514,7 +3515,7 @@ scripted_effect 4021_roll_for_prefered_topic_effect = {
 			}
 		}
 		10 = {
-			trigger = { 
+			trigger = {
 				root = { 4025_is_skilled_in_martial_trigger = yes }
 				trigger_if = {
 					limit = { has_variable = temp_old_prefered_topic }
@@ -3528,7 +3529,7 @@ scripted_effect 4021_roll_for_prefered_topic_effect = {
 			}
 		}
 		10 = {
-			trigger = { 
+			trigger = {
 				root = { 4025_is_skilled_in_stewardship_trigger = yes }
 				trigger_if = {
 					limit = { has_variable = temp_old_prefered_topic }
@@ -3542,7 +3543,7 @@ scripted_effect 4021_roll_for_prefered_topic_effect = {
 			}
 		}
 		10 = {
-			trigger = { 
+			trigger = {
 				root = { 4025_is_skilled_in_intrigue_trigger = yes }
 				trigger_if = {
 					limit = { has_variable = temp_old_prefered_topic }
@@ -3569,7 +3570,7 @@ scripted_effect 4021_roll_for_prefered_topic_effect = {
 			}
 		}
 		10 = {
-			trigger = { 
+			trigger = {
 				root = { 4025_is_skilled_traveler_trigger = yes }
 				trigger_if = {
 					limit = { has_variable = temp_old_prefered_topic }
@@ -3583,7 +3584,7 @@ scripted_effect 4021_roll_for_prefered_topic_effect = {
 			}
 		}
 		10 = {
-			trigger = { 
+			trigger = {
 				root = { 4025_is_skilled_pilgrim_trigger = yes }
 				trigger_if = {
 					limit = { has_variable = temp_old_prefered_topic }
@@ -3597,7 +3598,7 @@ scripted_effect 4021_roll_for_prefered_topic_effect = {
 			}
 		}
 		15 = {
-			trigger = { 
+			trigger = {
 				root = { 4025_has_max_poi_trigger = yes }
 				#No getting inspired about POI
 				NOT = { has_variable = temp_old_prefered_topic }
@@ -3611,7 +3612,7 @@ scripted_effect 4021_roll_for_prefered_topic_effect = {
 }
 
 #How many Chapters?
-laamp_base_learning_contract_events.4021 = { 
+laamp_base_learning_contract_events.4021 = {
 	type = character_event
 	title = laamp_base_learning_contract_events.4021.t
 	window = big_event_window
@@ -3745,7 +3746,7 @@ scripted_trigger 4025_has_max_poi_trigger = {
 }
 
 scripted_trigger 4025_prefered_topic_trigger = {
-	scope:task_contract = { 
+	scope:task_contract = {
 		has_variable = prefered_topic
 		var:prefered_topic = $TOPIC$
 	}
@@ -3784,7 +3785,7 @@ scripted_trigger 4025_has_applicable_skills_for_additional_event_options_trigger
 				is_target_in_variable_list = {
 					name = event_option_list
 					target = flag:has_diplomacy_option
-				}	
+				}
 			}
 		}
 		AND = {
@@ -3793,7 +3794,7 @@ scripted_trigger 4025_has_applicable_skills_for_additional_event_options_trigger
 				is_target_in_variable_list = {
 					name = event_option_list
 					target = flag:has_martial_option
-				}	
+				}
 			}
 		}
 		AND = {
@@ -3802,7 +3803,7 @@ scripted_trigger 4025_has_applicable_skills_for_additional_event_options_trigger
 				is_target_in_variable_list = {
 					name = event_option_list
 					target = flag:has_stewardship_option
-				}	
+				}
 			}
 		}
 		AND = {
@@ -3811,7 +3812,7 @@ scripted_trigger 4025_has_applicable_skills_for_additional_event_options_trigger
 				is_target_in_variable_list = {
 					name = event_option_list
 					target = flag:has_intrigue_option
-				}	
+				}
 			}
 		}
 		AND = {
@@ -3820,7 +3821,7 @@ scripted_trigger 4025_has_applicable_skills_for_additional_event_options_trigger
 				is_target_in_variable_list = {
 					name = event_option_list
 					target = flag:has_traveler_option
-				}	
+				}
 			}
 		}
 		AND = {
@@ -3829,7 +3830,7 @@ scripted_trigger 4025_has_applicable_skills_for_additional_event_options_trigger
 				is_target_in_variable_list = {
 					name = event_option_list
 					target = flag:has_pilgrimage_option
-				}	
+				}
 			}
 		}
 		AND = {
@@ -3838,7 +3839,7 @@ scripted_trigger 4025_has_applicable_skills_for_additional_event_options_trigger
 				is_target_in_variable_list = {
 					name = event_option_list
 					target = flag:has_poi_option
-				}	
+				}
 			}
 		}
 	}
@@ -3868,8 +3869,8 @@ scripted_effect 4025_success_effect = {
 	}
 	custom_tooltip = laamp_base_learning_contract_events.4025.tt.progress_towards_success
 	if = {
-		limit = { 
-			$REWARD$ = yes 
+		limit = {
+			$REWARD$ = yes
 			scope:task_contract.var:chapters_attempted = 4
 		}
 		random = {
@@ -3885,28 +3886,28 @@ scripted_effect 4025_success_effect = {
 				10 = {
 					trigger = { scope:task_contract.var:skill_to_learn_var ?= flag:diplomacy }
 					show_chance = no
-					add_diplomacy_skill = 1			
+					add_diplomacy_skill = 1
 				}
 				10 = {
 					trigger = { scope:task_contract.var:skill_to_learn_var ?= flag:martial }
 					show_chance = no
-					add_martial_skill = 1		
+					add_martial_skill = 1
 				}
 				10 = {
 					trigger = { scope:task_contract.var:skill_to_learn_var ?= flag:stewardship }
 					show_chance = no
-					add_stewardship_skill = 1			
+					add_stewardship_skill = 1
 				}
 				10 = {
 					trigger = { scope:task_contract.var:skill_to_learn_var ?= flag:intrigue }
 					show_chance = no
 					add_intrigue_skill = 1
-											
+
 				}
 				10 = {
 					trigger = { scope:task_contract.var:skill_to_learn_var ?= flag:learning }
 					show_chance = no
-					add_learning_skill = 1			
+					add_learning_skill = 1
 				}
 			}
 		}
@@ -3918,13 +3919,13 @@ scripted_effect 4025_failure_effect = { custom_tooltip = laamp_base_learning_con
 scripted_effect 4025_find_applicable_event_options_effect = {
 	random_list = {
 		10 = {
-			trigger = { 
+			trigger = {
 				root = { 4025_is_skilled_in_diplomacy_trigger = yes }
 				NOT = {
 					is_target_in_variable_list = {
 						name = event_option_list
 						target = flag:has_diplomacy_option
-					}	
+					}
 				}
 			}
 			modifier = {
@@ -3937,13 +3938,13 @@ scripted_effect 4025_find_applicable_event_options_effect = {
 			}
 		}
 		10 = {
-			trigger = { 
+			trigger = {
 				root = { 4025_is_skilled_in_martial_trigger = yes }
 				NOT = {
 					is_target_in_variable_list = {
 						name = event_option_list
 						target = flag:has_martial_option
-					}	
+					}
 				}
 			}
 			modifier = {
@@ -3956,13 +3957,13 @@ scripted_effect 4025_find_applicable_event_options_effect = {
 			}
 		}
 		10 = {
-			trigger = { 
+			trigger = {
 				root = { 4025_is_skilled_in_stewardship_trigger = yes }
 				NOT = {
 					is_target_in_variable_list = {
 						name = event_option_list
 						target = flag:has_stewardship_option
-					}	
+					}
 				}
 			}
 			modifier = {
@@ -3975,13 +3976,13 @@ scripted_effect 4025_find_applicable_event_options_effect = {
 			}
 		}
 		10 = {
-			trigger = { 
+			trigger = {
 				root = { 4025_is_skilled_in_intrigue_trigger = yes }
 				NOT = {
 					is_target_in_variable_list = {
 						name = event_option_list
 						target = flag:has_intrigue_option
-					}	
+					}
 				}
 			}
 			modifier = {
@@ -3994,13 +3995,13 @@ scripted_effect 4025_find_applicable_event_options_effect = {
 			}
 		}
 		10 = {
-			trigger = { 
+			trigger = {
 				root = { 4025_is_skilled_traveler_trigger = yes }
 				NOT = {
 					is_target_in_variable_list = {
 						name = event_option_list
 						target = flag:has_traveler_option
-					}	
+					}
 				}
 			}
 			modifier = {
@@ -4013,13 +4014,13 @@ scripted_effect 4025_find_applicable_event_options_effect = {
 			}
 		}
 		10 = {
-			trigger = { 
+			trigger = {
 				root = { 4025_is_skilled_pilgrim_trigger = yes }
 				NOT = {
 					is_target_in_variable_list = {
 						name = event_option_list
 						target = flag:has_pilgrimage_option
-					}	
+					}
 				}
 			}
 			modifier = {
@@ -4032,13 +4033,13 @@ scripted_effect 4025_find_applicable_event_options_effect = {
 			}
 		}
 		10 = {
-			trigger = { 
+			trigger = {
 				root = { 4025_has_max_poi_trigger = yes }
 				NOT = {
 					is_target_in_variable_list = {
 						name = event_option_list
 						target = flag:has_poi_option
-					}	
+					}
 				}
 			}
 			modifier = {
@@ -4105,7 +4106,7 @@ scripted_effect 4025_roll_for_event_options_effect = {
 	}
 	#And fill up the rest so that we have up to 5 options
 	while = {
-		limit = { 
+		limit = {
 			4025_has_applicable_skills_for_additional_event_options_trigger = yes
 			variable_list_size = {
 				name = event_option_list
@@ -4126,7 +4127,7 @@ scripted_effect 4025_add_prestige_reward_effect = {
 				add = 1
 			}
 			if = {
-				limit = { 
+				limit = {
 					4025_prefered_topic_trigger = { TOPIC = flag:$TOPIC$ }
 				}
 				multiply = 1.5
@@ -4145,7 +4146,7 @@ scripted_effect 4025_add_gold_reward_effect = {
 				add = 1
 			}
 			if = {
-				limit = { 
+				limit = {
 					4025_prefered_topic_trigger = { TOPIC = flag:$TOPIC$ }
 				}
 				multiply = 1.5
@@ -4165,7 +4166,7 @@ scripted_effect 4025_add_provisions_reward_effect = {
 					add = 1
 				}
 				if = {
-					limit = { 
+					limit = {
 						4025_prefered_topic_trigger = { TOPIC = flag:$TOPIC$ }
 					}
 					multiply = 1.5
@@ -4186,7 +4187,7 @@ scripted_effect 4025_add_piety_reward_effect = {
 				add = 1
 			}
 			if = {
-				limit = { 
+				limit = {
 					4025_prefered_topic_trigger = { TOPIC = flag:$TOPIC$ }
 				}
 				multiply = 1.5
@@ -4263,44 +4264,44 @@ scripted_effect 4025_generic_skill_duel_effect = {
 					if = {
 						limit = { $SKILL$ = diplomacy }
 						4025_success_effect = { REWARD = yes }
-						4025_add_prestige_reward_effect = { 
-							TOPIC = $SKILL$ 
-							VALUE = miniscule_prestige_gain 
+						4025_add_prestige_reward_effect = {
+							TOPIC = $SKILL$
+							VALUE = miniscule_prestige_gain
 						}
-						4025_add_gold_reward_effect = { 
-							TOPIC = $SKILL$ 
-							VALUE = miniscule_gold_laamps_value 
+						4025_add_gold_reward_effect = {
+							TOPIC = $SKILL$
+							VALUE = miniscule_gold_laamps_value
 						}
 					}
 					if = {
 						limit = { $SKILL$ = martial }
 						4025_success_effect = { REWARD = yes }
-						4025_add_prestige_reward_effect = { 
-							TOPIC = $SKILL$ 
-							VALUE = minor_prestige_gain 
+						4025_add_prestige_reward_effect = {
+							TOPIC = $SKILL$
+							VALUE = minor_prestige_gain
 						}
 					}
 					if = {
 						limit = { $SKILL$ = stewardship }
 						4025_success_effect = { REWARD = yes }
-						4025_add_gold_reward_effect = { 
-							TOPIC = $SKILL$ 
-							VALUE = tiny_gold_laamps_value 
+						4025_add_gold_reward_effect = {
+							TOPIC = $SKILL$
+							VALUE = tiny_gold_laamps_value
 						}
 					}
 					if = {
 						limit = { $SKILL$ = intrigue }
 						4025_success_effect = { REWARD = yes }
-						4025_add_gold_reward_effect = { 
-							TOPIC = $SKILL$ 
-							VALUE = miniscule_gold_laamps_value 
+						4025_add_gold_reward_effect = {
+							TOPIC = $SKILL$
+							VALUE = miniscule_gold_laamps_value
 						}
 						if = {
 							limit = {
 								domicile ?= { provisions < max_provisions }
 							}
-							4025_add_provisions_reward_effect = { 
-								TOPIC = $SKILL$ 
+							4025_add_provisions_reward_effect = {
+								TOPIC = $SKILL$
 								VALUE = task_contract_failure_provisions_gain_minor_value
 							}
 						}
@@ -4334,7 +4335,7 @@ scripted_effect 4025_generic_skill_duel_effect = {
 }
 
 #Create a work of learning
-laamp_base_learning_contract_events.4025 = { 
+laamp_base_learning_contract_events.4025 = {
 	type = character_event
 	title = {
 		first_valid = {
@@ -4379,7 +4380,7 @@ laamp_base_learning_contract_events.4025 = {
 							var:chapters_attempted ?= scope:task_contract.var:win_t2_threshold
 						}
 						has_variable = temp_old_prefered_topic
-					} 
+					}
 				}
 				desc = laamp_base_learning_contract_events.4025.desc.intro.inspiration
 			}
@@ -4442,9 +4443,9 @@ laamp_base_learning_contract_events.4025 = {
 		first_valid = {
 			#First, prefered topic
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					scope:task_contract.var:chapters_attempted = 0
-					scope:task_contract = { has_variable = prefered_topic } 
+					scope:task_contract = { has_variable = prefered_topic }
 				}
 				desc = laamp_base_learning_contract_events.4025.desc.outro.first.has_topic
 			}
@@ -4462,7 +4463,7 @@ laamp_base_learning_contract_events.4025 = {
 				desc = laamp_base_learning_contract_events.4025.desc.outro.01
 				desc = laamp_base_learning_contract_events.4025.desc.outro.02
 				desc = laamp_base_learning_contract_events.4025.desc.outro.03
-			}	
+			}
 		}
 	}
 	theme = learning
@@ -4513,7 +4514,7 @@ laamp_base_learning_contract_events.4025 = {
 		scope:task_contract = {
 			#Randomize the skill gain for if we get a perfect run
 			if = {
-				limit = { 
+				limit = {
 					var:win_t3_threshold ?= 5
 					NOT = { has_variable = skill_to_learn_var }
 				}
@@ -4522,31 +4523,31 @@ laamp_base_learning_contract_events.4025 = {
 						set_variable = {
 							name = skill_to_learn_var
 							value = flag:diplomacy
-						}			
+						}
 					}
 					10 = {
 						set_variable = {
 							name = skill_to_learn_var
 							value = flag:martial
-						}			
+						}
 					}
 					10 = {
 						set_variable = {
 							name = skill_to_learn_var
 							value = flag:stewardship
-						}			
+						}
 					}
 					10 = {
 						set_variable = {
 							name = skill_to_learn_var
 							value = flag:intrigue
-						}			
+						}
 					}
 					10 = {
 						set_variable = {
 							name = skill_to_learn_var
 							value = flag:learning
-						}			
+						}
 					}
 				}
 			}
@@ -4649,7 +4650,7 @@ laamp_base_learning_contract_events.4025 = {
 						name = animation_var
 						value = flag:spymaster
 					}
-				}			
+				}
 			}
 			#Vary the loc :rolleyes:
 			set_variable = {
@@ -4684,12 +4685,12 @@ laamp_base_learning_contract_events.4025 = {
 		4014_show_score_effect = yes
 		custom_tooltip = laamp_base_learning_contract_events.4025.tt.chapters_left
 		if = {
-			limit = { 
+			limit = {
 				exists = scope:task_contract.var:prefered_topic
 				4025_is_final_shot_trigger = no
 			}
 			custom_tooltip = laamp_base_learning_contract_events.4025.tt.prefered_topic
-		}	
+		}
 	}
 	#Learning duel
 	option = {
@@ -5135,15 +5136,15 @@ laamp_base_learning_contract_events.4025 = {
 				}
 				trigger_else_if = {
 					limit = { scope:task_contract.var:chapters_attempted = 4 }
-					var:poi_visited >= 40 
+					var:poi_visited >= 40
 				}
 				trigger_else_if = {
 					limit = { scope:task_contract.var:chapters_attempted = 3 }
-					var:poi_visited >= 30 
+					var:poi_visited >= 30
 				}
 				trigger_else_if = {
 					limit = { scope:task_contract.var:chapters_attempted = 2 }
-					var:poi_visited >= 20 
+					var:poi_visited >= 20
 				}
 				trigger_else = { var:poi_visited >= 10 }
 			}
@@ -5253,15 +5254,15 @@ laamp_base_learning_contract_events.4025 = {
 					name = prefered_topic
 					value = var:temp_old_prefered_topic
 				}
-				remove_variable ?= temp_old_prefered_topic		
+				remove_variable ?= temp_old_prefered_topic
 			}
 			#Did we get any ingenial ideas?
 			hidden_effect = {
 				random_list = {
 					20 = {
-						trigger = { 
+						trigger = {
 							has_variable = prefered_topic
-							NOR = { 
+							NOR = {
 								has_variable = had_inspiration_topic
 								#Don't do this for the final chapter
 								AND = {
@@ -5285,7 +5286,7 @@ laamp_base_learning_contract_events.4025 = {
 						#Probably not
 					}
 				}
-			}	
+			}
 		}
 		#We done yet?
 		if = {
@@ -5433,7 +5434,7 @@ laamp_base_learning_contract_events.4027 = {
 					}
 				}
 				#Else we should have 1 out of 2 for a Qualified Success
-				else = { add_stress = medium_stress_impact_gain }	
+				else = { add_stress = medium_stress_impact_gain }
 			}
 		}
 		#*shrug*
@@ -5482,7 +5483,7 @@ laamp_base_learning_contract_events.4027 = {
 			base = 100
 		}
 	}
-	after = { 
+	after = {
 		#Carry on
 		hidden_effect = {
 			current_travel_plan ?= { resume_travel_plan = yes }
@@ -5676,7 +5677,7 @@ scripted_effect 4100_actual_success_effect = {
 					add_$SKILL$_skill = 1
 				}
 			}
-		}	
+		}
 	}
 }
 
@@ -5719,7 +5720,7 @@ scripted_effect 4100_success_effect = {
 						}
 						add_prowess_skill = 1
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -5778,7 +5779,7 @@ scripted_effect 4100_decide_topic_effect = {
 		#Diplomacy
 		10 = {
 			trigger = {
-				NOT = { 
+				NOT = {
 					scope:task_contract = { has_variable = used_diplomacy_topic_var }
 				}
 			}
@@ -5795,7 +5796,7 @@ scripted_effect 4100_decide_topic_effect = {
 		#Martial
 		10 = {
 			trigger = {
-				NOT = { 
+				NOT = {
 					scope:task_contract = { has_variable = used_martial_topic_var }
 				}
 			}
@@ -5812,7 +5813,7 @@ scripted_effect 4100_decide_topic_effect = {
 		#Stewardship
 		10 = {
 			trigger = {
-				NOT = { 
+				NOT = {
 					scope:task_contract = { has_variable = used_stewardship_topic_var }
 				}
 			}
@@ -5829,7 +5830,7 @@ scripted_effect 4100_decide_topic_effect = {
 		#Intrigue
 		10 = {
 			trigger = {
-				NOT = { 
+				NOT = {
 					scope:task_contract = { has_variable = used_intrigue_topic_var }
 				}
 			}
@@ -5846,7 +5847,7 @@ scripted_effect 4100_decide_topic_effect = {
 		#Learning
 		10 = {
 			trigger = {
-				NOT = { 
+				NOT = {
 					scope:task_contract = { has_variable = used_learning_topic_var }
 				}
 			}
@@ -5859,7 +5860,7 @@ scripted_effect 4100_decide_topic_effect = {
 		#Prowess
 		10 = {
 			trigger = {
-				NOT = { 
+				NOT = {
 					scope:task_contract = { has_variable = used_prowess_topic_var }
 				}
 			}
@@ -5925,11 +5926,11 @@ scripted_effect 4100_save_background_effect = {
 		limit = { terrain = forest }
 		random_list = {
 			1 = {
-				trigger = { root = { current_season_spring = yes } }
+				trigger = { root = { current_season_spring = yes } } #Unop
 				4100_actual_save_background_effect = { FLAG = foggy_forest }
 			}
 			1 = {
-				trigger = { root = { current_season_autumn = yes } }
+				trigger = { root = { current_season_autumn = yes } } #Unop
 				4100_actual_save_background_effect = { FLAG = managed_forest }
 			}
 			1 = {
@@ -5941,13 +5942,13 @@ scripted_effect 4100_save_background_effect = {
 				4100_actual_save_background_effect = { FLAG = forest }
 			}
 			1 = {
-				trigger = { 
+				trigger = {
 					root = { middle_of_year_season_trigger = yes }
 				}
 				4100_actual_save_background_effect = { FLAG = forest_cave }
 			}
 			1 = {
-				trigger = { root = { location_has_winter_trigger = yes } }
+				trigger = { root = { location_has_winter_trigger = yes } } #Unop
 				4100_actual_save_background_effect = { FLAG = snowy_forest }
 			}
 		}
@@ -6082,7 +6083,7 @@ scripted_effect 4100_background_tombola_effect = {
 		}
 	}
 }
-		
+
 scripted_effect 4100_topic_option_effect_wrapper_effect = {
 	#Tally difficulty
 	4100_adjust_difficulty_effect = {
@@ -6131,15 +6132,15 @@ laamp_base_learning_contract_events.4100 = {
 				desc = laamp_base_learning_contract_events.4100.t.prowess
 			}
 		}
-	}	
+	}
 	window = big_event_window
 	desc = {
 		#Intro
 		first_valid = {
 			#First time
 			triggered_desc = {
-				trigger = { 
-					NOT = { 
+				trigger = {
+					NOT = {
 						scope:task_contract = { has_variable = education_approach_var }
 					}
 				}
@@ -6153,25 +6154,25 @@ laamp_base_learning_contract_events.4100 = {
 			triggered_desc = {
 				trigger = {
 					scope:support_person = root
-					scope:task_contract.var:education_approach_var = flag:support 
+					scope:task_contract.var:education_approach_var = flag:support
 				}
 				desc = laamp_base_learning_contract_events.4100.desc.intro.support_no_support
 			}
 			triggered_desc = {
-				trigger = { 
-					scope:task_contract.var:education_approach_var = flag:support 
+				trigger = {
+					scope:task_contract.var:education_approach_var = flag:support
 				}
 				desc = laamp_base_learning_contract_events.4100.desc.intro.support
 			}
 			triggered_desc = {
-				trigger = { 
-					scope:task_contract.var:education_approach_var = flag:learning 
+				trigger = {
+					scope:task_contract.var:education_approach_var = flag:learning
 				}
 				desc = laamp_base_learning_contract_events.4100.desc.intro.learning
 			}
 			triggered_desc = {
-				trigger = { 
-					scope:task_contract.var:education_approach_var = flag:topic 
+				trigger = {
+					scope:task_contract.var:education_approach_var = flag:topic
 				}
 				desc = laamp_base_learning_contract_events.4100.desc.intro.topic
 			}
@@ -6361,16 +6362,16 @@ laamp_base_learning_contract_events.4100 = {
 				desc = laamp_base_learning_contract_events.4100.desc.outro_other
 			}
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					NOT = { scope:support_person = root }
 				}
 				desc = laamp_base_learning_contract_events.4100.desc.outro
 			}
-		}	
+		}
 	}
 	theme = learning
 	left_portrait = {
-		trigger = { 
+		trigger = {
 			NOT = { scope:support_person = root }
 		}
 		character = scope:support_person
@@ -6389,7 +6390,7 @@ laamp_base_learning_contract_events.4100 = {
 		triggered_animation = {
 			trigger = { scope:lesson_topic = flag:intrigue_topic }
 			animation = spymaster
-		}	
+		}
 		animation = thinking
 	}
 	center_portrait = {
@@ -6594,7 +6595,7 @@ laamp_base_learning_contract_events.4100 = {
 		#What is the kid distracted by...
 		random_list = {
 			1 = {
-				trigger = { 
+				trigger = {
 					scope:task_contract = { var:education_approach_var ?= flag:stress }
 				}
 				save_scope_value_as = {
@@ -6757,7 +6758,7 @@ laamp_base_learning_contract_events.4100 = {
 					}
 				}
 				trigger_else = { always = no }
-				
+
 			}
 			save_scope_as = support_person
 		}
@@ -6911,7 +6912,7 @@ laamp_base_learning_contract_events.4100 = {
 	#TOPIC: Learning
 	option = {
 		name = laamp_base_learning_contract_events.4100.b.scholar
-		trigger = { 
+		trigger = {
 			scope:lesson_topic = flag:learning_topic
 			has_trait = scholar
 		}
@@ -6961,7 +6962,7 @@ laamp_base_learning_contract_events.4100 = {
 				first_valid = {
 					#Diplomacy
 					triggered_desc = {
-						trigger = { 
+						trigger = {
 							scope:support_person ?= root
 							scope:lesson_topic = flag:diplomacy_topic
 						}
@@ -6969,7 +6970,7 @@ laamp_base_learning_contract_events.4100 = {
 					}
 					#Martial
 					triggered_desc = {
-						trigger = { 
+						trigger = {
 							scope:support_person ?= root
 							scope:lesson_topic = flag:martial_topic
 						}
@@ -6977,7 +6978,7 @@ laamp_base_learning_contract_events.4100 = {
 					}
 					#Stewardship
 					triggered_desc = {
-						trigger = { 
+						trigger = {
 							scope:support_person ?= root
 							scope:lesson_topic = flag:stewardship_topic
 						}
@@ -6985,7 +6986,7 @@ laamp_base_learning_contract_events.4100 = {
 					}
 					#Intrigue
 					triggered_desc = {
-						trigger = { 
+						trigger = {
 							scope:support_person ?= root
 							scope:lesson_topic = flag:intrigue_topic
 						}
@@ -6993,7 +6994,7 @@ laamp_base_learning_contract_events.4100 = {
 					}
 					#Learning
 					triggered_desc = {
-						trigger = { 
+						trigger = {
 							scope:support_person ?= root
 							scope:lesson_topic = flag:learning_topic
 						}
@@ -7001,7 +7002,7 @@ laamp_base_learning_contract_events.4100 = {
 					}
 					#Prowess
 					triggered_desc = {
-						trigger = { 
+						trigger = {
 							scope:support_person ?= root
 							scope:lesson_topic = flag:prowess_topic
 						}
@@ -7078,7 +7079,7 @@ laamp_base_learning_contract_events.4100 = {
 				#How trained are they in the subject matter?
 				modifier = {
 					scope:lesson_topic = flag:diplomacy_topic
-					add = { 
+					add = {
 						scope:support_person ?= { add = diplomacy }
 						multiply = 20
 						min = 5
@@ -7087,7 +7088,7 @@ laamp_base_learning_contract_events.4100 = {
 				}
 				modifier = {
 					scope:lesson_topic = flag:martial_topic
-					add = { 
+					add = {
 						scope:support_person ?= { add = martial }
 						multiply = 20
 						min = 5
@@ -7096,7 +7097,7 @@ laamp_base_learning_contract_events.4100 = {
 				}
 				modifier = {
 					scope:lesson_topic = flag:stewardship_topic
-					add = { 
+					add = {
 						scope:support_person ?= { add = stewardship }
 						multiply = 20
 						min = 5
@@ -7105,7 +7106,7 @@ laamp_base_learning_contract_events.4100 = {
 				}
 				modifier = {
 					scope:lesson_topic = flag:intrigue_topic
-					add = { 
+					add = {
 						scope:support_person ?= { add = intrigue }
 						multiply = 20
 						min = 5
@@ -7114,7 +7115,7 @@ laamp_base_learning_contract_events.4100 = {
 				}
 				modifier = {
 					scope:lesson_topic = flag:learning_topic
-					add = { 
+					add = {
 						scope:support_person ?= { add = learning }
 						multiply = 20
 						min = 5
@@ -7123,7 +7124,7 @@ laamp_base_learning_contract_events.4100 = {
 				}
 				modifier = {
 					scope:lesson_topic = flag:prowess_topic
-					add = { 
+					add = {
 						scope:support_person ?= { add = prowess }
 						multiply = 20
 						min = 5
@@ -7190,7 +7191,7 @@ laamp_base_learning_contract_events.4100 = {
 			LEARNING = 2
 			TOPIC = 2
 			SUPPORT_PERSON = 5
-			STRESS = 15 
+			STRESS = 15
 		}
 		#Record most recent approach
 		scope:task_contract = {
@@ -7209,7 +7210,7 @@ laamp_base_learning_contract_events.4100 = {
 				AND = {
 					scope:task_contract.var:educational_moments_left = 1
 					scope:task_contract.var:wins_tally = 0
-				} 
+				}
 			}
 			#Go big or go home-event
 			trigger_event = laamp_base_learning_contract_events.4110
@@ -7222,7 +7223,7 @@ laamp_base_learning_contract_events.4100 = {
 			#Once more into the fray
 			trigger_event = {
 				id = laamp_base_learning_contract_events.4100
-				days = { 20 50 }
+				days = { 2 5 } #Unop Long event delays are annyoing and inconsistent with other similar contracts
 			}
 		}
 		else = {
@@ -7266,7 +7267,7 @@ laamp_base_learning_contract_events.4110 = {
 		character = scope:child_to_educate
 		camera = camera_event_scheme_vs_extra_right_look_right
 		triggered_animation = {
-			trigger = { 
+			trigger = {
 				scope:child_to_educate = { age >= 12 }
 			}
 			animation = disapproval
@@ -7405,7 +7406,7 @@ laamp_base_learning_contract_events.4110 = {
 				}
 			}
 			every_culture_global = {
-				limit = { 
+				limit = {
 					root = { knows_language_of_culture = prev }
 					scope:child_to_educate = {
 						NOT = { knows_language_of_culture = prev }
@@ -7445,8 +7446,8 @@ laamp_base_learning_contract_events.4110 = {
 		trigger = {
 			custom_tooltip = {
 				text = laamp_base_learning_contract_events.4110.b.tt
-				exists = scope:alternative_language_culture 
-			}	
+				exists = scope:alternative_language_culture
+			}
 		}
 		show_as_unavailable = { always = yes }
 		reason = language
@@ -7602,9 +7603,9 @@ laamp_base_learning_contract_events.4120 = {
 			base = 100
 		}
 	}
-	after = { 
+	after = {
 		remove_character_flag ?= is_in_task_contract_event_chain
-		hidden_effect = {
+		hidden_effect = { #Unop Only resume travel plan if paused
 			current_travel_plan ?= {
 				if = {
 					limit = { is_paused = yes }

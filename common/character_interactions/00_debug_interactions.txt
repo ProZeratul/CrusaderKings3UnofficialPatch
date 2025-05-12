@@ -114,7 +114,8 @@ debug_give_animal_interaction = {
 				any_owned_story = { story_type = story_cycle_pet_cat }
 				any_owned_story = { story_type = story_cycle_pet_dog }
 				any_owned_story = { story_type = story_cycle_martial_lifestyle_warhorse }
-				any_owned_story = { story_type = story_cycle_pet_rock }
+				has_eagle_trigger = yes
+				any_owned_story = { story_type = story_cycle_pet_rock } #Unop Add story_cycle_pet_rock
 			}
 		}
 	}
@@ -152,6 +153,17 @@ debug_give_animal_interaction = {
 	send_option = {
 		is_valid = {
 			NOT = {
+				scope:recipient = { has_eagle_trigger = yes }
+			}
+		}
+		flag = story_cycle_pet_eagle
+		localization = story_cycle_pet_eagle
+	}
+
+	#Unop Add story_cycle_pet_rock
+	send_option = {
+		is_valid = {
+			NOT = {
 				scope:recipient = { any_owned_story = { story_type = story_cycle_pet_rock } }
 			}
 		}
@@ -174,6 +186,10 @@ debug_give_animal_interaction = {
 				scope:story_cycle_martial_lifestyle_warhorse = {
 					start_warhorse_story_cycle_effect = yes
 				}
+				scope:story_cycle_pet_eagle = {
+					start_eagle_story_cycle_effect = yes
+				}
+				#Unop Add story_cycle_pet_rock
 				scope:story_cycle_pet_rock = {
 					start_rock_story_cycle_effect = yes
 				}
@@ -763,6 +779,15 @@ set_relation_debug = {
 		flag = grudge_on_me
 		localization = set_relation_debug_grudge_on_me
 	}
+	send_option = {
+		is_valid = {
+			scope:recipient = {
+				NOT = { has_relation_blood_brother = scope:actor }
+			}
+		}
+		flag = blood_brother
+		localization = set_relation_debug_blood_brother
+	}
 	# REMOVE
 	send_option = {
 		is_shown = {
@@ -881,6 +906,13 @@ set_relation_debug = {
 		flag = remove_grudge_on_me
 		localization = remove_relation_debug_grudge_on_me
 	}
+	send_option = {
+		is_shown = {
+			scope:recipient = { has_relation_blood_brother = scope:actor }
+		}
+		flag = remove_blood_brother
+		localization = remove_relation_debug_blood_brother
+	}
 
 	on_accept = {
 		scope:recipient = {
@@ -935,6 +967,7 @@ set_relation_debug = {
 					}
 				}
 				scope:grudge_on_me = { set_relation_grudge = scope:actor }
+				scope:blood_brother = { set_relation_blood_brother = scope:actor }
 				# REMOVE
 				scope:remove_potential_friend = { remove_relation_potential_friend = scope:actor }
 				scope:remove_potential_rival = { remove_relation_potential_rival = scope:actor }
@@ -973,6 +1006,7 @@ set_relation_debug = {
 					scope:actor = { remove_relation_grudge = scope:recipient }
 				}
 				scope:remove_grudge_on_me = { remove_relation_grudge = scope:actor }
+				scope:remove_blood_brother = { remove_relation_blood_brother = scope:actor }
 			}
 		}
 	}
@@ -1013,7 +1047,7 @@ slay_character_interaction = {
 	use_diplomatic_range = no
 	ignores_pending_interaction_block = yes
 	icon = icon_dead
-	common_interaction = no
+	common_interaction = yes
 
 	interface_priority = -1
 
@@ -2196,6 +2230,7 @@ debug_progress_all_active_schemes_interaction = {
 	}
 	on_accept = { scope:recipient = { every_scheme = { add_scheme_progress = 100 } } }
 	auto_accept = yes
+	common_interaction = yes
 }
 
 debug_travel_to_ruler_interaction = {
@@ -2968,7 +3003,7 @@ create_task_contract_interaction = {
 						# Comment/de-comment as appropriate for what you want to fire.
 						#task_contract_type = laamp_base_0011
 						#task_contract_type = laamp_base_1011
-						#task_contract_type = laamp_base_2011
+						#task_contract_type = laamp_base_2011 #Unop ck3-tiger
 						#task_contract_type = laamp_base_3011
 						task_contract_type = laamp_base_4011
 						#task_contract_type = laamp_base_6011
@@ -3429,7 +3464,7 @@ destroy_title_interaction = {
 	use_diplomatic_range = no
 	ignores_pending_interaction_block = yes
 	icon = antagonistic
-	
+
 	is_shown = {
 		debug_only = yes
 	}
@@ -3467,9 +3502,185 @@ destroy_title_interaction = {
 					}
 				}
 			}
-		}	
+		}
 	}
 
 	auto_accept = yes
 }
 
+debug_change_the_great_steppe = {
+	category = interaction_debug_mpo
+	use_diplomatic_range = no
+	ignores_pending_interaction_block = yes
+	common_interaction = yes
+	icon = travel_mixed
+
+	interface_priority = -1
+	auto_accept = yes
+
+	is_shown = {
+		debug_only = yes
+		scope:actor = {
+			government_has_flag = government_is_nomadic
+		}
+	}
+	send_option = {
+		flag = grazing
+		localization = debug_change_steppe_grazing
+	}
+	send_option = {
+		flag = drought
+		localization = debug_change_steppe_drought
+	}
+	send_option = {
+		flag = white_zud
+		localization = debug_change_steppe_white_zud
+	}
+	send_option = {
+		flag = cold_zud
+		localization = debug_change_steppe_cold_zud
+	}
+	send_option = {
+		flag = summer
+		localization = debug_change_steppe_everlasting_summer
+	}
+	send_option = {
+		flag = blessing
+		localization = debug_change_steppe_blessing
+	}
+	send_option = {
+		flag = havsarsan
+		localization = debug_change_steppe_havsarsan
+	}
+	on_accept = {
+		switch = {
+			trigger = yes
+			scope:grazing = {
+				if = {
+					limit = {
+						NOT = { exists = situation:the_great_steppe }
+					}
+					start_situation = {
+						type = the_great_steppe
+						start_phase = situation_steppe_abundant_grazing_season
+					}
+				}
+				else = {
+					situation:the_great_steppe = {
+						every_situation_sub_region = {
+							change_phase = { phase = situation_steppe_abundant_grazing_season }
+						}
+					}
+				}
+			}
+			scope:drought = {
+				if = {
+					limit = {
+						NOT = { exists = situation:the_great_steppe }
+					}
+					start_situation = {
+						type = the_great_steppe
+						start_phase = situation_steppe_severe_drought_season
+					}
+				}
+				else = {
+					situation:the_great_steppe = {
+						every_situation_sub_region = {
+							change_phase = { phase = situation_steppe_severe_drought_season }
+						}
+					}
+				}
+			}
+			scope:white_zud = {
+				if = {
+					limit = {
+						NOT = { exists = situation:the_great_steppe }
+					}
+					start_situation = {
+						type = the_great_steppe
+						start_phase = situation_steppe_white_zud_season
+					}
+				}
+				else = {
+					situation:the_great_steppe = {
+						every_situation_sub_region = {
+							change_phase = { phase = situation_steppe_white_zud_season }
+						}
+					}
+				}
+			}
+			scope:cold_zud = {
+				if = {
+					limit = {
+						NOT = { exists = situation:the_great_steppe }
+					}
+					start_situation = {
+						type = the_great_steppe
+						start_phase = situation_steppe_cold_zud_season
+					}
+				}
+				else = {
+					situation:the_great_steppe = {
+						every_situation_sub_region = {
+							change_phase = { phase = situation_steppe_cold_zud_season }
+						}
+					}
+				}
+			}
+			scope:summer = {
+				if = {
+					limit = {
+						NOT = { exists = situation:the_great_steppe }
+					}
+					start_situation = {
+						type = the_great_steppe
+						start_phase = situation_steppe_warm_nights_season
+					}
+				}
+				else = {
+					situation:the_great_steppe = {
+						every_situation_sub_region = {
+							change_phase = { phase = situation_steppe_warm_nights_season }
+						}
+					}
+				}
+			}
+			scope:blessing = {
+				if = {
+					limit = {
+						NOT = { exists = situation:the_great_steppe }
+					}
+					start_situation = {
+						type = the_great_steppe
+						start_phase = situation_steppe_sky_blessing_season
+					}
+				}
+				else = {
+					situation:the_great_steppe = {
+						every_situation_sub_region = {
+							change_phase = { phase = situation_steppe_sky_blessing_season }
+						}
+					}
+				}
+			}
+			scope:havsarsan = {
+				if = {
+					limit = {
+						NOT = { exists = situation:the_great_steppe }
+					}
+					start_situation = {
+						type = the_great_steppe
+						start_phase = situation_steppe_havsarsan_zud_season
+					}
+				}
+				else = {
+					situation:the_great_steppe = {
+						every_situation_sub_region = {
+							change_phase = { phase = situation_steppe_havsarsan_zud_season }
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -697,7 +697,7 @@ spymaster_task.0343 = {
 			reveal_to = root
 		}
 		scope:scheme = {
-			add_scheme_progress = 1
+			add_scheme_progress = scheme_progress_gain
 		}
 	}
 }
@@ -844,7 +844,7 @@ spymaster_task.0344 = {
 			}
 		}
 		scope:scheme = {
-			add_scheme_progress = 1
+			add_scheme_progress = scheme_progress_gain
 		}
 	}
 }
@@ -2261,7 +2261,8 @@ spymaster_task.1005 = {
 scripted_trigger spymaster_task_1101_scheme_trigger = {
 	hostile_scheme_trigger = yes
 	scheme_owner = { is_ai = yes }
-	scheme_progress >= 2
+	save_temporary_scope_as = scheme
+	scheme_progress >= scheme_progress_33
 }
 
 
@@ -2489,7 +2490,8 @@ spymaster_task.2002 = {
 
 scripted_trigger spymaster_task_2003_scheme_trigger = {
 	hostile_scheme_trigger = yes
-	scheme_progress >= 5
+	save_temporary_scope_as = scheme
+	scheme_progress >= scheme_progress_50
 }
 
 spymaster_task.2003 = {

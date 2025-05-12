@@ -505,6 +505,7 @@ court.0108 = {
 				has_sexuality = bisexual
 			}
 			has_court_event_flag = no
+			NOT = { has_trait_with_flag = can_not_marry } #Unop: Make sure the selected child CAN marry
 		}
 		any_kingdom = {
 			exists = holder
@@ -581,6 +582,7 @@ court.0108 = {
 						has_sexuality = heterosexual
 						has_sexuality = bisexual
 					}
+					NOT = { has_trait_with_flag = can_not_marry } #Unop: Make sure the selected child CAN marry
 				}
 				save_scope_as = available_child
 				court_event_character_flag_effect = yes
@@ -828,10 +830,6 @@ court.0109 = {
 		modifier = { 
 			add = -0.5
 			court_position:executioner_court_position = { has_trait = callous }
-		}
-		modifier = { 
-			add = 0.5
-			court_position:executioner_court_position = { has_trait = compassionate }
 		}
 	}
 
@@ -1659,6 +1657,8 @@ court.2201 = {
 	option = {
 		name = court.2201.a
 
+		trigger = { culture = { NOT = { has_cultural_parameter = cannot_disherit } } } # Unop: Make sure your culture doesn't allow this option
+
 		# Disinherit scope:eldest_heir for free.
 		scope:eldest_heir = {
 			disinherit_effect = { DISINHERITOR = root }
@@ -1744,6 +1744,8 @@ court.2201 = {
 	# Sad to say, scope:younger_heir, GetSheHe makes a good point.
 	option = {
 		name = court.2201.b
+
+		trigger = { culture = { NOT = { has_cultural_parameter = cannot_disherit } } } # Unop: Make sure your culture doesn't allow this option
 
 		# Disinherit scope:younger_heir for free.
 		scope:younger_heir = {
@@ -2391,7 +2393,7 @@ court.3031 = {
 				has_court_event_flag = no
 			}
 			save_scope_as = liw
-			set_variable = {
+			set_variable = { #Unop Set target_court_position variable
 				name = target_court_position
 				value = flag:lady_in_waiting
 			}
@@ -2407,7 +2409,7 @@ court.3031 = {
 					has_court_event_flag = no
 				}
 				save_scope_as = liw
-				set_variable = {
+				set_variable = { #Unop Set target_court_position variable
 					name = target_court_position
 					value = flag:cultural_emissary
 				}
@@ -2424,7 +2426,7 @@ court.3031 = {
 					has_court_event_flag = no
 				}
 				save_scope_as = liw
-				set_variable = {
+				set_variable = { #Unop Set target_court_position variable
 					name = target_court_position
 					value = flag:chief_eunuch
 				}
@@ -2441,7 +2443,7 @@ court.3031 = {
 					has_court_event_flag = no
 				}
 				save_scope_as = liw
-				set_variable = {
+				set_variable = { #Unop Set target_court_position variable
 					name = target_court_position
 					value = flag:court_poet
 				}
@@ -2463,7 +2465,7 @@ court.3031 = {
 			save_scope_as = reference_county
 		}
 		root = { save_scope_as = root_scope }
-		root = { set_variable = { name = unop_court_3031_culture value = scope:reference_county.culture } }
+		root = { set_variable = { name = unop_court_3031_culture value = scope:reference_county.culture } } #Unop
 	}
 
 	# Option A: Minority vassals
@@ -2517,7 +2519,7 @@ court.3031 = {
 			limit = {
 				culture = scope:reference_county.culture
 			}
-			custom = court.3031.c.tt
+			custom = court.3031.c.tt #Unop Add tooltip
 			change_county_control = 5
 		}
 		ai_chance = {
@@ -2552,9 +2554,9 @@ court.3031 = {
 		clear_court_event_participation = yes
 		scope:liw = {
 			clear_court_event_participation = yes
-			remove_variable = target_court_position
+			remove_variable = target_court_position #Unop Remove target_court_position variable
 		}
-		remove_variable = unop_court_3031_culture
+		remove_variable = unop_court_3031_culture #Unop
 	}
 }
 #
@@ -4398,13 +4400,11 @@ court.5060 = {
 		# employ them as champion or bodyguard
 		name = {
 			trigger = { 
-				NOT = { 
 					can_appoint_char_to_court_position = {
 						CHAR = scope:knight
 						COURT_POS = akolouthos_court_position
 					}
 				}
-			}
 			text = court.5060.d.akolouthos
 		}
 		name = {
@@ -4427,7 +4427,6 @@ court.5060 = {
 			}
 			text = court.5060.d.bodyguard
 		}
-		
 		if = {
 			limit = {
 				can_appoint_char_to_court_position = {
@@ -8137,8 +8136,58 @@ scripted_trigger court_8001_child_trigger = {
 	is_healthy = yes
 	age > 3
 	age < 12
+	has_any_focus = yes
 	NOT = { has_variable = court_8001_child_flag }
 	location = root.location
+}
+
+scripted_effect court_8001_skill_effect = {
+	duel = {
+		skill = $SKILL$
+		value = decent_skill_rating
+		5 = {
+			compare_modifier = {
+				value = scope:duel_value
+				multiplier = 1
+				min = -49
+			}
+			min = 1
+			desc = court.8001.a.success
+			send_interface_toast = {
+				left_icon = scope:child_1
+				title = court.8001.a.lesson_tt
+				scope:child_1 = { add_$SKILL$_skill = 2 }
+			}
+		}
+		10 = {
+			compare_modifier = {
+				value = scope:duel_value
+				multiplier = 3.5
+				min = -49
+			}
+			min = 2
+			desc = court.8001.a.success
+			send_interface_toast = {
+				left_icon = scope:child_1
+				title = court.8001.a.lesson_tt
+				scope:child_1 = { add_$SKILL$_skill = 1 }
+			}
+		}
+		10 = {
+			compare_modifier = {
+				value = scope:duel_value
+				multiplier = -3.5
+				min = -49
+			}
+			min = 5
+			desc = court.8001.a.failure
+		}
+	}
+	stress_impact = {
+		base = minor_stress_impact_gain
+		wrathful = minor_stress_impact_gain
+		callous = minor_stress_impact_gain
+	}
 }
 
 court.8001 = {
@@ -8146,70 +8195,50 @@ court.8001 = {
 	title = court.8001.t
 	desc = {
 		desc = court.8001.desc.intro
-		random_valid = {
+		first_valid = {
 			triggered_desc = {
 		        trigger = {
-		        	scope:child_1 = {
-		        		OR = {
-		        			has_trait = curious
-		        			has_focus = education_diplomacy
-		        		}
-		        	}
+					scope:child_1 = { has_focus = education_diplomacy }
 		        }
 		        desc = court.8001.desc.diplomacy
 		    }
 		    triggered_desc = {
 		        trigger = {
-		        	scope:child_1 = {
-		        		OR = {
-		        			has_trait = rowdy
-		        			has_focus = education_martial
-		        		}
-		        	}
+					scope:child_1 = { has_focus = education_martial }
 		        }
 		        desc = court.8001.desc.martial
 		    }
 		    triggered_desc = {
 		        trigger = {
-		        	scope:child_1 = {
-		        		OR = {
-		        			has_trait = bossy
-		        			has_focus = education_stewardship
-		        		}
-		        	}
+					scope:child_1 = { has_focus = education_stewardship }
 		        }
 		        desc = court.8001.desc.stewardship
 		    }
 		    triggered_desc = {
 		        trigger = {
-		        	scope:child_1 = {
-		        		OR = {
-		        			has_trait = charming
-		        			has_focus = education_intrigue
-		        		}
-		        	}
+					scope:child_1 = { has_focus = education_intrigue }
 		        }
 		        desc = court.8001.desc.intrigue
 		    }
 		    triggered_desc = {
 		        trigger = {
-		        	scope:child_1 = {
-		        		OR = {
-		        			has_trait = pensive
-		        			has_focus = education_learning
-		        		}
-		        	}
+					scope:child_1 = { has_focus = education_learning }
 		        }
 		        desc = court.8001.desc.learning
 		    }
 		    desc = court.8001.desc.fallback
 		}
+		desc = court.8001.desc.closing
 	}
 	theme = court
 	cooldown = { years = 10 }
 	court_scene = {
 		button_position_character = scope:gardener
 		roles = {
+			root = {
+				group = event_group
+				animation = war_over_tie
+			}
 			scope:gardener = {
 				group = event_group
 				animation = rage
@@ -8290,157 +8319,108 @@ court.8001 = {
 	}
 
 	option = { # Encourage the child's interests
-		name = {
+		name = court.8001.a.diplomacy
 			trigger = {
 				scope:child_1 = { has_focus = education_diplomacy }
 			}
-			text = court.8001.a.diplomacy
+		skill = diplomacy
+		court_8001_skill_effect = { SKILL = diplomacy }
+		ai_chance = {
+			base = 100
+			ai_value_modifier = {
+				ai_compassion = 2
+				ai_energy = 1
 		}
-		name = {
-			trigger = {
-				scope:child_1 = { has_focus = education_martial }
+			modifier = {	#Weight down for stress.
+				add = -15
+				has_trait = wrathful
 			}
-			text = court.8001.a.martial
+			modifier = {	#Weight down for stress.
+				add = -15
+				has_trait = callous
 		}
-		name = {
-			trigger = {
-				scope:child_1 = { has_focus = education_stewardship }
 			}
-			text = court.8001.a.stewardship
 		}
-		name = {
+
+	option = { # Encourage the child's interests
+		name = court.8001.a.martial
 			trigger = {
-				scope:child_1 = { has_focus = education_intrigue }
+			scope:child_1 = { has_focus = education_martial }
 			}
-			text = court.8001.a.intrigue
+		skill = martial
+		court_8001_skill_effect = { SKILL = martial }
+		ai_chance = {
+			base = 100
+			ai_value_modifier = {
+				ai_compassion = 2
+				ai_energy = 1
 		}
-		name = {
-			trigger = {
-				scope:child_1 = { has_focus = education_learning }
+			modifier = {	#Weight down for stress.
+				add = -15
+				has_trait = wrathful
 			}
-			text = court.8001.a.learning
+			modifier = {	#Weight down for stress.
+				add = -15
+				has_trait = callous
 		}
+	        			}
+					}
+
+	option = { # Encourage the child's interests
+		name = court.8001.a.stewardship
 		trigger = {
-			scope:child_1 = {
-				OR = {
-					AND = {
-						OR = {
-							has_trait = curious
-        					has_focus = education_diplomacy
-	        			}
-	        			root.diplomacy >= medium_skill_rating
-					}
-					AND = {
-						OR = {
-							has_trait = rowdy
-		        			has_focus = education_martial
+			scope:child_1 = { has_focus = education_stewardship }
 			        	}
-	        			root.martial >= medium_skill_rating
+		skill = stewardship
+		court_8001_skill_effect = { SKILL = stewardship }
+		ai_chance = {
+			base = 100
+			ai_value_modifier = {
+				ai_compassion = 2
+				ai_energy = 1
 					}
-					AND = {
-						OR = {
-							has_trait = bossy
-		        			has_focus = education_stewardship
+			modifier = {	#Weight down for stress.
+				add = -15
+				has_trait = wrathful
 	        			}
-	        			root.stewardship >= medium_skill_rating
+			modifier = {	#Weight down for stress.
+				add = -15
+				has_trait = callous
 					}
-					AND = {
-						OR = {
-							has_trait = charming
-		        			has_focus = education_intrigue
 	        			}
-	        			root.intrigue >= medium_skill_rating
 					}
-					AND = {
-						OR = {
-							has_trait = pensive
-        					has_focus = education_learning
+
+	option = { # Encourage the child's interests
+		name = court.8001.a.intrigue
+		trigger = {
+			scope:child_1 = { has_focus = education_intrigue }
 	        			}
-	        			root.learning >= medium_skill_rating
+		skill = intrigue
+		court_8001_skill_effect = { SKILL = intrigue }
+		ai_chance = {
+			base = 100
+			ai_value_modifier = {
+				ai_compassion = 2
+				ai_energy = 1
 					}
+			modifier = {	#Weight down for stress.
+				add = -15
+				has_trait = wrathful
 				}
+			modifier = {	#Weight down for stress.
+				add = -15
+				has_trait = callous
 			}
 		}
-		scope:child_1 = {
-			if = {
-				limit = {
-					OR = {
-						has_trait = curious
-	        			has_focus = education_diplomacy
 		        	}
-		        	root.diplomacy >= medium_skill_rating
-				}
-				root = {
-					send_interface_toast = {
-						left_icon = scope:child_1
-						title = court.8001.a.lesson_tt
-						scope:child_1 = { add_diplomacy_skill = 1 }
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					OR = {
-						has_trait = rowdy
-		        		has_focus = education_martial
-		        	}
-		        	root.martial >= medium_skill_rating
-				}
-				root = {
-					send_interface_toast = {
-						left_icon = scope:child_1
-						title = court.8001.a.lesson_tt
-						scope:child_1 = { add_martial_skill = 1 }
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					OR = {
-						has_trait = bossy
-	        			has_focus = education_stewardship
-		        	}
-		        	root.stewardship >= medium_skill_rating
-				}
-				root = {
-					send_interface_toast = {
-						left_icon = scope:child_1
-						title = court.8001.a.lesson_tt
-						scope:child_1 = { add_stewardship_skill = 1 }
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					OR = {
-						has_trait = charming
-	        			has_focus = education_intrigue
-		        	}
-					root.intrigue >= medium_skill_rating
-				}
-				root = {
-					send_interface_toast = {
-						left_icon = scope:child_1
-						title = court.8001.a.lesson_tt
-						scope:child_1 = { add_intrigue_skill = 1 }
-					}
-				}
-			}
-			else = {
-				root = {
-					send_interface_toast = {
-						left_icon = scope:child_1
-						title = court.8001.a.lesson_tt
-						scope:child_1 = { add_learning_skill = 1 }
-					}
-				}
-			}
+
+	option = { # Encourage the child's interests
+		name = court.8001.a.learning
+		trigger = {
+			scope:child_1 = { has_focus = education_learning }
 		}
-		stress_impact = {
-			base = miniscule_stress_impact_gain
-			lazy = medium_stress_impact_gain
-			callous = medium_stress_impact_gain
-		}
+		skill = learning
+		court_8001_skill_effect = { SKILL = learning }
 		ai_chance = {
 			base = 100
 			ai_value_modifier = {
@@ -8449,7 +8429,7 @@ court.8001 = {
 			}
 			modifier = {	#Weight down for stress.
 				add = -15
-				has_trait = lazy
+				has_trait = wrathful
 			}
 			modifier = {	#Weight down for stress.
 				add = -15
@@ -8460,85 +8440,53 @@ court.8001 = {
 
 	option = { # Replant them
 		name = court.8001.c
-		remove_short_term_gold = medium_gold_value
 		scope:child_1 = {
-			random_list = {
-				2 = {
-					trigger = {
-						NOT = { has_trait = lifestyle_gardener }
-					}
+			random = {
+				chance = 20
 					modifier = {
 						scope:gardener = { has_court_position = court_gardener_court_position }
-						add = 2
+					add = 5
+					}
+					modifier = {
+					scope:gardener = { has_trait = lifestyle_gardener }
+					add = 10
+					}
+					modifier = {
+					has_trait = diligent
+					add = 10
+					}
+					modifier = {
+					has_trait = lazy
+					add = -10
 					}
 					root = {
 						send_interface_toast = {
 							left_icon = scope:child_1
 							title = court.8001.c.gardener_tt
-							scope:child_1 = { add_trait = lifestyle_gardener }
-						}
-					}
-				}
-				2 = {
-					trigger = {
-						NOT = { has_trait = lifestyle_herbalist }
-					}
-					modifier = {
-						scope:gardener = { has_court_position = court_gardener_court_position }
-						add = 1
-					}
-					root = {
-						send_interface_toast = {
-							left_icon = scope:child_1
-							title = court.8001.c.gardener_tt
-							scope:child_1 = { add_trait = lifestyle_herbalist }
-						}
-					}
-				}
-				2 = {
-					modifier = {
-						factor = 1.5
-		        		OR = {
-		        			has_trait = bossy
-		        			has_focus = education_stewardship
-		        		}
-					}
-					modifier = {
-						factor = 1.5
-		        		OR = {
-		        			has_trait = pensive
-		        			has_focus = education_learning
-		        		}
-					}
-					root = {
-						send_interface_toast = {
-							left_icon = scope:child_1
-							title = court.8001.c.gardener_tt
-							if = {
-								limit = {
-									scope:gardener = { has_court_position = court_gardener_court_position }
-								}
-								scope:child_1 = { add_stewardship_skill = 2 }
-							}
-							else = {
-								scope:child_1 = { add_stewardship_skill = 1 }
+						scope:child_1 = { add_trait = lifestyle_gardener }
 							}
 						}
 					}
+			add_opinion = {
+				target = root
+				modifier = annoyed_opinion
+				opinion = -20
 				}
+			stress_impact = {
+				base = minor_stress_impact_gain
+				lazy = minor_stress_impact_gain
+				arrogant = minor_stress_impact_gain
 			}
 		}
 		stress_impact = {
-			vengeful = medium_stress_impact_gain
-			greedy = medium_stress_impact_gain
-			fickle = medium_stress_impact_gain
-			arrogant = medium_stress_impact_gain
+			just = minor_stress_impact_loss
+			diligent = minor_stress_impact_loss
 		}
 		ai_chance = {
 			base = 100
 			ai_value_modifier = {
 				ai_compassion = -1
-				ai_greed = -1
+				ai_vengefulness = 1
 			}
 			modifier = {	#Weight down for stress.
 				add = -15
@@ -8553,17 +8501,10 @@ court.8001 = {
 
 	option = { # Dismiss the gardener's protests (opt out)
 		name = court.8001.e
-		scope:child_1 = {
-			add_opinion = {
-				target = root
-				modifier = pleased_opinion
-				opinion = 20
-			}
-		}
-		stress_impact = {
-			just = minor_stress_impact_gain
-			vengeful = minor_stress_impact_gain
-			arbitrary = minor_stress_impact_gain
+		reverse_add_opinion = {
+			target = scope:gardener
+			modifier = annoyed_opinion
+			opinion = -20
 		}
 		ai_chance = {
 			base = 50
@@ -8581,6 +8522,7 @@ court.8001 = {
 			}
 		}
 	}
+
 	after = {
 		scope:gardener = {
 			clear_court_event_participation = yes
@@ -8901,6 +8843,7 @@ court.8010 = {
 								type = given
 							}
 						}
+						equip_artifact_to_owner_replace = yes #Unop: Force the character to wear the weapon
 		        	}
 		        }
 	        }
@@ -8961,6 +8904,7 @@ court.8010 = {
 						type = given
 					}
 				}
+				equip_artifact_to_owner_replace = yes #Unop: Force the character to wear the weapon
 	    	}
 	    }
 	    stress_impact = {
@@ -9744,6 +9688,7 @@ court.8040 = {
 	        any_held_title = {
 	        	count >= 4
 	        	tier = tier_county
+				is_landless_type_title = no
 	        }
 	    }
 	    domain_limit_available < 0
@@ -9816,6 +9761,7 @@ court.8040 = {
 	        	limit = {
 	        		tier = tier_county
 	        		NOT = { this = root.capital_county }
+					is_landless_type_title = no
 	        	}
 	        	order_by = {
 	        		value = 0
@@ -10853,7 +10799,6 @@ court.8140 = {
     	OR = {
     		exists = cp:councillor_marshal
     		exists = court_position:master_of_hunt_court_position
-    		exists = court_position:court_physician_court_position
 			trigger_if = { #Unop: To be consistent with the immediate selection logic
 				limit = {
     				NOT = {
@@ -10864,6 +10809,7 @@ court.8140 = {
     			}
     			exists = court_position:master_of_horse_court_position
 			}
+    		exists = court_position:court_physician_court_position
     	}
     }
 
@@ -10882,29 +10828,29 @@ court.8140 = {
     immediate = {
     	random_list = {
     		1 = {
-				trigger = { exists = cp:councillor_court_chaplain }
+				trigger = { exists = cp:councillor_court_chaplain } #Unop Add trigger
     			cp:councillor_court_chaplain ?= { save_scope_as = vassal_1 } #prayer
     		}
     		1 = {
-				trigger = { exists = cp:councillor_steward }
+				trigger = { exists = cp:councillor_steward } #Unop Add trigger
     			cp:councillor_steward ?= { save_scope_as = vassal_1 } #feast
     		}
     		2 = {
-				trigger = { exists = court_position:seneschal_court_position }
+				trigger = { exists = court_position:seneschal_court_position } #Unop Add trigger
     			court_position:seneschal_court_position ?= { save_scope_as = vassal_1 } #feast
     		}
     		2 = {
-				trigger = { exists = court_position:travel_leader_court_position }
+				trigger = { exists = court_position:travel_leader_court_position } #Unop Add trigger
     			court_position:travel_leader_court_position ?= { save_scope_as = vassal_1 } #travel
     		}
     	}
     	random_list = {
     		1 = {
-				trigger = { exists = cp:councillor_marshal }
+				trigger = { exists = cp:councillor_marshal } #Unop Add trigger
     			cp:councillor_marshal ?= { save_scope_as = vassal_2 } #hunt
     		}
     		2 = {
-				trigger = { exists = court_position:master_of_hunt_court_position }
+				trigger = { exists = court_position:master_of_hunt_court_position } #Unop Add trigger
     			court_position:master_of_hunt_court_position ?= { save_scope_as = vassal_2 } #hunt
     		}
     		2 = {
@@ -10914,12 +10860,12 @@ court.8140 = {
 							story_type = story_cycle_martial_lifestyle_warhorse
 						}
 					}
-					exists = court_position:master_of_horse_court_position
+					exists = court_position:master_of_horse_court_position #Unop Add court position check
     			}
     			court_position:master_of_horse_court_position ?= { save_scope_as = vassal_2 } #horse
     		}
     		2 = {
-				trigger = { exists = court_position:court_physician_court_position }
+				trigger = { exists = court_position:court_physician_court_position } #Unop Add trigger
     			court_position:court_physician_court_position ?= { save_scope_as = vassal_2 } #fresh air
     		}
     	}
@@ -11682,27 +11628,49 @@ court.8160 = {
         			NOT = { employs_court_position = akolouthos_court_position }
         			can_employ_court_position_type = akolouthos_court_position
         		}
-        	}
-        }
-        court_position_grant_effect = { POS = bodyguard CANDIDATE = scope:knight_1 EMPLOYER = root }
-        if = {
-        	limit = {
-        		any_court_position_holder = {
-        			type = bodyguard_court_position
-        			count = 1
+				AND = { #Unop: If both bodyguard are filled, check if akolouthos & champion are available
+        			any_court_position_holder = {
+        				type = bodyguard_court_position
+        				count = 2
+        			}
+        			NOT = { employs_court_position = akolouthos_court_position }
+        			can_employ_court_position_type = akolouthos_court_position
+					NOT = { employs_court_position = champion_court_position }
         		}
         	}
-			court_position_grant_effect = { POS = bodyguard CANDIDATE = scope:knight_2 EMPLOYER = root }
         }
-        else_if = {
-        	limit = {
-        		NOT = { employs_court_position = champion_court_position }
+		#Unop: Rewrote a lot of things below to not have a misleading tooltip & to handle the case of both bodyguard slot being filled but still have akolouthos & champion available
+		if = {
+			limit = { #Unop: No bodyguard, fill the 2 slots
+        		any_court_position_holder = {
+        			type = bodyguard_court_position
+        			count < 1
+        		}
         	}
-        	court_position_grant_effect = { POS = champion CANDIDATE = scope:knight_2 EMPLOYER = root }
-        }
-        else = {
-       	 	court_position_grant_effect = { POS = akolouthos CANDIDATE = scope:knight_2 EMPLOYER = root }
-        }
+			court_position_grant_effect = { POS = bodyguard CANDIDATE = scope:knight_1 EMPLOYER = root }
+			court_position_grant_effect = { POS = bodyguard CANDIDATE = scope:knight_2 EMPLOYER = root }
+		}
+		else_if = {
+			limit = { #Unop: 1 bodyguard, fill the other with either the champion or the akolouthos
+				any_court_position_holder = {
+					type = bodyguard_court_position
+					count < 2
+				}
+			}
+			if = {
+				limit = { NOT = { employs_court_position = champion_court_position } }
+				court_position_grant_effect = { POS = champion CANDIDATE = scope:knight_2 EMPLOYER = root }
+			}
+			else = {
+				court_position_grant_effect = { POS = akolouthos CANDIDATE = scope:knight_2 EMPLOYER = root }
+			}
+			court_position_grant_effect = { POS = bodyguard CANDIDATE = scope:knight_1 EMPLOYER = root }
+		}
+		else = { #No bodyguard slot, so fill both champion & akolouthos
+			court_position_grant_effect = { POS = champion CANDIDATE = scope:knight_1 EMPLOYER = root }
+			court_position_grant_effect = { POS = akolouthos CANDIDATE = scope:knight_2 EMPLOYER = root }
+		}
+
         custom_tooltip = court.8160.a.tt
         scope:knight_1 = { add_character_flag = competing_knight_position }
         scope:knight_2 = { add_character_flag = competing_knight_position }
@@ -12623,6 +12591,8 @@ court.9000 = {
 				modifier = rude_opinion
 				opinion = -20
 			}
+		}
+		scope:flirty_knight = {
 			hidden_effect = {
 				random = {
 					chance = 35
@@ -13350,7 +13320,9 @@ court.9100 = {
 		add_character_modifier = {
 			modifier = more_work_less_fun_modifier
 			years = 15
+			desc = feasts_more_expensive_modifier_tt
 		}
+		custom_tooltip = feasts_more_expensive_tt
 		stress_impact = {
 			gregarious = major_stress_impact_gain
 			gluttonous = major_stress_impact_gain
@@ -13515,8 +13487,8 @@ court.9300 = {
 				is_available_ai_adult = yes
 				has_court_event_flag = no
 				loves_food_trigger = yes
-				NOR = {
-					this = scope:another_courtier_check
+				NOT = { #Unop: Changed this to a NOT since it is now a single check
+					#this = scope:another_courtier_check # Unop: This is not needed since this current char will be excluded from the random_courtier below
 					is_of_major_interest_to_root_trigger = yes
 				}
 				is_of_minor_interest_to_root_trigger = yes

@@ -1619,7 +1619,7 @@ tournament_events.0161 = {
 	left_portrait = {
 		character = root
 		triggered_animation = {
-			trigger = { this = scope:marriage_winner }
+			trigger = { scope:marriage_winner ?= this }  # Unop: Change the order & added ?= as this scope can be undefined
 			animation = happiness
 		}
 		animation = thinking
@@ -1633,7 +1633,7 @@ tournament_events.0161 = {
 
 	immediate = {
 		show_as_tooltip = {
-			scope:marriage_winner = {
+			scope:marriage_winner ?= { # Unop: Change this to ?= as this scope can be undefined
 				if = {
 					limit = {
 						OR = {
@@ -1656,11 +1656,20 @@ tournament_events.0161 = {
 	option = {
 		name = tournament_events.0161.b
 		trigger = {
-			any_in_list = {
-				list = bachelors
-				has_opinion_modifier = {
-					target = scope:host
-					modifier = tournament_reneged_marriage_prize_opinion
+			OR = { #Unop Add second check
+				any_in_list = {
+					list = bachelors
+					has_opinion_modifier = {
+						target = scope:host
+						modifier = tournament_reneged_marriage_prize_opinion
+					}
+				}
+				AND = {
+					NOT = { scope:marriage_winner ?= this }
+					any_in_list = {
+						list = bachelors
+						this = root
+					}
 				}
 			}
 		}
@@ -1672,6 +1681,13 @@ tournament_events.0161 = {
 			NOT = {
 				any_in_list = { list = bachelors }
 			}
+		}
+	}
+
+	option = { # Unop: We need to have an option for the people who participated in the tournament but where not winners because no other option will be available for them
+		name = ep2_wedding.0970.a
+		trigger = {
+			NOT = { scope:marriage_winner ?= this }
 		}
 	}
 }
@@ -2038,7 +2054,10 @@ tournament_events.1000 = { # Select wager
 
 scripted_trigger tournament_pas_darmes_era_trigger = {
 	scope:host = {
-		NOT = { government_has_flag = government_is_tribal }
+		NOR = {
+			government_has_flag = government_is_tribal
+			government_has_flag = government_is_nomadic
+		}
 	}
 	culture = { has_cultural_era_or_later = culture_era_early_medieval }
 }
@@ -2253,7 +2272,10 @@ tournament_events.1101 = { # Start - Exotic
 		
 		#Standard checks.
 		tournament_pas_darmes_era_trigger = yes
-		NOT = { government_has_flag = government_is_tribal }
+		NOR = {
+			government_has_flag = government_is_tribal
+			government_has_flag = government_is_nomadic
+		}
 		NOT = {
 			scope:activity = {
 				any_in_list = { variable = pas_darmes_instigators }
@@ -4573,15 +4595,6 @@ tournament_events.1230 = {
 		}
 	}
 
-	#Unop: disabled since duplicated from above
-	#weight_multiplier = {
-	#	base = 1
-	#	modifier = {
-	#		factor = 2
-	#		has_activity_intent = recruit_knights_intent
-	#	}
-	#}
-
 	option = { # Make champion
 		name = tournament_events.1230.a
 		trigger = {
@@ -4851,7 +4864,7 @@ scripted_effect tournament_1240_prize_child_effect = {
 		limit = {
 			exists = father #Unop: Was checking mother to use the father
 			father = {
-				NOT = { this = root } #Unop: To unsure the father is not actual root for opinion loss just after
+				NOT = { this = root } #Unop: To ensure the father is not actual root for opinion loss just after
 				is_alive = yes
 				liege = root
 			}
@@ -4862,7 +4875,7 @@ scripted_effect tournament_1240_prize_child_effect = {
 		limit = {
 			exists = mother
 			mother = {
-				NOT = { this = root } #Unop: To unsure the mother is not actual root for opinion loss just after
+				NOT = { this = root } #Unop: To ensure the mother is not actual root for opinion loss just after
 				is_alive = yes
 				liege = root
 			}
@@ -5151,16 +5164,13 @@ scripted_effect tournament_favor_gift_effect = {
 		name = tournament_favor_offers
 		target = scope:favor_giver
 	}
-	#Unop: Since we are currently the 'favor_recipient', we need to be re-scoped to favor_giver, this was checking if the recipient was scheming against itself !
-	scope:favor_giver = {
-		if = {
-			limit = {
-				is_scheming_against = { target = scope:favor_recipient }
-			}
-			random_scheme = {
-				limit = { scheme_target_character = scope:favor_recipient }
-				save_scope_as = favor_scheme
-			}
+	if = {
+		limit = {
+			is_scheming_against = { target = scope:favor_recipient }
+		}
+		random_scheme = {
+			limit = { scheme_target_character = scope:favor_recipient }
+			save_scope_as = favor_scheme
 		}
 	}
 	custom_tooltip = tournament_events.1251.favor_tt
@@ -5664,7 +5674,7 @@ tournament_events.1251 = {
 				hidden_effect = {
 					if = {
 						limit = { exists = scope:favor_scheme }
-						scope:favor_scheme = { #Unop: favor_scheme scope was missing
+						scope:favor_scheme = {
 							add_scheme_modifier = { type = tournament_favor_scheme_modifier }
 						}
 					}
@@ -7006,7 +7016,10 @@ tournament_events.1280 = {
 			exists = dynasty.var:tournament_1280_cooldown
 			has_character_flag = tournament_host_disaster_cooldown
 		}
-		NOT = { government_has_flag = government_is_tribal }
+		NOR = {
+			government_has_flag = government_is_tribal
+			government_has_flag = government_is_nomadic
+		}
 		culture = { has_cultural_era_or_later = culture_era_high_medieval }
 	}
 
@@ -9701,6 +9714,7 @@ tournament_events.1332 = {
 	trigger = {
 		this = scope:host
 		any_powerful_vassal = {
+			is_ai = yes
 			involved_activity = scope:activity
 			activity_is_competing_trigger = yes
 		}
@@ -9709,6 +9723,7 @@ tournament_events.1332 = {
 	immediate = {
 		random_powerful_vassal = {
 			limit = {
+				is_ai = yes
 				involved_activity = scope:activity
 				activity_is_competing_trigger = yes
 			}
@@ -11523,19 +11538,19 @@ tournament_events.1407 = {
 			NOT = { this = root }
 			involved_activity = scope:activity
 			activity_is_competing_trigger = yes
-			save_temporary_scope_as = competing_family
+			save_temporary_scope_as = temp_competing_family #Unop: In triggers, scope are temporary and should be label as such (to avoid Trying to add the temporary target 'competing_family' which has the same name as a permanent target)
 		}
 		scope:activity = {
 			any_guest_subset_current_phase = { # There is a member of the crowd who dislikes their performance
 				name = spectator
 				NOR = {
 					this = root
-					is_close_family_of = scope:competing_family
-					has_relation_lover = scope:competing_family
-					has_relation_friend = scope:competing_family
-					has_relation_best_friend = scope:competing_family
+					is_close_family_of = scope:temp_competing_family #Unop: use the renamed scope above
+					has_relation_lover = scope:temp_competing_family #Unop: use the renamed scope above
+					has_relation_friend = scope:temp_competing_family #Unop: use the renamed scope above
+					has_relation_best_friend = scope:temp_competing_family #Unop: use the renamed scope above
 					opinion = {
-						target = scope:competing_family
+						target = scope:temp_competing_family #Unop: use the renamed scope above
 						value >= low_positive_opinion
 					}
 				}
@@ -14395,47 +14410,50 @@ tournament_events.6051 = { # Sabotage Outcome
 						exists = scope:sabotage_disqualified
 					}
 				}
+				#Unop: Rewrite this a little, the hidden_effect was actually potentially trying to override the decision made by the player in tournament_events.6052
+				#Unop: Seeing the hidden_effect outside of the original IF make me feel that this event was reworked a little
 				scope:host = {
 					if = {
 						limit = { is_ai = yes }
-						random_list = {
-							100 = {							
-								opinion_modifier = {
-									who = scope:host
-									opinion_target = scope:sabotage_target
-								}
-								modifier = {
-									scope:host = scope:sabotage_target
-									add = 200
-								}
-								save_scope_as = sabotage_disqualified
-							}
-							50 = {
-								opinion_modifier = {
-									who = scope:host
-									opinion_target = scope:sabotage_actor
-								}
-								reverse_add_opinion = {
-									target = scope:sabotage_target
-									modifier = tournament_tolerated_sabotage_opinion
-									opinion = -15
+						if = {
+							limit = { this = scope:sabotage_target }
+							hidden_effect = {
+								random = {
+									chance = 75
+									opinion_modifier = {
+										who = scope:host
+										opinion_target = scope:sabotage_actor #Unop: Change from "root" just to be clear
+										multiplier = 0.33
+									}
+									save_scope_as = sabotage_disqualified
 								}
 							}
 						}
-					}
-					hidden_effect = {
-						random = {
-							chance = 50
-							modifier = {
-								scope:host = scope:sabotage_target
-								add = 25
+						else = {
+							random_list = {
+								100 = {
+									opinion_modifier = {
+										who = scope:host
+										opinion_target = scope:sabotage_target
+									}
+									modifier = {
+										scope:host = scope:sabotage_target
+										add = 200
+									}
+									save_scope_as = sabotage_disqualified
+								}
+								50 = {
+									opinion_modifier = {
+										who = scope:host
+										opinion_target = scope:sabotage_actor
+									}
+									reverse_add_opinion = {
+										target = scope:sabotage_target
+										modifier = tournament_tolerated_sabotage_opinion
+										opinion = -15
+									}
+								}
 							}
-							opinion_modifier = {
-								who = scope:host
-								opinion_target = root
-								multiplier = 0.33
-							}
-							save_scope_as = sabotage_disqualified
 						}
 					}
 				}
@@ -14455,7 +14473,7 @@ tournament_events.6051 = { # Sabotage Outcome
 				}
 				remove_variable = contest_aptitude
 				add_character_flag = {
-					flag = resigned_contest_flag
+					flag = disqualified_contest_flag #Unop: Use correct flag
 					months = 2
 				}
 				scope:activity = {
@@ -15369,7 +15387,7 @@ tournament_events.6510 = {
 
 #Target: Success
 tournament_events.6511 = {
-	type = activity_event
+	type = character_event #Unop: Making this a character_event since it can fire after the activty has concluded
 	title = tournament_events.6510.t
 	desc = {
 		desc = tournament_events.6511.opening
@@ -15416,7 +15434,7 @@ tournament_events.6511 = {
 
 #Target: Failure
 tournament_events.6512 = {
-	type = activity_event
+	type = character_event #Unop: Making this a character_event since it can fire after the activty has concluded
 	title = tournament_events.6510.t
 	desc = {
 		desc = tournament_events.6511.opening
@@ -15455,7 +15473,7 @@ tournament_events.6512 = {
 
 #Actor: Success
 tournament_events.6513 = {
-	type = activity_event
+	type = character_event #Unop: Making this a character_event since it can fire after the activty has concluded
 	title = tournament_events.6510.t
 	desc = {
 		first_valid = {
@@ -15499,7 +15517,7 @@ tournament_events.6513 = {
 
 #Actor: Failure
 tournament_events.6514 = {
-	type = activity_event
+	type = character_event #Unop: Making this a character_event since it can fire after the activty has concluded
 	title = tournament_events.6510.t
 	desc = {
 		first_valid = {
@@ -15623,6 +15641,11 @@ tournament_events.6900 = {
 				50 = {
 					scope:activity = {
 						random_attending_character = {
+							limit = { #Unop: We want at least 1 county of this culture to get a faith
+								culture = {
+									culture_number_of_counties > 0 
+								}
+							} 
 							culture = { save_scope_as = attending_culture }
 						}
 					}

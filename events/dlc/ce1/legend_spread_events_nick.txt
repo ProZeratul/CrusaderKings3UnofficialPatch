@@ -2264,12 +2264,40 @@ legend_spread_events.5055 = {
 			is_ai = yes
 			is_adult = yes
 			culture = root.culture
+			trigger_if = {
+				limit = {
+					root.highest_held_title_tier >= tier_empire
+				}
+				highest_held_title_tier >= tier_duchy
+			}
+			trigger_else = {
+				highest_held_title_tier >= tier_county
+			}
 		}
 		any_vassal = { #And one who isn't
 			is_ai = yes
 			is_adult = yes
 			NOT = {
 				culture = root.culture
+			}
+			culture = {
+				save_temporary_scope_as = other_culture
+			}
+			#Should have at least two vassals of culture
+			root = {
+				any_vassal = {
+					count >= 2
+					culture = scope:other_culture
+				}
+			}
+			trigger_if = {
+				limit = {
+					root.highest_held_title_tier >= tier_empire
+				}
+				highest_held_title_tier >= tier_duchy
+			}
+			trigger_else = {
+				highest_held_title_tier >= tier_county
 			}
 		}
 		location = capital_province
@@ -2282,6 +2310,15 @@ legend_spread_events.5055 = {
 				is_ai = yes
 				is_adult = yes
 				culture = root.culture
+				trigger_if = {
+					limit = {
+						root.highest_held_title_tier = tier_empire
+					}
+					highest_held_title_tier >= tier_duchy
+				}
+				trigger_else = {
+					highest_held_title_tier >= tier_county
+				}
 			}
 			save_scope_as = vassal1
 		}
@@ -2291,6 +2328,25 @@ legend_spread_events.5055 = {
 				is_adult = yes
 				NOT = {
 					culture = root.culture
+				}
+				culture = {
+					save_temporary_scope_as = other_culture
+				}
+				#Should have at least two vassals of culture
+				root = {
+					any_vassal = {
+						count >= 2
+						culture = scope:other_culture
+					}
+				}
+				trigger_if = {
+					limit = {
+						root.highest_held_title_tier = tier_empire
+					}
+					highest_held_title_tier >= tier_duchy
+				}
+				trigger_else = {
+					highest_held_title_tier >= tier_county
 				}
 			}
 			save_scope_as = vassal2
@@ -2421,10 +2477,10 @@ legend_spread_events.5055 = {
 		}
 
 		every_vassal = {
+			custom = 5055_vassal2_culture
 			limit = { 
 				culture = scope:vassal2.culture
 			}
-			custom = 5055_vassal2_culture
 			add_opinion = {
 				modifier = respect_opinion
 				opinion = 15
@@ -5385,12 +5441,18 @@ legend_spread_events.5305 = {
 		highest_held_title_tier > tier_barony
 		any_neighboring_realm_same_rank_owner = {
 			is_available_healthy_ai_adult = yes
-			promoted_legend ?= {
+			promoted_legend ?= { #Unop Check correct conditions
 				NOT = { legend_owner ?= root }
 			}
+			#save_temporary_scope_as = potential_promoter_temp
 		}
 		promoted_legend ?= {
 			legend_owner = root
+			#any_legend_promoter = {
+			#	NOT = {
+			#		this = scope:potential_promoter_temp
+			#	}
+			#}
 		}
 	}
 
@@ -5398,7 +5460,7 @@ legend_spread_events.5305 = {
 		random_neighboring_realm_same_rank_owner = {
 			limit = {
 				is_available_healthy_ai_adult = yes
-				promoted_legend ?= {
+				promoted_legend ?= { #Unop Check correct conditions
 					NOT = { legend_owner ?= root }
 				}
 			}
@@ -5690,8 +5752,10 @@ legend_spread_events.5310 = {
 		}
 		any_neighboring_top_liege_realm_owner = {
 			is_available_healthy_ai_adult = yes
-			promoted_legend ?= {
-				NOT = { legend_owner ?= root }
+			NOT = {
+				promoted_legend ?= {
+					legend_owner = root
+				}
 			}
 		}
 
@@ -5711,8 +5775,10 @@ legend_spread_events.5310 = {
 		random_neighboring_top_liege_realm_owner = {
 			limit = {
 				is_available_healthy_ai_adult = yes
-				promoted_legend ?= {
-					NOT = { legend_owner ?= root }
+				NOT = {
+					promoted_legend ?= {
+						legend_owner = root
+					}
 				}
 			}
 

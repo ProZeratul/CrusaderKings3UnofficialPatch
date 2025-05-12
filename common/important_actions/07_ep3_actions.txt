@@ -114,7 +114,10 @@ action_laamp_camp_purpose = {
 	}
 
 	effect = {
-		open_view = my_realm
+		open_view_data = {
+			view = my_realm
+			data = flag:bookmark_domain
+		}
 	}
 }
 
@@ -238,6 +241,121 @@ action_in_debt_landless = {
 			try_create_important_action = {
 				important_action_type = action_in_debt_landless
 				actor = root
+			}
+		}
+	}
+}
+
+# ADMIN
+
+# LOSING HIGHEST TIER HELD ADMIN TITLE(S)
+action_primary_heir_not_inheriting_held_admin_title = {
+	priority = 250
+	combine_into_one = yes
+	is_dangerous = yes
+	check_create_action = {
+		if = {
+			limit = {
+				government_has_flag = government_is_administrative
+				save_temporary_scope_as = holder_temp
+			}
+			every_held_title = {
+				limit = {
+					tier = scope:holder_temp.highest_held_title_tier
+					is_landless_type_title = no
+					is_noble_family_title = no
+					OR = {
+						current_heir ?= {
+							OR = {
+								is_lowborn = yes
+								house ?= { this != scope:holder_temp.house }
+							}
+						}
+					}
+					OR = {
+						has_title_law_flag = appointment_type_succession
+						holder = { has_realm_law_flag = appointment_type_succession }
+					}
+				}
+				try_create_important_action = {
+					important_action_type = action_primary_heir_not_inheriting_held_admin_title
+					landed_title = this
+				}
+			}
+		}
+	}
+
+	unimportant = {
+		scope:landed_title != root.primary_title
+	}
+
+	effect = {
+		scope:landed_title = {
+			open_view_data = {
+				view = title_view_window
+			}
+		}
+	}
+}
+
+# INVESTED CANDIDATE NOT CURRENT HEIR
+action_invested_candidate_not_inheriting_admin_title = {
+	priority = 249
+	combine_into_one = yes
+	is_dangerous = yes
+	check_create_action = {
+		if = {
+			limit = {
+				government_has_flag = government_is_administrative
+				save_temporary_scope_as = holder_temp
+			}
+			every_succession_appointment_invested_title = {
+				limit = {
+					is_landless_type_title = no
+					is_noble_family_title = no
+					OR = {
+						has_title_law_flag = appointment_type_succession
+						holder = { has_realm_law_flag = appointment_type_succession }
+					}
+					current_heir ?= {
+						save_temporary_scope_as = heir_temp
+						NOT = {
+							root = { has_appointment_invested_character = scope:heir_temp }
+						}
+					}
+					any_title_heir = {
+						save_temporary_scope_as = candidate_temp
+						root = { has_appointment_invested_character = scope:candidate_temp }
+					}
+				}
+				save_scope_as = title
+				current_heir ?= { save_scope_as = heir }
+				random_title_heir = {
+					limit = {
+						save_temporary_scope_as = candidate_temp
+						root = { has_appointment_invested_character = scope:candidate_temp }
+					}
+					save_scope_as = candidate
+				}
+				save_scope_as = landed_title
+				try_create_important_action = {
+					important_action_type = action_invested_candidate_not_inheriting_admin_title
+					landed_title = this
+					recipient = scope:heir
+					actor = scope:candidate
+				}
+			}
+		}
+	}
+
+	unimportant = {
+		scope:heir.house = root.house
+	}
+
+	effect = {
+		scope:landed_title = {
+			open_view_data = {
+				view = title_view_window
 			}
 		}
 	}

@@ -1,0 +1,95 @@
+﻿unop_debug_grand_wedding_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+
+	decision_group_type = debug
+
+	desc = unop_debug_grand_wedding_decision_desc
+	selection_tooltip = unop_debug_grand_wedding_decision_tooltip
+
+	ai_check_interval = 0
+
+	is_shown = {
+		has_variable = promised_grand_wedding_marriage_countdown
+		OR = {
+			var:promised_grand_wedding_marriage_countdown = { is_alive = no }
+			var:promised_grand_wedding_marriage_countdown = {
+				is_alive = yes
+				is_betrothed = no
+			}
+			NOT = { exists = var:promised_grand_wedding_marriage_countdown }
+		}
+	}
+	
+	effect = {
+		if = { limit = { has_variable = promised_grand_wedding_to } remove_variable = promised_grand_wedding_to }
+		if = {
+			limit = { has_variable = promised_grand_wedding_marriage_countdown }
+			if = {
+				limit = { exists = var:promised_grand_wedding_marriage_countdown }
+				if = { 
+					limit = { var:promised_grand_wedding_marriage_countdown = { is_alive = no } }
+					remove_variable = promised_grand_wedding_marriage_countdown
+				}
+				else = {
+					var:promised_grand_wedding_marriage_countdown = {
+						if = { limit = { has_variable = promised_grand_wedding_by } remove_variable = promised_grand_wedding_by }
+						#if = { limit = { has_variable = promised_grand_wedding_by_other } remove_variable = promised_grand_wedding_by_other } #TODO: Remake this (check 1.12.5 unop version) as this variable is not vanilla
+					}
+					remove_variable = promised_grand_wedding_marriage_countdown
+				}
+			}
+			else = {
+				remove_variable = promised_grand_wedding_marriage_countdown
+			}
+		}
+	}
+
+	# TODO ?
+	ai_potential = {
+		always = no
+	}
+
+	# TODO ?
+	ai_will_do = {
+		base = 0
+	}
+}
+
+unop_debug_travel_stuck_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+
+	decision_group_type = debug
+
+	desc = unop_debug_travel_stuck_decision_desc
+	selection_tooltip = unop_debug_travel_stuck_decision_tooltip
+
+	ai_check_interval = 0
+
+	is_shown = {
+		current_travel_plan ?= {
+			is_completed = no
+			is_paused = yes
+			current_location = final_destination_province
+		}
+	}
+	
+	effect = {
+		current_travel_plan ?= {
+			resume_travel_plan = yes 
+		}
+	}
+
+	# TODO ?
+	ai_potential = {
+		always = no
+	}
+
+	# TODO ?
+	ai_will_do = {
+		base = 0
+	}
+}

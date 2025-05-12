@@ -228,6 +228,7 @@ current_gold_value = {
 default_event_cooldown_duration = 730
 long_event_cooldown_duration = 1200
 default_favor_duration = 3650
+prophecy_duration = 25 #years
 
 #SKILL RATINGS
 average_skill_rating = 8 #Tracks what we see as "typical". For use in duels, etc.
@@ -488,6 +489,11 @@ medium_dread_gain = 20
 major_dread_gain = 30
 massive_dread_gain = 50
 monumental_dread_gain = 70
+
+minor_dread_value = 20
+medium_dread_value = 45
+major_dread_value = 70
+massive_dread_value = 95
 
 execute_interaction_minor_dread_gain = 5
 execute_interaction_medium_dread_gain = 10
@@ -871,6 +877,7 @@ minor_piety_value = 50
 medium_piety_value = 100
 major_piety_value = 250
 massive_piety_value = 500
+monumental_piety_value = 1000
 
 
 miniscule_piety_loss = {
@@ -893,12 +900,17 @@ massive_piety_loss = {
 	value = 0
 	subtract = massive_piety_value
 }
+monumental_piety_loss = {
+	value = 0
+	subtract = monumental_piety_value
+}
 
 miniscule_piety_gain = miniscule_piety_value
 minor_piety_gain = minor_piety_value
 medium_piety_gain = medium_piety_value
 major_piety_gain = major_piety_value
 massive_piety_gain = massive_piety_value
+monumental_piety_gain = monumental_piety_value
 
 omega_piety_gain = {
 	value = massive_piety_value
@@ -1221,7 +1233,8 @@ crush_opinion_impact = 30
 
 #DYNASTY PRESTIGE
 
-raw_minimum_dynasty_prestige_value = 10 # Found that when doing GW with leisure_palace_01
+#Unop Found that when doing GW with leisure_palace_01
+raw_minimum_dynasty_prestige_value = 10
 raw_miniscule_dynasty_prestige_value = 25
 raw_minor_dynasty_prestige_value = 50
 raw_medium_dynasty_prestige_value = 75
@@ -1234,7 +1247,7 @@ raw_excessive_dynasty_prestige_value = 2500
 raw_struggle_ending_dynasty_prestige_value = 10000
 
 #Note! These are base values, use loss/gain below
-minimum_dynasty_prestige_value = {
+minimum_dynasty_prestige_value = { #Unop
 	value = 10
 	multiply = { value = scale_dynasty_prestige_by_era }
 }
@@ -1264,7 +1277,7 @@ excessive_dynasty_prestige_value = 2500
 scale_dynasty_prestige_by_era = {
 	value = 1
 	if = {
-		limit = { # dynast mean we are inside a Dynasty scope
+		limit = { #Unop dynast mean we are inside a Dynasty scope
 			exists = dynast.culture
 		}
 		dynast.culture = {
@@ -1282,7 +1295,7 @@ scale_dynasty_prestige_by_era = {
 			}
 		}
 	}
-	else_if = {
+	else_if = { #Unop dynasty means we are inside a character scope
 		limit = {
 			exists = dynasty.dynast.culture
 		}
@@ -1303,7 +1316,7 @@ scale_dynasty_prestige_by_era = {
 	}
 }
 
-minimum_dynasty_prestige_loss = {
+minimum_dynasty_prestige_loss = { #Unop
 	value = 0
 	subtract = minimum_dynasty_prestige_value
 }
@@ -1336,7 +1349,7 @@ excessive_dynasty_prestige_loss = {
 	subtract = excessive_dynasty_prestige_value
 }
 
-minimum_dynasty_prestige_gain = { value = minimum_dynasty_prestige_value }
+minimum_dynasty_prestige_gain = { value = minimum_dynasty_prestige_value } #Unop
 miniscule_dynasty_prestige_gain = { value = miniscule_dynasty_prestige_value }
 minor_dynasty_prestige_gain = { value = minor_dynasty_prestige_value }
 medium_dynasty_prestige_gain = { value = medium_dynasty_prestige_value }
@@ -1446,7 +1459,7 @@ gift_artifact_opinion = {
 			}
 		}
 		if = {
-			limit = { 
+			limit = { #Unop Compare to percent instead of value
 				artifact_durability_percent <= {
 					value = define:NInventory|ARTIFACT_LOW_DURABILITY
 					divide = 100
@@ -1455,7 +1468,7 @@ gift_artifact_opinion = {
 			divide = 3 # 1/3 for damaged artifacts
 		}
 		if = {
-			limit = {
+			limit = { #Unop Compare to percent instead of value
 				artifact_durability_percent <= {
 					value = define:NInventory|ARTIFACT_VERY_LOW_DURABILITY
 					divide = 100

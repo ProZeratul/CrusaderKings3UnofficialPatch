@@ -351,6 +351,7 @@ trait_specific.1010 = {
 
 	option = {
 		name = trait_specific.1010.a
+		#Unop Moved from immediate
 		if = {
 			limit = { has_inactive_trait = lunatic_genetic }
 			make_trait_active = lunatic_genetic
@@ -429,6 +430,7 @@ trait_specific.2002 = {
 
 	option = {
 		name = trait_specific.2002.a
+		#Unop Moved from immediate
 		if = {
 			limit = { has_inactive_trait = possessed_genetic }
 			make_trait_active = possessed_genetic
@@ -513,7 +515,7 @@ trait_specific.3002 = {
 
 	option = {
 		name = trait_specific.3999.a
-		if = {
+		if = { #Unop Add depressed_genetic
 			limit = { has_inactive_trait = depressed_genetic }
 			make_trait_active = depressed_genetic
 		}
@@ -893,7 +895,6 @@ trait_specific.6002 = {
 	left_portrait = {
 		character = root
 		animation = shame
-		outfit_tags = { no_clothes }
 	}
 	right_portrait = {
 		character = scope:lover
@@ -997,6 +998,7 @@ trait_specific.6002 = {
 				}
 			}
 		}
+		add_character_flag = is_naked
 	}
 
 	option = { #I'm into it
@@ -1034,8 +1036,10 @@ trait_specific.6002 = {
 			base = medium_stress_impact_gain
 		}
 	}
+	after = {
+		remove_character_flag = is_naked
+	}
 }
-
 
 ################
 ################
@@ -1499,8 +1503,10 @@ trait_specific.8501 = {
 			save_scope_as = mean_courtier
 		}
 
-		lisp_mocking_reaction_effect = yes
+		lisp_mocking_reaction_effect = yes #Unop moved from above
 	}
+
+
 
 	option = {
 		name = trait_specific.8501.a

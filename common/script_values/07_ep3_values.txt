@@ -654,6 +654,31 @@ appointment_score_interaction_multiplier_modifiers_value = {
 	}
 }
 
+# Eparch values
+eparch_aptitude_modifier_scaling_value = {
+	value = 1
+	if = {
+		limit = { exists = root }
+		add = root.aptitude:eparch_court_position
+	}
+	desc = MODIFIER_DEFINITION_MAIN_DESC_EPARCH_APTITUDE
+}
+university_cost_reduction_value = 0.25
+eparch_scheme_secrecy_bonus_value = {
+	if = {
+		limit = {
+			scope:owner = { has_court_position = eparch_court_position }
+			scope:target = {
+				domicile ?= { domicile_location = owner.top_liege.capital_province }
+			}
+		}
+		add = {
+			value = 15
+			desc = eparch_scheme_bonus_desc
+		}
+	}
+}
+
 # State Faith
 ep3_state_faith_conversion_mult_value = 2
 
@@ -736,22 +761,15 @@ ep3_laamp_chance_score_value = {
 		limit = { has_trait = physique_good }
 		add = 3
 	}
-	# Fame
-	every_trait_in_category = {
-		category = fame
-		limit = { root = { has_trait = prev } }
-		add = 3
+	# Fame/Lifestyle/Commander
+	every_character_trait = {
+		limit = {
+			OR = {
+				has_trait_category = fame
+				has_trait_category = lifestyle
+				has_trait_category = commander
 	}
-	# Lifestyle
-	every_trait_in_category = {
-		category = lifestyle
-		limit = { root = { has_trait = prev } }
-		add = 3
 	}
-	# Commander
-	every_trait_in_category = {
-		category = commander
-		limit = { root = { has_trait = prev } }
 		add = 3
 	}
 	# Education
@@ -803,6 +821,12 @@ ep3_laamp_chance_score_value = {
 	if = {
 		limit = {
 			culture = { has_cultural_parameter = unlock_voluntary_laampdom }
+		}
+		add = 5
+	}
+	if = {
+		limit = {
+			has_trait = nomadic_philosophy
 		}
 		add = 5
 	}
@@ -943,6 +967,10 @@ ep3_laamp_flavour_ewan_4041_regiment_damage_earthquake_max = 80
 
 chariot_race_entrance_fee = {
 	value = 50
+}
+
+chariot_race_base_cost_value = {
+	value = 200
 }
 
 chariot_ordering_value = {
@@ -1488,6 +1516,49 @@ governor_efficiency = {
 			}
 		}
 
+		# Eparch court position
+		if = {
+			limit = {
+				employs_court_position = eparch_court_position
+			}
+			add = {
+				add = {
+					value = 1
+					court_position:eparch_court_position ?= {
+						add = aptitude:eparch_court_position
+					}
+					multiply = 2
+					desc = eparch_increase_efficiency_desc
+				}
+				divide = 100
+			}
+		}
+		else_if = {
+			limit = {
+				top_liege ?= {
+					employs_court_position = eparch_court_position
+				}
+				NOT = { has_court_position = eparch_court_position }
+				domicile ?= {
+					domicile_location = {
+						this = county.holder.top_liege.capital_province
+					}
+				}
+			}
+			add = {
+				add = {
+					value = 1
+					top_liege ?= {
+						court_position:eparch_court_position ?= {
+							add = aptitude:eparch_court_position
+						}
+					}
+					desc = eparch_increase_efficiency_vassal_desc
+				}
+				divide = 100
+			}
+		}
+
 		# Events
 		add = {
 			add = {
@@ -1831,14 +1902,15 @@ appointment_score_max_tt_value = {
 		limit = {
 			exists = scope:target
 			exists = scope:secondary_recipient
+			NOT = { scope:secondary_recipient = scope:target.current_heir }
 		}
 		add = {
 			value = "scope:target.current_heir.appointment_candidate_score(scope:target)"
 			multiply = 1.1
 		}
 		subtract = "scope:secondary_recipient.appointment_candidate_score(scope:target)"
+		min = 4 # We do this to prevent cases when the default score of the candidate is already much higher than that the heir
 	}
-	min = 4 # We do this to prevent cases when the default score of the candidate is already much higher than that the heir
 	multiply = scope:actor.appointment_score_interaction_multiplier_modifiers_value
 }
 
@@ -2210,42 +2282,42 @@ task_contract_extra_reward_multiplier_value = 1.5 # Update all relevant paramete
 
 # How do we multiply the cash rewards in a task contract depending on the employer's tier?
 task_contract_tier_gold_multiplier_value = {
-	scope:task_contract.task_contract_employer ?= {
-		# Kings'n'emperors.
-		if = {
-			limit = { highest_held_title_tier >= define:NTaskContract|HIGH_TASK_CONTRACT_TIER }
-			add = 3
-		}
-		# Dukes.
-		else_if = {
-			limit = { highest_held_title_tier >= define:NTaskContract|MEDIUM_TASK_CONTRACT_TIER }
-			add = 2
-		}
-		# Courtiers first, as we give them a bit less.
-		else_if = {
-			limit = { highest_held_title_tier <= 0 }
-			add = 0.5
-			ceiling = yes
-		}
-		# Lastly, barons and counts are neutral, so no multiplier needed here.
-		else = { add = 1 }
+	value = 1 # Barons and counts are neutral, so no multiplier needed here.
+	if = {
+		limit = { exists = scope:task_contract.task_contract_employer }
+			# Kings'n'emperors.
+			if = {
+			limit = { scope:task_contract.task_contract_employer.highest_held_title_tier >= define:NTaskContract|HIGH_TASK_CONTRACT_TIER }
+				add = 3
+			}
+			# Dukes.
+			else_if = {
+			limit = { scope:task_contract.task_contract_employer.highest_held_title_tier >= define:NTaskContract|MEDIUM_TASK_CONTRACT_TIER }
+				add = 2
+			}
+			# Courtiers first, as we give them a bit less.
+			else_if = {
+			limit = { scope:task_contract.task_contract_employer.highest_held_title_tier <= 0 }
+				add = 0.5
+				ceiling = yes
+			}
 	}
 }
 # How do we multiply the non-cash rewards in a task contract depending on the employer's tier?
 task_contract_tier_other_reward_multiplier_value = {
-	scope:task_contract.task_contract_employer = {
+	value = 1 # Barons and counts are neutral, so no multiplier needed here.
+	if = {
+		limit = { exists = scope:task_contract.task_contract_employer }
 		# Kings'n'emperors.
 		if = {
-			limit = { highest_held_title_tier >= define:NTaskContract|HIGH_TASK_CONTRACT_TIER }
+			limit = { scope:task_contract.task_contract_employer.highest_held_title_tier >= define:NTaskContract|HIGH_TASK_CONTRACT_TIER }
 			add = 2.5
 		}
 		# Dukes.
 		else_if = {
-			limit = { highest_held_title_tier >= define:NTaskContract|MEDIUM_TASK_CONTRACT_TIER }
+			limit = { scope:task_contract.task_contract_employer.highest_held_title_tier >= define:NTaskContract|MEDIUM_TASK_CONTRACT_TIER }
 			add = 1.5
 		}
-		# Lastly, barons and counts are neutral, so no multiplier needed here.
-		else = { add = 1 }
 	}
 }
 
@@ -2261,6 +2333,16 @@ task_contract_success_prestige_gain_full_value = {
 			}
 		}
 		multiply = 1.2
+	}
+	if = {
+		limit = {
+			scope:taker ?= {
+				house = {
+					has_house_modifier = legacy_adventurer_house_modifier
+				}
+			}
+		}
+		multiply = 1.15
 	}
 }
 ## Boosted scaling reward.
@@ -2334,14 +2416,18 @@ task_contract_success_gold_gain_full_value = {
 	# Lifestyle perks.
 	if = {
 		limit = {
-			scope:task_contract.task_contract_taker ?= { has_perk = at_any_cost_perk }
+			exists = scope:task_contract.task_contract_taker
+			scope:task_contract.task_contract_taker = { has_perk = at_any_cost_perk }
 		}
 		multiply = 1.25
 	}
 	# Stuff that NEEDS to stay at the bottom.
 	## Vary our final tally up a bit.
 	if = {
-		limit = { scope:task_contract.task_contract_employer.ai_greed != 0 }
+		limit = {
+			exists = scope:task_contract.task_contract_taker
+			scope:task_contract.task_contract_employer.ai_greed != 0
+		}
 		add = {
 			value = scope:task_contract.task_contract_employer.ai_greed
 			multiply = -0.2
@@ -2354,7 +2440,10 @@ task_contract_success_gold_gain_full_value = {
 	}
 	## And boost a bit further for exceptional rewards, so that they're never beneath the common rewards.
 	if = {
-		limit = { scope:gold_safety_margin ?= flag:yes }
+		limit = {
+			exists = scope:gold_safety_margin
+			scope:gold_safety_margin = flag:yes
+		}
 		add = 10
 	}
 	## Shouldn't happen but just in case someone is really, really, _really_ stingy: never pay less than at least a truly pathetic amount.
@@ -2411,6 +2500,8 @@ task_contract_success_gold_gain_travel_value = {
 	multiply = task_contract_tier_gold_multiplier_value
 	# Lifestyle perks.
 	if = {
+		limit = { exists = scope:task_contract.task_contract_taker }
+	if = {
 		limit = {
 			scope:task_contract.task_contract_taker = { has_perk = at_any_cost_perk }
 		}
@@ -2422,20 +2513,30 @@ task_contract_success_gold_gain_travel_value = {
 		}
 		multiply = 2
 	}
+	}
 	# Stuff that NEEDS to stay at the bottom.
 	## Vary our final tally up a bit.
 	if = {
-		limit = { scope:task_contract.task_contract_employer.ai_greed != 0 }
+		limit = {
+			exists = scope:task_contract.task_contract_employer
+			scope:task_contract.task_contract_employer.ai_greed != 0
+		}
 		add = {
 			value = scope:task_contract.task_contract_employer.ai_greed
 			multiply = -0.2
 		}
 	}
 	## Plus change the last digit around slightly so the values look a little less robotic.
-	scope:gold_fuzz ?= { add = scope:gold_fuzz }
+	if = {
+		limit = { exists = scope:gold_fuzz }
+		add = scope:gold_fuzz
+	}
 	## And boost a bit further for exceptional rewards, so that they're never beneath the common rewards.
 	if = {
-		limit = { scope:gold_safety_margin ?= flag:yes }
+		limit = {
+			exists = scope:gold_safety_margin
+			scope:gold_safety_margin ?= flag:yes
+		}
 		add = 10
 	}
 	## Shouldn't happen but just in case someone is really, really, _really_ stingy: never pay less than at least a truly pathetic amount.
@@ -2482,6 +2583,8 @@ task_contract_success_gold_gain_crime_value = {
 	multiply = task_contract_tier_gold_multiplier_value
 	# Lifestyle perks.
 	if = {
+		limit = { exists = scope:task_contract.task_contract_taker }
+	if = {
 		limit = {
 			scope:task_contract.task_contract_taker = { has_perk = at_any_cost_perk }
 		}
@@ -2493,9 +2596,12 @@ task_contract_success_gold_gain_crime_value = {
 		}
 		multiply = 2
 	}
+	}
 	# Stuff that NEEDS to stay at the bottom.
 	## Vary our final tally up a bit.
 	### This time, we add _more_ gold the greedier the employer is — it's a criminal reward, so the greedier they are, the more gold they have available (albeit not to the same degree as the inverse in normal contracts).
+	if = {
+		limit = { exists = scope:task_contract.task_contract_employer }
 	if = {
 		limit = { scope:task_contract.task_contract_employer.ai_greed > 1 }
 		add = {
@@ -2511,11 +2617,18 @@ task_contract_success_gold_gain_crime_value = {
 			multiply = -0.05
 		}
 	}
+	}
 	## Plus change the last digit around slightly so the values look a little less robotic.
-	scope:gold_fuzz ?= { add = scope:gold_fuzz }
+	if = {
+		limit = { exists = scope:gold_fuzz }
+		add = scope:gold_fuzz
+	}
 	## And boost a bit further for exceptional rewards, so that they're never beneath the common rewards.
 	if = {
-		limit = { scope:gold_safety_margin ?= flag:yes }
+		limit = {
+			exists = scope:gold_safety_margin
+			scope:gold_safety_margin = flag:yes
+		}
 		add = 10
 	}
 	## Shouldn't happen but just in case someone is really, really, _really_ stingy: never pay less than at least a truly pathetic amount.
@@ -2564,7 +2677,27 @@ task_contract_failure_provisions_gain_minor_value = 0
 
 adventurer_siege_replenish_amount = {
 	value = 0
-	add = scope:barony.title_province.available_loot
+	add = { #Unop: Because the recently_looted_modifier set the available_loot of the province to 0 and I don't know any way to get the potential value of the county I had to find a workaround to still make this work.
+		value = 0
+		if = {
+			limit = {
+				scope:barony.title_province = {
+					has_province_modifier = recently_looted_modifier
+				}
+			}
+			if = {
+				limit = {
+					scope:barony.title_province = { 
+						has_variable = unop_potential_province_loot 
+					}
+				}
+				add = scope:barony.title_province.var:unop_potential_province_loot
+			}
+		}
+		else = {
+			add = scope:barony.title_province.available_loot
+		}
+	}
 	multiply = {
 		value = 2
 		if = {
@@ -2578,7 +2711,27 @@ adventurer_siege_replenish_amount = {
 
 adventurer_siege_provisions_amount = {
 	value = 0
-	add = scope:barony.title_province.available_loot
+	add = { #Unop: Because the recently_looted_modifier set the available_loot of the province to 0 and I don't know any way to get the potential value of the county I had to find a workaround to still make this work.
+		value = 0
+		if = {
+			limit = {
+				scope:barony.title_province = {
+					has_province_modifier = recently_looted_modifier
+				}
+			}
+			if = {
+				limit = {
+					scope:barony.title_province = { 
+						has_variable = unop_potential_province_loot 
+					}
+				}
+				add = scope:barony.title_province.var:unop_potential_province_loot
+			}
+		}
+		else = {
+			add = scope:barony.title_province.available_loot
+		}
+	}
 	multiply = 20
 }
 
@@ -2638,7 +2791,7 @@ laamp_base_2011_actual_surveyable_holdings_per_tier_value = {
 	value = sub_realm_size
 	every_sub_realm_barony = {
 		limit = {
-			exists = holder
+			exists = holder #Unop
 			holder.highest_held_title_tier = tier_barony
 			NOT = { this = root.domicile.domicile_location.county } #Unop: Added the .county to prevent error: (left was 'landed_title', right was 'province')
 		}
@@ -3201,10 +3354,11 @@ house_power_score = {
 
 		# Add scoring for every house member on top liege's council
 		add = {
-			house_head.top_liege = {
+			house_head.top_liege ?= {
 				every_councillor = {
 					limit = {
-						house = scope:target_house
+						exists = house
+						scope:target_house ?= house
 					}
 					add = 15
 				}
@@ -3215,6 +3369,7 @@ house_power_score = {
 		# Malus for not practicing the state faith
 		if = {
 			limit = {
+				exists = house_head
 				NOT = { house_head.top_liege.primary_title.state_faith ?= house_head.faith }
 			}
 			add = {
@@ -3226,13 +3381,11 @@ house_power_score = {
 		# Estate building bonuses
 		if = { # Market
 			limit = {
-				house_head = {
-					domicile ?= {
+				house_head.domicile ?= {
 						has_domicile_parameter = estate_increase_powerful_family_rating
 						has_domicile_building_or_higher = market_05
 					}
 				}
-			}
 			add = {
 				value = 30
 				desc = estate_buildings_desc
@@ -3240,13 +3393,11 @@ house_power_score = {
 		}
 		else_if = {
 			limit = {
-				house_head = {
-					domicile ?= {
+				house_head.domicile ?= {
 						has_domicile_parameter = estate_increase_powerful_family_rating
 						has_domicile_building_or_higher = market_03
 					}
 				}
-			}
 			add = {
 				value = 20
 				desc = estate_buildings_desc
@@ -3254,9 +3405,7 @@ house_power_score = {
 		}
 		else_if = {
 			limit = {
-				house_head = {
-					domicile ?= { has_domicile_parameter = estate_increase_powerful_family_rating }
-				}
+				house_head.domicile ?= { has_domicile_parameter = estate_increase_powerful_family_rating }
 			}
 			add = {
 				value = 10
@@ -3266,9 +3415,7 @@ house_power_score = {
 		if = { # Catacombs
 			limit = {
 				exists = house_head.dynasty
-				house_head = {
-					domicile ?= { has_domicile_parameter = estate_powerful_family_rating_per_dynasty_level }
-				}
+				house_head.domicile ?= { has_domicile_parameter = estate_powerful_family_rating_per_dynasty_level }
 			}
 			add = {
 				value = estate_increase_powerful_famil_rating_per_dynasty_level_value
@@ -3280,7 +3427,7 @@ house_power_score = {
 		# When your estate is located in the realm's capital
 		if = {
 			limit = {
-				house_head = {
+				house_head ?= {
 					exists = top_liege.capital_province
 					domicile ?= {
 						is_domicile_type = estate
@@ -3297,7 +3444,7 @@ house_power_score = {
 		# Obligation/Theme Administration bonus
 		if = {
 			limit = {
-				house_head = { vassal_contract_has_flag = admin_prestige_obligation_bonus }
+				house_head ?= { vassal_contract_has_flag = admin_prestige_obligation_bonus }
 			}
 			add = {
 				value = 10
@@ -3307,7 +3454,7 @@ house_power_score = {
 
 		# Heart of the Family Diplomacy Lifestyle Perk
 		if = {
-			limit = { house_head = { has_perk = familial_familiar_perk } }
+			limit = { house_head ?= { has_perk = familial_familiar_perk } }
 			add = {
 				value = 10
 				desc = familial_familiar_perk_name
@@ -3317,7 +3464,7 @@ house_power_score = {
 		# Base score increase from Power is a Ladder dynasty legacy perk
 		if = {
 			limit = {
-				house_head.dynasty = { ep3_administrative_legacy_track_perks >= 3 }
+				house_head.dynasty ?= { ep3_administrative_legacy_track_perks >= 3 }
 			}
 			add = {
 				value = 15
@@ -3327,7 +3474,7 @@ house_power_score = {
 
 		# From Mass Arrests Decision
 		if = {
-			limit = { house_head = { has_character_flag = mass_arrests_house_power_malus } }
+			limit = { house_head ?= { has_character_flag = mass_arrests_house_power_malus } }
 			add = {
 				value = -15
 				desc = ep3_mass_arrests_house_power_malus
@@ -3340,7 +3487,7 @@ house_power_score = {
 			every_house_member = {
 				limit = {
 					is_governor = yes
-					top_liege = house.house_head.top_liege
+					house.house_head.top_liege ?= top_liege
 				}
 				add = 0.4 # Let's add a multiplier to the overall score for each governorship
 			}
@@ -3353,7 +3500,7 @@ house_power_score = {
 				any_house_member = {
 					is_independent_ruler = yes
 					primary_title.tier >= tier_empire
-					top_liege = house.house_head.top_liege
+					house.house_head.top_liege ?= top_liege
 				}
 			}
 			add = {
@@ -3585,14 +3732,14 @@ ep3_foreign_ruler_interest_in_coup_value = {
 
 ep3_distance_to_comparator_claim = {
 	value = 0
-	add = "title_capital_county.squared_distance(scope:comparator.capital_province)"
+	add = "title_capital_county.squared_distance(scope:comparator.capital_province)" #Unop
 	abs = yes
 	multiply = -1
 }
 
 ep3_distance_to_comparator_capital_county = {
 	value = 0
-	add = "squared_distance(scope:comparator.capital_province)"
+	add = "squared_distance(scope:comparator.capital_province)" #Unop
 	abs = yes
 	multiply = -1
 }
@@ -3957,6 +4104,29 @@ gold_refill_value = {
 		}
 		multiply = 1.25
 	}
+	if = {
+		limit = {
+			scope:laamp_temp ?= {
+				government_has_flag = government_is_nomadic
+			}
+		}
+		multiply = 1.5
+	}
+	if = {
+		limit = {
+			trigger_if = {
+				limit = { exists = scope:laamp_temp }
+				scope:laamp_temp = { government_has_flag = government_is_nomadic }
+			}
+			trigger_else = { always = no }
+		}
+		multiply = {
+			add = scope:laamp_temp.martial
+			subtract = 8
+			divide = 100
+			add = 1
+		}
+	}
 }
 
 gold_refill_value_tt = {
@@ -3973,6 +4143,23 @@ gold_refill_value_tt = {
 			landless_inspector_king_of_the_wilds = yes
 		}
 		multiply = 1.25
+	}
+	if = {
+		limit = {
+			government_has_flag = government_is_nomadic
+		}
+		multiply = 1.5
+	}
+	if = {
+		limit = {
+			government_has_flag = government_is_nomadic
+		}
+		multiply = {
+			add = martial
+			subtract = 8
+			divide = 100
+			add = 1
+		}
 	}
 }
 

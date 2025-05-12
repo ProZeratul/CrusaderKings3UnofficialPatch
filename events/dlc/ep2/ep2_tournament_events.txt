@@ -2178,9 +2178,10 @@ ep2_tournament_events.0020 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					scope:secret = {
-						exists = this
-					}
+					exists = scope:secret #Unop: To prevent a failed context switch in the logs 
+					#scope:secret = {
+					#	exists = this
+					#}
 				}
 				desc = ep2_tournament_events.0020.secret
 			}
@@ -2221,9 +2222,10 @@ ep2_tournament_events.0020 = {
 		name = ep2_tournament_events.0020.a
 
 		trigger = {
-			scope:secret = {
-				exists = this
-			}
+			exists = scope:secret #Unop: To prevent a failed context switch in the logs 
+			#scope:secret = {
+			#	exists = this
+			#}
 			OR = {
 				has_trait = sadistic
 				has_trait = callous
@@ -2283,9 +2285,10 @@ ep2_tournament_events.0020 = {
 		name = ep2_tournament_events.0020.b
 
 		trigger = {
-			scope:secret = {
-				exists = this
-			}
+			exists = scope:secret #Unop: To prevent a failed context switch in the logs 
+			#scope:secret = {
+			#	exists = this
+			#}
 		}
 
 		add_internal_flag = special
@@ -3698,14 +3701,10 @@ ep2_tournament_events.1006 = {
 				}
 			}
 		}
-		#else = {
+		#else = { #Unop
 		#	create_artifact_brooch_effect = {
 		#		OWNER = scope:surrendering_knight
 		#		SMITH = scope:surrendering_knight
-		#	}
-		#	if = {
-		#		limit = { exists = scope:newly_created_artifact }
-		#		scope:newly_created_artifact = { save_scope_as = artifact }
 		#	}
 		#}
 
@@ -3829,7 +3828,7 @@ ep2_tournament_events.1006 = {
 		name = ep2_tournament_events.1006.c
 
 		trigger = {
-			exists = scope:artifact
+			exists = scope:artifact  #Unop Use simpler trigger
 		}
 
 		scope:artifact = {
@@ -3860,7 +3859,7 @@ ep2_tournament_events.1006 = {
 		name = ep2_tournament_events.1006.d
 
 		trigger = {
-			scope:surrendering_knight = {
+			scope:surrendering_knight = { #Unop Fix trigger conditions
 				gold < 5
 			}
 			NOT = { exists = scope:artifact }
@@ -3921,6 +3920,7 @@ ep2_tournament_events.1007 = {
 	desc = ep2_tournament_events.1007.desc
 	theme = tournament_contest
 	window = widget_activity_locale_fullscreen_event
+	#theme = tournament_contest #Unop Duplicated
 	left_portrait = {
 		character = root
 		animation = thinking
@@ -7630,6 +7630,7 @@ ep2_tournament_events.2001 = {
 	desc = ep2_tournament_events.2001.desc
 	theme = tournament_contest
 	window = widget_activity_locale_fullscreen_event
+	#theme = tournament_contest #Unop Duplicated
 	left_portrait = {
 		character = root
 		animation = aggressive_unarmed
@@ -10685,12 +10686,13 @@ ep2_tournament_events.3504 = {
 	theme = tournament_contest
 	left_portrait = {
 		character = root
-		animation = jockey_loss
+		animation = pain
 	}
 
 	trigger = {
-		scope:activity.activity_host.culture = {
-			has_cultural_parameter = can_host_joust_contests
+		is_participant_in_activity = scope:activity
+		scope:activity = {
+			has_current_phase = tournament_phase_joust
 		}
 	}
 
@@ -10699,17 +10701,17 @@ ep2_tournament_events.3504 = {
 
 		random_list = {
 			1 = {
-				desc = ep2_tournament_events.3504.wound_tt
+				desc = ep2_tournament_events.3504.wound_tt #Unop Add desc
 				show_chance = no
 				increase_wounds_effect = { REASON = accident }
 			}
 			1 = {
-				desc = ep2_tournament_events.3504.incapable_tt
+				desc = ep2_tournament_events.3504.incapable_tt #Unop Add desc
 				show_chance = no
 				add_trait = incapable
 			}
 			1 = {
-				desc = ep2_tournament_events.3504.death_tt
+				desc = ep2_tournament_events.3504.death_tt #Unop Add desc
 				show_chance = no
 				death = {
 					death_reason = death_tournament_quintain_hit
@@ -11878,7 +11880,7 @@ ep2_tournament_events.4008 = {
 	}
 
 	immediate = {
-		play_sound_effect = "event:/DLC/EP2/SFX/Ambience/2D/ep2_amb_2d_crowd_negative_reaction"
+		play_sound_effect = "event:/DLC/EP2/SFX/Ambience/2D/ep2_amb_2d_crowd_negative_reaction" #Unop Fix sound effect
 		contest_versus_player_vs_ai_scope_effect = yes
 		tournament_pivotal_flavor_variable_effect = { CONTEST = joust ID = 4008 }
 		scope:activity = {
@@ -12511,10 +12513,10 @@ ep2_tournament_events.5502 = {
 		scope:activity = {
 			add_activity_log_entry = {
 				key = tournament_plagiarism_log
-				tags = { good }
+				tags = { bad } # Unop: The tag was 'good' ? but the targt got cheating ?
 				score = 5
 				character = root
-				target = scope:versus_contestant
+				target = scope:contestant #Unop: Was versus_contestant but this scope does not exists
 			}
 		}
 	}
@@ -12600,12 +12602,11 @@ ep2_tournament_events.5502 = {
 		scope:contestant = {
 			activity_tournament_change_contestant_score_effect = { SCORE = decrease_medium }
 			add_prestige = minor_prestige_loss
-		}
-
-		progress_towards_rival_effect = {
-			REASON = rival_recital_booing
-			CHARACTER = scope:contestant
-			OPINION = default_rival_opinion
+			progress_towards_rival_effect = { #Unop: This char get mad at you, not the reverse.
+				REASON = rival_recital_booing
+				CHARACTER = root
+				OPINION = default_rival_opinion
+			}
 		}
 
 		stress_impact = {
@@ -13231,10 +13232,12 @@ ep2_tournament_events.5505 = {
 			}
 		}
 
-		progress_towards_rival_effect = {
-			REASON = rival_recital_insult
-			CHARACTER = scope:enemy
-			OPINION = default_rival_opinion
+		scope:enemy = { #Unop Enemy becomes your rival, not vice versa
+			progress_towards_rival_effect = {
+				REASON = rival_recital_insult
+				CHARACTER = root
+				OPINION = default_rival_opinion
+			}
 		}
 
 		scope:activity = {
@@ -13295,10 +13298,12 @@ ep2_tournament_events.5505 = {
 			}
 		}
 
-		progress_towards_rival_effect = {
-			REASON = rival_recital_insult
-			CHARACTER = scope:enemy
-			OPINION = default_rival_opinion
+		scope:enemy = { #Unop Enemy becomes your rival, not vice versa
+			progress_towards_rival_effect = {
+				REASON = rival_recital_insult
+				CHARACTER = root
+				OPINION = default_rival_opinion
+			}
 		}
 
 		scope:activity = {
@@ -13358,10 +13363,12 @@ ep2_tournament_events.5505 = {
 			}
 		}
 
-		progress_towards_rival_effect = {
-			REASON = rival_recital_insult
-			CHARACTER = scope:enemy
-			OPINION = default_rival_opinion
+		scope:enemy = { #Unop Enemy becomes your rival, not vice versa
+			progress_towards_rival_effect = {
+				REASON = rival_recital_insult
+				CHARACTER = root
+				OPINION = default_rival_opinion
+			}
 		}
 
 		scope:activity = {
@@ -13434,10 +13441,12 @@ ep2_tournament_events.5505 = {
 
 		activity_tournament_change_contestant_score_effect = { SCORE = increase_medium }
 
-		progress_towards_rival_effect = {
-			REASON = rival_recital_insult
-			CHARACTER = scope:enemy
-			OPINION = default_rival_opinion
+		scope:enemy = { #Unop Enemy becomes your rival, not vice versa
+			progress_towards_rival_effect = {
+				REASON = rival_recital_insult
+				CHARACTER = root
+				OPINION = default_rival_opinion
+			}
 		}
 
 		if = {
@@ -13504,10 +13513,12 @@ ep2_tournament_events.5505 = {
 
 		activity_tournament_change_contestant_score_effect = { SCORE = increase_minor }
 
-		progress_towards_friend_effect = {
-			REASON = friend_recital_compliment
-			CHARACTER = scope:enemy
-			OPINION = default_friend_opinion
+		scope:enemy = { #Unop Enemy becomes your rival, not vice versa
+			progress_towards_friend_effect = {
+				REASON = friend_recital_compliment
+				CHARACTER = root
+				OPINION = default_friend_opinion
+			}
 		}
 
 		if = {
@@ -13547,10 +13558,12 @@ ep2_tournament_events.5505 = {
 
 		activity_tournament_change_contestant_score_effect = { SCORE = increase_minor }
 
-		progress_towards_rival_effect = {
-			REASON = rival_recital_insult
-			CHARACTER = scope:enemy
-			OPINION = default_rival_opinion
+		scope:enemy = { #Unop Enemy becomes your rival, not vice versa
+			progress_towards_rival_effect = {
+				REASON = rival_recital_insult
+				CHARACTER = root
+				OPINION = default_rival_opinion
+			}
 		}
 
 		stress_impact = {
@@ -13855,7 +13868,7 @@ ep2_tournament_events.6501 = {
 	theme = tournament_contest
 	left_portrait = {
 		character = root
-		scripted_animation = bow_closed
+		scripted_animation = bow_closed #Unop Use scripted_animation
 	}
 	cooldown = { years = 1 }
 

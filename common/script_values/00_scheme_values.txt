@@ -10,14 +10,58 @@ scheme_failed_outcome_setback_value = -7
 
 #Scheme progress changes, 10% of current phase duration max in days
 scheme_progress_gain = {
-	value = scope:scheme.scheme_phase_duration
-	subtract = scope:scheme.scheme_progress
+	if = { #Unop ck3-tiger Use current scope if scope:scheme doesn't exist
+		limit = { exists = scope:scheme }
+		value = scope:scheme.scheme_phase_duration
+		subtract = scope:scheme.scheme_progress
+	}
+	else = {
+		value = scheme_phase_duration
+		subtract = scheme_progress
+	}
 	multiply = 0.1
 }
 scheme_progress_loss = {
-	value = scope:scheme.scheme_phase_duration
-	subtract = scope:scheme.scheme_progress
+	if = { #Unop ck3-tiger Use current scope if scope:scheme doesn't exist
+		limit = { exists = scope:scheme }
+		value = scope:scheme.scheme_phase_duration
+		subtract = scope:scheme.scheme_progress
+	}
+	else = {
+		value = scheme_phase_duration
+		subtract = scheme_progress
+	}
 	multiply = -0.1
+}
+scheme_progress_33 = {
+	if = { #Unop ck3-tiger Use current scope if scope:scheme doesn't exist
+		limit = { exists = scope:scheme }
+		value = scope:scheme.scheme_phase_duration
+	}
+	else = {
+		value = scheme_phase_duration
+	}
+	multiply = 0.33
+}
+scheme_progress_50 = {
+	if = { #Unop ck3-tiger Use current scope if scope:scheme doesn't exist
+		limit = { exists = scope:scheme }
+		value = scope:scheme.scheme_phase_duration
+	}
+	else = {
+		value = scheme_phase_duration
+	}
+	multiply = 0.5
+}
+scheme_progress_66 = {
+	if = { #Unop ck3-tiger Use current scope if scope:scheme doesn't exist
+		limit = { exists = scope:scheme }
+		value = scope:scheme.scheme_phase_duration
+	}
+	else = {
+		value = scheme_phase_duration
+	}
+	multiply = 0.66
 }
 # Secrecy changes
 minor_secrecy_loss = -0.05
@@ -172,6 +216,21 @@ influence_bribe_value = {
 piety_bribe_value = {
 	# Base.
 	value = medium_piety_value
+	# Your tier.
+	add = {
+		value = 25
+		multiply = scope:actor.highest_held_title_tier
+	}
+	# Their tier.
+	add = {
+		value = 25
+		multiply = scope:recipient.highest_held_title_tier
+	}
+}
+
+herd_bribe_value = {
+	# Base.
+	value = major_herd_value_static
 	# Your tier.
 	add = {
 		value = 25
@@ -2583,51 +2642,84 @@ agent_groups_owner_perspective_value = {
 }
 
 agent_groups_target_character_perspective_value = {
-	#Unop ck3-tiger Use scope:temp_target defined by the base value
-	#if = {
-	#	limit = {
-	#		scope:scheme ?= {
-	#			is_scheme_target_type = title
-	#		}
-	#	}
-	#	scope:scheme ?= {
-	#		scheme_target_title.holder ?= { save_temporary_scope_as = target }
-	#	}
-	#}
-	scope:temp_target = {
-		# We need to check the any's here to avoid +0s if there's no valid chars.
-		if = {
-			limit = {
-				any_courtier = { is_valid_agent_standard_trigger = yes }
-			}
-			add = {
-				value = 3
-				multiply = {
-					value = 0
-					every_courtier = {
-						limit = { is_valid_agent_standard_trigger = yes }
-						add = 1
-					}
-					max = 5
+	if = {
+		limit = {
+			exists = scope:target.holder
+		}
+		scope:target.holder = {
+			# We need to check the any's here to avoid +0s if there's no valid chars.
+			if = {
+				limit = {
+					any_courtier = { is_valid_agent_standard_trigger = yes }
 				}
-				desc = scheme_odds.agents.target.number_of_valid_courtiers_agents
+				add = {
+					value = 3
+					multiply = {
+						value = 0
+						every_courtier = {
+							limit = { is_valid_agent_standard_trigger = yes }
+							add = 1
+						}
+						max = 5
+					}
+					desc = scheme_odds.agents.target_holder.number_of_valid_courtiers_agents
+				}
+			}
+			if = {
+				limit = {
+					any_vassal = { is_valid_agent_standard_trigger = yes }
+				}
+				add = {
+					value = 2
+					multiply = {
+						value = 0
+						every_vassal = {
+							limit = { is_valid_agent_standard_trigger = yes }
+							add = 1
+						}
+						max = 5
+					}
+					desc = scheme_odds.agents.target_holder.number_of_valid_vassal_agents
+				}
 			}
 		}
-		if = {
-			limit = {
-				any_vassal = { is_valid_agent_standard_trigger = yes }
-			}
-			add = {
-				value = 2
-				multiply = {
-					value = 0
-					every_vassal = {
-						limit = { is_valid_agent_standard_trigger = yes }
-						add = 1
-					}
-					max = 5
+	}
+	else = {
+		scope:target = {
+			# We need to check the any's here to avoid +0s if there's no valid chars.
+			if = {
+				limit = {
+					any_courtier = { is_valid_agent_standard_trigger = yes }
 				}
-				desc = scheme_odds.agents.target.number_of_valid_vassal_agents
+				add = {
+					value = 3
+					multiply = {
+						value = 0
+						every_courtier = {
+							limit = { is_valid_agent_standard_trigger = yes }
+							add = 1
+						}
+						max = 5
+					}
+					desc = scheme_odds.agents.target.number_of_valid_courtiers_agents
+				}
+			}
+			if = {
+				limit = {
+					any_vassal = { is_valid_agent_standard_trigger = yes }
+				}
+				add = {
+					value = 2
+					multiply = {
+						value = 0
+						every_vassal = {
+							limit = { is_valid_agent_standard_trigger = yes }
+							add = 1
+						}
+						max = 5
+					}
+					desc = scheme_odds.agents.target.number_of_valid_vassal_agents
+				}
 			}
 		}
 	}
@@ -3032,6 +3124,19 @@ odds_skill_contribution_diplomacy_value = {
 		}
 	}
 }
+odds_skill_contribution_diplomacy_title_value = {
+	add = {
+		value = scope:owner.diplomacy
+		desc = scheme_odds.diplomacy.owner
+	}
+	scope:target.holder ?= {
+		add = {
+			value = scope:target.holder.diplomacy
+			desc = scheme_odds.diplomacy.target_holder
+			multiply = -0.5
+		}
+	}
+}
 odds_skill_contribution_martial_value = {
 	add = {
 		value = scope:owner.martial
@@ -3071,6 +3176,25 @@ odds_skill_contribution_intrigue_value = {
 		}
 	}
 }
+
+odds_variables_contribution_murder = {
+	## nomad_events.0006
+	if = {
+		limit = {
+			scope:owner = {
+				has_variable = achmach_murder_help_var
+				any_councillor = {
+					has_variable = achmach_murder_help_councillor_var
+				}
+			}
+		}
+		add = {
+			value = 15
+			desc = "ACHMACH_MURDER_BONUS"
+		}
+	}
+}
+
 odds_skill_contribution_learning_value = {
 	add = {
 		value = scope:owner.learning
@@ -3817,6 +3941,14 @@ odds_learn_language_scheme_misc_value = {
 			}
 			add = 4
 		}
+		if = {
+			limit = {
+				scope:owner ?= {
+					var:family_widow_forbidden_divorce ?= scope:target
+				}
+			}
+			add = 20
+		}
 	}
 	
 }
@@ -4054,6 +4186,139 @@ odds_subsume_province_scheme_misc_value = {
 	
 }
 
+#Unop Not used, same name as value below
+# same as odds_raid_estate_scheme_misc_value but target is a title
+#odds_dispute_border_scheme_misc_value = {
+#	add = {
+#		value = 0
+#		desc = scheme_odds.misc_modifiers
+#		add = {
+#			value = scope:owner.influence_level
+#			multiply = 2
+#		}
+#		add = {
+#			value = scope:target.influence_level
+#			multiply = -4
+#		}
+#		if = {
+#			limit = {
+#				scope:target.house = scope:owner.top_liege.house
+#			}
+#			add = -12
+#		}
+#		if = {
+#			limit = {
+#				scope:owner.house = {
+#					is_powerful_family = yes
+#					is_dominant_family = no
+#				}
+#			}
+#			add = 8
+#		}
+#		if = {
+#			limit = {
+#				scope:target.house = {
+#					is_powerful_family = yes
+#					is_dominant_family = no
+#				}
+#			}
+#			add = -16
+#		}
+#		if = {
+#			limit = {
+#				scope:target.domicile ?= {
+#					OR = {
+#						has_domicile_building_or_higher = barracks_01
+#						has_domicile_building_or_higher = guardhouse_01
+#						has_domicile_building_or_higher = watchtower_01
+#						has_domicile_building_or_higher = estate_main_02
+#					}
+#				}
+#			}
+#			add = -4
+#		}
+#		if = {
+#			limit = {
+#				scope:target.domicile ?= {
+#					OR = {
+#						has_domicile_building_or_higher = barracks_03
+#						has_domicile_building_or_higher = guardhouse_03
+#						has_domicile_building_or_higher = watchtower_03
+#						has_domicile_building_or_higher = estate_main_04
+#					}
+#				}
+#			}
+#			add = -12
+#		}
+#	}
+#}
+
+odds_dispute_border_scheme_misc_value = {
+	add = {
+		value = 0
+		desc = scheme_odds.misc_modifiers
+		add = {
+			value = scope:owner.influence_level
+			multiply = 2
+		}
+		add = {
+			value = scope:target.holder.influence_level
+			multiply = -4
+		}
+		if = {
+			limit = {
+				scope:target.holder.house = scope:owner.top_liege.house
+			}
+			add = -12
+		}
+		if = {
+			limit = {
+				scope:owner.house = {
+					is_powerful_family = yes
+					is_dominant_family = no
+				}
+			}
+			add = 8
+		}
+		if = {
+			limit = {
+				scope:target.holder.house = {
+					is_powerful_family = yes
+					is_dominant_family = no
+				}
+			}
+			add = -16
+		}
+		if = {
+			limit = {
+				scope:target.holder.domicile ?= {
+					OR = {
+						has_domicile_building_or_higher = barracks_01
+						has_domicile_building_or_higher = guardhouse_01
+						has_domicile_building_or_higher = watchtower_01
+						has_domicile_building_or_higher = estate_main_02
+					}
+				}
+			}
+			add = -4
+		}
+		if = {
+			limit = {
+				scope:target.holder.domicile ?= {
+					OR = {
+						has_domicile_building_or_higher = barracks_03
+						has_domicile_building_or_higher = guardhouse_03
+						has_domicile_building_or_higher = watchtower_03
+						has_domicile_building_or_higher = estate_main_04
+					}
+				}
+			}
+			add = -12
+		}
+	}
+}
+
+# same as odds_dispute_border_scheme_misc_value but target is a character
 odds_raid_estate_scheme_misc_value = {
 	add = {
 		value = 0
@@ -4673,6 +4938,14 @@ odds_romance_scheme_misc_value = {
 				}
 			}
 			add = -36
+		}
+		if = {
+			limit = {
+				scope:owner ?= {
+					var:family_widow_forbidden_divorce ?= scope:target
+				}
+			}
+			add = 20
 		}
 	}
 }

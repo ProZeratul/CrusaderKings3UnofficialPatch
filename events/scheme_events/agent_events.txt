@@ -413,8 +413,8 @@ scripted_trigger agent_events_0012_extra_requirements_for_lovers_trigger = {
 				faith = { has_doctrine_parameter = no_unfaithfulness_penalty_active }
 			}
 			NOR = {
-				is_consort_of = scope:char_1
-				is_consort_of = scope:char_2
+				is_consort_of = scope:char_temp #Unop ck3-tiger Use correct scopes
+				is_consort_of = scope:char_temp_2 #Unop ck3-tiger Use correct scopes
 			}
 		}
 	}
@@ -4245,7 +4245,7 @@ agent_events.3051 = {
 				change_opportunities = 2
 			}
 		}
-		scope:target_rival = { #Unop: Scope was missing so root add opinion on root
+		scope:target_rival = {
 			add_opinion = {
 				target = root
 				modifier = respect_opinion
@@ -4625,9 +4625,9 @@ scripted_trigger agent_events_4001_too_far_from_target_trigger = {
 	is_commanding_army = no
 	exists = location #Unop: To avoid the error: Character with no location in link 'location'
 	location = { is_sea_province = no } #Unop: Computation distance will fail at sea
-	exists = scope:scheme.scheme_target_character.location #Unop: To avoid the error: Character with no location in link 'location'
+	exists = scope:scheme.scheme_target_character.location
 	scope:scheme.scheme_target_character.location = { is_sea_province = no } #Unop: Computation distance will fail at sea
-	location = {
+	location ?= {
 		squared_distance = {
 			target = scope:scheme.scheme_target_character.location
 			value >= squared_distance_large
@@ -4790,8 +4790,8 @@ scripted_trigger agent_events_4011_nicely_close_to_target_trigger = {
 	exists = location
 	exists = scope:scheme.scheme_target_character.location
 	location = { is_sea_province = no }
-	#/Unop
 	scope:scheme.scheme_target_character.location = { is_sea_province = no }
+	#/Unop
 	location ?= scope:scheme.scheme_target_character.location
 	save_temporary_scope_as = char_temp
 	scope:scheme = {

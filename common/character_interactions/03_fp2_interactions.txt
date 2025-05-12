@@ -1025,7 +1025,7 @@ challenge_to_2p_chess_interaction = {
 	icon = icon_gaming
 	category = interaction_category_friendly
 	desc = challenge_to_2p_chess_interaction_desc
-	common_interaction = yes
+	common_interaction = no
 
 	greeting = positive
 	notification_text = CHALLENGE_TO_2P_CHESS_INTERACTION_NOTIFICATION
@@ -1997,15 +1997,17 @@ purchase_truce_interaction = {
 
 	is_shown = {
 		NOT = { scope:actor = scope:recipient }
-		# Scope:actor needs to either be involved in certain struggle types or else have a specific perk.
 		scope:actor = {
 			is_landless_adventurer = no
-			OR = {
-				any_character_struggle = {
-					involvement = involved
-					has_struggle_phase_parameter = unlocks_truce_purchasing_interaction
+
+			# If scope:recipient is a nomad and the actor is not, this is always available; otherwise,
+			# scope:actor needs to either be involved in certain struggle types or else have a specific perk.
+			OR = {	
+				AND = {
+					scope:recipient = { government_has_flag = government_is_nomadic }
+					NOT = { government_has_flag = government_is_nomadic }
 				}
-				has_perk = defensive_measures_perk
+				fp2_purchase_truce_interaction_soft_requirements_trigger = yes
 			}
 
 			# if you are not independent you should not be able to purchase truce with other fellow vassals only
@@ -2026,7 +2028,10 @@ purchase_truce_interaction = {
 
 	is_valid_showing_failures_only = {
 		# Scope:actor must be an available (adult or child).
-		scope:actor = { is_available = yes }
+		scope:actor = {
+			gold >= pt_sum_small_value
+			is_available = yes
+		}
 		# Scope:recipient must be at least available.
 		scope:recipient = { is_available = yes }
 		# Make sure that scope:actor is going into this with a clean, no-recent/active/forbidden hostilities mindset.
@@ -2441,45 +2446,6 @@ purchase_truce_interaction = {
 			add = 50
 			scope:actor.max_military_strength > scope:recipient.purchase_truce_interaction_recipient_far_stronger_value
 			desc = PT_AI_RECIPIENT_IS_MUCH_WEAKER
-		}
-
-		# Struggle
-		modifier = {
-			desc = AI_STRUGGLE_INTENT
-			scope:recipient = {
-				any_character_struggle = {
-					involvement = involved
-				}
-			}
-			scope:actor = {
-				any_character_struggle = {
-					involvement = involved
-				}
-			}
-			add = {
-				value = 0
-				if = {
-					limit = {
-						scope:recipient = {
-							any_character_struggle = {
-								phase_has_catalyst = catalyst_sign_truce_outside_war
-							}
-							has_character_flag = agenda_towards_escalation
-						}
-					}
-					add = -50
-				}
-				else_if = {
-					limit = {
-						scope:recipient = {
-							any_character_struggle = {
-								phase_has_catalyst = catalyst_sign_truce_outside_war
-							}
-						}
-					}
-					add = 100
-				}
-			}
 		}
 	}
 	## Performance-enhancement	
@@ -3174,11 +3140,13 @@ contract_assistance_interaction = {
 	is_shown = {
 		# Actor is Involved in Struggle
 		scope:actor = {
+			NOT = { government_has_flag = government_is_herder }
 			OR = {
 				any_character_struggle = {
 					involvement = involved
 					has_struggle_phase_parameter = unlocks_contract_assistance_interaction
 				}
+				culture = { has_cultural_parameter = unlocks_contract_assistance }
 				is_landless_adventurer = yes
 			}
 		}
@@ -3277,6 +3245,21 @@ contract_assistance_interaction = {
 					LAAMP = scope:actor
 				}
 			}
+		}
+
+		# Sensible restrictions to keep CulTrads from making this OP.
+		scope:recipient = {
+			custom_tooltip = {
+				text = contract_assistance_tier_too_high_tt
+				OR = {
+					highest_held_title_tier = tier_county
+					highest_held_title_tier >= scope:actor.highest_held_title_tier
+					sub_realm_size >= scope:actor.sub_realm_size
+				}
+			}
+		}
+		scope:actor = {
+			NOT = { highest_held_title_tier >= tier_empire }
 		}
 	}
 	
@@ -3639,6 +3622,7 @@ contract_assistance_interaction = {
 		is_imprisoned = no
 		is_at_war = no
 		ai_boldness >= -25
+		current_military_strength >= 500
 	}
 	ai_target_quick_trigger = { adult = yes }
 	ai_targets = {

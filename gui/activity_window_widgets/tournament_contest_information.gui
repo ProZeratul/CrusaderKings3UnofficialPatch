@@ -100,7 +100,7 @@ window = {
 					button_tab = {
 						name = "contest_info_contents_tabs_participants"
 						layoutpolicy_horizontal = expanding
-						visible = "[And( Or( Activity.IsPhaseInTheFuture(PlannedActivityPhase.Self), Activity.IsPhaseOngoing(PlannedActivityPhase.Self) ), Not( Activity.IsComplete ) )]"
+						visible = "[And( Or( Activity.IsPhaseInTheFuture(PlannedActivityPhase.Self), Activity.IsPhaseOngoing(PlannedActivityPhase.Self) ), Not( Activity.IsComplete ) )]" #Unop Remove closing brace
 
 						raw_text = "[SelectLocalization( Activity.IsCurrentPhaseActive, 'locale_window_tab_button_qualified', 'locale_window_tab_button_participants' )]"
 
@@ -111,7 +111,7 @@ window = {
 					button_tab = {
 						name = "contest_info_contents_tabs_log"
 						layoutpolicy_horizontal = expanding
-						visible = "[Or( Activity.IsPhaseInThePast(PlannedActivityPhase.Self), Activity.IsComplete )]"
+						visible = "[Or( Activity.IsPhaseInThePast(PlannedActivityPhase.Self), Activity.IsComplete )]" #Unop Remove closing brace
 
 
 						text = locale_window_tab_button_log
@@ -130,7 +130,7 @@ window = {
 						onclick = "[SetContestInfoTab('debug')]"
 						down = "[IsContestInfoTabViewing('debug')]"
 
-						using = Placeholder_Pink_Text
+						using = Text_Placeholder
 					}
 				}
 

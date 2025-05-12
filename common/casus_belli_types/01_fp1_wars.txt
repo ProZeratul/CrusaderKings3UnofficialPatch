@@ -152,12 +152,12 @@ fp1_varangian_adventurer_conquest = {
 					highest_held_title_tier >= tier_kingdom
 				}
 			}
-			
+
 		}
 	}
 
 	on_invalidated_desc = msg_county_conquest_war_invalidated_message
-	
+
 	on_invalidated = {}
 
 	cost = {
@@ -492,7 +492,7 @@ fp1_varangian_adventurer_conquest = {
 			name = suppress_legitimacy_loss
 			value = yes
 		}
-		
+
 		#EP2 accolade glory gain for winning against higher ranked enemy
 		scope:attacker = { accolade_attacker_war_end_glory_gain_med_effect = yes }
 
@@ -631,7 +631,7 @@ fp1_varangian_adventurer_conquest = {
 					save_scope_as = new_duchy
 				}
 				create_title_and_vassal_change = {
-					type = granted
+					type = granted #Unop: Was usurped but it clash with the title loss mechanic and make you loose prestige
 					save_scope_as = change
 					add_claim_on_loss = yes
 				}
@@ -755,12 +755,29 @@ fp1_varangian_adventurer_conquest = {
 					scope:attacker = { set_realm_capital = scope:new_capital }
 				}
 			}
+			### If nomadic, they will prefer county fertility
+			else_if = {
+				limit = {
+					any_in_list = {
+						list = target_titles
+						tier = tier_county
+						uses_county_fertility = yes 
+					}
+				}
+				ordered_in_list = {
+					list = target_titles
+					limit = { tier = tier_county }
+					order_by =  county_fertility
+					save_temporary_scope_as = new_capital
+					scope:attacker = { set_realm_capital = scope:new_capital }
+				}
+			}
 			### Everyone else prefers the highest development.
 			else = {
 				ordered_in_list = {
 					list = target_titles
 					limit = { tier = tier_county }
-					order_by = { add = development_level }
+					order_by = development_level
 					save_temporary_scope_as = new_capital
 					scope:attacker = { set_realm_capital = scope:new_capital }
 				}
@@ -838,7 +855,7 @@ fp1_varangian_adventurer_conquest = {
 							}
 							save_temporary_scope_as = spare_county
 							create_title_and_vassal_change = {
-								type = granted
+								type = granted #Unop: Was usurped but it clash with the title loss mechanic and make you loose prestige
 								save_scope_as = change
 								add_claim_on_loss = no
 							}
@@ -876,7 +893,7 @@ fp1_varangian_adventurer_conquest = {
 				}
 				# Assign the seceding title to the new upstart.
 				create_title_and_vassal_change = {
-					type = granted
+					type = granted #Unop: Was usurped but it clash with the title loss mechanic and make you loose prestige
 					save_scope_as = change
 					add_claim_on_loss = no
 				}
@@ -930,7 +947,7 @@ fp1_varangian_adventurer_conquest = {
 					}
 					# Assign the seceding title to the new upstart.
 					create_title_and_vassal_change = {
-						type = granted
+						type = granted #Unop: Was usurped but it clash with the title loss mechanic and make you loose prestige
 						save_scope_as = change
 						add_claim_on_loss = no
 					}
@@ -1030,7 +1047,7 @@ fp1_varangian_adventurer_conquest = {
 					NOT = { this = house.house_head }
 				}
 				found_cadet_house_decision_effect = {
-					CHARACTER = scope:attacker #Unop: ck3-tiger
+					CHARACTER = scope:attacker #Unop: Was 'this' but it can/will change depending on the scope inside the effect
 					PRESTIGE = 0
 				}
 			}
@@ -1050,9 +1067,9 @@ fp1_varangian_adventurer_conquest = {
 						order_by = age
 						max = 100	# Basically, all of them.
 						check_range_bounds = no
-						save_temporary_scope_as = attacker_house_member #Unop: ck3-tiger
+						save_temporary_scope_as = attacker_house_member #Unop: We need a scope to not use 'this' in the effect just below
 						found_cadet_house_decision_effect = {
-							CHARACTER = scope:attacker_house_member #Unop: ck3-tiger
+							CHARACTER = scope:attacker_house_member #Unop: Was 'this' but it can/will change depending on the scope inside the effect
 							PRESTIGE = 0
 						}
 					}
@@ -1061,7 +1078,10 @@ fp1_varangian_adventurer_conquest = {
 			## If scope:attacker wasn't an adventurer before, make them one.
 			if = {
 				limit = {
-					NOT = { has_trait = adventurer }
+					NOR = { 
+						has_trait = adventurer 
+						government_has_flag = government_is_nomadic
+					}
 				}
 				add_trait = adventurer
 			}
@@ -1088,7 +1108,7 @@ fp1_varangian_adventurer_conquest = {
 					has_trait = dwarf
 					NOT = {
 						capital_county = {
-							title_province = { geographical_region = world_europe } 
+							title_province = { geographical_region = world_europe }
 						}
 					}
 				}
@@ -1097,7 +1117,7 @@ fp1_varangian_adventurer_conquest = {
 			# Finally, courtiers are sometimes going walk about, so make sure they're all in the right spot.
 			hidden_effect = {
 				every_courtier = { set_location_to_default = yes }
-				every_prisoner = { set_location_to_default = yes }
+				every_prisoner = { set_location_to_default = yes } #Unop: So your prisoner won't be staying at your old main title location
 			}
 		}
 
@@ -1134,6 +1154,16 @@ fp1_varangian_adventurer_conquest = {
 					}
 					break_alliance = scope:attacker
 				}
+			}
+		}
+
+		# If part of a confederation
+		if = {
+			limit = {
+				exists = scope:attacker.confederation
+			}
+			scope:attacker.confederation = {
+				remove_confederation_member = scope:attacker
 			}
 		}
 
@@ -1216,7 +1246,7 @@ fp1_varangian_adventurer_conquest = {
 	on_defeat = {
 		# Legitimacy
 		add_legitimacy_attacker_defeat_effect = yes
-		
+
 		#EP2 accolade glory gain for winning against higher ranked enemy
 		scope:defender = { accolade_defender_war_end_glory_gain_med_effect = yes }
 
@@ -1276,7 +1306,7 @@ fp1_varangian_adventurer_conquest = {
 	use_de_jure_wargoal_only = yes
 
 	attacker_wargoal_percentage = 0.8
-	
+
 	max_defender_score_from_occupation = 150
 	max_attacker_score_from_occupation = 150
 }

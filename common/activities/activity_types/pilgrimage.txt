@@ -792,8 +792,6 @@
 	# PARAMETERS
 	###################
 
-	is_grand_activity = no
-
 	is_single_location = yes
 
 	province_filter = holy_sites
@@ -871,10 +869,13 @@
 						desc = court_event_discount_desc
 					}
 				}
-				#Adventurer
+				#Adventurer & Nomads
 				if = {
 					limit = {
-						is_landless_adventurer = yes
+						OR = {
+							is_landless_adventurer = yes
+							government_has_flag = government_is_nomadic
+						}
 						has_perk = clerical_justifications_perk
 					}
 					multiply = {
@@ -2627,6 +2628,20 @@
 	}
 	#Generic holy sites
 	background = {
+		trigger = {
+			scope:host = {
+				OR = {
+					religion = religion:tengrism_religion
+					religion = religion:magyar_religion
+					religion = religion:siberian_religion
+				}
+			}
+		}
+		texture = "gfx/interface/illustrations/event_scenes/mpo_temple_steppe.dds"
+		environment = "environment_mpo_temple_steppe" 
+		ambience = "event:/DLC/CE2/Events/Event_Images/mpo_temple_steppe"
+	}
+	background = {
 		trigger = { scope:host.religion = religion:zoroastrianism_religion }
 		texture = "gfx/interface/illustrations/event_scenes/fp3_temple.dds"
 		environment = "environment_event_fp3_temple"
@@ -2641,7 +2656,7 @@
 	background = {
 		trigger = {
 			activity_location.culture = {
-				OR = {
+				OR = { #Unop Add iranian culture group
 					has_graphical_mena_culture_group_trigger = yes
 					has_graphical_iranian_culture_group_trigger = yes
 				}

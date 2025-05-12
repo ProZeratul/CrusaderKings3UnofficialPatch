@@ -237,6 +237,24 @@ types Events
 								frame = 1
 								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_FRIEND"
 							}
+							
+							icon = {
+								name = "rival_icon"
+								visible = "[ReasonItem.IsFlag( 'rival' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/portraits/rival.dds"
+								frame = 1
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_RIVAL"
+							}
+							
+							icon = {
+								name = "blood_brother_icon"
+								visible = "[ReasonItem.IsFlag( 'blood_brother' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/portraits/blood_brother.dds"
+								frame = 1
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_BLOOD_BROTHER"
+							}
 
 							icon = {
 								name = "hook_icon"
@@ -766,6 +784,13 @@ types Events
 								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_VISIT_SETTLEMENT_TAVERN_POTENTIAL"
 							}
 							icon = {
+								name = "spouse_icon"
+								visible = "[ReasonItem.IsFlag( 'spouse' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/marriage.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_SPOUSE"
+							}
+							icon = {
 								name = "hood_icon"
 								visible = "[ReasonItem.IsFlag( 'hooded_character' )]"
 								size = { 34 34 }
@@ -961,6 +986,40 @@ types Events
 								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_CHURCH_HOLDING_BREWERY"
 							}
 							icon = {
+								name = "has_culture_icon"
+								visible = "[ReasonItem.IsFlag( 'culture' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/character_interactions/icon_culture.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_CULTURE"
+							}
+							icon = {
+								name = "has_cultrad_icon"
+								visible = "[ReasonItem.IsFlag( 'has_cultrad' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/character_interactions/icon_culture.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_TRADITIONS"
+							}
+							# Introduce heir MPO event
+							icon = {
+								name = "tourney_participant_icon"
+								visible = "[ReasonItem.IsFlag( 'tourney_participant' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/traits/tournament_foot_archery_horse_mind.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_HASTILUDER"
+							}
+							# Introduce heir MPO event
+							icon = {
+								name = "trade_yurt_icon"
+								visible = "[ReasonItem.IsFlag( 'trade_yurt' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/court_position_types/royal_architect_court_position.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_TRADE_YURT"
+							}
+							
+							
+							
+							#Unop Add icons
+							icon = {
 								name = "unop_is_basileus"
 								visible = "[ReasonItem.IsFlag( 'unop_is_basileus' )]"
 								size = { 34 34 }
@@ -994,6 +1053,20 @@ types Events
 								size = { 34 34 }
 								texture = "gfx/interface/icons/court_position_types/seneschal_court_position.dds"
 								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_HAVE_SENESCHAL"
+							}
+							icon = {
+								name = "unop_employ_tutor"
+								visible = "[ReasonItem.IsFlag( 'unop_employ_tutor' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/court_position_types/court_tutor_court_position.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_HAVE_TUTOR"
+							}
+							icon = {
+								name = "unop_employ_executioner"
+								visible = "[ReasonItem.IsFlag( 'unop_employ_executioner' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/court_position_types/executioner_court_position.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_HAVE_EXECUTIONER"
 							}
 						}
 					}
@@ -1084,10 +1157,19 @@ types Events
 					container = {
 						container = {
 							visible = "[OptionEffectItem.IsTrait]"
+							datacontext = "[OptionEffectItem.GetTrait]"
 							alwaystransparent = yes
 
+							# Needed for tooltipwidget We rely on that the code only shows this icon for Player Character gaining traits
+							datacontext = "[GetPlayer]"
+							datacontext = "[GetPlayer.GetFaith]"						
+
+							tooltipwidget = {
+								using = character_trait_tooltip
+							}
+
 							icon = {
-								datacontext = "[OptionEffectItem.GetTrait]"
+								
 								name = "trait_icon"
 								size = { 34 34 }
 								texture = "[Trait.GetIcon(GetPlayer)]"
@@ -1161,7 +1243,7 @@ types Events
 
 		icon = {
 			name = "event_picture_with_mask"
-			visible = "[And( Not( EventWindowBackgroundData.HasVideo ), EventWindowBackgroundData.HasVideoMask )]"
+			visible = "[And( Not( EventWindowBackgroundData.HasVideo ), EventWindowBackgroundData.HasVideoMask )]" #Unop Remove closing brace
 			texture = "[EventWindowBackgroundData.GetTexture]"
 			size = { 100% 100% }
 
@@ -1356,11 +1438,12 @@ template Event_Window_Debug_Info
 		size = { 40 40 }
 
 		button_icon = {
-			size = { 100% 100% }
-			texture = "gfx/interface/icons/flat_icons/data_system.dds"
-			tooltip = "TOGGLE_DATA_SYSTEM"
+			size = { 30 30 }
+			parentanchor = center
+			texture = "gfx/interface/icons/flat_icons/history.dds"
+			tooltip = "TOGGLE_DEBUG_OPTION_TOOLTIPS"
 			using = tooltip_below
-			onclick = "[ExecuteConsoleCommand('Localization.ToggleSkipDataSystemInLocOutput')]"
+			onclick = "[EventWindowData.ToggleDebugOptionTooltips]"
 			fontsize = 24
 		}
 	}
@@ -1369,12 +1452,11 @@ template Event_Window_Debug_Info
 		size = { 40 40 }
 
 		button_icon = {
-			size = { 30 30 }
-			parentanchor = center
-			texture = "gfx/interface/icons/flat_icons/history.dds"
-			tooltip = "TOGGLE_DEBUG_OPTION_TOOLTIPS"
+			size = { 100% 100% }
+			texture = "gfx/interface/icons/flat_icons/data_system.dds"
+			tooltip = "TOGGLE_DATA_SYSTEM"
 			using = tooltip_below
-			onclick = "[EventWindowData.ToggleDebugOptionTooltips]"
+			onclick = "[ExecuteConsoleCommand('Localization.ToggleSkipDataSystemInLocOutput')]"
 			fontsize = 24
 		}
 	}
