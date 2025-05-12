@@ -227,7 +227,7 @@ fp1_other_decisions.0003 = {
 	}
 	right_portrait = {
 		character = scope:unlucky_guest
-		animation = fear
+		animation = dead #Unop: Since the char is dead, use the new animation
 	}
 	override_background = { reference = temple }
 
@@ -252,6 +252,11 @@ fp1_other_decisions.0003 = {
 		involved_activity = { save_scope_as = activity }
 		# Get the party (audibly) started.
 		play_music_cue = "mx_cue_banquet"
+		
+		if = { #Unop: Since the HoF can change between this event (as the death of a spiritual HoF will re-roll it instantly) and all the sub-events, we need to keep track of the sacrificed HoF 
+			limit = { exists = scope:blotter.faith.religious_head }
+			scope:blotter.faith.religious_head = { save_scope_as = blotter_hof }
+		}
 
 		# Is it somebody specific's death day?
 		if = {
@@ -357,7 +362,7 @@ fp1_other_decisions.0003 = {
 			every_in_list = {
 				variable = gf_guests_rejecting_invite_list
 				# TIT-25457
-				remove_from_list = happified_title_subjects_list
+				remove_from_list = happified_character_subjects_list #Unop: Was happified_title_subjects_list but we need the character list
 			}
 		}
 		# Set up var:gf_faith for custom loc to work; not used in strictly every permutation, but doesn't really need an if gate on it.
@@ -381,77 +386,84 @@ fp1_other_decisions.0003 = {
 					}
 				}
 				## Big RIP, scope:unlucky_guest.
-				if = {
-					limit = { exists = scope:unlucky_guest }
-					# Sort opinions and kinslaying.
-					add_kinslayer_trait_or_nothing_effect = { VICTIM = scope:unlucky_guest}
-					execute_opinion_effect = {
-						VICTIM = scope:unlucky_guest
-						EXECUTIONER = scope:blotter
-					}
-					# Are you HumSac'ing the HoF of a faith that doesn't practice HumSac?
-					## We hide this, since it's too late for you to do anything about now and it's more fun/terrifying to find out about it *after* the sacrifice.
-					hidden_effect = {
-						humsacd_a_hof_effect = {
-							SACRIFICER = scope:blotter
-							SACRIFICED_HOF = scope:unlucky_guest
-						}
-					}
-					## And are you actually humsac'ing your *OWN* HoF?
+				activity_host = { #Unop: Fix scope (as we are in a add_activity_log_entry but we need the host scope)
 					if = {
-						limit = { scope:blotter.faith.religious_head = scope:unlucky_guest }
-						# Inform players that they're an abysmal, abysmal faith adherent.
-						every_player = {
-							limit = {
-								NOT = { this = scope:blotter }
-								faith = scope:unlucky_guest.faith
+						limit = { exists = scope:unlucky_guest }
+						# Sort opinions and kinslaying.
+						add_kinslayer_trait_or_nothing_effect = { VICTIM = scope:unlucky_guest}
+						execute_opinion_effect = {
+							VICTIM = scope:unlucky_guest
+							EXECUTIONER = scope:blotter
+						}
+						# Are you HumSac'ing the HoF of a faith that doesn't practice HumSac?
+						## We hide this, since it's too late for you to do anything about now and it's more fun/terrifying to find out about it *after* the sacrifice.
+						hidden_effect = {
+							humsacd_a_hof_effect = {
+								SACRIFICER = scope:blotter
+								SACRIFICED_HOF = scope:unlucky_guest
 							}
-							trigger_event = fp1_other_decisions.0023
 						}
-						# Update scope:blotter's HumSac'd HoFs kill tally manually, since we're not going through the usual effect.
-						add_to_variable_list = {
-							name = humsacd_hofs
-							target = scope:unlucky_guest.faith
-						}
-						# And tell scope:blotter they dun goofed.
-						trigger_event = {
-							id = fp1_other_decisions.0024
-							# We give it a day's delay, since they _might_ have taken a conversion option in the event itself, in which case the follow-up event is invalid.
-							days = 1
-						}
-					}
-					# How exactly do they die?
-					scope:unlucky_guest = {
-						# Cannibalist Germanic pagans will hang them, then eat them.
-						trigger_event = fp1_other_decisions.1000
+						## And are you actually humsac'ing your *OWN* HoF?
 						if = {
-							limit = { sacrifice_method_hang_n_fang_trigger = yes }
-							death = {
-								killer = scope:blotter
-								death_reason = death_ritually_hung_then_eaten
+							limit = { #Unop: Use the new scopes to ensure the sacrificed HoF was your HoF
+								exists = scope:blotter_hof
+								scope:blotter_hof = scope:unlucky_guest 
+							}	
+							# Inform players that they're an abysmal, abysmal faith adherent.
+							every_player = {
+								limit = {
+									NOT = { this = scope:blotter }
+									faith = scope:unlucky_guest.faith
+								}
+								trigger_event = fp1_other_decisions.0023
+							}
+							# Update scope:blotter's HumSac'd HoFs kill tally manually, since we're not going through the usual effect.
+							scope:blotter = { #Unop: This wasn't scoped to the activity host (since we are in the activity scope)
+								add_to_variable_list = {
+									name = humsacd_hofs
+									target = scope:unlucky_guest.faith
+								}
+								# And tell scope:blotter they dun goofed.
+								trigger_event = {
+									id = fp1_other_decisions.0024
+									# We give it a day's delay, since they _might_ have taken a conversion option in the event itself, in which case the follow-up event is invalid.
+									days = 1
+								}
 							}
 						}
-						# All other Germanic pagans will hang them.
-						else_if = {
-							limit = { sacrifice_method_eat_em_trigger = yes }
-							death = {
-								killer = scope:blotter
-								death_reason = death_ritually_eaten
+						# How exactly do they die?
+						scope:unlucky_guest = {
+							# Cannibalist Germanic pagans will hang them, then eat them.
+							trigger_event = fp1_other_decisions.1000
+							if = {
+								limit = { sacrifice_method_hang_n_fang_trigger = yes }
+								death = {
+									killer = scope:blotter
+									death_reason = death_ritually_hung_then_eaten
+								}
 							}
-						}
-						# All other cannibals will just eat them.
-						else_if = {
-							limit = { sacrifice_method_hang_em_trigger = yes }
-							death = {
-								killer = scope:blotter
-								death_reason = death_ritually_hung
+							# All other Germanic pagans will hang them.
+							else_if = {
+								limit = { sacrifice_method_eat_em_trigger = yes }
+								death = {
+									killer = scope:blotter
+									death_reason = death_ritually_eaten
+								}
 							}
-						}
-						# Fallback deaths go here; variants should be added above this point.
-						else = {
-							death = {
-								killer = scope:blotter
-								death_reason = death_sacrificed_to_gods
+							# All other cannibals will just eat them.
+							else_if = {
+								limit = { sacrifice_method_hang_em_trigger = yes }
+								death = {
+									killer = scope:blotter
+									death_reason = death_ritually_hung
+								}
+							}
+							# Fallback deaths go here; variants should be added above this point.
+							else = {
+								death = {
+									killer = scope:blotter
+									death_reason = death_sacrificed_to_gods
+								}
 							}
 						}
 					}
@@ -595,7 +607,7 @@ fp1_other_decisions.0003 = {
 			}
 			hidden_effect = {
 				every_in_list = {
-					list = happified_title_subjects_list
+					list = happified_character_subjects_list #Unop: Was happified_title_subjects_list (but we want the character list)
 					limit = {
 						# Filter out lowborns.
 						exists = dynasty
@@ -627,7 +639,7 @@ fp1_other_decisions.0003 = {
 				key = gruesome_festival_faithful_faith_option_log
 				score = 900
 				show_in_conclusion = yes 
-				character = root 
+				character = root
 				activity_host = {
 					# Your commitment to ritual earns you opinion with the priestly classes.
 					if = {
@@ -1392,7 +1404,7 @@ fp1_other_decisions.0012 = {
 			}
 			else_if = {
 				limit = {
-					NOT = {
+					NOR = {
 						this = scope:decliner_1
 						exists = scope:decliner_2
 					}
@@ -1401,7 +1413,7 @@ fp1_other_decisions.0012 = {
 			}
 			else_if = {
 				limit = {
-					NOT = {
+					NOR = {
 						this = scope:decliner_1
 						this = scope:decliner_2
 						exists = scope:decliner_3
@@ -1411,7 +1423,7 @@ fp1_other_decisions.0012 = {
 			}
 			else_if = {
 				limit = {
-					NOT = {
+					NOR = {
 						this = scope:decliner_1
 						this = scope:decliner_2
 						this = scope:decliner_3
@@ -1422,7 +1434,7 @@ fp1_other_decisions.0012 = {
 			}
 			else_if = {
 				limit = {
-					NOT = {
+					NOR = {
 						this = scope:decliner_1
 						this = scope:decliner_2
 						this = scope:decliner_3
@@ -1437,19 +1449,19 @@ fp1_other_decisions.0012 = {
 		scope:decliner_1 = { add_to_list = decliners_list }
 		if = {
 			limit = { exists = scope:decliner_2 }
-			add_to_list = decliners_list
+			scope:decliner_2 = { add_to_list = decliners_list } #Unop: Fix decliner_2 not being added
 		}
 		if = {
 			limit = { exists = scope:decliner_3 }
-			add_to_list = decliners_list
+			scope:decliner_3 = { add_to_list = decliners_list } #Unop: Fix decliner_3 not being added
 		}
 		if = {
 			limit = { exists = scope:decliner_4 }
-			add_to_list = decliners_list
+			scope:decliner_4 = { add_to_list = decliners_list } #Unop: Fix decliner_4 not being added
 		}
 		if = {
 			limit = { exists = scope:decliner_5 }
-			add_to_list = decliners_list
+			scope:decliner_5 = { add_to_list = decliners_list } #Unop: Fix decliner_5 not being added
 		}
 		# Clean up the variable list.
 		gruesome_sacrifices_clean_up_declining_guests_effect = yes
@@ -1533,10 +1545,23 @@ fp1_other_decisions.0012 = {
 				NOT = { this = scope:blotter }
 			}
 			custom = fp1_other_decisions.0012.b.all_decliners_list
-			progress_towards_rival_effect = {
-				REASON = rival_blotter_declined
-				CHARACTER = scope:blotter
-				OPINION = -30
+			hidden_effect = { #Unop: Made this an hidden_effect to have a better tooltip in the event option
+				progress_towards_rival_effect = {
+					REASON = rival_blotter_declined
+					CHARACTER = scope:blotter
+					OPINION = -30
+				}
+			}
+			#Unop: Both this is made to show opinion loss & rivalry on each characters 
+			show_as_tooltip = {
+				add_opinion = {
+					modifier = hate_opinion
+					target = scope:blotter
+					opinion = -30
+				}
+			}
+			custom_tooltip = {
+				text = LIST_GAINS_POTENTIAL_RIVAL
 			}
 		}
 
@@ -1649,7 +1674,7 @@ fp1_other_decisions.0021 = {
 	}
 	right_portrait = {
 		character = scope:sacrificed_hof
-		animation = fear
+		animation = dead #Unop: Since the char is dead, use the new animation
 	}
 	override_background = { reference = throne_room }
 
@@ -1720,7 +1745,7 @@ fp1_other_decisions.0022 = {
 	}
 	right_portrait = {
 		character = scope:sacrificed_hof
-		animation = fear
+		animation = dead #Unop: Since the char is dead, use the new animation
 	}
 	override_background = { reference = throne_room }
 
@@ -1830,7 +1855,7 @@ fp1_other_decisions.0023 = {
 	}
 	right_portrait = {
 		character = scope:unlucky_guest
-		animation = fear
+		animation = dead #Unop: Since the char is dead, use the new animation
 	}
 	override_background = { reference = throne_room }
 
