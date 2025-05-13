@@ -330,7 +330,7 @@ court_physician_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -1097,7 +1097,7 @@ travel_leader_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -1511,14 +1511,17 @@ antiquarian_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
 	}
 
 	is_shown = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			government_has_flag = government_is_nomadic
+		}
 		trigger_if = {
 			limit = {
 				is_ai = yes
@@ -1530,7 +1533,10 @@ antiquarian_court_position = {
 
 	# Is this an available position for this court? (root is court owner)
 	valid_position = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			government_has_flag = government_is_nomadic
+		}
 		trigger_if = {
 			limit = {
 				is_ai = yes
@@ -2274,7 +2280,7 @@ court_tutor_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -2325,7 +2331,12 @@ court_tutor_court_position = {
 	}
 
 	is_shown = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			domicile ?= {
+				has_domicile_parameter = nomad_unlock_court_tutor
+			}
+		}
 		has_ep1_court_positions_dlc_trigger = yes
 		trigger_if = {
 			limit = {
@@ -2806,14 +2817,19 @@ wet_nurse_court_position = { # BP2
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
 	}
 
 	is_shown = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			domicile ?= {
+				has_domicile_parameter = nomad_unlock_wet_nurse
+			}
+		}
 		has_bp2_dlc_trigger = yes
 		trigger_if = {
 			limit = {
@@ -2845,7 +2861,9 @@ wet_nurse_court_position = { # BP2
 				}
 			}
 		}
-		is_landed_or_landless_administrative = yes
+		trigger_else = {
+			is_landed_or_landless_administrative = yes
+		}
 	}
 
 	is_shown_character = {
@@ -3373,7 +3391,7 @@ charioteer_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -3800,7 +3818,7 @@ bookmaker_court_position = { # EP3
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -4253,7 +4271,7 @@ akolouthos_court_position = { # EP1 & EP3
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -4565,7 +4583,7 @@ chief_eunuch_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -4573,7 +4591,10 @@ chief_eunuch_court_position = {
 
 	# Is this an available position for this court? (root is court owner)
 	is_shown = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			government_has_flag = government_is_nomadic
+		}
 		trigger_if = {
 			limit = {
 				is_ai = yes
@@ -4584,7 +4605,10 @@ chief_eunuch_court_position = {
 	}
 
 	valid_position = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			government_has_flag = government_is_nomadic
+		}
 		highest_held_title_tier >= tier_duchy
 		save_temporary_scope_as = root_scope
 		custom_tooltip = {
@@ -4940,7 +4964,7 @@ master_of_horse_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -5384,14 +5408,17 @@ master_of_hunt_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
 	}
 
 	is_shown = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			government_has_flag = government_is_nomadic
+		}
 		trigger_if = {
 			limit = {
 				is_ai = yes
@@ -5403,7 +5430,10 @@ master_of_hunt_court_position = {
 
 	# Is this an available position for this court? (root is court owner)
 	valid_position = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			government_has_flag = government_is_nomadic
+		}
 		#Unop Not available if culture has cannot_hunt parameter
 		custom_tooltip = {
 			text = hunt_can_hunt_parameter_tt
@@ -5864,14 +5894,17 @@ master_assassin_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
 	}
 
 	is_shown = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			government_has_flag = government_is_nomadic
+		}
 		trigger_if = {
 			limit = {
 				is_ai = yes
@@ -5882,7 +5915,10 @@ master_assassin_court_position = {
 	}
 
 	valid_position = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			government_has_flag = government_is_nomadic
+		}
 		faith = {
 			has_doctrine = tenet_fp3_fedayeen
 		}
@@ -6264,7 +6300,7 @@ cultural_emissary_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -6651,7 +6687,7 @@ cave_hermit_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -7035,7 +7071,7 @@ chief_qadi_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -7425,7 +7461,7 @@ court_gardener_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -7848,7 +7884,7 @@ court_scholar_court_position = { # FP3
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -8163,7 +8199,12 @@ chronicler_court_position = { # CE1
 	}
 
 	is_shown = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			domicile ?= {
+				has_domicile_building_or_higher = court_yurt_01
+			}
+		}
 		has_dlc_feature = legends
 		trigger_if = {
 			limit = {
@@ -8266,14 +8307,13 @@ chronicler_court_position = { # CE1
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
 	}
 
 	valid_position = {
-		is_landed_or_landless_administrative = yes
 		trigger_if = {
 			limit = {
 				government_has_flag = government_is_nomadic
@@ -8281,6 +8321,9 @@ chronicler_court_position = { # CE1
 			domicile ?= {
 				has_domicile_building_or_higher = court_yurt_01
 			}
+		}
+		trigger_else = {
+			is_landed_or_landless_administrative = yes
 		}
 	}
 
@@ -8753,7 +8796,7 @@ champion_court_position = { # EP1
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -9100,14 +9143,17 @@ court_brewmaster_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
 	}
 
 	is_shown = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			government_has_flag = government_is_nomadic
+		}
 		trigger_if = {
 			limit = {
 				is_ai = yes
@@ -9119,7 +9165,10 @@ court_brewmaster_court_position = {
 
 	# Is this an available position for this court? (root is court owner)
 	valid_position = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			government_has_flag = government_is_nomadic
+		}
 		custom_tooltip = {
 			text = court_brewmaster_requirement_tt
 			any_sub_realm_barony = {
@@ -9450,7 +9499,7 @@ lady_in_waiting_court_position = { # EP1
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -9847,7 +9896,7 @@ royal_architect_court_position = { # EP1
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -10284,7 +10333,7 @@ high_almoner_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -10627,14 +10676,17 @@ court_poet_court_position = { # EP1
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
 	}
 
 	is_shown = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			government_has_flag = government_is_nomadic
+		}
 		has_ep1_court_positions_dlc_trigger = yes
 		trigger_if = {
 			limit = {
@@ -10646,8 +10698,35 @@ court_poet_court_position = { # EP1
 	}
 
 	valid_position = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			government_has_flag = government_is_nomadic
+		}
 		trigger_if = {
+			limit = {
+				government_has_flag = government_is_nomadic
+				root.culture ?= {
+					has_cultural_parameter = better_court_poets
+				}
+			}
+			OR = {
+				has_realm_law = nomadic_authority_5
+				has_realm_law = nomadic_authority_4
+				has_realm_law = nomadic_authority_3
+				has_realm_law = nomadic_authority_2
+			}
+		}
+		trigger_else_if = {
+			limit = {
+				government_has_flag = government_is_nomadic
+			}
+			OR = {
+				has_realm_law = nomadic_authority_5
+				has_realm_law = nomadic_authority_4
+				has_realm_law = nomadic_authority_3
+			}
+		}
+		trigger_else_if = {
 			limit = {
 				root.culture ?= {
 					has_cultural_parameter = better_court_poets
@@ -11074,14 +11153,17 @@ court_musician_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
 	}
 
 	is_shown = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			government_has_flag = government_is_nomadic
+		}
 		trigger_if = {
 			limit = {
 				is_ai = yes
@@ -11092,8 +11174,35 @@ court_musician_court_position = {
 	}
 
 	valid_position = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			government_has_flag = government_is_nomadic
+		}
 		trigger_if = {
+			limit = {
+				government_has_flag = government_is_nomadic
+				root.culture ?= {
+					has_cultural_parameter = better_court_musicians
+				}
+			}
+			OR = {
+				has_realm_law = nomadic_authority_5
+				has_realm_law = nomadic_authority_4
+				has_realm_law = nomadic_authority_3
+				has_realm_law = nomadic_authority_2
+			}
+		}
+		trigger_else_if = {
+			limit = {
+				government_has_flag = government_is_nomadic
+			}
+			OR = {
+				has_realm_law = nomadic_authority_5
+				has_realm_law = nomadic_authority_4
+				has_realm_law = nomadic_authority_3
+			}
+		}
+		trigger_else_if = {
 			limit = {
 				root.culture ?= {
 					has_cultural_parameter = better_court_musicians
@@ -11483,7 +11592,7 @@ cupbearer_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -11767,7 +11876,7 @@ food_taster_court_position = { # EP1
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -12156,7 +12265,7 @@ keeper_of_swans_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -12533,7 +12642,7 @@ court_jester_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -12959,7 +13068,7 @@ executioner_court_position = { # EP1
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -13615,7 +13724,7 @@ bodyguard_court_position = { # EP1
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -14031,7 +14140,7 @@ court_artificer_court_position = { # EP1
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -14415,7 +14524,7 @@ garuda_court_position = {
 				}
 			}
 			add = {
-				value = liege.court_position:yeke_jarquchi_court_position.unop_yeke_jarquchi_improve_court_value
+				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
@@ -14434,7 +14543,10 @@ garuda_court_position = {
 	}
 
 	valid_position = {
-		is_landed_or_landless_administrative = yes
+		OR = {
+			is_landed_or_landless_administrative = yes
+			government_has_flag = government_is_nomadic
+		}
 		highest_held_title_tier >= tier_kingdom
 		culture = { has_cultural_tradition = tradition_garuda_warriors }
 	}

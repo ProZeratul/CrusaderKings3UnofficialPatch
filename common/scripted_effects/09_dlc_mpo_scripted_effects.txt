@@ -1508,7 +1508,7 @@ mpo_find_suitable_merchant_effect = {
 					development_level >= 30
 					NOT = {
 						holder.top_liege = {
-							government_has_flag = government_is_nomadic #Unop ck3-tiger Fix flag name
+							government_has_flag = government_is_nomadic
 						}
 					}
 				}
@@ -1526,7 +1526,7 @@ mpo_find_suitable_merchant_effect = {
 					development_level >= 30
 					NOT = {
 						holder.top_liege = {
-							government_has_flag = government_is_nomadic #Unop ck3-tiger Fix flag name
+							government_has_flag = government_is_nomadic
 						}
 					}
 				}
@@ -1544,7 +1544,7 @@ mpo_find_suitable_merchant_effect = {
 					development_level >= 30
 					NOT = {
 						holder.top_liege = {
-							government_has_flag = government_is_nomadic #Unop ck3-tiger Fix flag name
+							government_has_flag = government_is_nomadic
 						}
 					}
 				}
@@ -1562,7 +1562,7 @@ mpo_find_suitable_merchant_effect = {
 					development_level >= 30
 					NOT = {
 						holder.top_liege = {
-							government_has_flag = government_is_nomadic #Unop ck3-tiger Fix flag name
+							government_has_flag = government_is_nomadic
 						}
 					}
 				}
@@ -1580,7 +1580,7 @@ mpo_find_suitable_merchant_effect = {
 					development_level >= 30
 					NOT = {
 						holder.top_liege = {
-							government_has_flag = government_is_nomadic #Unop ck3-tiger Fix flag name
+							government_has_flag = government_is_nomadic
 						}
 					}
 				}
@@ -1598,7 +1598,7 @@ mpo_find_suitable_merchant_effect = {
 					development_level >= 30
 					NOT = {
 						holder.top_liege = {
-							government_has_flag = government_is_nomadic #Unop ck3-tiger Fix flag name
+							government_has_flag = government_is_nomadic
 						}
 					}
 				}
@@ -1616,7 +1616,7 @@ mpo_find_suitable_merchant_effect = {
 					development_level >= 30
 					NOT = {
 						holder.top_liege = {
-							government_has_flag = government_is_nomadic #Unop ck3-tiger Fix flag name
+							government_has_flag = government_is_nomadic
 						}
 					}
 				}
@@ -1634,7 +1634,7 @@ mpo_find_suitable_merchant_effect = {
 					development_level >= 30
 					NOT = {
 						holder.top_liege = {
-							government_has_flag = government_is_nomadic #Unop ck3-tiger Fix flag name
+							government_has_flag = government_is_nomadic
 						}
 					}
 				}
@@ -1652,7 +1652,7 @@ mpo_find_suitable_merchant_effect = {
 					development_level >= 30
 					NOT = {
 						holder.top_liege = {
-							government_has_flag = government_is_nomadic #Unop ck3-tiger Fix flag name
+							government_has_flag = government_is_nomadic
 						}
 					}
 				}
@@ -1670,7 +1670,7 @@ mpo_find_suitable_merchant_effect = {
 					development_level >= 30
 					NOT = {
 						holder.top_liege = {
-							government_has_flag = government_is_nomadic #Unop ck3-tiger Fix flag name
+							government_has_flag = government_is_nomadic
 						}
 					}
 				}
@@ -1688,7 +1688,7 @@ mpo_find_suitable_merchant_effect = {
 					development_level >= 30
 					NOT = {
 						holder.top_liege = {
-							government_has_flag = government_is_nomadic #Unop ck3-tiger Fix flag name
+							government_has_flag = government_is_nomadic
 						}
 					}
 				}
@@ -1706,7 +1706,7 @@ mpo_find_suitable_merchant_effect = {
 					development_level >= 30
 					NOT = {
 						holder.top_liege = {
-							government_has_flag = government_is_nomadic #Unop ck3-tiger Fix flag name
+							government_has_flag = government_is_nomadic
 						}
 					}
 				}
@@ -4784,16 +4784,6 @@ lower_dominance_level_effect = {
 }
 
 adopt_nomadic_ways_decision_effect = {
-	if = {
-		limit = {
-			NOT = {
-				culture = { has_same_culture_heritage = root.location.culture }
-			}
-		}
-		custom_tooltip = {
-			text = adopt_nomadic_ways_decision_culture_tt
-		}
-	}
 	change_government = nomad_government
 	custom_tooltip = adopt_nomadic_ways_decision_title_tt
 	custom_tooltip = adopt_nomadic_ways_decision_herd_tt
@@ -4805,16 +4795,9 @@ adopt_nomadic_ways_decision_effect = {
 
 # Different effect as we cannot access the Herder scope in the preview
 adopt_nomadic_ways_decision_event_effect = {
-	if = {
-		limit = {
-			NOT = {
-				culture = { has_same_culture_heritage = scope:herder.culture }
-			}
-		}
-		custom_tooltip = {
-			text = adopt_nomadic_ways_decision_culture_tt_past
-			create_hybrid_culture = scope:herder.culture
-		}
+	add_character_flag = {
+		flag = domicile_culture_and_faith_check
+		days = 1
 	}
 	set_variable = {
 		name = previous_provisions
@@ -4889,7 +4872,7 @@ confederation_migration_notification_effect = {
 		type = msg_broken_confederation
 		title = msg_broken_confederation_migration_root
 		desc = msg_broken_confederation_migration_root_desc
-		left_icon = confederation
+		#left_icon = confederation #Unop: For now this does not work, so commented it out until further notice
 	}
 	add_character_flag = {
 		flag = migrating_from_confederation
@@ -6531,7 +6514,6 @@ mpo_abuse_authority_county_effect = {
 	        limit = {
 	            county_ready_for_abuse_trigger = yes
 	        }
-	        custom = custom.every_county_near_location
 	        change_county_fertility = -100
 	        change_county_control = -40
 	        add_county_modifier = {
@@ -6556,7 +6538,7 @@ mpo_abuse_authority_county_effect = {
 			limit = {
 	            county_ready_for_abuse_trigger = yes
 	        }
-			custom = custom.every_county_near_location
+			custom = custom.mpo_resources_gained_abuse
 			root.domicile ?= {
 	            change_herd = medium_herd_value
 	        }

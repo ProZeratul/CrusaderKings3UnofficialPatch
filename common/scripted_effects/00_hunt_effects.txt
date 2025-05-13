@@ -560,6 +560,13 @@ hunt_activity_deer_game_effect = {
 hunt_activity_dangerous_game_effect = {
 	random_list = {
 		15 = { # Wolf/Hyena/Lynx - Common
+			trigger = { #Unop: Missing trigger, potentially setting nothing if all 3 where impossible to spawn
+				OR = {
+					$PROVINCE$ = { hunt_animal_wolf_trigger = yes }
+					$PROVINCE$ = { hunt_animal_hyena_trigger = yes }
+					$PROVINCE$ = { hunt_animal_lynx_trigger = yes }
+				}
+			}
 			modifier = {
 				exists = scope:big_local_game
 				factor = 0
