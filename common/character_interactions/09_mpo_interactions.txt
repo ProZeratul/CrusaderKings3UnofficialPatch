@@ -3978,9 +3978,11 @@ mpo_interaction_ask_for_paiza = {
 	}
 
 	on_decline = {
-		add_character_flag = {
-			flag = paiza_recently_granted
-			years = 4
+		scope:recipient = { #Unop: Fix scope
+			add_character_flag = {
+				flag = paiza_recently_granted
+				years = 4
+			}
 		}
 	}
 
