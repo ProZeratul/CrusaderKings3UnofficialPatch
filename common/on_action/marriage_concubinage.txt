@@ -217,6 +217,21 @@ on_divorce = { # Will not fire from historical divorces
 				mpo_blood_brother_remove_family_opinion_effect = yes
 			}
 		}
+		#Unop: Add a new divorce memory
+		create_character_memory = {
+			type = divorced
+			participants = {
+				spouse = scope:spouse
+			}
+		}
+		scope:spouse = {
+			create_character_memory = {
+				type = divorced
+				participants = {
+					spouse = root
+				}
+			}
+		}
 	}
 }
 
