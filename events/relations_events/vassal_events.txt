@@ -2838,6 +2838,14 @@ vassal.2701 = {
 		ai_chance = {
 			base = 0
 		}
+		if = { #Unop: Cleanup variable to let if re-happen later
+			limit = { exists = var:commander_trait_being_taught }
+			remove_variable = commander_trait_being_taught
+		}
+		if = { #Unop: Cleanup flag to let if re-happen later
+			limit = { has_character_flag = being_taught_commander_trait }
+			remove_character_flag = being_taught_commander_trait
+		}
 	}
 }
 
@@ -3051,6 +3059,56 @@ vassal.2702 = {
 				has_character_flag = will_learn_ct
 			}
 		}
+	}
+
+	option = { #Unop: Added option for this missing trait
+		name = vassal.2702.a
+		trigger = {
+			has_character_flag = will_learn_ct
+			has_variable = commander_trait_being_taught
+			var:commander_trait_being_taught = flag:open_terrain_expert
+		}
+		trait = open_terrain_expert
+	}
+
+	option = { #Unop: Added option for this missing trait
+		name = vassal.2702.a
+		trigger = {
+			has_character_flag = will_learn_ct
+			has_variable = commander_trait_being_taught
+			var:commander_trait_being_taught = flag:rough_terrain_expert
+		}
+		trait = rough_terrain_expert
+	}
+
+	option = { #Unop: Added option for this missing trait
+		name = vassal.2702.a
+		trigger = {
+			has_character_flag = will_learn_ct
+			has_variable = commander_trait_being_taught
+			var:commander_trait_being_taught = flag:forest_fighter
+		}
+		trait = forest_fighter
+	}
+
+	option = { #Unop: Added option for this missing trait
+		name = vassal.2702.a
+		trigger = {
+			has_character_flag = will_learn_ct
+			has_variable = commander_trait_being_taught
+			var:commander_trait_being_taught = flag:cautious_leader
+		}
+		trait = cautious_leader
+	}
+
+	option = { #Unop: Added option for this missing trait
+		name = vassal.2702.a
+		trigger = {
+			has_character_flag = will_learn_ct
+			has_variable = commander_trait_being_taught
+			var:commander_trait_being_taught = flag:organizer
+		}
+		trait = organizer
 	}
 
 	after = {
