@@ -171,7 +171,10 @@ can_appoint_char_to_court_position = {
 			court_position = $COURT_POS$
 			employer = scope:hiring_liege
 		}
-		primary_title ?= { is_mercenary_company = no } #Unop: Deny mercenary commander from being hired (as they won't join you)
+		trigger_if = { # Unop: Since we are now checking would_be_valid_for_court_position instead of can_be_employed_as we still need to prevent rulers that are not our subjects to be potentially selected
+			limit = { is_ruler = yes }
+			liege = scope:hiring_liege
+		}
 	}
 }
 
