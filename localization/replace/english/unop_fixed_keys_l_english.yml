@@ -196,5 +196,41 @@
  murder_outcome.5001.creepy_crawly_known:0 "Even in the faint moonlight I can recognize the shape of a [SCOPE.Custom('VenomousCreature')]."
  # [ROOT.Char.Custom('VenomousCreatureAttack')] > [SCOPE.Custom('VenomousCreatureAttack')]
  murder_outcome.5001.creepy_crawly_end:0 "The [SCOPE.Custom('VenomousCreatureAttack')] barely stings at first, but soon my whole body is engulfed in searing pain. I try to call for help, but my voice is too weak as my limbs grow numb and my consciousness fades."
- 
+ # Add a |U after love_letter_section_2_part_3 so the new phrase start uppercased
  love_letter_compliment_system_text:0 "[ROOT.Char.Custom2('love_letter_compliment_system_section_1_part_1' , SCOPE.sC('second') )] [ROOT.Char.Custom2('love_letter_section_1_part_2' , SCOPE.sC('second') )]\n[ROOT.Char.Custom2('love_letter_section_2_part_1' , SCOPE.sC('second') )] [ROOT.Char.Custom2('love_letter_compliment_system_section_2_part_2' , SCOPE.sC('second') )]\n[ROOT.Char.Custom2('love_letter_section_2_part_3' , SCOPE.sC('second') )|U]\n[ROOT.Char.Custom2('love_letter_section_3_part_1' , SCOPE.sC('second') )]"
+ #Removed the "" at the start of the second phrase
+ legend_spread_events.5235.desc: "I am recounting my exploits in battle to [chronicler.GetFirstName] when [chronicler.GetSheHe] interrupts abruptly.\n\n"Is it true, then? Did you slay the vile enemy commander in single combat?" [chronicler.GetHerHis|U] eyes sparkle with the possibilities. Clearly this is some sort of tall tale absorbed through word of mouth.\n\nI was truly there in the battle, but the confusion of the melee makes a possibility of practically any event..."
+ # Reversed the scopes for the call of RelationToMeShort
+ learning_theology.3054.b:0 "It is my [ROOT.Char.Custom2('RelationToMeShort', family_actor)|U]’s time to shine!"
+ # Reversed the scopes for the call of RelationToMeShort
+ learning_theology.3054.c:0 "My [ROOT.Char.Custom2('RelationToMeShort', random_actor)|U] is a natural charmer."
+ # Fix the lying text saying the char will use YOUR diplomacy skill instead of THEIR
+ learning_theology.3054.b.tt:0 "[family_actor.GetName] will attempt to outperform [passion_playwright.GetName] in a duel using [family_actor.GetHerHis] [diplomacy_skill]."
+ # Fix the lying text saying the char will use YOUR diplomacy skill instead of THEIR
+ learning_theology.3054.c.tt:0 "[random_actor.GetName] will attempt to outperform [passion_playwright.GetName] in a duel using [random_actor.GetHerHis] [diplomacy_skill]."
+ # antiquarian > rival (rival is the scope intended since antiquarian and/or artificier could be undefined)
+ fund_inspiration.2080.a:0 ""[rival.GetFirstNameNoTooltip] #EMP will#! ensure its quality, [inspiration_owner.GetFirstNameNoTooltip].""
+ # antiquarian > rival (rival is the scope intended since antiquarian and/or artificier could be undefined)
+ fund_inspiration.2080.b:0 ""Stick to your own duties, [rival.GetFirstNameNoTooltip].""
+ # antiquarian > rival (rival is the scope intended since antiquarian and/or artificier could be undefined)
+ fund_inspiration.2080.success:0 "[rival.GetFirstNameNoTooltip] improves [inspiration_owner.GetFirstNamePossessiveNoTooltip] work"
+ # antiquarian > rival (rival is the scope intended since antiquarian and/or artificier could be undefined)
+ fund_inspiration.2080.failure:0 "[rival.GetFirstNameNoTooltip] stifles [inspiration_owner.GetFirstNameNoTooltip]"
+ # [ROOT.Char.ReligiousHeadTitleName] > [ROOT.Char.GetFaith.ReligiousHeadName] & [ROOT.Char.ReligiousHeadTitle] > [ROOT.Char.GetFaith.ReligiousHeadName]
+ bp1_yearly.9020.desc.hof:0 "what it would be like to lay with the [ROOT.Char.GetFaith.ReligiousHeadName]? All that time, the [ROOT.Char.GetFaith.ReligiousHeadName]'s fingers spend sifting over the holy books, why imagine how it must feel! Be my [ROOT.Char.GetFaith.ReligiousHeadName] and make me your [ROOT.Char.GetFaith.ReligiousText]!""
+ # Add the actual score by the addition of chancellor_foreign_affairs_realm_opinion_scale
+ task_foreign_affairs_fallback_effect_desc:0 "\n\nFellow Vassal Opinion: #P +[SCOPE.ScriptValue('chancellor_foreign_affairs_realm_opinion_scale')|1]#!"
+ # Reversed language [ROOT.Char.GetCulture.GetLanguage.GetNameNoTooltip] > [owner.GetCulture.GetLanguage.GetNameNoTooltip]
+ murder_save.1014.desc:0 "One evening as I am preparing for bed, I hear two of my servants talking in hushed voices. It takes me a moment to realize they are speaking in [owner.GetCulture.GetLanguage.GetNameNoTooltip] rather than [ROOT.Char.GetCulture.GetLanguage.GetNameNoTooltip]. They clearly don't realize I can understand them.\n\n"Wait for [ROOT.Char.GetHerHim] to fall asleep. Then you keep watch while I slit [ROOT.Char.GetHerHis] throat".\n\nI swiftly exit my quarters to inform my guards that there are assassins in my room. Thank [ROOT.Char.GetFaith.HighGodName] I speak [owner.GetCulture.GetLanguage.GetNameNoTooltip]!"
+ # Add \n\n to not have a wall of text on the weapon desc
+ ep2_locale_events_artifact_motto_desc:0 "[my_weapon.GetDesc]\n\nAlong the blade it reads [my_weapon.GetOwner.GetHouse.GetMotto]."
+ # [touring_grounds_scope.Custom('get_carvable_surface')] >[touring_grounds_scope.GetProvince.Custom('get_carvable_surface')]
+ tour_grounds_events.3016.desc:0 "I at last manage to find myself alone in the wilds of [touring_grounds_scope.GetNameNoTooltip] and my mind wanders to thoughts of [liege_lover_scope.Custom2('MyCharacterIntroduction', ROOT.Char)].\n\nI cannot deny that [touring_grounds_scope.GetNameNoTooltip] is a place of true beauty, almost beautiful enough to match my beloved [liege_lover_scope.GetNameNoTooltip]. I feel compelled to leave a mark here so all who pass through [touring_grounds_scope.GetNameNoTooltip] will know my love for [liege_lover_scope.GetHerHim]. Perhaps carving [liege_lover_scope.GetHerHis] name into a [touring_grounds_scope.GetProvince.Custom('get_carvable_surface')]!"
+ # [ROOT.Char.ReligiousHeadTitleName] > [ROOT.Char.GetFaith.ReligiousHeadName]
+ fp1_other_decisions.0022.desc:0 "It would seem that the [unlucky_guest.GetFaith.GetAdherentNamePlural] of the world have not taken my sacrifice of their false-[unlucky_guest.GetFaith.ReligiousHeadName] particularly well.\n\n"
+ # Show the artifact you are being challenged for by adding [target.GetName]
+ challenge_to_artifact_combat_interaction_victor_gets.tt:0 "The Victor will keep or gains [target.GetName]"
+ # the Artifact > [target.GetName] (same reason as above)
+ challenge_to_artifact_combat_interaction_loser_gets.tt:0 "The Loser will lose [target.GetName] or any [personal_artifact_claim|E]"
+ # [house_feud_rival.GetFirstNameNoTooltip] > [house_feud_rival.GetHouse.GetBaseNameNoTooltip] (house_feud_rival is a character we want the name of the house here)
+ bp1_house_feud.0500.a:0 "House [house_feud_rival.GetHouse.GetBaseNameNoTooltip] will regret this."
