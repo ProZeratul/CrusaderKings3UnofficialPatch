@@ -2024,8 +2024,23 @@ hold_court.8340 = {
 			save_scope_as = recipient
 			court_event_character_flag_effect = yes
 			court_position_generator_effect = { VAR = target EMPLOYER = root }
+			if = { #Unop: There is a "scope pollution" where old_holder is use in the court_position_generator_assignment_effect and so will conflict if it is already defined here
+				limit = { exists = scope:old_holder }
+				scope:old_holder = { save_scope_as = unop_hold_court_8340_target }
+				clear_saved_scope = old_holder
+			}
 			court_position_generator_effect = { VAR = second EMPLOYER = root }
-			court_position_generator_effect = { VAR = backup EMPLOYER = root }
+			if = { #Unop: There is a "scope pollution" where old_holder is use in the court_position_generator_assignment_effect and so will conflict if it is already defined here
+				limit = { exists = scope:old_holder }
+				scope:old_holder = { save_scope_as = unop_hold_court_8340_second }
+				clear_saved_scope = old_holder
+			}
+			court_position_generator_effect = { VAR = backup EMPLOYER = root }		
+			if = { #Unop: There is a "scope pollution" where old_holder is use in the court_position_generator_assignment_effect and so will conflict if it is already defined here
+				limit = { exists = scope:old_holder }
+				scope:old_holder = { save_scope_as = unop_hold_court_8340_backup }
+				clear_saved_scope = old_holder
+			}
 		}
 		# Trigger next event in chain.
 		hold_court_queue_next_event_effect = yes
