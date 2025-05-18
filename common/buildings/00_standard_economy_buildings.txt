@@ -66,7 +66,7 @@ caravanserai_01 = {
 			OR = {
 				is_county_capital = yes
 				AND = {
-					NOR = {
+					NAND = { #Unop: Was a NOR but that mean the caravanserai cannot be enabled if you have it :?
 						has_building_or_higher = watermills_01
 						has_building_or_higher = caravanserai_01
 					}
@@ -90,7 +90,7 @@ caravanserai_01 = {
 				AND = {
 					county = {
 						any_county_province = {
-							count < 2
+							count <= 2 #Unop: Was < 2 but we can have at most 2 not 1 
 							has_building_or_higher = caravanserai_01
 						}
 					}
@@ -107,7 +107,7 @@ caravanserai_01 = {
 			OR = {
 				is_county_capital = yes
 				AND = {
-					NOR = {
+					NAND = { #Unop: Was a NOR but that mean the caravanserai cannot be enabled if you have it :?
 						has_building_or_higher = watermills_01
 						has_building_or_higher = caravanserai_01
 					}
@@ -116,7 +116,7 @@ caravanserai_01 = {
 				AND = {
 					county = {
 						any_county_province = {
-							count < 2
+							count <= 2 #Unop: Was < 2 but we can have at most 2 not 1 
 							has_building_or_higher = caravanserai_01
 						}
 					}
