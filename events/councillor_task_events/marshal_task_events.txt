@@ -159,8 +159,9 @@ marshal_task.0301 = {
 	option = {
 		name = marshal_task.0301.b
 		scope:commander = {
-			select_and_move_to_pool_effect = yes
+			hidden_effect = { select_and_move_to_pool_effect = yes }
 		}
+		show_as_tooltip = { remove_courtier_or_guest = scope:commander } #Unop: So the tooltip is clean & you are not flooded with errors
 		ai_chance = {
 			base = 10
 		}
@@ -2564,7 +2565,7 @@ marshal_task.3003 = {
 	}
 
 	immediate = {
-		cp:councillor_marshal = {
+		scope:councillor ?= { #Unop: Use the councillor scope since now nomadic can use this task with a kurultai member and not a chancellor (was: root.cp:councillor_marshal)
 			save_scope_as = active_councillor
 		}
 		set_variable = {
