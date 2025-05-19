@@ -2859,9 +2859,9 @@ childhood.1002 = {
 
 	option = {
 		name = childhood.1002.a
-		ai_chance = {
-			base = 100
-		}
+		#ai_chance = { #Unop: Comment this block since it's already defined below
+		#	base = 100
+		#}
 		if = {
 			limit = {
 				is_ai = yes
@@ -7752,12 +7752,12 @@ childhood.2400 = {
 						value = scope:duel_value
 						multiplier = -4
 					}
-					add_opinion = {
-						modifier = disappointed_opinion
-						target = root
-						opinion = -10
-					}
 					root = {
+						add_opinion = { #Unop: Reverse the opinion loss was the priest disapointing in you when YOU ask the priest to convince the child
+							modifier = disappointed_opinion
+							target = scope:realm_priest
+							opinion = -10
+						}
 						send_interface_toast = {
 							type = event_toast_effect_bad
 							title = childhood.2400.b.toast.fail
