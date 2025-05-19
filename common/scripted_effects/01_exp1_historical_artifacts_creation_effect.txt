@@ -1065,6 +1065,23 @@ create_artifact_pedestal_branch_relic_general_effect = {
 			name = relic_religion
 			value = $RELIGION$
 		}
+
+		#This is needed to determine what religion the branch will work for.
+		if = {
+			limit = { NOT = { exists = $RELIGION$ } } #Unop: Since the adventurer can be at sea when the end event fire, the religion won't be set !
+			#Got location: Gulf of Aden(Province - 8674) so no wonder why faith was undefined 
+			set_variable = {
+				name = relic_religion
+				value = root.faith # Root or inspiration_sponsor faith ? going with root for now
+			}
+		}
+		else = {
+			set_variable = {
+				name = relic_religion
+				value = $RELIGION$
+			}
+		}
+
 		set_variable = { name = historical_unique_artifact value = yes }
 		add_scaled_artifact_modifier_piety_effect = yes
 		add_scaled_artifact_modifier_grandeur_small_effect = yes
@@ -2026,7 +2043,7 @@ create_artifact_robe_kassapa_effect = {
 		visuals = reliquary
 		wealth = scope:wealth
 		quality = scope:quality
-		template = buddhism_artifact_template
+		#template = buddhism_artifact_template #Unop: Duplicate a few line above
 		history = {
 			type = created_before_history
 		}
