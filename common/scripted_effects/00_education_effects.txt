@@ -431,6 +431,7 @@ education_complete_notification_effect = {
 		}
 		random_relation = {
 			type = guardian
+			save_scope_as = current_guardian #Unop: Save the guardian to be used later
 			if = {
 				limit = { this = { is_parent_of = root } }
 				save_scope_as = parent_guardian
@@ -510,7 +511,7 @@ education_complete_notification_effect = {
 			hidden_effect = { # Hidden to avoid duplicate effect messages
 				#Relationship back-up clean-up
 				remove_guardian_effect = {
-					GUARDIAN = this
+					GUARDIAN = scope:current_guardian #Unop: Use the scope saved before since THIS is scope-dependent
 					WARD = scope:educated_child
 					RETURN_WARD = no
 					HIDE_OPINION = no
