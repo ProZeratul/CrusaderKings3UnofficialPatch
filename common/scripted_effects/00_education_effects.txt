@@ -2918,9 +2918,18 @@ dynasty_perk_secondary_education_trait_effect = {
 		}
 
 		# Assign a trait, chance based on the development of the location
-		set_variable = {
-			name = chance_for_extra_trait
-			value = location.county.development_level
+		if = { #Unop: Rework this, since children COULD be traveling when they come of age, the current location they are while traveling will be the one chosen for the bonus, even if they spent all their childhood in a very high dev location
+			limit = { exists = current_travel_plan }
+			set_variable = {
+				name = chance_for_extra_trait
+				value = current_travel_plan.departure_location.county.development_level
+			}
+		}
+		else = {
+			set_variable = {
+				name = chance_for_extra_trait
+				value = location.county.development_level
+			}
 		}
 
 		random_list = {
