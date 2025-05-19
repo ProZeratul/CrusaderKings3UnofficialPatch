@@ -36,6 +36,32 @@ caravanserai_01 = {
 
 	can_construct_showing_failures_only = {
 		building_requirement_tribal = no
+
+		trigger_if = { #Unop: Added this to prevent people to construct more caravanserai than allowed
+			limit = {
+				culture = { has_cultural_parameter = second_caravanserai }
+			}
+			custom_tooltip = {
+				text = unop_already_two_caravanserai_in_county
+				county = {
+					any_county_province = {
+						count < 2
+						has_building_or_higher = caravanserai_01
+					}
+				}
+			}
+		}
+		trigger_else = {
+			custom_tooltip = {
+				text = unop_no_second_caravanserai
+				county = {
+					any_county_province = {
+						count < 1
+						has_building_or_higher = caravanserai_01
+					}
+				}
+			}
+		}
 	}
 	
 	is_enabled = {
