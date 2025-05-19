@@ -55,7 +55,18 @@ can_change_succession_law_trigger = {
 can_change_single_heir_dynasty_house_succession_law_trigger = {
 	trigger_if = {
 		limit = {
-			culture = { has_cultural_pillar = heritage_west_slavic }
+			culture = { # Unop: Rework this to better handle the table of prince innovation (retook the conditions of it)
+				OR = {
+					this = culture:czech
+					this = culture:slovien
+					any_parent_culture_or_above = {
+						this = culture:czech
+					}
+					any_parent_culture_or_above = {
+						this = culture:slovien
+					}
+				}
+			}
 			NOT = {
 				has_realm_law_flag = can_change_succession_laws
 			}
