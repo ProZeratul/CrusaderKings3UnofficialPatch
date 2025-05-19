@@ -785,7 +785,7 @@ friendship.0011 = { #by Mathilda Bjarnehed
 	title = friendship.0011.t
 	desc = friendship.0011.desc
 	theme = friend_relation
-	theme = unfriendly
+	#theme = unfriendly # Unop: Duplicated just above
 	left_portrait = {
 		character = scope:other_best_friend
 		animation = sadness
@@ -1393,16 +1393,33 @@ friendship.1006 = {
 		name = friendship.1006.b
 		trigger = {
 			scope:friend = {
-				gold > root.major_gold_value
+				gold > root.massive_gold_value
 			}
 		}
+		#Unop: Add the check like in the option A to ensure being given MORE gold than in the first option in case there is a large difference between the gold revenue of each (root should be gaining less/month than the targeted friend)
 		scope:friend = {
-			pay_short_term_gold = {
-				target = root
-				gold = {
-					value = root.massive_gold_value
-					multiply = 1.5
-					max = scope:friend.gold
+			if = {
+				limit = {
+					gold >= root.massive_gold_value
+					root.massive_gold_value >= scope:friend.massive_gold_value
+				}
+				pay_short_term_gold = {
+					target = root
+					gold = {
+						value = root.massive_gold_value
+						multiply = 1.5
+						max = scope:friend.gold
+					}
+				}
+			}
+			else = {
+				pay_short_term_gold = {
+					target = root
+					gold = {
+						value = scope:friend.massive_gold_value
+						multiply = 1.5
+						max = scope:friend.gold
+					}
 				}
 			}
 			add_opinion = {
