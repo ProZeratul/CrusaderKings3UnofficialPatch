@@ -60,7 +60,11 @@
 					list = target_titles 
 					limit = {
 						tier = tier_county
-						holder.top_liege = scope:defender
+						OR = { #Unop: Fix this CB cost to NOT be free when attacking fellow vassals & liege
+							holder.top_liege = scope:defender
+							holder.liege = scope:defender
+							holder.liege = scope:defender.liege
+						}
 					}
 					add = 100
 				}
@@ -729,7 +733,11 @@ individual_duchy_de_jure_cb = {
 					every_in_de_jure_hierarchy = { # goes down, not up
 						limit = {
 							tier = tier_county
-							holder.top_liege = scope:defender
+							OR = { #Unop: Fix this CB cost to NOT be free when attacking fellow vassals & liege
+								holder.top_liege = scope:defender
+								holder.liege = scope:defender
+								holder.liege = scope:defender.liege
+							}
 						}
 						add = 100
 					}
