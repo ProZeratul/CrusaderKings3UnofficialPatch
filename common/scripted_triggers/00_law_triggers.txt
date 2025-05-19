@@ -282,8 +282,15 @@ can_have_single_heir_dynasty_house_trigger = {
 	trigger_if = {
 		limit = {
 			culture = {
-				OR = {
-					has_cultural_pillar = heritage_west_slavic
+				OR = { # Unop: Rework this to better handle the table of prince innovation (retook the conditions of it)
+					this = culture:czech
+					this = culture:slovien
+					any_parent_culture_or_above = {
+						this = culture:czech
+					}
+					any_parent_culture_or_above = {
+						this = culture:slovien
+					}
 					NOT = {	has_innovation = innovation_heraldry }
 				}
 			}
