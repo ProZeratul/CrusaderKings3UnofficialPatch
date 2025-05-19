@@ -368,8 +368,17 @@ char_interaction.0080 = {
 				trigger = {
 					this = scope:guardian
 					scope:recipient = scope:ward_liege
+					NOT = { scope:recipient = scope:secondary_recipient }
 				}
 				desc = char_interaction.0080.desc_self
+			}
+			triggered_desc = {
+				trigger = {
+					this = scope:guardian
+					scope:recipient = scope:ward_liege
+					scope:recipient = scope:secondary_recipient
+				}
+				desc = char_interaction.0080.desc_ward_self
 			}
 			desc = char_interaction.0080.desc
 		} 
