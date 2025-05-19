@@ -1477,7 +1477,7 @@ create_artifact_wall_banner_effect = {
 					grant_banner_house_claim_effect = yes
 					set_artifact_description = artifact_wall_banner_dynasty_description # For commissioner flavor
 				}
-				remove_variable = banner_from_dynasty
+				#remove_variable = banner_from_dynasty
 			}
 			else_if = { #House Banner
 				limit = { has_variable = banner_from_house }
@@ -1523,7 +1523,7 @@ create_artifact_wall_banner_effect = {
 						value = scope:target
 					}
 				}
-				remove_variable = banner_from_house
+				#remove_variable = banner_from_house
 			}
 			else_if = { # For banners looted after a battle
 				limit = {
@@ -1569,7 +1569,21 @@ create_artifact_wall_banner_effect = {
 		# Modifiers are completely randomized - Possible modifiers are based on the battle
 		scope:newly_created_artifact = {
 			add_scaled_artifact_modifier_grandeur_small_effect = yes
+			#Unop I wanted to keep everything as clear as possible without messing everything so 1st is banner dynasty/house banners then battle then anything else
 			if = {
+				limit = {
+					scope:owner = {
+						OR = {
+							has_variable = banner_from_dynasty #Dynasty Banner
+							has_variable = banner_from_house #House Banner
+						}
+					}
+				}
+				add_scaled_artifact_modifier_dynasty_prestige_effect = yes
+				add_scaled_artifact_modifier_prestige_effect = yes
+				add_scaled_artifact_modifier_rulership_effect = yes
+			}
+			else_if = {
 				limit = {
 					exists = scope:epic_loser
 				}
@@ -2060,7 +2074,19 @@ create_artifact_wall_banner_effect = {
 				add_scaled_artifact_modifier_prestige_effect = yes
 				add_scaled_artifact_modifier_rulership_effect = yes
 			}
-			remove_artifact_modifier = artifact_placeholder_modifier
+			remove_artifact_modifier = artifact_placeholder_modifier			
+		}
+		scope:owner = {
+			if = { 
+				limit = { has_variable = banner_from_dynasty }
+				remove_variable = banner_from_dynasty 
+				if = { limit = { has_variable = startup_banner } remove_variable = startup_banner }
+			}
+			else_if = { 
+				limit = { has_variable = banner_from_house }
+				remove_variable = banner_from_house
+				if = { limit = { has_variable = startup_banner } remove_variable = startup_banner }
+			}
 		}
 	}
 }
