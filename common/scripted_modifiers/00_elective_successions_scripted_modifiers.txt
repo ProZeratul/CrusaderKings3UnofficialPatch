@@ -727,7 +727,7 @@ elector_voting_pattern_circumstances_feudal_elective_modifier = {
 		desc = tooltip_feudal_elector_vote_distant_relative
 		NOR = {
 			this = scope:candidate
-			is_close_family_of = root
+			NOT = { is_close_family_of = root } #Unop: Add the NOT to this to follow what is stated above
 			scope:candidate = scope:holder_candidate #Avoid if he's being specifically picked by the current ruler.
 		}
 		exists = scope:candidate.dynasty
@@ -1540,7 +1540,7 @@ elector_voting_pattern_traits_feudal_elective_modifier = {
 			attraction <= -25
 		}
 		add = {
-			value = 0
+			value = 1 #Unop: Was 0, but 0 multiplied by anything will be 0 and the goal is to reduce the voting score for ugly people
 			multiply = scope:candidate.attraction
 			multiply = 0.1
 		}
@@ -1657,27 +1657,20 @@ elector_voting_pattern_traits_feudal_elective_modifier = {
 		add = {
 			value = 10
 			if = {
-				limit = {
-					scope:candidate = { has_trait = intellect_good_1 }
-				}
+				limit = { scope:candidate = { has_trait = intellect_good_1 } }
 				add = 5
 			}
 			if = {
-				limit = {
-					scope:candidate = {
-						OR = {
-							has_trait = intellect_good_2
-							has_trait = shrewd
-						}
-					}
-				}
+				limit = { scope:candidate = { has_trait = intellect_good_2 } }
 				add = 10
 			}
 			if = {
-				limit = {
-					scope:candidate = { has_trait = intellect_good_3 }
-				}
+				limit = { scope:candidate = { has_trait = intellect_good_3 } }
 				add = 15
+			}
+			if = { #Unop: Make this a seperate entry (was merged with intellect 2)
+				limit = { scope:candidate = { has_trait = shrewd } }
+				add = 10
 			}
 		}
 	}
@@ -1697,27 +1690,20 @@ elector_voting_pattern_traits_feudal_elective_modifier = {
 		add = {
 			value = 0
 			if = {
-				limit = {
-					scope:candidate = { has_trait = intellect_good_1 }
-				}
+				limit = { scope:candidate = { has_trait = intellect_good_1 } }
 				add = 5
 			}
 			if = {
-				limit = {
-					scope:candidate = {
-						OR = {
-							has_trait = intellect_good_2
-							has_trait = shrewd
-						}
-					}
-				}
+				limit = { scope:candidate = { has_trait = intellect_good_2 } }
 				add = 10
 			}
 			if = {
-				limit = {
-					scope:candidate = { has_trait = intellect_good_3 }
-				}
+				limit = { scope:candidate = { has_trait = intellect_good_3 } }
 				add = 15
+			}
+			if = { #Unop: Make this a seperate entry (was merged with intellect 2)
+				limit = { scope:candidate = { has_trait = shrewd } }
+				add = 10
 			}
 		}
 	}
@@ -2753,7 +2739,7 @@ elector_voting_pattern_circumstances_gaelic_elective_modifier = {
 		}
 
 		OR = { # If the current holder is reigning from within the title, there is no reason to believe a lower tier candidate would not.
-			scope:holder = { 
+			scope:holder = {
 				capital_county = {
 					scope:title = {
 						NOT = { is_de_jure_liege_or_above_target = prev }
@@ -3060,7 +3046,7 @@ elector_voting_pattern_circumstances_saxon_elective_modifier = {
 			}
 		}
 	}
-	
+
 	modifier = {	# Witengamot will challenge the ruler's pick if they can't enforce it.
 		add = -30
 		desc = tooltip_saxon_elector_vote_military_strength
