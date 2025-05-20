@@ -54,10 +54,10 @@
 			}
 		}
 	}
-	
+
 	has_valid_target = {
 		exists = scope:target
-	}	
+	}
 
 	has_valid_target_showing_failures_only = {
 		scope:target = {
@@ -115,9 +115,9 @@
 		}
 	}
 
-	
+
 	is_valid_showing_failures_only = {
-		
+
 		scope:recipient = {
 			is_ruler = yes
 		}
@@ -197,7 +197,7 @@
 				}
 			}
 		}
-		
+
 		# You cannot call a suzerain against their own tributary
 		trigger_if = {
 			limit = {
@@ -218,7 +218,7 @@
 			}
 		}
 		trigger_else = {}
-		
+
 		# You cannot call a tributary against their suzerain
 		trigger_if = {
 			limit = {
@@ -274,7 +274,7 @@
 			}
 		}
 	}
-		
+
 	on_accept = {
 		call_ally_interaction_effect = yes
 
@@ -326,7 +326,7 @@
 			}
 		}
 	}
-	
+
 	on_decline = {
 		#The war could theoretically end on the day the decline is sent
 		if = {
@@ -347,7 +347,7 @@
 					scope:recipient = {
 						add_prestige_experience = major_prestige_loss
 					}
-					
+
 				}
 				else = {
 					scope:actor = {
@@ -425,7 +425,7 @@
 			scope:actor = {
 				trigger_event = call_ally.0101
 			}
-			
+
 			# If we're a clan this interaction affects unity
 			refuse_call_to_arms_add_clan_unity_effect = yes
 		}
@@ -448,7 +448,7 @@
 				text = "is_recipients_player_heir"
 				subject = scope:actor
 				object = scope:recipient
-				
+
 				exists = scope:recipient.player_heir
 				scope:recipient = {
 					player_heir = scope:actor
@@ -473,7 +473,7 @@
 			}
 		}
 	}
-	
+
 	ai_accept = {
 		base = 20
 
@@ -540,11 +540,11 @@
 						this = scope:target.casus_belli.primary_defender
 					}
 				}
-				
+
 			}
 			desc = WONT_FIGHT_SPOUSE_REASON
 		}
-		
+
 		modifier = {  # Refuse call against Suzerain if Obedient
 			add = -1000
 			trigger_if = {
@@ -585,7 +585,7 @@
 			scope:target.casus_belli.primary_defender = scope:actor
 			desc = DEFENSIVE_WAR_REASON
 		}
-		
+
 		modifier = { # Same language
 			add = 5
 			desc = speaks_same_language_interaction_reason
@@ -595,7 +595,7 @@
 				}
 			}
 		}
-		
+
 		modifier = { # Shared Court Language (non-spoken)
 			add = 10
 			desc = foreign_realm_court_language_non_spoken_interaction_reason
@@ -617,7 +617,7 @@
 							has_same_court_language = scope:recipient
 						}
 					}
-					
+
 					scope:recipient = { # The recipient doesn't have a royal court, but their liege does
 						is_independent_ruler = no
 						has_royal_court = no
@@ -683,7 +683,7 @@
 				}
 			}
 		}
-		
+
 		modifier = { # Shared Court Language (spoken)
 			add = 30
 			desc = foreign_realm_court_language_spoken_interaction_reason
@@ -705,7 +705,7 @@
 							has_same_court_language = scope:recipient
 						}
 					}
-					
+
 					scope:recipient = { # The recipient doesn't have a royal court, but their liege does
 						is_independent_ruler = no
 						has_royal_court = no
@@ -780,7 +780,7 @@
 				scope:actor = { has_diarchy_parameter = diarchy_type_is_entrenched_regency }
 			}
 			trigger_else = { always = no }
-		}		
+		}
 
 		compare_modifier = { # Likes fighting infidels
 			trigger = {
@@ -953,7 +953,7 @@
 	# Score above 0 means the AI will call this ally. Note that DESIRED_WAR_SIDE_STRENGTH still applies and can prevent calling the ally
 	ai_will_do = {
 		base = 100
-		
+
 		modifier = { # If the player is at war, do not bother them with offensive calls
 			scope:target.casus_belli.primary_attacker = scope:actor
 			scope:recipient = {
@@ -964,7 +964,7 @@
 			}
 			factor = 0
 		}
-		
+
 		modifier = { # Do not call the player if they are in debt
 			scope:recipient = {
 				is_ai = no
@@ -972,10 +972,10 @@
 			}
 			factor = 0
 		}
-		
+
 		modifier = { # Don't call players in against their heirs (they wouldn't accept the reverse situation... don't be a hypocrite)
 			exists = scope:recipient.player_heir
-			scope:recipient = {			
+			scope:recipient = {
 				is_ai = no
 			}
 			trigger_if = {
@@ -987,9 +987,9 @@
 			}
 			factor = 0
 		}
-		
+
 		modifier = { # Same with spouses
-			scope:recipient = {			
+			scope:recipient = {
 				is_ai = no
 			}
 			trigger_if = {
@@ -1005,7 +1005,7 @@
 			}
 			factor = 0
 		}
-		
+
 		modifier = { # Don't call brand-new allies into old wars, at least until some time has elapsed.
 			has_variable = delay_calling_recent_ally
 			var:delay_calling_recent_ally = scope:recipient
@@ -1064,7 +1064,7 @@ negotiate_alliance_interaction = {
 			}
 		}
 	}
-	
+
 	is_valid_showing_failures_only = {
 		scope:recipient = {
 			is_playable_character = yes
@@ -1201,7 +1201,7 @@ negotiate_alliance_interaction = {
 				has_usable_hook = scope:recipient
 			}
 		}
-		flag = hook	
+		flag = hook
 		localization = GENERIC_SPEND_A_HOOK
 	}
 	should_use_extra_icon = {
@@ -1229,12 +1229,12 @@ negotiate_alliance_interaction = {
 				NOT = { scope:hook = yes }
 			}
 		}
-		flag = influence	
+		flag = influence
 		localization = SPEND_INFLUENCE
 	}
 
 	send_options_exclusive = no
-		
+
 	on_accept = {
 		scope:actor = {
 			trigger_event = char_interaction.0235
@@ -1247,6 +1247,7 @@ negotiate_alliance_interaction = {
 				limit = {
 					scope:hook = yes
 					has_hook = scope:recipient
+					has_usable_hook = scope:recipient #Unop: Prevent an error in the logs
 				}
 				use_hook = scope:recipient
 			}
@@ -1454,7 +1455,7 @@ negotiate_alliance_interaction = {
 			REVERSE_NON_HOUSE_TARGET = no
 		}
 	}
-	
+
 	on_decline = {
 		scope:actor = {
 			trigger_event = char_interaction.0236
@@ -1498,7 +1499,7 @@ negotiate_alliance_interaction = {
 		# Same House (+)
 		# Declared war opinion
 		# Actor is at war penalty
-		
+
 		modifier = {
 			add = 20
 			scope:recipient = {
@@ -1506,7 +1507,7 @@ negotiate_alliance_interaction = {
 			}
 			desc = CLOSE_FAMILY_REASON
 		}
-		
+
 		modifier = {
 			add = 10
 			scope:recipient = {
@@ -1633,7 +1634,7 @@ negotiate_alliance_interaction = {
 				value = 25
 			}
 			desc = WE_ARE_LOVERS
-		}		
+		}
 		modifier = {
 			scope:recipient = {
 				has_relation_friend = scope:actor
@@ -1759,7 +1760,7 @@ negotiate_alliance_interaction = {
 			}
 			desc = "ACTOR_NEMESIS_TO_ME_REASON"
 		}
-		
+
 		# Dynasty Prestige Levels
 		modifier = {
 			add = -5
@@ -1886,7 +1887,7 @@ negotiate_alliance_interaction = {
 							scope:recipient.ai_zeal >= 50
 						}
 						multiply = 2
-					}										
+					}
 					if = {
 						limit = {
 							scope:recipient.faith = { has_doctrine = doctrine_pluralism_pluralistic }
@@ -1905,7 +1906,7 @@ negotiate_alliance_interaction = {
 			}
 			desc = LIEGE_REASON
 		}
-		
+
 		modifier = {
 	  	  	add = {
 				value = 1
@@ -1987,7 +1988,7 @@ negotiate_alliance_interaction = {
 			scope:actor = {
 				is_at_war = yes
 
-				# Since vassals and lieges can't call us into wars, this doesn't matter for us if we have that relationship. 
+				# Since vassals and lieges can't call us into wars, this doesn't matter for us if we have that relationship.
 				NOR = {
 					target_is_liege_or_above = scope:recipient
 					target_is_vassal_or_below = scope:recipient
@@ -2074,7 +2075,7 @@ negotiate_alliance_interaction = {
 			}
 			desc = THEIR_EXISTING_ALLIANCES_REASON
 		}
-		
+
 		modifier = {
 			add = intimidated_reason_value
 			scope:recipient = {
@@ -2097,7 +2098,7 @@ negotiate_alliance_interaction = {
 			}
 			desc = COWED_REASON
 		}
-		
+
 		modifier = {
 			add = intimidated_external_reason_value
 			scope:recipient = {
@@ -2127,7 +2128,7 @@ negotiate_alliance_interaction = {
 		}
 
 		fp3_struggle_resist_allied_wars_modifier = yes
-		
+
 		# LOW LEGITIMACY
 		modifier = {
 			desc = "LOW_LEGITIMACY_REASON"
@@ -2181,7 +2182,7 @@ negotiate_alliance_interaction = {
 				}
 			}
 		}
-		
+
 		# INFLUENCE
 		modifier = {
 			desc = INFLUENCE_REASON
@@ -2197,25 +2198,25 @@ negotiate_alliance_interaction = {
 	ai_potential = {
 		is_at_war = no
 	}
-	
+
 	ai_targets = {
 		ai_recipients = dynasty
 		max = 20
 	}
-	
+
 	ai_targets = {
 		ai_recipients = family
 		max = 10
 	}
-	
+
 	ai_targets = {
 		ai_recipients = spouses
 	}
 	ai_frequency = 72
-	
+
 	ai_will_do = {
 		base = 0
-		
+
 		modifier = {
 			add = 100
 			any_ally = {
@@ -2232,7 +2233,7 @@ negotiate_alliance_interaction = {
 				}
 			}
 		}
-		
+
 		modifier = { # Clans always want alliances with Vassals
 			add = 100
 			scope:actor = {
@@ -2247,12 +2248,12 @@ negotiate_alliance_interaction = {
 		evaluate_action_increasing_house_unity = {
 			VALUE = 100
 		}
-		
+
 		modifier = { # The AI shouldn't propose to their Lieges
 			factor = 0
 			is_liege_or_above_of = scope:recipient
 		}
-		
+
 		modifier = { # The AI shouldn't propose to their Vassals unless Clan
 			factor = 0
 			scope:actor = {
@@ -2270,14 +2271,14 @@ perk_alliance_interaction = {
 	ai_min_reply_days = 4
 	ai_max_reply_days = 9
 	icon = alliance
-	
+
 
 	interface_priority = 60
 	desc = perk_alliance_interaction_desc
-	
+
 	greeting = positive
 	notification_text = PERK_NEGOTIATE_ALLIANCE_NOTIFICATION
-	
+
 	is_shown = {
 		scope:recipient = {
 			NOR = {
@@ -2303,9 +2304,9 @@ perk_alliance_interaction = {
 			}
 		}
 	}
-	
+
 	is_valid_showing_failures_only = {
-		
+
 		custom_description = {
 			text = "already_has_an_alliance_deal"
 			subject = scope:recipient
@@ -2320,21 +2321,21 @@ perk_alliance_interaction = {
 				}
 			}
 		}
-		
+
 		scope:recipient = {
 			is_playable_character = yes
 			is_at_war = no
 			is_imprisoned = no
 		}
-		
+
 		scope:actor = {
 			is_playable_character = yes
 			is_at_war = no
 			is_imprisoned = no
 		}
-		
+
 		scope:recipient = { is_busy_in_events_localised = yes }
-		
+
 		custom_description = {
 			text = "has_already_rejected_renegotiation"
 			subject = scope:recipient
@@ -2348,7 +2349,7 @@ perk_alliance_interaction = {
 			}
 		}
 	}
-	
+
 	can_send = {
 		custom_description = { # Exploit prevention
 			text = "has_sent_interaction_already"
@@ -2374,14 +2375,14 @@ perk_alliance_interaction = {
 				has_usable_hook = scope:recipient
 			}
 		}
-		flag = hook	
+		flag = hook
 		localization = GENERIC_SPEND_A_HOOK
 	}
 	should_use_extra_icon = {
 		scope:actor = { has_usable_hook = scope:recipient }
 	}
 	extra_icon = "gfx/interface/icons/character_interactions/hook_icon.dds"
-	
+
 	# Admin Gov can spend Influence to increase AI acceptance towards other same-realm admin characters
 	send_option = {
 		is_shown = {
@@ -2402,12 +2403,12 @@ perk_alliance_interaction = {
 				NOT = { scope:hook = yes }
 			}
 		}
-		flag = influence	
+		flag = influence
 		localization = SPEND_INFLUENCE
 	}
 
 	send_options_exclusive = no
-		
+
 	on_accept = {
 		save_scope_value_as = { #So that we can show the opinion gain in the response event
 			name = perk_alliance_interaction
@@ -2430,7 +2431,7 @@ perk_alliance_interaction = {
 				limit = { scope:hook = yes }
 				use_hook = scope:recipient
 			}
-			
+
 			if = {
 				limit = {
 					scope:influence = yes
@@ -2453,7 +2454,7 @@ perk_alliance_interaction = {
 			REVERSE_NON_HOUSE_TARGET = no
 		}
 	}
-	
+
 	on_decline = {
 		scope:actor = {
 			trigger_event = char_interaction.0236
@@ -2482,7 +2483,7 @@ perk_alliance_interaction = {
 			scope:hook = yes
 		}
 	}
-	
+
 	ai_accept = { # Similar to Negotiate Alliance, but without modifiers for Liege, being an heir, etc.
 		base = -25
 
@@ -2543,7 +2544,7 @@ perk_alliance_interaction = {
 				value = 25
 			}
 			desc = WE_ARE_LOVERS
-		}			
+		}
 		modifier = {
 			scope:recipient = {
 				has_relation_friend = scope:actor
@@ -2552,7 +2553,7 @@ perk_alliance_interaction = {
 				value = 25
 			}
 			desc = WE_ARE_FRIENDS
-		}		
+		}
 		modifier = {
 			scope:actor = {
 				tier_difference = {
@@ -2696,7 +2697,7 @@ perk_alliance_interaction = {
 			}
 			desc = "ACTOR_NEMESIS_TO_ME_REASON"
 		}
-		
+
 		# Dynasty Prestige Levels
 		modifier = {
 			add = -5
@@ -2823,7 +2824,7 @@ perk_alliance_interaction = {
 							scope:recipient.ai_zeal >= 50
 						}
 						multiply = 2
-					}										
+					}
 					if = {
 						limit = {
 							scope:recipient.faith = { has_doctrine = doctrine_pluralism_pluralistic }
@@ -2842,7 +2843,7 @@ perk_alliance_interaction = {
 			}
 			desc = LIEGE_REASON
 		}
-		
+
 		modifier = {
 	  	  	add = {
 				value = 1
@@ -2924,7 +2925,7 @@ perk_alliance_interaction = {
 			scope:actor = {
 				is_at_war = yes
 
-				# Since vassals and lieges can't call us into wars, this doesn't matter for us if we have that relationship. 
+				# Since vassals and lieges can't call us into wars, this doesn't matter for us if we have that relationship.
 				NOR = {
 					target_is_liege_or_above = scope:recipient
 					target_is_vassal_or_below = scope:recipient
@@ -2999,7 +3000,7 @@ perk_alliance_interaction = {
 			}
 			desc = THEIR_EXISTING_ALLIANCES_REASON
 		}
-		
+
 		modifier = {
 			add = intimidated_reason_value
 			scope:recipient = {
@@ -3022,7 +3023,7 @@ perk_alliance_interaction = {
 			}
 			desc = COWED_REASON
 		}
-		
+
 		modifier = {
 			add = intimidated_external_reason_value
 			scope:recipient = {
@@ -3050,7 +3051,7 @@ perk_alliance_interaction = {
 		evaluate_action_increasing_house_unity = {
 			VALUE = 10
 		}
-		
+
 		# INFLUENCE
 		modifier = {
 			desc = INFLUENCE_REASON
@@ -3069,18 +3070,18 @@ perk_alliance_interaction = {
 			count < 2
 		}
 	}
-	
+
 	ai_targets = {
 		ai_recipients = neighboring_rulers
 		max = 10
 	}
-	
+
 	ai_targets = {
 		ai_recipients = peer_vassals
 		max = 5
 	}
 	ai_frequency = 72
-	
+
 	ai_will_do = {
 		base = 100
 
@@ -3088,7 +3089,7 @@ perk_alliance_interaction = {
 		evaluate_action_increasing_house_unity = {
 			VALUE = 100
 		}
-		
+
 		modifier = { # Don't disturb the player with pointless asks
 			add = -5000
 			scope:recipient = {
@@ -3099,13 +3100,13 @@ perk_alliance_interaction = {
 				scope:actor.primary_title.tier >= scope:recipient.primary_title.tier
 			}
 		}
-		
+
 		modifier = {
 			add = -5000
 			scope:recipient.current_military_strength <= 100
 		}
 	}
-	
+
 }
 
 join_war_interaction = {
@@ -3188,7 +3189,7 @@ join_war_interaction = {
 							text = laamp_war_change_sides_interaction.left_voluntarily
 							is_target_in_variable_list = {
 								name = left_voluntarily
-								target = scope:actor	
+								target = scope:actor
 							}
 						}
 					}
@@ -3223,7 +3224,7 @@ join_war_interaction = {
 												}
 											}
 										}
-											
+
 									}
 								}
 							}
@@ -3260,7 +3261,7 @@ join_war_interaction = {
 			# suzerains can always join their tributaries' defensive wars
 			trigger_else_if = {
 				limit = {
-					scope:recipient = { 
+					scope:recipient = {
 						is_tributary_of_suzerain_or_above = scope:actor
 					}
 				}
@@ -3278,7 +3279,7 @@ join_war_interaction = {
 			# tributaries can always offer to join their direct suzerains' defensive wars
 			trigger_else_if = {
 				limit = {
-					scope:actor = { 
+					scope:actor = {
 						is_tributary_of = scope:recipient
 					}
 				}
@@ -3316,7 +3317,7 @@ join_war_interaction = {
 				}
 			}
 		}
-		
+
 		scope:actor = {
 			trigger_if = {
 				limit = {
@@ -3340,13 +3341,13 @@ join_war_interaction = {
 			}
 		}
 	}
-	
+
 	can_be_picked = {
 		scope:target ?= {
 
 			# recipient is war leader
 			is_war_leader = scope:recipient
-			
+
 			# special exception for tributaries and suzerains to fight for one another
 			trigger_if = {
 				limit = {
@@ -3408,7 +3409,7 @@ join_war_interaction = {
 							NOT = {
 								fp2_struggle_conciliation_scope_uninvolved_trigger = { SCOPE = scope:target.primary_attacker }
 							}
-						} 
+						}
 					}
 					custom_description = {
 						text = join_war_interaction_recipient_not_def_GHW
@@ -3432,7 +3433,7 @@ join_war_interaction = {
 					}
 				}
 			}
-			# If not holy war, special exception for liege trying to put down his vassal's peasant revolt.	
+			# If not holy war, special exception for liege trying to put down his vassal's peasant revolt.
 			trigger_else_if = {
 				limit = {
 					is_religious_war = no
@@ -3531,7 +3532,7 @@ join_war_interaction = {
 
 	is_highlighted = {
 		scope:actor = {
-			any_character_task_contract = {		
+			any_character_task_contract = {
 				has_task_contract_type = laamp_join_war_contract
 				task_contract_employer = scope:recipient
 			}
