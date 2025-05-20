@@ -6,6 +6,8 @@
 on_join_court = {
 	events = {
 		court_maintenance.0005 # Add 'Order member' trait to courtiers who join holy order court
+		unop_court_maintenance.5005 #If the court is NOT a holy order, remove the trait 'Order member' and gain modifier 'holy_order_experience_modifier'
+		unop_court_maintenance.0005 #If the court is a holy order, remove the modifier 'holy_order_experience_modifier'
 	}
 }
 
@@ -31,7 +33,7 @@ on_leave_court = {
 				}
 			}
 			if = {
-				limit = { 
+				limit = {
 					is_alive = yes
 					has_variable_list = increased_position_salary_employees
 				}
@@ -45,5 +47,6 @@ on_leave_court = {
 	}
 	events = {
 		stewardship_duty.1064 # Cancels the employment contract between this character and their former employer.
+		unop_court_maintenance.0006 # Remove 'Order member' trait to courtiers who leave holy order court & add the corresponding modifier
 	}
 }
