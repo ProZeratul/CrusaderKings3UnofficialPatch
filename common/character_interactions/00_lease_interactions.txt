@@ -6,7 +6,7 @@
 
 	target_type = title
 	target_filter = recipient_lessee_titles
-	
+
 	auto_accept = yes
 
 	is_shown = {
@@ -23,7 +23,39 @@
 	#		piety >= holy_order_revoke_lease_piety_cost
 	#	}
 	#}
-	
+
+	# Fixpack: In order to make the piety cost display in the decision panel, add this entry
+	# Fixpack: but because revoke_holy_order_lease_effect will also remove the piety cost, it will be re-added in the on_accept block
+	cost = {
+		piety = {
+			value = 0
+			if = {
+				limit = {
+					 exists = scope:recipient
+					 exists = scope:recipient.faith
+				}
+				if = {
+					limit = { scope:actor.faith = scope:recipient.faith }
+					add = cancel_holy_order_piety_cost
+				}
+				else_if = {
+					limit = {
+						scope:actor.faith = {
+							faith_hostility_level = {
+								target = scope:recipient.faith
+								value <= faith_astray_level
+							}
+						}
+					}
+					add = 100
+				}
+				else = {
+					add = 0
+				}
+			}
+		}
+	}
+
 	has_valid_target_showing_failures_only = {
 		NOT = { scope:actor = { is_at_war_with = scope:recipient } }
 		#scope:target = {
@@ -51,6 +83,38 @@
 			TARGET = scope:recipient
 			BARONY = scope:target
 		}
+		#Unop: The piety cost of the decision is taken twice, so re-give half of it
+		hidden_effect = {
+			scope:actor = {
+				add_piety = {
+					value = 0
+					if = {
+						limit = {
+							exists = scope:recipient
+							exists = scope:recipient.faith
+						}
+						if = {
+							limit = { scope:actor.faith = scope:recipient.faith }
+							add = cancel_holy_order_piety_cost
+						}
+						else_if = {
+							limit = {
+								scope:actor.faith = {
+									faith_hostility_level = {
+										target = scope:recipient.faith
+										value <= faith_astray_level
+									}
+								}
+							}
+							add = 100
+						}
+						else = {
+							add = 0
+						}
+					}
+				}
+			}
+		}
 	}
 
 	# AI
@@ -62,6 +126,7 @@
 	ai_potential = {
 		is_playable_character = yes
 		highest_held_title_tier > tier_barony
+		piety >= cancel_holy_order_piety_cost # Unop: Prevent AI to go into negative piety
 	}
 
 	ai_will_do = {
