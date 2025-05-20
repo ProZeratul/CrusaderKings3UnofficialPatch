@@ -5,7 +5,7 @@
 	}
 	if = {
 		limit = {
-			has_special_building_slot = no 
+			has_special_building_slot = no
 		}
 		add_special_building_slot = hall_of_heroes_01
 	}
@@ -32,27 +32,31 @@ defenders_of_highgod_decision_effects = {
 	#}
 	if = { #The scope has been saved before this effect is run
 		limit = { exists = scope:holy_site }
-		scope:holy_site = { county.title_province = { defenders_of_highgod_decision_hall_of_heroes_effect = yes } }
-	}
-	else = {	
-		faith = {
-			every_holy_site = {
-				county.title_province = {
-					add_to_list = every_holy_site_province
-				}
-			}
-		}
-
-		show_as_tooltip = {
-			every_in_list = {
-				list = every_holy_site_province
-				custom = defenders_of_highgod_decision_effects_holy_site_of_choice
+		scope:holy_site = {
+			#county.title_province = { #Unop: holy_site is now a county selected in the decision tab
 				defenders_of_highgod_decision_hall_of_heroes_effect = yes
-			}
+			#}
 		}
 	}
+	#else = {
+	#	faith = {
+	#		every_holy_site = {
+	#			county.title_province = {
+	#				add_to_list = every_holy_site_province
+	#			}
+	#		}
+	#	}
+	#
+	#	show_as_tooltip = {
+	#		every_in_list = {
+	#			list = every_holy_site_province
+	#			custom = defenders_of_highgod_decision_effects_holy_site_of_choice
+	#			defenders_of_highgod_decision_hall_of_heroes_effect = yes
+	#		}
+	#	}
+	#}
 
-	#Fervor, modifiers and holy_warrior traits	
+	#Fervor, modifiers and holy_warrior traits
 	faith = {
 		save_scope_as = highgod_faith_scope
 		change_fervor = {
@@ -89,7 +93,7 @@ defenders_of_highgod_decision_effects = {
 			random = {
 				chance = 50
 				add_trait = holy_warrior
-			}	
+			}
 		}
 	}
 }
@@ -129,7 +133,7 @@ dynasty_of_many_crowns_effects = {
 						government_has_flag = government_is_nomadic
 						primary_title ?= {
 							tier >= tier_kingdom
-						} 
+						}
 					}
 					domicile ?= {
 						change_herd = {
@@ -152,7 +156,7 @@ dynasty_of_many_crowns_effects = {
 				}
 			}
 		}
-		
+
 	}
 	dynasty = {
 		add_dynasty_modifier = {
