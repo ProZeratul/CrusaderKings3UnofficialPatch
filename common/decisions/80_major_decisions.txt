@@ -1914,6 +1914,19 @@ lunatic_building_decision = {
 		}
 	}
 
+	widget = { #Unop: The goal is to prevent players to waste this decision that IMHO is hard to setup
+		controller = create_holy_order #revoke_holy_order_lease #create_holy_order
+		barony_valid = { #Unop: Taken from pick_legendary_barony_decision
+			trigger_if = {
+				limit = { exists = this }
+				title_province = { has_special_building_slot = no }
+				is_capital_barony = yes
+				holder = scope:ruler
+				is_leased_out = no
+			}
+		}
+	}
+
 	is_valid = {
 		prestige_level >= 2
 	}
@@ -1924,10 +1937,11 @@ lunatic_building_decision = {
 	}
 
 	effect = {
+		scope:barony.county = { save_scope_as = lunatic_county } #Unop: Save the county
 		save_scope_as = builder
-		root.cp:councillor_court_chaplain = {
-			save_scope_as = court_chaplain
-		}
+		#root.cp:councillor_court_chaplain = { #Unop: Why this was here ? it's not use anywhere
+		#	save_scope_as = court_chaplain
+		#}
 		show_as_tooltip = { lunatic_building_decision_effect = yes }
 
 		trigger_event = major_decisions.3001
