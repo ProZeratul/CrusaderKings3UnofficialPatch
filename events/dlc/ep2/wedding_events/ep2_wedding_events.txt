@@ -4161,7 +4161,7 @@ ep2_wedding.1120 = {
 			}
 		}
 		dynasty ?= {
-			add_dynasty_prestige = medium_dynasty_prestige_gain
+			add_dynasty_prestige = root.dynasty.medium_dynasty_prestige_gain
 		}
 		scope:trouble_child = {
 			add_opinion = {
@@ -10794,6 +10794,9 @@ ep2_wedding.1090 = {
 		has_ep2_dlc_trigger = yes
 		has_activity_intent = matchmaking_intent
 
+		exists = intent_target.location #Unop: In case target is in limbo
+		intent_target.location = { NOT = { is_sea_province = yes } } #Unop: In case target is at sea
+
 		intent_target.location = root.location
 		location = scope:activity.activity_location
 
@@ -15390,7 +15393,8 @@ ep2_wedding.1330 = {
 ##################################################
 
 scripted_trigger ep2_wedding_1340_marriage_cynic_trigger = {
-	is_ai = yes 
+	NOT = { this = scope:host } #Unop: In the event context it makes no sense
+	is_ai = yes
 	OR = {
 		any_spouse = { # dislikes a spouse
 			OR = {
