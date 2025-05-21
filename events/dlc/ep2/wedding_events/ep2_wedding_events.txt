@@ -159,6 +159,7 @@ ep2_wedding.0002 = {
 	option = {
 		name = ep2_wedding.0002.a
 		remove_variable = promised_grand_wedding_marriage_countdown
+		remove_variable = promised_grand_wedding_to #Unop: Aslo clean this variable
 	}
 }
 
@@ -202,8 +203,10 @@ ep2_wedding.0100 = {
 						root = scope:spouse_2
 					}
 				}
-				desc = ep2_wedding.0100.desc_host
-				desc = ep2_wedding.0100.desc_host_outro
+				desc = { #Unop: Add this desc block since it will now show both desc
+					desc = ep2_wedding.0100.desc_host
+					desc = ep2_wedding.0100.desc_host_outro
+				}
 			}
 			triggered_desc = {
 				trigger = {
@@ -635,6 +638,15 @@ ep2_wedding.0151 = {
 
 	option = {
 		name = ep2_wedding.0151.a
+
+		if = {
+			limit = { 
+				scope:spouse_1 = { is_spouse_of = scope:spouse_2 }
+			}
+			debug_log = "Unop: ep2_wedding.0151 => They are already considered married !"
+			debug_log_scopes = yes
+		}
+
 		scope:spouse_1 = {
 			marry = scope:spouse_2
 		}
@@ -683,12 +695,12 @@ ep2_wedding.0151 = {
 				}
 			}
 		}
-		scope:spouse_1.dynasty ?= { add_dynasty_prestige = medium_dynasty_prestige_gain }
+		scope:spouse_1.dynasty ?= { add_dynasty_prestige = root.dynasty.medium_dynasty_prestige_gain }
 		if = {
 			limit = {
 				NOT = { scope:spouse_2.dynasty ?= scope:spouse_1.dynasty }
 			}
-			scope:spouse_2.dynasty ?= { add_dynasty_prestige = medium_dynasty_prestige_gain }
+			scope:spouse_2.dynasty ?= { add_dynasty_prestige = root.dynasty.medium_dynasty_prestige_gain }
 		}
 		if = {
 			limit = {
@@ -1289,7 +1301,18 @@ ep2_wedding.0915 = {
 		# The wedding is invalidated: get a refund
 		custom_tooltip = {
 			text = ep2_wedding.9015.tt
-			add_gold = scope:previous_host.var:gwedding_gold_recoup_value
+			if = { #Unop: Try to cover all cases to actually get your refund
+				limit = { scope:previous_host = { has_variable = gwedding_gold_recoup_value } }
+				add_gold = scope:previous_host.var:gwedding_gold_recoup_value
+			}
+			else_if = {
+				limit = { has_variable = gwedding_gold_recoup_value }
+				add_gold = var:gwedding_gold_recoup_value
+			}
+			else = {
+				debug_log = "Unop: ep2_wedding.0915 gwedding_gold_recoup_value was never set"
+				add_gold = scope:previous_host.var:gwedding_gold_recoup_value #<= This is made on purpose to keep a failure in error log
+			}
 		}
 	}
 
@@ -1357,7 +1380,10 @@ ep2_wedding.0920 = {
 		}
 		remove_variable = promised_grand_wedding_by
 		scope:previous_host = {
-			remove_variable = promised_grand_wedding_marriage_countdown
+			if = { #Unop: Always try to check variable existence before removing it
+				limit = { has_variable = promised_grand_wedding_marriage_countdown }
+				remove_variable = promised_grand_wedding_marriage_countdown
+			}
 		}
 		if = {
 			limit = {
@@ -2080,6 +2106,8 @@ ep2_wedding.1010 = {
 		}
 
 		scope:host = root
+		exists = intent_target.location #Unop: In case target is in limbo
+		intent_target.location = { NOT = { is_sea_province = yes } } #Unop: In case target is at sea
 		intent_target.location = root.location
 
 		intent_target = {
@@ -7721,7 +7749,7 @@ ep2_wedding.1200 = {
 	option = {
 		name = ep2_wedding.1200.a
 		add_prestige = minor_prestige_gain
-		dynasty ?= { add_dynasty_prestige = minor_dynasty_prestige_gain }
+		dynasty ?= { add_dynasty_prestige = root.dynasty.minor_dynasty_prestige_gain }
 		stress_impact = {
 			base = minor_stress_impact_loss
 		}
@@ -19895,7 +19923,7 @@ scripted_trigger wedding_3400_suitor_trigger = {
 	is_participant_in_activity = scope:activity
 	is_attracted_to_gender_of = $SUITOR$
 	age >= $SUITOR$.age_minus_25
-    age < $SUITOR$.age_plus_25
+	age < $SUITOR$.age_plus_25
 	OR = {
 		is_married = no
 		allowed_more_spouses = yes
@@ -20660,6 +20688,7 @@ ep2_wedding.3410 = {
 			}
 			scope:jealousy_usurper = {
 				every_close_family_member = {
+					limit = { NOT = { this = root } } #Unop: To avoid self opinion
 					custom = every_usurper_close_family_tt
 					add_opinion = {
 						target = scope:jealousy_focus
