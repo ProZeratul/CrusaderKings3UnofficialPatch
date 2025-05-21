@@ -1274,7 +1274,10 @@ ep2_wedding.0910 = {
 		}
 		remove_variable = promised_grand_wedding_by
 		scope:previous_host = {
-			remove_variable = promised_grand_wedding_marriage_countdown
+			if = { #Unop: Always try to check variable existence before removing it
+				limit = { has_variable = promised_grand_wedding_marriage_countdown }
+				remove_variable = promised_grand_wedding_marriage_countdown
+			}
 		}
 		if = {
 			limit = {
