@@ -295,11 +295,10 @@ defenders_of_highgod_decision = {
 
 	widget = { #Unop: The goal is to prevent players to waste this decision that IMHO is hard to setup
 		controller = create_holy_order #revoke_holy_order_lease #create_holy_order
-		barony_valid = { #Unop: Allow the building to be constructed in any county as long as the county capital is a holy site
+		barony_valid = {
 			trigger_if = {
 				limit = { exists = this }
-				title_province = { is_holy_site = yes }
-				has_special_building_slot = no
+				title_province = { has_special_building_slot = no }
 				holder = scope:ruler
 				is_leased_out = no
 			}
@@ -364,7 +363,7 @@ defenders_of_highgod_decision = {
 	}
 
 	effect = {
-		scope:barony.county = { save_scope_as = holy_site } #Unop: Save the county as the holy_site
+		scope:barony = { save_scope_as = holy_site } #Unop: Save the county as the holy_site
 		save_scope_as = defender_of_highgod
 
 		show_as_tooltip = { defenders_of_highgod_decision_effects = yes } #Actually applied in east_europe.0010 - prestige, laws, title, innovation effects

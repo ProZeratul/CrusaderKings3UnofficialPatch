@@ -1252,13 +1252,17 @@ found_university_decision_effect = {
 }
 
 lunatic_building_decision_effect = {
-	scope:lunatic_county = { #capital_province = { #Unop: Change this so it use the selected capital county in lunatic_building_decision that was changed
+	scope:lunatic_county = { #Unop: Change this so it use the selected capital county in lunatic_building_decision that was changed
 		set_variable = { #To unlock the building
 			name = variable_greenhouse
 			value = yes
 		}
-		add_special_building_slot = special_greenhouse_01
-		add_special_building = special_greenhouse_01
+		title_province = { 
+			hidden_effect = { #Unop: So the special building slot is not show in the desc
+				add_special_building_slot = special_greenhouse_01
+			}
+			add_special_building = special_greenhouse_01 
+		}
 		#add_province_modifier = extra_building_slot
 		#add_building = special_greenhouse_01
 	}

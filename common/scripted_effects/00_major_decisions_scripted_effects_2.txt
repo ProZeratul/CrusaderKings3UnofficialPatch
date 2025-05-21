@@ -3,11 +3,13 @@
 		name = hall_of_heroes
 		value = yes
 	}
-	if = {
-		limit = {
-			has_special_building_slot = no
+	hidden_effect = { #Unop: So the special building slot is not show in the desc
+		if = {
+			limit = {
+				has_special_building_slot = no
+			}
+			add_special_building_slot = hall_of_heroes_01
 		}
-		add_special_building_slot = hall_of_heroes_01
 	}
 	add_special_building = hall_of_heroes_01
 }
@@ -32,7 +34,7 @@ defenders_of_highgod_decision_effects = {
 	#}
 	if = { #The scope has been saved before this effect is run
 		limit = { exists = scope:holy_site }
-		scope:holy_site = {
+		scope:holy_site.title_province = {
 			#county.title_province = { #Unop: holy_site is now a county selected in the decision tab
 				defenders_of_highgod_decision_hall_of_heroes_effect = yes
 			#}
