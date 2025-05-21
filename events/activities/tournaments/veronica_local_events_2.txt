@@ -1201,6 +1201,7 @@ ep2_locale_events.3510 = {
 		stress_impact = {
 			paranoid = medium_stress_impact_gain
 		}
+		hidden_effect = { destroy_artifact = scope:horseshoe_artifact } #Unop: To not flood the inventory with horseshoe
 		ai_chance = {
 			base = 100
 			modifier = {
@@ -1313,7 +1314,7 @@ ep2_locale_events.1530 = {
 				send_interface_toast = {
 					title = ep2_locale_events.1530.a.success
 					left_icon = root
-					dynasty ?= { add_dynasty_prestige = medium_dynasty_prestige_value }
+					dynasty ?= { add_dynasty_prestige = root.dynasty.medium_dynasty_prestige_value }
 				}
 			}
 			20 = { #you don't
@@ -1564,8 +1565,12 @@ ep2_locale_events.4540 = {
 			}
 		}
 		scope:my_weapon = {
-			set_artifact_description = ep2_locale_events_artifact_sharp_desc
+			if = { #To not flood the weapon with a text loop
+				limit = { scope:my_weapon = { NOT = { has_variable = ep2_locale_events_4540_sharp } } }
+				set_artifact_description = ep2_locale_events_artifact_sharp_desc
+			}
 			add_artifact_modifier = artifact_tournament_sharpened_blade_modifier
+			set_variable = ep2_locale_events_4540_sharp
 		}
 		stress_impact = {
 			greedy = medium_stress_impact_gain
@@ -1585,6 +1590,7 @@ ep2_locale_events.4540 = {
 
 	# Inscribe a carving - prayer
 	option = {
+		trigger = { scope:my_weapon = { NOT = { has_variable = ep2_locale_events_4540_prayer } } }
 		name = {
 			trigger = { religion = religion:christianity_religion }
 			text = ep2_locale_events.4540.b.christian
@@ -1605,6 +1611,7 @@ ep2_locale_events.4540 = {
 		scope:my_weapon = {
 			set_artifact_description = ep2_locale_events_artifact_prayer_desc
 			add_artifact_modifier = artifact_monthly_piety_7_modifier
+			set_variable = ep2_locale_events_4540_prayer
 		}
 		stress_impact = {
 			cynical = medium_stress_impact_gain
@@ -1626,6 +1633,7 @@ ep2_locale_events.4540 = {
 	
 	# Inscribe your motto
 	option = {
+		trigger = { scope:my_weapon = { NOT = { has_variable = ep2_locale_events_4540_motto } } }
 		name = ep2_locale_events.4540.c 
 		pay_short_term_gold = {
 			target = scope:weaponsmith
@@ -1637,6 +1645,7 @@ ep2_locale_events.4540 = {
 		scope:my_weapon = {
 			set_artifact_description = ep2_locale_events_artifact_motto_desc
 			add_artifact_modifier = artifact_monthly_prestige_7_modifier
+			set_variable = ep2_locale_events_4540_motto
 		}
 		stress_impact = {
 			greedy = medium_stress_impact_gain
