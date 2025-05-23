@@ -18,7 +18,7 @@ start_slander_interaction = {
 		max = 10
 	}
 	ai_frequency = 36
-	
+
 	is_shown = {
 		scope:actor = {
 			is_adult = yes
@@ -89,7 +89,7 @@ start_slander_interaction = {
 				type = event_toast_effect_neutral
 				title = start_slander_notification
 
-				left_icon = scope:actor					
+				left_icon = scope:actor
 				right_icon = scope:recipient
 
 				# Success.
@@ -186,7 +186,7 @@ start_slander_interaction = {
 			}
 		}
 	}
-	
+
 	auto_accept = yes
 
 	ai_will_do = {
@@ -320,7 +320,7 @@ start_promote_interaction = {
 		max = 10
 	}
 	ai_frequency = 60
-	
+
 	is_shown = {
 		scope:actor = {
 			is_adult = yes
@@ -384,7 +384,7 @@ start_promote_interaction = {
 				type = event_toast_effect_neutral
 				title = start_promote_notification
 
-				left_icon = scope:actor					
+				left_icon = scope:actor
 				right_icon = scope:recipient
 
 				# Success.
@@ -455,7 +455,7 @@ start_promote_interaction = {
 			}
 		}
 	}
-	
+
 	auto_accept = yes
 
 	ai_will_do = {
@@ -658,7 +658,7 @@ start_generate_claim_interaction = {
 				type = event_toast_effect_neutral
 				title = start_generate_claim_notification
 
-				left_icon = scope:actor					
+				left_icon = scope:actor
 				right_icon = scope:recipient
 
 				if = {
@@ -916,7 +916,7 @@ start_challenge_status_interaction = {
 	}
 
 	ai_frequency = 120
-	
+
 	is_shown = {
 		scope:actor = {
 			government_allows = administrative
@@ -1048,7 +1048,7 @@ start_challenge_status_interaction = {
 		}
 		government_allows = administrative
 	}
-	
+
 	auto_accept = yes
 
 	ai_will_do = {
@@ -1143,7 +1143,7 @@ start_expand_power_base_interaction = {
 	ai_targets = {
 		ai_recipients = self
 	}
-	
+
 	is_shown = {
 		scope:actor = {
 			is_adult = yes
@@ -1253,7 +1253,7 @@ start_expand_power_base_interaction = {
 			custom_tooltip = expand_power_base_effect_tt
 		}
 	}
-	
+
 	auto_accept = yes
 
 	ai_will_do = {
@@ -1300,7 +1300,7 @@ start_depose_interaction = {
 		max = 1
 	}
 	ai_frequency = 60
-	
+
 	is_shown = {
 		has_ep3_dlc_trigger = yes
 		scope:actor = { government_allows = administrative }
@@ -1328,7 +1328,7 @@ start_depose_interaction = {
 				# Must be the house head
 				house.house_head = scope:actor
 			}
-			# Must not be from the same House as the Emperor 
+			# Must not be from the same House as the Emperor
 			NOT = { house = scope:actor.top_liege.house }
 			can_start_scheme = {
 				type = depose
@@ -1372,7 +1372,7 @@ start_depose_interaction = {
 				type = event_toast_effect_neutral
 				title = start_depose_notification
 
-				left_icon = scope:actor					
+				left_icon = scope:actor
 				right_icon = scope:recipient
 
 				# Success.
@@ -1469,7 +1469,7 @@ start_depose_interaction = {
 			}
 		}
 	}
-	
+
 	auto_accept = yes
 
 	ai_will_do = {
@@ -1562,7 +1562,7 @@ start_depose_interaction = {
 			}
 			factor = 0
 		}
-		
+
 		# Only depose if you dislike the target
 		modifier = {
 			opinion = { target = scope:recipient value > -30 }
@@ -1596,7 +1596,7 @@ start_foster_legitimacy_interaction = {
 	}
 
 	ai_frequency = 60
-	
+
 	is_shown = {
 		scope:actor = {
 			is_adult = yes
@@ -1644,7 +1644,7 @@ start_foster_legitimacy_interaction = {
 				type = event_toast_effect_neutral
 				title = start_foster_legitimacy_notification
 
-				left_icon = scope:actor					
+				left_icon = scope:actor
 				right_icon = scope:recipient
 
 				begin_scheme_basic_effect = {
@@ -1680,7 +1680,7 @@ start_foster_legitimacy_interaction = {
 			NOT = { meets_legitimacy_expectation_of = scope:actor }
 		}
 	}
-	
+
 	auto_accept = yes
 
 	ai_will_do = {
@@ -1697,12 +1697,12 @@ start_foster_legitimacy_interaction = {
 			has_lifestyle = diplomacy_lifestyle
 			add = 15
 		}
-		
+
 		modifier = {
 			has_trait = loyal
 			add = 15
 		}
-		
+
 		modifier = {
 			has_trait = disloyal
 			add = -25
@@ -1719,7 +1719,7 @@ start_foster_legitimacy_interaction = {
 			has_any_good_relationship_with_character_trigger = { CHARACTER = scope:recipient }
 			add = 25
 		}
-		
+
 		modifier = {
 			house = scope:recipient.house
 			has_any_good_relationship_with_character_trigger = { CHARACTER = scope:recipient }
@@ -1763,7 +1763,7 @@ start_damage_legitimacy_interaction = {
 	}
 
 	ai_frequency = 60
-	
+
 	is_shown = {
 		scope:actor = {
 			is_adult = yes
@@ -1811,7 +1811,7 @@ start_damage_legitimacy_interaction = {
 				type = event_toast_effect_neutral
 				title = start_damage_legitimacy_notification
 
-				left_icon = scope:actor					
+				left_icon = scope:actor
 				right_icon = scope:recipient
 
 				begin_scheme_basic_effect = {
@@ -1840,7 +1840,7 @@ start_damage_legitimacy_interaction = {
 	ai_potential = {
 		is_governor = yes
 	}
-	
+
 	auto_accept = yes
 
 	ai_will_do = {
@@ -1851,17 +1851,17 @@ start_damage_legitimacy_interaction = {
 			has_lifestyle = intrigue_lifestyle
 			add = 15
 		}
-		
+
 		modifier = {
 			has_trait = disloyal
 			add = 15
 		}
-		
+
 		modifier = {
 			has_trait = deceitful
 			add = 15
 		}
-		
+
 		modifier = {
 			has_trait = loyal
 			add = -25
@@ -1871,18 +1871,18 @@ start_damage_legitimacy_interaction = {
 			has_trait = honest
 			add = -15
 		}
-		
+
 		# Relationships
 		modifier = {
 			add = -25
 			has_any_moderate_good_relationship_with_character_trigger = { CHARACTER = scope:recipient }
 		}
-		
+
 		modifier = {
 			add = -50
 			has_any_best_good_relationship_with_character_trigger = { CHARACTER = scope:recipient }
 		}
-		
+
 		modifier = {
 			add = 25
 			has_any_mild_bad_relationship_with_character_trigger = { CHARACTER = scope:recipient }
@@ -1904,11 +1904,11 @@ start_damage_legitimacy_interaction = {
 start_dispute_border_interaction = {
 	icon = icon_dispute_border
 	interface_priority = 75
-	category = interaction_category_vassal 
-	send_name = START_SCHEME 
+	category = interaction_category_vassal
+	send_name = START_SCHEME
 	scheme = dispute_border
-	ignores_pending_interaction_block = yes 
-	ai_targets = { ai_recipients = peer_vassals } 
+	ignores_pending_interaction_block = yes
+	ai_targets = { ai_recipients = peer_vassals }
 	ai_frequency = 60
 	common_interaction = yes
 
@@ -2031,13 +2031,13 @@ start_dispute_border_interaction = {
 			send_interface_toast = {
 				type = event_toast_effect_neutral
 				title = start_dispute_border_notification
-				left_icon = scope:recipient					
+				left_icon = scope:recipient
 				right_icon = scope:target
 				scope:recipient = {
 					send_interface_toast = {
 						type = event_toast_effect_bad
 						title = start_dispute_border_notification
-						left_icon = scope:actor					
+						left_icon = scope:actor
 						right_icon = scope:target
 						scope:actor = {
 							# Success.
@@ -2135,7 +2135,7 @@ start_dispute_border_interaction = {
 		}
 		is_governor = yes
 	}
-	
+
 	auto_accept = yes
 
 	ai_will_do = {
@@ -2196,10 +2196,10 @@ start_subsume_province_interaction = {
 	common_interaction = yes
 	interface_priority = 50
 	category = interaction_category_vassal
-	send_name = START_SCHEME 
+	send_name = START_SCHEME
 	scheme = subsume_province
-	ignores_pending_interaction_block = yes 
-	ai_targets = { ai_recipients = peer_vassals } 
+	ignores_pending_interaction_block = yes
+	ai_targets = { ai_recipients = peer_vassals }
 	ai_frequency = 60
 
 	filter_tags = { admin_governor }
@@ -2235,8 +2235,8 @@ start_subsume_province_interaction = {
 			is_alive = yes
 			top_liege = scope:actor.top_liege
 			is_governor = yes
-			NOR = { 
-				this = scope:actor 
+			NOR = {
+				this = scope:actor
 				scope:actor.house = scope:recipient.house
 			}
 			in_diplomatic_range = scope:actor
@@ -2341,13 +2341,13 @@ start_subsume_province_interaction = {
 			send_interface_toast = {
 				type = event_toast_effect_neutral
 				title = start_subsume_province_notification
-				left_icon = scope:recipient					
+				left_icon = scope:recipient
 				right_icon = scope:target
 				scope:recipient = {
 					send_interface_toast = {
 						type = event_toast_effect_bad
 						title = start_subsume_province_notification
-						left_icon = scope:actor					
+						left_icon = scope:actor
 						right_icon = scope:target
 						scope:actor = {
 							# Success.
@@ -2421,7 +2421,7 @@ start_subsume_province_interaction = {
 		}
 		is_governor = yes
 	}
-	
+
 	auto_accept = yes
 
 	ai_will_do = {
@@ -2446,6 +2446,7 @@ start_subsume_province_interaction = {
 					}
 				}
 			}
+			add = 50 #Unop: Add the missing modifier, put the same value as the one found in start_dispute_border_interaction
 		}
 		# Relationships
 		modifier = {
@@ -2482,9 +2483,9 @@ start_found_despotate_interaction = {
 	interface_priority = 60
 	common_interaction = yes
 	category = interaction_category_friendly
-	send_name = START_SCHEME 
+	send_name = START_SCHEME
 	scheme = found_despotate
-	ignores_pending_interaction_block = yes  
+	ignores_pending_interaction_block = yes
 	ai_frequency = 60
 	ai_targets = { ai_recipients = self }
 
@@ -2523,19 +2524,19 @@ start_found_despotate_interaction = {
 			scope:recipient.top_liege = { completely_controls = scope:target }
 		}
 	}
-	
+
 	has_valid_target_showing_failures_only = {
 		scope:target = {
 			tier = tier_kingdom
 		}
 	}
-	
+
 	# We do this via redirects because recipient_de_jure_titles did not turn up for work today.
 	redirect = {
 		scope:actor = {
 			top_liege ?= { save_scope_as = secondary_recipient }
 			if = {
-				limit = { 
+				limit = {
 					exists = primary_title.kingdom
 					primary_title.tier = tier_duchy
 				}
@@ -2575,7 +2576,7 @@ start_found_despotate_interaction = {
 						is_landless_type_title = no
 					}
 				}
-				
+
 			}
 		}
 		scope:actor = {
@@ -2673,13 +2674,13 @@ start_found_despotate_interaction = {
 			send_interface_toast = {
 				type = event_toast_effect_neutral
 				title = start_found_despotate_notification
-				left_icon = scope:recipient					
+				left_icon = scope:recipient
 				right_icon = scope:target
 				scope:recipient = {
 					send_interface_toast = {
 						type = event_toast_effect_bad
 						title = start_found_despotate_notification
-						left_icon = scope:actor					
+						left_icon = scope:actor
 						right_icon = scope:target
 						scope:actor = {
 							# Success.
@@ -2739,7 +2740,7 @@ start_found_despotate_interaction = {
 			any_scheme = { is_scheme_category = political }
 		}
 	}
-	
+
 	auto_accept = yes
 
 	ai_will_do = {
@@ -2752,9 +2753,9 @@ start_raid_estate_interaction = {
 	icon = icon_raid_estate
 	interface_priority = 90
 	category = interaction_category_hostile
-	send_name = START_SCHEME 
+	send_name = START_SCHEME
 	scheme = raid_estate
-	ignores_pending_interaction_block = yes  
+	ignores_pending_interaction_block = yes
 	ai_frequency = 60
 
 	ai_targets = { ai_recipients = liege }
@@ -2835,7 +2836,7 @@ start_raid_estate_interaction = {
 	}
 
 	on_accept = {
-		scope:recipient = { 
+		scope:recipient = {
 			custom_tooltip = raid_estate_kill_maim_imprison_house_members_tt
 			custom_tooltip = raid_estate_destroy_buildings_tt
 			custom_tooltip = raid_estate_house_modifier_tt
@@ -2848,7 +2849,7 @@ start_raid_estate_interaction = {
 			send_interface_toast = {
 				type = event_toast_effect_neutral
 				title = start_raid_estate_notification
-				left_icon = scope:recipient					
+				left_icon = scope:recipient
 				right_icon = scope:target_title
 				# Success.
 				if = {
@@ -2958,7 +2959,7 @@ start_raid_estate_interaction = {
 		}
 		any_held_title = { is_noble_family_title = yes }
 	}
-	
+
 	auto_accept = yes
 
 	ai_will_do = {
@@ -3019,7 +3020,7 @@ start_teach_governor_interaction = {
 	interface_priority = 20
 	category = interaction_category_vassal
 	filter_tags = { admin_governor }
-	send_name = START_SCHEME 
+	send_name = START_SCHEME
 	scheme = teach_governor
 	ai_targets = {
 		ai_recipients = peer_vassals
@@ -3103,13 +3104,13 @@ start_teach_governor_interaction = {
 			send_interface_toast = {
 				type = event_toast_effect_neutral
 				title = start_teach_governor_notification
-				left_icon = scope:recipient					
+				left_icon = scope:recipient
 				right_icon = scope:recipient.primary_title
 				scope:recipient = {
 					send_interface_toast = {
 						type = event_toast_effect_bad
 						title = start_teach_governor_notification
-						left_icon = scope:actor					
+						left_icon = scope:actor
 						right_icon = scope:actor.primary_title
 						scope:actor = {
 							begin_scheme_basic_effect = {
@@ -3249,7 +3250,7 @@ start_teach_governor_interaction = {
 			has_relation_best_friend = scope:actor
 			add = 30
 		}
-		modifier = { # Rival 
+		modifier = { # Rival
 			desc = offer_vassalization_interaction_aibehavior_rival_tt
 			has_relation_rival = scope:actor
 			NOT = { has_relation_nemesis = scope:actor }
@@ -3417,7 +3418,7 @@ start_ingratiate_family_interaction = {
 		max = 20
 	}
 	ai_frequency = 36
-	
+
 	is_shown = {
 		scope:actor = {
 			can_start_scheme = {
@@ -3451,7 +3452,7 @@ start_ingratiate_family_interaction = {
 			}
 		}
 	}
- 	
+
  	desc = start_ingratiate_family_interaction_desc
 
 	on_accept = {
@@ -3482,7 +3483,7 @@ start_ingratiate_family_interaction = {
 					}
 				}
 			}
-			
+
 			if = { # I am the emperor
 				limit = { scope:actor.highest_held_title_tier >= tier_empire }
 				custom_tooltip = {
@@ -3602,7 +3603,7 @@ start_ingratiate_family_interaction = {
 								scheme_target_character	= scope:recipient
 							}
 							add_scheme_modifier = { type = admin_target_powerful_family_scheme_modifier }
-						}	
+						}
 					}
 				}
 			}
@@ -3625,7 +3626,7 @@ start_ingratiate_family_interaction = {
 			}
 		}
 	}
-	
+
 	auto_accept = yes
 
 	ai_will_do = {
