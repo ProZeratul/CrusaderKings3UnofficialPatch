@@ -1,0 +1,53 @@
+﻿#Court Maintenance events of various persuasions
+
+namespace = unop_court_maintenance
+
+unop_court_maintenance.0005 = {
+	hidden = yes
+
+	trigger = {
+		scope:new_employer = {
+			government_has_flag = government_is_holy_order
+		}
+	}
+
+	immediate = {
+		remove_character_modifier = holy_order_experience_modifier
+	}
+}
+
+unop_court_maintenance.5005 = {
+	hidden = yes
+
+	trigger = {
+		scope:new_employer = {
+			NOT = { government_has_flag = government_is_holy_order }
+		}
+		has_trait = order_member
+	}
+
+	immediate = {
+		remove_trait = order_member
+		add_character_modifier = holy_order_experience_modifier
+	}
+}
+
+unop_court_maintenance.0006 = {
+	hidden = yes
+
+	trigger = {
+		scope:old_employer = {
+			OR = {
+				government_has_flag = government_is_holy_order
+				has_trait = order_member
+				has_character_modifier = holy_order_experience_modifier
+			}
+		}
+		has_trait = order_member
+	}
+
+	immediate = {
+		remove_trait = order_member
+		add_character_modifier = holy_order_experience_modifier
+	}
+}

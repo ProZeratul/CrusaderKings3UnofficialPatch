@@ -35,7 +35,7 @@
  # Replace intrigue_family_focus since it does not exists
  SCHEME_FAMILY_FOCUS: "[GetFocus('diplomacy_family_focus').GetName]: $VALUE|+0=$"
  # Fix DogStorHerHis missing 'y'
- hunt.1080.dog_appears:0 "\n\nA loud bark sounds: I turn and see my beloved dog, [ROOT.Char.Custom('DogStoryName')] bounding towards me protectively, loudly heralding [ROOT.Char.Custom('DogStoryHerHis')] arrival." 
+ hunt.1080.dog_appears:0 "\n\nA loud bark sounds: I turn and see my beloved dog, [ROOT.Char.Custom('DogStoryName')] bounding towards me protectively, loudly heralding [ROOT.Char.Custom('DogStoryHerHis')] arrival."
  # Fix typo 'EventTitleDisdease'
  health.1003.t:1 "[SCOPE.Custom('EventTitleDisease')]: The Price of Indulgence"
  # Remove the final '.' because the tooltip add a ':' just after so it will show .: and I find it ugly
@@ -188,7 +188,7 @@
  #msg_set_relation_lover_title:1 "Gained a Lover"
  #msg_set_relation_soulmate_title:1 "Found Soulmate"
 
- # As of 1.16.1 [Character.GetPrimaryTitle.GetProvince.GetTerrain.GetNameNoTooltip] does not work, so use the GetCapitalLocation instead (so it will not be [   of XXX]) 
+ # As of 1.16.1 [Character.GetPrimaryTitle.GetProvince.GetTerrain.GetNameNoTooltip] does not work, so use the GetCapitalLocation instead (so it will not be [   of XXX])
  county_herder: "[Character.GetCapitalLocation.GetTerrain.GetNameNoTooltip]"
  # Look at my with > Look at me with
  mpo_nerge.0110.desc: "Despite our best attempts, the hunt has been a depressing sight. A couple of beasts have fallen, but not nearly as many as we had planned or hoped for.\n\nMy fellow riders look at me with despondent eyes, the shame as heavy on them as it is on me. How can we possibly show our faces in [ROOT.Char.GetCapitalLocation.GetName] after this?"
@@ -234,3 +234,13 @@
  challenge_to_artifact_combat_interaction_loser_gets.tt:0 "The Loser will lose [target.GetName] or any [personal_artifact_claim|E]"
  # [house_feud_rival.GetFirstNameNoTooltip] > [house_feud_rival.GetHouse.GetBaseNameNoTooltip] (house_feud_rival is a character we want the name of the house here)
  bp1_house_feud.0500.a:0 "House [house_feud_rival.GetHouse.GetBaseNameNoTooltip] will regret this."
+ # Removed the extra space at the end
+ building_type_capital_bureau_01: "Capital Magistracy"
+ # Add the missing scope so primary_prisoner > SCOPE.sC('primary_prisoner')
+ combat_event.1004.pow_message.t:0 "[ROOT.Char.Custom2('RelationToMeShort', SCOPE.sC('primary_prisoner'))|U] Taken Prisoner"
+ # who's father > whose father
+ game_concept_designate_chief_sacrifice_desc:0 "When holding a grand sacrificial festival, [characters|E] may designate one of their [prisoners|E] to be the primary sacrifice. This $game_concept_prisoner$ is killed first, and may cause the sacrificing character to gain more [piety|E].\n\nPreferable sacrifices are:\n$EFFECT_LIST_BULLET$ Landless $game_concept_characters$ who's [faith|E] is either [faith_hostile|L] or [faith_evil|L]\n$EFFECT_LIST_BULLET$ [landed|E] $game_concept_characters$ of at least [count|E]-[rank|E]\n$EFFECT_LIST_BULLET$ [heads_of_faith|E] (though this may have repercussions)"
+ # [CharYouSheHe(CHARACTER)] flinch > [CharYouHerHim(CHARACTER)] flinch
+ nick_the_fearless_desc:1 "[CHARACTER.GetShortUINamePossessiveNoTooltipNoFormat|U] soldiers say they've never seen [CharYouHerHim(CHARACTER)] flinch — neither to man, nor horse, nor missile. Most people believe them."
+ # and, next to him > and, next to [stop_host_scope.GetHerHim]
+ cultural_festival.3060.desc.vassal:0 "I spot [stop_host_scope.GetTitledFirstName] among the crowd and, next to [stop_host_scope.GetHerHim], one of the most beautiful [vassal_spouse.GetWomenMen] I've ever seen..."

@@ -25,7 +25,7 @@ namespace = pilgrimage
 # pilgrimage.2003 - Hire more guards?
 # pilgrimage.2004 - Run into a potential friend
 # pilgrimage.2005 - A peasant inadvertedly insults you
-# pilgrimage.2006 - Your pilgrimage is taking a little detour 
+# pilgrimage.2006 - Your pilgrimage is taking a little detour
 # pilgrimage.2008 - Fall ill
 # pilgrimage.2009 - Develop pneumonia
 # pilgrimage.2010-5 - Meet a Mystic
@@ -266,7 +266,7 @@ pilgrimage.0042 = {
 			var:old_host_to_be_buried = { save_scope_as = old_pilgrimage_host }
 		}
 	}
-	option = { 
+	option = {
 		name = pilgrimage.0042.a
 		#Trigger burial
 		trigger_event = {
@@ -278,7 +278,7 @@ pilgrimage.0042 = {
 
 scripted_trigger pilgrimage_0500_valid_holy_site_trigger = {
 	#... we really shouldn't talk about the holy site we might be _in_ right now / invalid capital_province holy site
-	NOR = { 
+	NOR = {
 		this = root.location.barony
 		AND = {
 			exists = root.capital_province #Unop: Add missing root scope
@@ -335,17 +335,17 @@ pilgrimage.0500 = {
 		#Forbidden from pilgrimages? No pilgrimage for you!
 		faith = {
 			NOT = { has_doctrine_parameter = forbidden_from_pilgrimage }
-			any_holy_site = { 
+			any_holy_site = {
 				pilgrimage_0500_valid_holy_site_trigger = yes
 				save_temporary_scope_as = holy_site_check
 			}
-			any_holy_site = { 
+			any_holy_site = {
 				pilgrimage_0500_valid_holy_site_trigger = yes
 				NOT = { this = scope:holy_site_check }
-			}	
+			}
 		}
 		#This really should take care of most Hajj/Pilgrim-related trigger checks - if you don't have this trait, you haven't been pilgrimming before
-		NOR = { 
+		NOR = {
 			has_trait = pilgrim
 			has_trait = hajjaj
 		}
@@ -384,9 +384,9 @@ pilgrimage.0500 = {
 		}
 		#Some loc flavor
 		faith = {
-			random_holy_site = { 
+			random_holy_site = {
 				limit = { pilgrimage_0500_valid_holy_site_trigger = yes }
-				save_scope_as = first_holy_site 
+				save_scope_as = first_holy_site
 			}
 			random_holy_site = {
 				limit = {
@@ -476,7 +476,7 @@ pilgrimage.0500 = {
 # pilgrimage.2003 - Hire more guards?
 # pilgrimage.2004 - Run into a potential friend
 # pilgrimage.2005 - A peasant inadvertedly insults you
-# pilgrimage.2006 - Your pilgrimage is taking a little detour 
+# pilgrimage.2006 - Your pilgrimage is taking a little detour
 # pilgrimage.2008 - Fall ill
 # pilgrimage.2009 - Develop pneumonia
 # pilgrimage.2010-5 - Meet a Mystic
@@ -646,7 +646,7 @@ pilgrimage.1100 = {
 					NOR = {
 						this = root
 						this = scope:victim_pilgrim
-					}					
+					}
 				}
 				alternative_limit = {
 					NOT = { this = root }
@@ -673,9 +673,9 @@ pilgrimage.1100 = {
 		if = {
 			limit = { exists = scope:victim_pilgrim }
 			random = {
-				chance = 50	
+				chance = 50
 				custom_tooltip = {
-					text = pilgrimage_random_pilgrim_tt		
+					text = pilgrimage_random_pilgrim_tt
 					send_interface_toast = {
 						title = pilgrimage_fell_overboard_tt
 						left_icon = scope:victim_pilgrim
@@ -698,7 +698,7 @@ pilgrimage.1100 = {
 					}
 				}
 			}
-		}		
+		}
 		pious_type_option_effect = yes
 		pilgrimage_st_elmo_success_effect = yes
 		stress_impact = {
@@ -1120,7 +1120,7 @@ pilgrimage.1110 = {
 		}
 	}
 	# Come on then
-	option = { 
+	option = {
 		name = pilgrimage.1110.a
 		duel = {
 			skill = martial
@@ -1143,16 +1143,16 @@ pilgrimage.1110 = {
 					factor = 1.5
 				}
 				modifier = {
-					current_travel_plan = {	
+					current_travel_plan = {
 						num_entourage_characters < 15
-						num_entourage_characters > 8 
+						num_entourage_characters > 8
 					}
 					factor = 1.3
 				}
 				modifier = {
-					current_travel_plan = {	
+					current_travel_plan = {
 						num_entourage_characters < 8
-						num_entourage_characters > 4 
+						num_entourage_characters > 4
 					}
 					factor = 1.1
 				}
@@ -1252,16 +1252,16 @@ pilgrimage.1110 = {
 					factor = 0.5
 				}
 				modifier = {
-					current_travel_plan = {	
+					current_travel_plan = {
 						num_entourage_characters < 15
-						num_entourage_characters > 8 
+						num_entourage_characters > 8
 					}
 					factor = 0.7
 				}
 				modifier = {
-					current_travel_plan = {	
+					current_travel_plan = {
 						num_entourage_characters < 8
-						num_entourage_characters > 4 
+						num_entourage_characters > 4
 					}
 					factor = 0.9
 				}
@@ -1362,7 +1362,7 @@ pilgrimage.1110 = {
 		}
 	}
 	# Leave us in peace
-	option = { 
+	option = {
 		name = {
 			trigger = { religion = scope:heathen_raider.religion }
 			text = pilgrimage.1110.b.religion
@@ -1442,7 +1442,7 @@ pilgrimage.1110 = {
 		}
 	}
 	# Join me, God is pretty cool
-	option = { 
+	option = {
 		name = pilgrimage.1110.c
 		trigger = {
 			OR = {
@@ -1476,9 +1476,9 @@ pilgrimage.1110 = {
 						hidden_effect = { set_character_faith_with_conversion = root.faith }
 						set_character_faith = root.faith
 					}
-					add_to_entourage_court_and_activity_effect = { 
-						CHAR_TO_ADD = scope:heathen_raider 
-						NEW_COURT_OWNER = root 
+					add_to_entourage_court_and_activity_effect = {
+						CHAR_TO_ADD = scope:heathen_raider
+						NEW_COURT_OWNER = root
 					}
 					spawn_army = {
 						name = event_troop_default_name
@@ -1824,12 +1824,12 @@ pilgrimage.1130 = {
 		}
 		current_travel_plan = {
 			OR = {
-				any_entourage_character = { 
+				any_entourage_character = {
 					faith = root.location.faith
 					NOT = { this = root }
 				}
 				any_entourage_character = {
-					NOT = { 
+					NOT = {
 						faith = root.location.faith
 						this = root
 					}
@@ -1919,7 +1919,7 @@ pilgrimage.1130 = {
 		}
 	}
 	# Stop to pray
-	option = { 
+	option = {
 		name = pilgrimage.1130.a
 		trigger = { location.faith = root.faith }
 		flavor = pilgrimage.1130.a.flavor
@@ -1939,7 +1939,7 @@ pilgrimage.1130 = {
 		}
 	}
 	# Steal de moolah
-	option = { 
+	option = {
 		name = pilgrimage.1130.b
 		flavor = pilgrimage.1130.b.flavor
 		add_gold = {
@@ -1998,7 +1998,7 @@ pilgrimage.1130 = {
 		}
 	}
 	# Desecrate de shrine
-	option = { 
+	option = {
 		name = pilgrimage.1130.c
 		trigger = {
 			NOT = { location.faith = root.faith }
@@ -2048,7 +2048,7 @@ pilgrimage.1130 = {
 		}
 	}
 	# Mock de prayer
-	option = { 
+	option = {
 		name = pilgrimage.1130.d
 		trigger = {
 			exists = scope:shrine_faithist
@@ -2082,7 +2082,7 @@ pilgrimage.1130 = {
 		}
 	}
 	# Insult de mocker
-	option = { 
+	option = {
 		name = pilgrimage.1130.e
 		trigger = {
 			exists = scope:shrine_mocker
@@ -2114,7 +2114,7 @@ pilgrimage.1130 = {
 		}
 	}
 	# Leave
-	option = { 
+	option = {
 		name = {
 			text = pilgrimage.1130.f
 			trigger = { faith = scope:shrine_province.faith }
@@ -2300,13 +2300,13 @@ pilgrimage.1140 = {
 		}
 	}
 	# Welcome them
-	option = { 
+	option = {
 		name = pilgrimage.1140.a
 		remove_short_term_gold = 10
 		add_piety = minor_piety_gain
-		add_to_entourage_court_and_activity_effect = { 
-			CHAR_TO_ADD = scope:group_leader 
-			NEW_COURT_OWNER = root 
+		add_to_entourage_court_and_activity_effect = {
+			CHAR_TO_ADD = scope:group_leader
+			NEW_COURT_OWNER = root
 		}
 		current_travel_plan = {
 			add_travel_plan_modifier = { modifier = pilgrim_group_joined_modifier }
@@ -2330,7 +2330,7 @@ pilgrimage.1140 = {
 		}
 	}
 	# Culture turn away
-	option = { 
+	option = {
 		name = pilgrimage.1140.b
 		trigger = {
 			NOT = { culture = scope:group_leader.culture }
@@ -2360,7 +2360,7 @@ pilgrimage.1140 = {
 		}
 	}
 	# Provision them
-	option = { 
+	option = {
 		name = pilgrimage.1140.c
 		add_piety = miniscule_piety_gain
 		remove_short_term_gold = 20
@@ -2381,7 +2381,7 @@ pilgrimage.1140 = {
 		}
 	}
 	# Turn away
-	option = { 
+	option = {
 		name = pilgrimage.1140.d
 		flavor = pilgrimage.1140.d.flavor
 		add_prestige = miniscule_prestige_gain
@@ -2483,7 +2483,7 @@ pilgrimage.2002 = {
 		}
 	}
 	# Are they truly all that bad?
-	option = { 
+	option = {
 		name = pilgrimage.2002.a
 		worldly_type_option_effect = yes
 		add_character_modifier = {
@@ -2519,7 +2519,7 @@ pilgrimage.2002 = {
 		}
 	}
 	# Of course
-	option = { 
+	option = {
 		name = pilgrimage.2002.b
 		add_character_modifier = {
 			modifier = pilgrimage_disdainful_towards_faiths_modifier
@@ -2654,7 +2654,7 @@ pilgrimage.2003 = {
 		}
 	}
 	#Hire more guards
-	option = { 
+	option = {
 		name = pilgrimage.2003.a
 		trigger = {
 			current_travel_plan = {
@@ -2662,8 +2662,8 @@ pilgrimage.2003 = {
 			}
 		}
 		if = {
-			limit = { 
-				faith = { has_doctrine = tenet_armed_pilgrimages } 
+			limit = {
+				faith = { has_doctrine = tenet_armed_pilgrimages }
 			}
 			custom_description_no_bullet = {
 				text = pilgrimage_piousness_because_i_have_tenet_armed_pilgrimages
@@ -2671,8 +2671,8 @@ pilgrimage.2003 = {
 			}
 		}
 		else_if = {
-			limit = { 
-				faith = { has_doctrine = tenet_struggle_submission } 
+			limit = {
+				faith = { has_doctrine = tenet_struggle_submission }
 			}
 			custom_description_no_bullet = {
 				text = pilgrimage_piousness_because_i_have_tenet_struggle_submission
@@ -2707,11 +2707,11 @@ pilgrimage.2003 = {
 		}
 	}
 	#Hire that beefy chonk
-	option = { 
+	option = {
 		name = pilgrimage.2003.b
 		if = {
-			limit = { 
-				faith = { has_doctrine = tenet_warmonger } 
+			limit = {
+				faith = { has_doctrine = tenet_warmonger }
 			}
 			custom_description_no_bullet = {
 				text = pilgrimage_piousness_because_i_have_tenet_warmonger
@@ -2719,9 +2719,9 @@ pilgrimage.2003 = {
 			}
 		}
 		remove_short_term_gold = minor_gold_value
-		recruit_to_entourage_court_and_activity_effect = { 
-			CHAR_TO_ADD = scope:2002_local_warrior 
-			NEW_COURT_OWNER = root 
+		recruit_to_entourage_court_and_activity_effect = {
+			CHAR_TO_ADD = scope:2002_local_warrior
+			NEW_COURT_OWNER = root
 		}
 		stress_impact = {
 			humble = medium_stress_impact_gain
@@ -2749,7 +2749,7 @@ pilgrimage.2003 = {
 		}
 	}
 	# This journey will remain humble and personal
-	option = { 
+	option = {
 		name = pilgrimage.2003.c
 		pious_type_option_effect = yes
 		give_pilgrim_xp_effect = yes
@@ -2830,20 +2830,20 @@ pilgrimage.2004 = {
 		}
 	}
 	#PantheonTerm has brought us together!
-	option = { 
+	option = {
 		name = pilgrimage.2004.a
 		worldly_type_option_effect = yes
-		set_relation_friend = { 
-			reason = friend_pilgrimage 
-			target = scope:potential_friend 
+		set_relation_friend = {
+			reason = friend_pilgrimage
+			target = scope:potential_friend
 		}
 		reverse_add_opinion = {
 			target = scope:potential_friend
 			modifier = divine_blessing_friendship_opinion
 		}
-		add_to_entourage_court_and_activity_effect = { 
-			CHAR_TO_ADD = scope:potential_friend 
-			NEW_COURT_OWNER = root 
+		add_to_entourage_court_and_activity_effect = {
+			CHAR_TO_ADD = scope:potential_friend
+			NEW_COURT_OWNER = root
 		}
 		hidden_effect = {
 			add_opinion = {
@@ -2867,7 +2867,7 @@ pilgrimage.2004 = {
 		}
 	}
 	# I must do this in solitude
-	option = { 
+	option = {
 		name = pilgrimage.2004.b
 		pious_type_option_effect = yes
 		add_piety = minor_piety_gain
@@ -2964,7 +2964,7 @@ pilgrimage.2005 = {
 		}
 	}
 	# Take it with some humour
-	option = { 
+	option = {
 		name = pilgrimage.2005.a
 		flavor = pilgrimage.2005.a.flavor
 		worldly_type_option_effect = yes
@@ -2990,7 +2990,7 @@ pilgrimage.2005 = {
 		}
 	}
 	# What an insult! String them up!
-	option = { 
+	option = {
 		name = pilgrimage.2005.b
 		add_dread = medium_dread_gain
 		add_piety = minor_piety_loss
@@ -3015,7 +3015,7 @@ pilgrimage.2005 = {
 		}
 	}
 	# Find other people to travel with
-	option = { 
+	option = {
 		name = pilgrimage.2005.c
 		add_character_modifier = {
 			modifier = new_pilgrimage_companions_modifier
@@ -3033,7 +3033,7 @@ pilgrimage.2005 = {
 	}
 }
 
-#Your pilgrimage is taking a little detour 
+#Your pilgrimage is taking a little detour
 # by Filippa Gannholm Kirsten
 pilgrimage.2006 = {
 	type = character_event
@@ -3098,13 +3098,13 @@ pilgrimage.2006 = {
 		modifier = {
 			exists = current_travel_plan.travel_leader
 			current_travel_plan.travel_leader = {
-				aptitude:travel_leader_court_position < 10
+				aptitude:travel_leader_court_position <= 1 #Unop: Was < 10 but excellent is 4, so made it only for terrible (0) & poor aptitude (1)
 			}
 			faith = {
 				OR = {
 					trait_is_virtue = forgiving
 					trait_is_virtue = patient
-				}	
+				}
 			}
 			add = 1
 		}
@@ -3131,7 +3131,7 @@ pilgrimage.2006 = {
 			}
 			random_pool_character = {
 				province = root.location
-				limit = { 
+				limit = {
 					is_available_ai_adult = yes
 					has_no_real_status_trigger = yes
 				}
@@ -3181,7 +3181,7 @@ pilgrimage.2006 = {
 		}
 	}
 	#I'm too old for this #¤%#
-	option = { 
+	option = {
 		name = {
 			trigger = {
 				involved_activity = {
@@ -3244,7 +3244,7 @@ pilgrimage.2006 = {
 		}
 	}
 	#Let's accept the situation
-	option = { 
+	option = {
 		name = {
 			trigger = { has_trait = cynical }
 			text = pilgrimage.2006.b_cynical
@@ -3311,9 +3311,9 @@ pilgrimage.2006 = {
 		}
 	}
 	#This is unacceptable!
-	option = { 
+	option = {
 		name = {
-			trigger = { 
+			trigger = {
 				NOT = { exists = scope:caravan_master }
 			}
 			text = pilgrimage.2006.c
@@ -3381,7 +3381,7 @@ pilgrimage.2006 = {
 				factor = 0
 			}
 			modifier = {
-				faith = { 
+				faith = {
 					OR = {
 						trait_is_virtue = forgiving
 						trait_is_virtue = patient
@@ -3391,7 +3391,7 @@ pilgrimage.2006 = {
 			}
 		}
 	}
-	after = { 
+	after = {
 		remove_character_flag = pilgrimage_travel_smart
 		mp_resume_travel_plan = yes
 	}
@@ -3425,10 +3425,10 @@ pilgrimage.2008 = {
 		show_as_tooltip = { add_trait = ill }
 		hidden_effect = {
 			#Adds the trait, sends event "health.2201" to those who care if health is brought too low
-			contract_disease_effect = { 
-				DISEASE = ill 
-				TREATMENT_EVENT = yes 
-			} 	
+			contract_disease_effect = {
+				DISEASE = ill
+				TREATMENT_EVENT = yes
+			}
 		}
 		current_travel_plan = {
 			if = {
@@ -3468,7 +3468,7 @@ pilgrimage.2008 = {
 		}
 	}
 	#Oh no
-	option = { 
+	option = {
 		name = pilgrimage.2008.a
 		custom_tooltip = pilgrimage.2008.a.tt
 		#Decide whether to go home or continue on
@@ -3507,7 +3507,7 @@ pilgrimage.2009 = {
 		}
 	}
 	#Ok, guess I have pneumonia now
-	option = { 
+	option = {
 		name = pilgrimage.2009.a
 		ai_chance = {
 			base = 100
@@ -3519,7 +3519,7 @@ pilgrimage.2009 = {
 	}
 }
 
-scripted_trigger pilgrimage_2010_mystic_ruler = {	
+scripted_trigger pilgrimage_2010_mystic_ruler = {
 	faith = root.faith
 	has_trait = lifestyle_mystic
 	is_available_ai = yes
@@ -3559,7 +3559,7 @@ scripted_effect pilgrimage_2013_outcome_effect = {
 		add_trait = lifestyle_mystic
 	}
 	else_if = {
-		limit = { 
+		limit = {
 			has_trait = lifestyle_mystic
 			has_trait_xp = {
 				trait = lifestyle_mystic
@@ -3576,7 +3576,7 @@ scripted_effect pilgrimage_2013_outcome_effect = {
 		add_learning_lifestyle_perk_points = 1
 	}
 	else_if = {
-		limit = { 
+		limit = {
 			has_trait = pilgrim
 			has_trait_xp = {
 				trait = pilgrim
@@ -3640,7 +3640,7 @@ scripted_effect pilgrimage_2015_outcome_effect = {
 					add_learning_lifestyle_xp = medium_lifestyle_xp
 				}
 				else = { add_learning_skill = 1 }
-				
+
 			}
 		}
 		50 = {
@@ -3655,7 +3655,7 @@ scripted_effect pilgrimage_2015_outcome_effect = {
 				left_icon = root
 				right_icon = scope:2010_mystic
 				add_piety = miniscule_piety_gain
-			}				
+			}
 		}
 	}
 }
@@ -3739,7 +3739,7 @@ pilgrimage.2010 = {
 		add_character_flag = in_pilgrimage_event_chain
 	}
 	# Let's see what this person is up to
-	option = { 
+	option = {
 		name = pilgrimage.2010.a
 		custom_tooltip = pilgrimage.2010.a.tt
 		worldly_type_option_effect = yes
@@ -3750,7 +3750,7 @@ pilgrimage.2010 = {
 		}
 	}
 	# Smells of heresy to me!
-	option = { 
+	option = {
 		name = pilgrimage.2010.b
 		pious_type_option_effect = yes
 		add_piety = minor_piety_gain
@@ -3813,7 +3813,7 @@ pilgrimage.2011 = {
 		trigger_event = pilgrimage.2012
 	}
 	# Tell me more!
-	option = { 
+	option = {
 		name = pilgrimage.2011.a
 		custom_tooltip = pilgrimage.2011.a.tt
 		trigger = { learning >= decent_skill_rating }
@@ -3827,7 +3827,7 @@ pilgrimage.2011 = {
 		}
 	}
 	# I'm just going to take a nap
-	option = { 
+	option = {
 		name = pilgrimage.2011.b
 		custom_tooltip = pilgrimage.2011.b.tt
 		show_as_tooltip = { pilgrimage_2014_outcome_effect = yes }
@@ -3838,7 +3838,7 @@ pilgrimage.2011 = {
 		}
 	}
 	# Engage in vigorous debate
-	option = { 
+	option = {
 		name = pilgrimage.2011.c
 		custom_tooltip = pilgrimage.2011.c.tt
 		show_as_tooltip = { pilgrimage_2015_outcome_effect = yes }
@@ -3887,7 +3887,7 @@ pilgrimage.2012 = {
 	}
 	after = {
 		current_travel_plan = { resume_travel_plan = yes }
-		remove_character_flag = in_pilgrimage_event_chain 
+		remove_character_flag = in_pilgrimage_event_chain
 	}
 }
 
@@ -4004,8 +4004,8 @@ pilgrimage.2015 = {
 		character = scope:2010_mystic
 		animation = personality_rational
 	}
-	immediate = { 
-		pilgrimage_2015_outcome_effect = yes 
+	immediate = {
+		pilgrimage_2015_outcome_effect = yes
 	}
 	#Go debate team!
 	option = {
@@ -4116,9 +4116,9 @@ pilgrimage.2020 = {
 	immediate = {
 		if = {
 			limit = {
-				any_pool_character = { 
+				any_pool_character = {
 					province = root.location
-					pilgrimage_2020_suitable_thief = yes 
+					pilgrimage_2020_suitable_thief = yes
 				}
 			}
 			random_pool_character = {
@@ -4163,7 +4163,7 @@ pilgrimage.2020 = {
 		scope:thief_to_convert = { add_character_flag = use_stealth_clothes }
 	}
 	#Have them join you
-	option = { 
+	option = {
 		name = {
 			trigger = {
 				scope:thief_to_convert = { is_adult = no }
@@ -4216,9 +4216,9 @@ pilgrimage.2020 = {
 				type = loyalty_hook
 			}
 		}
-		add_to_entourage_court_and_activity_effect = { 
-			CHAR_TO_ADD = scope:thief_to_convert 
-			NEW_COURT_OWNER = root 
+		add_to_entourage_court_and_activity_effect = {
+			CHAR_TO_ADD = scope:thief_to_convert
+			NEW_COURT_OWNER = root
 		}
 		scope:thief_to_convert = {
 			#Add them to your family
@@ -4269,7 +4269,7 @@ pilgrimage.2020 = {
 		}
 	}
 	#Try to convert them
-	option = { 
+	option = {
 		name = pilgrimage.2020.b
 		pious_type_option_effect = yes
 		duel = {
@@ -4337,7 +4337,7 @@ pilgrimage.2020 = {
 		}
 	}
 	#Let them go in peace
-	option = { 
+	option = {
 		#What will God say about that...
 		name = {
 			trigger = { has_trait = cynical }
@@ -4363,7 +4363,7 @@ pilgrimage.2020 = {
 	after = {
 		scope:thief_to_convert = {
 			if = {
-				limit = { 
+				limit = {
 					has_character_flag = created_thief
 					NOR = {
 						has_character_flag = recruited_thief
@@ -4410,7 +4410,7 @@ pilgrimage.2021 = {
 		}
 	}
 	#Convert them to your faith and have them spread the word
-	option = { 
+	option = {
 		name = pilgrimage.2021.a
 		pious_type_option_effect = yes
 		add_character_modifier = {
@@ -4529,7 +4529,7 @@ pilgrimage.2021 = {
 	}
 	after = {
 		if = {
-			limit = { 
+			limit = {
 				current_travel_plan ?= { is_paused = yes }
 			}
 			current_travel_plan = { resume_travel_plan = yes }
@@ -4561,7 +4561,7 @@ pilgrimage.2030 = {
 					has_activity_intent = zealot_intent
 					AND = {
 						has_trait = zealous
-						NOT = { 
+						NOT = {
 							any_secret = { secret_type = secret_non_believer }
 						}
 					}
@@ -4582,8 +4582,8 @@ pilgrimage.2030 = {
 	trigger = {
 		location = { is_sea_province = yes }
 		current_travel_plan ?= {
-			any_entourage_character = { 
-				count > 5 
+			any_entourage_character = {
+				count > 5
 			}
 			any_entourage_character = {
 				NOT = {
@@ -4607,7 +4607,7 @@ pilgrimage.2030 = {
 		}
 	}
 	#Acshually...
-	option = { 
+	option = {
 		name = pilgrimage.2030.a
 		trigger = {
 			OR = {
@@ -4628,7 +4628,7 @@ pilgrimage.2030 = {
 			}
 		}
 		if = {
-			limit = { 
+			limit = {
 				has_trait = lifestyle_traveler
 				has_trait_xp = {
 					trait = lifestyle_traveler
@@ -4662,7 +4662,7 @@ pilgrimage.2030 = {
 				has_activity_intent = zealot_intent
 				AND = {
 					has_trait = zealous
-					NOT = { 
+					NOT = {
 						any_secret = { secret_type = secret_non_believer }
 					}
 				}
@@ -4676,7 +4676,7 @@ pilgrimage.2030 = {
 		pious_type_option_effect = yes
 		add_piety = miniscule_piety_gain
 		if = {
-			limit = { 
+			limit = {
 				has_trait = pilgrim
 				has_trait_xp = {
 					trait = pilgrim
@@ -4757,8 +4757,8 @@ pilgrimage.2040 = {
 	trigger = {
 		location = { is_sea_province = yes }
 		current_travel_plan ?= {
-			any_entourage_character = { 
-				count > 5 
+			any_entourage_character = {
+				count > 5
 			}
 			any_entourage_character = {
 				is_adult = yes
@@ -4804,7 +4804,7 @@ pilgrimage.2040 = {
 					if = {
 						limit = {
 							has_trait = zealous
-							NOT = { 
+							NOT = {
 								any_secret = { secret_type = secret_non_believer }
 							}
 						}
@@ -4819,7 +4819,7 @@ pilgrimage.2040 = {
 						}
 					}
 					add_prestige = medium_prestige_gain
-				}	
+				}
 			}
 			#Catch a small fish
 			50 = {
@@ -4835,7 +4835,7 @@ pilgrimage.2040 = {
 					if = {
 						limit = {
 							has_trait = zealous
-							NOT = { 
+							NOT = {
 								any_secret = { secret_type = secret_non_believer }
 							}
 						}
@@ -4850,7 +4850,7 @@ pilgrimage.2040 = {
 						}
 					}
 					add_prestige = minor_prestige_gain
-				}				
+				}
 			}
 		}
 		ai_chance = {
@@ -4873,7 +4873,7 @@ pilgrimage.2040 = {
 				has_activity_intent = zealot_intent
 				AND = {
 					has_trait = zealous
-					NOT = { 
+					NOT = {
 						any_secret = { secret_type = secret_non_believer }
 					}
 				}
@@ -4896,9 +4896,9 @@ pilgrimage.2040 = {
 	#Nap time!
 	option = {
 		name = pilgrimage.2040.c
-		trigger = { 
+		trigger = {
 			OR = {
-				has_activity_intent = reflection_intent 
+				has_activity_intent = reflection_intent
 				has_trait = lazy
 			}
 			NOT = { has_character_modifier = pilgrimage_chill_ship_modifier }
@@ -5106,7 +5106,7 @@ pilgrimage.2050 = {
 				}
 				scope:first_pilgrim = { death = { death_reason = death_drowned } }
 				scope:second_pilgrim = { death = { death_reason = death_drowned } }
-				scope:third_pilgrim = { death = { death_reason = death_drowned } }			
+				scope:third_pilgrim = { death = { death_reason = death_drowned } }
 			}
 		}
 		stress_impact = {
@@ -5133,7 +5133,7 @@ pilgrimage.2050 = {
 		}
 		scope:first_pilgrim = { death = { death_reason = death_drowned } }
 		scope:second_pilgrim = { death = { death_reason = death_drowned } }
-		scope:third_pilgrim = { death = { death_reason = death_drowned } }		
+		scope:third_pilgrim = { death = { death_reason = death_drowned } }
 		stress_impact = {
 			paranoid = medium_stress_impact_loss
 			callous = medium_stress_impact_loss
@@ -5178,7 +5178,7 @@ scripted_effect pilgrimage_2101_save_scopes_effect = {
 pilgrimage.2101 = {
 	type = character_event
 	title = pilgrimage.2101.t
-	desc = { 
+	desc = {
 		desc = pilgrimage.2101.desc
 		first_valid = {
 			triggered_desc = {
@@ -5197,17 +5197,17 @@ pilgrimage.2101 = {
 				trigger = {
 					OR = {
 						has_sexuality = asexual
-						faith = { 
+						faith = {
 							NOR = {
 								trait_is_sin = lustful
-								trait_is_virtue = lustful 
+								trait_is_virtue = lustful
 							}
 						}
 					}
 				}
 				desc = pilgrimage.2101.desc.lust_neutral
 			}
-		}	
+		}
 	}
 	cooldown = { years = 5 }
 	theme = travel_pilgrimage
@@ -5243,7 +5243,7 @@ pilgrimage.2101 = {
 							is_female = yes
 							has_sexuality = homosexual
 						}
-						#straight or asexual guy 
+						#straight or asexual guy
 						AND = {
 							is_male = yes
 							OR = {
@@ -5251,10 +5251,10 @@ pilgrimage.2101 = {
 								has_sexuality = asexual
 							}
 						}
-						#asexual woman and homo is ok 
+						#asexual woman and homo is ok
 						AND = {
 							has_sexuality = asexual
-							is_female = yes 
+							is_female = yes
 							faith = { has_doctrine = doctrine_homosexuality_accepted }
 						}
 						#bisexual
@@ -5316,7 +5316,7 @@ pilgrimage.2101 = {
 							is_male = yes
 							has_sexuality = homosexual
 						}
-						#straight or asexual woman 
+						#straight or asexual woman
 						AND = {
 							is_female = yes
 							OR = {
@@ -5324,10 +5324,10 @@ pilgrimage.2101 = {
 								has_sexuality = heterosexual
 							}
 						}
-						#asexual man and homo is ok 
+						#asexual man and homo is ok
 						AND = {
 							has_sexuality = asexual
-							is_male = yes 
+							is_male = yes
 							faith = { has_doctrine = doctrine_homosexuality_accepted }
 						}
 						#bisexual
@@ -5408,9 +5408,9 @@ pilgrimage.2101 = {
 			CHARACTER = scope:naked_tempter
 			PREGNANCY_CHANCE = pregnancy_chance
 		}
-		add_to_entourage_court_and_activity_effect = { 
-			CHAR_TO_ADD = scope:naked_tempter 
-			NEW_COURT_OWNER = root 
+		add_to_entourage_court_and_activity_effect = {
+			CHAR_TO_ADD = scope:naked_tempter
+			NEW_COURT_OWNER = root
 		}
 		hidden_effect = {
 			#STD transmission
@@ -5430,7 +5430,7 @@ pilgrimage.2101 = {
 			}
 		}
 		ai_chance = {
-			base = 10	
+			base = 10
 			ai_value_modifier = {
 				ai_energy = 0.5
 				ai_greed = -1
@@ -5475,9 +5475,9 @@ pilgrimage.2101 = {
 			CHARACTER = scope:naked_tempter
 			PREGNANCY_CHANCE = pregnancy_chance
 		}
-		add_to_entourage_court_and_activity_effect = { 
-			CHAR_TO_ADD = scope:naked_tempter 
-			NEW_COURT_OWNER = root 
+		add_to_entourage_court_and_activity_effect = {
+			CHAR_TO_ADD = scope:naked_tempter
+			NEW_COURT_OWNER = root
 		}
 		hidden_effect = {
 			random = {
@@ -5557,7 +5557,7 @@ pilgrimage.2101 = {
 				}
 			}
 		}
-	}	
+	}
 }
 
 scripted_effect generosity_piety_stress_effect = {
@@ -5585,7 +5585,7 @@ scripted_effect generosity_piety_stress_effect = {
 		callous = minor_stress_gain
 		arrogant = minor_stress_gain
 		vengeful = minor_stress_gain
-	}	
+	}
 }
 
 scripted_effect parsimony_piety_stress_effect = {
@@ -5622,7 +5622,7 @@ pilgrimage.2501 = {
 	title = pilgrimage.2501.t
 	desc = {
 		desc = pilgrimage.2501.desc.opening
-		first_valid = {	
+		first_valid = {
 			triggered_desc = {
 				trigger = { faith = { trait_is_virtue = generous } }
 				desc = pilgrimage.2501.desc.virtue.generous
@@ -5722,8 +5722,8 @@ pilgrimage.2501 = {
 			text = pilgrimage.2501.a.virtue
 		}
 		name = {
-			trigger = { 
-				faith = { trait_is_sin = generous } 
+			trigger = {
+				faith = { trait_is_sin = generous }
 			}
 			text = pilgrimage.2501.a.sin
 		}
@@ -6053,14 +6053,14 @@ pilgrimage.2504 = {
 	#Dismiss them
 	option = {
 		name = {
-			trigger = { 
-				faith = { trait_is_virtue = generous } 
+			trigger = {
+				faith = { trait_is_virtue = generous }
 			}
 			text = pilgrimage.2504.c.virtue
 		}
 		name = {
-			trigger = { 
-				faith = { trait_is_sin = generous } 
+			trigger = {
+				faith = { trait_is_sin = generous }
 			}
 			text = pilgrimage.2504.c.sin
 		}
@@ -6384,8 +6384,8 @@ pilgrimage.3001 = {
 				NOT = { has_trait = whole_of_body }
 			}
 			if = {
-				limit = { 
-					NOT = { has_trait = ill } 
+				limit = {
+					NOT = { has_trait = ill }
 				}
 				random = {
 					chance = {
@@ -6403,7 +6403,7 @@ pilgrimage.3001 = {
 							DISEASE = ill
 							TREATMENT_EVENT = no
 						}
-					}	
+					}
 				}
 			}
 			else_if = {
@@ -6426,7 +6426,7 @@ pilgrimage.3001 = {
 							DISEASE = pneumonic
 							TREATMENT_EVENT = no
 						}
-					}	
+					}
 				}
 			}
 		}
@@ -6487,7 +6487,7 @@ pilgrimage.3002 = {
 				has_doctrine = special_doctrine_naked_priests
 			}
 		}
-		NOT = { 
+		NOT = {
 			any_courtier = { has_character_flag = convinced_naked_preacher }
 		}
 		is_location_valid_for_travel_event_on_land = yes
@@ -6527,9 +6527,9 @@ pilgrimage.3002 = {
 		worldly_type_option_effect = yes
 		add_piety = massive_piety_loss
 		set_character_faith = faith:adamites
-		add_to_entourage_court_and_activity_effect = { 
+		add_to_entourage_court_and_activity_effect = {
 			CHAR_TO_ADD = scope:naked_preacher
-			NEW_COURT_OWNER = root 
+			NEW_COURT_OWNER = root
 		}
 		ai_chance = {
 			base = 1
@@ -6607,7 +6607,7 @@ pilgrimage.3002 = {
 					title = pilgrimage.3002.c.failure
 					left_icon = root
 					add_learning_lifestyle_xp = medium_lifestyle_xp
-				}				
+				}
 			}
 		}
 		ai_chance = {
@@ -6669,9 +6669,9 @@ pilgrimage.3003 = {
 	option = {
 		name = pilgrimage.3003.a
 		flavor = pilgrimage.3003.a.flavor
-		add_to_entourage_court_and_activity_effect = { 
+		add_to_entourage_court_and_activity_effect = {
 			CHAR_TO_ADD = scope:naked_preacher
-			NEW_COURT_OWNER = root 
+			NEW_COURT_OWNER = root
 		}
 	}
 	#Good for you, now spread the word
@@ -6728,7 +6728,7 @@ pilgrimage.3004 = {
 		trigger = { learning >= high_skill_rating }
 		pious_type_option_effect = yes
 		if = {
-			limit = { 
+			limit = {
 				has_trait = pilgrim
 				has_trait_xp = {
 					trait = pilgrim
@@ -6780,7 +6780,7 @@ pilgrimage.3004 = {
 				}
 			}
 		}
-	}		
+	}
 }
 
 ###3101-3200: Islam
@@ -6801,11 +6801,11 @@ pilgrimage.3102 = {
 		is_location_valid_for_travel_event_on_land = yes
 	}
 	# See distant places
-	option = { 
+	option = {
 		name = pilgrimage.3102.a
 		worldly_type_option_effect = yes
 		if = {
-			limit = { 
+			limit = {
 				has_trait = lifestyle_traveler
 				has_trait_xp = {
 					trait = lifestyle_traveler
@@ -6840,10 +6840,10 @@ pilgrimage.3102 = {
 				value = stress
 				multiplier = 2
 			}
-		}		
+		}
 	}
 	# My zeal drives me!
-	option = { 
+	option = {
 		name = pilgrimage.3102.b
 		trigger = {
 			NOT = { has_trait = cynical }
@@ -6853,7 +6853,7 @@ pilgrimage.3102 = {
 			has_trait = cynical
 		}
 		if = {
-			limit = { 
+			limit = {
 				has_trait = pilgrim
 				has_trait_xp = {
 					trait = pilgrim
@@ -6878,7 +6878,7 @@ pilgrimage.3102 = {
 		}
 	}
 	# I have... questions
-	option = { 
+	option = {
 		name = pilgrimage.3102.c
 		trigger = {
 			NOT = { has_trait = zealous }
@@ -6926,7 +6926,7 @@ pilgrimage.3201 = {
 		name = pilgrimage.3201.a
 		pious_type_option_effect = yes
 		if = {
-			limit = { 
+			limit = {
 				has_trait = pilgrim
 				has_trait_xp = {
 					trait = pilgrim
@@ -7026,7 +7026,7 @@ pilgrimage.3202 = {
 			}
 		}
 		if = {
-			limit = { 
+			limit = {
 				has_trait = pilgrim
 				has_trait_xp = {
 					trait = pilgrim
@@ -7115,7 +7115,7 @@ pilgrimage.3301 = {
 		add_prestige = medium_prestige_gain
 		add_piety = minor_piety_gain
 		if = {
-			limit = { 
+			limit = {
 				has_trait = pilgrim
 				has_trait_xp = {
 					trait = pilgrim
@@ -7191,11 +7191,11 @@ pilgrimage.6001 = {
 	title = pilgrimage.6001.t
 	desc = pilgrimage.6001.desc
 	theme = travel_pilgrimage
-	left_portrait = { 
+	left_portrait = {
 		character = root
 		animation = personality_content
 	}
-	right_portrait = { 
+	right_portrait = {
 		character = scope:friend
 		animation = happiness
 	}
@@ -7228,7 +7228,7 @@ pilgrimage.6001 = {
 		}
 	}
 	# Let's chat
-	option = { 
+	option = {
 		name = pilgrimage.6001.a
 		worldly_type_option_effect = yes
 		add_character_flag = in_pilgrimage_event_chain
@@ -7239,9 +7239,9 @@ pilgrimage.6001 = {
 			limit = {
 				scope:friend = { is_ruler = no }
 			}
-			add_to_entourage_court_and_activity_effect = { 
+			add_to_entourage_court_and_activity_effect = {
 				CHAR_TO_ADD = scope:friend
-				NEW_COURT_OWNER = root 
+				NEW_COURT_OWNER = root
 			}
 		}
 		if = { # Get schwasted at the tavern
@@ -7250,7 +7250,7 @@ pilgrimage.6001 = {
 				scope:friend = {
 					drinks_alcohol_trigger = yes
 					OR = {
-						has_trait = drunkard 
+						has_trait = drunkard
 						has_trait = lifestyle_reveler
 					}
 				}
@@ -7275,24 +7275,24 @@ pilgrimage.6001 = {
 			limit = {
 				scope:friend = {
 					OR = {
-						# Physical Traits 
+						# Physical Traits
 						has_trait = wounded_1
 						has_trait = wounded_2
 						has_trait = wounded_3
-						has_trait = impotent 
-						has_trait = infirm 
-						# Diseases 
+						has_trait = impotent
+						has_trait = infirm
+						# Diseases
 						has_trait = ill
 						has_trait = bubonic_plague
-						has_trait = cancer 
-						has_trait = consumption 
-						has_trait = great_pox 
+						has_trait = cancer
+						has_trait = consumption
+						has_trait = great_pox
 						has_trait = gout_ridden
-						has_trait = leper 
-						has_trait = lovers_pox 
-						has_trait = pneumonic 
-						has_trait = smallpox 
-						has_trait = typhus 
+						has_trait = leper
+						has_trait = lovers_pox
+						has_trait = pneumonic
+						has_trait = smallpox
+						has_trait = typhus
 					}
 				}
 			}
@@ -7315,7 +7315,7 @@ pilgrimage.6001 = {
 		involved_activity = {
 			set_variable = {
 				name = friend_companion
-				value = scope:friend 
+				value = scope:friend
 			}
 		}
 		stress_impact = {
@@ -7332,7 +7332,7 @@ pilgrimage.6001 = {
 		}
 	}
 	# Leave me alone
-	option = { 
+	option = {
 		name = pilgrimage.6001.b
 		reverse_add_opinion = {
 			target = scope:friend
@@ -7352,12 +7352,12 @@ pilgrimage.6001 = {
 		}
 	}
 	# Zealous Option, bye bye pal
-	option = { 
+	option = {
 		name = pilgrimage.6001.c
 		trigger = { has_trait = zealous }
 		pious_type_option_effect = yes
 		if = {
-			limit = { 
+			limit = {
 				has_trait = pilgrim
 				has_trait_xp = {
 					trait = pilgrim
@@ -7379,34 +7379,34 @@ pilgrimage.6001 = {
 			base = 100
 			ai_value_modifier = {
 				ai_compassion = -0.5
-				ai_zeal = 1 
+				ai_zeal = 1
 			}
 		}
 	}
 }
 
 #Tavern, Suggestion
-pilgrimage.6002 = { 
+pilgrimage.6002 = {
 	type = character_event
 	title = pilgrimage.6001.t
-	desc = pilgrimage.6002.desc 
+	desc = pilgrimage.6002.desc
 	theme = travel_pilgrimage
 	override_background = { reference = bp1_bonfire }
-	left_portrait = { 
+	left_portrait = {
 		character = root
 		animation = personality_content
 	}
-	right_portrait = { 
+	right_portrait = {
 		character = scope:friend
 		animation = happiness
 	}
 	# Hit up the tavern
-	option = { 
+	option = {
 		name = pilgrimage.6002.a
 		custom_tooltip = pilgrimage.6002.a_tt
 		trigger_event = {
-			id = pilgrimage.6003 
-			days = 5 
+			id = pilgrimage.6003
+			days = 5
 		}
 		stress_impact = {
 			zealous = major_stress_impact_gain
@@ -7422,7 +7422,7 @@ pilgrimage.6002 = {
 		}
 	}
 	# Politely decline
-	option = { 
+	option = {
 		name = pilgrimage.6002.b
 		remove_character_flag = in_pilgrimage_event_chain
 		current_travel_plan = { resume_travel_plan = yes }
@@ -7440,7 +7440,7 @@ pilgrimage.6002 = {
 		}
 	}
 	# Emphatic no
-	option = { 
+	option = {
 		name = pilgrimage.6002.c
 		trigger = { has_trait = zealous }
 		remove_character_flag = in_pilgrimage_event_chain
@@ -7463,17 +7463,17 @@ pilgrimage.6002 = {
 }
 
 #Tavern, beginning
-pilgrimage.6003 = { 
+pilgrimage.6003 = {
 	type = character_event
 	title = pilgrimage.6001.t
 	desc = pilgrimage.6003.desc
 	theme = pilgrimage_destination
 	override_background = { reference = tavern }
-	left_portrait = { 
+	left_portrait = {
 		character = root
 		animation = drink_goblet
 	}
-	right_portrait = { 
+	right_portrait = {
 		character = scope:friend
 		animation = toast_goblet
 	}
@@ -7481,7 +7481,7 @@ pilgrimage.6003 = {
 		play_music_cue = "mx_cue_in_taberna_instrumental"
 	}
 	#More drinks
-	option = { 
+	option = {
 		name = pilgrimage.6003.a
 		custom_tooltip = pilgrimage.6003.a_tt
 		remove_short_term_gold = tiny_gold_value
@@ -7525,32 +7525,32 @@ pilgrimage.6003 = {
 }
 
 #Tavern, crash
-pilgrimage.6004 = { 
+pilgrimage.6004 = {
 	type = character_event
 	title = pilgrimage.6001.t
 	desc = pilgrimage.6004.desc
 	theme = pilgrimage_destination
 	override_background = { reference = bp1_wine_cellar }
-	left_portrait = { 
+	left_portrait = {
 		character = root
 		animation = shock
 	}
-	right_portrait = { 
+	right_portrait = {
 		character = scope:friend
 		animation = shock
 	}
 	immediate = {
 		play_music_cue = "mx_cue_in_taberna_instrumental"
 		random_list = {
-			5 = { 
-				# Empty field, significant chance that nothing happens 
-			} 
+			5 = {
+				# Empty field, significant chance that nothing happens
+			}
 			1 = {
-				add_trait = wounded_1 
+				add_trait = wounded_1
 				scope:friend = { add_trait = wounded_1 }
 			}
 			2 = {
-				add_trait = wounded_1 
+				add_trait = wounded_1
 			}
 			2 = {
 				scope:friend = { add_trait = wounded_1 }
@@ -7558,7 +7558,7 @@ pilgrimage.6004 = {
 		}
 	}
 	#_even more_ drinks!
-	option = { 
+	option = {
 		name = pilgrimage.6004.a
 		custom_tooltip = pilgrimage.6004.a.tt
 		add_character_modifier = {
@@ -7607,7 +7607,7 @@ pilgrimage.6004 = {
 }
 
 #Returning to camp
-pilgrimage.6005 = { 
+pilgrimage.6005 = {
 	type = character_event
 	title = pilgrimage.6001.t
 	desc = {
@@ -7618,44 +7618,44 @@ pilgrimage.6005 = {
 				desc = pilgrimage.6005.desc.bad
 			}
 			triggered_desc = {
-				desc = pilgrimage.6005.desc.good 
+				desc = pilgrimage.6005.desc.good
 			}
 		}
 	}
 	theme = pilgrimage_destination
 	override_background = { reference = bp1_bonfire }
-	left_portrait = { 
+	left_portrait = {
 		character = root
 		animation = paranoia
 	}
-	right_portrait = { 
+	right_portrait = {
 		character = scope:friend
 		animation = paranoia
 	}
 	immediate = {
 		random_list = {
-			3 = { 
+			3 = {
 				trigger = { has_character_modifier = life_of_the_party_modifier }
-				save_scope_as = mad_inkeeper 
+				save_scope_as = mad_inkeeper
 			}
-			7 = { 
-				# 70% chance not to happen 
-			} 
+			7 = {
+				# 70% chance not to happen
+			}
 		}
 		if = {
-			limit = { 
-				can_set_relation_best_friend_trigger = { CHARACTER = scope:friend } 
+			limit = {
+				can_set_relation_best_friend_trigger = { CHARACTER = scope:friend }
 			}
-			set_relation_best_friend = { 
-				reason = best_friend_pilgrimage 
-				copy_reason = friend 
+			set_relation_best_friend = {
+				reason = best_friend_pilgrimage
+				copy_reason = friend
 				target = scope:friend
 			}
 		}
 		remove_character_flag = in_pilgrimage_event_chain
 	}
 	#Woo! Good time!
-	option = { 
+	option = {
 		name = pilgrimage.6005.a
 		trigger = {
 			NOT = { exists = scope:mad_inkeeper }
@@ -7696,11 +7696,11 @@ pilgrimage.6006 = {
 	title = pilgrimage.6001.t
 	desc = pilgrimage.6006.desc
 	theme = travel_pilgrimage
-	left_portrait = { 
+	left_portrait = {
 		character = root
 		animation = shock
 	}
-	right_portrait = { 
+	right_portrait = {
 		character = scope:friend
 		animation = anger
 	}
@@ -7715,17 +7715,17 @@ pilgrimage.6006 = {
 		remove_character_flag = in_pilgrimage_event_chain
 	}
 	# Priviledge friendship
-	option = { 
+	option = {
 		name = pilgrimage.6006.a
 		worldly_type_option_effect = yes
 		if = {
-			limit = { 
-				can_set_relation_best_friend_trigger = { CHARACTER = scope:friend } 
+			limit = {
+				can_set_relation_best_friend_trigger = { CHARACTER = scope:friend }
 			}
-			set_relation_best_friend = { 
-				reason = best_friend_pilgrimage 
-				copy_reason = friend 
-				target = scope:friend 
+			set_relation_best_friend = {
+				reason = best_friend_pilgrimage
+				copy_reason = friend
+				target = scope:friend
 			}
 		}
 		reverse_add_opinion = {
@@ -7735,7 +7735,7 @@ pilgrimage.6006 = {
 		}
 	}
 	# Priviledge faith
-	option = { 
+	option = {
 		name = pilgrimage.6006.b
 		pious_type_option_effect = yes
 		scope:friend_secret = { expose_secret = root }
@@ -7743,10 +7743,10 @@ pilgrimage.6006 = {
 			target = scope:friend
 			modifier = exposed_my_secret_opinion
 		}
-		add_piety = medium_piety_gain	
+		add_piety = medium_piety_gain
 	}
 	# You become a non-believer
-	option = { 
+	option = {
 		name = pilgrimage.6006.c
 		trigger = {
 			OR = {
@@ -7755,7 +7755,7 @@ pilgrimage.6006 = {
 			}
 			NOR = {
 				any_secret = { secret_type = secret_non_believer }
-				has_trait = zealous 
+				has_trait = zealous
 			}
 		}
 		add_secret = { type = secret_non_believer }
@@ -7765,10 +7765,10 @@ pilgrimage.6006 = {
 		}
 		if = {
 			limit = { can_set_relation_best_friend_trigger = { CHARACTER = scope:friend } }
-			set_relation_best_friend = { 
-				reason = best_friend_pilgrimage 
-				copy_reason = friend 
-				target = scope:friend 
+			set_relation_best_friend = {
+				reason = best_friend_pilgrimage
+				copy_reason = friend
+				target = scope:friend
 			}
 		}
 	}
@@ -7807,7 +7807,7 @@ pilgrimage.6007 = {
 		scope:6007_healer = { add_character_flag = no_hat }
 	}
 	# Priest makes a learning challenge for healing
-	option = { 
+	option = {
 		name = pilgrimage.6007.a
 		pious_type_option_effect = yes
 		if = {
@@ -7904,14 +7904,14 @@ pilgrimage.6007 = {
 								else = {
 									remove_trait = ill
 								}
-							}	
+							}
 							add_character_modifier = {
 								modifier = pilgrimage_miracle_witness_modifier
 							}
 						}
 					}
 				}
-				70 = {	
+				70 = {
 					desc = pilgrimage.6007.a.failure
 					compare_modifier = {
 						value = scope:duel_value
@@ -7919,8 +7919,8 @@ pilgrimage.6007 = {
 					}
 					root = {
 						send_interface_toast = {
-							title = pilgrimage.6007.a.failure 
-							left_icon = scope:friend 
+							title = pilgrimage.6007.a.failure
+							left_icon = scope:friend
 							scope:friend = {
 								add_character_modifier = {
 									modifier = pilgrimage_botched_miracle_modifier
@@ -7934,7 +7934,7 @@ pilgrimage.6007 = {
 		stress_impact = {
 			trusting = minor_stress_impact_loss
 			zealous = medium_stress_impact_loss
-			cynical = major_stress_impact_gain	
+			cynical = major_stress_impact_gain
 		}
 		ai_chance = {
 			base = 50
@@ -7951,7 +7951,7 @@ pilgrimage.6007 = {
 		stress_impact = {
 			trusting = medium_stress_impact_gain
 			zealous = major_stress_impact_gain
-			cynical = minor_stress_impact_loss	
+			cynical = minor_stress_impact_loss
 		}
 		ai_chance = {
 			base = 50
@@ -7991,7 +7991,7 @@ pilgrimage.3101 = {
 	}
 
 	trigger = { exists = scope:activity }
-	
+
 	immediate = {
 		play_music_cue = mx_cue_pilgrimage_arrival
 		scope:activity = {
@@ -8039,10 +8039,10 @@ pilgrimage.3101 = {
 			ai_value_modifier = {
 				ai_zeal = 1
 			}
-		}	
+		}
 	}
 	# I don't have to be that strict
-	option = { 
+	option = {
 		name = pilgrimage.3101.b
 		worldly_type_option_effect = yes
 		add_piety = medium_piety_loss
@@ -8223,8 +8223,8 @@ pilgrimage.4002 = {
 					any_spouse = {
 						count = all
 						save_temporary_scope_as = partner
-						root = { 
-							might_cheat_on_partner_trigger = { PARTNER = scope:partner } 
+						root = {
+							might_cheat_on_partner_trigger = { PARTNER = scope:partner }
 						}
 					}
 				}
@@ -8248,7 +8248,7 @@ pilgrimage.4010 = {
 		character = root
 		triggered_animation = {
 			trigger = {
-				NOT = { 
+				NOT = {
 					any_secret = { secret_type = secret_non_believer }
 				}
 				has_trait = zealous
@@ -8261,10 +8261,10 @@ pilgrimage.4010 = {
 		give_pilgrim_trait_or_xp_effect = yes
 	}
 	#Zealous person regrets their decisiooon...
-	option = { 
+	option = {
 		name = pilgrimage.4010.a
 		trigger = {
-			NOT = { 
+			NOT = {
 				any_secret = { secret_type = secret_non_believer }
 			}
 			has_trait = zealous
@@ -8274,7 +8274,7 @@ pilgrimage.4010 = {
 		add_character_flag = pilgrimage_counter_obligatory
 		if = {
 			limit = {
-				NOT = { 
+				NOT = {
 					any_secret = { secret_type = secret_non_believer }
 				}
 				has_trait = zealous
@@ -8293,14 +8293,14 @@ pilgrimage.4010 = {
 		}
 	}
 	#I'm _done_. Beam me up, Scotty!
-	option = { 
+	option = {
 		name = pilgrimage.4010.b
 		flavor = pilgrimage.4010.b.flavor
 		custom_tooltip = pilgrimage.4010.b.tt
 		scope:activity = { progress_activity_phase_after = { days = 1 } }
 		if = {
 			limit = {
-				NOT = { 
+				NOT = {
 					any_secret = { secret_type = secret_non_believer }
 				}
 				has_trait = zealous
@@ -8408,7 +8408,7 @@ pilgrimage.4020 = {
 		remove_character_modifier = pilgrimage_burial_at_destination_modifier
 	}
 	#In the ground ye go
-	option = { 
+	option = {
 		name = pilgrimage.4020.a
 		flavor = pilgrimage.4020.a.flavor
 		involved_activity ?= {
@@ -9294,7 +9294,7 @@ pilgrimage.6500 = {
 	cooldown = { years = 1 }
 	trigger = {
 		current_travel_plan ?= {
-			any_entourage_character = { 
+			any_entourage_character = {
 				count > 1
 				NOR = {
 					has_trait = sadistic
@@ -9311,7 +9311,7 @@ pilgrimage.6500 = {
 	immediate = {
 		current_travel_plan = {
 			random_entourage_character = {
-				limit = { 
+				limit = {
 					is_adult = yes
 					NOR = {
 						has_trait = sadistic
@@ -9332,8 +9332,8 @@ pilgrimage.6500 = {
 		trigger = {
 			culture = { has_cultural_tradition = tradition_xenophilic }
 		}
-		show_as_unavailable = { 
-			custom_tooltip = { text = pilgrimage.6500.a.tt } 
+		show_as_unavailable = {
+			custom_tooltip = { text = pilgrimage.6500.a.tt }
 			NOT = {
 				culture = { has_cultural_tradition = tradition_xenophilic }
 			}
@@ -9446,12 +9446,12 @@ pilgrimage.6510 = {
 				root = {
 					add_piety = minor_piety_gain
 					if = {
-						limit = { 
-							NOT = { has_trait = scholar } 
+						limit = {
+							NOT = { has_trait = scholar }
 						}
 						random = {
 							chance = 5
-							add_trait = scholar	
+							add_trait = scholar
 						}
 					}
 				}
@@ -9602,7 +9602,7 @@ pilgrimage.6520 = {
 	cooldown = { years = 1 }
 	trigger = {
 		current_travel_plan ?= {
-			any_entourage_character = { 
+			any_entourage_character = {
 				count > 1
 				OR = {
 					has_trait = impatient
@@ -9654,9 +9654,9 @@ pilgrimage.6520 = {
 				target = scope:impatient_pilgrim
 
 				#Effects
-				root = { 
+				root = {
 					if = {
-						limit = { 
+						limit = {
 							has_trait = pilgrim
 							has_trait_xp = {
 								trait = pilgrim
@@ -9681,7 +9681,7 @@ pilgrimage.6520 = {
 		stress_impact = {
 			zealous = medium_stress_impact_loss
 			forgiving = minor_stress_impact_gain
-			compassionate = minor_stress_impact_gain 
+			compassionate = minor_stress_impact_gain
 		}
 		ai_chance = {
 			base = 100
@@ -9701,7 +9701,7 @@ pilgrimage.6520 = {
 		name = pilgrimage.6520.b
 		pious_type_option_effect = yes
 		add_piety = miniscule_piety_gain
-		stress_impact = { 
+		stress_impact = {
 			zealous = miniscule_stress_impact_gain
 		}
 		ai_chance = {
@@ -9721,7 +9721,7 @@ pilgrimage.6520 = {
 			modifier = humored_opinion
 			opinion = 10
 		}
-		stress_impact = { 
+		stress_impact = {
 			zealous = medium_stress_impact_gain
 			cynical = minor_stress_impact_loss
 			lazy = minor_stress_impact_loss
@@ -9800,13 +9800,13 @@ pilgrimage.6530 = {
 		desc = pilgrimage.6530.desc_intro
 		first_valid = {
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					scope:local_guide = { is_adult = yes }
 				}
 				desc = pilgrimage.6530.desc_adult
 			}
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					scope:local_guide = { is_adult = no }
 				}
 				desc = pilgrimage.6530.desc_child
@@ -9818,7 +9818,7 @@ pilgrimage.6530 = {
 				desc = pilgrimage.6530.desc_warning
 			}
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					learning >= high_skill_rating
 					scope:local_guide = { has_character_flag = fishy_guide }
 				}
@@ -9832,26 +9832,26 @@ pilgrimage.6530 = {
 		character = root
 		#They're trying to fool us and it makes me _angry_
 		triggered_animation = {
-			trigger = { 
+			trigger = {
 				learning >= high_skill_rating
 				OR = {
 					has_trait = wrathful
 					has_trait = irritable
 				}
-				scope:local_guide = { 
+				scope:local_guide = {
 					is_adult = yes
-					has_character_flag = fishy_guide 
+					has_character_flag = fishy_guide
 				}
 			}
 			animation = rage
 		}
 		#They're trying to fool us and we know it
 		triggered_animation = {
-			trigger = { 
+			trigger = {
 				learning >= high_skill_rating
 				scope:local_guide = { has_character_flag = fishy_guide }
 			}
-			animation = personality_cynical	
+			animation = personality_cynical
 		}
 		#I don't trust anyone
 		triggered_animation = {
@@ -9869,7 +9869,7 @@ pilgrimage.6530 = {
 	right_portrait = {
 		character = scope:local_guide
 		triggered_animation = {
-			trigger = { 
+			trigger = {
 				is_adult = no
 				has_character_flag = fishy_guide
 				root = { learning >= high_skill_rating }
@@ -9877,8 +9877,8 @@ pilgrimage.6530 = {
 			animation = shame
 		}
 		triggered_animation = {
-			trigger = { 
-				is_adult = no 
+			trigger = {
+				is_adult = no
 			}
 			animation = happiness
 		}
@@ -9924,19 +9924,19 @@ pilgrimage.6530 = {
 			limit = {
 				learning < high_skill_rating
 				current_travel_plan ?= {
-					any_entourage_character = { 
+					any_entourage_character = {
 						count > 1
 						is_adult = yes
-						learning >= high_skill_rating 
+						learning >= high_skill_rating
 					}
 				}
 				scope:local_guide = { has_character_flag = fishy_guide }
 			}
 			current_travel_plan ?= {
 				random_entourage_character = {
-					limit = { 
+					limit = {
 						is_adult = yes
-						learning >= high_skill_rating 
+						learning >= high_skill_rating
 					}
 					save_scope_as = warning_character
 				}
@@ -9951,8 +9951,8 @@ pilgrimage.6530 = {
 			#We're learned and they're not fishy
 			trigger_if = {
 				limit = { learning >= high_skill_rating }
-				NOT = { 
-					scope:local_guide = { has_character_flag = fishy_guide } 
+				NOT = {
+					scope:local_guide = { has_character_flag = fishy_guide }
 				}
 			}
 			#Or we're not learned
@@ -9982,10 +9982,10 @@ pilgrimage.6530 = {
 					50 = {
 						#Non-fishy guides don't lead you to the trap
 						modifier = {
-							scope:local_guide = { 
-								NOT = { has_character_flag = fishy_guide } 
+							scope:local_guide = {
+								NOT = { has_character_flag = fishy_guide }
 							}
-							factor = 0 
+							factor = 0
 						}
 						#Child heartstring event
 						trigger_event = pilgrimage.6533
@@ -9999,8 +9999,8 @@ pilgrimage.6530 = {
 			if = {
 				limit = {
 					learning >= high_skill_rating
-					NOT = { 
-						scope:local_guide = { has_character_flag = fishy_guide } 
+					NOT = {
+						scope:local_guide = { has_character_flag = fishy_guide }
 					}
 				}
 				random_list = {
@@ -10036,10 +10036,10 @@ pilgrimage.6530 = {
 						desc = pilgrimage.6530.dangerous.desc
 						#Non-fishy guides don't lead you to the trap
 						modifier = {
-							scope:local_guide = { 
-								NOT = { has_character_flag = fishy_guide } 
+							scope:local_guide = {
+								NOT = { has_character_flag = fishy_guide }
 							}
-							factor = 0 
+							factor = 0
 						}
 						show_as_tooltip = { 6532_negative_outcome = yes }
 						#Trap event
@@ -10048,9 +10048,9 @@ pilgrimage.6530 = {
 				}
 			}
 		}
-		stress_impact = { 
+		stress_impact = {
 			paranoid = medium_stress_impact_gain
-			craven = minor_stress_impact_gain 
+			craven = minor_stress_impact_gain
 		}
 		ai_chance = {
 			base = 100
@@ -10106,7 +10106,7 @@ pilgrimage.6530 = {
 			modifier = pilgrimage_forgiving_modifier
 			years = 5
 		}
-		stress_impact = { 
+		stress_impact = {
 			forgiving = minor_stress_impact_loss
 			compassionate = minor_stress_impact_loss
 		}
@@ -10120,7 +10120,7 @@ pilgrimage.6530 = {
 		trigger = {
 			learning >= high_skill_rating
 			has_trait = greedy
-			scope:local_guide = { 
+			scope:local_guide = {
 				has_character_flag = fishy_guide
 				is_adult = yes
 			}
@@ -10145,7 +10145,7 @@ pilgrimage.6530 = {
 				opinion = low_negative_opinion
 			}
 		}
-		stress_impact = { 
+		stress_impact = {
 			greedy = minor_stress_impact_loss
 		}
 		ai_chance = {
@@ -10158,9 +10158,9 @@ pilgrimage.6530 = {
 		trigger = {
 			learning >= high_skill_rating
 			has_trait = sadistic
-			scope:local_guide = { 
+			scope:local_guide = {
 				has_character_flag = fishy_guide
-				is_adult = yes 
+				is_adult = yes
 			}
 		}
 		flavor = pilgrimage.6530.d.flavor
@@ -10188,7 +10188,7 @@ pilgrimage.6530 = {
 				opinion = low_negative_opinion
 			}
 		}
-		stress_impact = { 
+		stress_impact = {
 			sadistic = minor_stress_impact_loss
 			flagellant = medium_stress_impact_loss
 		}
@@ -10216,9 +10216,9 @@ pilgrimage.6530 = {
 				}
 				scope:local_guide = { has_character_flag = fishy_guide }
 			}
-			stress_impact = { 
+			stress_impact = {
 				wrathful = minor_stress_impact_gain
-				irritable = minor_stress_impact_gain 
+				irritable = minor_stress_impact_gain
 			}
 		}
 		ai_chance = {
@@ -10264,19 +10264,19 @@ pilgrimage.6531 = {
 		}
 	}
 	theme = pilgrimage_destination
-	override_background = { 
+	override_background = {
 		trigger = {
-			NOT = { 
-				root.location = { geographical_region = world_middle_east } 
+			NOT = {
+				root.location = { geographical_region = world_middle_east }
 			}
 		}
-		reference = ep2_hunt_forest_cave 
+		reference = ep2_hunt_forest_cave
 	}
-	override_background = { 
-		trigger = { 
+	override_background = {
+		trigger = {
 			root.location = { geographical_region = world_middle_east }
 		}
-		reference = wilderness 
+		reference = wilderness
 	}
 	left_portrait = {
 		character = root
@@ -10322,16 +10322,16 @@ pilgrimage.6532 = {
 	title = pilgrimage.6532.t
 	desc = pilgrimage.6532.desc
 	theme = pilgrimage_destination
-	override_background = { 
+	override_background = {
 		trigger = {
-			NOT = { 
-				root.location = { geographical_region = world_middle_east } 
+			NOT = {
+				root.location = { geographical_region = world_middle_east }
 			}
 		}
 		reference = ep2_hunt_foggy_forest
 	}
-	override_background = { 
-		trigger = { 
+	override_background = {
+		trigger = {
 			root.location = { geographical_region = world_middle_east }
 		}
 		reference = terrain_travel
@@ -10382,7 +10382,7 @@ pilgrimage.6532 = {
 		if = {
 			limit = {
 				current_travel_plan ?= {
-					any_entourage_character = { 
+					any_entourage_character = {
 						OR = {
 							has_court_position = bodyguard_court_position
 							has_court_position = akolouthos_court_position
@@ -10392,7 +10392,7 @@ pilgrimage.6532 = {
 				}
 			}
 			current_travel_plan ?= {
-				random_entourage_character = { 
+				random_entourage_character = {
 					limit = { has_court_position = akolouthos_court_position }
 					alternative_limit = { has_court_position = bodyguard_court_position }
 					alternative_limit = { is_knight_of = root }
@@ -10417,7 +10417,7 @@ pilgrimage.6532 = {
 			duel = {
 				skill = prowess
 				target = scope:6532_local_bandit
-				75 = { 
+				75 = {
 					desc = pilgrimage.6532.a_success.desc
 					compare_modifier = {
 						value = scope:duel_value
@@ -10462,7 +10462,7 @@ pilgrimage.6532 = {
 	option = {
 		name = pilgrimage.6532.b
 		trigger = { has_perk = zealous_proselytizer_perk }
-		show_as_unavailable = { 
+		show_as_unavailable = {
 			NOT = { has_perk = zealous_proselytizer_perk }
 		}
 		custom_tooltip = pilgrimage.6532.c_success.desc
@@ -10489,7 +10489,7 @@ pilgrimage.6532 = {
 		duel = {
 			skills = { learning intrigue }
 			value = medium_skill_rating
-			75 = { 
+			75 = {
 				desc = pilgrimage.6532.c_success.desc
 				compare_modifier = {
 					value = scope:duel_value
@@ -10514,8 +10514,8 @@ pilgrimage.6532 = {
 							#Effects
 							root = {
 								if = {
-									limit = { 
-										NOT = { has_perk = zealous_proselytizer_perk } 
+									limit = {
+										NOT = { has_perk = zealous_proselytizer_perk }
 									}
 									add_perk = zealous_proselytizer_perk
 								}
@@ -10569,16 +10569,16 @@ pilgrimage.6533 = {
 	title = pilgrimage.6533.t
 	desc = pilgrimage.6533.desc
 	theme = pilgrimage_destination
-	override_background = { 
+	override_background = {
 		trigger = {
-			NOT = { 
-				root.location = { geographical_region = world_middle_east } 
+			NOT = {
+				root.location = { geographical_region = world_middle_east }
 			}
 		}
 		reference = ep2_hunt_foggy_forest
 	}
-	override_background = { 
-		trigger = { 
+	override_background = {
+		trigger = {
 			root.location = { geographical_region = world_middle_east }
 		}
 		reference = terrain_travel
@@ -10704,12 +10704,12 @@ pilgrimage.6535 = {
 				}
 			}
 		}
-		
+
 		if = {
-			limit = { 
-				scope:6532_local_bandit ?= { 
+			limit = {
+				scope:6532_local_bandit ?= {
 					is_alive = yes
-					has_character_flag = created_bandit 
+					has_character_flag = created_bandit
 				}
 			}
 			scope:6532_local_bandit = {
@@ -10762,9 +10762,9 @@ pilgrimage.6540 = {
 		animation = personality_greedy
 	}
 	cooldown = { years = 10 }
-	trigger = { 
+	trigger = {
 		#This is more for human flavor
-		is_ai = no 
+		is_ai = no
 	}
 	weight_multiplier = {
 		base = 1
@@ -11110,7 +11110,7 @@ pilgrimage.6750 = {
 			}
 		}
 	}
-	
+
 	#Je ne regrette rien
 	option = {
 		name = pilgrimage.6750.b
@@ -11159,7 +11159,7 @@ pilgrimage.6760 = {
 		animation = chaplain
 	}
 	cooldown = { years = 2 }
-	
+
 	trigger = {
 		faith.religion = religion:christianity_religion
 		OR = {
@@ -11180,7 +11180,7 @@ pilgrimage.6760 = {
 			}
 		}
 	}
-	
+
 	immediate = {
 		if = {
 			limit = { exists = location.county.holder.cp:councillor_court_chaplain }
@@ -11789,7 +11789,7 @@ pilgrimage.6780 = {
 	#My court is so much better than this one
 	option = {
 		name = pilgrimage.6780.b
-		trigger = { diplomacy >= high_skill_rating } 
+		trigger = { diplomacy >= high_skill_rating }
 		show_as_unavailable = { diplomacy < high_skill_rating }
 		skill = diplomacy
 		duel = {
@@ -11815,9 +11815,9 @@ pilgrimage.6780 = {
 
 							#Effects
 							root = {
-								recruit_to_entourage_court_and_activity_effect = { 
-									CHAR_TO_ADD = scope:stolen_courtier 
-									NEW_COURT_OWNER = root 
+								recruit_to_entourage_court_and_activity_effect = {
+									CHAR_TO_ADD = scope:stolen_courtier
+									NEW_COURT_OWNER = root
 								}
 							}
 						}
@@ -11907,9 +11907,9 @@ pilgrimage.6780 = {
 
 				#Effects
 				root = {
-					recruit_to_entourage_court_and_activity_effect = { 
-						CHAR_TO_ADD = scope:stolen_courtier 
-						NEW_COURT_OWNER = root 
+					recruit_to_entourage_court_and_activity_effect = {
+						CHAR_TO_ADD = scope:stolen_courtier
+						NEW_COURT_OWNER = root
 					}
 				}
 			}
@@ -12027,7 +12027,7 @@ pilgrimage.6790 = {
 					trait = pilgrim
 					value >= 50 #TODO_CD_EP2 standardize LEVEL 2
 				}
-			}					
+			}
 			has_trait = hajjaj
 			has_trait = lifestyle_mystic
 			has_trait = theologian
@@ -12060,7 +12060,7 @@ pilgrimage.6790 = {
 				culture = root.location.culture
 				faith = root.location.faith
 				save_scope_as = spiritual_mentor
-				after_creation = { 
+				after_creation = {
 					add_character_flag = mystic_beard_var
 				}
 			}
@@ -12108,7 +12108,7 @@ pilgrimage.6790 = {
 			}
 		}
 	}
-	
+
 	#I am PERFECT
 	option = {
 		name = pilgrimage.6790.c
@@ -12149,8 +12149,8 @@ scripted_trigger pilgrimage_6800_valid_member = {
 
 scripted_effect pilgrimage_6800_friend_effect = {
 	if = {
-		limit = { 
-			can_set_relation_friend_trigger = { CHARACTER = scope:called_member } 
+		limit = {
+			can_set_relation_friend_trigger = { CHARACTER = scope:called_member }
 		}
 		set_relation_friend = {
 			reason = friend_holy_site_monk
@@ -12171,8 +12171,8 @@ scripted_effect pilgrimage_6800_friend_effect = {
 scripted_effect pilgrimage_6800_rival_effect = {
 	scope:called_member = {
 		if = {
-			limit = { 
-				can_set_relation_rival_trigger = { CHARACTER = root } 
+			limit = {
+				can_set_relation_rival_trigger = { CHARACTER = root }
 			}
 			progress_towards_rival_effect = {
 				REASON = rival_no_holy_site_monk
@@ -12243,10 +12243,10 @@ pilgrimage.6800 = {
 		}
 		exists = scope:court_owner_check.cp:councillor_court_chaplain
 		current_travel_plan ?= {
-			any_entourage_character = { 
+			any_entourage_character = {
 				pilgrimage_6800_valid_member = { NEW_COURT_OWNER = scope:court_owner_check }
 			}
-		}				
+		}
 	}
 	immediate = {
 		location.county.holder = { save_scope_as = holy_site_owner }
@@ -12256,7 +12256,7 @@ pilgrimage.6800 = {
 		}
 		current_travel_plan = {
 			random_entourage_character = {
-				limit = { 
+				limit = {
 					pilgrimage_6800_valid_member = { NEW_COURT_OWNER = scope:holy_site_owner }
 				}
 				weight = {
@@ -12314,7 +12314,7 @@ pilgrimage.6800 = {
 				character = root
 				target = scope:called_member
 				location = root.location
-				
+
 				#Effects
 				root = {
 					add_piety = medium_piety_gain
@@ -12877,7 +12877,7 @@ pilgrimage.6820 = {
 				gold <= medium_gold_value
 			}
 		}
-	}	
+	}
 	#You explain the place to them
 	option = {
 		name = pilgrimage.6820.b
@@ -12979,9 +12979,9 @@ pilgrimage.6830 = {
 				any_character_artifact = {
 					is_equipped = no
 					artifact_durability < 50
-					NOR = { 
+					NOR = {
 						rarity = illustrious
-						rarity = famed 
+						rarity = famed
 					}
 				}
 			}
@@ -12989,9 +12989,9 @@ pilgrimage.6830 = {
 				limit = {
 					is_equipped = no
 					artifact_durability < 50
-					NOR = { 
+					NOR = {
 						rarity = illustrious
-						rarity = famed 
+						rarity = famed
 					}
 				}
 				save_scope_as = votive_artifact
@@ -13001,18 +13001,18 @@ pilgrimage.6830 = {
 			limit = {
 				any_character_artifact = {
 					is_equipped = no
-					NOR = { 
+					NOR = {
 						rarity = illustrious
-						rarity = famed 
+						rarity = famed
 					}
 				}
 			}
 			random_character_artifact = {
 				limit = {
 					is_equipped = no
-					NOR = { 
+					NOR = {
 						rarity = illustrious
-						rarity = famed 
+						rarity = famed
 					}
 				}
 				save_scope_as = votive_artifact
@@ -13398,7 +13398,7 @@ pilgrimage.7000 = {
 			}
 			#Hajj conclusion
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					scope:activity = { activity_has_hajj_pilgrimage_type_trigger = yes }
 				}
 				desc = pilgrimage.7000.t_hajj
@@ -13607,7 +13607,7 @@ pilgrimage.7000 = {
 									variable = visited_unique_holy_sites_list
 									count > 1
 								}
-								has_character_flag = added_new_holy_site 
+								has_character_flag = added_new_holy_site
 							}
 							desc = pilgrimage.7000.outro_new_holy_site
 						}
@@ -13670,7 +13670,7 @@ pilgrimage.7000 = {
 			random_memory = {
 				limit = {
 					has_variable = first_pilgrimage
-					NOT = { var:pilgrimage_destination = root.location }	
+					NOT = { var:pilgrimage_destination = root.location }
 				}
 				save_scope_as = first_pilgrimage_memory
 			}
@@ -13685,22 +13685,22 @@ pilgrimage.7000 = {
 	option = {
 		#Hajj alright
 		name = {
-			trigger = { 
+			trigger = {
 				scope:activity = { activity_has_hajj_pilgrimage_type_trigger = yes }
-				has_trait = cynical 
+				has_trait = cynical
 			}
 			text = pilgrimage.7000.a_hajj_cynical
 		}
 		#Hajj cynical
 		name = {
-			trigger = { 
-				scope:activity = { activity_has_hajj_pilgrimage_type_trigger = yes } 
+			trigger = {
+				scope:activity = { activity_has_hajj_pilgrimage_type_trigger = yes }
 			}
 			text = pilgrimage.7000.a_hajj
 		}
 		#Cynical
 		name = {
-			trigger = { 
+			trigger = {
 				OR = {
 					AND = {
 						scope:activity = {
@@ -13711,7 +13711,7 @@ pilgrimage.7000 = {
 						}
 						NOT = { has_character_flag = pilgrimage_counter_obligatory }
 					}
-					has_trait = cynical 
+					has_trait = cynical
 				}
 			}
 			text = pilgrimage.7000.a_cynical
@@ -13729,7 +13729,7 @@ pilgrimage.7000 = {
 						}
 						NOT = { has_character_flag = pilgrimage_counter_obligatory }
 					}
-					has_trait = cynical 
+					has_trait = cynical
 				}
 			}
 			text = pilgrimage.7000.a
@@ -13738,7 +13738,7 @@ pilgrimage.7000 = {
 		#Rewards and log entries are resolved in on_end in the Pilgrimage activity setup
 		show_as_tooltip = { pilgrimage_completed_log_entry_effect = yes }
 	}
-	
+
 	option = {
 		name = pilgrimage.7000.b
 		trigger = { # If it's Pious or Hajj we lower your Gallowsbait
@@ -13781,7 +13781,7 @@ pilgrimage.7000 = {
 		}
 		show_as_tooltip = { pilgrimage_completed_log_entry_effect = yes }
 	}
-	
+
 	after = {
 		#Party's over; clean up time
 		clean_up_pilgrimage_type_reward_flags_effect = yes
@@ -13835,7 +13835,7 @@ pilgrimage.9001 = {
 			has_variable = has_completed_pilgrimage
 			has_variable = pilgrimage_invalidated
 		}
-		NOR = { 
+		NOR = {
 			has_variable = pilgrimage_death_turn_back
 			has_variable = pilgrimage_death_bury_home
 			has_character_flag = pilgrimage_burial_interrupted_pilgrimage
@@ -13949,9 +13949,9 @@ pilgrimage.9010 = {
 		first_valid = {
 			#Turned back, liked host
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					has_variable = pilgrimage_death_turn_back
-					has_character_flag = pilgrimage_liked_my_predecessor 
+					has_character_flag = pilgrimage_liked_my_predecessor
 				}
 				desc = pilgrimage.9010.desc.turned_back_liked
 			}
@@ -13962,7 +13962,7 @@ pilgrimage.9010 = {
 			}
 			#Went to holy site and back, liked host
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					has_variable = pilgrimage_death_bury_home
 					has_character_flag = pilgrimage_liked_my_predecessor
 					NOT = { has_character_flag = pilgrimage_burial_interrupted_pilgrimage }
@@ -13971,7 +13971,7 @@ pilgrimage.9010 = {
 			}
 			#Went to holy site and back, neutral relation
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					has_variable = pilgrimage_death_bury_home
 					NOT = { has_character_flag = pilgrimage_burial_interrupted_pilgrimage }
 				}
@@ -14049,11 +14049,11 @@ pilgrimage.9010 = {
 		}
 		#For atmosphere
 		if = {
-			limit = { 
+			limit = {
 				exists = cp:councillor_court_chaplain
 				cp:councillor_court_chaplain = { is_available = yes }
 			}
-			cp:councillor_court_chaplain = { save_scope_as = grieving_companion }	
+			cp:councillor_court_chaplain = { save_scope_as = grieving_companion }
 		}
 		else = {
 			random_courtier = {
@@ -14079,7 +14079,7 @@ pilgrimage.9010 = {
 		}
 		flavor = pilgrimage.9010.a.flavor
 		if = {
-			limit = { 
+			limit = {
 				OR = {
 					has_variable = pilgrimage_death_turn_back
 					#If we wanted to bury them at the holy site but our activity was invalidated

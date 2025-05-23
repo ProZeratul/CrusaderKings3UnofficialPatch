@@ -754,6 +754,7 @@
 		allow_outside = yes
 		size = { 600 690 }
 		position = { 0 1 }
+		alwaystransparent = no
 
 		using = Window_Background
 
@@ -1130,6 +1131,7 @@
 		allow_outside = yes
 		position = { 0 1 }
 		size = { 600 690 }
+		alwaystransparent = no
 
 		using = Window_Background
 
@@ -1296,7 +1298,7 @@
 				fittype = centercrop
 				using = Mask_Rough_Edges
 
-				margin = { 0 -16 }
+				margin = { -20 -16 }
 
 				modify_texture = {
 					texture = "gfx/interface/component_masks/mask_fade_vertical_up.dds"
@@ -2701,7 +2703,7 @@ types DomicileWindowTypes {
 
 						### Locked Internal Slot
 						vbox = {
-							visible = "[Or( Not(DomicileInternalGuiSlot.IsUnlocked), DomicileBuildingSlot.IsUnderConstruction )]" #Unop Remove closing brace
+							visible = "[Or( Not( DomicileInternalGuiSlot.IsUnlocked ), DomicileBuildingSlot.IsUnderConstruction )]"
 
 							button = {
 								name = "internal_slot_locked"
