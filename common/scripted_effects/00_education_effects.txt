@@ -2673,10 +2673,10 @@ huntperson_camp_officer_education_boost_effect = {
 		court_owner = {
 			random_court_position_holder = {
 				type = huntperson_camp_officer
-				limit = { aptitude:huntperson_camp_officer >= 5 }
-				alternative_limit = { aptitude:huntperson_camp_officer >= 4 }
-				alternative_limit = { aptitude:huntperson_camp_officer >= 3 }
-				alternative_limit = { aptitude:huntperson_camp_officer >= 2 }
+				limit = { aptitude:huntperson_camp_officer >= 4 } #Unop: Was 5 but aptitude are [0-4]
+				alternative_limit = { aptitude:huntperson_camp_officer >= 3 } #Unop: Was 4 but aptitude are [0-4]
+				alternative_limit = { aptitude:huntperson_camp_officer >= 2 } #Unop: Was 3 but aptitude are [0-4]
+				alternative_limit = { aptitude:huntperson_camp_officer >= 1 } #Unop: Was 2 but aptitude are [0-4]
 				alternative_limit = { always = yes }
 				save_scope_as = huntperson
 			}
@@ -2686,7 +2686,7 @@ huntperson_camp_officer_education_boost_effect = {
 			random_list = {
 				10 = { # Small chance for a GREAT boost
 					trigger = {
-						scope:huntperson.aptitude:huntperson_camp_officer = 5
+						scope:huntperson.aptitude:huntperson_camp_officer = 4 #Unop: Was 5 but aptitude are [0-4]
 					}
 					change_variable = {
 						name = education_martial_variable
@@ -2696,11 +2696,11 @@ huntperson_camp_officer_education_boost_effect = {
 				40 = {
 					modifier = {
 						add = 20
-						scope:huntperson.aptitude:huntperson_camp_officer = 5
+						scope:huntperson.aptitude:huntperson_camp_officer = 4 #Unop: Was 5 but aptitude are [0-4]
 					}
 					modifier = {
 						add = 10
-						scope:huntperson.aptitude:huntperson_camp_officer = 4
+						scope:huntperson.aptitude:huntperson_camp_officer = 3 #Unop: Was 4 but aptitude are [0-4]
 					}
 					change_variable = {
 						name = education_martial_variable
