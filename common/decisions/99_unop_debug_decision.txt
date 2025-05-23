@@ -21,14 +21,14 @@
 			NOT = { exists = var:promised_grand_wedding_marriage_countdown }
 		}
 	}
-	
+
 	effect = {
 		if = { limit = { has_variable = promised_grand_wedding_to } remove_variable = promised_grand_wedding_to }
 		if = {
 			limit = { has_variable = promised_grand_wedding_marriage_countdown }
 			if = {
 				limit = { exists = var:promised_grand_wedding_marriage_countdown }
-				if = { 
+				if = {
 					limit = { var:promised_grand_wedding_marriage_countdown = { is_alive = no } }
 					remove_variable = promised_grand_wedding_marriage_countdown
 				}
@@ -76,10 +76,10 @@ unop_debug_travel_stuck_decision = {
 			current_location = final_destination_province
 		}
 	}
-	
+
 	effect = {
 		current_travel_plan ?= {
-			resume_travel_plan = yes 
+			resume_travel_plan = yes
 		}
 	}
 
@@ -107,7 +107,7 @@ unop_debug_iberian_struggle_decision = {
 	ai_check_interval = 0
 
 	is_shown = {
-		always = yes
+		debug_only = yes
 	}
 
 	widget = {
@@ -192,7 +192,7 @@ unop_debug_iberian_struggle_decision = {
 			struggle:iberian_struggle = { change_struggle_phase = struggle_iberia_phase_opportunity }
 		}
 	}
-	
+
 	# TODO ?
 	ai_potential = {
 		always = no
