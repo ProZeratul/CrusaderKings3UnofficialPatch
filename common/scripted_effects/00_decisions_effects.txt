@@ -82,7 +82,7 @@ create_holy_order_effect = {
 					add_trait = order_member
 				}
 			}
-			
+
 			# send messages
 			send_interface_toast = {
 				type = holy_order_founded_message
@@ -475,7 +475,7 @@ form_portugal_decision_effects = {
 			limit = { has_same_culture_as = scope:portugal_former }
 			add_to_list = convert_list
 		}
-		#transfer over innovations from previous culture. 
+		#transfer over innovations from previous culture.
 		culture:portuguese = {
 			hidden_effect = { reset_culture_creation_date = yes }
 			get_all_innovations_from = scope:portugal_former.culture
@@ -529,7 +529,7 @@ form_portugal_decision_effects = {
 	}
 
 	#Prestige
-	add_prestige = massive_prestige_gain	
+	add_prestige = massive_prestige_gain
 }
 
 
@@ -568,9 +568,9 @@ declare_canarias_decision_effects = {
 	}
 
 	#Prestige
-	add_prestige = massive_prestige_gain	
+	add_prestige = massive_prestige_gain
 }
-	
+
 
 
 unite_the_spanish_thrones_decision_effects = {
@@ -591,7 +591,7 @@ unite_the_spanish_thrones_decision_effects = {
 		}
 		add_realm_law_skip_effects = crown_authority_3
 	}
-	
+
 	# Coat of Arms
 	if = {
 		limit = { scope:spain_uniter.primary_title = title:k_castille }
@@ -714,7 +714,7 @@ unite_africa_decision_effects = {
 }
 
 avenge_the_battle_of_tours_decision_effects = {
-		
+
 	give_nickname = nick_the_avenger
 	add_character_modifier = {
 		modifier = avenger_of_the_martyrs
@@ -771,12 +771,12 @@ avenge_the_battle_of_tours_decision_effects = {
 			}
 			county = {
 				add_to_list = every_realm_county
-			}	
+			}
 		}
 
 		every_in_list = {
 			list = every_realm_county
-			custom = every_non_root_faith_county_west_europe		
+			custom = every_non_root_faith_county_west_europe
 			random = {
 				chance = 33
 				custom_tooltip = every_non_avenger_faith_convert
@@ -887,7 +887,7 @@ unite_the_western_slavs_decision_effects = {
 				set_de_jure_liege_title = scope:western_slav_uniter.primary_title
 			}
 		}
-	}	
+	}
 }
 
 unite_the_southern_slavs_decision_effects = {
@@ -1026,7 +1026,7 @@ unite_the_slavs_decision_effects = {
 
 	# Inform players of the de jure drift
 	title:e_slavia = { custom_tooltip = unite_the_slavs_decision_titles_tt } #Scope change for tooltip formatting.
-	
+
 	if = {
 		limit = { has_dlc_feature = legends }
 		create_legend_seed = {
@@ -1252,17 +1252,21 @@ found_university_decision_effect = {
 }
 
 lunatic_building_decision_effect = {
-	capital_province = {
-		set_variable = { #To unlock the building
-			name = variable_greenhouse
-			value = yes
+	scope:lunatic_county = { #Unop: Change this so it use the selected capital county in lunatic_building_decision that was changed
+		title_province = { 
+			set_variable = { #To unlock the building
+				name = variable_greenhouse
+				value = yes
+			}
+			hidden_effect = { #Unop: So the special building slot is not show in the desc
+				add_special_building_slot = special_greenhouse_01
+			}
+			add_special_building = special_greenhouse_01 
 		}
-		add_special_building_slot = special_greenhouse_01
-		add_special_building = special_greenhouse_01
 		#add_province_modifier = extra_building_slot
 		#add_building = special_greenhouse_01
 	}
-	
+
 	give_nickname = nick_the_glass
 }
 
@@ -1455,9 +1459,9 @@ convert_whole_realm_to_feudalism_effect = {
 				}
 			}
 		}
-		
+
 		## Spawn holdings in tribal counties
-		
+
 		every_sub_realm_county = { # Spawn temples in your holy sites
 			limit = {
 				any_county_province = {
@@ -1486,7 +1490,7 @@ convert_whole_realm_to_feudalism_effect = {
 				set_holding_type = church_holding
 			}
 		}
-		
+
 		every_sub_realm_county = { # Spawn a City
 			limit = {
 				any_county_province = {
@@ -1557,7 +1561,7 @@ convert_whole_realm_to_feudalism_effect = {
 				}
 			}
 		}
-		
+
 		every_sub_realm_county = { # Spawn a Temple
 			limit = {
 				any_county_province = {
@@ -1619,7 +1623,7 @@ convert_whole_realm_to_feudalism_effect = {
 					modifier = {
 						add = 20
 						OR = {
-							terrain = floodplains	
+							terrain = floodplains
 							terrain = oasis
 							terrain = farmlands
 						}
@@ -2973,7 +2977,7 @@ linguist_bonus_culture_effect = {
 						has_same_culture_language = scope:$CULTURE$
 						has_same_culture_language = root.culture
 						AND = {
-							exists = scope:target_court_language.culture
+							exists = scope:target_court_language #Unop ck3-tiger
 							has_same_culture_language = scope:target_court_language.culture
 						}
 						AND = {
@@ -2999,7 +3003,7 @@ linguist_bonus_culture_effect = {
 						has_same_culture_language = scope:$CULTURE$
 						has_same_culture_language = root.culture
 						AND = {
-							exists = scope:target_court_language.culture
+							exists = scope:target_court_language #Unop ck3-tiger
 							has_same_culture_language = scope:target_court_language.culture
 						}
 						AND = {
@@ -3181,4 +3185,56 @@ unisolate_family_decision_effect = {
 		paranoid = minor_stress_impact_gain
 		shy = minor_stress_impact_gain
 	}
+}
+
+
+#Whippy whippy
+flagellation_decision_effect = {
+	#Get both rewards
+	if = {
+		limit = {
+			has_trait = flagellant
+			faith = { has_doctrine_parameter = self_mutilation_active }
+		}
+		add_stress = major_stress_loss
+		add_piety = medium_piety_value
+	}
+	#Only Piety
+	else_if = {
+		limit = {
+			faith = { has_doctrine_parameter = self_mutilation_active }
+		}
+		add_piety = medium_piety_value
+	}
+	#Only Stress-loss
+	else = { add_stress = major_stress_loss }
+
+	#Be kind to the AI
+	if = {
+		limit = { is_ai = yes }
+		random_list = {
+			75 = {
+				#No increase
+			}
+			25 = {
+				increase_wounds_effect = { REASON = whipping }
+			}
+		}
+	}
+	else = {
+		increase_wounds_effect = { REASON = whipping }
+	}
+
+	#Not already flagellant?
+	if = {
+		limit = {
+			NOT = { has_trait = flagellant }
+		}
+		random = {
+			chance = 20
+			add_trait = flagellant
+			add_stress = major_stress_loss
+		}
+	}
+
 }

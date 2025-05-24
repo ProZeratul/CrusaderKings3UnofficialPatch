@@ -3,7 +3,8 @@
 		any_guest_subset = {
 			name = contestant
 			activity_is_valid_tournament_contestant = yes
-			location = scope:province 
+			location = scope:province
+			has_variable = progress_to_victory #Unop: We want at least someone to have this variable, if not this event will do nothing
 		}
 	}
 
@@ -15,6 +16,7 @@
 			limit = {
 				activity_is_valid_tournament_contestant = yes
 				location = scope:province
+				has_variable = progress_to_victory #Unop: We want at least someone to have this variable, if not this event will do nothing
 			}
 			save_scope_as = first
 		}
@@ -122,6 +124,7 @@ tournament_win_memory = {
 					has_memory_category = winner
 				}
 			}
+			has_variable = progress_to_victory #Unop: We want at least someone to have this variable, if not this event will do nothing
 		}
 	}
 
@@ -140,6 +143,7 @@ tournament_win_memory = {
 						has_memory_category = winner
 					}
 				}
+				has_variable = progress_to_victory #Unop: We want at least someone to have this variable, if not this event will do nothing
 			}
 			save_scope_as = first
 		}
@@ -873,7 +877,7 @@ tournament_joust_lance_broken = {
 
 tournament_joust_unhorsed = {
 	is_valid = {
-		scope:activity = { has_current_phase = tournament_phase_joust } #Unop: Was tournament_phase_recital
+		scope:activity = { has_current_phase = tournament_phase_joust }
 		any_guest_subset = {
 			name = qualified
 			location = scope:province

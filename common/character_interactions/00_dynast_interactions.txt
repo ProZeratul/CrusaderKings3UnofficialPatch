@@ -7,10 +7,10 @@ disinherit_interaction = {
 
 	desc = disinherit_interaction_desc
 	use_diplomatic_range = no
-	
+
 	is_shown = {
-		NOT = { 
-			scope:recipient = scope:actor 
+		NOT = {
+			scope:recipient = scope:actor
 
 			AND = { # Explicit AND to ensure no funny business
 				scope:recipient = { is_child_of = scope:actor }
@@ -37,7 +37,7 @@ disinherit_interaction = {
 		custom_description = {
 			scope:actor.culture = {
 				NOT = { has_cultural_parameter = cannot_disherit }
-			} 
+			}
 			text = "mystical_ancestors_disinherit"
 		}
 	}
@@ -91,14 +91,14 @@ disinherit_interaction = {
 			trigger_event = char_interaction.0020
 		}
 	}
-	
+
 	on_accept = {
 		scope:actor = {
 			stress_impact = {
 				forgiving = minor_stress_impact_gain
 				compassionate = minor_stress_impact_gain
 			}
-			
+
 			#Legitimacy loss
 			if = {
 				limit = { has_legitimacy = yes }
@@ -128,7 +128,7 @@ disinherit_interaction = {
 					type = event_toast_effect_neutral
 					title = disinherit_interaction_notification
 
-					left_icon = scope:actor					
+					left_icon = scope:actor
 					right_icon = scope:recipient
 
 					scope:recipient = {
@@ -173,7 +173,7 @@ disinherit_interaction = {
 			}
 		}
 	}
-	
+
 	cost = {
 		renown = {
 			value = {
@@ -254,7 +254,7 @@ disinherit_interaction = {
 			}
 		}
 	}
-	
+
 	auto_accept = yes
 
 	ai_potential = {
@@ -263,17 +263,17 @@ disinherit_interaction = {
 			has_trait = forgiving
 		}
 	}
-	
+
 	ai_targets = {
 		ai_recipients = dynasty
 		max = 20
 	}
-	
+
 	ai_frequency = 96
-	
+
 	ai_will_do = {
 		base = 0
-		
+
 		modifier = {
 			add = -100
 			scope:actor = {
@@ -284,7 +284,7 @@ disinherit_interaction = {
 			}
 			scope:recipient = { is_primary_heir_of = scope:actor }
 		}
-		
+
 		modifier = {
 			add = 100
 			scope:recipient = {
@@ -294,7 +294,7 @@ disinherit_interaction = {
 				}
 			}
 		}
-		
+
 		modifier = {
 			add = 100
 			scope:recipient = {
@@ -306,7 +306,7 @@ disinherit_interaction = {
 				}
 			}
 		}
-		
+
 		modifier = {
 			add = 5
 			ai_vengefulness >= medium_positive_ai_value
@@ -393,7 +393,7 @@ disinherit_interaction = {
 		evaluate_action_decreasing_house_unity = {
 			VALUE = 100
 		}
-		
+
 		modifier = {
 			factor = 0
 			scope:recipient = {
@@ -403,7 +403,7 @@ disinherit_interaction = {
 				}
 			}
 		}
-		
+
 		modifier = {
 			factor = 0
 			scope:recipient = {
@@ -518,7 +518,7 @@ disinherit_children_interaction = {
 			VALUE = minor_unity_loss
 			DESC = clan_unity_disinheritance.desc
 			REVERSE_NON_HOUSE_TARGET = no
-		}		
+		}
 	}
 
 	cost = {
@@ -725,7 +725,7 @@ restore_inheritance_interaction = {
 			trigger_event = char_interaction.0030
 		}
 	}
-	
+
 	on_accept = {
 		scope:actor = {
 			stress_impact = {
@@ -757,7 +757,7 @@ restore_inheritance_interaction = {
 			VALUE = minor_unity_gain
 			DESC = clan_unity_re_inheritance.desc
 			REVERSE_NON_HOUSE_TARGET = no
-		}		
+		}
 	}
 
 	cost = {
@@ -765,23 +765,23 @@ restore_inheritance_interaction = {
 			value = scope:actor.dynasty.medium_dynasty_prestige_value #Unop ck3-tiger
 		}
 	}
-	
+
 	auto_accept = yes
 
 	ai_potential = {
 		is_at_war = no
 	}
-	
+
 	ai_targets = {
 		ai_recipients = dynasty
 		max = 20
 	}
-	
+
 	ai_frequency = 120
-	
+
 	ai_will_do = {
 		base = 0
-		
+
 		modifier = {
 			add = 100
 			scope:recipient = {
@@ -791,12 +791,12 @@ restore_inheritance_interaction = {
 				}
 			}
 		}
-		
+
 		modifier = {
 			add = 5
 			ai_vengefulness <= medium_negative_ai_value
 		}
-		
+
 		modifier = {
 			add = 100
 			scope:recipient = scope:actor
@@ -806,7 +806,7 @@ restore_inheritance_interaction = {
 		evaluate_action_increasing_house_unity = {
 			VALUE = 100
 		}
-		
+
 		modifier = {
 			factor = 0
 			scope:recipient = {
@@ -822,10 +822,10 @@ restore_inheritance_interaction = {
 denounce_interaction = {
 	icon = icon_dynasty
 	category = interaction_category_hostile
-	interface_priority = 60
+	interface_priority = 59 #after disinherit
 
 	desc = denounce_interaction_desc
-	
+
 	is_shown = {
 		NOT = { scope:recipient = scope:actor }
 
@@ -857,7 +857,7 @@ denounce_interaction = {
 			trigger_event = char_interaction.0040
 		}
 	}
-	
+
 	on_accept = {
 		scope:actor = {
 			stress_impact = {
@@ -870,7 +870,7 @@ denounce_interaction = {
 					type = event_toast_effect_neutral
 					title = denounce_interaction_notification
 
-					left_icon = scope:actor					
+					left_icon = scope:actor
 					right_icon = scope:recipient
 
 					scope:recipient = {
@@ -893,7 +893,7 @@ denounce_interaction = {
 			VALUE = minor_unity_loss
 			DESC = clan_unity_denouncement.desc
 			REVERSE_NON_HOUSE_TARGET = no
-		}		
+		}
 	}
 
 	cost = {
@@ -946,7 +946,7 @@ denounce_interaction = {
 			}
 		}
 	}
-	
+
 	auto_accept = yes
 
 	ai_potential = {
@@ -955,17 +955,17 @@ denounce_interaction = {
 			has_trait = forgiving
 		}
 	}
-	
+
 	ai_targets = {
 		ai_recipients = dynasty
 		max = 20
 	}
-	
+
 	ai_frequency = 96
-	
+
 	ai_will_do = {
 		base = 0
-		
+
 		modifier = {
 			add = 100
 			scope:recipient = {
@@ -975,7 +975,7 @@ denounce_interaction = {
 				}
 			}
 		}
-		
+
 		modifier = {
 			add = 5
 			ai_vengefulness >= medium_positive_ai_value
@@ -1059,7 +1059,7 @@ denounce_interaction = {
 		evaluate_action_decreasing_house_unity = {
 			VALUE = 100
 		}
-		
+
 		modifier = {
 			factor = 0
 			scope:recipient = {
@@ -1078,7 +1078,7 @@ forgive_interaction = {
 	interface_priority = 60
 
 	desc = forgive_interaction_desc
-	
+
 	is_shown = {
 		NOT = { scope:recipient = scope:actor }
 
@@ -1135,7 +1135,7 @@ forgive_interaction = {
 			VALUE = minor_unity_gain
 			DESC = clan_unity_forgiveness.desc
 			REVERSE_NON_HOUSE_TARGET = no
-		}		
+		}
 	}
 
 	cost = {
@@ -1143,23 +1143,23 @@ forgive_interaction = {
 			value = scope:actor.dynasty.miniscule_dynasty_prestige_value #Unop ck3-tiger
 		}
 	}
-	
+
 	auto_accept = yes
 
 	ai_potential = {
 		is_at_war = no
 	}
-	
+
 	ai_targets = {
 		ai_recipients = dynasty
 		max = 20
 	}
-	
+
 	ai_frequency = 120
-	
+
 	ai_will_do = {
 		base = 0
-		
+
 		modifier = {
 			add = 100
 			scope:recipient = {
@@ -1169,12 +1169,12 @@ forgive_interaction = {
 				}
 			}
 		}
-		
+
 		modifier = {
 			add = 5
 			ai_vengefulness <= medium_negative_ai_value
 		}
-		
+
 		modifier = {
 			add = 100
 			scope:recipient = scope:actor
@@ -1184,7 +1184,7 @@ forgive_interaction = {
 		evaluate_action_increasing_house_unity = {
 			VALUE = 100
 		}
-		
+
 		modifier = {
 			factor = 0
 			scope:recipient = {
@@ -1203,15 +1203,15 @@ call_dynasty_member_to_war_interaction = {
 	interface_priority = 60
 
 	desc = call_dynasty_member_to_war_interaction_desc
-	
+
 	interface = call_ally
 	special_interaction = call_ally_interaction
 	popup_on_receive = yes
 	pause_on_receive = yes
-	
+
 	greeting = positive
 	notification_text = CALL_DYNASTY_MEMBER_NOTIFICATION
-	
+
 	is_shown = {
 		NOT = { scope:recipient = scope:actor }
 
@@ -1234,7 +1234,7 @@ call_dynasty_member_to_war_interaction = {
 			}
 		}
 	}
-	
+
 	has_valid_target = {
 		exists = scope:target
 	}
@@ -1281,7 +1281,7 @@ call_dynasty_member_to_war_interaction = {
 			trigger_event = call_ally.0001
 		}
 	}
-		
+
 	on_accept = {
 		call_dynasty_member_to_war_interaction_effect = yes
 
@@ -1299,7 +1299,7 @@ call_dynasty_member_to_war_interaction = {
 			}
 		}
 	}
-	
+
 	on_decline = {
 		#The war could theoretically end on the day the decline is sent
 		if = {
@@ -1349,7 +1349,7 @@ call_dynasty_member_to_war_interaction = {
 			}
 		}
 	}
-	
+
 	ai_accept = {
 		base = 20
 
@@ -1396,11 +1396,11 @@ call_dynasty_member_to_war_interaction = {
 						this = scope:target.casus_belli.primary_defender
 					}
 				}
-				
+
 			}
 			desc = WONT_FIGHT_SPOUSE_REASON
 		}
-		
+
 		modifier = {  # Reluctant when already at war
 			add = -50
 			scope:recipient = {
@@ -1530,6 +1530,7 @@ call_dynasty_member_to_war_interaction = {
 dynast_claim_title_interaction = {
 	icon = icon_dynasty
 	category = interaction_category_diplomacy
+	interface_priority = 34 #right after HoF Request Claim
 	desc = dynast_claim_title_interaction_desc
 	target_type = title
 	target_filter = recipient_domain_titles
@@ -1548,7 +1549,7 @@ dynast_claim_title_interaction = {
 			is_playable_character = yes
 		}
 	}
-	
+
 	can_be_picked = {
 		custom_description = {
 			scope:target = { NOT = { any_claimant = { this = scope:actor } } }
@@ -1562,7 +1563,7 @@ dynast_claim_title_interaction = {
 				any_held_title = {
 					tier >= tier_county
 					NOT = { any_claimant = { this = scope:actor } }
-				} 
+				}
 			}
 
 			object = scope:recipient
@@ -1575,7 +1576,7 @@ dynast_claim_title_interaction = {
 			trigger_event = char_interaction.0060
 		}
 	}
-	
+
 	on_accept = {
 		dynast_claim_title_effect = yes
 		scope:actor = {
@@ -1584,7 +1585,7 @@ dynast_claim_title_interaction = {
 					type = event_toast_effect_neutral
 					title = dynast_claim_title_interaction_notification
 
-					left_icon = scope:actor					
+					left_icon = scope:actor
 					right_icon = scope:recipient
 
 					show_as_tooltip = {
@@ -1614,7 +1615,7 @@ dynast_end_dynasty_wars_interaction = {
 
 	is_shown = {
 		NOT = { scope:actor = scope:recipient }
-		
+
 		scope:actor = {
 			is_dynast = yes
 			religion = scope:recipient.religion
@@ -1699,7 +1700,7 @@ dynast_legitimize_bastard_interaction = {
 	cost = {
 		renown = scope:actor.dynasty.medium_dynasty_prestige_value #Unop ck3-tiger
 	}
-	
+
 	on_accept = {
 		scope:actor = {
 			stress_impact = {
@@ -1720,7 +1721,7 @@ dynast_legitimize_bastard_interaction = {
 				}
 			}
 		}
-		
+
 		hidden_effect = {
 			scope:recipient = {
 				trigger_event = bastard_interaction.0009
@@ -1762,18 +1763,18 @@ send_to_varangian_guard_interaction = {
 	desc = send_to_varangian_guard_interaction_desc
 	use_diplomatic_range = no
 	common_interaction = yes
-	
+
 	is_shown = {
 		NOT = { scope:recipient = scope:actor }
 
 		scope:actor = {
 			is_dynast = yes
 			dynasty = scope:recipient.dynasty
-			
+
 			dynasty = {
 				has_dynasty_perk = fp1_adventure_legacy_1
 			}
-			
+
 			exists = title:e_byzantium.holder
 			NOR = {
 				faith = {
@@ -1785,7 +1786,7 @@ send_to_varangian_guard_interaction = {
 			}
 		}
 	}
-	
+
 	cooldown = { years = 2 }
 
 	is_valid_showing_failures_only = {
@@ -1800,8 +1801,9 @@ send_to_varangian_guard_interaction = {
 			is_ruler = no
 			is_adult = yes
 			is_married = no
-			NOT = {
+			NOR = {
 				has_trait = varangian
+				has_trait = order_member #Unop: You don't exit an order that easily
 			}
 		}
 		trigger_if = {
@@ -1840,7 +1842,7 @@ send_to_varangian_guard_interaction = {
 			}
 		}
 	}
-	
+
 	on_accept = {
 		title:e_byzantium.holder = {
 			save_scope_as = emperor
@@ -1852,7 +1854,7 @@ send_to_varangian_guard_interaction = {
 				}
 			}
 		}
-		
+
 		scope:actor = {
 			stress_impact = {
 				paranoid = minor_stress_impact_gain
@@ -1862,9 +1864,9 @@ send_to_varangian_guard_interaction = {
 					type = event_toast_effect_neutral
 					title = send_to_varangian_guard_interaction_toast
 
-					left_icon = scope:recipient					
+					left_icon = scope:recipient
 					right_icon = scope:emperor
-					
+
 					custom_tooltip = send_to_varangian_guard_interaction_toast_desc
 				}
 			}
@@ -1872,9 +1874,9 @@ send_to_varangian_guard_interaction = {
 
 		scope:recipient = {
 			save_scope_as = varangian_candidate
-			
+
 		}
-		
+
 		show_as_tooltip = {
 			scope:varangian_candidate = {
 				visit_court_of = scope:emperor
@@ -1889,7 +1891,7 @@ send_to_varangian_guard_interaction = {
 				trigger_event = varangian.0003
 			}
 		}
-		
+
 		# If we're a clan this interaction affects unity
 		add_clan_unity_interaction_effect = {
 			CHARACTER = scope:actor
@@ -1897,25 +1899,25 @@ send_to_varangian_guard_interaction = {
 			VALUE = miniscule_unity_loss
 			DESC = clan_unity_vaering.desc
 			REVERSE_NON_HOUSE_TARGET = no
-		}		
+		}
 	}
-	
+
 	cost = {
 		prestige = {
 			value = 350
 		}
 	}
-	
+
 	auto_accept = yes
 
 	ai_potential = {
 		is_at_war = no
 		is_dynast = yes
-		
+
 		dynasty = {
 			has_dynasty_perk = fp1_adventure_legacy_1
 		}
-		
+
 		exists = title:e_byzantium.holder
 		NOR = {
 			faith = {
@@ -1926,14 +1928,14 @@ send_to_varangian_guard_interaction = {
 			is_at_war_with = title:e_byzantium.holder
 		}
 	}
-	
+
 	ai_targets = {
 		ai_recipients = children
 		max = 10
 	}
-	
+
 	ai_frequency = 120
-	
+
 	ai_will_do = {
 		base = 100
 	}

@@ -57,8 +57,19 @@
 	cost = {
 		gold = {
 			add = {
-				value = standard_camp_party_activity_cost
-				desc = hunt_base_cost
+				add = {
+					value = standard_camp_party_activity_cost
+					desc = hunt_base_cost
+				}
+				if =  {
+					limit = {
+						has_character_modifier = journey_communal_modifier
+					}
+					multiply = {
+						value = 0.8
+						desc = journey_communal_modifier
+					}
+				}
 			}
 		}	
 	}
@@ -309,10 +320,10 @@
 				cost = {
 					gold = {
 						add = {
-							desc = camp_party_drinks_simple
+							desc = camp_party_drinks_adequate #Unop: Was camp_party_drinks_simple
 							add = {
 								value = 10
-								desc = camp_party_drinks_simple
+								desc = camp_party_drinks_adequate #Unop: Was camp_party_drinks_simple
 							}
 							add = {
 								value = 10
@@ -380,10 +391,10 @@
 				cost = {
 					gold = {
 						add = {
-							desc = camp_party_drinks_lavish
+							desc = camp_party_drinks_abundant #Unop: Was camp_party_drinks_lavish
 							add = {
 								value = 20
-								desc = camp_party_drinks_lavish
+								desc = camp_party_drinks_abundant #Unop: Was camp_party_drinks_lavish
 							}
 							add = {
 								value = 20
@@ -573,6 +584,10 @@
 		defaults = {
 			1 = activity_invite_rule_followers
 			2 = activity_invite_rule_local_lord
+			2 = activity_invite_rule_friends
+			2 = activity_invite_rule_potential_friends
+			2 = activity_invite_rule_lovers
+			2 = activity_invite_rule_potential_lovers
 		}
 	}
 

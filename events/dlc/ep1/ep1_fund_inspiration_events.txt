@@ -4398,7 +4398,7 @@ fund_inspiration.0051 = {
 
 	option = { #tibet
 		name = fund_inspiration.0051.tibet
-		trigger = { exists = scope:burma_option }
+		trigger = { exists = scope:tibet_option }
 		custom_tooltip = fund_inspiration.you_decide_option_tt
 		scope:inspiration_owner = {
 			set_variable = {
@@ -7984,6 +7984,22 @@ fund_inspiration.1071 = {
 				value = yes
 			}
 		}
+		else = { #Unop: For this effect to be error & future proof we need to have a fallback case
+			if = {
+				limit = { debug_only = yes }
+				debug_log = "Unop: For fund_inspiration.1071 diagnostic, no var artifact_smith_type defined, fallback on a brooch"
+				debug_log_scopes = yes
+			}
+			create_artifact_brooch_effect = {
+				OWNER = root
+				SMITH = scope:inspiration_owner
+			}
+			save_scope_value_as = {
+				name = brooch
+				value = yes
+			}
+		}
+
 		# Add a dedication to the description - fund_inspiration.7001
 		if = {
 			limit = {
@@ -11798,7 +11814,7 @@ fund_inspiration.2080 = {
 		animation = dismissal
 	}
 	right_portrait = {
-		character = scope:antiquarian
+		character = scope:rival # Unop: This was: scope:antiquarian but that scope could be undefined and so should be rival
 		animation = disapproval
 	}
 	cooldown = { years = 5 }
@@ -12393,7 +12409,7 @@ fund_inspiration.2100 = {
 			20 = {
 				compare_modifier = {
 					value = scope:duel_value
-					multiplier = 2
+					multiplier = -2 #Unop: Multiplier need to be reversed in the duel (was 2)
 				}
 				min = 5
 				send_interface_toast = {
@@ -17220,13 +17236,6 @@ fund_inspiration.6102 = {
 				ai_rationality = 0.5
 			}
 		}
-		#Unop ck3-tiger Already defined above
-		#ai_chance = {
-		#	base = 50
-		#	ai_value_modifier = {
-		#		ai_rationality = 0.5
-		#	}
-		#}
 	}
 
 	option = {
@@ -17890,11 +17899,13 @@ fund_inspiration.6300 = {
 			scope:inspiration_owner = {
 				homosexual_poet_trigger = no
 				unloved_poet_trigger = yes
-				is_attracted_to_gender_of = root
-				might_cheat_on_every_partner_trigger = yes
+				#is_attracted_to_gender_of = root #Unop: This will be checked in the unop_is_sexually_compatible_with_character just below
+				#might_cheat_on_every_partner_trigger = yes #Unop: This will be checked in the unop_is_sexually_compatible_with_character just below
+				unop_is_sexually_compatible_with_character = { CHARACTER = root DENY_CHASTE = flag:no }
 			}
-			is_attracted_to_gender_of = scope:inspiration_owner
-			might_cheat_on_every_partner_trigger = yes
+			#is_attracted_to_gender_of = scope:inspiration_owner #Unop: This will be checked in the unop_is_sexually_compatible_with_character just below
+			#might_cheat_on_every_partner_trigger = yes #Unop: This will be checked in the unop_is_sexually_compatible_with_character just below
+			unop_is_sexually_compatible_with_character = { CHARACTER = scope:inspiration_owner DENY_CHASTE = flag:no }
 		}
 		had_sex_with_effect = {
 			CHARACTER = scope:inspiration_owner
@@ -19273,10 +19284,6 @@ fund_inspiration.6505 = {
 	left_portrait = {
 		character = scope:inspiration_owner
 		animation = happiness
-		triggered_outfit = {
-			remove_default_outfit = yes
-			outfit_tags = { no_clothes }
-		}
 	}
 	artifact = {
 		target = scope:naked_tapestry

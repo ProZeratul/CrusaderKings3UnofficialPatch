@@ -431,6 +431,7 @@ education_complete_notification_effect = {
 		}
 		random_relation = {
 			type = guardian
+			save_scope_as = current_guardian #Unop: Save the guardian to be used later
 			if = {
 				limit = { this = { is_parent_of = root } }
 				save_scope_as = parent_guardian
@@ -510,7 +511,7 @@ education_complete_notification_effect = {
 			hidden_effect = { # Hidden to avoid duplicate effect messages
 				#Relationship back-up clean-up
 				remove_guardian_effect = {
-					GUARDIAN = this
+					GUARDIAN = scope:current_guardian #Unop: Use the scope saved before since THIS is scope-dependent
 					WARD = scope:educated_child
 					RETURN_WARD = no
 					HIDE_OPINION = no
@@ -550,6 +551,27 @@ education_complete_notification_effect = {
 			send_interface_message = {
 				type = msg_dynasty_child_of_age
 				title = msg_dynasty_child_of_age_title
+				desc = msg_dynasty_child_of_age_desc
+				left_icon = scope:educated_child
+				scope:educated_child = { display_correct_education_trait_gain_tooltip_effect = yes }
+			}
+		}
+	}
+	liege ?= {
+		if = {
+			limit = {
+				is_ai = no
+				is_employer_of = scope:educated_child
+				NOR = {
+					scope:educated_child.dynasty ?= dynasty
+					is_parent_of = scope:educated_child
+					scope:parent_guardian ?= this
+				}
+			}
+			save_scope_as = relative
+			send_interface_message = {
+				type = msg_courtier_child_of_age
+				title = msg_courtier_child_of_age_title
 				desc = msg_dynasty_child_of_age_desc
 				left_icon = scope:educated_child
 				scope:educated_child = { display_correct_education_trait_gain_tooltip_effect = yes }
@@ -2085,13 +2107,13 @@ results_of_university_education_points_effect = {
 			random_list = {
 				60 = {
 					change_variable = {
-						name = education_martial_variable #Unop
+						name = education_martial_variable
 						add = 2
 					}
 				}
 				40 = {
 					change_variable = {
-						name = education_martial_variable #Unop
+						name = education_martial_variable
 						add = 3
 					}
 				}
@@ -2102,13 +2124,13 @@ results_of_university_education_points_effect = {
 			random_list = {
 				60 = {
 					change_variable = {
-						name = education_stewardship_variable #Unop
+						name = education_stewardship_variable
 						add = 2
 					}
 				}
 				40 = {
 					change_variable = {
-						name = education_stewardship_variable #Unop
+						name = education_stewardship_variable
 						add = 3
 					}
 				}
@@ -2119,13 +2141,13 @@ results_of_university_education_points_effect = {
 			random_list = {
 				60 = {
 					change_variable = {
-						name = education_intrigue_variable #Unop
+						name = education_intrigue_variable
 						add = 2
 					}
 				}
 				40 = {
 					change_variable = {
-						name = education_intrigue_variable #Unop
+						name = education_intrigue_variable
 						add = 3
 					}
 				}
@@ -2136,13 +2158,13 @@ results_of_university_education_points_effect = {
 			random_list = {
 				60 = {
 					change_variable = {
-						name = education_learning_variable #Unop
+						name = education_learning_variable
 						add = 2
 					}
 				}
 				40 = {
 					change_variable = {
-						name = education_learning_variable #Unop
+						name = education_learning_variable
 						add = 3
 					}
 				}
@@ -2651,10 +2673,10 @@ huntperson_camp_officer_education_boost_effect = {
 		court_owner = {
 			random_court_position_holder = {
 				type = huntperson_camp_officer
-				limit = { aptitude:huntperson_camp_officer >= 5 }
-				alternative_limit = { aptitude:huntperson_camp_officer >= 4 }
-				alternative_limit = { aptitude:huntperson_camp_officer >= 3 }
-				alternative_limit = { aptitude:huntperson_camp_officer >= 2 }
+				limit = { aptitude:huntperson_camp_officer >= 4 } #Unop: Was 5 but aptitude are [0-4]
+				alternative_limit = { aptitude:huntperson_camp_officer >= 3 } #Unop: Was 4 but aptitude are [0-4]
+				alternative_limit = { aptitude:huntperson_camp_officer >= 2 } #Unop: Was 3 but aptitude are [0-4]
+				alternative_limit = { aptitude:huntperson_camp_officer >= 1 } #Unop: Was 2 but aptitude are [0-4]
 				alternative_limit = { always = yes }
 				save_scope_as = huntperson
 			}
@@ -2664,7 +2686,7 @@ huntperson_camp_officer_education_boost_effect = {
 			random_list = {
 				10 = { # Small chance for a GREAT boost
 					trigger = {
-						scope:huntperson.aptitude:huntperson_camp_officer = 5
+						scope:huntperson.aptitude:huntperson_camp_officer = 4 #Unop: Was 5 but aptitude are [0-4]
 					}
 					change_variable = {
 						name = education_martial_variable
@@ -2674,11 +2696,11 @@ huntperson_camp_officer_education_boost_effect = {
 				40 = {
 					modifier = {
 						add = 20
-						scope:huntperson.aptitude:huntperson_camp_officer = 5
+						scope:huntperson.aptitude:huntperson_camp_officer = 4 #Unop: Was 5 but aptitude are [0-4]
 					}
 					modifier = {
 						add = 10
-						scope:huntperson.aptitude:huntperson_camp_officer = 4
+						scope:huntperson.aptitude:huntperson_camp_officer = 3 #Unop: Was 4 but aptitude are [0-4]
 					}
 					change_variable = {
 						name = education_martial_variable
@@ -2897,9 +2919,18 @@ dynasty_perk_secondary_education_trait_effect = {
 		}
 
 		# Assign a trait, chance based on the development of the location
-		set_variable = {
-			name = chance_for_extra_trait
-			value = location.county.development_level
+		if = { #Unop: Rework this, since children COULD be traveling when they come of age, the current location they are while traveling will be the one chosen for the bonus, even if they spent all their childhood in a very high dev location
+			limit = { exists = current_travel_plan }
+			set_variable = {
+				name = chance_for_extra_trait
+				value = current_travel_plan.departure_location.county.development_level
+			}
+		}
+		else = {
+			set_variable = {
+				name = chance_for_extra_trait
+				value = location.county.development_level
+			}
 		}
 
 		random_list = {
@@ -3028,7 +3059,14 @@ ward_depart_effect = {
 			}
 		}
 		hidden_effect = { #to prevent doubling of "becomes guardian of x" effect in the interaction confirmation window
-			scope:guardian = { set_relation_ward = scope:ward }
+			if = {
+				limit = {
+					NOT = {
+						scope:guardian = { has_relation_ward = scope:ward }
+					}
+				}
+				scope:guardian = { set_relation_ward = scope:ward }
+			}
 		}
 		#Opinions
 		guardian_add_opinion_effect = {

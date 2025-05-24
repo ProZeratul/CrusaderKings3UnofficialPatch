@@ -1,4 +1,4 @@
-[Unofficial patch] 8.0.16
+[Unofficial patch] 8.0.29
 
 NOTE: Due to 1.13 Roads to power patch, A LOT of game files have changed, so instead of waiting a long time before seeing the patch I'll just make small update in order to get the patch out quicker.
 For now the goal is to not make the game crash while still having the mod enabled !
@@ -31,7 +31,7 @@ common
             gruesome_festival.txt
                 > Changed the cost for the option gruesome_festival_sacrifice_animals_magnificent_poser (to be shown / to be refunded) to gruesome_festival_option_medium
             hunt.txt
-                > Add an event in case the host dies but not from a hunt event            
+                > Add an event in case the host dies but not from a hunt event
             pilgrimage.txt
                 > Add the iranian_culture_group with the mena_culture_group to display a better background
         activity_system_events.txt
@@ -60,12 +60,12 @@ common
         00_artifact_interactions.txt
             > (LAAMP) "Steal Artifact" - Interaction will only show the interaction if the recipient actually has artifacts
             > (LAAMP) "Steal Artifact" - Limit range for landless adventurers that don't have claims on an artifact
-            > (LAAMP) "Steal Artifact" - You now need a claim or a contract to steal masterwork artifacts 
+            > (LAAMP) "Steal Artifact" - You now need a claim or a contract to steal masterwork artifacts
         00_scheme_interactions.txt [Removed- Got fix by the devs]
             > Fix abduct interaction not checking the domicile building
         06_ep3_interactions.txt
             > Fix AI sending child with the offer_eunuch_interaction
-        
+
 
     customizable_localization
         00_relations.txt
@@ -93,7 +93,7 @@ common
     genes
         05_genes_special_accessories_clothes.txt
             > Add missing female_clothes_religious_buddhist_devoted_01
-            > Fix female_clothes_religious_buddhist_devoted_01 being referenced as female_clothes_religious_hindu_devoted_01 
+            > Fix female_clothes_religious_buddhist_devoted_01 being referenced as female_clothes_religious_hindu_devoted_01
 
     important_actions
         00_personal_actions.txt
@@ -126,7 +126,7 @@ common
         07_dlc_ep3_scripted_effects.txt
             > Fix laamp_as_mercenary_payout_effect that was putting all mercenaries in the same list instead of seperating them. That lead to the wrong outcome letter event after a war
         00_decisions_effects.txt
-            > Fix launch_hungarian_migration_scripted_effect using twice a limit instead of an alternative_limit 
+            > Fix launch_hungarian_migration_scripted_effect using twice a limit instead of an alternative_limit
 
     scripted_triggers
         00_court_position_triggers.txt
@@ -134,7 +134,7 @@ common
             > Change can_appoint_char_to_court_position to also check if the employer is actaully employing someone
             > Fix Scout for Talent event not firing
         20_health_triggers.txt
-            > Fix has_high_health_penalty_disease_type_trigger & has_low_health_penalty_disease_type_trigger for elderly/child characters who have consumption or measles 
+            > Fix has_high_health_penalty_disease_type_trigger & has_low_health_penalty_disease_type_trigger for elderly/child characters who have consumption or measles
         00_scheme_triggers.txt
             > Fix agent_valid_to_be_discovered_by_spymaster using the wrong scope target instead of target_character
 
@@ -156,7 +156,7 @@ events
         chariot_race_activity
             chariot_race_ongoing_events.txt
                 > Fix chariot_race.3030 to use the proper trigger & effect to affect a charioteer
-                > Fix chariot_race.3050 
+                > Fix chariot_race.3050
             chariot_ongoing_events_jp.txt
                 > Prevent the HoF to be selected as a valid target for chariot_race_ongoing_jp.0201
         hold_court_activity
@@ -171,7 +171,7 @@ events
             > Add more check to marshal_task_0302_commander_trigger to avoid conflicts with vassal.2701 & vassal.2702
             > Fix marshal_task.0302 using an after block (that does not work in hidden events)
             > Add more checks to marshal_task_2101_teacher_trigger to ensure the selected commander is available and healthy
-            > Add more check to marshal_task_2101_commander_trigger to avoid conflicts with vassal.2701 & vassal.2702 
+            > Add more check to marshal_task_2101_commander_trigger to avoid conflicts with vassal.2701 & vassal.2702
             > Rework marshal_task.2101 to ensure the duo mentor/student is correct, also the event was using an after block (that does not work in hidden events)
 
     court_events_general
@@ -190,7 +190,7 @@ events
             epidemic_events.txt
                 > Ensure all legitimacy change use the effect that ensure the char is using legitimacy (reduce logged errors)
                 > Ensure events that infect you use the proper effect to ensure that you are not immune to the disease and also will launch the physician treatment event & later recovery
-        
+
         ep3
             ep3_contract_events.txt
                 >  Prevent characters in army from traveling with adventurers, ensure prisoners also travel with you
@@ -201,7 +201,7 @@ events
                     > Not making you vassal of the holder
                     > Not giving you the correct government than what was displayed in the tooltip
                     > Flooding the event option with a list of nothing happen
-                    > Changing the name of all counties of the holder to english ones instead of the one the holder sold you 
+                    > Changing the name of all counties of the holder to english ones instead of the one the holder sold you
             ep3_laamp_decision_event.txt
                 > The first time you enter the barracks as an adventurer, the 6th rule of the fight club is now enforced
                 > Fix AI landless adventurers not visiting settlements
@@ -221,7 +221,7 @@ events
             fp2_struggle_events.txt
                 > Fix fp2_struggle.0003 & fp2_struggle.0004 duplicate top scope (the none one)
                 > Fix fp2_struggle.0501 option A sound effect
-                > Fix fp2_struggle.0900, fp2_struggle.0910, 
+                > Fix fp2_struggle.0900, fp2_struggle.0910,
                 > Fix fp2_struggle.1001 missing alternative_limit that could break the event
                 > Fix fp2_struggle.1010 not ensuring the building with blacksmiths_01 (or higher was in Iberia)
                 > Fix fp2_struggle.1020 logic where AI could select themselves multiple times as event characters
@@ -239,11 +239,11 @@ events
             > Fix a wrong scope used for the gold received for the employer in laamp_base_contract_schemes.2002
             > Fix laamp_base_contract_schemes.3021 balance agent option adding 3 secrecy agent instead of 2 speed & 1 secrecy
             > Fix laamp_base_contract_schemes.3022 not transfering the captive to the contractor
-        
+
         laamp_base_learning_contract_events.txt
             > Fix laamp_base_learning_contract_events.4001 clearing the wrong flag preventing the language option being selectable after the first event
             > Fix 4100_save_background_effect using the wrong scope to check for season
-        
+
         scheme_critical_moments_events.txt
             > Fix scheme_critical_moments.0001 incorrect scheme type selection
             > Misc cleanup of scheme_critical_moments.1174 wild if
@@ -253,7 +253,7 @@ events
             seduce_ongoing_events.txt
                 > Fix seduce_ongoing.1101 checking your char instead of the target for gift
                 > Fix seduce_ongoing.1202 event desc missing a part
-            
+
     siege_events.txt
         > Revert a bug caused by 1.13 patch preventing you to capture people after a siege
         > Fix master of spoils camp officer not increasing the chance to get an artifact after a siege
@@ -277,7 +277,7 @@ events
         yearly_events.txt
             > Add some check to ensure cheating likeliness
         yearly_events_2.txt
-            > Add some check to ensure cheating likeliness in yearly.1001 & yearly.1010 & yearly.1060 / yearly_1060_possible_flirt_trigger & yearly_1060_joker_trigger 
+            > Add some check to ensure cheating likeliness in yearly.1001 & yearly.1010 & yearly.1060 / yearly_1060_possible_flirt_trigger & yearly_1060_joker_trigger
         yearly_events_3.txt
             > Add some check to ensure cheating likeliness
         yearly_events_5.txt

@@ -26,7 +26,7 @@ peasant_faction = {
 	requires_character = no
 
 	is_valid = {
-		has_valid_faction_members_trigger = yes
+		always = yes
 	}
 
 	is_county_valid = {
@@ -38,10 +38,16 @@ peasant_faction = {
 			holder.top_liege = scope:faction.faction_target
 		}
 		trigger_else = { holder = scope:faction.faction_target }
+		title_province = {
+			NOR = {
+				has_holding_type = nomad_holding
+				has_holding_type = herder_holding
+			}
+		}
 	}
 
 	is_character_valid = {
-		always = yes
+		has_valid_faction_members_trigger = yes
 	}
 
 	demand = {
@@ -196,6 +202,22 @@ peasant_faction = {
 				is_ai = no
 			}
 		}
+		modifier = { # Hard
+			desc = "FACTION_REASON_DIFFICULTY_HARD"
+			add = -50
+			has_game_rule = hard_difficulty
+			scope:faction.faction_target = {
+				is_ai = yes
+			}
+		}
+		modifier = { # Very Hard
+			desc = "FACTION_REASON_DIFFICULTY_VERY_HARD"
+			add = -150
+			has_game_rule = very_hard_difficulty
+			scope:faction.faction_target = {
+				is_ai = yes
+			}
+		}
 		
 		modifier = { # Conquerors
 			desc = "NO_FRIVOLOUS_ACTIVITIES_REASON"
@@ -228,6 +250,30 @@ peasant_faction = {
 			desc = "FACTION_REASON_GAME_RULE_REALM_STABILITY_EXTREME"
 			add = -100
 			has_game_rule = extreme_realm_stability
+		}
+		modifier = {
+			desc = "FACTION_REASON_GAME_RULE_REALM_STABILITY_LESSER"
+			add = 25
+			has_game_rule = lesser_realm_stability_ai_only
+			scope:faction.faction_target = {
+				is_ai = yes
+			}
+		}
+		modifier = {
+			desc = "FACTION_REASON_GAME_RULE_REALM_STABILITY_HIGHER"
+			add = -50
+			has_game_rule = higher_realm_stability_ai_only
+			scope:faction.faction_target = {
+				is_ai = yes
+			}
+		}
+		modifier = {
+			desc = "FACTION_REASON_GAME_RULE_REALM_STABILITY_EXTREME"
+			add = -100
+			has_game_rule = extreme_realm_stability_ai_only
+			scope:faction.faction_target = {
+				is_ai = yes
+			}
 		}
 		
 		# Conquerors
@@ -319,7 +365,23 @@ peasant_faction = {
 				is_ai = no
 			}
 		}
-		modifier = { # Very Easy
+		modifier = { # Hard
+			desc = "FACTION_REASON_DIFFICULTY_HARD"
+			add = -50
+			has_game_rule = hard_difficulty
+			scope:target = {
+				is_ai = yes
+			}
+		}
+		modifier = { # Very Hard
+			desc = "FACTION_REASON_DIFFICULTY_VERY_HARD"
+			add = -150
+			has_game_rule = very_hard_difficulty
+			scope:target = {
+				is_ai = yes
+			}
+		}
+		modifier = { # Conquerors
 			add = -150
 			scope:target = {
 				ai_should_get_extreme_conqueror_bonuses = yes
@@ -339,6 +401,31 @@ peasant_faction = {
 		modifier = {
 			add = -100
 			has_game_rule = extreme_realm_stability
+		}
+		
+		modifier = {
+			desc = "FACTION_REASON_GAME_RULE_REALM_STABILITY_LESSER"
+			add = 25
+			has_game_rule = lesser_realm_stability_ai_only
+			scope:target = {
+				is_ai = yes
+			}
+		}
+		modifier = {
+			desc = "FACTION_REASON_GAME_RULE_REALM_STABILITY_HIGHER"
+			add = -50
+			has_game_rule = higher_realm_stability_ai_only
+			scope:target = {
+				is_ai = yes
+			}
+		}
+		modifier = {
+			desc = "FACTION_REASON_GAME_RULE_REALM_STABILITY_EXTREME"
+			add = -100
+			has_game_rule = extreme_realm_stability_ai_only
+			scope:target = {
+				is_ai = yes
+			}
 		}
 		
 		# Conquerors
@@ -368,6 +455,13 @@ peasant_faction = {
 			holder.top_liege = scope:faction.faction_target
 		}
 		trigger_else = { holder = scope:faction.faction_target }
+		
+		title_province = {
+			NOR = {
+				has_holding_type = nomad_holding
+				has_holding_type = herder_holding
+			}
+		}
 	}
 
 	can_county_create = {
@@ -398,6 +492,13 @@ peasant_faction = {
 			text = character_is_immune_to_factions
 			subject = scope:target
 			NOT = { scope:target = { immune_to_factions_trigger = yes } }
+		}
+		
+		title_province = {
+			NOR = {
+				has_holding_type = nomad_holding
+				has_holding_type = herder_holding
+			}
 		}
 	}
 

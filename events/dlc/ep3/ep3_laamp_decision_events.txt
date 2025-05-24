@@ -172,8 +172,12 @@ scripted_trigger 1000_appropriate_visiting_partner_basic_trigger = {
 #Are we not in a city?
 scripted_trigger 1000_is_a_nomadic_holding_trigger = {
 	scope:visiting_location = { 
-		has_holding_type = tribal_holding
-		is_nomadic_location_trigger = yes
+		OR = {
+			has_holding_type = tribal_holding
+			has_holding_type = nomad_holding
+			has_holding_type = herder_holding
+			is_nomadic_location_trigger = yes
+		}
 	}
 }
 
@@ -445,13 +449,25 @@ ep3_laamp_decision_event.1000 = {
 			random_valid = {
 				triggered_desc = { 
 					trigger = { 
-						scope:visiting_location = { has_holding_type = tribal_holding }
+						scope:visiting_location = {
+							OR = {
+								has_holding_type = tribal_holding
+								has_holding_type = nomad_holding
+								has_holding_type = herder_holding
+							}
+						}
 					}
 					desc = ep3_laamp_decision_event.1000.desc_intro_tribal_holding_01
 				}
 				triggered_desc = { 
 					trigger = { 
-						scope:visiting_location = { has_holding_type = tribal_holding }
+						scope:visiting_location = {
+							OR = {
+								has_holding_type = tribal_holding
+								has_holding_type = nomad_holding
+								has_holding_type = herder_holding
+							}
+						}
 					}
 					desc = ep3_laamp_decision_event.1000.desc_intro_tribal_holding_02
 				}
@@ -1045,7 +1061,13 @@ ep3_laamp_decision_event.1000 = {
 		override_background = {
 			trigger = { 
 				1000_time_to_go_home_trigger = yes
-				scope:visiting_location = { has_holding_type = tribal_holding }
+				scope:visiting_location = {
+					OR = {
+						has_holding_type = tribal_holding
+						has_holding_type = nomad_holding
+						has_holding_type = herder_holding
+					}
+				}
 			}
 			reference = bp1_bonfire
 		}
@@ -1062,9 +1084,22 @@ ep3_laamp_decision_event.1000 = {
 		#Tribe Holding
 		override_background = {
 			trigger = { 
-				scope:visiting_location = { has_holding_type = tribal_holding }
+				scope:visiting_location = {
+					has_holding_type = tribal_holding
+				}
 			}
 			reference = terrain_settlement
+		}
+		override_background = {
+			trigger = { 
+				scope:visiting_location = {
+					OR = {
+						has_holding_type = nomad_holding
+						has_holding_type = herder_holding
+					}
+				}
+			}
+			reference = mpo_camp_steppe
 		}
 		#Constantinople
 		override_background = { 
@@ -1156,6 +1191,8 @@ ep3_laamp_decision_event.1000 = {
 		animation = personality_content
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#For loc purposes
 		if = {
 			limit = {
@@ -1728,7 +1765,13 @@ ep3_laamp_decision_event.1001 = {
 			#FIRST TIME
 			triggered_desc = {
 				trigger = {
-					scope:visiting_location = { has_holding_type = tribal_holding }
+					scope:visiting_location = {
+						OR = {
+							has_holding_type = tribal_holding
+							has_holding_type = nomad_holding
+							has_holding_type = herder_holding
+						}
+					}
 					NOT = { exists = scope:been_to_second }
 				}
 				desc = ep3_laamp_decision_event.1001.desc_intro_nomads
@@ -2087,7 +2130,13 @@ ep3_laamp_decision_event.1001 = {
 		override_background = {
 			trigger = { 
 				1000_time_to_go_home_trigger = yes
-				scope:visiting_location = { has_holding_type = tribal_holding }
+				scope:visiting_location = {
+					OR = {
+						has_holding_type = tribal_holding
+						has_holding_type = nomad_holding
+						has_holding_type = herder_holding
+					}
+				}
 			}
 			reference = bp1_bonfire
 		}
@@ -2104,9 +2153,22 @@ ep3_laamp_decision_event.1001 = {
 		#Tribe Holding
 		override_background = {
 			trigger = { 
-				scope:visiting_location = { has_holding_type = tribal_holding }
+				scope:visiting_location = {
+					has_holding_type = tribal_holding
+				}
 			}
 			reference = terrain_settlement
+		}
+		override_background = {
+			trigger = { 
+				scope:visiting_location = {
+					OR = {
+						has_holding_type = nomad_holding
+						has_holding_type = herder_holding
+					}
+				}
+			}
+			reference = mpo_camp_steppe
 		}
 		#Constantinople
 		override_background = { 
@@ -2198,6 +2260,8 @@ ep3_laamp_decision_event.1001 = {
 		animation = personality_rational
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#It just works. (To get the appropriate loc when you snub the artifact vendor at the last minute, then refresh when we exit & re-enter)
 		remove_variable ?= 1021_artifact_sell_screen	
 	}
@@ -3242,7 +3306,13 @@ ep3_laamp_decision_event.1010 = {
 	theme = stewardship
 	override_background = {
 		trigger = {
-			scope:visiting_location = { has_holding_type = tribal_holding }
+			scope:visiting_location = {
+				OR = {
+					has_holding_type = tribal_holding
+					has_holding_type = nomad_holding
+					has_holding_type = herder_holding
+				}
+			}
 		}
 		reference = army_camp
 	}
@@ -3351,6 +3421,8 @@ ep3_laamp_decision_event.1010 = {
 		character = scope:other_parent
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#Find our merchant
 		if = {
 			#Do we already have a merchant?
@@ -4323,6 +4395,8 @@ ep3_laamp_decision_event.1020 = {
 		position = lower_right_portrait
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#Do we have someone more clever in our company?
 		if = {
 			limit = {
@@ -4554,6 +4628,13 @@ ep3_laamp_decision_event.1020 = {
 		if = {
 			limit = { exists = scope:1020_third_artifact_to_sell }
 			custom_tooltip = ep3_laamp_decision_event.1020.a.third_artifact.tt
+		}
+		if = { # Eagle
+			limit = {
+				can_laamp_sell_eagle_trigger = yes
+			}
+			custom_tooltip = ep3_laamp_decision_event.1020.eagle.tt
+			custom_tooltip = ep3_laamp_decision_event.1020.eagle.price_tt
 		}
 		remove_variable ?= 1021_artifact_sell_screen
 		#Go to sell screen
@@ -4888,6 +4969,12 @@ ep3_laamp_decision_event.1021 = {
 			}
 			animation = shame
 		}
+		triggered_animation = {
+			trigger = {
+				can_laamp_sell_eagle_trigger = yes
+			}
+			animation = hunting_falcon #TODO_MPO - Change to eagle
+		}
 		animation = thinking
 	}
 	right_portrait = {
@@ -4912,6 +4999,10 @@ ep3_laamp_decision_event.1021 = {
 		trigger = { exists = scope:1020_third_artifact_to_sell }
 		target = scope:1020_third_artifact_to_sell
 		position = lower_right_portrait
+	}
+	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 	}
 	#Sell artifact #1
 	option = {
@@ -4938,6 +5029,64 @@ ep3_laamp_decision_event.1021 = {
 		scope:1020_third_artifact_to_sell = { ep3_laamp_decision_1021_sell_artifact_effect = yes }
 		#Set correct variables and reroute us to main square
 		1020_sold_artifact_effect = yes
+	}
+	option = {
+		name = ep3_laamp_decision_event.1021.eagle
+		trigger = {
+			can_laamp_sell_eagle_trigger = yes
+		}
+		#Sell eagle :(
+		add_character_flag = is_selling_eagle_flag
+		show_as_tooltip = {
+			sell_eagle_effect = {
+				PRICE = hunting_eagle_sell_value
+				RECIPIENT = scope:laamp_artifact_peddler
+				SELLER = root
+			}
+		}
+
+		#Stress
+		stress_impact = {
+			base = minor_stress_impact_gain
+			greedy = minor_stress_impact_loss
+			callous = minor_stress_impact_loss
+			compassionate = minor_stress_impact_gain
+			loyal = minor_stress_impact_gain
+		}
+
+		#Set correct variables and reroute us to main square
+		1020_sold_artifact_effect = yes
+		
+		ai_chance = {
+			base = 15 # No one is really doing this unless they're giga broke
+			modifier = {
+				factor = 1.7
+				short_term_gold <= 5
+			}
+			modifier = {
+				add = 1.2
+				has_character_modifier = weak_eagle_modifier
+			}
+			modifier = {
+				add = 1.5
+				has_character_modifier = very_weak_eagle_modifier
+			}
+			modifier = {
+				add = 1.5
+				eagle_is_old_trigger = yes
+			}
+			modifier = {
+				add = 0.75
+				OR = {
+					has_character_modifier = strong_eagle_modifier
+					has_eagle_personality_trait_trigger = yes
+				}
+			}
+			ai_value_modifier = {
+				ai_greed = 0.5
+				ai_compassion = -0.5
+			}
+		}
 	}
 	#I've changed my mind
 	option = {
@@ -4990,6 +5139,30 @@ ep3_laamp_decision_event.1021 = {
 		}
 		#What was our last location
 		1000_update_last_location_effect = { LOCATION_FLAG = flag:artifact_peddler }
+		hidden_effect = {
+			# Put eagle selling option on cooldown
+			if = {
+				limit = {
+					has_available_eagle_trigger = yes
+				}
+				add_character_flag = {
+					flag = cant_sell_eagle
+					months = 6
+				} 
+			}
+			# Actually sell the eagle if applicable
+			if = {
+				limit = {
+					has_character_flag = is_selling_eagle_flag
+				}
+				sell_eagle_effect = {
+					PRICE = hunting_eagle_sell_value
+					RECIPIENT = scope:laamp_artifact_peddler
+					SELLER = root
+				}
+				remove_character_flag = is_selling_eagle_flag
+			}
+		}
 	}
 }
 
@@ -6643,7 +6816,13 @@ ep3_laamp_decision_event.1025 = {
 			random_valid = {
 				triggered_desc = { 
 					trigger = {
-						scope:visiting_location = { has_holding_type = tribal_holding }
+						scope:visiting_location = {
+							OR = {
+								has_holding_type = tribal_holding
+								has_holding_type = nomad_holding
+								has_holding_type = herder_holding
+							}
+						}
 						exists = scope:been_to_contract
 						scope:contract_loc_tracker ?= 0
 						OR = {
@@ -6656,7 +6835,13 @@ ep3_laamp_decision_event.1025 = {
 				}
 				triggered_desc = { 
 					trigger = {
-						scope:visiting_location = { has_holding_type = tribal_holding }
+						scope:visiting_location = {
+							OR = {
+								has_holding_type = tribal_holding
+								has_holding_type = nomad_holding
+								has_holding_type = herder_holding
+							}
+						}
 						scope:contract_loc_tracker ?= 1
 						OR = {
 							scope:1025_first_contract ?= flag:legendary_contract
@@ -6697,7 +6882,13 @@ ep3_laamp_decision_event.1025 = {
 			random_valid = {
 				triggered_desc = { 
 					trigger = {
-						scope:visiting_location = { has_holding_type = tribal_holding }
+						scope:visiting_location = {
+							OR = {
+								has_holding_type = tribal_holding
+								has_holding_type = nomad_holding
+								has_holding_type = herder_holding
+							}
+						}
 						exists = scope:been_to_contract
 						scope:contract_loc_tracker ?= 0
 					}
@@ -6705,7 +6896,13 @@ ep3_laamp_decision_event.1025 = {
 				}
 				triggered_desc = { 
 					trigger = {
-						scope:visiting_location = { has_holding_type = tribal_holding }
+						scope:visiting_location = {
+							OR = {
+								has_holding_type = tribal_holding
+								has_holding_type = nomad_holding
+								has_holding_type = herder_holding
+							}
+						}
 						scope:contract_loc_tracker ?= 1 
 					}
 					desc = ep3_laamp_decision_event.1025.desc_tribal_returned_02
@@ -6728,7 +6925,13 @@ ep3_laamp_decision_event.1025 = {
 			#FIRST TIME: Tribal - Legendary contract - Reused Elder
 			triggered_desc = {
 				trigger = {
-					scope:visiting_location = { has_holding_type = tribal_holding }
+					scope:visiting_location = {
+						OR = {
+							has_holding_type = tribal_holding
+							has_holding_type = nomad_holding
+							has_holding_type = herder_holding
+						}
+					}
 					exists = scope:laamp_recurring_town_crier
 					NOR = { 
 						exists = scope:been_to_contract
@@ -6761,7 +6964,13 @@ ep3_laamp_decision_event.1025 = {
 			#FIRST TIME: Tribal - Legendary contract
 			triggered_desc = {
 				trigger = {
-					scope:visiting_location = { has_holding_type = tribal_holding }
+					scope:visiting_location = {
+						OR = {
+							has_holding_type = tribal_holding
+							has_holding_type = nomad_holding
+							has_holding_type = herder_holding
+						}
+					}
 					NOR = { 
 						exists = scope:been_to_contract
 						has_variable = 1025_has_contracted_recently
@@ -6792,7 +7001,13 @@ ep3_laamp_decision_event.1025 = {
 			#FIRST TIME: Tribal - No legendary contract - Reused Town Crier
 			triggered_desc = {
 				trigger = {
-					scope:visiting_location = { has_holding_type = tribal_holding }
+					scope:visiting_location = {
+						OR = {
+							has_holding_type = tribal_holding
+							has_holding_type = nomad_holding
+							has_holding_type = herder_holding
+						}
+					}
 					exists = scope:laamp_recurring_town_crier
 					NOR = { 
 						exists = scope:been_to_contract
@@ -6815,7 +7030,13 @@ ep3_laamp_decision_event.1025 = {
 			#FIRST TIME: Tribal - No legendary contract
 			triggered_desc = {
 				trigger = {
-					scope:visiting_location = { has_holding_type = tribal_holding }
+					scope:visiting_location = {
+						OR = {
+							has_holding_type = tribal_holding
+							has_holding_type = nomad_holding
+							has_holding_type = herder_holding
+						}
+					}
 					NOR = { 
 						exists = scope:been_to_contract
 						has_variable = 1025_has_contracted_recently
@@ -6909,7 +7130,7 @@ ep3_laamp_decision_event.1025 = {
 	override_sound = { reference = "event:/SFX/Events/Themes/sfx_event_theme_type_activity" }
 	override_background = {
 		trigger = { 1000_is_a_nomadic_holding_trigger = yes }
-		reference = terrain_settlement_no_owner
+		reference = mpo_camp_steppe
 	}
 	override_background = { reference = garden_location }
 	left_portrait = {
@@ -6934,6 +7155,8 @@ ep3_laamp_decision_event.1025 = {
 		animation = debating
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#Can we _not_ repeat the loc?
 		1025_set_and_check_scene_loc_tracker_scope_effect = { SCENE = contract }
 		#Run all of this once
@@ -6964,7 +7187,13 @@ ep3_laamp_decision_event.1025 = {
 					#_Elder_
 					trigger_if = {
 						limit = { 
-							scope:visiting_location = { has_holding_type = tribal_holding }
+							scope:visiting_location = {
+								OR = {
+									has_holding_type = tribal_holding
+									has_holding_type = nomad_holding
+									has_holding_type = herder_holding
+								}
+							}
 						}
 						age >= 50
 					}
@@ -6987,7 +7216,13 @@ ep3_laamp_decision_event.1025 = {
 						#_Elder_
 						trigger_if = {
 							limit = { 
-								scope:visiting_location = { has_holding_type = tribal_holding }
+								scope:visiting_location = {
+									OR = {
+										has_holding_type = tribal_holding
+										has_holding_type = nomad_holding
+										has_holding_type = herder_holding
+									}
+								}
 							}
 							age >= 50
 						}
@@ -7003,7 +7238,13 @@ ep3_laamp_decision_event.1025 = {
 				#Create Elder to stuff in pool
 				if = {
 					limit = { 
-						scope:visiting_location = { has_holding_type = tribal_holding }
+						scope:visiting_location = {
+							OR = {
+								has_holding_type = tribal_holding
+								has_holding_type = nomad_holding
+								has_holding_type = herder_holding
+							}
+						}
 					}
 					create_character = {
 						template = generic_peasant_character
@@ -7633,13 +7874,15 @@ ep3_laamp_decision_event.1030 = {
 	override_icon = { reference = "gfx/interface/icons/event_types/type_travel_stewardship.dds" }
 	override_background = {
 		trigger = { 1000_is_a_nomadic_holding_trigger = yes }
-		reference = throne_room_tribal #Give me other variations - like a yurt - and I'll use a yurt. Otherwise you get a tent.
+		reference = mpo_tent_interior_mongol
 	}
 	override_background = {
 		trigger = { 
-			scope:visiting_location = { has_holding_type = tribal_holding } 
+			scope:visiting_location = {
+				has_holding_type = tribal_holding
+			} 
 		}
-		reference = western_tavern
+		reference = throne_room_tribal
 	}
 	override_background = { reference = tavern }
 	#PARTNER / ROOT
@@ -7883,6 +8126,8 @@ ep3_laamp_decision_event.1030 = {
 		character = scope:1030_fifth_character
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#Set up the ancillary portraits to remind the player of the characters
 		if = {
 			#Hood _and_ Spouse exists
@@ -8336,7 +8581,13 @@ ep3_laamp_decision_event.1030 = {
 				25 = {
 					#More common in Tribal/No Settlement
 					modifier = { 
-						scope:visiting_location = { has_holding_type = tribal_holding }
+						scope:visiting_location = {
+							OR = {
+								has_holding_type = tribal_holding
+								has_holding_type = nomad_holding
+								has_holding_type = herder_holding
+							}
+						}
 						factor = 2
 					}
 					#Has this person been our thief in the past 10 years?
@@ -9210,7 +9461,13 @@ ep3_laamp_decision_event.1031 = {
 	}
 	override_background = {
 		trigger = { 
-			scope:visiting_location = { has_holding_type = tribal_holding } 
+			scope:visiting_location = {
+				OR = {
+					has_holding_type = tribal_holding
+					has_holding_type = nomad_holding
+					has_holding_type = herder_holding
+				}
+			} 
 		}
 		reference = bp1_kitchen_western
 	}
@@ -9242,6 +9499,8 @@ ep3_laamp_decision_event.1031 = {
 		animation = storyteller
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#Can we _not_ repeat the loc?
 		if = {
 			limit = { has_variable = 1031_saved_storyteller_state }
@@ -9480,6 +9739,13 @@ ep3_laamp_decision_event.1031 = {
 		}
 		#Chance to boost your lowest skill
 		1031_boost_lowest_skill_effect = yes
+		if = {
+			limit = {
+				has_trait = zealous
+				NOT = { has_trait = eccentric }
+			}
+			stress_impact = { zealous = miniscule_stress_impact_gain }
+		}
 		#Set the variables and redirect us back to the tavern main room
 		1031_storied_effect = yes
 		ai_chance = {
@@ -9525,7 +9791,17 @@ ep3_laamp_decision_event.1031 = {
 				always = yes
 			}
 		}
-		show_as_unavailable = { always = yes }
+		show_as_unavailable = {
+			#Hide if what you're missing is a trait
+			trigger_if = {
+				limit = { 
+					has_trait = zealous
+					NOT = { has_trait = eccentric }
+				}
+				always = no
+			}
+			trigger_else = { always = yes }	
+		}
 		#Strongarm it
 		if = {
 			limit = { 1031_is_max_witty_trigger = yes }
@@ -9680,7 +9956,13 @@ scripted_effect 1033_generate_character_effect = {
 		10 = {
 			#Some variation
 			modifier = {
-				scope:visiting_location = { has_holding_type = tribal_holding }
+				scope:visiting_location = {
+					OR = {
+						has_holding_type = tribal_holding
+						has_holding_type = nomad_holding
+						has_holding_type = herder_holding
+					}
+				}
 				factor = 2
 			}
 			create_character = {
@@ -9728,7 +10010,13 @@ scripted_effect 1033_generate_character_effect = {
 		#Intrigue
 		10 = {
 			modifier = {
-				scope:visiting_location = { has_holding_type = tribal_holding }
+				scope:visiting_location = {
+					OR = {
+						has_holding_type = tribal_holding
+						has_holding_type = nomad_holding
+						has_holding_type = herder_holding
+					}
+				}
 				factor = 2
 			}
 			create_character = {
@@ -9760,7 +10048,13 @@ scripted_effect 1033_generate_character_effect = {
 		#... witch
 		5 = {
 			modifier = {
-				scope:visiting_location = { has_holding_type = tribal_holding }
+				scope:visiting_location = {
+					OR = {
+						has_holding_type = tribal_holding
+						has_holding_type = nomad_holding
+						has_holding_type = herder_holding
+					}
+				}
 				factor = 2
 			}
 			create_character = {
@@ -9889,46 +10183,52 @@ scripted_effect 1033_set_cost_effect = {
 		}
 	}
 	save_scope_value_as = {
-		name = $VALUE_NAME$
-		value = {
-			integer_range = {
-			    min = medium_gold_laamps_value
-			    max = major_gold_laamps_value
-			}
-			#Cheaper out in the wilds
-			if = {
-				limit = { 
-					scope:visiting_location = { has_holding_type = tribal_holding }
-				}
-				multiply = 0.6
-			}
-			if = { #They're stellar? More expensive. :elmofire:
-				limit = { scope:$VALUE_NAME$_sum_skills >= 120 } #Good in all skills?
-				multiply = 8 #20 in all skills
-			}
-			else_if = {
-				limit = { scope:$VALUE_NAME$_sum_skills >= 100 } #Good in four skills?
-				multiply = 5
-			}
-			else_if = {
-				limit = { scope:$VALUE_NAME$_sum_skills >= 80 } #Good in three skills?
-				multiply = 4
-			}
-			else_if = {
-				limit = { scope:$VALUE_NAME$_sum_skills >= 60 } #Good in two skills?
-				multiply = 3
-			}
-			else_if = {
-				limit = { scope:$VALUE_NAME$_sum_skills >= 40 } #Good in one-and-a-half skill? Should be roughly 90-110 gold
-				multiply = 2.5
-			}
-			else_if = {
-				limit = { scope:$VALUE_NAME$_sum_skills >= 20 } #Good in one skill?
-				multiply = 1.5
-			}
-			#Add perk discounts and other things here.
-		}
-	}
+        name = $VALUE_NAME$
+        value = {
+            integer_range = {
+                min = medium_gold_laamps_value
+                max = major_gold_laamps_value
+            }
+            #Cheaper out in the wilds
+            if = {
+                limit = { 
+                    scope:visiting_location = {
+						OR = {
+							has_holding_type = tribal_holding
+							has_holding_type = nomad_holding
+							has_holding_type = herder_holding
+						}
+					}
+                }
+                multiply = 0.6
+            }
+            if = { #They're stellar? More expensive. :elmofire:
+                limit = { scope:$VALUE_NAME$_sum_skills >= 120 } #Good in all skills?
+                multiply = 8 #20 in all skills
+            }
+            else_if = {
+                limit = { scope:$VALUE_NAME$_sum_skills >= 100 } #Good in four skills?
+                multiply = 5
+            }
+            else_if = {
+                limit = { scope:$VALUE_NAME$_sum_skills >= 80 } #Good in three skills?
+                multiply = 4
+            }
+            else_if = {
+                limit = { scope:$VALUE_NAME$_sum_skills >= 60 } #Good in two skills?
+                multiply = 3
+            }
+            else_if = {
+                limit = { scope:$VALUE_NAME$_sum_skills >= 40 } #Good in one-and-a-half skill? Should be roughly 90-110 gold
+                multiply = 2.5
+            }
+            else_if = {
+                limit = { scope:$VALUE_NAME$_sum_skills >= 20 } #Good in one skill?
+                multiply = 1.5
+            }
+            #Add perk discounts and other things here.
+        }
+    }
 }
 
 #This is a remotely interesting character
@@ -10188,6 +10488,8 @@ ep3_laamp_decision_event.1033 = {
 		animation = scheme
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#For the background
 		scope:visiting_location.county.holder = { save_scope_as = bg_override_char }
 		#Can we _not_ repeat the loc?
@@ -10292,9 +10594,9 @@ ep3_laamp_decision_event.1033 = {
 							    		#Create a victim to kill
 								    	create_character = {
 											template = generic_peasant_character
-											culture = scope:visiting_location.culture
-											faith = scope:visiting_location.faith
-											location = scope:visiting_location
+											culture = scope:visiting_location.culture #Unop Use correct scope
+											faith = scope:visiting_location.faith #Unop Use correct scope
+											location = scope:visiting_location #Unop Use correct scope
 											after_creation = { set_to_lowborn = yes }
 											save_scope_as = 1030_previous_victim
 										}
@@ -10632,7 +10934,13 @@ ep3_laamp_decision_event.1035 = {
 	}
 	override_background = {
 		trigger = { 
-			scope:visiting_location = { has_holding_type = tribal_holding } 
+			scope:visiting_location = {
+				OR = {
+					has_holding_type = tribal_holding
+					has_holding_type = nomad_holding
+					has_holding_type = herder_holding
+				}
+			} 
 		}
 		reference = western_tavern
 	}
@@ -10664,6 +10972,8 @@ ep3_laamp_decision_event.1035 = {
 		animation = personality_cynical
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#Run this once: Re-save the portrait so the Spouse is not the 1030_second_character / 1030_third_character
 		if = {
 			limit = { scope:1030_second_character ?= scope:laamp_spouse_material }
@@ -11613,6 +11923,8 @@ ep3_laamp_decision_event.1037 = {
 		animation = chess_cocky
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#Run this once: Re-save the portrait so the Hood is not the 1030_third_character
 		if = {
 			limit = { scope:1030_third_character ?= scope:laamp_hooded_figure }
@@ -11707,7 +12019,13 @@ ep3_laamp_decision_event.1037 = {
 					#Go outside of the city to drink, eh
 					if = {
 						limit = {
-							scope:visiting_location = { has_holding_type = tribal_holding }
+							scope:visiting_location = {
+								OR = {
+									has_holding_type = tribal_holding
+									has_holding_type = nomad_holding
+									has_holding_type = herder_holding
+								}
+							}
 						}
 						multiply = 0.5
 					}
@@ -12476,6 +12794,8 @@ ep3_laamp_decision_event.1040 = {
 		character = scope:1040_fifth_character
 	}	
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#Set up the ancillary portraits to remind the player of the characters
 		if = {
 			#Physician exists
@@ -13394,6 +13714,8 @@ ep3_laamp_decision_event.1041 = {
 		position = lower_right_portrait
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#Can we _not_ repeat the loc?
 		1025_set_and_check_scene_loc_tracker_scope_effect = { SCENE = healer }
 		#Find our healer
@@ -13896,6 +14218,8 @@ ep3_laamp_decision_event.1043 = {
 		animation = personality_forgiving
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#For the background
 		scope:visiting_location.county.holder = { save_scope_as = bg_override_char }
 		#Can we _not_ repeat the loc?
@@ -14469,6 +14793,8 @@ ep3_laamp_decision_event.1044 = {
 		character = scope:visiting_partner
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		hidden_effect = {
 			scope:laamp_clergy_character = {
 				if = {
@@ -14702,6 +15028,8 @@ ep3_laamp_decision_event.1045 = {
 		animation = thinking
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#For the background
 		scope:visiting_location.county.holder = { save_scope_as = bg_override_char }
 		#Can we _not_ repeat the loc?
@@ -15056,6 +15384,8 @@ ep3_laamp_decision_event.1047 = {
 		animation = reading
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#Run this once: Re-save the portrait so the Physician is not the 1040_third_character (since they narratively moved to their study)
 		if = {
 			limit = { scope:1040_third_character = scope:laamp_physician_recruit }
@@ -15477,6 +15807,8 @@ ep3_laamp_decision_event.1050 = {
 		character = scope:1050_fourth_character
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#Set up the ancillary portraits to remind the player of the characters
 		if = {
 			#Bodyguard exists
@@ -16116,6 +16448,8 @@ ep3_laamp_decision_event.1051 = {
 		animation = disapproval
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#Can we _not_ repeat the loc?
 		1025_set_and_check_scene_loc_tracker_scope_effect = { SCENE = training }
 		#Find our potential Master of Arms (MoA) character
@@ -16511,6 +16845,8 @@ ep3_laamp_decision_event.1053 = {
 		animation = disapproval
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#Can we _not_ repeat the loc?
 		1025_set_and_check_scene_loc_tracker_scope_effect = { SCENE = garrison }
 		#Find our garrison guards
@@ -16547,7 +16883,7 @@ ep3_laamp_decision_event.1053 = {
 			random_pool_character = {
 				province = scope:visiting_location
 				limit = { 1053_random_martial_character_trigger = yes }
-				save_scope_as = laamp_talented_guard # Fix: Save correct scope
+				save_scope_as = laamp_talented_guard # Unop: Save correct scope
 			}
 			#Otherwise create a suiting talented guard
 			if = {
@@ -16595,6 +16931,7 @@ ep3_laamp_decision_event.1053 = {
 			}
 		}
 
+		#Unop Remove their shirts and hats
 		if = { # The first time you go to the garrison, the desc is telling that they are brawling
 			limit = {
 				NOT = { exists = scope:been_to_garrison }
@@ -16729,6 +17066,7 @@ ep3_laamp_decision_event.1053 = {
 		#What was our last location
 		1000_update_last_location_effect = { LOCATION_FLAG = flag:garrison }
 
+		#Unop Put their shirts and hats back on
 		scope:laamp_plain_guard ?= {
 			if = { 
 				limit = { has_character_flag = single_combat_stripped_to_waist }
@@ -16973,6 +17311,8 @@ ep3_laamp_decision_event.1055 = {
 		reference = legend_glow
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#Can we _not_ repeat the loc?
 		1025_set_and_check_scene_loc_tracker_scope_effect = { SCENE = reinforcers }
 		#Find a spokesperson
@@ -17293,6 +17633,8 @@ ep3_laamp_decision_event.1057 = {
 		animation = disappointed
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#Run this once: Re-save the portrait so the Bodyguard is not the 1050_third_character (since they narratively moved to the alley)
 		if = {
 			limit = { scope:1050_third_character = scope:laamp_bodyguard_recruit }
@@ -17727,6 +18069,8 @@ ep3_laamp_decision_event.1060 = {
 		character = scope:1060_sixth_character
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#Can we _not_ repeat the loc?
 		1025_set_and_check_hub_loc_tracker_scope_effect = { HUB = craftsmen }
 		#Find our weaponsmith
@@ -18514,6 +18858,8 @@ ep3_laamp_decision_event.1061 = {
 		position = lower_right_portrait
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		location.province_owner = { save_scope_as = bg_override_char }
 		#Can we _not_ repeat the loc?
 		1025_set_and_check_scene_loc_tracker_scope_effect = { SCENE = weaponsmith }
@@ -18795,6 +19141,8 @@ ep3_laamp_decision_event.1063 = {
 		position = lower_right_portrait
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		location.province_owner = { save_scope_as = bg_override_char }
 		#Can we _not_ repeat the loc?
 		1025_set_and_check_scene_loc_tracker_scope_effect = { SCENE = armorer }
@@ -19167,6 +19515,8 @@ ep3_laamp_decision_event.1065 = {
 		position = lower_right_portrait
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		location.province_owner = { save_scope_as = bg_override_char }
 		#Can we _not_ repeat the loc?
 		1025_set_and_check_scene_loc_tracker_scope_effect = { SCENE = jeweler }
@@ -19488,6 +19838,8 @@ ep3_laamp_decision_event.1067 = {
 		animation = drink_goblet
 	}
 	immediate = {
+		#To prevent the character, for whatever reason, managing to not have the variable be removed when exiting VS
+		temporarily_lock_visit_settlement_effect = yes
 		#Run this once: Re-save the portrait so the Quartermaster is not the 1060_third_character (since they narratively moved to the tavern)
 		if = {
 			limit = { scope:1060_third_character = scope:laamp_quartermaster_recruit }
@@ -20663,7 +21015,7 @@ ep3_laamp_decision_event.1133 = { #get a mill
 		add_character_flag = laamp_city_builder_mill
 		show_as_tooltip = {
 			scope:city_location = {
-				add_building = watermills_01
+				add_building = watermills_02 #Unop: laamp_city_builder_construction_effect is building the _02 building not _01
 			}
 		}
 		remove_short_term_gold = 80
@@ -20846,12 +21198,19 @@ ep3_laamp_decision_event.1135 = { #argue for more favorable land assigment from 
 		}
 	}
 
+	on_trigger_fail = { #Unop: Added the missing event trigger in the chain
+		trigger_event = {
+			id = ep3_laamp_decision_event.1136
+			months = { 4 6 }
+		}
+	}
+
 	option = { #cool
 		name = ep3_laamp_decision_event.1135.a
 		add_character_flag = laamp_city_builder_manor
 		show_as_tooltip = {
 			scope:city_location = {
-				add_building = farm_estates_01
+				add_building = farm_estates_02 #Unop: laamp_city_builder_construction_effect is building the _02 building not _01
 			}
 		}
 		pay_short_term_gold = {
@@ -20891,7 +21250,13 @@ ep3_laamp_decision_event.1135 = { #argue for more favorable land assigment from 
 			base = 0
 		}
 	}
-	
+
+	after = {
+		trigger_event = {
+			id = ep3_laamp_decision_event.1136
+			months = { 4 6 }
+		}
+	}
 }
 
 ep3_laamp_decision_event.1136 = { #utilize connections, get guildhall
@@ -20933,7 +21298,7 @@ ep3_laamp_decision_event.1136 = { #utilize connections, get guildhall
 		add_character_flag = laamp_city_builder_guilds
 		show_as_tooltip = {
 			scope:city_location = {
-				add_building = guild_halls_01
+				add_building = guild_halls_02 #Unop: laamp_city_builder_construction_effect is building the _02 building not _01
 			}
 		}
 		add_prestige = -400
@@ -21008,7 +21373,7 @@ ep3_laamp_decision_event.1137 = { #utilize connections, get prayer hall
 		add_character_flag = laamp_city_builder_prayer_hall
 		show_as_tooltip = {
 			scope:city_location = {
-				add_building = monastic_schools_01
+				add_building = monastic_schools_02 #Unop: laamp_city_builder_construction_effect is building the _02 building not _01
 			}
 		}
 		add_piety = -400

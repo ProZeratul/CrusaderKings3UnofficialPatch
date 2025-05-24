@@ -61,7 +61,7 @@ scripted_trigger ep3_laamp_conquest_title_trigger = {
 		recent_history = { type = conquest_claim days = 1 }
 		recent_history = { type = conquest_populist days = 1 }
 	}
-	previous_holder = root
+	previous_holder ?= scope:adventurer
 }
 
 # Conquest loser event
@@ -206,23 +206,20 @@ ep3_laamps.0002 = {
 		save_scope_as = adventurer
 		# AI chance
 		if = {
-			limit = { is_ai = yes }
-			if = {
-				limit = { highest_held_title_tier <= tier_barony }
-				save_scope_as = baron_blocker
+			limit = {
+				is_ai = yes
+				ai_can_valid_to_create_laamp_trigger = yes
 			}
 			if = {
 				limit = { is_landed = yes }
 				depose = yes
 			}
-			if = {
-				limit = {
-					ai_can_valid_to_create_laamp_trigger = yes
-					NOT = { exists = scope:baron_blocker }
+			save_scope_value_as = {
+				name = ai_laamp_chance
+				value = ep3_laamp_chance_score_value
 				}
 				random = {
-					chance = 0
-					modifier = { add = ep3_laamp_chance_score_value }
+				chance = scope:ai_laamp_chance
 					# Plus for our memory variable.
 					ordered_in_list = {
 						list = target_titles
@@ -246,12 +243,11 @@ ep3_laamps.0002 = {
 					scope:winner = { trigger_event = ep3_laamps.0003 }
 				}
 			}
-		}
 		# Player event
 		else = {
 			if = {
 				limit = {
-					scope:attacker = {
+					scope:new_holder ?= {
 						any_held_title = { ep3_laamp_conquest_title_trigger = yes }
 					}
 				}
@@ -1056,7 +1052,10 @@ ep3_laamps.0030 = {
 		# Transfer landed titles
 		every_held_title = {
 			limit = {
-				is_landless_type_title = no
+				OR = {
+					is_landless_type_title = no
+					is_nomad_title = yes
+				}
 				tier > tier_barony
 			}
 			add_to_list = target_titles
@@ -1621,8 +1620,8 @@ ep3_laamps.0100 = {
 		}
 	}
 
+	#Unop Finally, courtiers are sometimes going walk about, so make sure they're all in the right spot.
 	after = {
-		# Finally, courtiers are sometimes going walk about, so make sure they're all in the right spot.
 		hidden_effect = {
 			every_courtier = { set_location_to_default = yes }
 			every_prisoner = { set_location_to_default = yes }
@@ -5957,7 +5956,7 @@ ep3_laamps.5030 = {
 			}
 		}
 
-		reason = unop_house_known
+		reason = unop_house_known #Unop
 
 		flavor = ep3_laamps.5030.b.tt
 
@@ -6716,6 +6715,7 @@ ep3_laamps.5045 = {
 					highest_held_title_tier > tier_duchy
 					any_held_title = {
 						tier = tier_county
+						is_landless_type_title = no
 						count >= 1
 					}
 				}
@@ -6725,6 +6725,7 @@ ep3_laamps.5045 = {
 					limit = {
 						tier = tier_county
 						holder = scope:local_lord
+						is_landless_type_title = no
 					}
 					#Least developed county as a rough approximation of backwaters
 					order_by = {
@@ -7809,7 +7810,11 @@ ep3_laamps.6016 = {
 				trigger_event = ep3_laamps.6021
 			}
 		}
-
+		if = {
+			limit = {
+				exists = domicile
+				location != domicile.domicile_location
+			}
 		start_travel_plan = {
 			destination = root.domicile.domicile_location
 			players_use_planner = no
@@ -7819,6 +7824,7 @@ ep3_laamps.6016 = {
 			return_trip = no # One way
 		}
 	}
+}
 }
 
 # The Harrying of the North begins
@@ -8151,17 +8157,19 @@ ep3_laamps.7001 = {
 
 		ep3_increase_resistance_effect = { AMOUNT = harrying_medium_increase_value }
 
-		random = {
-			chance = {
-				value = 5
-				if = {
-					limit = { is_ai = no }
-					add = 95
+		hidden_effect = { #Unop: So it's not displayed an empty 100% chance of nothing
+			random = {
+				chance = {
+					value = 5
+					if = {
+						limit = { is_ai = no }
+						add = 95
+					}
 				}
-			}
-			trigger_event = {
-				id = ep3_laamps.7002
-				days = { 150 200 }
+				trigger_event = {
+					id = ep3_laamps.7002
+					days = { 150 200 }
+				}
 			}
 		}
 
@@ -8622,28 +8630,41 @@ ep3_laamps.7004 = {
 	}
 
 	immediate = {
-		scope:zichia.holder.top_liege = {
-			save_scope_as = title_holder
+		if = {
+			limit = {
+				scope:zichia.holder.top_liege = {
+					government_has_flag = government_is_herder 
+				}
+			}
+			scope:zichia.holder.suzerain = {
+				save_scope_as = title_holder
+			}
+		}
+		else = {
+			scope:zichia.holder.top_liege = {
+				save_scope_as = title_holder
+			}
 		}
 		hidden_effect = {
 			add_unpressed_claim = title:c_zichia
 		}
 		title:c_zichia = {
 			add_to_list = landed_titles
-			add_to_list = purchased_titles
+			add_to_list = purchased_titles #Unop
 		}
 		scope:zichia = {
 			every_county_province = { # Unop: So only the baronnies in the county we purchase are renamed.
 				barony = { add_to_list = zichia_names }
 			}
 		}
+		root = { save_scope_as = actor }
+		scope:title_holder = { save_scope_as = recipient }
 	}
 
 	option = { #OK, I'll pay
 		name = ep3_laamps.7004.a
-		# Unop: Setup all required scope for the purchase land effect
-		root = { save_scope_as = actor }
-		scope:target.holder = { save_scope_as = recipient }
+		#Unop: Heavilly reworked this option to use the dedicated "purchase_land_interaction_effect" that handle all cases that this option is doing. Also the tooltip option is now reliable & clean.
+
 		#scope:landed_titles = { save_scope_as = purchased_titles }
 		scope:zichia = { save_scope_as = new_primary_title }
 		save_scope_value_as = {
@@ -8669,10 +8690,12 @@ ep3_laamps.7004 = {
 		}
 
 		# Unop: Will be handled by the effect
-		#pay_short_term_gold = {
-		#	target = scope:title_holder
-		#	gold = 100
-		#}
+		show_as_tooltip = {
+			pay_short_term_gold = {
+				target = scope:recipient
+				gold = 100
+			}
+		}
 
 		# Unop: Will handled by the effect
 		#hidden_effect = { #For tooltip reasons
@@ -8696,6 +8719,12 @@ ep3_laamps.7004 = {
 				save_scope_as = new_liege #Unop: So we actually become a vassal of the holder.
 				switch = {
 					trigger = government_has_flag
+					government_is_nomadic = {
+						root = { change_government = nomad_government }
+					}
+					government_is_herder = {
+						root = { change_government = nomad_government }
+					}
 					government_is_administrative = {
 						root = { change_government = administrative_government }
 					}
@@ -8712,24 +8741,61 @@ ep3_laamps.7004 = {
 			}
 		}
 
+		hidden_effect = {
+			## Nomad.
+			if = {
+				limit = {
+					OR = {
+						government_has_flag = government_is_nomadic
+						scope:new_liege ?= { government_has_flag = government_is_nomadic }
+						scope:new_liege ?= { government_has_flag = government_is_herder }
+						scope:old_government ?= flag:nomad
+						scope:new_capital.title_province = { #Unop ck3-tiger
+							OR = {
+								has_holding_type = nomad_holding
+								has_holding_type = herder_holding
+							}
+						}
+					}
+				}
+				change_government = nomad_government
+			}
+			## Administrative.
+			else_if = {
+				limit = {
+					scope:new_liege ?= { government_has_flag = government_is_administrative }
+				}
+				change_government = administrative_government
+			}
+			## Clan.
+			else_if = {
+				limit = {
+					scope:new_liege ?= { government_has_flag = government_is_clan }
+				}
+				change_government = clan_government
+			}
+			## Tribal.
+			else_if = {
+				limit = {
+					scope:new_liege ?= { government_has_flag = government_is_tribal }
+				}
+				change_government = tribal_government
+			}
+			## Else feudal.
+			else = { change_government = feudal_government }
+		}
+
 		scope:zichia = {
-			custom_tooltip = {
+			custom_tooltip = { #Unop Add tooltip
 				text = unop.7004
 				set_title_name = c_new_england
 			}
 			set_color_from_title = title:k_england
 		}
 
-		hidden_effect = {
-			every_in_list = {
-				list = zichia_names
-				new_england_holding_names_effect = yes
-			}
-		}
-
 		stress_impact = {
 			ambitious = minor_stress_impact_loss
-			greedy = minor_stress_impact_gain #Unop: Changed to minor since purchase_land_interaction_effect is already applying a stress effect
+			greedy = minor_stress_impact_gain #Unop: Changed to minor since purchase_land_interaction_effect is already applying a minor stress effect (so in the end it's the same as before)
 		}
 
 		ai_chance = { #50% chance for AI

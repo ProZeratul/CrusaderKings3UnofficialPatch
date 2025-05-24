@@ -4,7 +4,10 @@
 
 building_requirement_tribal = {
 	scope:holder ?= {
-		government_has_flag = government_is_tribal
+		OR = {
+			government_has_flag = government_is_tribal
+			government_has_flag = government_is_nomadic
+		}
 	}
 }
 
@@ -13,6 +16,38 @@ building_requirement_tribal_holding_in_county = {
 		county = {
 			any_county_province = {
 				has_holding_type = tribal_holding
+			}
+		}
+	}
+}
+
+building_requirement_nomad = {
+	scope:holder ?= {
+		government_has_flag = government_is_nomadic
+	}
+}
+
+building_requirement_nomad_holding_in_county = {
+	NOT = {
+		county = {
+			any_county_province = {
+				has_holding_type = nomad_holding
+			}
+		}
+	}
+}
+
+building_requirement_herder = {
+	scope:holder ?= {
+		government_has_flag = government_is_herder
+	}
+}
+
+building_requirement_herder_holding_in_county = {
+	NOT = {
+		county = {
+			any_county_province = {
+				has_holding_type = herder_holding
 			}
 		}
 	}
@@ -260,7 +295,10 @@ building_hill_farms_requirement_terrain = {
 
 building_elephant_pens_requirement_terrain = {
 	terrain = jungle
-	geographical_region = world_innovation_elephants
+	OR = {
+		geographical_region = world_innovation_elephants
+		culture = { has_cultural_parameter = elephant_pens_building_bonuses }
+	}
 }
 
 building_horse_pastures_requirement_terrain = {
@@ -283,7 +321,7 @@ building_quarries_requirement_terrain = {
 	OR = {
 		terrain = mountains
 		terrain = desert_mountains
-		culture = { has_cultural_parameter = can_build_quarries_in_hills } #Unop: This have been changed to allow build quarries EVERYWHERE instead but they kept the in_hills suffix
+		culture = { has_cultural_parameter = can_build_quarries_everywhere }
 	}
 }
 
@@ -439,6 +477,7 @@ has_any_special_mine_trigger = {
 		has_building_or_higher = nishapur_mines_01
 		has_building_or_higher = srebrenica_mines_01
 		has_building_or_higher = ratnapura_mines_01
+		has_building_or_higher = sar_i_sang_mines_01 #Unop This mine was missing
 	}
 }
 
@@ -634,6 +673,7 @@ islamic_special_building_trigger = {
 		has_building = hagia_sophia_02
 		has_building = the_friday_mosque_01 # shared zoroastrian
 		has_building = holy_site_great_mosque_of_cordoba_01 # shared christian
+		has_building_or_higher = damascus_mosque_01
 	}
 }
 
@@ -647,6 +687,11 @@ christian_special_building_trigger = {
 		has_building = temple_of_uppsala_02
 		has_building = lund_cathedral_01
 		has_building = holy_site_great_mosque_of_cordoba_01 # shared muslim
+		has_building_or_higher = cluny_abbey_01
+		has_building_or_higher = beta_giyorgis_01
+		has_building_or_higher = holy_wisdom_01
+		has_building_or_higher = duomo_florence_01
+		has_building_or_higher = wawel_cathedral_01
 	}
 }
 
@@ -657,6 +702,9 @@ eastern_special_building_trigger = {
 		has_building = shwedagon_pagoda_01
 		has_building = ananda_temple_01
 		has_building = khajuraho_01
+		has_building_or_higher = jokhang_01
+		has_building_or_higher = konark_temple_01
+		has_building_or_higher = vatapi_caves_01
 	}
 }
 

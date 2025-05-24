@@ -45,7 +45,7 @@ weight = {
 			base = 0
 			modifier = {
 				add = 100
-				scope:current_weight > overweight_body_threshold
+				scope:current_weight > overweight_body_threshold #Unop Use correct threshold
 			}
 			modifier = {
 				add = -100
@@ -71,7 +71,7 @@ weight = {
 			base = 0
 			modifier = {
 				add = 100
-				scope:current_weight < underweight_body_threshold
+				scope:current_weight < underweight_body_threshold #Unop Use correct threshold
 			}
 			modifier = {
 				add = -100
@@ -97,7 +97,7 @@ weight = {
 			modifier = {
 				add = 100
 				exists = scope:ruler_designer
-				scope:current_weight > overweight_body_threshold
+				scope:current_weight > overweight_body_threshold #Unop Use correct threshold
 			}
 		}
 	}
@@ -117,7 +117,7 @@ weight = {
 			modifier = {
 				add = 100
 				exists = scope:ruler_designer
-				scope:current_weight < underweight_body_threshold
+				scope:current_weight < underweight_body_threshold #Unop Use correct threshold
 			}
 		}
 	}
@@ -178,7 +178,7 @@ special_pregnancy = {
 					value = 1
 					if = {
 						# Overweight females should have less visible pregnancy, so we change the 100% pregnant value
-						limit = { current_weight > overweight_body_threshold }
+						limit = { current_weight > overweight_body_threshold } #Unop Use correct threshold
 						value = scope:weight_for_portrait # An absolute and normalized value derived from character body weight
 						multiply = -1.0 
 						add = 1.5

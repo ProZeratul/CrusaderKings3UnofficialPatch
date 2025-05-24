@@ -163,6 +163,7 @@
 			count <= 30
 		}
 		ai_should_focus_on_building_in_their_capital = no
+		NOT = { government_has_flag = government_is_nomadic }
 	}
 
 	ai_will_do = {
@@ -407,6 +408,7 @@ kick_from_court_interaction = {
 	is_valid_showing_failures_only = {
 		scope:recipient = {
 			kick_from_court_validity_trigger = yes
+			NOT = { is_imprisoned_by = scope:actor }
 
 			custom_description = {
 				text = "kick_from_court_interaction_travelling_family_invalid"
@@ -607,6 +609,17 @@ invite_to_court_interaction = {
 			RECRUITER = scope:actor
 			RECRUITEE = scope:recipient
 		}
+		custom_tooltip = {
+			scope:recipient = {
+ 				NAND = {
+ 					has_variable = nomad_defector_var
+ 					var:nomad_defector_var = {
+ 						this = scope:actor
+ 					}
+ 				}
+ 			}
+ 			text = nomad_defected_invite_desc
+ 		}
 	}
 	
 	#Pay som gold to persuade a wandering character to come to your court
@@ -1145,7 +1158,7 @@ invite_to_court_interaction = {
  			desc = MALUS_TO_RECRUITMENT_FOR_IMPERIAL_EUNUCHS
  			scope:recipient = {
  				is_eunuch_trigger = yes
-	 			liege = {
+	 			liege ?= { #Unop Fix missing scope errors
 	 				government_allows = administrative
 	 				primary_title.tier = tier_empire
 	 				culture = { has_cultural_parameter = can_appoint_chief_eunuch }

@@ -35,6 +35,7 @@
 # Setting AI Intent
 fp2_struggle.0003 = {
 	hidden = yes
+	#scope = none #Unop
 	scope = struggle
 
 	trigger = { # Should not need this, but, redundancy check!
@@ -241,7 +242,7 @@ fp2_struggle.0003 = {
 # Set AI Intent on join
 fp2_struggle.004 = {
 	hidden = yes
-	type = character_event
+	type = character_event #Unop
 
 	immediate = {
 		set_variable = {
@@ -497,7 +498,7 @@ fp2_struggle.0501 = { # Fullscreen Intro Event
 	}
 	option = {
 		name = fp2_struggle.0501.a
-		play_sound_effect = "event:/DLC/FP2/SFX/UI/fp2_struggle_start_select"
+		play_sound_effect = "event:/DLC/FP2/SFX/UI/fp2_struggle_start_select" #Unop Use correct effect
 	}
 }
 
@@ -555,6 +556,7 @@ fp2_struggle.0900 = { # Hostility
 		play_music_cue = "mx_Struggle_ending_hostility"
 		fp2_stuggle_ending_involved_list_effect = yes
 		give_nickname = nick_the_conquistador
+		#Unop Change renown correctly
 		unop_change_renown = { CHAR = root PRESTIGE_MODIFIER = raw_struggle_ending_dynasty_prestige_value }
 		#dynasty ?= { add_dynasty_prestige = 10000 }
 	}
@@ -592,6 +594,7 @@ fp2_struggle.0900 = { # Hostility
 		# Renown reward for culture victory
 		if = {
 			limit = { exists = house }
+			#Unop Change renown correctly
 			unop_change_renown = { CHAR = root PRESTIGE_MODIFIER = raw_monumental_dynasty_prestige_value }
 			#dynasty ?= { add_dynasty_prestige = 1000 }
 			house = {
@@ -707,9 +710,10 @@ fp2_struggle.0910 = {
 		play_music_cue = "mx_Struggle_ending_hostility"
 		##### Major Effects #####
 		show_as_tooltip = {
+			#Unop Change renown correctly
 			unop_change_renown = { CHAR = scope:struggle_ender PRESTIGE_MODIFIER = raw_struggle_ending_dynasty_prestige_value }
 			scope:struggle_ender = {
-				#dynasty ?= { add_dynasty_prestige = 10000 }
+				#dynasty = { add_dynasty_prestige = 10000 }
 				fp2_struggle_hostility_ender_effect = yes
 			}
 		}
@@ -1089,6 +1093,7 @@ fp2_struggle.0912 = {
 # By Ola Jentzsch
 ###################################
 scripted_trigger fp2_struggle_1000_tension_county_trigger = {
+	is_landless_type_title = no
 	any_county_province = { geographical_region = world_europe_west_iberia }
 	faith = { save_temporary_scope_as = compare_faith }
 	root = {
@@ -1671,6 +1676,7 @@ fp2_struggle.1001 = {
 				fp2_struggle.1001_expectant_vassal_or_courtier_traits = yes
 				is_spouse_of = root
 			}
+		
 			alternative_limit = {
 				fp2_struggle.1001_expectant_vassal_or_courtier_traits = yes
 				any_player_heir = { is_spouse_of = prev }
@@ -1683,7 +1689,7 @@ fp2_struggle.1001 = {
 				fp2_struggle.1001_expectant_vassal_or_courtier_traits = yes
 				is_powerful_vassal = yes
 			}
-			alternative_limit = { #Fixpack: Saw warn that expectant_courtier could still be null, just put the scope as defined in the trigger block of this event
+			alternative_limit = { #Unop: Saw warn that expectant_courtier could still be null, just put the scope as defined in the trigger block of this event
 				fp2_struggle.1001_expectant_vassal_or_courtier_traits = yes
 			}
 			save_scope_as = expectant_courtier
@@ -2906,6 +2912,7 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
 	trigger = { #The province must also be involved in the Iberian struggle
 		has_fp2_dlc_trigger = yes
 		any_held_county = {
+			#Unop Only fire for iberian struggle counties
 			any_county_struggle = {
 				is_struggle_type = iberian_struggle
 			}		
@@ -2922,6 +2929,7 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
 
 		random_held_county = { #this is to find the county that has the blacksmith
 			limit = {
+				#Unop Only fire for iberian struggle counties
 				any_county_struggle = {
 					is_struggle_type = iberian_struggle
 				}		
@@ -4055,14 +4063,14 @@ fp2_struggle.1020 = {
 				any_ruler = {
 					is_ai = yes
 					is_close_or_extended_family_of = scope:minority_councillor
-					NOT = { this = root }
+					NOT = { this = root } #Unop
 				}
 			}
 			random_ruler = {
 				limit = {
 					is_ai = yes
 					is_close_or_extended_family_of = scope:minority_councillor
-					NOT = { this = root }
+					NOT = { this = root } #Unop
 				}
 				save_scope_as = councillor_executor
 				set_variable = relative_created
@@ -4106,7 +4114,7 @@ fp2_struggle.1020 = {
 
 		scope:minority_councillor = {
 			every_close_or_extended_family_member = {
-			limit = { NOT = { this = root } }
+				limit = { NOT = { this = root } } #Unop
 				custom = all_family_members
 				if = {
 					limit = { is_ai = yes }
@@ -4161,7 +4169,7 @@ fp2_struggle.1020 = {
 			every_close_or_extended_family_member = {
 				custom = all_family_members
 				if = {
-					limit = {
+					limit = { #Unop
 						is_ai = yes
 						NOT = { this = root }
 					}
@@ -5238,7 +5246,7 @@ fp2_struggle.2001 = {
 				}
 
 				# Actual strength is calc below, thanks to joe
-				root_military_strength_higher_than_value > target_military_strength_root_value
+				root_military_strength_higher_than_military_target_value > target_military_strength_root_value
 			}
 			save_scope_as = fp2_se_2001_ai_war_winnable # Acts as boolean for wether or not the AI has a chance at winning
 		}
@@ -5962,7 +5970,7 @@ fp2_struggle.2002 = {
 			}
 		}
 
-		scope:fp2_2001_desperate_elder ?= {
+		scope:fp2_2001_desperate_elder ?= { #Unop Prevens missing scope errors
 			silent_disappearance_effect = yes
 		}
 	}
@@ -6559,10 +6567,6 @@ fp2_struggle.2004 = {
 		top_liege = root
 
 		realm_size >= minor_realm_size
-		any_sub_realm_county = {
-			NOT = { has_county_modifier = fp2_successful_shipyards_modifier }
-			is_coastal_county = yes
-		}
 
 		exists = cp:councillor_marshal
 		cp:councillor_marshal	= { is_available_ai_adult = yes }
@@ -6570,6 +6574,11 @@ fp2_struggle.2004 = {
 		cp:councillor_steward	= {
 			is_available_ai_adult = yes
 			NOT = { has_character_flag = fp2_2004_critical_success_achieved }
+		}
+
+		any_sub_realm_county = {
+			is_coastal_county = yes
+			NOT = { has_county_modifier = fp2_successful_shipyards_modifier }
 		}
 	}
 
@@ -6995,12 +7004,10 @@ fp2_struggle.2005 = {
 	}
 
 	immediate = {
-		#Fixpack: Wait what ? (and the scope is never used)
 		if = {
 			limit = { root = root } # Check if scoped port town is still under your control
 			save_scope_as = port_under_control
 		}
-		#/Fixpack
 
 		# MIA checks
 		if = { # Assign current steward
@@ -7042,7 +7049,7 @@ fp2_struggle.2005 = {
 					chance = 25
 					add_character_flag = fp2_2004_critical_success_achieved
 				}
-				#save_scope_as = 2005_scoped_steward #Fixpack: Comment this scope out. It will set "root" as the designer... (probably a c/p from the random_courtier_or_guest block)
+				#save_scope_as = 2005_scoped_steward #Unop: Comment this scope out. It will set "root" as the designer... (probably a c/p from the random_courtier_or_guest block)
 			}
 		}
 	}
@@ -7289,10 +7296,10 @@ fp2_struggle.2006 = {
 	trigger = {
 		has_fp2_dlc_trigger = yes
 		root.top_liege = root
-		cp:councillor_court_chaplain ?= { save_temporary_scope_as = 2006_scoped_chaplain_temp }
+		cp:councillor_court_chaplain ?= { save_temporary_scope_as = 2006_scoped_chaplain_temp } #Unop save temp scope
 		any_sub_realm_county = {
 			fp2_event2006_check_if_right_vassal_target = yes
-			trigger_if = {
+			trigger_if = { #Unop
 				limit = { exists = scope:2006_scoped_chaplain_temp }
 				NOT = { holder = { this = scope:2006_scoped_chaplain_temp } }
 			}
@@ -7310,7 +7317,7 @@ fp2_struggle.2006 = {
 			cp:councillor_court_chaplain = { save_scope_as = 2006_scoped_chaplain }
 		}
 		random_sub_realm_county = {
-			limit = {
+			limit = { #Unop
 				fp2_event2006_check_if_right_vassal_target = yes
 				NOT = { holder = { this = scope:2006_scoped_chaplain } }
 			}
@@ -8177,6 +8184,7 @@ fp2_struggle.2007 = {
 				round = yes
 			}
 		}
+		#Unop Save refund values
 		save_scope_value_as = {
 			name = refund_value_minor
 			value = minor_gold_value
@@ -8407,7 +8415,7 @@ fp2_struggle.2007 = {
 						begin_create_holding = {
 							type = castle_holding
 							refund_cost = {
-								gold = scope:refund_value_medium
+								gold = scope:refund_value_medium #Unop Use saved refund value
 							}
 						}
 					}
@@ -8436,7 +8444,7 @@ fp2_struggle.2007 = {
 							begin_create_holding = {
 								type = castle_holding
 								refund_cost = {
-									gold = scope:refund_value_medium
+									gold = scope:refund_value_medium #Unop Use saved refund value
 								}
 							}
 						}
@@ -8500,7 +8508,7 @@ fp2_struggle.2007 = {
 								begin_create_holding = {
 									type = castle_holding
 									refund_cost = {
-										gold = scope:refund_value_minor
+										gold = scope:refund_value_minor #Unop Use saved refund value
 									}
 								}
 							}
@@ -8525,7 +8533,7 @@ fp2_struggle.2007 = {
 									begin_create_holding = {
 										type = castle_holding
 										refund_cost = {
-											gold = scope:refund_value_minor
+											gold = scope:refund_value_minor #Unop Use saved refund value
 										}
 									}
 								}
@@ -9025,6 +9033,7 @@ fp2_struggle.2009 = {
 				primary_title = { is_mercenary_company = no }
 				is_landed = yes
 				count > 1 # Redundancy check in response to more errors on nigtly. Now on the bottom of the block. Reduced by one to total 3.
+				#Unop Avoid sea provinces 
 				exists = location
 				location = { NOT = { is_sea_province = yes } }
 			}
@@ -9055,6 +9064,7 @@ fp2_struggle.2009 = {
 					is_independent_ruler = yes
 					primary_title = { is_mercenary_company = no }
 					is_landed = yes
+					#Unop Avoid sea provinces 
 					exists = location
 					location = { NOT = { is_sea_province = yes } }
 				}
@@ -10314,7 +10324,7 @@ fp2_struggle.2015 = {
 
 	trigger = {
 		has_fp2_dlc_trigger = yes
-		is_independent_ruler = yes
+		is_independent_ruler = yes #Unop
 
 		any_powerful_vassal = {
 			fp2_struggle_2015_vassal_check_trigger = yes
@@ -10326,6 +10336,7 @@ fp2_struggle.2015 = {
 	}
 
 	immediate = {
+		#Unop Rework fp2_struggle_2015_murder_requester_vassal
 		ordered_vassal = {
 			limit = {
 				fp2_struggle_2015_vassal_check_trigger = yes
@@ -10346,7 +10357,7 @@ fp2_struggle.2015 = {
 			save_scope_as = fp2_struggle_2015_murder_requester_vassal
 		}
 
-		if = {
+		if = { #Unop Add debug logging
 			limit = { NOT = { exists = scope:fp2_struggle_2015_murder_requester_vassal } }
 
 			every_vassal = {
@@ -10782,6 +10793,7 @@ fp2_struggle.2021 = { # Main event
 		hidden_effect = { # Hides exceptions from players, fix is not necessary
 			scope:fp2_2009_garduna_guild_master = {
 				save_scope_as = dueltarget # For Loc
+				#Unop Send to root capital is current location is a sea province
 				if = {
 					limit = { root.location = { is_sea_province = yes } }
 					if = {
@@ -11593,7 +11605,7 @@ fp2_struggle.3021 = {
 		}
 		any_courtier = { #someone will research this
 			is_available_healthy_ai_adult = yes
-			NOR = { #you shouldn't lose your spouse or heir because of this
+			NOR = { #Unop you shouldn't lose your spouse or heir because of this
 				this = root.primary_spouse
 				this = root.player_heir
 			}

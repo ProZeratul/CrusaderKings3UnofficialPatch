@@ -1,0 +1,205 @@
+﻿unop_debug_grand_wedding_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+
+	decision_group_type = debug
+
+	desc = unop_debug_grand_wedding_decision_desc
+	selection_tooltip = unop_debug_grand_wedding_decision_tooltip
+
+	ai_check_interval = 0
+
+	is_shown = {
+		has_variable = promised_grand_wedding_marriage_countdown
+		OR = {
+			var:promised_grand_wedding_marriage_countdown = { is_alive = no }
+			var:promised_grand_wedding_marriage_countdown = {
+				is_alive = yes
+				is_betrothed = no
+			}
+			NOT = { exists = var:promised_grand_wedding_marriage_countdown }
+		}
+	}
+
+	effect = {
+		if = { limit = { has_variable = promised_grand_wedding_to } remove_variable = promised_grand_wedding_to }
+		if = {
+			limit = { has_variable = promised_grand_wedding_marriage_countdown }
+			if = {
+				limit = { exists = var:promised_grand_wedding_marriage_countdown }
+				if = {
+					limit = { var:promised_grand_wedding_marriage_countdown = { is_alive = no } }
+					remove_variable = promised_grand_wedding_marriage_countdown
+				}
+				else = {
+					var:promised_grand_wedding_marriage_countdown = {
+						if = { limit = { has_variable = promised_grand_wedding_by } remove_variable = promised_grand_wedding_by }
+						#if = { limit = { has_variable = promised_grand_wedding_by_other } remove_variable = promised_grand_wedding_by_other } #TODO: Remake this (check 1.12.5 unop version) as this variable is not vanilla
+					}
+					remove_variable = promised_grand_wedding_marriage_countdown
+				}
+			}
+			else = {
+				remove_variable = promised_grand_wedding_marriage_countdown
+			}
+		}
+	}
+
+	# TODO ?
+	ai_potential = {
+		always = no
+	}
+
+	# TODO ?
+	ai_will_do = {
+		base = 0
+	}
+}
+
+unop_debug_travel_stuck_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+
+	decision_group_type = debug
+
+	desc = unop_debug_travel_stuck_decision_desc
+	selection_tooltip = unop_debug_travel_stuck_decision_tooltip
+
+	ai_check_interval = 0
+
+	is_shown = {
+		current_travel_plan ?= {
+			is_completed = no
+			is_paused = yes
+			current_location = final_destination_province
+		}
+	}
+
+	effect = {
+		current_travel_plan ?= {
+			resume_travel_plan = yes
+		}
+	}
+
+	# TODO ?
+	ai_potential = {
+		always = no
+	}
+
+	# TODO ?
+	ai_will_do = {
+		base = 0
+	}
+}
+
+unop_debug_iberian_struggle_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+
+	decision_group_type = debug
+
+	desc = unop_debug_iberian_struggle_decision_desc
+	selection_tooltip = unop_debug_iberian_struggle_decision_tooltip
+
+	ai_check_interval = 0
+
+	is_shown = {
+		debug_only = yes
+	}
+
+	widget = {
+		gui = "decision_view_widget_option_list_generic"
+		controller = decision_option_list_controller
+		decision_to_second_step_button = "CHOOSE_IBERIAN_STRUGGLE_PHASE_DECISION_NEXT_STEP_BUTTON"
+		show_from_start = yes
+
+		item = { # Compromise
+			value = toggle_to_compromise
+			is_valid = {
+				struggle:iberian_struggle = {
+					NOT = { is_struggle_phase = struggle_iberia_phase_compromise }
+				}
+			}
+			current_description = struggle_iberia_phase_compromise
+			localization = struggle_iberia_phase_compromise
+			icon = "gfx/interface/icons/struggle_types/struggle_iberia_phase_compromise.dds"
+			ai_chance = {
+				value = 0
+			}
+		}
+		item = { # Conciliation
+			value = toggle_to_conciliation
+			is_valid = {
+				struggle:iberian_struggle = {
+					NOT = { is_struggle_phase = struggle_iberia_phase_conciliation }
+				}
+			}
+			current_description = struggle_iberia_phase_conciliation
+			localization = struggle_iberia_phase_conciliation
+			icon = "gfx/interface/icons/struggle_types/struggle_iberia_phase_conciliation.dds"
+			ai_chance = {
+				value = 0
+			}
+		}
+		item = { # Hostility
+			value = toggle_to_hostility
+			is_valid = {
+				struggle:iberian_struggle = {
+					NOT = { is_struggle_phase = struggle_iberia_phase_hostility }
+				}
+			}
+			current_description = struggle_iberia_phase_hostility
+			localization = struggle_iberia_phase_hostility
+			icon = "gfx/interface/icons/struggle_types/struggle_iberia_phase_hostility.dds"
+			ai_chance = {
+				value = 0
+			}
+		}
+		item = { # Opportunity
+			value = toggle_to_opportunity
+			is_valid = {
+				struggle:iberian_struggle = {
+					NOT = { is_struggle_phase = struggle_iberia_phase_opportunity }
+				}
+			}
+			current_description = struggle_iberia_phase_opportunity
+			localization = struggle_iberia_phase_opportunity
+			icon = "gfx/interface/icons/struggle_types/struggle_iberia_phase_opportunity.dds"
+			ai_chance = {
+				value = 0
+			}
+		}
+	}
+
+	effect = {
+		if = {
+			limit = { scope:toggle_to_compromise = yes }
+			struggle:iberian_struggle = { change_struggle_phase = struggle_iberia_phase_compromise }
+		}
+		else_if = {
+			limit = { scope:toggle_to_conciliation = yes }
+			struggle:iberian_struggle = { change_struggle_phase = struggle_iberia_phase_conciliation }
+		}
+		else_if = {
+			limit = { scope:toggle_to_hostility = yes }
+			struggle:iberian_struggle = { change_struggle_phase = struggle_iberia_phase_hostility }
+		}
+		else_if = {
+			limit = { scope:toggle_to_opportunity = yes }
+			struggle:iberian_struggle = { change_struggle_phase = struggle_iberia_phase_opportunity }
+		}
+	}
+
+	# TODO ?
+	ai_potential = {
+		always = no
+	}
+
+	# TODO ?
+	ai_will_do = {
+		base = 0
+	}
+}

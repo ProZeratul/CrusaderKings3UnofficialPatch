@@ -50,14 +50,31 @@ challenge_to_chess_stress_stake_value = { value = medium_stress_gain }
 challenge_to_chess_gold_change_value = {
 	value = 0
 
-	# To keep this balanced, we want to use the lowest income of scope:actor & scope:recipient.
+	#Guess you don't have a monthly income, most of the time
 	if = {
-		limit = { scope:actor.monthly_character_income >= scope:recipient.monthly_character_income }
-		add = scope:recipient.monthly_character_income
+		limit = {
+			scope:actor = {
+				monthly_character_income <= 0
+				is_landless_adventurer = yes
+			}
+		}
+		if = {
+			limit = { scope:actor.gold > scope:recipient.gold }
+			add = scope:recipient.monthly_character_income
+			multiply = 9
+		}
+		else = { add = scope:actor.gold }
 	}
-	else = { add = scope:actor.monthly_character_income }
-	# And, because month-to-month income isn't much, we take it up to a significant fraction of a year's earnings.
-	multiply = 9
+	else = {
+		# To keep this balanced, we want to use the lowest income of scope:actor & scope:recipient.
+		if = {
+			limit = { scope:actor.monthly_character_income >= scope:recipient.monthly_character_income }
+			add = scope:recipient.monthly_character_income
+		}
+		else = { add = scope:actor.monthly_character_income }
+		# And, because month-to-month income isn't much, we take it up to a significant fraction of a year's earnings.
+		multiply = 9
+	}
 }
 
 bg_stake_land_evaluate_appropriate_county_ordering_value = {
@@ -616,7 +633,7 @@ struggle_iberia_ending_ending_decision_foreign_realm_total_value = {
 				NOT = { this = root }
 				is_independent_ruler = yes
 				is_landless_adventurer = no
-				primary_title = { is_head_of_faith = no }
+				primary_title = { is_head_of_faith = no } #Unop Skip heads of faith
 				primary_title = { is_holy_order = no }
 				primary_title = { is_mercenary_company = no }
 			}
@@ -900,9 +917,9 @@ struggle_iberia_ending_conciliation_decision_alliance_counter_value = {
 				NOT = { this = root }
 				is_independent_ruler = yes
 				is_landless_adventurer = no
+				primary_title = { is_head_of_faith = no } #Unop Skip heads of faith
 				primary_title = { is_holy_order = no }
 				primary_title = { is_mercenary_company = no }
-				primary_title = { is_head_of_faith = no }
 				is_allied_to = root
 			}
 			add = 1
@@ -1101,6 +1118,10 @@ pt_sum_small_value = {
 		}
 		multiply = 0.5
 	}
+	if = { # double the cost if you're just buying off a nomad without any prerequisites
+		limit = { fp2_purchase_truce_interaction_soft_requirements_trigger = no }
+		multiply = 2
+	}
 }
 
 pt_sum_medium_value = {
@@ -1126,6 +1147,10 @@ pt_sum_medium_value = {
 		}
 		multiply = 0.5
 	}
+	if = { # double the cost if you're just buying off a nomad without any prerequisites
+		limit = { fp2_purchase_truce_interaction_soft_requirements_trigger = no }
+		multiply = 2
+	}
 }
 
 pt_sum_large_value = {
@@ -1150,5 +1175,9 @@ pt_sum_large_value = {
 			}
 		}
 		multiply = 0.5
+	}
+	if = { # double the cost if you're just buying off a nomad without any prerequisites
+		limit = { fp2_purchase_truce_interaction_soft_requirements_trigger = no }
+		multiply = 2
 	}
 }
