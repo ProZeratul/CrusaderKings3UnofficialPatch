@@ -99,7 +99,7 @@ laamp_extra_contract_schemes.0001 = {
 			}
 		}
 	}
-	
+
 	# Boost speed.
 	option = {
 		name = laamp_extra_contract_schemes.0001.b
@@ -117,7 +117,7 @@ laamp_extra_contract_schemes.0001 = {
 			}
 		}
 	}
-	
+
 	# No starting bonus.
 	option = {
 		name = laamp_extra_contract_schemes.0001.d
@@ -246,7 +246,7 @@ laamp_extra_contract_schemes.0002 = {
 						type = title_revocation_rights
 						level = 1
 					}
-				}				
+				}
 			}
 			else = {
 				save_scope_value_as = {
@@ -467,7 +467,7 @@ laamp_extra_contract_schemes.0011 = {
 			}
 		}
 	}
-	
+
 	# Boost speed.
 	option = {
 		name = laamp_extra_contract_schemes.0001.b
@@ -485,7 +485,7 @@ laamp_extra_contract_schemes.0011 = {
 			}
 		}
 	}
-	
+
 	# No starting bonus.
 	option = {
 		name = laamp_extra_contract_schemes.0001.d
@@ -520,8 +520,8 @@ laamp_extra_contract_schemes.0012 = {
 			desc = laamp_extra_contract_schemes.0012.desc_no_thief
 		}
 		first_valid = {
-			triggered_desc = {
-				trigger = { exists = scope:agent_lookout }
+			triggered_desc = { #Unop: changed the agent (see ep3_contract_event.0030)
+				trigger = { exists = scope:agent_lookout_speed }
 				desc = laamp_extra_contract_schemes.0012.desc_lookout
 			}
 			desc = laamp_extra_contract_schemes.0012.desc_no_lookout
@@ -644,7 +644,7 @@ laamp_extra_contract_schemes.0012 = {
 				target = scope:task_contract_object
 			}
 		}
-		
+
 		stress_impact = { arrogant = minor_stress_impact_loss }
 	}
 }
@@ -665,7 +665,7 @@ laamp_extra_contract_schemes.0013 = {
 				desc = laamp_extra_contract_schemes.0013.desc_no_lookout
 			}
 			triggered_desc = {
-				trigger = { NOT = { exists = scope:agent_infiltrator } }				
+				trigger = { NOT = { exists = scope:agent_infiltrator } }
 				desc = laamp_extra_contract_schemes.0013.desc_no_infiltrator
 			}
 			desc = laamp_extra_contract_schemes.0013.desc
@@ -791,7 +791,7 @@ laamp_extra_contract_schemes.0020 = {
 
 	trigger = {
 		scope:target_character = {
-			spymaster_task_find_secrets_court_has_minor_secrets_trigger = yes		
+			spymaster_task_find_secrets_court_has_minor_secrets_trigger = yes
 		}
 	}
 
@@ -810,7 +810,7 @@ laamp_extra_contract_schemes.0020 = {
 				}
 				every_secret = {
 					limit = {
-						spymaster_task_find_secrets_suitable_minor_secret_trigger = yes	
+						spymaster_task_find_secrets_suitable_minor_secret_trigger = yes
 					}
 					add_to_temporary_list = suitable_secrets
 				}
@@ -820,7 +820,7 @@ laamp_extra_contract_schemes.0020 = {
 				limit = {
 					any_secret = {
 						spymaster_task_find_secrets_suitable_minor_secret_trigger = yes
-					}	
+					}
 				}
 				every_secret = {
 					limit = {
@@ -935,10 +935,10 @@ laamp_extra_contract_schemes.0020 = {
 							desc = task_intrigue_good_skilled_notification_tooltip
 						}
 					}
-					
+
 					left_icon = scope:secret_holder
 					right_icon = scope:councillor
-					
+
 					scope:secret_to_reveal = {
 						reveal_to = scope:councillor_liege
 					}
@@ -962,11 +962,11 @@ laamp_extra_contract_schemes.0020 = {
 					send_interface_message = {
 						type = msg_spymaster_task_good
 						title = spymaster_task.0311.notification
-						
+
 						left_icon = scope:secret_holder
-						
+
 						desc = blank_line
-						
+
 						scope:secret_to_reveal = {
 							reveal_to = scope:councillor
 						}
@@ -998,7 +998,7 @@ laamp_extra_contract_schemes.0021 = {
 				}
 				every_secret = {
 					limit = {
-						spymaster_task_find_secrets_suitable_major_secret_trigger = yes	
+						spymaster_task_find_secrets_suitable_major_secret_trigger = yes
 					}
 					add_to_temporary_list = suitable_secrets
 				}
@@ -1008,7 +1008,7 @@ laamp_extra_contract_schemes.0021 = {
 				limit = {
 					any_secret = {
 						spymaster_task_find_secrets_suitable_major_secret_trigger = yes
-					}	
+					}
 				}
 				every_secret = {
 					limit = {
@@ -1131,7 +1131,7 @@ laamp_extra_contract_schemes.0021 = {
 							title = spymaster_task.0311.notification
 
 							left_icon = scope:secret_holder
-							
+
 							desc = blank_line
 
 							scope:secret_to_reveal = {
@@ -1168,7 +1168,7 @@ laamp_extra_contract_schemes.0022 = {
 		character = scope:character_to_hook
 		animation = boredom
 	}
-	
+
 	trigger = {
 		scope:target_character = {
 			OR = {
