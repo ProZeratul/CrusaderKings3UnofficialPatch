@@ -545,6 +545,43 @@ watermills_01 = {
 
 	can_construct_potential = {
 		building_watermills_requirement_terrain = yes
+		building_requirement_castle_city_church = { LEVEL = 01 }
+	}
+
+	can_construct_showing_failures_only = {
+		building_requirement_tribal = no
+	}
+
+	is_enabled = {
+		trigger_if = {
+			limit = {
+				NOT = {
+					scope:holder.culture = {
+						has_cultural_parameter = watermills_windmills_cities
+					}
+				}
+			}
+			is_county_capital = yes
+		}
+		trigger_else = {
+			scope:holder.culture = {
+				has_cultural_parameter = watermills_windmills_cities
+			}
+			OR = {
+				is_county_capital = yes
+				AND = {
+					NOR = {
+						has_building_or_higher = windmills_01
+						has_building_or_higher = caravanserai_01
+					}
+					has_building_or_higher = city_01
+				}
+			}
+		}
+	}
+	show_disabled = yes
+
+	can_construct = {
 		trigger_if = {
 			limit = {
 				has_holding_type = city_holding
@@ -583,43 +620,6 @@ watermills_01 = {
 				}
 			}
 		}
-	}
-
-	can_construct_showing_failures_only = {
-		building_requirement_tribal = no
-	}
-
-	is_enabled = {
-		trigger_if = {
-			limit = {
-				NOT = {
-					scope:holder.culture = {
-					has_cultural_parameter = watermills_windmills_cities
-					}
-				}
-			}
-			is_county_capital = yes
-		}
-		trigger_else = {
-			scope:holder.culture = {
-				has_cultural_parameter = watermills_windmills_cities
-			}
-			OR = {
-				is_county_capital = yes
-				AND = {
-					NOR = {
-						has_building_or_higher = windmills_01
-						has_building_or_higher = caravanserai_01
-					}
-					has_building_or_higher = city_01
-				}
-
-			}
-		}
-	}
-	show_disabled = yes
-
-	can_construct = {
 	}
 
 	cost_gold = expensive_building_tier_1_cost
@@ -679,7 +679,7 @@ watermills_02 = {
 	can_construct = {
 		trigger_if = {
 			limit = {
-				NOT = {
+				NOR = { # Unop: Was a NOT
 					scope:holder.culture = {
 						has_cultural_parameter = next_level_w_mills
 					}
