@@ -2201,8 +2201,31 @@ ai_agent_join_chance_laamp_contract_modifier = {
 		}
 		# Followers must earn their keep.
 		modifier = {
-			trigger = { is_courtier_of = scope:owner }
+			trigger = {
+				is_courtier_of = scope:owner
+				NOT = { scope:scheme = { is_scheme_category = contract } } #Unop: Added to make sure it doesn't conflict with the addition below
+			}
 			add = 100
+			desc = ai_opinion.reason.courtier.followers_must_work
+		}
+		# Followers must earn their keep. Unop: With the modification from invite_agent_to_scheme_interaction/auto-accept
+		modifier = {
+			trigger = {
+				NOR = {
+					has_relation_nemesis = scope:owner
+					has_relation_rival = scope:owner
+					AND = {
+						has_court_position = stooge_camp_officer
+						is_court_position_employer = {
+							court_position = stooge_camp_officer
+							who = scope:owner
+						}
+					}
+				}
+				is_courtier_of = scope:owner
+				scope:scheme = { is_scheme_category = contract }
+			}
+			add = 1500 # Unop: That seems a lot, but in fact we need a VERY BIG value to counteract EVERYTHNG to mimic the "auto accept"
 			desc = ai_opinion.reason.courtier.followers_must_work
 		}
 	}
