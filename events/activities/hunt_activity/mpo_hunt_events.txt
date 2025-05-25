@@ -704,11 +704,12 @@ mpo_hunt.0020 = {
 		show_as_tooltip = {
 			scope:newly_created_artifact = { set_owner = root }
 		}
-		stress_impact = {
-			brave = major_stress_impact_loss
-			craven = major_stress_impact_gain
-			lazy = major_stress_impact_gain
-		}
+		#Unop Removed the stress impact, the mother is dead, there is no danger
+		#stress_impact = {
+		#	brave = major_stress_impact_loss
+		#	craven = major_stress_impact_gain
+		#	lazy = major_stress_impact_gain
+		#}
 		ai_chance = {
 			base = 100
 			modifier = {
@@ -745,6 +746,10 @@ mpo_hunt.0020 = {
 					title = mpo_hunt.0020.b.tt.success
 					left_icon = root
 					add_prestige = medium_prestige_gain
+					#Unop You still get a pelt if you kill the mother
+					show_as_tooltip = {
+						scope:newly_created_artifact = { set_owner = root }
+					}
 					if = {
 						limit = {
 							OR = {
@@ -775,6 +780,10 @@ mpo_hunt.0020 = {
 				}
 				min = 5
 				desc = mpo_hunt.0020.b.tt.failure
+				#Unop No pelt if you fail to kill the mother
+				hidden_effect = {
+					destroy_artifact = scope:newly_created_artifact
+				}
 				send_interface_toast = {
 					title = mpo_hunt.0020.b.tt.failure
 					left_icon = root
@@ -784,9 +793,12 @@ mpo_hunt.0020 = {
 			}
 		}
 		stress_impact = {
-			gregarious = medium_stress_impact_loss
-			callous = medium_stress_impact_gain
-			sadistic = medium_stress_impact_gain
+			#Unop Changed the stress impact as it didn't make sense at all
+			#gregarious = medium_stress_impact_loss
+			#callous = medium_stress_impact_gain
+			#sadistic = medium_stress_impact_gain
+			brave = medium_stress_impact_loss
+			craven = medium_stress_impact_gain
 		}
 		ai_chance = {
 			base = 100
@@ -842,8 +854,12 @@ mpo_hunt.0020 = {
 				}
 			}
 		}
+		#Unop No pelt if you tried to sneak past the mother
+		hidden_effect = {
+			destroy_artifact = scope:newly_created_artifact
+		}
 		stress_impact = {
-			calm = medium_stress_impact_gain
+			content = medium_stress_impact_gain #Unop Was calm
 			ambitious = medium_stress_impact_loss
 		}
 		ai_chance = {
