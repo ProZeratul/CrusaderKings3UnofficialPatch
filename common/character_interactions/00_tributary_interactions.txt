@@ -1593,31 +1593,40 @@ offer_courtier_interaction = {
 				opinion = -10
 			}
 		}
-		scope:recipient = {
-			add_courtier = scope:secondary_actor
-			scope:secondary_actor = {
-				every_consort = {
-					limit = {
-						is_courtier_of = scope:actor
+		scope:actor = {
+			#Unop Add a proper notification
+			send_interface_toast = {
+				type = event_toast_effect_neutral
+				title = unop_msg_offer_courtier_accepted_tt
+				right_icon = scope:recipient
+				left_icon = scope:secondary_actor
+				scope:recipient = {
+					add_courtier = scope:secondary_actor
+					scope:secondary_actor = {
+						every_consort = {
+							limit = {
+								is_courtier_of = scope:actor
+							}
+							scope:recipient = {
+								add_courtier = prev
+							}
+						}
+						every_child = {
+							limit = {
+								is_adult = no
+								is_courtier_of = scope:recipient
+							}
+							scope:actor = {
+								add_courtier = prev
+							}
+						}
 					}
-					scope:recipient = {
-						add_courtier = prev
+					add_opinion = {
+						target = scope:actor
+						modifier = unop_offer_courtier_opinion #Unop Use custom non-stacking opinion, as for other gifts
+						opinion = 10
 					}
 				}
-				every_child = {
-					limit = {
-						is_adult = no
-						is_courtier_of = scope:recipient
-					}
-					scope:actor = {
-						add_courtier = prev
-					}
-				}
-			}
-			add_opinion = {
-				target = scope:actor
-				modifier = unop_offer_courtier_opinion #Unop Use custom non-stacking opinion, as for other gifts
-				opinion = 10
 			}
 		}
 	}
@@ -1974,30 +1983,37 @@ demand_courtier_interaction = {
 			}
 		}
 		scope:actor = {
-			add_courtier = scope:secondary_actor
-			scope:secondary_actor = {
-				every_consort = {
-					limit = {
-						is_courtier_of = scope:recipient
+			#Unop Add a proper notification
+			send_interface_toast = {
+				type = event_toast_effect_neutral
+				title = unop_msg_demand_courtier_accepted_tt
+				right_icon = scope:recipient
+				left_icon = scope:secondary_actor
+				add_courtier = scope:secondary_actor
+				scope:secondary_actor = {
+					every_consort = {
+						limit = {
+							is_courtier_of = scope:recipient
+						}
+						scope:actor = {
+							add_courtier = prev
+						}
 					}
-					scope:actor = {
-						add_courtier = prev
+					every_child = {
+						limit = {
+							is_adult = no
+							is_courtier_of = scope:recipient
+						}
+						scope:actor = {
+							add_courtier = prev
+						}
 					}
 				}
-				every_child = {
-					limit = {
-						is_adult = no
-						is_courtier_of = scope:recipient
-					}
-					scope:actor = {
-						add_courtier = prev
-					}
+				add_opinion = {
+					target = scope:recipient
+					modifier = pleased_opinion
+					opinion = 20
 				}
-			}
-			add_opinion = {
-				target = scope:recipient
-				modifier = pleased_opinion
-				opinion = 20
 			}
 		}
 		scope:recipient = {
