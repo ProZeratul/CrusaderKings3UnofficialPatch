@@ -1390,166 +1390,182 @@ mpo_blood_brother_loving_trigger = {
 }
 
 has_bad_season_nomadic_capital_root_trigger = {
-	any_county_situation = {
-		OR = {
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_white_zud_season
-				situation_sub_region_has_county = root.capital_county
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_cold_zud_season
-				situation_sub_region_has_county = root.capital_county
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_severe_drought_season
-				situation_sub_region_has_county = root.capital_county
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_havsarsan_zud_season
-				situation_sub_region_has_county = root.capital_county
+	root ?= { #Unop ck3-tiger Make this a proper root capital county trigger
+		any_character_situation = {
+			OR = {
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_white_zud_season
+					situation_sub_region_has_county = root.capital_county
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_cold_zud_season
+					situation_sub_region_has_county = root.capital_county
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_severe_drought_season
+					situation_sub_region_has_county = root.capital_county
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_havsarsan_zud_season
+					situation_sub_region_has_county = root.capital_county
+				}
 			}
 		}
 	}
 }
 
 has_zud_season_nomadic_capital_root_trigger = {
-	any_character_situation = {
-		OR = {
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_white_zud_season
-				situation_sub_region_has_county = root.capital_county
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_cold_zud_season
-				situation_sub_region_has_county = root.capital_county
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_havsarsan_zud_season
-				situation_sub_region_has_county = root.capital_county
+	root ?= { #Unop ck3-tiger Make this a proper root capital county trigger
+		any_character_situation = {
+			OR = {
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_white_zud_season
+					situation_sub_region_has_county = root.capital_county
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_cold_zud_season
+					situation_sub_region_has_county = root.capital_county
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_havsarsan_zud_season
+					situation_sub_region_has_county = root.capital_county
+				}
 			}
 		}
 	}
 }
 
 has_zud_season_in_county_trigger = {
-	any_character_situation = {
-		OR = {
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_white_zud_season
-				situation_sub_region_has_county = $COUNTY$
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_cold_zud_season
-				situation_sub_region_has_county = $COUNTY$
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_havsarsan_zud_season
-				situation_sub_region_has_county = $COUNTY$
+	$COUNTY$ = { #Unop ck3-tiger Make this a proper county trigger
+		any_county_situation = {
+			OR = {
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_white_zud_season
+					situation_sub_region_has_county = $COUNTY$
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_cold_zud_season
+					situation_sub_region_has_county = $COUNTY$
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_havsarsan_zud_season
+					situation_sub_region_has_county = $COUNTY$
+				}
 			}
 		}
 	}
 }
 
 has_bad_season_nomadic_capital_character_trigger = {
-	any_character_situation = {
-		OR = {
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_white_zud_season
-				situation_sub_region_has_county = $CHARACTER$.capital_county
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_cold_zud_season
-				situation_sub_region_has_county = $CHARACTER$.capital_county
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_severe_drought_season
-				situation_sub_region_has_county = $CHARACTER$.capital_county
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_havsarsan_zud_season
-				situation_sub_region_has_county = $CHARACTER$.capital_county
+	$CHARACTER$ = { #Unop ck3-tiger Make this a proper character trigger
+		any_character_situation = {
+			OR = {
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_white_zud_season
+					situation_sub_region_has_county = $CHARACTER$.capital_county
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_cold_zud_season
+					situation_sub_region_has_county = $CHARACTER$.capital_county
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_severe_drought_season
+					situation_sub_region_has_county = $CHARACTER$.capital_county
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_havsarsan_zud_season
+					situation_sub_region_has_county = $CHARACTER$.capital_county
+				}
 			}
 		}
 	}
 }
 
 has_bad_season_in_county_trigger = {
-	any_county_situation = {
-		OR = {
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_white_zud_season
-				situation_sub_region_has_county = $COUNTY$
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_cold_zud_season
-				situation_sub_region_has_county = $COUNTY$
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_severe_drought_season
-				situation_sub_region_has_county = $COUNTY$
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_havsarsan_zud_season
-				situation_sub_region_has_county = $COUNTY$
+	$COUNTY$ = { #Unop ck3-tiger Make this a proper county trigger
+		any_county_situation = {
+			OR = {
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_white_zud_season
+					situation_sub_region_has_county = $COUNTY$
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_cold_zud_season
+					situation_sub_region_has_county = $COUNTY$
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_severe_drought_season
+					situation_sub_region_has_county = $COUNTY$
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_havsarsan_zud_season
+					situation_sub_region_has_county = $COUNTY$
+				}
 			}
 		}
 	}
 }
 
 has_good_season_nomadic_capital_root_trigger = {
-	any_character_situation = {
-		OR = {
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_abundant_grazing_season
-				situation_sub_region_has_county = root.capital_county
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_warm_nights_season
-				situation_sub_region_has_county = root.capital_county
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_sky_blessing_season
-				situation_sub_region_has_county = root.capital_county
-			
+	root ?= { #Unop ck3-tiger Make this a proper root capital county trigger
+		any_character_situation = {
+			OR = {
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_abundant_grazing_season
+					situation_sub_region_has_county = root.capital_county
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_warm_nights_season
+					situation_sub_region_has_county = root.capital_county
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_sky_blessing_season
+					situation_sub_region_has_county = root.capital_county
+				
+				}
 			}
 		}
 	}
 }
 
 has_good_season_nomadic_capital_character_trigger = {
-	any_character_situation = {
-		OR = {
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_abundant_grazing_season
-				situation_sub_region_has_county = $CHARACTER$.capital_county
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_warm_nights_season
-				situation_sub_region_has_county = $CHARACTER$.capital_county
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_sky_blessing_season
-				situation_sub_region_has_county = $CHARACTER$.capital_county
+	$CHARACTER$ = { #Unop ck3-tiger Make this a proper character trigger
+		any_character_situation = {
+			OR = {
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_abundant_grazing_season
+					situation_sub_region_has_county = $CHARACTER$.capital_county
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_warm_nights_season
+					situation_sub_region_has_county = $CHARACTER$.capital_county
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_sky_blessing_season
+					situation_sub_region_has_county = $CHARACTER$.capital_county
+				}
 			}
 		}
 	}
 }
 
 has_good_season_in_county_trigger = {
-	any_county_situation = {
-		OR = {
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_abundant_grazing_season
-				situation_sub_region_has_county = $COUNTY$
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_warm_nights_season
-				situation_sub_region_has_county = $COUNTY$
-			}
-			any_situation_sub_region = {
-				sub_region_current_phase = situation_steppe_sky_blessing_season
-				situation_sub_region_has_county = $COUNTY$
-			
+	$COUNTY$ = { #Unop ck3-tiger Make this a proper county trigger
+		any_county_situation = {
+			OR = {
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_abundant_grazing_season
+					situation_sub_region_has_county = $COUNTY$
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_warm_nights_season
+					situation_sub_region_has_county = $COUNTY$
+				}
+				any_situation_sub_region = {
+					sub_region_current_phase = situation_steppe_sky_blessing_season
+					situation_sub_region_has_county = $COUNTY$
+				
+				}
 			}
 		}
 	}
