@@ -11,7 +11,7 @@ fp3_demand_submission_interaction = {
 
 	greeting = positive
 	notification_text = DEMAND_SUBMISSION_NOTIFICATION
-	
+
 	is_shown = {
 		NOT = { scope:actor = scope:recipient }
 		struggle:persian_struggle ?= { has_struggle_phase_parameter = demand_submission_interaction_unlocked }
@@ -27,7 +27,7 @@ fp3_demand_submission_interaction = {
 
 	ai_min_reply_days = 2
 	ai_max_reply_days = 7
-	
+
 	ai_accept = {
 		base = 0
 		# This is more flavorful than "base acceptance"
@@ -248,7 +248,7 @@ fp3_demand_submission_interaction = {
 	}
 
 	ai_frequency = 12
-	
+
 	# Very similar to ai_accept, but ignores effects that are < 10 in value for brevity's sake
 	ai_will_do = {
 		# The caliph generally _wants_ to be chucking these out all over the place.
@@ -377,6 +377,7 @@ fp3_request_turkic_invasion_interaction = {
 					OR = {
 						government_has_flag = government_is_clan
 						government_has_flag = government_is_tribal
+						government_has_flag = government_is_nomadic # Unop: Added this flag, since nomad DLC a lot of recipient are now nomadic
 					}
 					culture = { has_cultural_pillar = heritage_turkic }
 					highest_held_title_tier >= tier_county
@@ -393,7 +394,7 @@ fp3_request_turkic_invasion_interaction = {
 			}
 		}
 	}
-	
+
 	send_options_exclusive = no
 
 	send_option = {
@@ -554,7 +555,7 @@ fp3_request_turkic_invasion_interaction = {
 				else = {
 					random_realm_county = { save_scope_as = invasion_target_title }
 				}
-				
+
 				scope:invasion_target_title.duchy = { save_scope_as = text_title }
 
 				hidden_effect = { # Not worth cluttering the UI with
@@ -653,10 +654,10 @@ fp3_request_turkic_invasion_interaction = {
 				if = {
 					limit = { scope:war_support = yes }
 					custom_tooltip = fp3_request_turkic_invasion_interaction_option_join_war_outcome_tooltip
-					trigger_event = fp3_misc_decisions.0005 
+					trigger_event = fp3_misc_decisions.0005
 				}
 			}
-			
+
 			scope:actor = {
 				hidden_effect = {
 					send_interface_toast = {
@@ -664,14 +665,14 @@ fp3_request_turkic_invasion_interaction = {
 						title = fp3_request_turkic_invasion_interaction_accept_notification.t
 						left_icon = scope:secondary_recipient
 						right_icon = scope:recipient
-	
+
 						show_as_tooltip = {
 							custom_tooltip = fp3_request_turkic_invasion_interaction_accept_notification.desc
 						}
 					}
 				}
 			}
-			
+
 			scope:recipient = {
 				add_character_flag = {
 					flag = incursion_ai_pacing
@@ -683,7 +684,7 @@ fp3_request_turkic_invasion_interaction = {
 						title = fp3_request_turkic_invasion_interaction_accept_notification.t
 						left_icon = scope:secondary_recipient
 						right_icon = scope:actor
-	
+
 						show_as_tooltip = {
 							custom_tooltip = fp3_request_turkic_invasion_interaction_accept_target_notification.desc
 						}
@@ -926,11 +927,11 @@ fp3_challenge_house_head_interaction = {
 			desc = fp3_challenge_house_head_interaction_notification
 		}
 	}
-	
+
 	greeting = positive
 
 	ai_maybe = yes
-	
+
 	cooldown_against_recipient = { years = 10 }
 
 	is_shown = {
@@ -973,7 +974,7 @@ fp3_challenge_house_head_interaction = {
 			}
 		}
 	}
-	
+
 	auto_accept = {
 		trigger_if = {
 			limit = {
@@ -1001,7 +1002,7 @@ fp3_challenge_house_head_interaction = {
 		}
 		trigger_else = { always = no }
 	}
-	
+
 	can_send = {
 		scope:actor = {
 			# Do not allow house heads who accepted a challenge to ping pong back and forth
@@ -1078,7 +1079,7 @@ fp3_challenge_house_head_interaction = {
 								REVERSE_NON_HOUSE_TARGET = yes
 							}
 						}
-					} 
+					}
 					else = {
 						custom_tooltip = fp3_challenge_house_head_interaction_tooltip_actor.a.lethal
 						scope:house_head = { custom_tooltip = fp3_challenge_house_head_interaction_tooltip_recipient.b.lethal }
@@ -1147,7 +1148,7 @@ fp3_challenge_house_head_interaction = {
 	send_options_exclusive = no
 
 	# AI
-	
+
 	ai_accept = {
 		base = 25
 		modifier = {
@@ -1229,20 +1230,20 @@ fp3_challenge_house_head_interaction = {
 			multiplier = 0.5
 		}
 	}
-	
+
 	ai_frequency = 24
-	
+
 	ai_target_quick_trigger = {
 		adult = yes
 	}
-	
+
 	ai_potential = {
 		NOR = {
 			has_trait = craven
 			has_trait = content
 		}
 		government_has_flag = government_is_clan
-		is_physically_able = yes 
+		is_physically_able = yes
 	}
 
 	ai_targets = {
@@ -1264,11 +1265,11 @@ fp3_challenge_house_head_interaction = {
 		ai_recipients = neighboring_rulers
 		max = 30
 	}
-	
+
 	ai_will_do = {
 		base = 5
 		# Base requirements for AI
-		modifier = { 
+		modifier = {
 			add = -1000
 			NOR = {
 				AND = {
@@ -1284,7 +1285,7 @@ fp3_challenge_house_head_interaction = {
 			}
 		}
 		# Stop AI constantly challenging players
-		modifier = { 
+		modifier = {
 			scope:recipient = { has_character_flag = ai_cooldown_house_head_challenge_flag }
 			add = -1000
 		}
@@ -1812,7 +1813,7 @@ fp3_change_allegiance = {
 			has_title = title:d_sunni
 			add = 200
 		}
-		
+
 		###############
 		## TRAITS
 		###############
@@ -1932,9 +1933,11 @@ fp3_request_honorary_titles_interaction = { # todo_cd_polish add different optio
 			value = major_piety_value
 			if = {
 				limit = { # cheaper for the actual liege
-					any_vassal = {
-						any_held_title = {
-							this = title:d_sunni
+					scope:actor = { #Unop: Root does not exists in interaction
+						any_vassal = {
+							any_held_title = {
+								this = title:d_sunni
+							}
 						}
 					}
 				}
@@ -2234,7 +2237,7 @@ fp3_request_house_unity_change_interaction = {
 							add = medium_unity_loss
 						}
 					}
-					character = root
+					character = scope:actor #Unop: Root does not exists in interaction
 					desc = clan_unity_caliph_interfered_with_unity.desc
 				}
 			}
