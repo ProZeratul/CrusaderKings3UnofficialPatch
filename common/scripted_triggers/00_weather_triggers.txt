@@ -47,8 +47,11 @@ has_winter_trigger = {
 		has_province_modifier = winter_normal_modifier
 		has_province_modifier = winter_harsh_modifier
 		#Unop Use_zud_season_in_county_trigger correctly
-		county = { save_temporary_scope_as = county }
-		has_zud_season_in_county_trigger = { COUNTY = scope:county }
+		AND = {
+			exists = county
+			county = { save_temporary_scope_as = county }
+			has_zud_season_in_county_trigger = { COUNTY = scope:county }
+		}
 	}
 }
 
