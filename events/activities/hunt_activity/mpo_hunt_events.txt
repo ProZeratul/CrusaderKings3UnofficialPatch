@@ -644,6 +644,10 @@ mpo_hunt.0020 = {
 			}
 		}
 		involved_activity.activity_host ?= this
+		#Unop Ensure wolf is a valid hunt animal for this region
+		involved_activity.activity_location = {
+			hunt_animal_wolf_trigger = yes
+		}
 	}
 
 	immediate = {
@@ -712,17 +716,18 @@ mpo_hunt.0020 = {
 		#}
 		ai_chance = {
 			base = 100
-			modifier = {
-				factor = 2
-				has_trait = brave
-			}
-			modifier = {
-				factor = 0
-				OR = {
-					has_trait = craven
-					has_trait = lazy
-				}
-			}
+			#Unop Removed ai_chance modifiers for consistency with stress_impact
+			#modifier = {
+			#	factor = 2
+			#	has_trait = brave
+			#}
+			#modifier = {
+			#	factor = 0
+			#	OR = {
+			#		has_trait = craven
+			#		has_trait = lazy
+			#	}
+			#}
 		}
 	}
 	
@@ -802,16 +807,25 @@ mpo_hunt.0020 = {
 		}
 		ai_chance = {
 			base = 100
+			#Unop Changed ai_chance modifiers for consistency with stress_impact
+			#modifier = {
+			#	factor = 2
+			#	has_trait = gregarious
+			#}
+			#modifier = {
+			#	factor = 0
+			#	OR = {
+			#		has_trait = callous
+			#		has_trait = sadistic
+			#	}
+			#}
 			modifier = {
 				factor = 2
-				has_trait = gregarious
+				has_trait = brave
 			}
 			modifier = {
 				factor = 0
-				OR = {
-					has_trait = callous
-					has_trait = sadistic
-				}
+				has_trait = craven
 			}
 		}
 	}
@@ -870,7 +884,7 @@ mpo_hunt.0020 = {
 			}
 			modifier = {
 				factor = 0
-				has_trait = calm
+				has_trait = content #Unop Was calm
 			}
 		}
 	}

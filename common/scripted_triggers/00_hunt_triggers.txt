@@ -139,14 +139,18 @@ hunt_animal_tropical_terrain_trigger = {
 
 # Wolf
 hunt_animal_wolf_trigger = {
-	NAND = {
-		geographical_region = world_africa_west
-		OR = {
-			terrain = hills
-			terrain = forest
-			terrain = jungle
-			terrain = mountains
-		}
+	#Unop Wolves are found everywhere except Africa
+	#NAND = {
+	#	geographical_region = world_africa_west
+	#	OR = {
+	#		terrain = hills
+	#		terrain = forest
+	#		terrain = jungle
+	#		terrain = mountains
+	#	}
+	#}
+	NOT = {
+		geographical_region = world_africa
 	}
 }
 
