@@ -363,7 +363,11 @@ boyan_court_position = { ### MPO
 
 	court_position_asset = {
 		trigger = {
-			NOT = { culture = { has_cultural_pillar = heritage_mongolic } }
+			NOT = {
+				court_owner ?= { #Unop: We want to check the culture of the court_owner (most likely the player) not the culture of the recipient
+					culture = { has_cultural_pillar = heritage_mongolic }
+				}
+			}
 		}
 		animation = personality_bold
 		background = "gfx/interface/illustrations/event_scenes/mpo_camp_steppe.dds"
@@ -1133,7 +1137,11 @@ yurtchi_court_position = { ### MPO
 
 	court_position_asset = {
 		trigger = {
-			NOT = { culture = { has_cultural_pillar = heritage_mongolic } }
+			NOT = {
+				court_owner ?= { #Unop: We want to check the culture of the court_owner (most likely the player) not the culture of the recipient
+					culture = { has_cultural_pillar = heritage_mongolic } 
+				}
+			}
 		}
 		animation = steward
 		background = "gfx/interface/illustrations/event_scenes/mpo_tent_interior_mongol.dds"
@@ -1491,7 +1499,11 @@ cherbi_court_position = { ### MPO
 
 	court_position_asset = {
 		trigger = {
-			NOT = { culture = { has_cultural_pillar = heritage_mongolic } }
+			NOT = { 
+				court_owner ?= { #Unop: We want to check the culture of the court_owner (most likely the player) not the culture of the recipient
+					culture = { has_cultural_pillar = heritage_mongolic } 
+				}
+			}
 		}
 		animation = personality_bold
 		background = "gfx/interface/illustrations/event_scenes/mpo_hunt_steppe.dds"
@@ -1925,8 +1937,10 @@ yeke_jarquchi_court_position = { ### MPO
 	court_position_asset = {
 		trigger = {
 			NOR = {
-				culture = { has_cultural_pillar = heritage_mongolic }
-				culture = { has_cultural_pillar = heritage_turkic }
+				court_owner ?= { #Unop: We want to check the culture of the court_owner (most likely the player) not the culture of the recipient
+					culture = { has_cultural_pillar = heritage_mongolic }
+					culture = { has_cultural_pillar = heritage_turkic }
+				}
 			}
 		}
 		animation = debating
@@ -1936,7 +1950,9 @@ yeke_jarquchi_court_position = { ### MPO
 	
 	court_position_asset = {
 		trigger = {
-			culture = { has_cultural_pillar = heritage_turkic }
+			court_owner ?= { #Unop: We want to check the culture of the court_owner (most likely the player) not the culture of the recipient
+				culture = { has_cultural_pillar = heritage_turkic }
+			}
 		}
 		animation = debating
 		background = "gfx/interface/illustrations/event_scenes/mpo_hunt_steppe.dds"
