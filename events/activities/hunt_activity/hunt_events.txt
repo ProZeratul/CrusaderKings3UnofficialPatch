@@ -2199,8 +2199,10 @@ hunt.0530 = {
 						value = scope:activity.activity_location.county.var:animal_type
 					}
 				}
-				hidden_effect = {
-					hunt_activity_falconry_game_effect = { PROVINCE = scope:activity.activity_location }
+				else = { #Unop Only select random game if no sighting
+					hidden_effect = {
+						hunt_activity_falconry_game_effect = { PROVINCE = scope:activity.activity_location }
+					}
 				}
 			}
 			hunt_activity_random_subordinate_participant_effect = {
