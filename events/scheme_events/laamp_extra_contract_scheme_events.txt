@@ -520,8 +520,8 @@ laamp_extra_contract_schemes.0012 = {
 			desc = laamp_extra_contract_schemes.0012.desc_no_thief
 		}
 		first_valid = {
-			triggered_desc = { #Unop: changed the agent (see ep3_contract_event.0030)
-				trigger = { exists = scope:agent_lookout_speed }
+			triggered_desc = {
+				trigger = { exists = scope:agent_lookout_speed } #Unop: Since agent_lookout is now agent_lookout_speed (see ep3_contract_event.0030)
 				desc = laamp_extra_contract_schemes.0012.desc_lookout
 			}
 			desc = laamp_extra_contract_schemes.0012.desc_no_lookout
@@ -565,14 +565,14 @@ laamp_extra_contract_schemes.0012 = {
 			task_contract.var:task_contract_object = { save_scope_as = task_contract_object }
 			if = {
 				limit = {
-					any_scheme_agent_slot = { is_agent_slot_type = agent_lookout }
+					any_scheme_agent_slot = { is_agent_slot_type = agent_lookout_speed } #Unop: Since agent_lookout is now agent_lookout_speed (see ep3_contract_event.0030)
 				}
 				random_scheme_agent_slot = {
 					limit = {
-						is_agent_slot_type = agent_lookout
+						is_agent_slot_type = agent_lookout_speed #Unop: Since agent_lookout is now agent_lookout_speed (see ep3_contract_event.0030)
 					}
 					slot_character = {
-						save_scope_as = agent_lookout
+						save_scope_as = agent_lookout_speed #Unop: Since agent_lookout is now agent_lookout_speed (see ep3_contract_event.0030)
 					}
 				}
 			}
