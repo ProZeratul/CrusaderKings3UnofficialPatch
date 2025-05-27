@@ -2186,16 +2186,16 @@ nomad_events.0100 = {
 			scope:vassal_1.domicile ?= {
 				if = {
 					limit = {
-						herd <= root.minor_herd_gain
+						herd <= root.domicile.minor_herd_gain #Unop: Added domicile between root & minor_herd_gain
 					}
-					change_herd = root.minor_herd_gain
+					change_herd = root.domicile.minor_herd_gain #Unop: Added domicile between root & minor_herd_gain
 				}
 			}
 		}
 		scope:vassal_1 = {
 			pay_herd = {
 				target = scope:vassal_2
-				value = root.minor_herd_gain
+				value = root.domicile.minor_herd_gain #Unop: Added domicile between root & minor_herd_gain
 			}
 		}
 	}
@@ -2208,7 +2208,7 @@ nomad_events.0100 = {
 		scope:vassal_2 = {
 			pay_herd = {
 				target = scope:vassal_2
-				value = root.minor_herd_gain
+				value = root.domicile.minor_herd_gain #Unop: Added domicile between root & minor_herd_gain
 			}
 		}
 		stress_impact = {
@@ -2230,7 +2230,7 @@ nomad_events.0100 = {
 			nomad_events_0100_dislike_effect = { VALUE = -20 }
 			pay_herd = {
 				target = scope:vassal_2
-				value = root.minor_herd_gain
+				value = root.domicile.minor_herd_gain #Unop: Added domicile between root & minor_herd_gain
 			}
 		}
 		ai_chance = {
