@@ -13323,7 +13323,9 @@ bodyguard_court_position = { # EP1
 
 	court_position_asset = {
 		trigger = {
-			culture = { has_cultural_pillar = heritage_mongolic }
+			court_owner ?= { #Unop: We want to check the culture of the court_owner (most likely the player) not the culture of the bodyguard
+				culture = { has_cultural_pillar = heritage_mongolic }
+			}
 		}
 		animation = menacing
 		background = "gfx/interface/illustrations/event_scenes/corridor.dds"
