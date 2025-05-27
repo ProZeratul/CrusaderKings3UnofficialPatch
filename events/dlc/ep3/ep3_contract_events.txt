@@ -3471,11 +3471,13 @@ ep3_contract_event.0030 = {
 			# Success.
 			AGENT_1 = agent_thief
 			AGENT_2 = agent_thug
+			AGENT_3 = agent_muscle #Unop: Since vanilla agent 4 & 5 are useless, reorder the agents to all have success first, speed second
 			# Speed.
-			AGENT_3 = agent_infiltrator
-			# Secrecy.
-			AGENT_4 = agent_lookout
-			AGENT_5 = agent_decoy
+			AGENT_4 = agent_infiltrator
+			AGENT_5 = agent_lookout_speed
+			# Secrecy. #Unop: This scheme was probably secret when it was created, then changed to not be secret anymore for unknown reason (since laamp_extra_contract_schemes.0011 is not adding secrecy bonus)
+			#AGENT_4 = agent_lookout
+			#AGENT_5 = agent_decoy
 		}
 		scope:task_contract.scheme = {
 			save_scope_as = scheme
@@ -5891,7 +5893,7 @@ ep3_contract_event.0090 = {
 		#	interaction = task_contract_train_knight_interaction
 		#	actor = root
 		#	recipient = scope:task_contract_employer
-		#}	
+		#}
 		if = {
 			limit = {
 				is_ai = yes
@@ -7648,7 +7650,7 @@ ep3_contract_event.0100 = {
 
 	#start scheme to find secrets
 	option = {
-		name = ep3_contract_event.0030.b
+		name = ep3_contract_event.0100.a #Unop: Was ep3_contract_event.0030.b but it's another event and another context :?
 		begin_contract_scheme_with_agents_effect = {
 			SCHEME_TYPE = laamp_help_find_secrets_scheme
 			TARGET_TYPE = target_character
