@@ -130,8 +130,11 @@ ai_has_cautious_personality = {
 		}
 		AND = { # They are Detractors during the FP3 Struggle in the Unrest Phase
 			any_character_struggle = {
-				is_struggle_type = persian_struggle
-				is_struggle_phase = struggle_persia_phase_unrest
+				trigger_if = { #Unop: Prevent log flood by ensuring the struggle is not indeed the persian
+					limit = { is_struggle_type = persian_struggle }
+					is_struggle_phase = struggle_persia_phase_unrest
+				}
+				trigger_else = { always = no }
 			}
 			has_trait = fp3_struggle_detractor
 		}
