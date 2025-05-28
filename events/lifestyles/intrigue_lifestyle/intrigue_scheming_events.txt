@@ -7596,6 +7596,7 @@ intrigue_scheming_special.1302 = {
 		random_targeting_scheme = {
 			if = {
 				limit = {
+					NOT = { scheme_type = learn_language } #Unop: There is nothing secret in learn_language scheme
 					is_scheme_exposed = no
 					scheme_owner = {
 						is_in_the_same_court_as_or_guest = root
@@ -7605,6 +7606,8 @@ intrigue_scheming_special.1302 = {
 			}
 			else_if = {
 				limit = {
+					NOT = { scheme_type = learn_language } #Unop: There is nothing secret in learn_language scheme
+					is_scheme_exposed = no #Unop: We need to have the scheme exposed to find agents
 					any_scheme_agent_character = {
 						AND = {
 							is_in_the_same_court_as_or_guest = root
