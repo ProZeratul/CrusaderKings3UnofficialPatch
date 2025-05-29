@@ -2308,8 +2308,6 @@ murder_outcome_reworked.0052 = {
 	immediate = {
 		# Toggleable for loc testing.
 		debug_sort_scheme_scopes_for_testing_effect = yes
-		# Process target murder effects.
-		murder_success_kill_effect = { REASON = death_disappearance }
  		if = {
  			limit = {
  				NOT = { exists = scope:home_province }
@@ -2326,6 +2324,8 @@ murder_outcome_reworked.0052 = {
 	 			location = { save_scope_as = home_province }
 	 		}
 	 	}
+		# Process target murder effects. #Unop: Put this below so the location still exists !
+		murder_success_kill_effect = { REASON = death_disappearance }
 	}
 
 	option = { name = murder_outcome_reworked.0000.successful_scheme_target.adult }
