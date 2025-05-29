@@ -1068,62 +1068,62 @@ mpo_convert_capital_duchy_nomad_value = {
 		add = 100
 	}
 }
+#Unop: All this is already defined
+#mpo_introduce_heir_prestige_cost = medium_prestige_value
+#mpo_introduce_heir_piety_cost = major_piety_value
+#
+#age_compared_to_player_heir = {
+#	add = age
+#	subtract = root.player_heir.age
+#}
 
-mpo_introduce_heir_prestige_cost = medium_prestige_value
-mpo_introduce_heir_piety_cost = major_piety_value
-
-age_compared_to_player_heir = {
-	add = age
-	subtract = root.player_heir.age
-}
-
-odds_steal_herd_scheme_misc_value = {
-	value = 10
-	add = {
-		value = 0
-		desc = scheme_odds.misc_modifiers
-
-		if = {
-			limit = {
-				scope:target = {				
-					has_opinion_modifier = {
-						target = scope:owner
-						modifier = attempted_to_steal_herd_crime
-					}
-				}
-			}
-			add = -50
-		}
-	}
-
-	add = {
-		value = scope:owner.prowess
-		desc = scheme_odds.prowess.owner
-	}
-
-	if = {
-		limit = {
-			scope:owner = { has_trait = gallowsbait }
-		}
-		add = {
-			value = 10
-			desc = SCHEME_STEAL_HERD_GALLOWSBAIT
-		}
-	}
-
-	# If it's a herder, even though you probably shouldn't be stealing from them anyways
-	if = {
-		limit = {
-			scope:target = {
-				government_has_flag = government_is_herder
-			}
-		}
-		add = {
-			value = -10 
-			desc = scheme_odds.misc_is_herder
-		}
-	}
-}
+#odds_steal_herd_scheme_misc_value = {
+#	value = 10
+#	add = {
+#		value = 0
+#		desc = scheme_odds.misc_modifiers
+#
+#		if = {
+#			limit = {
+#				scope:target = {				
+#					has_opinion_modifier = {
+#						target = scope:owner
+#						modifier = attempted_to_steal_herd_crime
+#					}
+#				}
+#			}
+#			add = -50
+#		}
+#	}
+#
+#	add = {
+#		value = scope:owner.prowess
+#		desc = scheme_odds.prowess.owner
+#	}
+#
+#	if = {
+#		limit = {
+#			scope:owner = { has_trait = gallowsbait }
+#		}
+#		add = {
+#			value = 10
+#			desc = SCHEME_STEAL_HERD_GALLOWSBAIT
+#		}
+#	}
+#
+#	# If it's a herder, even though you probably shouldn't be stealing from them anyways
+#	if = {
+#		limit = {
+#			scope:target = {
+#				government_has_flag = government_is_herder
+#			}
+#		}
+#		add = {
+#			value = -10 
+#			desc = scheme_odds.misc_is_herder
+#		}
+#	}
+#}
 
 odds_steal_herd_scheme_misc_value = {
 	value = 10
@@ -2363,25 +2363,25 @@ potential_joiner_combined_value = {
 }
 
 
-mpo_domicile_yurt_marriage_acceptance_value = {
-	value = 0
-	scope:actor.domicile ?= {
-		switch = {
-			trigger = has_domicile_parameter
-			nomad_yurt_marriage_acceptance_lvl_1 = { add = 5 }
-			nomad_yurt_marriage_acceptance_lvl_2 = { add = 10 }
-			nomad_yurt_marriage_acceptance_lvl_3 = { add = 20 }
-			nomad_yurt_marriage_acceptance_lvl_4 = { add = 30 }
-		}
-		switch = {
-			trigger = has_domicile_parameter
-			nomad_main_yurt_marriage_acceptance_lvl_1 = { add = 5 }
-			nomad_main_yurt_marriage_acceptance_lvl_2 = { add = 10 }
-			nomad_main_yurt_marriage_acceptance_lvl_3 = { add = 15 }
-			nomad_main_yurt_marriage_acceptance_lvl_4 = { add = 20 }
-		}
-	}
-}
+#po_domicile_yurt_marriage_acceptance_value = { #Unop: Already exists with same values
+#	value = 0
+#	scope:actor.domicile ?= {
+#		switch = {
+#			trigger = has_domicile_parameter
+#			nomad_yurt_marriage_acceptance_lvl_1 = { add = 5 }
+#			nomad_yurt_marriage_acceptance_lvl_2 = { add = 10 }
+#			nomad_yurt_marriage_acceptance_lvl_3 = { add = 20 }
+#			nomad_yurt_marriage_acceptance_lvl_4 = { add = 30 }
+#		}
+#		switch = {
+#			trigger = has_domicile_parameter
+#			nomad_main_yurt_marriage_acceptance_lvl_1 = { add = 5 }
+#			nomad_main_yurt_marriage_acceptance_lvl_2 = { add = 10 }
+#			nomad_main_yurt_marriage_acceptance_lvl_3 = { add = 15 }
+#			nomad_main_yurt_marriage_acceptance_lvl_4 = { add = 20 }
+#		}
+#	}
+#
 
 sent_herd_opinion_value = {
 	value = 5
