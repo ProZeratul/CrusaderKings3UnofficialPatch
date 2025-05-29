@@ -2353,8 +2353,11 @@ court_tutor_court_position = {
 			limit = {
 				government_has_flag = government_is_nomadic
 			}
-			domicile ?= {
-				has_domicile_parameter = nomad_unlock_court_tutor
+			custom_tooltip = { #Unop: To properly display the building that you need
+				text = has_court_tutor_domicile_building
+				domicile ?= {
+					has_domicile_parameter = nomad_unlock_court_tutor
+				}
 			}
 		}
 		trigger_else = {
