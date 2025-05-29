@@ -16318,7 +16318,10 @@ steal_herd_success_effect = {
 			limit = {
 				is_independent_ruler = no
 				liege = {
-					NOT = { is_liege_or_above_of = scope:owner }
+					NOR = { 
+						this = scope:owner #Unop: If the liege stole herd of a vassal, prevent lose self opinion
+						is_liege_or_above_of = scope:owner
+					}
 				}
 			}
 			liege = {
