@@ -2203,34 +2203,126 @@ nomadic_cultural_maa_bonus_low_value = 0.1
 nomadic_cultural_maa_bonus_medium_value = 0.2
 nomadic_cultural_maa_bonus_high_value = 0.4
 
-dominate_title_current_ally_strength = {
-	value = root.current_military_strength
+dominate_title_current_ally_strength = { #Unop: Recompute correctly the strength
+	value = current_military_strength
+	save_temporary_scope_as = defender
 	every_tributary = {
 		limit = {
 			vassal_contract_has_flag = tributary_contract_tributary_forced_war_override
+			NOT = { is_allied_to = scope:defender }
 		}
-		add = current_military_strength #Unop: Removed the root in front of current_military_strength
+		add = current_military_strength
 	}
 	every_ally = {
-		add = current_military_strength #Unop: Removed the root in front of current_military_strength
+		limit = {
+			NOR = {
+				liege = prev
+				top_liege = prev
+			}
+		}
+		add = current_military_strength
+	}
+	confederation ?= {
+		every_confederation_member = {
+			limit = {
+				is_landed = yes
+				NOT = { this = scope:defender }
+				NOT = { is_allied_to = scope:defender }
+			}
+			add = current_military_strength
+		}
 	}
 }
 
-dominate_title_current_enemy_strength = {
+dominate_title_current_enemy_strength = { #Unop: Recompute correctly the strength
 	value = 0
-	root.primary_title.de_jure_liege ?= {
-		every_de_jure_county_holder = {
-			limit = {
-				is_landed = yes
-				NOR = {
-					is_allied_to = root
-					top_liege = root
-					top_suzerain ?= root
-					government_has_flag = government_is_herder
+	primary_title.de_jure_liege ?= { save_temporary_scope_as = title_scope }
+	if = {
+		limit = {
+			scope:title_scope ?= {
+				NOT = { exists = holder }
+				any_de_jure_county_holder = {
+					is_landed = yes
+					NOR = {
+						top_liege ?= root
+						top_suzerain ?= root
+						is_allied_to = root
+						government_has_flag = government_is_herder
+					}
+					is_independent_ruler = yes
 				}
-				is_independent_ruler = yes
 			}
+		}
+		scope:title_scope = {
+			ordered_de_jure_county_holder = {
+				limit = {
+					is_landed = yes
+					NOR = {
+						top_liege ?= root
+						top_suzerain ?= root
+						is_allied_to = root
+						government_has_flag = government_is_herder
+					}
+					is_independent_ruler = yes
+				}
+				order_by = current_military_strength
+				max = 1
+				save_temporary_scope_as = main_defender
+			}
+		}	
+		scope:main_defender = {
 			add = current_military_strength
+			every_ally = {
+				limit = {
+					NOR = {
+						liege = prev
+						top_liege = prev
+					}
+					any_sub_realm_county = {
+						holder = prev
+						NOT = { holder.primary_title.de_jure_liege = scope:title_scope }
+					}
+				}
+				add = current_military_strength
+			}			
+			every_tributary = {
+				limit = {
+					vassal_contract_has_flag = tributary_contract_tributary_forced_war_override
+					NOT = { is_allied_to = scope:main_defender }
+				}
+				add = current_military_strength
+			}
+			confederation ?= {
+				every_confederation_member = {
+					limit = {
+						is_landed = yes
+						NOT = { this = scope:main_defender }
+						NOT = { is_allied_to = scope:main_defender }
+						any_sub_realm_county = {
+							holder = prev
+							NOT = { holder.primary_title.de_jure_liege = scope:title_scope }
+						}
+					}
+					add = current_military_strength
+				}
+			}
+		}
+		scope:title_scope ?= {
+			every_de_jure_county_holder = {
+				limit = {
+					is_landed = yes
+					NOR = {
+						is_allied_to = root
+						top_liege = root
+						top_suzerain ?= root
+						government_has_flag = government_is_herder
+						this = scope:main_defender
+						is_allied_to = scope:main_defender
+					}
+					is_independent_ruler = yes
+				}
+				add = current_military_strength
+			}
 		}
 	}
 }
