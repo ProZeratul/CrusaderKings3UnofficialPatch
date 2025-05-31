@@ -75,6 +75,10 @@
 				}
 			}
 		}
+	}
+	#Unop Rework the section below for the recipient, as it was (presumably) intended
+	# For the actor, this = scope:secondary_recipient is always false
+	scope:recipient = {
 		if = {
 			limit = {
 				this = scope:secondary_recipient # We check that you're marrying them yourself
@@ -85,7 +89,7 @@
 			show_as_tooltip = {
 				vassals_dislike_marry_lowborn_effect = {
 					SPOUSE = scope:secondary_actor
-					RULER = scope:actor
+					RULER = scope:recipient #Unop
 				}
 			}
 			#Legitimacy loss for marrying a lowborn
@@ -103,10 +107,10 @@
 					send_interface_toast = {
 						type = event_toast_effect_good
 						title = married_lowborn_toast
-						left_icon = scope:actor
+						left_icon = scope:recipient #Unop
 						add_legitimacy = {
 							value = medium_legitimacy_loss
-							multiply = scope:actor.primary_title.tier
+							multiply = scope:recipient.primary_title.tier #Unop
 						}
 					}
 				}
@@ -114,7 +118,7 @@
 					send_interface_toast = {
 						type = event_toast_effect_good
 						title = married_lowborn_toast
-						left_icon = scope:actor
+						left_icon = scope:recipient #Unop
 						add_legitimacy = { value = minor_legitimacy_loss }
 					}
 					hidden_effect = {
@@ -126,15 +130,43 @@
 				}
 			}
 		}
-		else = { # If they're not a lowborn AND you and the recipient are both Nomad we may give you some Legitimacy
-			if = {
-				limit = {
-					is_valid_for_nomadic_legitimacy_change = yes
-					scope:recipient = { government_has_flag = government_is_nomadic }
-					mpo_lower_nomad_authority_trigger = { CHARACTER = scope:recipient } # Only if recipient has higher Dominance than you
-				}
-				add_legitimacy = medium_legitimacy_gain
+		#Unop Replace the section below with dedicated sections for actor and recipient
+		#else = { # If they're not a lowborn AND you and the recipient are both Nomad we may give you some Legitimacy
+		#	if = {
+		#		limit = {
+		#			is_valid_for_nomadic_legitimacy_change = yes
+		#			scope:recipient = { government_has_flag = government_is_nomadic }
+		#			mpo_lower_nomad_authority_trigger = { CHARACTER = scope:recipient } # Only if recipient has higher Dominance than you
+		#		}
+		#		add_legitimacy = medium_legitimacy_gain
+		#	}
+		#}
+	}
+	#Unop Add the actor and recipient sections below as replacement for the buggy logic above
+	# We assume that the actor may get legitimacy from marrying a highborn secondary_recipient
+	# only if they are marrying them yourself, and similarly for the recipient
+	scope:actor = {
+		if = { # If they're not a lowborn AND you and the recipient are both Nomad we may give you some Legitimacy
+			limit = {
+				this = scope:secondary_actor # We check that you're marrying them yourself
+				scope:secondary_recipient = { is_lowborn = no }
+				is_valid_for_nomadic_legitimacy_change = yes
+				scope:recipient = { government_has_flag = government_is_nomadic }
+				mpo_lower_nomad_authority_trigger = { CHARACTER = scope:recipient } # Only if recipient has higher Dominance than you
 			}
+			add_legitimacy = medium_legitimacy_gain
+		}
+	}
+	scope:recipient = {
+		if = { # If they're not a lowborn AND you and the recipient are both Nomad we may give you some Legitimacy
+			limit = {
+				this = scope:secondary_recipient # We check that you're marrying them yourself
+				scope:secondary_actor = { is_lowborn = no }
+				is_valid_for_nomadic_legitimacy_change = yes
+				scope:actor = { government_has_flag = government_is_nomadic }
+				mpo_lower_nomad_authority_trigger = { CHARACTER = scope:actor } # Only if recipient has higher Dominance than you
+			}
+			add_legitimacy = medium_legitimacy_gain
 		}
 	}
 	
