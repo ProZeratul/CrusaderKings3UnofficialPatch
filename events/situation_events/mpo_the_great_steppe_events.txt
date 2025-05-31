@@ -356,6 +356,22 @@ mpo_the_great_steppe.0002 = {
 				change_county_control = -10
 			}
 		}
+
+		if = { #Unop: So the stargazer task modifier (if active) is updated right-away instead of waiting the the next monthly check
+			limit = {
+				OR = {
+					has_character_modifier = court_astrologer_abundant_grazing_modifier
+					has_character_modifier = court_astrologer_warm_nights_modifier
+					has_character_modifier = court_astrologer_sky_blessing_modifier
+					has_character_modifier = court_astrologer_white_zud_modifier
+					has_character_modifier = court_astrologer_cold_zud_modifier
+					has_character_modifier = court_astrologer_severe_drought_modifier
+					has_character_modifier = court_astrologer_havsarsan_zud_modifier
+				}
+			}
+			court_astrologer_task_remove_seasonal_modifiers_effect = yes
+			court_astrologer_task_add_seasonal_modifiers_effect = yes
+		}
 		
 		ai_chance = {
 			base = 100

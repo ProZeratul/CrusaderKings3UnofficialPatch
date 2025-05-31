@@ -2999,56 +2999,96 @@ court_astrologer_task_remove_seasonal_modifiers_effect = {
 court_astrologer_task_add_seasonal_modifiers_effect = {
 	hidden_effect = {
 		save_scope_as = current_character
-		capital_province.county = {
-			random_county_situation_sub_region = {
+		capital_province.county ?= {
+			if = {
 				limit = {
-					OR = {
-						sub_region_current_phase = situation_steppe_abundant_grazing_season
-						sub_region_current_phase = situation_steppe_warm_nights_season
-						sub_region_current_phase = situation_steppe_sky_blessing_season
-						sub_region_current_phase = situation_steppe_white_zud_season
-						sub_region_current_phase = situation_steppe_cold_zud_season
-						sub_region_current_phase = situation_steppe_severe_drought_season
-						sub_region_current_phase = situation_steppe_havsarsan_zud_season
+					any_county_situation = {
+						any_situation_sub_region = {
+							sub_region_current_phase = situation_steppe_abundant_grazing_season
+							situation_sub_region_has_county = scope:current_character.capital_county
+						}
 					}
 				}
-				switch = {
-					trigger = sub_region_current_phase
-					situation_steppe_abundant_grazing_season = {
-						scope:current_character = {
-							add_character_modifier = court_astrologer_abundant_grazing_modifier
+				scope:current_character = {
+					add_character_modifier = court_astrologer_abundant_grazing_modifier
+				}
+			}
+			else_if = {
+				limit = {
+					any_county_situation = {
+						any_situation_sub_region = {
+							sub_region_current_phase = situation_steppe_warm_nights_season
+							situation_sub_region_has_county = scope:current_character.capital_county
 						}
 					}
-					situation_steppe_warm_nights_season = {
-						scope:current_character = {
-							add_character_modifier = court_astrologer_warm_nights_modifier
+				}
+				scope:current_character = {
+					add_character_modifier = court_astrologer_warm_nights_modifier
+				}
+			}
+			else_if = {
+				limit = {
+					any_county_situation = {
+						any_situation_sub_region = {
+							sub_region_current_phase = situation_steppe_sky_blessing_season
+							situation_sub_region_has_county = scope:current_character.capital_county
 						}
 					}
-					situation_steppe_sky_blessing_season = {
-						scope:current_character = {
-							add_character_modifier = court_astrologer_sky_blessing_modifier
+				}
+				scope:current_character = {
+					add_character_modifier = court_astrologer_sky_blessing_modifier
+				}
+			}
+			else_if = {
+				limit = {
+					any_county_situation = {
+						any_situation_sub_region = {
+							sub_region_current_phase = situation_steppe_white_zud_season
+							situation_sub_region_has_county = scope:current_character.capital_county
 						}
 					}
-					situation_steppe_white_zud_season = {
-						scope:current_character = {
-							add_character_modifier = court_astrologer_white_zud_modifier
+				}
+				scope:current_character = {
+					add_character_modifier = court_astrologer_white_zud_modifier
+				}
+			}
+			else_if = {
+				limit = {
+					any_county_situation = {
+						any_situation_sub_region = {
+							sub_region_current_phase = situation_steppe_cold_zud_season
+							situation_sub_region_has_county = scope:current_character.capital_county
 						}
 					}
-					situation_steppe_cold_zud_season = {
-						scope:current_character = {
-							add_character_modifier = court_astrologer_cold_zud_modifier
+				}
+				scope:current_character = {
+					add_character_modifier = court_astrologer_cold_zud_modifier
+				}
+			}
+			else_if = {
+				limit = {
+					any_county_situation = {
+						any_situation_sub_region = {
+							sub_region_current_phase = situation_steppe_severe_drought_season
+							situation_sub_region_has_county = scope:current_character.capital_county
 						}
 					}
-					situation_steppe_severe_drought_season = {
-						scope:current_character = {
-							add_character_modifier = court_astrologer_severe_drought_modifier
+				}
+				scope:current_character = {
+					add_character_modifier = court_astrologer_severe_drought_modifier
+				}
+			}
+			else_if = {
+				limit = {
+					any_county_situation = {
+						any_situation_sub_region = {
+							sub_region_current_phase = situation_steppe_havsarsan_zud_season
+							situation_sub_region_has_county = scope:current_character.capital_county
 						}
 					}
-					situation_steppe_havsarsan_zud_season = {
-						scope:current_character = {
-							add_character_modifier = court_astrologer_havsarsan_zud_modifier
-						}
-					}
+				}
+				scope:current_character = {
+					add_character_modifier = court_astrologer_havsarsan_zud_modifier
 				}
 			}
 		}
