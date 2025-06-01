@@ -6212,6 +6212,7 @@ bp2_yearly.6200 = {
 	option = { # Send with knight 
 		name = bp2_yearly.6200.c
 		flavor = bp2_yearly.6200.c.tt
+		trigger = { exists = scope:target_knight } #Unop: Mandatory to add this or the AI will be free to use this (it ignore the show_as_unavailable)
 		show_as_unavailable = {
 			NOT = {
 				any_knight = {
@@ -7509,6 +7510,7 @@ bp2_yearly.6205 = {
 		# End hostageship
 		bp2_return_hostage_no_travel_effect = { HOSTAGE = scope:hostage }
 		every_close_family_member = {
+			limit = { NOT = { this = scope:hostage } } #Unop: Could try to add an hostage self opinion
 			custom = all_close_family_members
 			add_opinion = {
 				target = root
@@ -12142,6 +12144,7 @@ bp2_yearly.6150 = {
 		custom_tooltip = bp2_yearly.6150.family_opinion_hostage
 		hidden_effect = {
 			every_close_family_member = {
+				limit = { NOT = { this = scope:hostage } } #Unop: Could try to add an hostage self opinion
 				reverse_add_opinion = {
 					target = scope:hostage
 					modifier = friendliness_opinion
