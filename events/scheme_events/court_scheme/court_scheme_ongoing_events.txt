@@ -941,8 +941,9 @@ scripted_trigger court_ongoing_1010_insulter_trigger = {
 	is_adult = yes
 	exists = liege
 	can_be_combatant_based_on_gender_trigger = { ARMY_OWNER = scope:potential_insulter.liege }
-	NOT = {
+	NOR = {
 		this = scope:target
+		this = root #Unop prevent you from being selected for the insulter
 	}
 	OR = {
 		opinion = {
