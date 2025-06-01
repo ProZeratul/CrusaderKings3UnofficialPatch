@@ -55,8 +55,13 @@ scripted_trigger bp2_yearly_6000_valid_educator = {
 			}
 			OR = {
 				is_knight_of = root
-				this = root.cp:councillor_marshal
 				this = root.cp:councillor_spymaster
+				trigger_if = { # Unop: In nomadic gov there is no councillor (except spymaster), so replace it with the astrologer (stargazer)
+					limit = { 
+						NOT = { government_has_flag = government_is_nomadic }
+					}
+					this = root.cp:councillor_marshal
+				}
 			}
 		}
 		AND = {
@@ -64,9 +69,15 @@ scripted_trigger bp2_yearly_6000_valid_educator = {
 				has_cultural_pillar = ethos_bureaucratic
 			}
 			OR = {
-				this = root.cp:councillor_steward
 				has_court_position = seneschal_court_position
-				this = root.cp:councillor_court_chaplain
+				trigger_if = { # Unop: In nomadic gov there is no councillor (except spymaster), so replace it with the astrologer (stargazer)
+					limit = { government_has_flag = government_is_nomadic }
+					has_court_position = court_astrologer_court_position
+				}
+				trigger_else = {
+					this = root.cp:councillor_steward
+					this = root.cp:councillor_court_chaplain
+				}
 			}
 		}
 		AND = {
@@ -74,9 +85,15 @@ scripted_trigger bp2_yearly_6000_valid_educator = {
 				has_cultural_pillar = ethos_communal
 			}
 			OR = {
-				this = root.cp:councillor_chancellor
-				this = root.cp:councillor_court_chaplain
 				has_court_position = court_poet_court_position
+				trigger_if = { # Unop: In nomadic gov there is no councillor (except spymaster), so replace it with the astrologer (stargazer)
+					limit = { government_has_flag = government_is_nomadic }
+					has_court_position = court_astrologer_court_position
+				}
+				trigger_else = {
+					this = root.cp:councillor_chancellor
+					this = root.cp:councillor_court_chaplain
+				}
 			}
 		}
 		AND = {
@@ -84,10 +101,16 @@ scripted_trigger bp2_yearly_6000_valid_educator = {
 				has_cultural_pillar = ethos_courtly
 			}
 			OR = {
-				this = root.cp:councillor_chancellor
 				has_court_position = seneschal_court_position
 				has_court_position = court_poet_court_position
-				this = root.cp:councillor_court_chaplain
+				trigger_if = { # Unop: In nomadic gov there is no councillor (except spymaster), so replace it with the astrologer (stargazer)
+					limit = { government_has_flag = government_is_nomadic }
+					has_court_position = court_astrologer_court_position
+				}
+				trigger_else = {
+					this = root.cp:councillor_chancellor
+					this = root.cp:councillor_court_chaplain
+				}
 			}
 		}
 		AND = {
@@ -95,16 +118,28 @@ scripted_trigger bp2_yearly_6000_valid_educator = {
 				has_cultural_pillar = ethos_egalitarian
 			}
 			OR = {
-				this = root.cp:councillor_chancellor
 				has_court_position = seneschal_court_position
-				this = root.cp:councillor_court_chaplain
+				trigger_if = { # Unop: In nomadic gov there is no councillor (except spymaster), so replace it with the astrologer (stargazer)
+					limit = { government_has_flag = government_is_nomadic }
+					has_court_position = court_astrologer_court_position
+				}
+				trigger_else = {
+					this = root.cp:councillor_chancellor
+					this = root.cp:councillor_court_chaplain
+				}
 			}
 		}
 		AND = {
 			root.culture = {
 				has_cultural_pillar = ethos_spiritual
 			}
-			this = root.cp:councillor_court_chaplain
+			trigger_if = { # Unop: In nomadic gov there is no councillor (except spymaster), so replace it with the astrologer (stargazer)
+				limit = { government_has_flag = government_is_nomadic }
+				has_court_position = court_astrologer_court_position
+			}
+			trigger_else = {
+				this = root.cp:councillor_court_chaplain
+			}
 		}
 
 		AND = {
@@ -113,10 +148,16 @@ scripted_trigger bp2_yearly_6000_valid_educator = {
 			}
 			OR = {
 				is_knight_of = root
-				this = root.cp:councillor_marshal
-				this = root.cp:councillor_chancellor
 				has_court_position = court_poet_court_position
-				this = root.cp:councillor_court_chaplain
+				trigger_if = { # Unop: In nomadic gov there is no councillor (except spymaster), so replace it with the astrologer (stargazer)
+					limit = { government_has_flag = government_is_nomadic }
+					has_court_position = court_astrologer_court_position
+				}
+				trigger_else = {
+					this = root.cp:councillor_marshal
+					this = root.cp:councillor_chancellor
+					this = root.cp:councillor_court_chaplain
+				}
 			}
 		}
 	}
