@@ -1278,6 +1278,7 @@ scale_dynasty_prestige_by_era = {
 	value = 1
 	if = {
 		limit = { #Unop dynast mean we are inside a Dynasty scope
+			exists = dynast
 			exists = dynast.culture
 		}
 		dynast.culture = {
@@ -1297,6 +1298,7 @@ scale_dynasty_prestige_by_era = {
 	}
 	else_if = { #Unop dynasty means we are inside a character scope
 		limit = {
+			exists = dynasty
 			exists = dynasty.dynast.culture
 		}
 		dynasty.dynast.culture = {
