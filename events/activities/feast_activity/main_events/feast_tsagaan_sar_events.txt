@@ -241,8 +241,9 @@ scripted_trigger more_likely_to_give_important_gift_trigger = {
     	is_tributary_of = involved_activity.var:host_var
 		is_obedient_to = involved_activity.var:host_var
         is_vassal_or_below_of = involved_activity.var:host_var
-        is_any_family_relation_or_spouse_trigger = { CHARACTER = involved_activity.var:host_var }
-        has_important_relationship_with_character_trigger = { CHARACTER = involved_activity.var:host_var }
+        involved_activity.var:host_var = { save_temporary_scope_as = unop_host } #Unop: Use a temp scope instead of the whole 'involved_activity.var:host_var' for the parameter
+        is_any_family_relation_or_spouse_trigger = { CHARACTER = scope:unop_host }
+        has_important_relationship_with_character_trigger = { CHARACTER = scope:unop_host }
     }
 }
 
@@ -1278,6 +1279,7 @@ feast_tsagaan_sar_events.0004 = {
                 save_scope_as = artifact_3
             }
         }
+        involved_activity.var:host_var = { save_scope_as = unop_host_var } # Unop: Add this so we do not rely on the involved_activity property that is scope-dependent
     }
 
     # Gift artifact 1
@@ -1293,7 +1295,7 @@ feast_tsagaan_sar_events.0004 = {
                 right_icon = root
                 type = event_generic_neutral
                 scope:artifact_1 = {
-                    set_owner = involved_activity.var:host_var
+                    set_owner = scope:unop_host_var #Unop: See comment above on this scope creation
                 }
             }
         }
@@ -1327,7 +1329,7 @@ feast_tsagaan_sar_events.0004 = {
                 right_icon = root
                 type = event_generic_neutral
                 scope:artifact_2 = {
-                    set_owner = involved_activity.var:host_var
+                    set_owner = scope:unop_host_var #Unop: See comment above on this scope creation
                 }
             }
         }
@@ -1361,7 +1363,7 @@ feast_tsagaan_sar_events.0004 = {
                 right_icon = root
                 type = event_generic_neutral
                 scope:artifact_3 = {
-                    set_owner = involved_activity.var:host_var
+                    set_owner = scope:unop_host_var #Unop: See comment above on this scope creation
                 }
             }
         }
@@ -4084,12 +4086,16 @@ feast_tsagaan_sar_events.0253 = {
         # Outcome of bet
         if = {
             limit = {
-                has_character_flag = horse_race_bet_1
-                scope:rider_winner = scope:horse_rider_1
-            }
-            alternative_limit = {
-                has_character_flag = horse_race_bet_2
-                scope:rider_winner = scope:horse_rider_2
+                OR = { #Unop: Fix the alternative_limit that is not valid in this context
+                    AND = {
+                        has_character_flag = horse_race_bet_1
+                        scope:rider_winner = scope:horse_rider_1
+                    }
+                    AND = {
+                        has_character_flag = horse_race_bet_2
+                        scope:rider_winner = scope:horse_rider_2
+                    }
+                }
             }
             custom_tooltip = feast_tsagaan_sar_events.0253.bet_tt
             add_short_term_gold = tiny_gold_value_double
