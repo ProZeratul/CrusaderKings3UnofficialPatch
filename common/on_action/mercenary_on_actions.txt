@@ -41,7 +41,7 @@ on_mercenary_company_dismissed = {
 			limit = {
 				scope:old_employer = { government_has_flag = government_is_nomadic }
 			}
-			root = {
+			mercenary_company_leader = {
 				set_variable = {
 					name = merc_knight_gain_chance
 					value = 0
@@ -57,26 +57,27 @@ on_mercenary_company_dismissed = {
 				switch = {
 					trigger = has_domicile_parameter
 					nomad_yurt_merc_fired_bonus_lvl_1 = {
-						root = { change_variable = { name = merc_knight_gain_chance add = 20 } }
+						root.mercenary_company_leader = { change_variable = { name = merc_knight_gain_chance add = 20 } }
 					}
 					nomad_yurt_merc_fired_bonus_lvl_2 = {
-						root = { change_variable = { name = merc_knight_gain_chance add = 40 } }
+						root.mercenary_company_leader = { change_variable = { name = merc_knight_gain_chance add = 40 } }
 					}
 					nomad_yurt_merc_fired_bonus_lvl_3 = {
-						root = { change_variable = { name = merc_knight_gain_chance add = 60 } }
+						root.mercenary_company_leader = { change_variable = { name = merc_knight_gain_chance add = 60 } }
 					}	
 				}
 				random = {
-					chance = var:merc_knight_gain_chance
+					chance = root.mercenary_company_leader.var:merc_knight_gain_chance
 					scope:old_employer = {
 						send_interface_message = {
 							type = event_generic_good
 							title = merc_yurt_knights_gained.tt
 							add_courtier = scope:giveaway_knight
 						}
-					}					
+					}
 				}
 			}
+			mercenary_company_leader = { remove_variable = merc_knight_gain_chance }
 		}
 		scope:old_employer = {
 			if = {
