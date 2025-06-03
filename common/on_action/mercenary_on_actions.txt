@@ -41,7 +41,7 @@ on_mercenary_company_dismissed = {
 			limit = {
 				scope:old_employer = { government_has_flag = government_is_nomadic }
 			}
-			mercenary_company_leader = {
+			mercenary_company_leader ?= { # Unop: Root is a mercenary company, wee need the leader to have a scope that support variable (I didn't know you couldn't on them ?)
 				set_variable = {
 					name = merc_knight_gain_chance
 					value = 0
@@ -57,17 +57,19 @@ on_mercenary_company_dismissed = {
 				switch = {
 					trigger = has_domicile_parameter
 					nomad_yurt_merc_fired_bonus_lvl_1 = {
-						root.mercenary_company_leader = { change_variable = { name = merc_knight_gain_chance add = 20 } }
+						root.mercenary_company_leader ?= { change_variable = { name = merc_knight_gain_chance add = 20 } }
 					}
 					nomad_yurt_merc_fired_bonus_lvl_2 = {
-						root.mercenary_company_leader = { change_variable = { name = merc_knight_gain_chance add = 40 } }
+						root.mercenary_company_leader ?= { change_variable = { name = merc_knight_gain_chance add = 40 } }
 					}
 					nomad_yurt_merc_fired_bonus_lvl_3 = {
-						root.mercenary_company_leader = { change_variable = { name = merc_knight_gain_chance add = 60 } }
+						root.mercenary_company_leader ?= { change_variable = { name = merc_knight_gain_chance add = 60 } }
 					}	
 				}
+			}
+			mercenary_company_leader ?= {
 				random = {
-					chance = root.mercenary_company_leader.var:merc_knight_gain_chance
+					chance = var:merc_knight_gain_chance
 					scope:old_employer = {
 						send_interface_message = {
 							type = event_generic_good
@@ -76,8 +78,8 @@ on_mercenary_company_dismissed = {
 						}
 					}
 				}
+				remove_variable = merc_knight_gain_chance 
 			}
-			mercenary_company_leader = { remove_variable = merc_knight_gain_chance }
 		}
 		scope:old_employer = {
 			if = {
