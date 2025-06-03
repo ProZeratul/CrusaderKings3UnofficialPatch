@@ -906,6 +906,7 @@ unite_the_southern_slavs_decision_effects = {
 	title:k_bulgaria = { add_to_list = south_slavic_kingdoms }
 	title:k_dacia = { add_to_list = south_slavic_kingdoms }
 	title:k_moldavia = { add_to_list = south_slavic_kingdoms }
+	title:k_bosnia = { add_to_list = south_slavic_kingdoms } #Unop: Also potentially drift bosnia
 
 	custom_tooltip = unite_the_southern_slavs_decision_titles_tt
 	hidden_effect = {
@@ -991,7 +992,7 @@ unite_the_slavs_decision_effects = {
 	set_primary_title_to = title:e_slavia
 	title:e_slavia = { save_scope_as = slavia } #For localisation
 
-	#Destroy the other three empires if I have them
+	#Destroy the other four empires if I have them
 	if = {
 		limit = { has_title = title:e_russia }
 		destroy_title = title:e_russia
@@ -1003,6 +1004,10 @@ unite_the_slavs_decision_effects = {
 	if = {
 		limit = { has_title = title:e_carpathia }
 		destroy_title = title:e_carpathia
+	}
+	if = { #Unop: Added since We can have united the Western Slavs kingdoms
+		limit = { has_title = title:e_west_slavia }
+		destroy_title = title:e_west_slavia
 	}
 
 	###Handle de jure drift and empire destruction###
@@ -1255,7 +1260,7 @@ found_university_decision_effect = {
 
 lunatic_building_decision_effect = {
 	scope:lunatic_county = { #Unop: Change this so it use the selected capital county in lunatic_building_decision that was changed
-		title_province = { 
+		title_province = {
 			set_variable = { #To unlock the building
 				name = variable_greenhouse
 				value = yes
@@ -1263,7 +1268,7 @@ lunatic_building_decision_effect = {
 			hidden_effect = { #Unop: So the special building slot is not show in the desc
 				add_special_building_slot = special_greenhouse_01
 			}
-			add_special_building = special_greenhouse_01 
+			add_special_building = special_greenhouse_01
 		}
 		#add_province_modifier = extra_building_slot
 		#add_building = special_greenhouse_01
@@ -2275,7 +2280,7 @@ launch_hungarian_migration_scripted_effect = {
 					}
 					#Assign the seceding titles to the new peasant warlord.
 					create_title_and_vassal_change = {
-						type = usurped
+						type = granted #Unop: Was usurped but it clash with the title loss mechanic and make you loose prestige
 						save_scope_as = change
 						add_claim_on_loss = no
 					}
@@ -2374,7 +2379,7 @@ launch_hungarian_migration_scripted_effect = {
 					}
 					#Assign the seceding title to the new peasant warlord.
 					create_title_and_vassal_change = {
-						type = usurped
+						type = granted #Unop: Was usurped but it clash with the title loss mechanic and make you loose prestige
 						save_scope_as = change
 						add_claim_on_loss = no
 					}
@@ -2398,6 +2403,11 @@ launch_hungarian_migration_scripted_effect = {
 					resolve_title_and_vassal_change = scope:change
 				}
 			}
+
+			# Unop: Added this block taken from fp1_varangian_adventurer_conquest to be sure our court & prisoners are moving with us
+			# Finally, courtiers are sometimes going walk about, so make sure they're all in the right spot.
+			every_courtier = { set_location_to_default = yes }
+			every_prisoner = { set_location_to_default = yes } #Unop: So your prisoner won't be staying at your old main title location
 		}
 	}
 }
