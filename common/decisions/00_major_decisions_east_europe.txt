@@ -946,6 +946,11 @@ launch_hungarian_migration_decision = {
 			text = launch_hungarian_migration_decision_before_last_date
 			current_date <= 911.1.1
 		}
+		#Cannot be a settled people.
+		OR = { #Unop: Restore this as it was before 1.16.1 but adding the nomadic gov
+			government_has_flag = government_is_tribal
+			government_has_flag = government_is_nomadic
+		}
 	}
 
 	is_valid_showing_failures_only = {
