@@ -3826,19 +3826,18 @@ elector_voting_pattern_confederation_modifier = {
 	modifier = {
 		desc = tooltip_confederation_good_prowess_tt
 		prowess >= high_skill_rating
-		prowess < high_skill_rating
+		prowess < very_high_skill_rating #Unop: Was also checking high_skill_rating that is not possible
 		add = 10
 	}
 	modifier = {
 		desc = tooltip_confederation_great_prowess_tt
 		prowess >= very_high_skill_rating
-		prowess < very_high_skill_rating
+		prowess < extremely_high_skill_rating #Unop: Was also checking very_high_skill_rating that is not possible
 		add = 15
 	}
 	modifier = {
 		desc = tooltip_confederation_amazing_prowess_tt
-		prowess > extremely_high_skill_rating
-		prowess <= extremely_high_skill_rating
+		prowess >= extremely_high_skill_rating #Unop: Was checking extremely_high_skill_rating just like above but would prevent someone that have higher than extremely
 		add = 20
 	}
 }
