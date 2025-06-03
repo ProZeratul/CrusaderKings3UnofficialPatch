@@ -10836,7 +10836,12 @@ laamp_base_contract_schemes.1781 = {
 			}
 			else = {
 				if = {
-					limit = { scope:task_contract.var:haul_actual >= 1 }
+					limit = {
+						scope:task_contract = { #Unop: Just ensure the "haul_actual" exists so it doesn't yell in the logs
+							has_variable = haul_actual
+							var:haul_actual >= 1 
+						}
+					}
 					travel_plan_owner = { trigger_event = laamp_base_contract_schemes.1783 }
 				}
 				else = {

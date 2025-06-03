@@ -843,11 +843,11 @@ unite_the_western_slavs_decision_effects = {
 	title:k_sorbia = { add_to_list = west_slavic_kingdoms }
 	title:k_moravia = { add_to_list = west_slavic_kingdoms }
 
-	if = {
-		limit = { highest_held_title_tier = tier_kingdom }
-		custom_tooltip = unite_the_western_slavs_decision_titles_tt
-	}
-	custom_tooltip = unite_the_western_slavs_decision_titles_empire_tt
+	#if = {
+	#	limit = { highest_held_title_tier = tier_kingdom }
+	#	custom_tooltip = unite_the_western_slavs_decision_titles_tt
+	#}
+	#custom_tooltip = unite_the_western_slavs_decision_titles_empire_tt #Unop: Moved this down
 	# If Saxony has been created, shift everything back into Polabia
 	if = {
 		limit = {
@@ -863,7 +863,7 @@ unite_the_western_slavs_decision_effects = {
 			}
 		}
 	}
-	hidden_effect = {
+	#hidden_effect = {
 		scope:western_slav_uniter = {
 			#If king-tier, give them the West-Slavia title
 			if = {
@@ -880,14 +880,24 @@ unite_the_western_slavs_decision_effects = {
 					}
 				}
 				resolve_title_and_vassal_change = scope:title_change
+				set_primary_title_to = title:e_west_slavia				
+				title:e_west_slavia = { save_scope_as = unop_west_slavia } #For localisation
+				
+				# Inform players of the de jure drift
+				custom_tooltip = unite_the_western_slavs_decision_titles_empire_tt_2
 			}
-			# Drift kingdoms to empire
-			every_in_list = {
-				list = west_slavic_kingdoms
-				set_de_jure_liege_title = scope:western_slav_uniter.primary_title
+			else = {
+				custom_tooltip = unite_the_western_slavs_decision_titles_empire_tt
+			}
+			hidden_effect = {
+				# Drift kingdoms to empire
+				every_in_list = {
+					list = west_slavic_kingdoms
+					set_de_jure_liege_title = scope:western_slav_uniter.primary_title
+				}
 			}
 		}
-	}
+	#}
 }
 
 unite_the_southern_slavs_decision_effects = {
