@@ -4197,6 +4197,11 @@ scripted_effect 4025_add_piety_reward_effect = {
 }
 
 scripted_effect 4025_generic_skill_duel_effect = {
+	save_scope_value_as = {
+		name = unop_used_skill
+		value = flag:$SKILL$
+	}
+
 	if = {
 		limit = { $SKILL$ = learning }
 		duel = {
@@ -4261,48 +4266,47 @@ scripted_effect 4025_generic_skill_duel_effect = {
 				send_interface_toast = {
 					title = laamp_base_learning_contract_events.4025.success.t
 					left_icon = root
-					if = {
-						limit = { $SKILL$ = diplomacy }
-						4025_success_effect = { REWARD = yes }
-						4025_add_prestige_reward_effect = {
-							TOPIC = $SKILL$
-							VALUE = miniscule_prestige_gain
-						}
-						4025_add_gold_reward_effect = {
-							TOPIC = $SKILL$
-							VALUE = miniscule_gold_laamps_value
-						}
-					}
-					if = {
-						limit = { $SKILL$ = martial }
-						4025_success_effect = { REWARD = yes }
-						4025_add_prestige_reward_effect = {
-							TOPIC = $SKILL$
-							VALUE = minor_prestige_gain
-						}
-					}
-					if = {
-						limit = { $SKILL$ = stewardship }
-						4025_success_effect = { REWARD = yes }
-						4025_add_gold_reward_effect = {
-							TOPIC = $SKILL$
-							VALUE = tiny_gold_laamps_value
-						}
-					}
-					if = {
-						limit = { $SKILL$ = intrigue }
-						4025_success_effect = { REWARD = yes }
-						4025_add_gold_reward_effect = {
-							TOPIC = $SKILL$
-							VALUE = miniscule_gold_laamps_value
-						}
-						if = {
-							limit = {
-								domicile ?= { provisions < max_provisions }
-							}
-							4025_add_provisions_reward_effect = {
+					switch = {
+						trigger = scope:unop_used_skill
+						flag:diplomacy = {
+							4025_success_effect = { REWARD = yes }
+							4025_add_prestige_reward_effect = {
 								TOPIC = $SKILL$
-								VALUE = task_contract_failure_provisions_gain_minor_value
+								VALUE = miniscule_prestige_gain
+							}
+							4025_add_gold_reward_effect = {
+								TOPIC = $SKILL$
+								VALUE = miniscule_gold_laamps_value
+							}
+						}
+						flag:martial = {
+							4025_success_effect = { REWARD = yes }
+							4025_add_prestige_reward_effect = {
+								TOPIC = $SKILL$
+								VALUE = minor_prestige_gain
+							}
+						}
+						flag:stewardship = {
+							4025_success_effect = { REWARD = yes }
+							4025_add_gold_reward_effect = {
+								TOPIC = $SKILL$
+								VALUE = tiny_gold_laamps_value
+							}
+						}
+						flag:intrigue = { 
+							4025_success_effect = { REWARD = yes }
+							4025_add_gold_reward_effect = {
+								TOPIC = $SKILL$
+								VALUE = miniscule_gold_laamps_value
+							}
+							if = {
+								limit = {
+									domicile ?= { provisions < max_provisions }
+								}
+								4025_add_provisions_reward_effect = {
+									TOPIC = $SKILL$
+									VALUE = task_contract_failure_provisions_gain_minor_value
+								}
 							}
 						}
 					}

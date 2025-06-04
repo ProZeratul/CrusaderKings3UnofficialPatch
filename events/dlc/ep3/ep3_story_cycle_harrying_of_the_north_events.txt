@@ -2331,7 +2331,7 @@ ep3_story_cycle_harrying.3000 = {
 				save_scope_as = neighboring_church
 			}
 		}
-		hidden_effect = {
+		hidden_effect_new_object = { #Unop: Changed from hidden_effect to not get errors in the logs
 			create_character = {
 				template = priest_character_template
 				location = scope:neighboring_church
@@ -3511,6 +3511,14 @@ ep3_story_cycle_harrying.3021 = {
 			}
 		}
 
+		#Unop: Now is time to return to camp !
+		start_travel_plan = {
+			destination = root.domicile.domicile_location
+			players_use_planner = no
+			on_arrival_destinations = last
+			return_trip = no
+		}
+
 		stress_impact = {
 			calm = minor_stress_impact_loss
 			just = miniscule_stress_impact_loss
@@ -3582,6 +3590,14 @@ ep3_story_cycle_harrying.3021 = {
 			}
 		}
 
+		#Unop: Now is time to return to camp !
+		start_travel_plan = {
+			destination = root.domicile.domicile_location
+			players_use_planner = no
+			on_arrival_destinations = last
+			return_trip = no
+		}
+
 		stress_impact = {
 			ambitious = miniscule_stress_impact_loss
 			vengeful = miniscule_stress_impact_loss
@@ -3607,6 +3623,14 @@ ep3_story_cycle_harrying.3021 = {
 
 		ep3_decrease_resistance_effect = yes
 
+		#Unop: Now is time to return to camp !
+		start_travel_plan = {
+			destination = root.domicile.domicile_location
+			players_use_planner = no
+			on_arrival_destinations = last
+			return_trip = no
+		}
+		
 		stress_impact = {
 			patient = miniscule_stress_impact_loss
 			impatient = minor_stress_impact_gain
@@ -3666,7 +3690,7 @@ ep3_story_cycle_harrying.3022 = {
 
 		add_gold = { 50 100 }
 
-		hidden_effect = {
+		hidden_effect_new_object = { #Unop: Changed from hidden_effect to not get errors in the logs
 			scope:willy_vassal = {
 				create_artifact_brooch_effect = { 
 					OWNER = scope:willy_vassal 
