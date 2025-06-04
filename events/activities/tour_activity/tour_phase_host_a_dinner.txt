@@ -1369,8 +1369,16 @@ host_dinner_events.1006 = {
 			}
 			scope:concubine_scope = { silent_disappearance_effect = yes }
 		}
-		scope:concubine_scope ?= {
-			remove_character_flag = is_naked
+		if = {
+			limit = {
+				exists = scope:concubine_scope
+				scope:concubine_scope ?= {
+					is_alive = yes
+				}
+			}
+			scope:concubine_scope ?= {
+				remove_character_flag = is_naked
+			}
 		}
 	}
 }
