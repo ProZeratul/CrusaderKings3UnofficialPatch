@@ -491,7 +491,35 @@ barony_cannot_construct_holding = {
 			terrain = desert
 			terrain = desert_mountains
 		}
-		geographical_region = world_africa_sahara
+		# Unop: From the 1.13.2 changelog: 
+		# Fixed a previous change to the holding triggers which prevented you from constructing holdings in most baronies with desert or desert mountain terrain in the areas in and surrounding the Sahara.
+		# Only the corridors across the Sahara will remain empty.
+		# Unop: But they prevented building in all baronies except if they have another terrain type than desert & desert mountain
+		# Unop: So I've changed this to prevent building ONLY in province flagged as Corridor inside definition.csv (in map_data)
+		trigger_if = {
+			limit = { geographical_region = world_africa_sahara }
+			OR = {
+				this = province:6650
+				this = province:6651
+				this = province:6652
+				this = province:6653
+				this = province:6654
+				this = province:6655
+				this = province:6656
+				this = province:6657
+				this = province:6658
+				this = province:6659
+				this = province:6660
+				this = province:6661
+				this = province:6662
+				this = province:6663
+				this = province:6664
+				this = province:6665
+				this = province:6666
+				this = province:6667
+				this = province:6668
+			}
+		}
 	}
 }
 
