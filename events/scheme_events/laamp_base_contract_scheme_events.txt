@@ -15309,17 +15309,11 @@ laamp_base_contract_schemes.2322 = {
 	option = {
 		name = laamp_base_contract_schemes.2322.d
 		trigger = {
-			#Unop: Inverted the trigger & show_as_unavailable blocks to actually not be shown at all if the violence can't be chosen and show that you need more military troops if you want to take this decision
+			#Unop: Remove the scope check from the show_as_unavailable, so the option is now only shown if the event goes into violence.
 			scope:total_result = flag:violence
 			custom_tooltip = {
 				text = laamp_base_contract_schemes.2322.d.tt.need_troops
 				current_military_strength >= 500
-			}
-		}
-		show_as_unavailable = {
-			custom_tooltip = {
-				text = laamp_base_contract_schemes.2322.d.tt.need_troops
-				current_military_strength < 500
 			}
 		}
 
