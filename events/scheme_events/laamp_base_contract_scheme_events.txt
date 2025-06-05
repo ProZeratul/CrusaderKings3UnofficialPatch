@@ -15215,6 +15215,7 @@ laamp_base_contract_schemes.2322 = {
 					name = total_result
 					value = flag:violence
 				}
+				scope:person_a = { save_scope_as = aggressor } #Unop: We need the aggressor scope for laamp_base_contract_schemes.2332 event text
 			}
 			# Everyone else rolls the highest of their boldness or vengeance, min 20%.
 			else = {
@@ -15308,12 +15309,15 @@ laamp_base_contract_schemes.2322 = {
 	option = {
 		name = laamp_base_contract_schemes.2322.d
 		trigger = {
+			#Unop: Inverted the trigger & show_as_unavailable blocks to actually not be shown at all if the violence can't be chosen and show that you need more military troops if you want to take this decision
+			scope:total_result = flag:violence
+		}
+		show_as_unavailable = {
 			custom_tooltip = {
 				text = laamp_base_contract_schemes.2322.d.tt.need_troops
-				current_military_strength >= 500
+				current_military_strength < 500
 			}
 		}
-		show_as_unavailable = { scope:total_result = flag:violence }
 
 		duel = {
 			skill = martial
