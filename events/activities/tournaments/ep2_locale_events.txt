@@ -8599,26 +8599,29 @@ ep2_locale_events.4520 = {
 						min = -49
 					}
 					desc = ep2_locale_events.4520.a.success
-					send_interface_toast = {
-						title = ep2_locale_events.4520.a.success
-						left_icon = root
-						right_icon = scope:tournament_weaponsmith
-
-						create_artifact = {
-							name = blooded_blade
-							description = blooded_blade_description
-							type = sword
-							visuals = sword
-							creator = scope:tournament_weaponsmith
-							modifier = artifact_monthly_prestige_3_modifier
-							modifier = artifact_dread_gain_mult_2_modifier
-							modifier = artifact_prowess_1_negative_modifier
-							wealth = 70
-							quality = 70
-							save_scope_as = blooded_blade
+					root = {
+						send_interface_toast = {
+							title = ep2_locale_events.4520.a.success
+							left_icon = root
+							right_icon = scope:tournament_weaponsmith
+							scope:tournament_weaponsmith = {
+								create_artifact = {
+									name = blooded_blade
+									description = blooded_blade_description
+									type = sword
+									visuals = sword
+									creator = scope:tournament_weaponsmith
+									modifier = artifact_monthly_prestige_3_modifier
+									modifier = artifact_dread_gain_mult_2_modifier
+									modifier = artifact_prowess_1_negative_modifier
+									wealth = 70
+									quality = 70
+									save_scope_as = blooded_blade
+								}
+							}
 						}
+						add_character_flag = blooded_blade
 					}
-					add_character_flag = blooded_blade
 				}
 
 				# The created sword is unimpressive
@@ -8629,28 +8632,31 @@ ep2_locale_events.4520 = {
 						min = -49
 					}
 					desc = ep2_locale_events.4520.a.failure
-					send_interface_toast = {
-						title = ep2_locale_events.4520.a.failure
-						left_icon = root
-						right_icon = scope:tournament_weaponsmith
-
-						create_artifact = {
-							name = sullied_blooded_blade
-							description = sullied_blooded_blade_description
-							type = sword
-							visuals = sword
-							creator = scope:tournament_weaponsmith
-							modifier = artifact_monthly_prestige_2_modifier
-							modifier = artifact_prowess_2_negative_modifier
-							wealth = 40
-							quality = 40
-							save_scope_as = blooded_blade
+					root = {
+						send_interface_toast = {
+							title = ep2_locale_events.4520.a.failure
+							left_icon = root
+							right_icon = scope:tournament_weaponsmith
+							scope:tournament_weaponsmith = {
+								create_artifact = {
+									name = sullied_blooded_blade
+									description = sullied_blooded_blade_description
+									type = sword
+									visuals = sword
+									creator = scope:tournament_weaponsmith
+									modifier = artifact_monthly_prestige_2_modifier
+									modifier = artifact_prowess_2_negative_modifier
+									wealth = 40
+									quality = 40
+									save_scope_as = blooded_blade
+								}
+							}
+							scope:blooded_blade = {
+								flag_as_unwanted_artifact = yes
+							}
 						}
-						scope:blooded_blade = {
-							flag_as_unwanted_artifact = yes
-						}
+						add_character_flag = sullied_blooded_blade
 					}
-					add_character_flag = sullied_blooded_blade
 				}
 			}
 		}
@@ -8703,28 +8709,32 @@ ep2_locale_events.4520 = {
 						min = -49
 					}
 					desc = ep2_locale_events.4520.a.success
-					send_interface_toast = {
-						title = ep2_locale_events.4520.a.success
-						left_icon = root
-						right_icon = scope:tournament_weaponsmith
-						if = {
-							limit = { activity_is_competing_trigger = yes }
-							activity_tournament_change_contestant_score_effect = { SCORE = increase_minor }
+					root = {
+						send_interface_toast = {
+							title = ep2_locale_events.4520.a.success
+							left_icon = root
+							right_icon = scope:tournament_weaponsmith
+							if = {
+								limit = { activity_is_competing_trigger = yes }
+								activity_tournament_change_contestant_score_effect = { SCORE = increase_minor }
+							}
+							scope:tournament_weaponsmith = {
+								create_artifact = {
+									name = blooded_blade
+									description = blooded_blade_description
+									type = sword
+									visuals = sword
+									creator = scope:tournament_weaponsmith
+									modifier = artifact_monthly_prestige_3_modifier
+									modifier = artifact_dread_gain_mult_2_modifier
+									modifier = artifact_prowess_1_negative_modifier
+									wealth = 70
+									quality = 70
+									save_scope_as = blooded_blade
+								}
+							}
+							add_character_flag = blooded_blade
 						}
-						create_artifact = {
-							name = blooded_blade
-							description = blooded_blade_description
-							type = sword
-							visuals = sword
-							creator = scope:tournament_weaponsmith
-							modifier = artifact_monthly_prestige_3_modifier
-							modifier = artifact_dread_gain_mult_2_modifier
-							modifier = artifact_prowess_1_negative_modifier
-							wealth = 70
-							quality = 70
-							save_scope_as = blooded_blade
-						}
-						add_character_flag = blooded_blade
 					}
 				}
 
@@ -8736,30 +8746,34 @@ ep2_locale_events.4520 = {
 						min = -49
 					}
 					desc = ep2_locale_events.4520.a.failure
-					send_interface_toast = {
-						title = ep2_locale_events.4520.a.failure
-						left_icon = root
-						right_icon = scope:tournament_weaponsmith
-						if = {
-							limit = { activity_is_competing_trigger = yes }
-							activity_tournament_change_contestant_score_effect = { SCORE = increase_miniscule }
+					root = {
+						send_interface_toast = {
+							title = ep2_locale_events.4520.a.failure
+							left_icon = root
+							right_icon = scope:tournament_weaponsmith
+							if = {
+								limit = { activity_is_competing_trigger = yes }
+								activity_tournament_change_contestant_score_effect = { SCORE = increase_miniscule }
+							}
+							scope:tournament_weaponsmith = {
+								create_artifact = {
+									name = sullied_blooded_blade
+									description = sullied_blooded_blade_description
+									type = sword
+									visuals = sword
+									creator = scope:tournament_weaponsmith
+									modifier = artifact_monthly_prestige_2_modifier
+									modifier = artifact_prowess_2_negative_modifier
+									wealth = 40
+									quality = 40
+									save_scope_as = blooded_blade
+								}
+							}
+							scope:blooded_blade = {
+								flag_as_unwanted_artifact = yes
+							}
+							add_character_flag = sullied_blooded_blade
 						}
-						create_artifact = {
-							name = sullied_blooded_blade
-							description = sullied_blooded_blade_description
-							type = sword
-							visuals = sword
-							creator = scope:tournament_weaponsmith
-							modifier = artifact_monthly_prestige_2_modifier
-							modifier = artifact_prowess_2_negative_modifier
-							wealth = 40
-							quality = 40
-							save_scope_as = blooded_blade
-						}
-						scope:blooded_blade = {
-							flag_as_unwanted_artifact = yes
-						}
-						add_character_flag = sullied_blooded_blade
 					}
 				}
 			}
@@ -8832,18 +8846,20 @@ ep2_locale_events.4520 = {
 								limit = { activity_is_competing_trigger = yes }
 								activity_tournament_change_contestant_score_effect = { SCORE = increase_minor }
 							}
-							create_artifact = {
-								name = blooded_blade
-								description = blooded_blade_description
-								type = sword
-								visuals = sword
-								creator = scope:tournament_weaponsmith
-								modifier = artifact_monthly_prestige_3_modifier
-								modifier = artifact_dread_gain_mult_2_modifier
-								modifier = artifact_prowess_1_negative_modifier
-								wealth = 70
-								quality = 70
-								save_scope_as = blooded_blade
+							scope:tournament_weaponsmith = {
+								create_artifact = {
+									name = blooded_blade
+									description = blooded_blade_description
+									type = sword
+									visuals = sword
+									creator = scope:tournament_weaponsmith
+									modifier = artifact_monthly_prestige_3_modifier
+									modifier = artifact_dread_gain_mult_2_modifier
+									modifier = artifact_prowess_1_negative_modifier
+									wealth = 70
+									quality = 70
+									save_scope_as = blooded_blade
+								}
 							}
 						}
 						add_character_flag = blooded_blade
@@ -8867,17 +8883,19 @@ ep2_locale_events.4520 = {
 								limit = { activity_is_competing_trigger = yes }
 								activity_tournament_change_contestant_score_effect = { SCORE = increase_miniscule }
 							}
-							create_artifact = {
-								name = sullied_blooded_blade
-								description = sullied_blooded_blade_description
-								type = sword
-								visuals = sword
-								creator = scope:tournament_weaponsmith
-								modifier = artifact_monthly_prestige_2_modifier
-								modifier = artifact_prowess_2_negative_modifier
-								wealth = 40
-								quality = 40
-								save_scope_as = blooded_blade
+							scope:tournament_weaponsmith = {
+								create_artifact = {
+									name = sullied_blooded_blade
+									description = sullied_blooded_blade_description
+									type = sword
+									visuals = sword
+									creator = scope:tournament_weaponsmith
+									modifier = artifact_monthly_prestige_2_modifier
+									modifier = artifact_prowess_2_negative_modifier
+									wealth = 40
+									quality = 40
+									save_scope_as = blooded_blade
+								}
 							}
 							scope:blooded_blade = {
 								flag_as_unwanted_artifact = yes
@@ -9009,6 +9027,9 @@ ep2_locale_events.4521 = {
 				target = root
 				gold = 35
 			}
+		}
+		hidden_effect = { #Unop: Make sure to not leak into the weaponsmith inventory
+			destroy_artifact = scope:blooded_blade
 		}
 
 		if = {
