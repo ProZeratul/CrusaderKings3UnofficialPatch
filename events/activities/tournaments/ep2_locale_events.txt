@@ -5384,6 +5384,15 @@ ep2_locale_events.3002 = {
 			any_attending_character = {
 				count >= 2
 				is_adult = yes
+				OR = { #Unop: Harmonized with the immediate check (to not allow this event to fire without required char)
+					has_trait = lustful
+					has_trait = rakish
+					is_deviant_trigger = yes
+					trigger_if = {
+						limit = { exists = scope:lech1_temporary }
+						is_attracted_to_gender_of = scope:lech1_temporary
+					}
+				}
 				NOT = { this = scope:lech1_temporary }
 				willing_lecherous_knight_trigger = yes
 			}
@@ -6618,6 +6627,13 @@ ep2_locale_events.4050 = {
 			exists = var:tournament_bowyer
 			var:tournament_bowyer = { is_alive = yes }
 		}
+		OR = { #Unop: Mitigate this event from happening too much if we already bought the bracer
+			NOT = { has_character_modifier = tournament_bracer_modifier }
+			AND = {
+				has_trait = profligate
+				NOT = { has_character_modifier = tournament_two_bracers_modifier }
+			}
+		}
 	}
 
 	immediate = {
@@ -6747,6 +6763,10 @@ ep2_locale_events.4050 = {
 		if = {
 			limit = { activity_is_competing_trigger = yes }
 			activity_tournament_change_contestant_score_effect = { SCORE = increase_minor }
+		}
+		if = { #Unop: So we don't get the bonus from both 1 bracer & 2 bracers
+			limit = { has_character_modifier = tournament_bracer_modifier }
+			remove_character_modifier = tournament_bracer_modifier
 		}
 		add_character_modifier = tournament_two_bracers_modifier
 		reverse_add_opinion = {
