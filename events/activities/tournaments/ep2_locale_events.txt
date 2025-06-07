@@ -7357,11 +7357,11 @@ ep2_locale_events.4505 = {
 	}
 	override_background = { reference = armory }
 
-	trigger = {
-		exists = var:tournament_weaponsmith
-		var:tournament_weaponsmith = { is_alive = yes }
-		scope:activity = { 
+	trigger = { #Unop: This trigger could not fire at all since the root scope did not have the var:tournament_weaponsmith
+		scope:activity = { # You have a weaponsmith
 			has_active_locale = tournament_locale_artisans
+			exists = var:tournament_weaponsmith
+			var:tournament_weaponsmith = { is_alive = yes }
 		}
 		has_trait = tourney_participant
 		has_trait_xp = { #Make sure you are a famed soldier
@@ -7372,21 +7372,24 @@ ep2_locale_events.4505 = {
 	}
 
 	immediate = {
-		hidden_effect = {
-			create_artifact = {
-				name = artisanal_sword
-				description = artisanal_sword_description
-				type = sword
-				visuals = sword
-				modifier = artifact_prowess_2_modifier
-				creator = scope:tournament_weaponsmith
-				wealth = scope:wealth
-				quality = scope:quality
-				save_scope_as = artisanal_sword
-			}
 
-			random_courtier_or_guest = {
-				save_scope_as = tournament_weaponsmith
+		scope:activity = { #Unop: Replace the random_courtier_or_guest that will select a random courtier or guest instead of the desired tournament_weaponsmith 
+			var:tournament_weaponsmith = { save_scope_as = tournament_weaponsmith }
+		}
+
+		scope:tournament_weaponsmith = {
+			hidden_effect = { #Unop: Lower this effect since it's using tournament_weaponsmith scope that was not defined in original script.
+				create_artifact = {
+					name = artisanal_sword
+					description = artisanal_sword_description
+					type = sword
+					visuals = sword
+					modifier = artifact_prowess_2_modifier
+					creator = scope:tournament_weaponsmith
+					wealth = scope:wealth
+					quality = scope:quality
+					save_scope_as = artisanal_sword
+				}
 			}
 
 			#Personalise your sword
