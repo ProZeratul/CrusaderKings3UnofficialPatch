@@ -5384,6 +5384,7 @@ ep2_locale_events.3002 = {
 			any_attending_character = {
 				count >= 2
 				is_adult = yes
+				willing_lecherous_knight_trigger = yes
 				OR = { #Unop: Harmonized with the immediate check (to not allow this event to fire without required char)
 					has_trait = lustful
 					has_trait = rakish
@@ -5394,7 +5395,29 @@ ep2_locale_events.3002 = {
 					}
 				}
 				NOT = { this = scope:lech1_temporary }
+				save_temporary_scope_as = lech2_temporary
+			}
+			any_attending_character = { # Unop: This is needed since we need a character attracted to both lech1 & lech2 genders !
+				count >= 1
+				is_adult = yes
 				willing_lecherous_knight_trigger = yes
+				OR = {
+					has_trait = lustful
+					has_trait = rakish
+					is_deviant_trigger = yes
+					trigger_if = {
+						limit = { exists = scope:lech1_temporary }
+						is_attracted_to_gender_of = scope:lech1_temporary
+					}
+					trigger_if = {
+						limit = { exists = scope:lech2_temporary }
+						is_attracted_to_gender_of = scope:lech2_temporary
+					}
+				}
+				NOR = { 
+					this = scope:lech1_temporary
+					this = scope:lech2_temporary
+				}
 			}
 		}
 		scope:activity = {
@@ -5467,6 +5490,17 @@ ep2_locale_events.3002 = {
 				add_to_list = lecherous_knights
 			}
 		}
+
+		if = { #Unop: Sanity & debug warning check
+			limit = {
+				debug_only = yes
+				NOT = { exists = scope:lech3 }
+			}
+			error_log = "Unop: lech3 is undefined"
+			debug_log = "Unop: lech3 is undefined"
+			debug_log_scopes = yes
+		}
+
 		scope:lech1 = {
 			hidden_effect = {
 				had_sex_with_effect = {
