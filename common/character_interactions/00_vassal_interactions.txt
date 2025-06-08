@@ -241,13 +241,15 @@ grant_vassal_interaction = {
 						}
 					}
 				}
-				every_character_struggle = {
-					involvement = involved
-					activate_struggle_catalyst = {
-						catalyst = catalyst_grants_vassal_to_de_jure_liege_supporter_detractor
-						character = scope:actor
+				scope:actor = { # Unop: Add missing scope
+					every_character_struggle = {
+						involvement = involved
+						activate_struggle_catalyst = {
+							catalyst = catalyst_grants_vassal_to_de_jure_liege_supporter_detractor
+							character = scope:actor
+						}
+						log_debug_variable_for_persian_struggle_effect = { VAR = concession_catalyst_grants_vassal_to_de_jure_liege_supporter_detractor }
 					}
-					log_debug_variable_for_persian_struggle_effect = { VAR = concession_catalyst_grants_vassal_to_de_jure_liege_supporter_detractor }
 				}
 			}
 			if = {
