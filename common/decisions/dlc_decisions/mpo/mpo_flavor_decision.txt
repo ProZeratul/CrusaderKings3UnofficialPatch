@@ -505,10 +505,12 @@ mpo_abuse_authority_paiza_decision = {
         }
         modifier = {
             add = {
-                value = max_herd
-                subtract = herd
-                divide = max_herd
-                multiply = 10
+                domicile ?= { # Unop: max_herd & herd are from the domicile scope that is missing here
+                    value = max_herd
+                    subtract = herd
+                    divide = max_herd
+                    multiply = 10
+                }
             }
             domicile ?= {
                 herd <= max_herd
