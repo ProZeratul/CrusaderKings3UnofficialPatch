@@ -4739,23 +4739,27 @@ mpo_decisions_events.0112 = { #mpo_abuse_authority_paiza_decision consequences d
 			has_character_flag = refused_paiza_abuse_notifications
 		}
 		scope:paiza_abuser = {
-			any_dynasty_member = {
-				location = scope:paiza_abuser
-				is_ai = yes
-				is_adult = yes
+			dynasty = { #Unop: Fix missing dynasty rescope for the any_dynasty_member
+				any_dynasty_member = {
+					location = scope:paiza_abuser.location
+					is_ai = yes
+					is_adult = yes
+				}
 			}
 		}
 	}
 
 	immediate = {
 		scope:paiza_abuser = {
-			random_dynasty_member = {
-				limit = {
-					location = scope:paiza_abuser
-					is_ai = yes
-					is_adult = yes
+			dynasty = { #Unop: Fix missing dynasty rescope for the any_dynasty_member
+				random_dynasty_member = {
+					limit = {
+						location = scope:paiza_abuser.location
+						is_ai = yes
+						is_adult = yes
+					}
+					save_scope_as = paiza_abuser_1		
 				}
-				save_scope_as = paiza_abuser_1		
 			}
 			random_equipped_character_artifact = {
 				limit = {
