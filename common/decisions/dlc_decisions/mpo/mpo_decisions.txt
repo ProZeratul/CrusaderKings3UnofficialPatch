@@ -796,12 +796,14 @@ leave_confederation_decision = {
 							}
 						}
 					}
-					any_confederation_member = {
-						NOT = {
-							this = root
-						}
-						capital_province = {
-							squared_distance = { target = root.capital_province value < 100000 }
+					confederation = { #Unop: Add the confederation re-scope
+						any_confederation_member = {
+							NOT = {
+								this = root
+							}
+							capital_province = {
+								squared_distance = { target = root.capital_province value < 100000 }
+							}
 						}
 					}
 				}
@@ -820,12 +822,14 @@ leave_confederation_decision = {
 							}
 						}
 					}
-					any_confederation_member = {
-						NOT = {
-							this = root
-						}
-						capital_province = {
-							squared_distance = { target = root.capital_province value < 200000 }
+					confederation = { #Unop: Add the confederation re-scope
+						any_confederation_member = {
+							NOT = {
+								this = root
+							}
+							capital_province = {
+								squared_distance = { target = root.capital_province value < 200000 }
+							}
 						}
 					}
 				}
@@ -969,7 +973,7 @@ leave_confederation_decision = {
 				confederation = {
 					any_confederation_member = {
 						exists = root.house
-						house ?= root.dynasty
+						house ?= root.house #Unop: Fix the house being compared to a dynasty
 					}
 				}
 			}
