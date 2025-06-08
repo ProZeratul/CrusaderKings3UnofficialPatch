@@ -207,7 +207,7 @@ stop_war_defender_likelihood_calculation = {
 	}
 	else_if = {
 		#If it's a war over the defender's last county, they won't say yes.
-		if = {
+		#if = { #Unop: Not need since already in else_if
 			limit = {
 				exists = scope:target
 				any_held_title = {
@@ -223,7 +223,7 @@ stop_war_defender_likelihood_calculation = {
 				}
 			}
 			value = 0
-		}
+		#} #Unop: Not need since already in else_if
 	}
 	else = {
 		# Calculate chance of character accepting.
