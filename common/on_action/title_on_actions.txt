@@ -2356,7 +2356,7 @@ on_title_lost = {
 					exists = root.player_heir
 					exists = root.dynasty
 					player_heir = {
-						dynasty ?= story_owner.dynasty
+						dynasty ?= root.dynasty #Unop: replace story_owner with root since it's the same (but story_owner does not exists in the player_heir scope)
 					}
 				}
 				player_heir ?= {
