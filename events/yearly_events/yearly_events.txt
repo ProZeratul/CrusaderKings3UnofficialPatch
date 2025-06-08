@@ -672,6 +672,17 @@ yearly.0002 = {
 				save_scope_as = secret
 			}
 		}
+
+		#Unop: Bug tracking where councillor is undefined
+		if = {
+			limit = {
+				debug_only = yes
+				NOT = { exists = scope:councillor }
+			}
+			error_log = "Unop:yearly.0002: scope:councillor is undefined"
+			debug_log = "Unop:yearly.0002: scope:councillor is undefined"
+			debug_log_scopes = yes
+		}
 	}
 
 	#Option A: Imprison the councillor.

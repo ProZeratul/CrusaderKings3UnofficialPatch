@@ -1177,10 +1177,15 @@ scripted_effect tournament_marriage_prize_effect = {
 					create_betrothal = scope:marriage_prize
 				}
 				else = { marry = scope:marriage_prize }
-				add_opinion = {
-					target = root
-					modifier = grateful_opinion
-					opinion = 10
+				if = { #Unop: No self-opinion
+					limit = {
+						NOT = { this = scope:host }
+					}
+					add_opinion = {
+						target = root
+						modifier = grateful_opinion
+						opinion = 10
+					}
 				}
 			}
 			if = {
@@ -1203,10 +1208,15 @@ scripted_effect tournament_marriage_prize_effect = {
 					this = scope:host
 				}
 			}
-			add_opinion = {
-				target = root
-				modifier = disappointed_opinion
-				opinion = -10
+			if = { #Unop: No self-opinion
+				limit = {
+					NOT = { this = scope:host }
+				}
+				add_opinion = {
+					target = root
+					modifier = disappointed_opinion
+					opinion = -10
+				}
 			}
 		}
 		scope:host = {
@@ -4571,6 +4581,11 @@ tournament_events.1230 = {
 	immediate = {
 		scope:activity = {
 			random_attending_character = {
+				limit = { #Unop: We want at least 1 county of this culture to get a faith
+					culture = {
+						culture_number_of_counties > 0
+					}
+				}
 				culture = { save_scope_as = attending_culture }
 			}
 		}
@@ -8927,6 +8942,11 @@ tournament_events.1320 = {
 	immediate = {
 		scope:activity = {
 			random_attending_character = {
+				limit = { #Unop: We want at least 1 county of this culture to get a faith
+					culture = {
+						culture_number_of_counties > 0
+					}
+				}
 				culture = { save_scope_as = attending_culture }
 			}
 		}
@@ -15644,9 +15664,9 @@ tournament_events.6900 = {
 						random_attending_character = {
 							limit = { #Unop: We want at least 1 county of this culture to get a faith
 								culture = {
-									culture_number_of_counties > 0 
+									culture_number_of_counties > 0
 								}
-							} 
+							}
 							culture = { save_scope_as = attending_culture }
 						}
 					}
@@ -16098,6 +16118,11 @@ tournament_events.7000 = {
 	immediate = {
 		scope:activity = {
 			random_attending_character = {
+				limit = { #Unop: We want at least 1 county of this culture to get a faith
+					culture = {
+						culture_number_of_counties > 0
+					}
+				}
 				culture = { save_scope_as = attending_culture }
 			}
 		}

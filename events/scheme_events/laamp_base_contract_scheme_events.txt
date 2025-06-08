@@ -10836,7 +10836,12 @@ laamp_base_contract_schemes.1781 = {
 			}
 			else = {
 				if = {
-					limit = { scope:task_contract.var:haul_actual >= 1 }
+					limit = {
+						scope:task_contract = { #Unop: Just ensure the "haul_actual" exists so it doesn't yell in the logs
+							has_variable = haul_actual
+							var:haul_actual >= 1 
+						}
+					}
 					travel_plan_owner = { trigger_event = laamp_base_contract_schemes.1783 }
 				}
 				else = {
@@ -15210,6 +15215,7 @@ laamp_base_contract_schemes.2322 = {
 					name = total_result
 					value = flag:violence
 				}
+				scope:person_a = { save_scope_as = aggressor } #Unop: We need the aggressor scope for laamp_base_contract_schemes.2332 event text
 			}
 			# Everyone else rolls the highest of their boldness or vengeance, min 20%.
 			else = {
@@ -15303,12 +15309,13 @@ laamp_base_contract_schemes.2322 = {
 	option = {
 		name = laamp_base_contract_schemes.2322.d
 		trigger = {
+			#Unop: Remove the scope check from the show_as_unavailable, so the option is now only shown if the event goes into violence.
+			scope:total_result = flag:violence
 			custom_tooltip = {
 				text = laamp_base_contract_schemes.2322.d.tt.need_troops
 				current_military_strength >= 500
 			}
 		}
-		show_as_unavailable = { scope:total_result = flag:violence }
 
 		duel = {
 			skill = martial
@@ -15466,11 +15473,6 @@ laamp_base_contract_schemes.2323 = {
 				}
 			}
 		}
-		# And send our laamp off.
-		hidden_effect = {
-			current_travel_plan = { resume_travel_plan = yes } #Unop: laamp_base_contract_schemes.2301 is pausing the travel, so we need to resume it
-			return_home = yes
-		}
 
 		# Neither stress nor AI chance, for t'is the only option.
 	}
@@ -15488,17 +15490,18 @@ laamp_base_contract_schemes.2323 = {
 			opinion = -50
 		}
 
-		# And send our laamp off.
-		hidden_effect = {
-			current_travel_plan = { resume_travel_plan = yes }
-			return_home = yes
-		}
-
 		stress_impact = {
 			arrogant = medium_stress_loss
 			humble = medium_stress_gain
 		}
 		# Don't worry about AI chance, we don't mind the AI taking this or not.
+	}
+
+	after = {
+		hidden_effect = {
+			current_travel_plan = { resume_travel_plan = yes }
+			return_home = yes
+		}
 	}
 }
 

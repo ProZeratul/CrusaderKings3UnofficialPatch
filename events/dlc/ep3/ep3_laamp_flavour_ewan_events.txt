@@ -1203,9 +1203,9 @@ ep3_laamp_flavour_ewan.0021 = {
 			domicile = { has_domicile_building = baggage_train_kennel }
 		}
 		# Plus make sure that we don't _already_ have both dog & cat.
-		OR = {
-			ep3_laamp_flavour_ewan_no_dog_trigger = no
-			ep3_laamp_flavour_ewan_no_cat_trigger = no
+		OR = { #Unop: Change this so it's from = no so it's actually checking as it should
+			ep3_laamp_flavour_ewan_no_dog_trigger = yes
+			ep3_laamp_flavour_ewan_no_cat_trigger = yes
 		}
 	}
 
@@ -9437,9 +9437,14 @@ ep3_laamp_flavour_ewan.2011 = {
 						value = flag:false
 					}
 					# If we don't have a scope:victim by now, create one.
-					random_courtier = {
-						limit = { ep3_laamp_flavour_ewan_2011_valid_courtier_for_gossip_trigger = yes }
-						save_scope_as = victim
+					if = {
+						limit = { #Unop: Actually make sure the scope is undefined
+							NOT = { exists = scope:victim }
+						}
+						random_courtier = {
+							limit = { ep3_laamp_flavour_ewan_2011_valid_courtier_for_gossip_trigger = yes }
+							save_scope_as = victim
+						}
 					}
 				}
 				# Plus stress out our victim a little.
@@ -9502,9 +9507,14 @@ ep3_laamp_flavour_ewan.2011 = {
 						value = flag:false
 					}
 					# If we don't have a scope:victim by now, create one.
-					random_courtier = {
-						limit = { ep3_laamp_flavour_ewan_2011_valid_courtier_for_gossip_trigger = yes }
-						save_scope_as = victim
+					if = {
+						limit = { #Unop: Actually make sure the scope is undefined
+							NOT = { exists = scope:victim }
+						}
+						random_courtier = {
+							limit = { ep3_laamp_flavour_ewan_2011_valid_courtier_for_gossip_trigger = yes }
+							save_scope_as = victim
+						}
 					}
 				}
 				# Plus stress out our victim a little.
