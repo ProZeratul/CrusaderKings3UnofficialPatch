@@ -747,18 +747,20 @@
 			desc = "FACTION_REASON_NEIGHBORS"
 			factor = {
 				value = 1
-		    	every_faction_member = {
-		    		if = {
-		    			limit = {
-			    			any_neighboring_realm_same_rank_owner = {
-			    				this = root
-			    			}
-						}
-		    			add = 0.25
-		    		}		
-		    	}
-	    	}
-	    }
+				scope:faction = { # Unop: Add the missing faction rescope
+					every_faction_member = {
+						if = {
+							limit = {
+								any_neighboring_realm_same_rank_owner = {
+									this = root
+								}
+							}
+							add = 0.25
+						}		
+					}
+				}
+			}
+		}
 
 	     modifier = {
 			desc = "FACTION_REASON_POWERFUL_VASSAL"
@@ -866,6 +868,7 @@
 		save_scope_as = faction
 		special_character = {
 			save_scope_as = peasant_leader
+			save_scope_as = faction_leader #Unop: This scope is needed for faction_demand.1001 that is fired below 
 		}
 		special_title = {
 			save_scope_as = target_title
