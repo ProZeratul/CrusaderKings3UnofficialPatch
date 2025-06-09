@@ -962,7 +962,11 @@ fp3_yearly.2020 = {
 			has_religion = religion:islam_religion
 			employs_tax_collector = yes
 			any_tax_collector = {
-				any_tax_collector_vassal = { this = root }
+				any_tax_collector_vassal = { #Unop: We want someone that is taxed by the tax collector that is not the tax collector himself !
+					NOT = {
+						this = root
+					}
+				}
 				fp3_yearly_2020_is_valid_tax_collector = yes
 			}
 			# Liege has not been bothered about this tax collector in the last 5 years
@@ -987,7 +991,11 @@ fp3_yearly.2020 = {
 			}
 			random_tax_collector = {
 				limit = {
-					any_tax_collector_vassal = { this = root }
+					any_tax_collector_vassal = { #Unop: We want someone that is taxed by the tax collector that is not the tax collector himself !
+						NOT = {
+							this = root
+						}
+					}
 					fp3_yearly_2020_is_valid_tax_collector = yes
 				}
 				save_scope_as = sinful_tax_collector
@@ -1138,7 +1146,12 @@ fp3_yearly.2020 = {
 					}
 				}
 			}
-			save_scope_as = denouncing_taxpayer
+			random_tax_collector_vassal = { #Unop: We want someone that is taxed by the tax collector that is not the tax collector himself !
+				limit = {
+					NOT = { this = root }
+				}
+				save_scope_as = denouncing_taxpayer
+			}
 			scope:liege = { trigger_event = fp3_yearly.2021 }
 		}
 		stress_impact = {
@@ -1170,7 +1183,12 @@ fp3_yearly.2020 = {
 			OPINION = 0
 		}
 		# Tank the collector's aptitude and inform the liege
-		save_scope_as = denouncing_taxpayer
+		random_tax_collector_vassal = { #Unop: We want someone that is taxed by the tax collector that is not the tax collector himself !
+			limit = {
+				NOT = { this = root }
+			}
+			save_scope_as = denouncing_taxpayer
+		}
 		add_piety = minor_piety_gain
 		liege = {
 			send_interface_message = {
