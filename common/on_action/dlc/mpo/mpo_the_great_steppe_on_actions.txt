@@ -334,36 +334,33 @@ mpo_the_great_steppe_yearly_pulse_random = {
 					primary_title.tier = tier_county
 					domain_size > domain_limit
 					this = top_liege
-					any_held_title = {
-						tier = tier_county
-						is_landless_type_title = no
-						this != scope:nomad_capital_ruler.capital_county
-						OR = {
-							any_neighboring_county = {
-								holder.top_liege != scope:nomad_capital_ruler.top_liege
+					OR = { #Unop: Unify this in an OR since it was an alternative_limit but it's not valid in this context
+						any_held_title = {
+							tier = tier_county
+							is_landless_type_title = no
+							this != scope:nomad_capital_ruler.capital_county
+							OR = {
+								any_neighboring_county = {
+									holder.top_liege != scope:nomad_capital_ruler.top_liege
+								}
+								is_coastal_county = yes
 							}
-							is_coastal_county = yes
+							NOT = {
+								any_neighboring_county = {
+									this = scope:nomad_capital_ruler.capital_county
+								}
+							}
 						}
-						NOT = {
-							any_neighboring_county = {
-								this = scope:nomad_capital_ruler.capital_county
+						any_held_title = {
+							tier = tier_county
+							is_landless_type_title = no
+							this != scope:nomad_capital_ruler.capital_county
+							OR = {
+								any_neighboring_county = {
+									holder.top_liege != scope:nomad_capital_ruler.top_liege
+								}
+								is_coastal_county = yes
 							}
-						}
-					}
-				}
-				alternative_limit = {
-					primary_title.tier = tier_county
-					domain_size > domain_limit
-					this = top_liege
-					any_held_title = {
-						tier = tier_county
-						is_landless_type_title = no
-						this != scope:nomad_capital_ruler.capital_county
-						OR = {
-							any_neighboring_county = {
-								holder.top_liege != scope:nomad_capital_ruler.top_liege
-							}
-							is_coastal_county = yes
 						}
 					}
 				}
