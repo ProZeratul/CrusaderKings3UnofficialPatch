@@ -980,6 +980,12 @@ bp1_yearly.7010 = { #A loyalty test
 			NOR = {
 				has_trait = loyal
 				has_trait = disloyal
+				root = { #Unop: As this event is to add a loyalty hook, check if we don't already have one on the potential target
+					has_hook_of_type = {
+						type = loyalty_hook
+						target = prev
+					}
+				}
 			}
 		}
 	
@@ -998,6 +1004,12 @@ bp1_yearly.7010 = { #A loyalty test
 				NOR = {
 					has_trait = loyal
 					has_trait = disloyal
+					root = { #Unop: As this event is to add a loyalty hook, check if we don't already have one on the potential target
+						has_hook_of_type = {
+							type = loyalty_hook
+							target = prev
+						}
+					}
 				}
 			}
 
@@ -1092,9 +1104,17 @@ bp1_yearly.7010 = { #A loyalty test
 					title = bp1_yearly.7010.toast.not_betrayed
 					right_icon = scope:tested_friend
 					add_prestige = medium_prestige_gain
-					add_hook = {
-						type = loyalty_hook
-						target = scope:tested_friend
+					if = { #Unop: Just make sure the hook can be added before adding it.
+						limit = {
+							can_add_hook = {
+								type = loyalty_hook 
+								target = scope:tested_friend
+							}
+						}
+						add_hook = {
+							type = loyalty_hook
+							target = scope:tested_friend
+						}
 					}
 					scope:tested_friend = {
 						add_trait = loyal
