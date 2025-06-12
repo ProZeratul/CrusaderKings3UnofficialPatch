@@ -7165,6 +7165,10 @@ tournament_events.1280 = {
 								is_close_or_extended_family_of = root
 								is_landed = yes
 							}
+							trigger_if = { # Unop: Ensure this dynasty has not been already affected by this event
+								limit = { exists = dynasty }
+								NOT = { exists = dynasty.var:tournament_1280_cooldown }
+							}
 						}
 						save_scope_as = collapse_victim
 					}
