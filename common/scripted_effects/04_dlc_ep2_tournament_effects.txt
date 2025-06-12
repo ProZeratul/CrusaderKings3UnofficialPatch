@@ -3225,6 +3225,11 @@ tournament_versus_dead_qualifier_effect = {
 # Create a mysterious stranger contestant
 tournament_mysterious_stranger_effect = {
 	random_attending_character = {
+		limit = { #Unop: We want at least 1 county of this culture to get a faith
+			culture = {
+				culture_number_of_counties > 0
+			}
+		}
 		culture = { save_scope_as = attending_culture }
 	}
 	scope:attending_culture = {
