@@ -15091,12 +15091,9 @@ ep2_wedding.1330 = {
 	option = {
 		name = ep2_wedding.1330.d
 		trigger = {
-			OR = {
-				has_trait = deviant
-				any_secret = { secret_type = secret_deviant }
-			}
+			is_deviant_trigger = yes #Unop: Prefer use existing triggers instead (for future proofing the events)
 			NOR = {
-				faith = { has_doctrine = doctrine_deviancy_accepted }
+				faith = { has_doctrine_parameter = deviancy_accepted } #Unop: Prefer check the parameter instead of the doctrine itself (as it can be accepted & virtuous)
 				scope:spouse = { has_trait = deviant }
 				scope:spouse = { any_secret = { secret_type = secret_deviant NOT = { is_known_by = root } } }
 			}
@@ -15434,8 +15431,7 @@ scripted_trigger ep2_wedding_1340_unusual_hobbies_trigger = {
 		has_trait = rakish
 		has_trait = cannibal
 		any_secret = { secret_type = secret_cannibal }
-		has_trait = witch
-		any_secret = { secret_type = secret_witch }
+		is_witch_trigger = yes #Unop: Prefer use existing triggers instead (for future proofing the events)
 	}
 }
 
