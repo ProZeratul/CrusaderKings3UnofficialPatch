@@ -3561,7 +3561,7 @@ scripted_effect send_merchant_on_first_voyage_effect = {
 		value = scope:merchant_origin
 	}
 	start_travel_plan = {
-		destination = var:merchant_employer.location
+		destination = var:merchant_employer.domicile.domicile_location #Unop Use domicile location
 		on_arrival_event = mpo_decisions_events.2140
 		on_arrival_destinations = first
 		return_trip = no
@@ -3643,11 +3643,11 @@ mpo_decisions_events.2140 = {
 				if = {
 					limit = {
 						NOT = {
-							root.location = location
+							root.location = domicile.domicile_location #Unop Use domicile location
 						}
 					}
 					root = {
-						set_location = { location = var:merchant_employer.location }
+						set_location = domicile.domicile_location #Unop Use domicile location
 					}
 				}
 				if = {
@@ -3821,16 +3821,25 @@ mpo_decisions_events.2141 = { #mpo_call_for_merchants_smol_decision initial even
 
 	trigger = {
 		is_available_adult = yes
-		scope:paiza_merchant.location = root.location
+		#Unop Avoid the merchant chasing root
+		#scope:paiza_merchant.location = root.location
 	}
 
 	on_trigger_fail = {
-		scope:paiza_merchant = {
-			set_location = { location = root.location }
-		}
+		#Unop Avoid the merchant chasing root
+		#scope:paiza_merchant = {
+		#	set_location = { location = root.location }
+		#}
 		trigger_event = {
 			id = mpo_decisions_events.2141
 			months = { 2 4 }
+		}
+	}
+
+	#Unop Avoid the merchant chasing root, and use domicile location
+	immediate = {
+		scope:paiza_merchant = {
+			set_location = root.domicile.domicile_location
 		}
 	}
 
@@ -3965,16 +3974,25 @@ mpo_decisions_events.0100 = { #mpo_call_for_merchants_decision initial event
 
 	trigger = {
 		is_available_adult = yes
-		scope:paiza_merchant.location = root.location
+		#Unop Avoid the merchant chasing root
+		#scope:paiza_merchant.location = root.location
 	}
 
 	on_trigger_fail = {
-		scope:paiza_merchant = {
-			set_location = { location = root.location }
-		}
+		#Unop Avoid the merchant chasing root
+		#scope:paiza_merchant = {
+		#	set_location = { location = root.location }
+		#}
 		trigger_event = {
 			id = mpo_decisions_events.0100
 			months = { 2 4 }
+		}
+	}
+
+	#Unop Avoid the merchant chasing root, and use domicile location
+	immediate = {
+		scope:paiza_merchant = {
+			set_location = root.domicile.domicile_location
 		}
 	}
 
@@ -4161,13 +4179,15 @@ mpo_decisions_events.0101 = { #the merchant is back
 
 	trigger = {
 		is_available_adult = yes
-		scope:paiza_merchant.location = root.location
+		#Unop Avoid the merchant chasing root
+		#scope:paiza_merchant.location = root.location
 	}
 
 	on_trigger_fail = {
-		scope:paiza_merchant = {
-			set_location = { location = root.location }
-		}
+		#Unop Avoid the merchant chasing root (moved to immediate)
+		#scope:paiza_merchant = {
+		#	set_location = { location = root.location }
+		#}
 		trigger_event = {
 			id = mpo_decisions_events.0101
 			months = { 2 4 }
@@ -4177,6 +4197,11 @@ mpo_decisions_events.0101 = { #the merchant is back
 	immediate = {
 		mpo_paiza_deal_grade_effect = yes
 		mpo_yurts_paiza_bonuses_effect = yes
+
+		#Unop Avoid the merchant chasing root, and use domicile location
+		scope:paiza_merchant = {
+			set_location = root.domicile.domicile_location
+		}
 	}
 
 
@@ -4461,11 +4486,11 @@ mpo_decisions_events.0102 = {
 				if = {
 					limit = {
 						NOT = {
-							root.location = location
+							root.location = domicile.domicile_location #Unop Use domicile location
 						}
 					}
 					root = {
-						set_location = { location = var:merchant_employer.location }
+						set_location = domicile.domicile_location #Unop Use domicile location
 					}
 				}
 				trigger_event = mpo_decisions_events.0101
@@ -4758,7 +4783,7 @@ mpo_decisions_events.0112 = { #mpo_abuse_authority_paiza_decision consequences d
 						is_ai = yes
 						is_adult = yes
 					}
-					save_scope_as = paiza_abuser_1		
+					save_scope_as = paiza_abuser_1
 				}
 			}
 			random_equipped_character_artifact = {
