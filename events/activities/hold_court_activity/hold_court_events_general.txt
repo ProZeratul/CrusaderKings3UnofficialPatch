@@ -15182,7 +15182,10 @@ hold_court.8060 = {
 			scope:vassal = { is_vassal_of = root }
 			scope:vassal.short_term_gold >= hold_court_holding_cost_half_value
 		}
-		show_as_unavailable = { scope:vassal.short_term_gold < hold_court_holding_cost_half_value }
+		show_as_unavailable = {
+			exists = scope:vassal #Unop: Prevent errors in log
+			scope:vassal.short_term_gold < hold_court_holding_cost_half_value 
+		}
 		highlight_portrait = scope:vassal
 		remove_short_term_gold = hold_court_holding_cost_half_value
 		scope:vassal = {
@@ -15225,6 +15228,7 @@ hold_court.8060 = {
 	option = { # Get the Subvassal to pay half
 		name = hold_court.8060.c
 		trigger = {
+			exists = scope:vassal #Unop: Prevent errors in log
 			exists = scope:subvassal
 			OR = {
 				scope:subvassal.short_term_gold >= hold_court_holding_cost_half_value
@@ -15232,6 +15236,8 @@ hold_court.8060 = {
 			}
 		}
 		show_as_unavailable = {
+			exists = scope:vassal #Unop: Prevent errors in log
+			exists = scope:subvassal #Unop: Prevent errors in log
 			scope:subvassal.short_term_gold < hold_court_holding_cost_half_value
 			scope:vassal.short_term_gold < hold_court_holding_cost_half_value
 		}

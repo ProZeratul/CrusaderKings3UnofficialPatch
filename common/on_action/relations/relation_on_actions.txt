@@ -183,7 +183,12 @@ on_remove_relation_lover = {
 			LOVER = scope:target
 		}
 
-		set_relation_old_flame = scope:target
+		if = { #Unop: Prevent the set relation if the relation already exists
+            limit = {
+                NOT = { has_relation_old_flame = scope:target }
+            }
+            set_relation_old_flame = scope:target
+        }
 
 		create_character_memory = {
 			type = broke_up_lovers
@@ -603,6 +608,8 @@ on_remove_relation_friend = {
 	}
 }
 
+#Root is the dying character
+#scope:target is the friend
 on_death_relation_friend = {
 	effect = {
 		remove_character_modifier = confidants_perk_modifier
@@ -633,6 +640,7 @@ on_death_relation_friend = {
 								has_trait = chaste
 								has_trait = celibate
 							}
+							NOT = { this = scope:target } #Unop: Prevent spouse self-targeting
 						}
 					}
 				}
@@ -646,6 +654,7 @@ on_death_relation_friend = {
 								has_trait = chaste
 								has_trait = celibate
 							}
+							NOT = { this = scope:target } #Unop: Prevent spouse self-targeting
 						}
 						save_scope_as = dead_friend_spouse
 					}
@@ -1747,6 +1756,7 @@ on_set_relation_blood_brother = {
 				every_in_list = {
 					list = target_family
 					limit = {
+						NOT = { this = scope:root_picked_family } # Unop: Prevent self-opinion if root & target are in the same family
 						#root and target shouldn't get this towards one another
 						NOT = {
 							has_relation_blood_brother = scope:root_picked_family
