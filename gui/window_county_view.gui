@@ -3209,7 +3209,7 @@ types CountyViewTypes
 {
 	type widget_building_item = widget {
 		size = { 55 55 }
-		enabled = "[GUIBuildingItem.IsBuildingButtonEnabled]"
+		enabled = "[Or(GUIBuildingItem.IsBuildingButtonEnabled, GUIBuildingItem.HasLevel)]" # Unop: Was [GUIBuildingItem.IsBuildingButtonEnabled] instead but it actually prevent players to convert some special building (like hagia sophia)
 		tooltip = "[GUIBuildingItem.GetTooltip]"
 		using = tooltip_ne
 
