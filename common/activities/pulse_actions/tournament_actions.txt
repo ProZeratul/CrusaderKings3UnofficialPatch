@@ -467,10 +467,12 @@ tournament_game_of_rhetoric = {
 		any_attending_character = {
 			location = scope:province
 			has_trait = tourney_participant
+			save_temporary_scope_as = unop_first #Unop: Need to make sure the knight won't compete himself
 		}
 		any_attending_character = {
 			location = scope:province
 			has_trait = tourney_participant
+			NOT = { scope:unop_first ?= this } #Unop: Need to make sure the knight won't compete himself
 		}
 	}
 
@@ -488,6 +490,7 @@ tournament_game_of_rhetoric = {
 			limit = { 
 				location = scope:province
 				has_trait = tourney_participant
+				NOT = { scope:first ?= this } #Unop: Need to make sure the knight won't compete himself
 			}
 			save_scope_as = second
 		}

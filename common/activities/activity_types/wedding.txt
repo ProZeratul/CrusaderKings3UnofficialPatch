@@ -477,6 +477,26 @@
 				}
 			}
 		}
+		# Free the officiant! #Unop: To not let the officiant with the permanent flags
+		if = {
+			limit = { exists = scope:officiant }
+			scope:officiant = {
+				if = {
+					limit = { has_character_flag = need_priest_outfit }
+					remove_character_flag = need_priest_outfit
+				}
+				if = {
+					limit = { has_character_flag = officiant }
+					remove_character_flag = officiant
+				}
+			}
+		}
+		scope:host = { #Unop: In case of bloody wedding, run the variable cleanup event
+			trigger_event = { #cleans up the variables with enough delay for the guest events
+				id = ep2_wedding.0958
+				days = 7
+			}
+		}
 	}
 
 	on_host_death = {

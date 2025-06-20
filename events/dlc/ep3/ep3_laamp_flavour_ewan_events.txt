@@ -10793,9 +10793,23 @@ ep3_laamp_flavour_ewan.2021 = {
 		}
 		# Decent chance this won't stop 'em.
 		hidden_effect = {
-			random = {
+			random = { #Unop: Ensure the lover relation is possible & there is not already a lover secret
 				chance = 25
+				modifier = {
+					NOT = {
+						can_set_relation_lover_trigger = { CHARACTER = scope:follower_2 }
+					}
+					factor = 0
+				}
+				modifier = {
+					any_secret = {
+						secret_type = secret_lover
+						secret_target = scope:follower_2
+					}
+					factor = 0
+				}
 				scope:follower_1 = {
+					set_random_lover_reason = { TARGET = scope:follower_2 }
 					add_secret = { 
 						target = scope:follower_2
 						type = secret_lover 
