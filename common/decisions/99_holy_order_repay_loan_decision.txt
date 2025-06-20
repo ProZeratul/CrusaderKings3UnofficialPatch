@@ -1,0 +1,105 @@
+﻿repay_holy_order_loan_decision = { #Adapted from repay_loan_decision
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_spend_money.dds"
+	}
+	decision_group_type = major
+
+	desc = {
+		desc = repay_holy_order_loan_decision_desc_intro
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { var:loan_story.var:original_loan_holder = var:loan_story.var:current_loan_holder }
+					NOT = { var:loan_story.var:original_loan_lender = var:loan_story.var:holy_order.leader }
+				}
+				desc = repay_holy_order_loan_decision_desc_all_new_char
+			}
+			triggered_desc = {
+				trigger = {
+					NOT = { var:loan_story.var:original_loan_holder = var:loan_story.var:current_loan_holder }
+					var:loan_story.var:original_loan_lender = var:loan_story.var:holy_order.leader
+				}
+				desc = repay_holy_order_loan_decision_desc_inherited_loan_char
+			}
+			triggered_desc = {
+				trigger = {
+					var:loan_story.var:original_loan_holder = var:loan_story.var:current_loan_holder
+					NOT = { var:loan_story.var:original_loan_lender = var:loan_story.var:holy_order.leader }
+				}
+				desc = repay_holy_order_loan_decision_desc_new_holy_master_char
+			}
+			triggered_desc = {
+				trigger = {
+					var:loan_story.var:original_loan_holder = var:loan_story.var:current_loan_holder
+					var:loan_story.var:original_loan_lender = var:loan_story.var:holy_order.leader
+				}
+				desc = repay_holy_order_loan_decision_desc_all_same_char
+			}
+		}
+		desc = repay_holy_order_loan_decision_desc_outro
+	}
+	selection_tooltip = repay_loan_decision_decision_tooltip
+
+	ai_check_interval = 0
+
+	is_shown = {
+		exists = var:loan_story
+
+		any_owned_story = {
+			story_type = story_cycle_holy_order_loan
+			this = prev.var:loan_story
+			save_temporary_scope_as = temp_story
+		}
+
+		NOT = { scope:temp_story.var:alternative_payment = yes }
+		exists = scope:temp_story.var:loan_amount_owed
+		exists = scope:temp_story.var:holy_order
+	}
+
+	is_valid_showing_failures_only = {
+		any_owned_story = {
+			story_type = story_cycle_holy_order_loan
+			save_temporary_scope_as = temp_story
+		}
+		is_available = yes
+		gold >= scope:temp_story.var:loan_amount_owed
+	}
+
+	effect = {
+		var:loan_story = {
+			save_scope_as = story
+		}
+		scope:story.var:holy_order = {
+			leader = { save_scope_as = holy_order_master }
+		}
+
+		pay_short_term_gold = {
+			gold = scope:story.var:loan_amount_owed
+			target = scope:holy_order_master
+		}
+		scope:story = {
+			hidden_effect = { end_story = yes }
+		}
+		hidden_effect = { remove_decision_cooldown = repay_loan_decision }
+		if = {
+			limit = {
+				NOT = {
+					any_owned_story = {
+						story_type = story_cycle_holy_order_loan
+					}
+				}
+			}
+			remove_character_flag = borrow_from_holy_order
+		}
+	}
+
+	# TODO ?
+	ai_potential = {
+		always = no
+	}
+
+	# TODO ?
+	ai_will_do = {
+		base = 0
+	}
+}
