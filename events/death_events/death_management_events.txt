@@ -870,10 +870,6 @@ death_management.0002 = {
 					
 					if = {
 						limit = {
-							opinion = {
-								target = scope:dead_character
-								value >= 33
-							}
 							scope:dead_character = {
 								age < 40
 							}
@@ -1034,6 +1030,7 @@ death_management.0002 = {
 					type = notable_has_died
 					desc = death_management.educator.desc
 					left_icon = scope:dead_character
+					right_icon = scope:ward_of_dead_character
 				}
 			}
 
@@ -3456,19 +3453,7 @@ death_management.1206 = {
     override_background = { reference = battlefield  }
     left_portrait = {
         character = scope:portrait_scope
-        triggered_animation = {
-            trigger = {
-                OR = {
-                    this = scope:battle_death_enemy
-                    this = scope:battle_death_leader
-                }
-            }
-            animation = grief
-        }
-        triggered_animation = {
-            trigger = { always = yes }
-            animation = fear
-        }
+        animation = schadenfreude
     }
     lower_right_portrait = {
         character = scope:battle_death_killer
