@@ -243,16 +243,14 @@ holy_order.0200 = {
 			#}
 		}
 
-		#Fixpack: As the current system is not reliable, loan are now stories
+		#Unop: As the current system is not reliable, loan are now stories
 		#Variables will be cleared by the story setup
 
 		set_variable = { name = order value = scope:order }
 		set_variable = { name = lender value = scope:recipient }
 		set_variable = { name = loan_holder value = root }
 		set_variable = { name = amount value = root.holy_order_gold_value }
-		create_story = story_cycle_holy_order_loan
-
-		#/Fixpack
+		create_story = unop_story_cycle_holy_order_loan
 	}
 
 	option = { #Your piety level is too low :( sinner!

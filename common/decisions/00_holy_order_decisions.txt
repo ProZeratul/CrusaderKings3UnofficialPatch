@@ -240,15 +240,14 @@ borrow_from_holy_order_decision = { #by Linnéa Thimrén
 			exists = var:loan_amount_owed
 			exists = var:loan_holder
 		}
-		# Fixpack: As loans are now stories and I don't want to break ongoing games let the old mechanic in place
+		# Unop: As loans are now stories and I don't want to break ongoing games let the old mechanic in place
 		NOT = {
 			any_owned_story = {
-				story_type = story_cycle_holy_order_loan
+				story_type = unop_story_cycle_holy_order_loan
 			}
 			# Did we not gave back the gold to an Holy-Order ?
 			has_character_flag = banned_from_loan
 		}
-		#/Fixpack
 	}
 
 	is_valid_showing_failures_only = {
@@ -272,12 +271,11 @@ borrow_from_holy_order_decision = { #by Linnéa Thimrén
 				value = holy_order_gold_value
 				days = 1
 			}
-			#Fixpack:Will be added with the story creation now
+			#Unop:Will be added with the story creation now
 			#add_character_flag = {
 			#	flag = borrow_from_holy_order
 			#	days = 3560
 			#}
-			#/Fixpack
 			faith = {
 				random_faith_holy_order = {
 					limit = {
@@ -412,7 +410,7 @@ cancel_holy_order_lease_decision = {
 			county.holder = { is_ai = yes }
 			is_under_holy_order_lease = yes
 		}
-		piety >= cancel_holy_order_piety_cost 
+		piety >= cancel_holy_order_piety_cost #Unop: Prevent AI to go below 0 in piety
 	}
 
 	ai_will_do = {

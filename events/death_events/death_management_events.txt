@@ -233,18 +233,17 @@ death_management.0001 = {
 			var:owes_me_money = {
 				remove_variable = loan_holder
 				remove_variable = loan_amount_owed
-				#Fixpack: We also need to clear those variables
+				#Unop: We also need to clear those variables
 				remove_variable = has_reminded_about_loan
 				remove_variable = original_loan_holder
 				remove_character_flag = promised_repayment
-				#/Fixpack
 			}
 		}
 
 		#To make the heir inherit a loan (make them owe someone money)
-		#Fixpack:Review: This will break things if the heir already has a loan for himself
-		#Fixpack:Review: As I've re-written the HolyOrder loan to use stories, there should not be much conflict anymore
-		#Fixpack:Review: As long as there are only 2 events for vassal loan that are very rarelly fired
+		#Unop:Review: This will break things if the heir already has a loan for himself
+		#Unop:Review: As I've re-written the HolyOrder loan to use stories, there should not be much conflict anymore
+		#Unop:Review: As long as there are only 2 events for vassal loan that are very rarelly fired
 		if = {
 			limit = {
 				exists = var:loan_holder
@@ -259,27 +258,26 @@ death_management.0001 = {
 				exists = player_heir
 			}
 			player_heir = {
-				save_scope_as = new_loan_owner # Fixpack: To be use later in the script
+				save_scope_as = new_loan_owner # Unop: To be use later in the script
 				set_variable = {
 					name = original_loan_holder
 					value = root
 				}
 				set_variable = {
 					name = loan_holder
-					value = root.var:loan_holder #Fixpack: Use the correct value to keep the char we'll have to repay
+					value = root.var:loan_holder #Unop: Use the correct value to keep the char we'll have to repay
 				}
 				set_variable = {
 					name = loan_amount_owed
 					value = root.var:loan_amount_owed
 				}
-				#Fixpack: We need to tell the char that own the loan that the loan has been inherited
+				#Unop: We need to tell the char that own the loan that the loan has been inherited
 				root.var:loan_holder = {
 					set_variable = {
 						name = owes_me_money
 						value = scope:new_loan_owner
 					}
 				}
-				#/Fixpack
 			}
 		}
 

@@ -1,15 +1,13 @@
 ﻿namespace = holy_order
 
-#Fixpack: Based on holy_order_request_child_trigger
+#Unop: Based on holy_order_request_child_trigger
 scripted_trigger unop_holy_order_request_child_trigger = {
 	is_courtier_of = root
 	NOT = { has_trait = devoted }
 	is_adult = yes
 	has_education_martial_trigger = yes
 	can_be_warrior_trigger = { ARMY_OWNER = root }
-	#Fixpack: Also check he/she is not already in an order
-	NOT = { has_trait = order_member }
-	#/Fixpack
+	NOT = { has_trait = order_member } #Unop: Also check he/she is not already in an order
 }
 
 #Holy order demands payment
@@ -37,7 +35,7 @@ holy_order.0292 = {
 	#trigger = {
 		#has_character_flag = borrow_from_holy_order
 		#any_owned_story = {
-		#	story_type = story_cycle_holy_order_loan
+		#	story_type = unop_story_cycle_holy_order_loan
 		#	save_temporary_scope_as = temp_story
 		#}
 		#exists = scope:temp_story
@@ -47,7 +45,7 @@ holy_order.0292 = {
 
 	immediate = {
 		#random_owned_story = {
-		#	limit = { story_type = story_cycle_holy_order_loan }
+		#	limit = { story_type = unop_story_cycle_holy_order_loan }
 		#	save_scope_as = story
 		#}
 
