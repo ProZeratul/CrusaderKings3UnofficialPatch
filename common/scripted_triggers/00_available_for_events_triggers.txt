@@ -102,6 +102,8 @@ is_available_allow_travelling = {
 	}
 	# Variable set within the adventure inspiration events
 	NOT = { has_variable = gone_adventuring }
+	#Unop Prevent paiza merchants from being selected in events
+	NOT = { has_variable = merchant_var }
 }
 
 is_available = {
@@ -244,6 +246,17 @@ is_available_even_at_war_adult = {
 is_capable_adult = {
 	is_adult = yes
 	is_incapable = no
+
+	#Unop: Prevent paiza merchants from being selected by pool character selectors
+	# To avoid modifying all such selectors, this is done here as this trigger is
+	# used by all of them; the additional checks limit it to the pool character selectors only
+	trigger_if = {
+		limit = {
+			is_pool_character = yes
+			exists = scope:base
+		}
+		NOT = { has_variable = merchant_var }
+	}
 }
 
 is_capable_adult_ai = {

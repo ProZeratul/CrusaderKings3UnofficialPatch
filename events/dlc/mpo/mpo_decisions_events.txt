@@ -3615,10 +3615,11 @@ mpo_decisions_events.2139 = {
 				}
 			}
 			add_trait = lifestyle_traveler
-			add_gold = {
-				value = root.tiny_gold_value
-				multiply = 21.37
-			}
+			#Unop The same amount of gold is already added in mpo_find_suitable_merchant_effect
+			#add_gold = {
+			#	value = root.tiny_gold_value
+			#	multiply = 21.37
+			#}
 			send_merchant_on_first_voyage_effect = yes
 		}
 	}
@@ -3629,7 +3630,7 @@ mpo_decisions_events.2140 = {
 	hidden = yes
 
 	immediate = {
-		remove_variable = merchant_var # Used only to send the death notification message
+		# remove_variable = merchant_var # Used only to send the death notification message #Unop Only remove the merchant variable after the entire event chain is over
 		save_scope_as = paiza_merchant
 		var:merchant_origin = {
 			save_scope_as = merchant_origin
@@ -4260,6 +4261,8 @@ mpo_decisions_events.0101 = { #the merchant is back
 				target = root
 				gold = root.var:trade_gold_value
 			}
+
+			remove_variable = merchant_var #Unop Remove the merchant variable here
 		}	
 	}
 }
