@@ -324,6 +324,9 @@ guest_allowed_to_arrive_trigger = {
 		}
 		$HOST$ = { highest_held_title_tier <= tier_county }
 	}
+
+	#Unop Prevent paiza merchants from arrving as guests
+	NOT = { has_variable = merchant_var }
 } #Note: this trigger used to contain opinion triggers but then some awful rulers could never get guests because everyone hates them
 
 
@@ -531,6 +534,8 @@ can_recruit_character_to_court_trigger = {
 					}
 				}
 			}
+			#Unop Disable Invite to Court for paiza merchants
+			has_variable = merchant_var
 		}
 	}
 }
@@ -772,6 +777,8 @@ pool_character_is_pruneable_trigger = {
 			is_ai = no
 		}
 		has_character_flag = easteregg
+		#Unop Prevent pruning paiza merchants
+		has_variable = merchant_var
 	}
 	trigger_if = {
 		limit = {

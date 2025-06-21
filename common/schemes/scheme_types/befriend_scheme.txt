@@ -15,7 +15,7 @@
 	# Parameters
 	speed_per_skill_point = -2.5
 	spymaster_speed_per_skill_point = 0	
-	uses_resistance = no
+	# uses_resistance = no #Unop ck3-tiger Duplicated from above
 	base_progress_goal = 365
 	base_maximum_success = 95
 	minimum_success = 5
@@ -747,6 +747,10 @@
 		}
 	}
 	on_monthly = {
+		#Unop ck3-tiger Save scopes as they are needed by player_target_available_for_personal_scheme_ongoing_events_trigger
+		save_scope_as = scheme
+		scheme_owner = { save_scope_as = owner }
+		scheme_target_character = { save_scope_as = target }
 		#Fickleness
 		if = {
 			limit = {
