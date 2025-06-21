@@ -1,0 +1,66 @@
+﻿namespace = loan_story
+
+# The holy order that lend money has been disbanded
+loan_story.0001 = {
+	type = character_event
+	title = loan_story.0001.title
+	theme = skull
+	desc = { 
+		desc = loan_story.0001.intro
+		desc = loan_story.0001.body
+		desc = loan_story.0001.outro
+	}
+	left_portrait = {
+		character = root
+		animation = idle
+	}
+	override_background = {
+		reference = temple
+	}
+
+	immediate = {
+	}
+
+	option = {
+		name = loan_story.0001.option.a
+	}
+}
+
+# We have inherited a loan :sad:
+loan_story.0002 = {
+	type = character_event
+	title = loan_story.0002.title
+	theme = skull
+	desc = { 
+		desc = loan_story.0002.intro
+		desc = loan_story.0002.body
+		desc = loan_story.0002.outro
+	}
+	left_portrait = {
+		character = root
+		animation = sadness
+	}
+	right_portrait = {
+		character = scope:original_loan_holder
+		animation = idle
+	}
+	override_background = {
+		reference = temple
+	}
+
+	immediate = {
+		scope:loan_story = {
+			var:loan_amount_owed = {
+				save_scope_as = gold_owed
+			}
+			var:holy_order = {
+				save_scope_as = holy_order
+			}
+		}
+		#scope:original_loan_holder
+	}
+
+	option = {
+		name = loan_story.0002.option.a
+	}
+}

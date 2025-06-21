@@ -39,7 +39,10 @@
 	}
 
 	ai_potential = {
-		NOT = { has_realm_law_flag = cannot_imprison }
+		trigger_if = {
+			limit = { has_realm_law_flag = imprisonment_toggle_enable } #Unop: Present on all tribal authority to disable imprisonment
+			has_realm_law_flag = imprisonment_toggle_on					#Unop: Present from tribal authority level 1 to re-enable imprisonment
+		}
 		is_imprisoned = no
 	}
 

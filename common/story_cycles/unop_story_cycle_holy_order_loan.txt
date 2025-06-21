@@ -1,0 +1,272 @@
+﻿unop_story_cycle_holy_order_loan = {
+
+	on_setup = {
+
+		### Scopes
+		save_scope_as = holy_order_loan_story
+
+		### Tracking variables
+
+		#Holy Order
+		set_variable = {
+			name = holy_order
+			value = story_owner.var:order
+		}
+
+		# Holy master who gave money (originally)
+		set_variable = {
+			name = original_loan_lender
+			value = story_owner.var:lender
+		}
+
+		# Holy master who gave money (now) => Disabled as we'll use the holy_order.lender to get him
+		#set_variable = {
+		#	name = current_loan_lender
+		#	value = story_owner.var:lender
+		#}
+
+		# How much gold did the Holy Master gave
+		set_variable = {
+			name = loan_amount_owed
+			value = story_owner.var:amount
+		}
+
+		# When did the loan was given (just to be displayed)
+
+		set_variable = {
+			name = loan_day
+			value = current_day
+		}
+
+		set_variable = {
+			name = loan_month
+			value = current_month
+		}
+
+		set_variable = {
+			name = loan_year
+			value = current_year
+		}
+
+		# Cannot be used to have a clean date displayed
+		#set_variable = {
+		#	name = loan_date
+		#	value = current_date
+		#}
+
+		# The character that received the money (originally, if inherited will use another var for current)
+		set_variable = {
+			name = original_loan_holder
+			value = story_owner.var:loan_holder
+		}
+
+		# The current loan holder (in case of inheritance, if not will be the same as original_loan_holder)
+		set_variable = {
+			name = current_loan_holder
+			value = story_owner.var:loan_holder
+		}
+
+		# Years past since loan (by default you have 10 years to repay + 5 if asked for time)
+		set_variable = {
+			name = years_since_loan
+			value = 0
+		}
+
+		# How much years we still have to repay the loan (10 + (5 if asked_for_time))
+		# Only use for display purpose
+		set_variable = {
+			name = years_left_for_repayment
+			value = 10
+		}
+
+		# Has the char been given more time to pay ? (can be only asked once)
+		set_variable = {
+			name = asked_for_time
+			value = no
+		}
+
+		# Has the char asked to pay something else (castle or child)
+		set_variable = {
+			name = alternative_payment
+			value = no
+		}
+
+		# Is the loan frozen (in case of inheritance, we will wait for the already ongoing loan story to end)
+		set_variable = {
+			name = is_frozen
+			value = no
+		}
+
+		# First repay call have been made
+		set_variable = {
+			name = first_call
+			value = no
+		}
+
+		# second repay call have been made
+		set_variable = {
+			name = second_call
+			value = no
+		}
+
+		story_owner = {
+			remove_variable = lender
+			remove_variable = amount
+			remove_variable = loan_holder
+			remove_variable = order
+
+			if = {
+				limit = { NOT = { has_character_flag = borrow_from_holy_order } }
+				add_character_flag = { flag = borrow_from_holy_order }
+			}
+		}
+
+		if = {
+			limit = { NOT = { exists = story_owner.var:loan_story } }
+			story_owner = { set_variable = { name = loan_story value = root } }
+		}
+
+		# Now that everything is setup give the story_owner his loan
+		var:original_loan_lender = {
+			pay_short_term_gold = {
+				target = root.var:original_loan_holder
+				gold = root.var:loan_amount_owed
+			}
+		}
+	}
+
+	on_end = {
+		story_owner = {
+			if = {
+				limit = {
+					any_owned_story = {
+						story_type = unop_story_cycle_holy_order_loan
+						NOT = { this = scope:story }
+					}
+				}
+				random_owned_story = {
+					limit = { 
+						story_type = unop_story_cycle_holy_order_loan
+						NOT = { this = scope:story }
+					}
+					save_scope_as = new_story
+				}
+				set_variable = { name = loan_story value = scope:new_story }
+				scope:new_story = {
+					set_variable = { name = is_frozen value = no }
+				}
+			}
+			else = {
+				remove_variable = loan_story
+			}
+		}
+	}
+
+	on_owner_death = {
+		# Transfer to heir
+		if = {
+			limit = { story_owner = { exists = player_heir } }
+			story_owner = {
+				save_scope_as = old_loan_holder
+				player_heir = { save_scope_as = new_story_owner }
+				if = {
+					limit = {
+						player_heir = {
+							any_owned_story = {
+								story_type = unop_story_cycle_holy_order_loan
+							}
+						}
+					}
+					prev = {
+						set_variable = { name = is_frozen value = yes }
+					}
+				}
+				else = {
+					player_heir = {
+						set_variable = { name = loan_story value = scope:story }
+					}
+				}
+			}
+			transfer_holy_order_loan_story_cycle_to_effect = {
+				CHARACTER = scope:new_story_owner
+				STORY = scope:story
+			}
+		}
+		# Or destroy
+		else = {
+			scope:story = { end_story = yes }
+		}
+	}
+
+	# Max duration - Just in case something goes wrong
+	effect_group = {
+		years = 1
+
+		trigger = {
+			exists = var:years_since_loan
+			var:years_since_loan >= 16
+		}
+
+		first_valid = {
+			triggered_effect = {
+				trigger = { always = yes }
+				effect = {
+					if = {
+						limit = {
+							exists = var:loan_day
+							exists = var:loan_month
+							exists = var:loan_year
+						}
+						debug_log = "Holy Order loan story force end on:"
+						debug_log_date = yes
+					}
+					end_story = yes
+				}
+			}
+		}
+	}
+
+	#Main loop
+	effect_group = {
+		years = 1
+
+		trigger = {
+			NOT = { var:is_frozen = yes }
+		}
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				save_scope_as = story
+				change_variable = {
+					name = years_since_loan
+					add = 1
+				}
+				# Ask to repay the loan (first call)
+				if = {
+					limit = {
+						var:years_since_loan >= 10
+						NOT = { var:first_call = yes }
+					}
+					story_owner = {
+						trigger_event = holy_order.0292
+					}
+					set_variable = { name = first_call value = yes }
+				}
+				# Ask to repay the loan (if asked for more time)
+				else_if = {
+					limit = {
+						var:years_since_loan >= 15
+						var:asked_for_time = yes
+						var:first_call = yes
+						NOT = { var:second_call = yes }
+					}
+					story_owner = {
+						trigger_event = holy_order.0292
+					}
+					set_variable = { name = second_call value = yes }
+				}
+			}
+		}
+	}
+}

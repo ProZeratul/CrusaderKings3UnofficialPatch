@@ -1,0 +1,408 @@
+﻿namespace = holy_order
+
+#Unop: Based on holy_order_request_child_trigger
+scripted_trigger unop_holy_order_request_child_trigger = {
+	is_courtier_of = root
+	NOT = { has_trait = devoted }
+	is_adult = yes
+	has_education_martial_trigger = yes
+	can_be_warrior_trigger = { ARMY_OWNER = root }
+	NOT = { has_trait = order_member } #Unop: Also check he/she is not already in an order
+}
+
+#Holy order demands payment
+#Based on holy_order.0202 by Linnéa Thimrén
+holy_order.0292 = {
+	type = letter_event
+	opening = {
+		desc = char_interaction.0001.opening
+	}
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					exists = scope:story.var:asked_for_time
+					scope:story.var:asked_for_time = yes
+				}
+				desc = holy_order.0292.second_time
+			}
+			desc = holy_order.0292.opening
+		}
+		desc = holy_order.0202.desc
+	}
+	sender = scope:recipient
+
+	#trigger = {
+		#has_character_flag = borrow_from_holy_order
+		#any_owned_story = {
+		#	story_type = unop_story_cycle_holy_order_loan
+		#	save_temporary_scope_as = temp_story
+		#}
+		#exists = scope:temp_story
+		#exists = scope:temp_story.var:loan_amount_owed
+		#exists = scope:temp_story.var:current_loan_lender
+	#}
+
+	immediate = {
+		#random_owned_story = {
+		#	limit = { story_type = unop_story_cycle_holy_order_loan }
+		#	save_scope_as = story
+		#}
+
+		scope:story.var:holy_order.leader = {
+			save_scope_as = recipient
+		}
+		scope:story.var:current_loan_holder = {
+			save_scope_as = actor
+		}
+		save_scope_value_as = {
+			name = loan_amount_owed
+			value = scope:story.var:loan_amount_owed
+		}
+		faith = {
+			random_faith_holy_order = {
+				limit = {
+					leader = {
+						this = scope:recipient
+					}
+				}
+				save_scope_as = holy_order
+			}
+		}
+	}
+
+	option = { #Pay back
+		name = holy_order.0202.a
+		trigger = {
+			can_execute_decision = repay_holy_order_loan_decision
+		}
+		show_as_unavailable = { NOT = { can_execute_decision = repay_holy_order_loan_decision } }
+		flavor = { #To get warning if you don't have enough money
+			triggered_desc = {
+				trigger = {
+					NOT = { can_execute_decision = repay_holy_order_loan_decision }
+				}
+				desc = holy_order.0202.a._not.tt
+			}
+		}
+		show_as_tooltip = {
+			pay_short_term_gold = {
+				gold = scope:story.var:loan_amount_owed
+				target = scope:recipient
+			}
+		}
+		execute_decision = repay_holy_order_loan_decision
+	}
+
+	option = { #Pretty please give me more time?
+		name = {
+			trigger = {
+				faith = { religion_tag = christianity_religion }
+			}
+			text = holy_order.0202.b_christian
+		}
+		name = {
+			trigger = {
+				NOT = { faith = { religion_tag = christianity_religion } }
+			}
+			text = holy_order.0202.b
+		}
+		trigger = {
+			piety_level >= 3
+			exists = scope:story.var:asked_for_time
+			NOT = { scope:story.var:asked_for_time = yes }
+		}
+		show_as_unavailable = {
+			piety_level < 3
+			exists = scope:story.var:asked_for_time
+			scope:story.var:asked_for_time = yes
+		}
+		custom_tooltip = holy_order.0202.b.tt
+
+		scope:story = {
+			set_variable = {
+				name = asked_for_time
+				value = yes
+			}
+			change_variable = {
+				name = years_left_for_repayment
+				add = 5
+			}
+		}
+	}
+
+	option = { #no
+		name = holy_order.0202.c
+		flavor = holy_order.0202.c.tt
+		hidden_effect = {
+
+			scope:story = {
+				set_variable = {
+					name = alternative_payment
+					value = yes
+				}
+			}
+
+			random_list = {
+				50 = {
+					trigger = { #Has a fitting castle
+						any_held_title = {
+							tier = tier_barony
+							barony_is_valid_for_holy_order_lease_trigger = { CHARACTER = root }
+						}
+					}
+					trigger_event = { #They ask for a castle
+						id = holy_order.0293
+						days = { 30 90 }
+					}
+				}
+				50 = {
+					trigger = { #Has a fitting child
+						any_child = {
+							unop_holy_order_request_child_trigger = yes
+						}
+					}
+					trigger_event = { #They ask for a child
+						id = holy_order.0294
+						days = { 30 90 }
+					}
+				}
+				1 = {
+					trigger = { #Has a fitting castle
+						NOR = {
+							any_held_title = {
+								tier = tier_barony
+								barony_is_valid_for_holy_order_lease_trigger = { CHARACTER = root }
+							}
+							any_child = {
+								unop_holy_order_request_child_trigger = yes
+							}
+						}
+					}
+					trigger_event = { #No options left at all
+						id = holy_order.0295
+						days = 1
+					}
+				}
+			}
+		}
+	}
+
+	option = { #no
+		name = holy_order.0202.d
+
+		#Consequences for not paying back
+		trigger_event = {
+			id = holy_order.0295
+			days = 1
+		}
+	}
+}
+
+#Holy Order demands castle
+#Based on holy_order.0203 by Linnéa Thimrén
+holy_order.0293 = {
+	type = letter_event
+	opening = {
+		desc = char_interaction.0001.opening
+	}
+	desc = holy_order.0203.desc
+	sender = scope:recipient
+
+	trigger = {
+		has_character_flag = borrow_from_holy_order
+		any_held_title = {
+			tier = tier_barony
+			barony_is_valid_for_holy_order_lease_trigger = { CHARACTER = root }
+		}
+		exists = scope:holy_order
+	}
+
+	on_trigger_fail = { #If no available children exists now
+		if = {
+			limit = {
+				exists = scope:holy_order
+				has_character_flag = borrow_from_holy_order
+				any_child = {
+					unop_holy_order_request_child_trigger = yes
+				}
+			}
+			trigger_event = holy_order.0294
+		}
+		else = { #No options left at all
+			trigger_event = holy_order.0295
+		}
+	}
+
+	immediate = {
+		random_held_title = {
+			limit = {
+				tier = tier_barony
+				barony_is_valid_for_holy_order_lease_trigger = { CHARACTER = root }
+			}
+			save_scope_as = province
+		}
+	}
+
+	option = {
+		name = holy_order.0203.a
+		custom_tooltip = holy_order.0204.a.tt
+		remove_character_flag = borrow_from_holy_order
+		scope:province = {
+			lease_out_to = scope:holy_order
+		}
+		hidden_effect = {
+			scope:story = { end_story = yes }
+		}
+	}
+
+	option = { #refuse
+		name = holy_order.0203.b
+		trigger_event = {
+			id = holy_order.0295
+			days = 1
+		}
+	}
+}
+
+#Holy Order demands child
+#Based on holy_order.0204 by Linnéa Thimrén
+holy_order.0294 = {
+	type = letter_event
+	opening = {
+		desc = char_interaction.0001.opening
+	}
+	desc = holy_order.0204.desc
+	sender = scope:recipient
+
+	trigger = {
+		exists = scope:holy_order
+		has_character_flag = borrow_from_holy_order
+		any_child = {
+			unop_holy_order_request_child_trigger = yes
+		}
+	}
+
+	on_trigger_fail = { #If no available children exists now
+		if = {
+			limit = {
+				exists = scope:holy_order
+				has_character_flag = borrow_from_holy_order
+				any_held_title = {
+					tier = tier_barony
+					barony_is_valid_for_holy_order_lease_trigger = { CHARACTER = root }
+				}
+			}
+			trigger_event = holy_order.0293
+		}
+		else = { #No options left at all
+			trigger_event = holy_order.0295
+		}
+	}
+
+	immediate = {
+		random_child = {
+			limit = {
+				unop_holy_order_request_child_trigger = yes
+			}
+			save_scope_as = child
+		}
+	}
+
+	option = {
+		name = holy_order.0204.a
+		custom_tooltip = holy_order.0204.a.tt
+		remove_character_flag = borrow_from_holy_order
+		scope:child = {
+			add_trait = order_member
+			add_piety_level = 1
+			if = { # Ensure that your child is of the correct faith to join the holy order.
+				limit = {
+					NOT = { faith = scope:recipient.faith }
+				}
+				set_character_faith = scope:recipient.faith
+			}
+		}
+		scope:recipient = {
+			add_courtier = scope:child
+			add_opinion = {
+				target = root
+				modifier = pleased_opinion
+				opinion = 20
+			}
+		}
+		add_piety = medium_piety_gain
+		unop_change_renown = { CHAR = root PRESTIGE_MODIFIER = medium_dynasty_prestige_gain }
+		#dynasty = {
+		#	add_dynasty_prestige = root.dynasty.medium_dynasty_prestige_gain
+		#}
+		hidden_effect = {
+			scope:story = { end_story = yes }
+		}
+	}
+
+	option = { #refuse
+		name = holy_order.0203.b
+		trigger_event = {
+			id = holy_order.0295
+			days = 1
+		}
+	}
+}
+
+#No options available, send punishment event
+#Based on holy_order.0205 by Linnéa Thimrén (I guess ?)
+holy_order.0295 = {
+	type = letter_event
+	opening = {
+		desc = char_interaction.0001.opening
+	}
+	desc = holy_order.0205.desc
+	sender = scope:recipient
+
+	immediate = {
+		hidden_effect = {
+			scope:story = { end_story = yes }
+		}
+	}
+
+	option = {
+		name = holy_order.0205.a
+		if = {
+			limit = {
+				exists = scope:recipient.faith.religious_head
+				NOT = { scope:recipient.faith.religious_head = root }
+			}
+			scope:recipient.faith.religious_head = {
+				add_opinion = {
+					modifier = not_repay_loan_opinion
+					target = root
+				}
+			}
+		}
+
+		# Instead of just the current Grand Master of the holy order who gave the loan
+		# Now EVERY Grand Master (of the same faith) does trust you less
+		scope:recipient.faith = {
+			every_faith_holy_order = {
+				custom = all_holy_order_masters
+				leader = {
+					add_opinion = {
+						modifier = not_repay_loan_opinion
+						target = root
+					}
+				}
+			}
+		}
+
+		if = { #are we still of the same faith?
+			limit = {
+				scope:recipient.faith = root.faith
+			}
+			add_piety_level = -1
+
+			#Add a flag to indicate this char is banned from future loan (as long as it was not the same faith)
+			add_character_flag = banned_from_loan
+		}
+	}
+}
