@@ -3581,32 +3581,83 @@ title_revocation_stress_effect = {
 }
 
 revoke_holy_order_lease_effect = {
-
-	$CHARACTER$ = { save_scope_as = revoker }
-	$TARGET$ = { save_scope_as = holy_order_master }
-	$BARONY$ = { save_scope_as = holy_order_location }
+	#Unop: $CHARACTER$ is the revoker
+	#Unop: $TARGET$  is the holy_order_master
+	#Unop: $BARONY$ is the holy_order_location being revoked
 
 	if = {
 		limit = {
-			scope:revoker.faith = {
+			$TARGET$.faith = {
 				any_faith_holy_order = {
 					num_leased_titles = 1
-					title = scope:holy_order_location.lessee_title
+					title = $BARONY$.lessee_title
 				}
 			}
 		}
 		custom_tooltip = destroy_holy_order_warning
 	}
 
-	scope:revoker = {
+	$TARGET$ = {
+		hidden_effect = { #Nudge towards rivalry
+			if = {
+				limit = {
+					NOR = {
+						has_relation_rival = $CHARACTER$
+						has_relation_potential_rival = $CHARACTER$
+					}
+				}
+				set_relation_potential_rival = $CHARACTER$
+			}
+		}
+		if = {
+			limit = {
+				NOT = { this = $CHARACTER$ }
+			}
+			add_opinion = {
+				target = $CHARACTER$
+				modifier = angry_opinion
+				opinion = -40
+			}
+		}
+
+		faith = {
+			if = {
+				limit = {
+					exists = religious_head
+					NOT = { religious_head = $CHARACTER$ }
+				}
+				religious_head = {
+					add_opinion = {
+						modifier = angry_opinion
+						target = $CHARACTER$
+						opinion = -20
+					}
+					if = {
+						limit = {
+							has_opinion_modifier = {
+								target = $CHARACTER$
+								modifier = founded_holy_order_opinion
+							}
+						}
+						remove_opinion = {
+							target = $CHARACTER$
+							modifier = founded_holy_order_opinion
+						}
+					}
+				}
+			}
+		}
+	}
+
+	$CHARACTER$ = {
 		send_interface_message = {
 			type = holy_order_lease_revoked_message
 			title = revoke_leased_title_interaction_notification
-			right_icon = scope:holy_order_master
+			right_icon = $TARGET$
 
 			# Zealous costs stress if same-faith.
 			if = {
-				limit = { faith = scope:holy_order_master.faith }
+				limit = { $CHARACTER$.faith = $TARGET$.faith }
 				stress_impact = {
 					zealous = massive_stress_impact_gain
 					generous = medium_stress_impact_gain
@@ -3621,9 +3672,9 @@ revoke_holy_order_lease_effect = {
 			else_if = {
 				# Bit less but still some if you view the other faith as astray.
 				limit = {
-					scope:revoker.faith = {
+					$CHARACTER$.faith = {
 						faith_hostility_level = {
-							target = scope:holy_order_master.faith
+							target = $TARGET$.faith
 							value <= faith_astray_level
 						}
 					}
@@ -3640,11 +3691,11 @@ revoke_holy_order_lease_effect = {
 			else = {
 
 				if = {
-					limit = { exists =  scope:revoker.faith.religious_head  }
-					scope:revoker.faith.religious_head = {
+					limit = { exists = $CHARACTER$.faith.religious_head  }
+					$CHARACTER$.faith.religious_head = {
 						add_opinion = {
 							modifier = pleased_opinion
-							target = scope:revoker
+							target = $CHARACTER$
 							opinion = 20
 						}
 					}
@@ -3664,9 +3715,9 @@ revoke_holy_order_lease_effect = {
 			}
 
 			# If the county has the same faith than the HO, locals are unhappy
-			scope:holy_order_location = {
+			$BARONY$ = {
 				if = {
-					limit = { title_province.county.faith = scope:holy_order_master.faith }
+					limit = { title_province.county.faith = $TARGET$.faith }
 					title_province.county = {
 						add_county_modifier = {
 							modifier = lost_holy_order_modifier
@@ -3674,61 +3725,7 @@ revoke_holy_order_lease_effect = {
 						}
 					}
 				}
-
 				revoke_lease = yes
-			}
-		}
-	}
-
-	scope:holy_order_master = {
-		hidden_effect = { #Nudge towards rivalry
-			if = {
-				limit = {
-					NOR = {
-						has_relation_rival = scope:revoker
-						has_relation_potential_rival = scope:revoker
-					}
-				}
-				set_relation_potential_rival = scope:revoker
-			}
-		}
-
-		if = {
-			limit = {
-				NOT = { this = scope:revoker }
-			}
-			add_opinion = {
-				target = scope:revoker
-				modifier = angry_opinion
-				opinion = -40
-			}
-		}
-
-		faith = {
-			if = {
-				limit = {
-					exists = religious_head
-					NOT = { religious_head = scope:revoker }
-				}
-				religious_head = {
-					add_opinion = {
-						modifier = angry_opinion
-						target = scope:revoker
-						opinion = -20
-					}
-					if = {
-						limit = {
-							has_opinion_modifier = {
-								target = scope:revoker
-								modifier = founded_holy_order_opinion
-							}
-						}
-						remove_opinion = {
-							target = scope:revoker
-							modifier = founded_holy_order_opinion
-						}
-					}
-				}
 			}
 		}
 	}
