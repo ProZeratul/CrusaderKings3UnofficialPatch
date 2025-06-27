@@ -3622,7 +3622,7 @@ tournament_events.1141 = { # Host Challenge - Outcome
 				}
 			}
 			save_scope_as = pas_darmes_victim
-			scope:pas_darmes_instigator = { add_personal_artifact_claim = scope:newly_created_artifact }
+			#scope:pas_darmes_instigator = { add_personal_artifact_claim = scope:newly_created_artifact } #Unop: This will be handled in the option B
 		}
 		else = {
 			scope:pas_darmes_instigator = {
@@ -7164,6 +7164,10 @@ tournament_events.1280 = {
 								exists = var:contest_aptitude
 								is_close_or_extended_family_of = root
 								is_landed = yes
+							}
+							trigger_if = { # Unop: Ensure this dynasty has not been already affected by this event
+								limit = { exists = dynasty }
+								NOT = { exists = dynasty.var:tournament_1280_cooldown }
 							}
 						}
 						save_scope_as = collapse_victim

@@ -1,0 +1,144 @@
+﻿# A holy order gets a new barony for lease.
+# root = the holy order
+# scope:patron = the current patron of the holy order, if any
+# scope:barony = the new title leased to the holy order
+on_holy_order_new_lease = {
+	effect = {
+		if = {
+			limit = {
+				exists = scope:patron
+				NOR = {
+					scope:barony.holder = scope:patron
+					scope:barony.holder.liege = scope:patron
+				}
+			}
+			save_scope_as = holy_order
+			scope:barony.holder = {
+				save_scope_as = former_holder
+			}
+			scope:patron = {
+				send_interface_message = {
+					type = holy_order_expanded_message
+					desc = holy_order.new_lease
+					left_icon = scope:barony
+					right_icon = scope:holy_order.leader
+					show_as_tooltip = {
+						scope:barony = { lease_out_to = scope:holy_order }
+					}
+				}
+			}
+		}
+	}
+}
+
+# A holy order is hired by a ruler.
+# root = the holy order
+# scope:patron = the current patron of the holy order, if any
+# scope:actor = the character hiring the holy order
+on_holy_order_hired = {
+	effect = {
+		save_scope_as = holy_order
+		if = {
+			limit = {
+				exists = scope:patron
+				NOT = { scope:patron = scope:actor }
+			}
+			scope:patron = {
+				send_interface_message = {
+					type = holy_order_hired_message
+					desc = holy_order.hired_message
+					left_icon = scope:actor
+					right_icon = scope:holy_order.leader
+				}
+			}
+		}
+		scope:actor = {
+			every_war_enemy = {
+				send_interface_toast = {	
+					type = holy_order_hired_by_enemy_message
+					desc = holy_order.hired_by_enemy
+					left_icon = scope:actor
+					right_icon = scope:holy_order.leader
+				}
+			}
+		}
+	}
+}
+
+# A holy order has been destroyed.
+# root = the faith the holy order belonged to
+# scope:title = the title of the holy order
+# scope:leader = the leader of the holy order
+on_holy_order_destroyed = {
+	effect = {
+		# If it's the Jomsvikings, reset Jomsberg & send a full event.
+		if = {
+			limit = {
+				exists = global_var:jomsberg_location
+				scope:title = global_var:jomsvikings_title
+			}
+			# Reset the barony name first.
+			global_var:jomsberg_location = { reset_title_name = yes }
+			# Then send out events as appropriate.
+			every_player = {
+				limit = {
+					OR = {
+						# We notify everyone of the faith.
+						faith = faith:norse_pagan
+						# But also just people within diplomatic range.
+						in_diplomatic_range = scope:leader
+					}
+				}
+				trigger_event = fp1_jomsvikings.1001
+			}
+		}
+		# Otherwise, use the standard flow.
+		else = {
+			every_ruler = {
+				limit = {
+					is_ai = no
+					faith = root
+				}
+				send_interface_toast = {
+					type = holy_order_destroyed_message #Unop: Since the original 'holy_order_destroyed' name was changed to be harmonized with the rest
+					title = holy_order.destroyed_title
+					desc = holy_order.destroyed_message #Unop: Changed from 'custom_tooltip' to actually have the desc message be shown
+					left_icon = scope:title
+					right_icon = scope:leader
+				}
+			}
+		}
+
+		#Unop: For the loan, in case the HolyOrder is disbanded we need to end the story & warn the player
+		every_ruler = {
+			if = {
+				limit = {
+					any_owned_story = { story_type = unop_story_cycle_holy_order_loan }
+				}
+				save_scope_as = current_ruler
+				every_owned_story = {
+					limit = { story_type = unop_story_cycle_holy_order_loan }
+					if = {
+						limit = { NOT = { exists = var:holy_order } }
+						end_story = yes
+						scope:current_ruler = {
+							if = {
+								limit = { is_ai = no }
+								trigger_event = {
+									id = loan_story.0001
+									days = { 1 3 }
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		scope:leader = {
+			remove_trait = order_member
+			add_character_modifier = holy_order_experience_modifier
+			#Add memory for the Holy Order being disbanded ?
+		}
+	}
+}

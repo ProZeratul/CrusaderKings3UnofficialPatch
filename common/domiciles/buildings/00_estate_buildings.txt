@@ -12595,37 +12595,6 @@ silk_01 = {
 	construction_time = 730
 	allowed_domicile_types = { estate }
 
-	can_construct_potential = { #Unop: To NOT show this building AT ALL if you can't take the decision
-		OR = {
-			AND = { # Unop: Taken from establish_silk_production_decision > is_shown
-				has_ep3_dlc_trigger = yes
-				government_allows = administrative
-				OR = {
-					this = house.house_head
-					AND = {
-						is_ai = no
-						house.house_head = top_liege
-					}
-				}
-				domicile ?= {
-					is_domicile_type = estate
-				}
-				top_liege ?= {
-					OR = {
-						primary_title = title:e_byzantium
-						primary_title = title:e_roman_empire
-					}
-				}
-				NOT = {
-					house = {
-						has_house_modifier = ep3_unlocked_silk
-					}
-				}
-			}
-			house = { has_house_modifier = ep3_unlocked_silk }
-		}
-	}
-
 	can_construct = {
 		custom_tooltip = {
 			house = { has_house_modifier = ep3_unlocked_silk }

@@ -81,20 +81,29 @@ seduce_outcome.0002 = {
 			}
 		}
 
-		#DISCOVERY ROLL
-		save_scope_value_as = {
-			name = discovery_chance
-			value = {
-				value = 100
-				subtract = scope:scheme.scheme_secrecy
+		if = { # Unop: Seducing your wife or concubine is nothing secret / to be ashamed of
+			limit = {
+				NOT = {
+					scope:target = {
+						is_consort_of = scope:owner
+					}
+				}
 			}
-		}
-
-		random = {
-			chance = scope:discovery_chance
+			#DISCOVERY ROLL
 			save_scope_value_as = {
-				name = scheme_discovered
-				value = yes
+				name = discovery_chance
+				value = {
+					value = 100
+					subtract = scope:scheme.scheme_secrecy
+				}
+			}
+
+			random = {
+				chance = scope:discovery_chance
+				save_scope_value_as = {
+					name = scheme_discovered
+					value = yes
+				}
 			}
 		}
 

@@ -278,7 +278,7 @@ hold_court.0021 = {
 		# Guaranteed small grandeur reward, in addition to any from events
 		change_current_court_grandeur = minor_court_grandeur_gain
 		# LEGITIMACY GAIN FROM HOLDING COURT
-		add_legitimacy = minor_legitimacy_gain
+		add_legitimacy_effect = { LEGITIMACY = minor_legitimacy_gain } #Unop: Better to call the dedicated effect
 	}
 }
 
@@ -3920,9 +3920,10 @@ hold_court.4500 = {
 	option = {
 		name = hold_court.4500.b
 		change_current_court_grandeur = minor_court_grandeur_gain
-		replace_existing_position_with_character_in_current_scope_court_effect = {
-			CHARACTER = scope:demanding_poet
-			POSITION = court_poet_court_position
+		court_position_grant_effect = { #Unop: To show aptitude & the cost of the position
+			CANDIDATE = scope:demanding_poet
+			POS = court_poet
+			EMPLOYER = root
 		}
 		ai_chance = {
 			base = 50
@@ -14258,10 +14259,7 @@ hold_court.8050 = {
 				}
 			}
 			scope:knight = { #Unop: Actually ensure they can be a bodyguard before showing the option.
-				would_be_valid_for_court_position = {
-					court_position = bodyguard_court_position
-					employer = root
-				}
+				bodyguard_validity_trigger = { EMPLOYER = root } #Unop: Using this as it's the only way to only check requierements outside of liege/court
 			}
 		}
 		#highlight_portrait = scope:bodyguard #Unop: Since bodyguard can be undefined, commented it, so it won't output errors in logs
@@ -15182,7 +15180,10 @@ hold_court.8060 = {
 			scope:vassal = { is_vassal_of = root }
 			scope:vassal.short_term_gold >= hold_court_holding_cost_half_value
 		}
-		show_as_unavailable = { scope:vassal.short_term_gold < hold_court_holding_cost_half_value }
+		show_as_unavailable = {
+			exists = scope:vassal #Unop: Prevent errors in log
+			scope:vassal.short_term_gold < hold_court_holding_cost_half_value 
+		}
 		highlight_portrait = scope:vassal
 		remove_short_term_gold = hold_court_holding_cost_half_value
 		scope:vassal = {
@@ -15225,6 +15226,7 @@ hold_court.8060 = {
 	option = { # Get the Subvassal to pay half
 		name = hold_court.8060.c
 		trigger = {
+			exists = scope:vassal #Unop: Prevent errors in log
 			exists = scope:subvassal
 			OR = {
 				scope:subvassal.short_term_gold >= hold_court_holding_cost_half_value
@@ -15232,6 +15234,8 @@ hold_court.8060 = {
 			}
 		}
 		show_as_unavailable = {
+			exists = scope:vassal #Unop: Prevent errors in log
+			exists = scope:subvassal #Unop: Prevent errors in log
 			scope:subvassal.short_term_gold < hold_court_holding_cost_half_value
 			scope:vassal.short_term_gold < hold_court_holding_cost_half_value
 		}

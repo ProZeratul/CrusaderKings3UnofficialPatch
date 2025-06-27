@@ -4380,88 +4380,72 @@ court.5060 = {
 		}
 	}
 
-	option = { #Give minor title
+	# Unop: Split the original option into 3 entries for each potential position (to leave the choice to the player)
+	option = { # employ them as bodyguard
 		trigger = {
-			OR = {
-				can_appoint_char_to_court_position = {
-					CHAR = scope:knight
-					COURT_POS = bodyguard_court_position
-				}
-				can_appoint_char_to_court_position = {
-					CHAR = scope:knight
-					COURT_POS = champion_court_position
-				}
-				can_appoint_char_to_court_position = {
-					CHAR = scope:knight
-					COURT_POS = akolouthos_court_position
-				}
+			can_appoint_char_to_court_position = {
+				CHAR = scope:knight
+				COURT_POS = bodyguard_court_position
 			}
 		}
-		# employ them as champion or bodyguard
-		name = {
-			trigger = { 
-					can_appoint_char_to_court_position = {
-						CHAR = scope:knight
-						COURT_POS = akolouthos_court_position
-					}
-				}
-			text = court.5060.d.akolouthos
+		name = court.5060.d.bodyguard
+		employ_character_as_position_in_current_scope_court_effect = {
+			CHARACTER = scope:knight
+			POSITION = bodyguard
 		}
-		name = {
-			trigger = { 
-				can_appoint_char_to_court_position = {
-					CHAR = scope:knight
-					COURT_POS = champion_court_position
-				}
-			}
-			text = court.5060.d.champion 
+		scope:knight = {
+			accolade_minor_glory_gain_with_checks_effect = yes
 		}
-		name = {
-			trigger = { 
-				NOT = { 
-					can_appoint_char_to_court_position = {
-						CHAR = scope:knight
-						COURT_POS = bodyguard_court_position
-					}
-				}
-			}
-			text = court.5060.d.bodyguard
+		stress_impact = {
+			paranoid = medium_stress_impact_loss
 		}
-		if = {
-			limit = {
-				can_appoint_char_to_court_position = {
-					CHAR = scope:knight 
-					COURT_POS = akolouthos_court_position
-				}
-			}
-			employ_character_as_position_in_current_scope_court_effect = { 
-				CHARACTER = scope:knight 
-				POSITION = akolouthos
+		ai_chance = {
+			base = 100
+			modifier = {
+				has_trait = paranoid
+				add = 50
 			}
 		}
-		else_if = {
-			limit = {
-				can_appoint_char_to_court_position = {
-					CHAR = scope:knight
-					COURT_POS = champion_court_position
-				}
-			}
-			employ_character_as_position_in_current_scope_court_effect = { 
-				CHARACTER = scope:knight 
-				POSITION = champion
+	}
+
+	option = { # employ them as champion
+		trigger = {
+			can_appoint_char_to_court_position = {
+				CHAR = scope:knight
+				COURT_POS = champion_court_position
 			}
 		}
-		else_if = {
-			limit = {
-				can_appoint_char_to_court_position = {
-					CHAR = scope:knight 
-					COURT_POS = bodyguard_court_position
-				}
+		name = court.5060.d.champion
+		employ_character_as_position_in_current_scope_court_effect = {
+			CHARACTER = scope:knight
+			POSITION = champion
+		}
+		scope:knight = {
+			accolade_minor_glory_gain_with_checks_effect = yes
+		}
+		stress_impact = {
+			paranoid = medium_stress_impact_loss
+		}
+		ai_chance = {
+			base = 100
+			modifier = {
+				has_trait = paranoid
+				add = 50
 			}
-			employ_character_as_position_in_current_scope_court_effect = { 
-				CHARACTER = scope:knight 
-				POSITION = bodyguard
+		}
+	}
+
+	option = { # employ them as akolouthos
+		trigger = {
+			can_appoint_char_to_court_position = {
+				CHAR = scope:knight
+				COURT_POS = akolouthos_court_position
 			}
+		}
+		name = court.5060.d.akolouthos
+		employ_character_as_position_in_current_scope_court_effect = {
+			CHARACTER = scope:knight
+			POSITION = akolouthos
 		}
 		scope:knight = {
 			accolade_minor_glory_gain_with_checks_effect = yes
@@ -7987,9 +7971,9 @@ scripted_trigger pigeon_assistance_scheme_trigger = {
 	OR = {
 		scheme_type = fabricate_hook
 		scheme_type = abduct
-		scheme_type = sway
+		#scheme_type = sway #Unop: This scheme does not have agents (for option A)
 		scheme_type = murder
-		scheme_type = convert_to_witchcraft
+		#scheme_type = convert_to_witchcraft #Unop: This scheme does not have agents (for option A)
 	}
 }
 

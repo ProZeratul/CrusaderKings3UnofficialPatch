@@ -3581,6 +3581,10 @@ title_revocation_stress_effect = {
 }
 
 revoke_holy_order_lease_effect = {
+	#Unop: $CHARACTER$ is the revoker
+	#Unop: $TARGET$  is the holy_order_master
+	#Unop: $BARONY$ is the holy_order_location being revoked
+
 	if = {
 		limit = {
 			$TARGET$.faith = {
@@ -3605,11 +3609,10 @@ revoke_holy_order_lease_effect = {
 				set_relation_potential_rival = $CHARACTER$
 			}
 		}
-
 		if = {
-				limit = {
-					NOT = { this = $CHARACTER$ }
-				}
+			limit = {
+				NOT = { this = $CHARACTER$ }
+			}
 			add_opinion = {
 				target = $CHARACTER$
 				modifier = angry_opinion
@@ -3688,7 +3691,7 @@ revoke_holy_order_lease_effect = {
 			else = {
 
 				if = {
-					limit = { exists =  $CHARACTER$.faith.religious_head  }
+					limit = { exists = $CHARACTER$.faith.religious_head  }
 					$CHARACTER$.faith.religious_head = {
 						add_opinion = {
 							modifier = pleased_opinion
@@ -3709,22 +3712,19 @@ revoke_holy_order_lease_effect = {
 						desc = fervor_gain_holy_order_expelled_by_force
 					}
 				}
+			}
 
-				# If the county has the same faith than the HO, locals are unhappy
-				$BARONY$ = {
-					if = {
-						limit = { title_province.county.faith = $TARGET$.faith }
-						title_province.county = {
-							add_county_modifier = {
-								modifier = lost_holy_order_modifier
-								years = 10
-							}
+			# If the county has the same faith than the HO, locals are unhappy
+			$BARONY$ = {
+				if = {
+					limit = { title_province.county.faith = $TARGET$.faith }
+					title_province.county = {
+						add_county_modifier = {
+							modifier = lost_holy_order_modifier
+							years = 10
 						}
 					}
 				}
-			}
-
-			$BARONY$ = {
 				revoke_lease = yes
 			}
 		}

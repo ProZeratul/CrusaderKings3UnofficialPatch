@@ -65,7 +65,7 @@ scripted_trigger councillor_spouse_learning_1001_vassal_trigger = {
 			target = root
 		}
 	}
-	NOT = { this = scope:councillor } #Fixpack: To prevent vassal spouse to target him/herself
+	NOT = { this = scope:councillor } #Unop: To prevent vassal spouse to target him/herself
 }
 
 councillor_spouse_learning.1001 = {
@@ -1046,11 +1046,10 @@ councillor_spouse_learning.1305 = {
 					modifier = spouse_mediation_opinion
 					target = root
 				}
-				#Fixpack: Taken from councillor_spouse_learning.2301, we do not want this to trigger if we (or our spouse) are the HoF or already friend with HoF
+				#Unop: Taken from councillor_spouse_learning.2301, we do not want this to trigger if we (or our spouse) are the HoF or already friend with HoF
 				has_relation_friend = root
 				this = root
 				this = scope:councillor
-				#/Fixpack
 			}
 		}
 	}
