@@ -22909,10 +22909,14 @@ scripted_trigger hold_court_8180_lord_trigger = {
 			NOT = { vassal_contract_has_flag = has_scutage_contract }
 		}
 		AND = { # March
-			liege.culture = {
-				has_innovation = innovation_burhs
+			#liege.culture = {
+			#	has_innovation = innovation_burhs
+			#}
+			#NOT = { vassal_contract_has_flag = has_march_contract }
+			unop_can_have_vassal_march_contract = { #Unop: Custom trigger that take the condition above (but fixed & also check the rest that is not checked here that will throw errors later)
+				LIEGE = liege
+				VASSAL = root
 			}
-			NOT = { vassal_contract_has_flag = has_march_contract }
 		}
 		AND = { # Palatinate
 			liege.culture = {
@@ -23408,10 +23412,14 @@ hold_court.8180 = {
 					}
 					1 = { # March / 8
 						trigger = {
-							liege.culture = {
-								has_innovation = innovation_burhs
-							}
+							#liege.culture = {
+							#	has_innovation = innovation_burhs
+							#}
 							NOT = { vassal_contract_obligation_level_can_be_decreased = special_contract } # No existing special contract
+							unop_can_have_vassal_march_contract = { #Unop: Custom trigger that take the condition above (but fixed & also check the rest that is not checked here that will throw errors later)
+								LIEGE = liege
+								VASSAL = root
+							}
 						}
 						modifier = {
 							factor = 2
