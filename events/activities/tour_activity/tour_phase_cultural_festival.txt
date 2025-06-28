@@ -8827,6 +8827,10 @@ cultural_festival.4300 = { #Vassal: Decide which gift to give
 			}
 		}
 		hidden_effect = { #create new artifact and save it as something to gift
+			if = { #Unop: Prevent error: Failed to fetch variable for 'child_toy_variable' due to not being set
+				limit = { is_adult = no }
+				set_favorite_toy_effect = yes
+			}
 			create_cultural_artifact_effect = yes
 		}
 		add_character_flag = {  #to make sure to not trigger 4310 in the same tour you gave the gift
@@ -9188,6 +9192,10 @@ cultural_festival.4302 = { #Liege: Pick the gift for Vassal, mirror of cultural_
 			}
 		}
 		hidden_effect = {
+			if = { #Unop: Prevent error: Failed to fetch variable for 'child_toy_variable' due to not being set
+				limit = { is_adult = no }
+				set_favorite_toy_effect = yes
+			}
 			create_cultural_artifact_effect = yes
 		}
 		add_character_flag = {  #to make sure to not trigger 4310 in the same tour you gave the gift
