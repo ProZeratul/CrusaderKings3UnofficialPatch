@@ -1647,6 +1647,7 @@ cultural_festival.2040 = {
 	
 	immediate = {
 		location.county.culture = { save_scope_as = festival_culture_scope }
+		location = { select_root_vegetable_effect = yes } #Unop: For cultural_festival.2040.desc to work properly
 	}
 
 	weight_multiplier = {
@@ -7127,6 +7128,9 @@ cultural_festival.3071 = {
 ######################
 
 scripted_trigger unknown_language_character_trigger = { #pick someone you don't understand
+	exists = location #Unop: Added this & the 2 lines below to not select someone that is at sea or in limbo
+	location = { NOT = { is_sea_province = yes } }
+	exists = location.county
 	is_physically_able_ai_adult = yes
 	culture = location.county.culture
 	NOT = { knows_language_of_culture = scope:visiting_liege.culture }
@@ -7673,7 +7677,7 @@ scripted_effect parade_liege_enjoyment_effect = { #rewards for liege if liege li
 		}
 	}
 	if = {
-		limit = { NOT = { scope:visiting_liege.culture = location.county.culture } }
+		limit = { NOT = { scope:visiting_liege.culture = scope:stop_host_scope.location.county.culture } }
 		scope:visiting_liege.culture = {
 			change_cultural_acceptance = {
 				target = scope:stop_host_scope.location.county.culture
@@ -7760,7 +7764,7 @@ scripted_effect parade_end_effect = { #rewards for vassal dependent on parade ty
 					years = 5
 				}
 			}
-			dynasty = { add_dynasty_prestige = minor_dynasty_prestige_gain }
+			dynasty ?= { add_dynasty_prestige = scope:stop_host_scope.dynasty.minor_dynasty_prestige_gain } #Unop: Fix add_dynasty_prestige gain from culture era
 			if = {
 				limit = { scope:visiting_liege = { has_character_flag = parade_liege_dissatisfaction_flag } }
 				negative_opinion_after_parade_effect = yes
@@ -7782,7 +7786,7 @@ scripted_effect parade_end_effect = { #rewards for vassal dependent on parade ty
 					years = 5
 				}
 			}
-			dynasty = { add_dynasty_prestige = minor_dynasty_prestige_gain }
+			dynasty ?= { add_dynasty_prestige = scope:stop_host_scope.minor_dynasty_prestige_gain } #Unop: Fix add_dynasty_prestige gain from culture era
 		}
 		else = {
 			scope:cultural_festival_scope = {
@@ -7791,7 +7795,7 @@ scripted_effect parade_end_effect = { #rewards for vassal dependent on parade ty
 					years = 5
 				}
 			}
-			dynasty ?= { add_dynasty_prestige = miniscule_dynasty_prestige_gain }
+			dynasty ?= { add_dynasty_prestige = scope:stop_host_scope.miniscule_dynasty_prestige_gain } #Unop: Fix add_dynasty_prestige gain from culture era
 			negative_opinion_after_parade_effect = yes
 		}
 	}
