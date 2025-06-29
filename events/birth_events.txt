@@ -2136,7 +2136,11 @@ birth.2001 = {
 				add_courtier = scope:child
 			}
 			else = {
-				scope:child = { visit_court_of = root.court_owner }
+				#Unop Don't visit court if imprisoned
+				if = {
+					limit = { scope:child = { is_imprisoned = no } }
+					scope:child = { visit_court_of = root.court_owner }
+				}
 			}
 		}
 	
@@ -2221,13 +2225,35 @@ birth.2001 = {
 		#Spouse of mother must know about baby
 		if = {
 			limit = {
-				scope:mother = {
-					is_married = yes
-					NOT = { primary_spouse = scope:real_father }
+				#Unop Ensure primary spouse is not the legitimizer or the other parent
+				exists = scope:mother.primary_spouse
+				scope:mother.primary_spouse = { 
+					NOR = {
+						this = scope:legitimizer
+						this = scope:other_parent
+						this = scope:real_father
+					}
 				}
 			}
 			scope:mother.primary_spouse = {
 				trigger_event = birth.2102
+			}
+		}
+
+		#Unop Spouse of father must know about baby
+		if = {
+			limit = {
+				exists = scope:real_father.primary_spouse
+				scope:real_father.primary_spouse = {
+					NOR = {
+						this = scope:legitimizer
+						this = scope:other_parent
+						this = scope:mother
+					}
+				}
+			}
+			scope:real_father.primary_spouse = {
+				trigger_event = birth.2104
 			}
 		}
 
@@ -2403,6 +2429,23 @@ birth.2011 = {
 				trigger_event = birth.2102
 			}
 		}
+
+		#Unop Spouse of father must know about baby
+		if = {
+			limit = {
+				exists = scope:real_father.primary_spouse
+				scope:real_father.primary_spouse = {
+					NOR = {
+						this = scope:legitimizer
+						this = scope:other_parent
+						this = scope:mother
+					}
+				}
+			}
+			scope:real_father.primary_spouse = {
+				trigger_event = birth.2104
+			}
+		}
 	}
 }
 
@@ -2477,7 +2520,7 @@ birth.2102 = {
 birth.2104 = {
 	type = character_event
 	title = birth.2104.t
-	orphan = yes #TODO_CD - Figure out why
+	#orphan = yes #TODO_CD - Figure out why #Unop Not orphaned anymore
 	desc = {
 		first_valid = {
 			triggered_desc = {
