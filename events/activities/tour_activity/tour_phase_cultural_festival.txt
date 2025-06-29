@@ -6457,18 +6457,18 @@ cultural_festival.3070 = {
 		religion = religion:christianity_religion #this is a deeply Christian thing
 		location = {
 			any_character_in_location = {
-				NOT = { is_travelling = yes }
+				NOT = { this = root } #Unop: Prevent root to self-target itself
+				NOT = { is_travelling = yes } #Unop: Prevent traveling characters to be selected if they stopped by at the same time this event fired
 				NOT = { this = scope:visiting_liege }
-				NOT = { this = root }
 				num_sinful_traits >= 1
 				is_adult = yes
 				save_temporary_scope_as = jester_1
 			}
 			any_character_in_location = {
-				NOT = { is_travelling = yes }
+				NOT = { this = root } #Unop: Prevent root to self-target itself
+				NOT = { is_travelling = yes } #Unop: Prevent traveling characters to be selected if they stopped by at the same time this event fired
 				NOT = { this = scope:jester_1 }
 				NOT = { this = scope:visiting_liege }
-				NOT = { this = root }
 				OR = {
 					has_relation_potential_rival = root
 					has_relation_rival = root
@@ -6522,7 +6522,7 @@ cultural_festival.3070 = {
 					any_character_in_location = {
 						NOT = { this = scope:visiting_liege }
 						has_relation_nemesis = root
-						NOT = { is_travelling = yes }
+						NOT = { is_travelling = yes } #Unop: Prevent traveling characters to be selected if they stopped by at the same time this event fired
 					}
 				}
 			}
@@ -6531,7 +6531,7 @@ cultural_festival.3070 = {
 					limit = {
 						NOT = { this = scope:visiting_liege }
 						has_relation_nemesis = root
-						NOT = { is_travelling = yes }
+						NOT = { is_travelling = yes } #Unop: Prevent traveling characters to be selected if they stopped by at the same time this event fired
 					}
 					save_scope_as = rival_jester
 				}
@@ -6543,7 +6543,7 @@ cultural_festival.3070 = {
 					any_character_in_location = {
 						NOT = { this = scope:visiting_liege }
 						has_relation_rival = root
-						NOT = { is_travelling = yes }
+						NOT = { is_travelling = yes } #Unop: Prevent traveling characters to be selected if they stopped by at the same time this event fired
 					}
 				}
 			}
@@ -6552,7 +6552,7 @@ cultural_festival.3070 = {
 					limit = {
 						NOT = { this = scope:visiting_liege }
 						has_relation_rival = root
-						NOT = { is_travelling = yes }
+						NOT = { is_travelling = yes } #Unop: Prevent traveling characters to be selected if they stopped by at the same time this event fired
 					}
 					save_scope_as = rival_jester
 				}
@@ -6564,7 +6564,7 @@ cultural_festival.3070 = {
 					any_character_in_location = {
 						NOT = { this = scope:visiting_liege }
 						has_relation_potential_rival = root
-						NOT = { is_travelling = yes }
+						NOT = { is_travelling = yes } #Unop: Prevent traveling characters to be selected if they stopped by at the same time this event fired
 					}
 				}
 			}
@@ -6573,7 +6573,7 @@ cultural_festival.3070 = {
 					limit = {
 						NOT = { this = scope:visiting_liege }
 						has_relation_potential_rival = root
-						NOT = { is_travelling = yes }
+						NOT = { is_travelling = yes } #Unop: Prevent traveling characters to be selected if they stopped by at the same time this event fired
 					}
 					save_scope_as = rival_jester
 				}
@@ -6590,7 +6590,7 @@ cultural_festival.3070 = {
 								value < 0
 							}
 						}
-						NOT = { is_travelling = yes }
+						NOT = { is_travelling = yes } #Unop: Prevent traveling characters to be selected if they stopped by at the same time this event fired
 					}
 					weight = {
 						base = 100
@@ -6610,8 +6610,8 @@ cultural_festival.3070 = {
 					is_adult = yes
 					NOT = { this = scope:rival_jester } 
 					NOT = { this = scope:visiting_liege }
-					NOT = { this = root }
-					NOT = { is_travelling = yes }
+					NOT = { this = root } #Unop: Prevent root to self-target itself
+					NOT = { is_travelling = yes } #Unop: Prevent traveling characters to be selected if they stopped by at the same time this event fired
 				}
 				save_scope_as = sinful_jester
 			}
