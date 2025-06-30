@@ -1140,11 +1140,13 @@ hunt_melee_kill_prowess_value = {
 		}	
 		else_if = {
 			limit = {
-				scope:activity.var:animal_type = flag:boar
-				scope:activity.var:animal_type = flag:bison
-				scope:activity.var:animal_type = flag:hart
-				scope:activity.var:animal_type = flag:reindeer
-				scope:activity.var:animal_type = flag:elk
+				OR = { #Unop: OR is needed here
+					scope:activity.var:animal_type = flag:boar
+					scope:activity.var:animal_type = flag:bison
+					scope:activity.var:animal_type = flag:hart
+					scope:activity.var:animal_type = flag:reindeer
+					scope:activity.var:animal_type = flag:elk
+				}
 			}
 			add = 6
 		}
