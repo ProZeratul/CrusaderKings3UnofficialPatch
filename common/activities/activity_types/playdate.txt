@@ -1,14 +1,16 @@
 ﻿activity_playdate = {
 
+	can_always_plan = no #Unop: To not show when on CD
+
 	is_shown = {
-		highest_held_title_tier > tier_barony
-		trigger_if = {
-			limit = {
-				highest_held_title_tier = tier_county
-			}
-			is_independent_ruler = no
-		}
-		is_landed_or_landless_administrative = yes
+		#highest_held_title_tier > tier_barony
+		#trigger_if = { #Unop: Moved all this in the can_start_showing_failures_only for better desc
+		#	limit = {
+		#		highest_held_title_tier = tier_county
+		#	}
+		#	is_independent_ruler = no
+		#}
+		#is_landed_or_landless_administrative = yes
 		trigger_if = {
 			limit = {
 				is_ai = yes
@@ -17,12 +19,21 @@
 			ai_has_conqueror_personality = no
 		}
 		is_adult = no
-		age < less_than_two_years_to_adulthood_value #Consistency!
+		#age < less_than_two_years_to_adulthood_value #Consistency! #Unop: Move this in the can_start_showing_failures_only
 	}
 
 	can_start_showing_failures_only = {
 		is_available = yes
 		age >= 4
+		age < less_than_two_years_to_adulthood_value #Consistency!
+		highest_held_title_tier > tier_barony
+		trigger_if = {
+			limit = { highest_held_title_tier = tier_county }
+			custom_tooltip = {
+				text = unop_playdate_invalid_independent_count
+				is_independent_ruler = no
+			}
+		}
 	}
 
 	is_valid = {
