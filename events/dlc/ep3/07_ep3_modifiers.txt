@@ -1799,19 +1799,19 @@ laamp_decision_church_health_modifier = {
 			if = {
 				limit = { exists = var:1041_healer_aptitude }
 				if = {
-					limit = { var:1041_healer_aptitude = 5 } # 50%
+					limit = { var:1041_healer_aptitude = 4 } # 50% #Unop: Was 5 but aptitude are [0-4]
 					add = 5
 				}
 				else_if = {
-					limit = { var:1041_healer_aptitude >= 4 } # 40%
+					limit = { var:1041_healer_aptitude >= 3 } # 40% #Unop: Was 4 but aptitude are [0-4]
 					add = 4
 				}
 				else_if = {
-					limit = { var:1041_healer_aptitude >= 3 } # 30%
+					limit = { var:1041_healer_aptitude >= 2 } # 30% #Unop: Was 3 but aptitude are [0-4]
 					add = 3
 				}
 				else_if = {
-					limit = { var:1041_healer_aptitude >= 2 } # 20%
+					limit = { var:1041_healer_aptitude >= 1 } # 20% #Unop: Was 2 but aptitude are [0-4]
 					add = 2
 				}
 				else = { add = 1 } # No change, 10%
@@ -1833,19 +1833,19 @@ laamp_decision_church_health_partner_modifier = {
 			if = {
 				limit = { exists = var:1041_partner_healer_aptitude }
 				if = {
-					limit = { var:1041_partner_healer_aptitude = 5 }
+					limit = { var:1041_partner_healer_aptitude = 4 } #Unop: Was 5 but aptitude are [0-4]
 					add = 4.5
 				}
 				else_if = {
-					limit = { var:1041_partner_healer_aptitude >= 4 }
+					limit = { var:1041_partner_healer_aptitude >= 3 } #Unop: Was 4 but aptitude are [0-4]
 					add = 3.6
 				}
 				else_if = {
-					limit = { var:1041_partner_healer_aptitude >= 3 }
+					limit = { var:1041_partner_healer_aptitude >= 2 } #Unop: Was 3 but aptitude are [0-4]
 					add = 2.7
 				}
 				else_if = {
-					limit = { var:1041_partner_healer_aptitude >= 2 }
+					limit = { var:1041_partner_healer_aptitude >= 1 } #Unop: Was 2 but aptitude are [0-4]
 					add = 1.8
 				}
 				else = { add = 0.9 }
