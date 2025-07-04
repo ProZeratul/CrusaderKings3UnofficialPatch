@@ -5052,7 +5052,7 @@ ep3_laamps.5010 = {
 					type = event_toast_effect_bad
 					title = ep3_laamps.5010.c.failure
 					left_icon = root
-					right_icon = scope:hunter
+					right_icon = scope:follower #Unop: Was scope:hunter that do not exists here
 
 					add_stress = minor_stress_gain
 					add_character_modifier = {
@@ -7815,16 +7815,16 @@ ep3_laamps.6016 = {
 				exists = domicile
 				location != domicile.domicile_location
 			}
-		start_travel_plan = {
-			destination = root.domicile.domicile_location
-			players_use_planner = no
-			on_start_on_action = on_travel_relocation_start
-			on_arrival_on_action = on_travel_relocation_end
-			on_arrival_destinations = last
-			return_trip = no # One way
+			start_travel_plan = { #Unop: Just cleanup the indentation here
+				destination = root.domicile.domicile_location
+				players_use_planner = no
+				on_start_on_action = on_travel_relocation_start
+				on_arrival_on_action = on_travel_relocation_end
+				on_arrival_destinations = last
+				return_trip = no # One way
+			}
 		}
 	}
-}
 }
 
 # The Harrying of the North begins

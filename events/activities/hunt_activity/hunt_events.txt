@@ -13871,6 +13871,12 @@ hunt.4006 = {
 			COMBATANT = yes
 			SCOPE = hunt_participant
 		}
+		scope:activity.activity_location = { #Unop: county_owner scope is needed in options below
+			county = {
+				save_scope_as = activity_place
+				holder = { save_scope_as = county_owner }
+			}
+		}
 	}
 
 	option = {
@@ -19675,14 +19681,14 @@ hunt.4017 = {
 		has_character_flag = had_mystical_animal_story
 		any_owned_story = {
 			story_type = story_cycle_hunt_mystical_animal
-			OR = {
+			#OR = { #Unop: Useless OR
 				var:legendary_county = {
 					OR = {
 						this = root.location.county
 						any_neighboring_county = { this = root.location.county }
 					}
 				}
-			}
+			#}
 		}
 		exists = scope:activity.var:hunt_4017 # Found animal in 4018
 	}
@@ -19875,14 +19881,14 @@ hunt.4018 = {
 		has_character_flag = had_mystical_animal_story
 		any_owned_story = {
 			story_type = story_cycle_hunt_mystical_animal
-			OR = {
+			#OR = { #Unop: Useless OR
 				var:legendary_county = {
 					OR = {
 						this = root.location.county
 						any_neighboring_county = { this = root.location.county }
 					}
 				}
-			}
+			#}
 		}
 		NOT = { exists = scope:activity.var:hunt_4013 } # Not first Legendary hunt
 	}
@@ -23973,7 +23979,7 @@ hunt.7020 = {
 													this = scope:pertinent
 												}
 											}
-											custom = hunt_every_attendee_tt
+											custom = hunt_every_hunter_tt #Unop: Was hunt_every_attendee_tt that do not exists
 											add_opinion = {
 												target = root
 												modifier = hunt_jumped_boulder_opinion
@@ -24009,7 +24015,7 @@ hunt.7020 = {
 													this = scope:pertinent
 												}
 											}
-											custom = hunt_every_attendee_tt
+											custom = hunt_every_hunter_tt #Unop: Was hunt_every_attendee_tt that do not exists
 											add_opinion = {
 												target = scope:pertinent
 												modifier = hunt_jumped_boulder_opinion
@@ -24042,7 +24048,7 @@ hunt.7020 = {
 													this = scope:pertinent
 												}
 											}
-											custom = hunt_every_attendee_tt
+											custom = hunt_every_hunter_tt #Unop: Was hunt_every_attendee_tt that do not exists
 											add_opinion = {
 												target = root
 												modifier = hunt_jumped_boulder_opinion
