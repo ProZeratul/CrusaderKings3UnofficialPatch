@@ -1033,11 +1033,13 @@ hunt_melee_danger_value = {
 			}	
 			else_if = {
 				limit = {
-					var:animal_type = flag:boar
-					var:animal_type = flag:bison
-					var:animal_type = flag:hart
-					var:animal_type = flag:reindeer
-					var:animal_type = flag:elk
+					OR = { #Unop: OR is needed here
+						var:animal_type = flag:boar
+						var:animal_type = flag:bison
+						var:animal_type = flag:hart
+						var:animal_type = flag:reindeer
+						var:animal_type = flag:elk
+					}
 				}
 				add = 15
 			}
