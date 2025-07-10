@@ -1670,6 +1670,18 @@ martial_authority_special.1501 = {
 	}
 	
 	trigger = {
+		trigger_if = { # Unop: This means we are in the flag:battle case of the immediate and need to check for a battle memory
+			limit = {
+				location = {
+					NOT = { has_province_modifier = recently_looted_modifier }
+				}
+			}
+			save_temporary_scope_value_as = {
+				name = temp_unop_desertion_reason
+				value = flag:battle
+			}
+		}
+
 		NOT = { has_character_flag = is_in_martial_special_event }
 		OR = {
 			has_focus = martial_authority_focus
@@ -1685,6 +1697,18 @@ martial_authority_special.1501 = {
 				is_ai = yes
 				is_adult = yes
 				is_knight_of = root
+
+ 				trigger_if = { #Unop: Harmonization with the immediate block, to not fire if there is no valid soldier available
+                    limit = {
+                        scope:temp_unop_desertion_reason ?= flag:battle
+                    }
+                    any_memory = {
+                        has_memory_type = battle_lost_memory
+                        var:battle_location = location
+                        memory_age_years < 1
+                    }
+                }
+
 				save_temporary_scope_as = deserting_soldier_temp
 			}
 		}
@@ -1697,13 +1721,13 @@ martial_authority_special.1501 = {
 				var:battle_location = root.location
 				memory_age_years < 1
 			}
-			scope:deserting_soldier_temp = {
-				any_memory = {
-					has_memory_type = battle_lost_memory
-					var:battle_location = root.location
-					memory_age_years < 1
-				}
-			}
+			#scope:deserting_soldier_temp = { # Unop: Check done inside the any_courtier_or_guest
+			#	any_memory = {
+			#		has_memory_type = battle_lost_memory
+			#		var:battle_location = root.location
+			#		memory_age_years < 1
+			#	}
+			#}
 		}
 	}
 
