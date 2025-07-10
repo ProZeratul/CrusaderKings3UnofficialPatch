@@ -252,27 +252,23 @@ house_arrest_ongoing.0003 = {
 					limit = {
 						OR = {
 							AND = {
-								is_attracted_to_women = yes
-								scope:friendly_prisoner = { is_female = yes }
+								root = { unop_is_sexually_compatible_with_character = { CHARACTER = scope:friendly_prisoner DENY_CHASTE = flag:no } } # Unop: Checking if both characters are potentially attracted to each-other
+								scope:friendly_prisoner = { unop_is_sexually_compatible_with_character = { CHARACTER = root DENY_CHASTE = flag:no } } # Unop: Checking if both characters are potentially attracted to each-other
 							}
-							AND = {
-								is_attracted_to_men = yes
-								scope:friendly_prisoner = { is_male = yes }
-							}
-						}
-						OR = {
-							opinion = {
-								target = root
-								value >= 30
-							}
-							AND = {
+							OR = {
 								opinion = {
 									target = root
-									value >= 15
+									value >= 30
 								}
-								number_of_personality_traits_in_common = {
-									target = root
-									value >= 2
+								AND = {
+									opinion = {
+										target = root
+										value >= 15
+									}
+									number_of_personality_traits_in_common = {
+										target = root
+										value >= 2
+									}
 								}
 							}
 						}
