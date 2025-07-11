@@ -500,30 +500,42 @@ camp_officer_old_holder_effect = { # Save existing holder if relevant
 }
 
 court_position_grant_effect = { # Give position, and revoke old holder's if they exist
-	if = { #CP With more than 1 slot - we replace the worst one
-		limit = {
-			$EMPLOYER$ = {
-				any_court_position_holder = {
-					type = $POS$_court_position
-					count >= 2
+	if = {
+		limit = { unop_is_multi_slot_cp = { CP = flag:$POS$ } }
+		save_scope_value_as = { 
+			name = unop_multi_slot_cp
+			value = flag:$POS$_court_position
+		}
+		if = { # CP with 2 slots
+			limit = {
+				OR = {
+					scope:unop_multi_slot_cp = flag:bodyguard #2
+					scope:unop_multi_slot_cp = flag:lady_in_waiting #2
+					scope:unop_multi_slot_cp = flag:garuda #2
 				}
+			}
+			unop_get_worst_cp_holder = {
+				EMPLOYER = $EMPLOYER$
+				POS = $POS$
+				SLOT = 2
 			}
 		}
-		$EMPLOYER$ = {
-			ordered_court_position_holder = {
-				type = $POS$_court_position
-				order_by = {
-					value = aptitude:$POS$_court_position
-					multiply = -1
-				}
-				save_scope_as = old_holder #Should be the one with worst aptitude
-				save_scope_as = unop_replace_cp_holder #Unop: To avoid rechecking if this is a multiple slot CP just after
+		else_if = {
+			limit = { scope:unop_multi_slot_cp = flag:court_artificer } #3
+			unop_get_worst_cp_holder = {
+				EMPLOYER = $EMPLOYER$
+				POS = $POS$
+				SLOT = 3
 			}
+		}
+		if = {
+			limit = { exists = scope:unop_worst_char_for_cp }
+			save_scope_as = old_holder
 		}
 	}
 	else = {
 		$EMPLOYER$.court_position:$POS$_court_position ?= { save_scope_as = old_holder }
-	}
+	}	
 	$CANDIDATE$ = {
 		save_scope_as = candidate
 		if = {
@@ -539,7 +551,7 @@ court_position_grant_effect = { # Give position, and revoke old holder's if they
 	}
 	$EMPLOYER$ = {
 		if = {
-			limit = { exists = scope:unop_replace_cp_holder }
+			limit = { exists = scope:old_holder }
 			send_interface_toast = {
 				title = move_and_grant_court_position_effect_tooltip
 				left_icon = $CANDIDATE$

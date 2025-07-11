@@ -9,3 +9,30 @@
 		}
 	}
 }
+
+# Need parameters:
+# EMPLOYER
+# POS
+# SLOT
+unop_get_worst_cp_holder = {
+	if = {
+		limit = {
+			$EMPLOYER$ = {
+				any_court_position_holder = {
+					type = $POS$_court_position
+					count >= $SLOT$
+				}
+			}
+		}
+		$EMPLOYER$ = {
+			ordered_court_position_holder = {
+				type = $POS$_court_position
+				order_by = {
+					value = aptitude:$POS$_court_position
+					multiply = -1
+				}
+				save_scope_as = unop_worst_char_for_cp
+			}
+		}
+	}
+}
