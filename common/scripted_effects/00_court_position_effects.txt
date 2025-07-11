@@ -500,7 +500,7 @@ camp_officer_old_holder_effect = { # Save existing holder if relevant
 }
 
 court_position_grant_effect = { # Give position, and revoke old holder's if they exist
-	if = { #Bodyguards - we replace the worst one
+	if = { #CP With more than 1 slot - we replace the worst one
 		limit = {
 			$EMPLOYER$ = {
 				any_court_position_holder = {
@@ -520,11 +520,8 @@ court_position_grant_effect = { # Give position, and revoke old holder's if they
 			}
 		}
 	}
-	else_if = {
-		limit = {
-			$EMPLOYER$.court_position:$POS$_court_position ?= { has_court_position = $POS$_court_position }
-		}
-		$EMPLOYER$.court_position:$POS$_court_position = { save_scope_as = old_holder }
+	else = {
+		$EMPLOYER$.court_position:$POS$_court_position ?= { save_scope_as = old_holder }
 	}
 	$CANDIDATE$ = {
 		save_scope_as = candidate
@@ -542,41 +539,14 @@ court_position_grant_effect = { # Give position, and revoke old holder's if they
 	$EMPLOYER$ = {
 		if = {
 			limit = { exists = scope:old_holder }
-			if = {
-				limit = { 
-					scope:old_holder = { has_court_position = bodyguard_court_position }
-				}
-				if = { 
-					limit = {
-						any_court_position_holder = {
-							type = bodyguard_court_position
-							has_court_position = bodyguard_court_position
-							count > 1
-						}
-					}
-					send_interface_toast = {
-						title = move_and_grant_court_position_effect_tooltip
-						left_icon = $CANDIDATE$
-						right_icon = scope:old_holder
-						replace_court_position = {
-							recipient = $CANDIDATE$
-							holder = scope:old_holder
-							court_position = bodyguard_court_position
-						}
+			if = { 
+				limit = {
+					any_court_position_holder = {
+						type = $POS$_court_position
+						has_court_position = $POS$_court_position
+						count > 1
 					}
 				}
-				else = {
-					send_interface_toast = {
-						title = move_and_grant_court_position_effect_tooltip
-						left_icon = $CANDIDATE$
-						appoint_court_position = {
-							recipient = $CANDIDATE$
-							court_position = bodyguard_court_position
-						}
-					}
-				}
-			}
-			else = {
 				send_interface_toast = {
 					title = move_and_grant_court_position_effect_tooltip
 					left_icon = $CANDIDATE$
@@ -584,6 +554,16 @@ court_position_grant_effect = { # Give position, and revoke old holder's if they
 					replace_court_position = {
 						recipient = $CANDIDATE$
 						holder = scope:old_holder
+						court_position = $POS$_court_position
+					}
+				}
+			}
+			else = {
+				send_interface_toast = {
+					title = move_and_grant_court_position_effect_tooltip
+					left_icon = $CANDIDATE$
+					appoint_court_position = {
+						recipient = $CANDIDATE$
 						court_position = $POS$_court_position
 					}
 				}
