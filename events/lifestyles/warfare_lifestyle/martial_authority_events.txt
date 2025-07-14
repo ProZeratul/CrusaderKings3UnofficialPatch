@@ -1699,15 +1699,15 @@ martial_authority_special.1501 = {
 				is_knight_of = root
 
  				trigger_if = { #Unop: Harmonization with the immediate block, to not fire if there is no valid soldier available
-                    limit = {
-                        scope:temp_unop_desertion_reason ?= flag:battle
-                    }
-                    any_memory = {
-                        has_memory_type = battle_lost_memory
-                        var:battle_location = root.location #Unop: Need to rescope location on root since we are in a memory
-                        memory_age_years < 1
-                    }
-                }
+					limit = {
+						scope:temp_unop_desertion_reason ?= flag:battle
+					}
+					any_memory = {
+						has_memory_type = battle_lost_memory
+						var:battle_location = root.location #Unop: Need to rescope location on root since we are in a memory
+						memory_age_years < 1
+					}
+				}
 
 				save_temporary_scope_as = deserting_soldier_temp
 			}
