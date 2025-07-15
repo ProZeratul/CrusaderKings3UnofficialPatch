@@ -160,7 +160,7 @@ pilgrimage_additional_reward_effect = {
 	if = {
 		limit = {
 			faith = { has_doctrine = tenet_esotericism }
-			NOT = {
+			NAND = { #Unop: Was a NOT
 				has_trait = lifestyle_mystic
 				has_trait_xp = {
 					trait = lifestyle_mystic
@@ -846,6 +846,7 @@ christian_saint_bone_creation_effect = {
 				faith = faith:insular_celtic
 				faith = { has_doctrine = tenet_christian_syncretism }
 			}
+			NOT = { has_character_flag = unop_got_relic_from_pilgrimage } #Unop: Custom flag to prevent char to get multiple bone artifact from the same pilgrimage
 		}
 		hidden_effect = {
 			#TODO_CD_EP2 This will most likely need updating if we want to keep it -- does this still work?
@@ -886,41 +887,52 @@ christian_saint_bone_creation_effect = {
 					is_ai = yes
 				}
 				save_scope_as = saint_bone_owner
-				create_artifact = {
-					name = christian_saint_bone_name
-					description = christian_saint_bone_description
-					type = pedestal
-					visuals = bone
-					template = saintly_bones_template
-					modifier = artifact_monthly_piety_1_modifier
-					save_scope_as = christian_saint_bone_scope
-				}
-				#TODO_CD_EP2_FGK Add activity log entry here that sets the owner to ROOT
-				scope:christian_saint_bone_scope = {
-					set_variable = { # required to track usability for template
-						name = saint_bone_faith
-						value = scope:saint_bone_owner.faith
-					}
-					set_variable = { # required to track usability for template
-						name = holy_site
-						value = scope:saint_bone_owner.involved_activity.activity_location.county
-					}
-					if = {
-						limit = { exists = var:holy_site }
-						#To prevent unused variable errors :catto:
+				scope:saint_bone_owner = { #Unop: Flag the char has having received an artifact from the pilgrimage
+					add_character_flag = unop_got_relic_from_pilgrimage
+					involved_activity.activity_location.county = {
+						save_scope_as = unop_holy_site_location
 					}
 				}
-				scope:activity ?= {
-					add_activity_log_entry = {
-						key = pilgrimage_completed_relic_log
-						score = 75
-						tags = { complete }
-						character = scope:host
-						artifact = scope:christian_saint_bone_scope
-						show_in_conclusion = yes
-						# Effects
-						scope:christian_saint_bone_scope = {
-							set_owner = root
+				hidden_effect_new_object = {
+					create_artifact = {
+						name = christian_saint_bone_name
+						description = christian_saint_bone_description
+						type = pedestal
+						visuals = bone
+						template = saintly_bones_template
+						modifier = artifact_monthly_piety_1_modifier
+						save_scope_as = christian_saint_bone_scope
+					}
+					#TODO_CD_EP2_FGK Add activity log entry here that sets the owner to ROOT
+					scope:christian_saint_bone_scope = {
+						set_variable = { # required to track usability for template
+							name = saint_bone_faith
+							value = scope:saint_bone_owner.faith
+						}
+						set_variable = { # required to track usability for template
+							name = holy_site
+							value = scope:unop_holy_site_location
+						}
+						if = {
+							limit = { exists = var:holy_site }
+							#To prevent unused variable errors :catto:
+						}
+					}
+					scope:activity ?= {
+						add_activity_log_entry = {
+							key = pilgrimage_completed_relic_log
+							score = 75
+							tags = { complete }
+							character = scope:host
+							artifact = scope:christian_saint_bone_scope
+							show_in_conclusion = yes
+							# Effects
+							scope:christian_saint_bone_scope = {
+								if = { #Unop: To not get a tooltip saying we get the artifact from ourselves
+									limit = { NOT = { artifact_owner = root } }
+									set_owner = root
+								}
+							}
 						}
 					}
 				}
