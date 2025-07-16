@@ -161,8 +161,10 @@ court_position_does_not_already_have_a_job_trigger = {
 # $CHAR$ is the character you wish to appoint
 can_appoint_char_to_court_position = {
 	save_temporary_scope_as = hiring_liege
-	#can_employ_court_position_type = $COURT_POS$ #Unop: Replaced this with the line below to work even if the char is not in our court
-	is_valid_to_hire_court_position_type = $COURT_POS$
+	OR = {  #Unop: We need to have an OR since can_employ_court_position_type will return false if we have the maximum amount of character for a given slot (like 2 bodyguard)
+		can_employ_court_position_type = $COURT_POS$
+		employs_court_position = $COURT_POS$
+	}
 	$CHAR$ = {
 		NOT = { this = scope:hiring_liege }
 		NOT = { has_court_position = $COURT_POS$ }
