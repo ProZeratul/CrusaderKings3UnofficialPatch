@@ -4869,15 +4869,15 @@ laamp_help_find_secrets_contract = {
 			}
 			else = {
 				scope:task_contract = {
-					if = {
-						limit = {
-							var:knights_trained >= scope:task_contract.var:knights_failed
-						}
-						complete_task_contract = success_standard
-					}
-					else = {
+					#if = { #Unop: Commented this part to always fail the contract since this variable is coming from another contract (copy/paste issue probably)
+					#	limit = {
+					#		var:knights_trained >= scope:task_contract.var:knights_failed
+					#	}
+					#	complete_task_contract = success_standard
+					#}
+					#else = {
 						complete_task_contract = failure_standard
-					}
+					#}
 				}
 			}
 		}
