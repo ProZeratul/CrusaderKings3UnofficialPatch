@@ -2153,6 +2153,7 @@ pilgrimage.1130 = {
 }
 
 scripted_trigger pilgrim_group_leader_trigger = {
+	is_adult = yes #Unop: Ensure we do not get a child as a group leader
 	is_available = yes
 	# Landless
 	is_landed = no
@@ -2795,6 +2796,7 @@ scripted_trigger pilgrimage_2004_potential_friend_trigger = {
 	faith = root.faith
 	NOT = { is_courtier_of = root }
 	location = root.location
+	is_ruler = no #Unop To fix [ Trying to put character in court despite being a ruler ] (because of this char being taken in piligrimage travel)
 }
 
 #Run into a potential friend
@@ -3775,6 +3777,7 @@ pilgrimage.2010 = {
 				}
 			}
 		}
+		remove_character_flag = in_pilgrimage_event_chain #Unop: Cut the event_chain since this option mean we do not get further
 	}
 }
 
@@ -6523,6 +6526,10 @@ pilgrimage.3002 = {
 				NOT = { has_game_rule = strict_regional_heresy }
 				is_ai = no
 			}
+			trigger_if = { #Unop: A HoF will never convert
+				limit = { exists = faith.religious_head }
+				NOT = { faith.religious_head = root}
+			}
 		}
 		worldly_type_option_effect = yes
 		add_piety = massive_piety_loss
@@ -7400,6 +7407,14 @@ pilgrimage.6002 = {
 		character = scope:friend
 		animation = happiness
 	}
+	trigger = { #Unop: Since this is a delayed event, we need to ensure that the friend is still alive !
+		scope:friend = { is_alive = yes }
+	}
+	on_trigger_fail = {
+		remove_character_flag = in_pilgrimage_event_chain
+		current_travel_plan = { resume_travel_plan = yes }
+		#Make an event to warn ?
+	}
 	# Hit up the tavern
 	option = {
 		name = pilgrimage.6002.a
@@ -7477,6 +7492,14 @@ pilgrimage.6003 = {
 		character = scope:friend
 		animation = toast_goblet
 	}
+	trigger = { #Unop: Since this is a delayed event, we need to ensure that the friend is still alive !
+		scope:friend = { is_alive = yes }
+	}
+	on_trigger_fail = {
+		remove_character_flag = in_pilgrimage_event_chain
+		current_travel_plan = { resume_travel_plan = yes }
+		#Make an event to warn ?
+	}
 	immediate = {
 		play_music_cue = "mx_cue_in_taberna_instrumental"
 	}
@@ -7521,6 +7544,7 @@ pilgrimage.6003 = {
 		name = pilgrimage.6003.b
 		custom_tooltip = pilgrimage.6003.b.tt
 		current_travel_plan = { resume_travel_plan = yes }
+		remove_character_flag = in_pilgrimage_event_chain #Unop: Opt-out, clear the flag
 	}
 }
 
@@ -7538,6 +7562,14 @@ pilgrimage.6004 = {
 	right_portrait = {
 		character = scope:friend
 		animation = shock
+	}
+	trigger = { #Unop: Since this is a delayed event, we need to ensure that the friend is still alive !
+		scope:friend = { is_alive = yes }
+	}
+	on_trigger_fail = {
+		remove_character_flag = in_pilgrimage_event_chain
+		current_travel_plan = { resume_travel_plan = yes }
+		#Make an event to warn ?
 	}
 	immediate = {
 		play_music_cue = "mx_cue_in_taberna_instrumental"
@@ -7596,7 +7628,7 @@ pilgrimage.6004 = {
 	option = {
 		name = pilgrimage.6004.b
 		custom_tooltip = pilgrimage.6003.b.tt
-		current_travel_plan = { resume_travel_plan = yes }
+		#current_travel_plan = { resume_travel_plan = yes } #Unop: will be done in pilgrimage.6005
 	}
 	after = {
 		trigger_event = {
@@ -7631,6 +7663,14 @@ pilgrimage.6005 = {
 	right_portrait = {
 		character = scope:friend
 		animation = paranoia
+	}
+	trigger = { #Unop: Since this is a delayed event, we need to ensure that the friend is still alive !
+		scope:friend = { is_alive = yes }
+	}
+	on_trigger_fail = {
+		remove_character_flag = in_pilgrimage_event_chain
+		current_travel_plan = { resume_travel_plan = yes }
+		#Make an event to warn ?
 	}
 	immediate = {
 		random_list = {
@@ -7703,6 +7743,59 @@ pilgrimage.6006 = {
 	right_portrait = {
 		character = scope:friend
 		animation = anger
+	}
+	trigger = {
+		scope:friend = { is_alive = yes } #Unop: Since this is a delayed event, we need to ensure that the friend is still alive !
+ 		scope:friend = { #Unop: Since this is a delayed event, the secret could have been exposed by now (seen in the log)
+			any_secret = { secret_type = secret_non_believer }
+		}
+	}
+	on_trigger_fail = {
+		if = {
+			limit = { scope:friend = { is_alive = no } }
+			remove_character_flag = in_pilgrimage_event_chain
+			current_travel_plan = { resume_travel_plan = yes }
+			#Make an event to warn ?
+		}
+		else = {
+			#Unop: So if the secret is no more, we try to fire the other possible events from pilgrimage.6001.a
+			if = {
+				limit = {
+					scope:friend = {
+						OR = {
+							# Physical Traits 
+							has_trait = wounded_1
+							has_trait = wounded_2
+							has_trait = wounded_3
+							has_trait = impotent 
+							has_trait = infirm 
+							# Diseases 
+							has_trait = ill
+							has_trait = bubonic_plague
+							has_trait = cancer 
+							has_trait = consumption 
+							has_trait = great_pox 
+							has_trait = gout_ridden
+							has_trait = leper 
+							has_trait = lovers_pox 
+							has_trait = pneumonic 
+							has_trait = smallpox 
+							has_trait = typhus 
+						}
+					}
+				}
+				trigger_event = {
+					id = pilgrimage.6007
+					days = 0
+				}
+			}
+			else = { # Fallback event
+				trigger_event = {
+					id = pilgrimage.6002
+					days = 0
+				}
+			}
+		}
 	}
 	immediate = {
 		scope:friend = {
@@ -7794,6 +7887,14 @@ pilgrimage.6007 = {
 		outfit_tags = { monk_outfit }
 	}
 	cooldown = { years = 10 }
+	trigger = {
+		scope:friend = { is_alive = yes } #Unop: Since this is a delayed event, we need to ensure that the friend is still alive !
+	}
+	on_trigger_fail = {
+		remove_character_flag = in_pilgrimage_event_chain
+		current_travel_plan = { resume_travel_plan = yes }
+		#Make an event to warn ?
+	}
 	immediate = {
 		play_music_cue = "mx_cue_sacredrite"
 		create_character = {
@@ -8195,16 +8296,19 @@ pilgrimage.4002 = {
 		name = pilgrimage.4002.b
 		trigger = {
 			has_trait = lustful
-			scope:2010_mystic = {
-				NOR = {
-					has_trait = chaste
-					has_trait = celibate
-				}
-				is_attracted_to_gender_of = root
-				might_cheat_on_every_partner_trigger = yes
-			}
-			is_attracted_to_gender_of = scope:2010_mystic
-			might_cheat_on_every_partner_trigger = yes
+			#scope:2010_mystic = {
+			#	NOR = {
+			#		has_trait = chaste
+			#		has_trait = celibate
+			#	}
+			#	is_attracted_to_gender_of = root
+			#	might_cheat_on_every_partner_trigger = yes
+			#}
+			#is_attracted_to_gender_of = scope:2010_mystic
+			#might_cheat_on_every_partner_trigger = yes
+			#Unop: Commented everything above to use the more reliable in-house trigger
+			scope:2010_mystic = { unop_is_sexually_compatible_with_character = { CHARACTER = root DENY_CHASTE = flag:yes } }
+			unop_is_sexually_compatible_with_character = { CHARACTER = scope:2010_mystic DENY_CHASTE = flag:yes }
 		}
 		had_sex_with_effect = {
 			CHARACTER = scope:2010_mystic
@@ -11782,6 +11886,16 @@ pilgrimage.6780 = {
 				}
 			}
 		}
+
+		if = { #Unop Add debug logging
+			limit = {
+				NOT = { exists =  scope:stolen_courtier }
+				debug_only = yes 
+			}
+			debug_log = "#Unop:pilgrimage.6780 Scope stolen_courtier is undefined"
+			error_log = "#Unop:pilgrimage.6780 Scope stolen_courtier is undefined"
+			debug_log_scopes = yes
+		}
 	}
 	weight_multiplier = {
 		base = 1
@@ -12144,6 +12258,16 @@ scripted_trigger pilgrimage_6800_valid_member = {
 		has_trait = celibate
 		has_trait = devoted
 		is_courtier_of = $NEW_COURT_OWNER$
+	}
+	trigger_if = { #Unop: Do not allow the script to select someone who cannot divorce
+		limit = {
+			is_married = yes
+			OR = {
+				faith = { has_doctrine = doctrine_divorce_disallowed }
+				culture = { has_cultural_parameter = cannot_divorce }
+			}
+		}
+		always = no
 	}
 }
 
@@ -13789,6 +13913,7 @@ pilgrimage.7000 = {
 		remove_character_flag = added_new_holy_site
 		remove_character_flag = should_get_trait_piety
 		remove_character_flag = pilgrimage_counter_obligatory
+		remove_character_flag = unop_got_relic_from_pilgrimage #Unop: To not get multiple relic from a pilgrimage
 	}
 }
 
