@@ -69,7 +69,23 @@ religion_demand_conversion_default_modifier = {
 		desc = SCHEME_WEAK_HOOK_USED
 		add = 50
 		scope:hook = yes
-		scope:actor = { NOT = { is_landless_adventurer = yes } }
+		#Unop Spending a hook as a LAAMP increases the acceptance, unless you are attempting to convert a ruler using the
+		# who is not your house member (e.g. via the "Attempt to Convert" interaction)
+		#scope:actor = { NOT = { is_landless_adventurer = yes } }
+		trigger_if = {
+			limit = {
+				scope:actor = {
+					is_landless_adventurer = yes
+				}
+				scope:recipient = {
+					is_ruler = yes
+				}
+			}
+			scope:actor = {
+				is_house_head = yes
+				house = scope:recipient.house
+			}
+		}
 	}
 	modifier = {
 		desc = RELIGIOUS_HEAD_INTERACTION_SAVIOR
