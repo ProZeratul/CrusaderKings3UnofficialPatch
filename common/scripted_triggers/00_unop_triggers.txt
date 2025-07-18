@@ -894,3 +894,13 @@ unop_can_have_vassal_succession_rights_contract = { #Unop: Taken from succession
 		can_have_confederate_partition_succession_law_trigger = yes
 	}
 }
+
+# Need a CP as a flag parameter without the _court_position suffix
+unop_is_multi_slot_cp = {
+	OR = {
+		$CP$_court_position = flag:bodyguard_court_position #2
+		$CP$_court_position = flag:lady_in_waiting_court_position #2
+		$CP$_court_position = flag:garuda_court_position #2
+		$CP$_court_position = flag:court_artificer_court_position #3
+	}
+}
