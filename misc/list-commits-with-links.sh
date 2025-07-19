@@ -39,12 +39,12 @@ git log --oneline --no-merges -n "$LIMIT" --skip="$SKIP" | while read sha title;
         issue_link="${REPO_BASE}/issues/${number}"
         
         # Output with empty body (we'll get description from PR)
-        echo "$sha|$date|$author|$(sanitize "$clean_title")||$pr_link|$issue_link"
+        echo "$sha|$author|$(sanitize "$clean_title")||$pr_link|$issue_link"
     elif [ -n "$body" ]; then
         # Output with full body and no links
-        echo "$sha|$date|$author|$(sanitize "$subject")|$(sanitize "$body")||"
+        echo "$sha|$author|$(sanitize "$subject")|$(sanitize "$body")||"
     else
         # No body either, just output the title
-        echo "$sha|$date|$author|$(sanitize "$subject")|||"
+        echo "$sha|$author|$(sanitize "$subject")|||"
     fi
 done
