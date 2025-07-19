@@ -3267,13 +3267,13 @@ join_war_interaction = {
 				}
 				custom_tooltip = {
 					text = join_war_interaction_recipient_tributary_no_defensive_war
-					NOT = {
+					#NOT = { #Unop Revert the check to work as intended
 						scope:recipient = {
 							any_character_war = {
 								primary_defender = scope:recipient
 							}
 						}
-					}
+					#}
 				}
 			}
 			# tributaries can always offer to join their direct suzerains' defensive wars
@@ -3284,14 +3284,14 @@ join_war_interaction = {
 					}
 				}
 				custom_tooltip = {
-					text = join_war_interaction_recipient_tributary_no_defensive_war
-					NOT = {
+					text = unop_join_war_interaction_recipient_suzerain_no_defensive_war # Unop Fix tooltip to talk about suzerain and not tributary
+					#NOT = { #Unop Revert the check to work as intended
 						scope:recipient = {
 							any_character_war = {
 								primary_defender = scope:recipient
 							}
 						}
-					}
+					#}
 				}
 			}
 
@@ -3353,24 +3353,25 @@ join_war_interaction = {
 				limit = {
 					OR = {
 						scope:actor = {
-							is_tributary_of_suzerain_or_above = scope:recipient
+							is_tributary_of = scope:recipient #Unop Change to is_tributary_of to match the check in is_valid_showing_failures_only
 						}
 						scope:recipient = {
-							is_tributary_of = scope:actor
+							is_tributary_of_suzerain_or_above = scope:actor #Unop Change to is_tributary_of_suzerain_or_above to match the check in is_valid_showing_failures_only
 						}
 					}
 				}
 				# if this is directed at a tributary, make sure they're the primary defender
-				trigger_if = {
-					limit = {
-						scope:recipient = { is_tributary_of = scope:actor }
-					}
+				#Unop Always check for primary_defender to match the check in is_valid_showing_failures_only
+				#trigger_if = {
+				#	limit = {
+				#		scope:recipient = { is_tributary_of = scope:actor }
+				#	}
 					custom_tooltip = {
 						text = join_war_interaction_recipient_tributary_not_primary_defender
 						primary_defender = scope:recipient
 					}
-				}
-				trigger_else = { always = yes }
+				#}
+				#trigger_else = { always = yes }
 			}
 
 			#allow laamp_join_war_contract to bypass the requirements
