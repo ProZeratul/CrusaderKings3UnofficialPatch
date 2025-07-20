@@ -357,8 +357,10 @@ purchase_land_interaction = {
 			scope:actor = { use_hook = scope:recipient }
 		}
 		scope:actor = { trigger_event = ep3_laamps.0100 }
-		scope:actor = { # Unop: Give the actor the gold that was taken from the cost = {} block, since it will be taken inside purchase_land_interaction_effect to be given to the recipient
-			add_gold = scope:purchase_land_cost
+		hidden_effect = { # Unop: Give the actor the gold that was taken from the cost = {} block, since it will be taken inside purchase_land_interaction_effect to be given to the recipient
+			scope:actor = {
+				add_gold = scope:purchase_land_cost
+			}
 		}
 	}
 
