@@ -1254,12 +1254,17 @@ purchase_land_interaction_effect = {
 	}
 	# Purchase land specific
 	scope:actor = {
-		#show_as_tooltip = { #Unop: So the character is really getting the money
+		show_as_tooltip = {
 			pay_short_term_gold = {
 				gold = scope:purchase_land_cost
 				target = scope:recipient
 			}
-		#}
+		}
+	}
+	hidden_effect = { #Unop: So the seller of the land is really getting the money
+		scope:recipient = {
+			add_gold = scope:purchase_land_cost
+		}
 	}
 	# Resolve title, liege, government changes
 	ep3_become_landed_transfer_effect = {
