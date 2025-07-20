@@ -1232,7 +1232,7 @@ on_travel_plan_start = {
 				has_variable = prepare_travels_value
 				var:prepare_travels_value >= 1
 			}
-			#Unop Add prepare_travels_modifier to the travel owner to make it scale properly
+			#Unop Add unop_prepare_travels_character_modifier to the travel owner so that it scales properly
 			#current_travel_plan = {
 			#	set_variable = {
 			#		name = prepare_travels_modifier_value
@@ -1244,7 +1244,7 @@ on_travel_plan_start = {
 				name = prepare_travels_modifier_value
 				value = root.var:prepare_travels_value
 			}
-			add_character_modifier = prepare_travels_modifier
+			add_character_modifier = unop_prepare_travels_character_modifier
 			remove_variable = prepare_travels_value
 		}
 	}
@@ -1563,12 +1563,12 @@ on_travel_plan_complete = {
 			trigger_event = laamp_base_learning_contract_events.4017
 		}
 
-		#Unop Remove prepare_travels_modifier from the travel owner
+		#Unop Remove unop_prepare_travels_character_modifier from the travel owner
 		if = {
 			limit = {
-				has_character_modifier = prepare_travels_modifier
+				has_character_modifier = unop_prepare_travels_character_modifier
 			}
-			remove_character_modifier = prepare_travels_modifier
+			remove_character_modifier = unop_prepare_travels_character_modifier
 			remove_variable = prepare_travels_modifier_value
 		}
 	}
@@ -1657,12 +1657,12 @@ on_travel_plan_abort = {
 		# Invalidating travels to a Nomadic Settlement Contract
 		mpo_invalidating_settlement_contract_effect = yes
 
-		#Unop Remove prepare_travels_modifier from the travel owner
+		#Unop Remove unop_prepare_travels_character_modifier from the travel owner
 		if = {
 			limit = {
-				has_character_modifier = prepare_travels_modifier
+				has_character_modifier = unop_prepare_travels_character_modifier
 			}
-			remove_character_modifier = prepare_travels_modifier
+			remove_character_modifier = unop_prepare_travels_character_modifier
 			remove_variable = prepare_travels_modifier_value
 		}
 	}
