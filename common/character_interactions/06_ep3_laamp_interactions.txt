@@ -273,6 +273,12 @@ purchase_land_interaction = {
 					}
 				}
 			}
+			if = { # Unop: This check was missing from this block, (found inside on_accept)
+				limit = {
+					scope:actor = { has_variable = ep3_grace_to_the_family_var }
+				}
+				multiply = 0.5
+			}
 			if = {
 				limit = { scope:offer_gold = yes }
 				multiply = 2
@@ -351,6 +357,11 @@ purchase_land_interaction = {
 			scope:actor = { use_hook = scope:recipient }
 		}
 		scope:actor = { trigger_event = ep3_laamps.0100 }
+		hidden_effect = { # Unop: Give the actor the gold that was taken from the cost = {} block, since it will be taken inside purchase_land_interaction_effect to be given to the recipient
+			scope:actor = {
+				add_gold = scope:purchase_land_cost
+			}
+		}
 	}
 
 	on_decline = {
