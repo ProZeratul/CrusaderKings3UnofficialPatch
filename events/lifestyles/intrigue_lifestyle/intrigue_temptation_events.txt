@@ -804,6 +804,9 @@ intrigue_temptation.3010 = { #by Mathilda Bjarnehed
 								is_spouse_or_romantic_partner_of_root = yes
 								romantic_partner_is_supportive_of_multiple_partners = no
 							}
+							scope:wingman = {
+								is_adult = no #Unop: We will grab someone else if the wingman is not an adult
+							}
 						}
 					}
 					random_in_list = {
@@ -819,7 +822,7 @@ intrigue_temptation.3010 = { #by Mathilda Bjarnehed
 								limit = { is_spouse_or_romantic_partner_of_root = yes 	}
 								romantic_partner_is_supportive_of_multiple_partners = yes
 							}
-							
+							is_adult = yes #Unop: We want an adult as wingman
 						}
 						weight = {
 							base = 1
@@ -842,7 +845,10 @@ intrigue_temptation.3010 = { #by Mathilda Bjarnehed
 					if = {
 						limit = {
 							scope:wingman = {
-								supportive_of_same_sex_seduction_trigger = no
+								OR = {
+									supportive_of_same_sex_seduction_trigger = no
+									is_adult = no #Unop: We will grab someone else if the wingman is not an adult
+								}
 							}
 							#If the wingman is my spouse, are they cool with this? If not, let's get someone else
 							scope:wingman = { 

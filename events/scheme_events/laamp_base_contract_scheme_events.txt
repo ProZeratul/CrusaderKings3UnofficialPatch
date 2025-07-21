@@ -9920,9 +9920,11 @@ scripted_effect laamp_base_contract_schemes_1301_roll_other_duel_effect = {
 					title = laamp_base_contract_schemes_1301.$OPTION$.tt.success
 					left_icon = scope:recidivist
 					custom_tooltip = laamp_base_contract_schemes.1301.tt.score_increased
-					increment_variable_effect = {
-						VAR = wins_tally
-						VAL = 1
+					scope:task_contract = { #Unop: Need to rescope to task_contract since without, it add the variable to the character scope
+						increment_variable_effect = {
+							VAR = wins_tally
+							VAL = 1
+						}
 					}
 					if = {
 						limit = { scope:task_contract.var:encounters_tally >= 3 }

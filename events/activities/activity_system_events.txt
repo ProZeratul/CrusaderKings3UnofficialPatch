@@ -594,6 +594,9 @@ activity_system.0320 = {
 	}
 
 	immediate = {
+		scope:activity.activity_location.county.holder = { #Unop: Scope needed for the portrait above
+			save_scope_as = new_holder
+		}
 	}
 
 	option = {
@@ -669,7 +672,10 @@ activity_system.0331 = {
 	}
 
 	immediate = {
-		scope:activity.activity_host ?= { save_scope_as = host }
+		scope:activity.activity_host ?= { 
+			save_scope_as = host
+			save_scope_as = new_host #Unop: Scope needed for the portrait above
+		}
 	}
 
 	option = {
