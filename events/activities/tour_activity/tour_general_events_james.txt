@@ -251,7 +251,7 @@ tour_general.5010 = {
 						}
 						25 = {
 							#You need to have a title/realm for this to be a relevant reward
-							trigger = { is_landed = yes }
+							trigger = { root = { is_landed = yes } } #Unop: added the root scope (since we are in the mysterious_journal)
 							set_variable = {
 								name = answer_variable
 								value = 3
@@ -357,7 +357,7 @@ scripted_effect generic_journal_reward = {
 		}
 	}
 	add_prestige = major_prestige_gain
-	add_dynasty_prestige = major_dynasty_prestige_gain
+	unop_change_renown = { CHAR = root PRESTIGE_MODIFIER = major_dynasty_prestige_gain } #Unop: Use our custom effect to better handle renown
 }
 
 # You solved it! It's a book about grotesques!
