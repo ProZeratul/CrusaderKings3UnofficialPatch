@@ -655,7 +655,7 @@ scripted_effect hire_for_court_position_journey_effect = {
 	show_as_tooltip = {
 		if = {
 			limit = {
-				is_valid_to_hire_court_position_type = $COURT_POSITION$_court_position
+				unop_employer_can_have_cp = { COURT_POS = $COURT_POSITION$_court_position }
 				trigger_if = {
 					limit = {
 						exists = scope:current_holder
@@ -678,7 +678,7 @@ scripted_effect hire_for_court_position_journey_effect = {
 	
 	if = {
 		limit = {
-			is_valid_to_hire_court_position_type = $COURT_POSITION$_court_position
+			unop_employer_can_have_cp = { COURT_POS = $COURT_POSITION$_court_position }
 			OR = {
 				NOT = { exists = scope:current_holder }
 				trigger_if = {
@@ -727,7 +727,7 @@ scripted_effect hire_for_court_position_journey_laamp_replacement_effect = {
 	show_as_tooltip = {
 		if = {
 			limit = {
-				is_valid_to_hire_court_position_type = $COURT_POSITION$_court_position
+				unop_employer_can_have_cp = { COURT_POS = $COURT_POSITION$_court_position }
 			}
 			appoint_court_position = {
 				recipient = $CHARACTER$
@@ -737,7 +737,7 @@ scripted_effect hire_for_court_position_journey_laamp_replacement_effect = {
 		}
 		else_if = {
 			limit = {
-				is_valid_to_hire_court_position_type = $LAAMP_POSITION$_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = $LAAMP_POSITION$_camp_officer }
 			}
 			appoint_court_position = {
 				recipient = $CHARACTER$
@@ -1112,8 +1112,8 @@ bp3_journey.1000 = {
 		base = 1
 		modifier = {
 			add = 1
-			is_valid_to_hire_court_position_type = antiquarian_court_position
 			NOT = { employs_court_position = antiquarian_court_position }
+			unop_employer_can_have_cp = { COURT_POS = antiquarian_court_position }
 		}
 		modifier = {
 			add = 1
@@ -1151,7 +1151,7 @@ bp3_journey.1000 = {
 		name = bp3_journey.1000.curiosity
 		trigger = {
 			has_activity_intent = journey_curiosity_intent
-			is_valid_to_hire_court_position_type = antiquarian_court_position
+			unop_employer_can_have_cp = { COURT_POS = antiquarian_court_position }
 		}
 		
 		hire_for_court_position_journey_effect = {
@@ -1263,7 +1263,7 @@ bp3_journey.1000 = {
 		name = bp3_journey.1000.b
 		
 		trigger = {
-			is_valid_to_hire_court_position_type = antiquarian_court_position
+			unop_employer_can_have_cp = { COURT_POS = antiquarian_court_position }
 			NOT = { has_activity_intent = journey_curiosity_intent }
 		}
 		
@@ -1672,8 +1672,8 @@ bp3_journey.1200 = {
 		base = 1
 		modifier = {
 			add = 1
-			is_valid_to_hire_court_position_type = court_physician_court_position
 			NOT = { employs_court_position = court_physician_court_position }
+			unop_employer_can_have_cp = { COURT_POS = court_physician_court_position }
 		}
 		modifier = {
 			add = 1
@@ -1717,7 +1717,7 @@ bp3_journey.1200 = {
 		name = bp3_journey.1200.curiosity
 		trigger = {
 			has_activity_intent = journey_curiosity_intent
-			is_valid_to_hire_court_position_type = court_physician_court_position
+			unop_employer_can_have_cp = { COURT_POS = court_physician_court_position }
 		}
 		custom_tooltip = hair_will_change
 		add_character_flag = {
@@ -1818,7 +1818,7 @@ bp3_journey.1200 = {
 		name = bp3_journey.1200.b
 		
 		trigger = {
-			is_valid_to_hire_court_position_type = court_physician_court_position
+			unop_employer_can_have_cp = { COURT_POS = court_physician_court_position }
 			NOT = { has_activity_intent = journey_curiosity_intent }
 		}
 
@@ -1910,7 +1910,7 @@ bp3_journey.1300 = {
 		scope:activity.activity_location = { save_scope_as = location }
 		if = {
 			limit = {
-				is_valid_to_hire_court_position_type = stooge_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = stooge_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -1949,7 +1949,7 @@ bp3_journey.1300 = {
 		}
 		else_if = {
 			limit = {
-				is_valid_to_hire_court_position_type = stooge_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = stooge_camp_officer }
 			}
 			create_character = {
 				template = stooge_camp_officer_template
@@ -2042,7 +2042,7 @@ bp3_journey.1300 = {
 		}
 		if = {
 			limit = {
-				is_valid_to_hire_court_position_type = master_bard_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = master_bard_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -2083,7 +2083,7 @@ bp3_journey.1300 = {
 		}
 		else_if = {
 			limit = {
-				is_valid_to_hire_court_position_type = master_bard_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = master_bard_camp_officer }
 			}
 			create_character = {
 				template = master_bard_camp_officer_template
@@ -2185,11 +2185,11 @@ bp3_journey.1300 = {
 			add = 1
 			OR = {
 				AND = {
-					is_valid_to_hire_court_position_type = court_jester_court_position
+					unop_employer_can_have_cp = { COURT_POS = court_jester_court_position }
 					NOT = { employs_court_position = court_jester_court_position }
 				}
 				AND = {
-					is_valid_to_hire_court_position_type = court_musician_court_position
+					unop_employer_can_have_cp = { COURT_POS = court_musician_court_position }
 					NOT = { employs_court_position = court_musician_court_position }
 				}
 			}
@@ -2314,8 +2314,8 @@ bp3_journey.1300 = {
 		
 		trigger = {
 			OR = {
-				is_valid_to_hire_court_position_type = court_jester_court_position
-				is_valid_to_hire_court_position_type = stooge_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = court_jester_court_position }
+				unop_employer_can_have_cp = { COURT_POS = stooge_camp_officer }
 			}
 			NOT = { has_activity_intent = journey_curiosity_intent }
 		}
@@ -2350,8 +2350,8 @@ bp3_journey.1300 = {
 		
 		trigger = {
 			OR = {
-				is_valid_to_hire_court_position_type = court_musician_court_position
-				is_valid_to_hire_court_position_type = master_bard_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = court_musician_court_position }
+				unop_employer_can_have_cp = { COURT_POS = master_bard_camp_officer }
 			}
 			NOT = { has_activity_intent = journey_curiosity_intent }
 		}
@@ -2462,7 +2462,7 @@ bp3_journey.1400 = {
 		scope:activity.activity_location = { save_scope_as = location }
 		if = {
 			limit = {
-				is_valid_to_hire_court_position_type = master_bard_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = master_bard_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -2490,7 +2490,7 @@ bp3_journey.1400 = {
 		}
 		else_if = {
 			limit = {
-				is_valid_to_hire_court_position_type = huntperson_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = huntperson_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -2609,7 +2609,7 @@ bp3_journey.1400 = {
 		modifier = {
 			add = 1
 			AND = {
-				is_valid_to_hire_court_position_type = master_of_hunt_court_position
+				unop_employer_can_have_cp = { COURT_POS = master_of_hunt_court_position }
 				NOT = { employs_court_position = master_of_hunt_court_position }
 			}
 		}
@@ -2657,7 +2657,7 @@ bp3_journey.1400 = {
 		name = bp3_journey.1400.curiosity
 		trigger = {
 			has_activity_intent = journey_curiosity_intent
-			is_valid_to_hire_court_position_type = master_of_hunt_court_position
+			unop_employer_can_have_cp = { COURT_POS = master_of_hunt_court_position }
 		}
 		
 		hunter_progress_point_gain_effect = { CHANGE = 3 RANDOM_CHANGE = 1 } #Gives Hunter Lifestyle XP
@@ -2735,7 +2735,7 @@ bp3_journey.1400 = {
 		name = bp3_journey.1400.b
 		
 		trigger = {
-			is_valid_to_hire_court_position_type = master_of_hunt_court_position
+			unop_employer_can_have_cp = { COURT_POS = master_of_hunt_court_position }
 			NOT = { has_activity_intent = journey_curiosity_intent }
 		}
 
@@ -2832,7 +2832,7 @@ bp3_journey.1500 = {
 		scope:activity.activity_location = { save_scope_as = location }
 		if = {
 			limit = {
-				is_valid_to_hire_court_position_type = chief_forager_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = chief_forager_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -2871,7 +2871,7 @@ bp3_journey.1500 = {
 		}
 		else_if = {
 			limit = {
-				is_valid_to_hire_court_position_type = chief_forager_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = chief_forager_camp_officer }
 			}
 			create_character = {
 				template = chief_forager_camp_officer_template
@@ -2900,7 +2900,7 @@ bp3_journey.1500 = {
 		}
 		else_if = {
 			limit = {
-				is_valid_to_hire_court_position_type = chief_qadi_court_position
+				unop_employer_can_have_cp = { COURT_POS = chief_qadi_court_position }
 				scope:location.religion = religion:islam_religion
 				any_pool_character = {
 					province = scope:location
@@ -2940,7 +2940,7 @@ bp3_journey.1500 = {
 		}
 		else_if = {
 			limit = {
-				is_valid_to_hire_court_position_type = chief_qadi_court_position
+				unop_employer_can_have_cp = { COURT_POS = chief_qadi_court_position }
 				scope:location.religion = religion:islam_religion
 			}
 			create_character = {
@@ -3074,7 +3074,7 @@ bp3_journey.1500 = {
 		}
 		else_if = {
 			limit = {
-				is_valid_to_hire_court_position_type = quartermaster_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = quartermaster_camp_officer }
 			}
 			create_character = {
 				template = quartermaster_camp_officer_template
@@ -3175,19 +3175,19 @@ bp3_journey.1500 = {
 			add = 1
 			OR = {
 				AND = {
-					is_valid_to_hire_court_position_type = quartermaster_camp_officer
+					unop_employer_can_have_cp = { COURT_POS = quartermaster_camp_officer }
 					NOT = { employs_court_position = quartermaster_camp_officer }
 				}
 				AND = {
-					is_valid_to_hire_court_position_type = chief_qadi_court_position
+					unop_employer_can_have_cp = { COURT_POS = chief_qadi_court_position }
 					NOT = { employs_court_position = chief_qadi_court_position }
 				}
 				AND = {
-					is_valid_to_hire_court_position_type = high_almoner_court_position
+					unop_employer_can_have_cp = { COURT_POS = high_almoner_court_position }
 					NOT = { employs_court_position = high_almoner_court_position }
 				}
 				AND = {
-					is_valid_to_hire_court_position_type = seneschal_court_position
+					unop_employer_can_have_cp = { COURT_POS = seneschal_court_position }
 					NOT = { employs_court_position = seneschal_court_position }
 				}
 			}
@@ -3370,9 +3370,9 @@ bp3_journey.1500 = {
 
 		trigger = {
 			OR = {
-				is_valid_to_hire_court_position_type = chief_forager_camp_officer
-				is_valid_to_hire_court_position_type = chief_qadi_court_position
-				is_valid_to_hire_court_position_type = high_almoner_court_position
+				unop_employer_can_have_cp = { COURT_POS = chief_forager_camp_officer }
+				unop_employer_can_have_cp = { COURT_POS = chief_qadi_court_position }
+				unop_employer_can_have_cp = { COURT_POS = high_almoner_court_position }
 			}
 			NOT = { has_activity_intent = journey_curiosity_intent }
 		}
@@ -3406,8 +3406,8 @@ bp3_journey.1500 = {
 		
 		trigger = {
 			OR = {
-				is_valid_to_hire_court_position_type = seneschal_court_position
-				is_valid_to_hire_court_position_type = quartermaster_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = seneschal_court_position }
+				unop_employer_can_have_cp = { COURT_POS = quartermaster_camp_officer }
 			}
 			NOT = { has_activity_intent = journey_curiosity_intent }
 		}
@@ -3705,7 +3705,7 @@ bp3_journey.1700 = {
 		scope:activity.activity_location = { save_scope_as = location }
 		if = {
 			limit = {
-				is_valid_to_hire_court_position_type = head_groom_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = head_groom_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -3744,7 +3744,7 @@ bp3_journey.1700 = {
 		}
 		else_if = {
 			limit = {
-				is_valid_to_hire_court_position_type = head_groom_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = head_groom_camp_officer }
 			}
 			create_character = {
 				template = head_groom_camp_officer_template
@@ -3991,15 +3991,15 @@ bp3_journey.1700 = {
 			add = 1
 			OR = {
 				AND = {
-					is_valid_to_hire_court_position_type = bodyguard_court_position
+					unop_employer_can_have_cp = { COURT_POS = bodyguard_court_position }
 					NOT = { employs_court_position = bodyguard_court_position }
 				}
 				AND = {
-					is_valid_to_hire_court_position_type = master_of_horse_court_position
+					unop_employer_can_have_cp = { COURT_POS = master_of_horse_court_position }
 					NOT = { employs_court_position = master_of_horse_court_position }
 				}
 				AND = {
-					is_valid_to_hire_court_position_type = head_groom_camp_officer
+					unop_employer_can_have_cp = { COURT_POS = head_groom_camp_officer }
 					NOT = { employs_court_position = head_groom_camp_officer }
 				}
 			}
@@ -4362,7 +4362,7 @@ bp3_journey.1800 = {
 		base = 1
 		modifier = {
 			add = 1
-			is_valid_to_hire_court_position_type = travel_leader_court_position
+			unop_employer_can_have_cp = { COURT_POS = travel_leader_court_position }
 			OR = {
 				NOT = { employs_court_position = travel_leader_court_position }
 				any_court_position_holder = {
@@ -4517,7 +4517,7 @@ bp3_journey.1800 = {
 		name = bp3_journey.1800.curiosity
 		trigger = {
 			has_activity_intent = journey_curiosity_intent
-			is_valid_to_hire_court_position_type = travel_leader_court_position
+			unop_employer_can_have_cp = { COURT_POS = travel_leader_court_position }
 			NOT = { has_trait = trusting }
 		}
 		
@@ -4637,7 +4637,7 @@ bp3_journey.1800 = {
 				has_activity_intent = journey_curiosity_intent
 				has_trait = trusting
 			}
-			is_valid_to_hire_court_position_type = travel_leader_court_position
+			unop_employer_can_have_cp = { COURT_POS = travel_leader_court_position }
 		}
 
 		hire_for_court_position_journey_effect = {
@@ -4731,254 +4731,98 @@ bp3_journey.1900 = {
 
 	trigger = {
 		OR = {
-			is_valid_to_hire_court_position_type = court_tutor_court_position
-			is_valid_to_hire_court_position_type = royal_architect_court_position
-			is_valid_to_hire_court_position_type = head_porter_camp_officer
-			is_valid_to_hire_court_position_type = cupbearer_court_position
-			is_valid_to_hire_court_position_type = witness_camp_officer
-			is_valid_to_hire_court_position_type = court_poet_court_position
-			is_valid_to_hire_court_position_type = chronicler_court_position
-			is_valid_to_hire_court_position_type = second_camp_officer
-			is_valid_to_hire_court_position_type = wet_nurse_court_position
-			AND = {
-				is_valid_to_hire_court_position_type = antiquarian_court_position
-				OR = {
-					NOT = { employs_court_position = antiquarian_court_position }
-					AND = {
-						employs_court_position = antiquarian_court_position
-						any_court_position_holder = {
-							type = antiquarian_court_position
-							aptitude:antiquarian_court_position < 4
-						}
-					}
-				}
-			}
+			unop_employer_can_have_cp = { COURT_POS = court_tutor_court_position }
+			unop_employer_can_have_cp = { COURT_POS = royal_architect_court_position }
+			unop_employer_can_have_cp = { COURT_POS = head_porter_camp_officer }
+			unop_employer_can_have_cp = { COURT_POS = cupbearer_court_position }
+			unop_employer_can_have_cp = { COURT_POS = witness_camp_officer }
+			unop_employer_can_have_cp = { COURT_POS = court_poet_court_position }
+			unop_employer_can_have_cp = { COURT_POS = chronicler_court_position }
+			unop_employer_can_have_cp = { COURT_POS = second_camp_officer }
+			unop_employer_can_have_cp = { COURT_POS = wet_nurse_court_position }
+			unop_employer_can_have_cp = { COURT_POS = antiquarian_court_position }
 		}
 	}
 
 	immediate = {
 		scope:activity.activity_location = { save_scope_as = location }
 		random_list = {
-			1 = {
+			100 = {
 				trigger = {
-					is_valid_to_hire_court_position_type = head_porter_camp_officer
-				}
-				modifier = {
-					add = 99
-					AND = {
-						is_valid_to_hire_court_position_type = head_porter_camp_officer
-						OR = {
-							NOT = { employs_court_position = head_porter_camp_officer }
-							AND = {
-								employs_court_position = head_porter_camp_officer
-								any_court_position_holder = {
-									type = head_porter_camp_officer
-									aptitude:head_porter_camp_officer < 4
-								}
-							}
-						}
-					}
+					unop_employer_can_have_cp = { COURT_POS = head_porter_camp_officer }
 				}
 				journey_find_or_create_excellent_court_position_effect = {
 					COURT_POSITION = head_porter_camp_officer
 					LOCATION = scope:location
 				}
 			}
-			1 = {
+			100 = {
 				trigger = {
-					is_valid_to_hire_court_position_type = witness_camp_officer
-				}
-				modifier = {
-					add = 99
-					AND = {
-						is_valid_to_hire_court_position_type = witness_camp_officer
-						OR = {
-							NOT = { employs_court_position = witness_camp_officer }
-							AND = {
-								employs_court_position = witness_camp_officer
-								any_court_position_holder = {
-									type = witness_camp_officer
-									aptitude:witness_camp_officer < 4
-								}
-							}
-						}
-					}
+					unop_employer_can_have_cp = { COURT_POS = witness_camp_officer }
 				}
 				journey_find_or_create_excellent_court_position_effect = {
 					COURT_POSITION = witness_camp_officer
 					LOCATION = scope:location
 				}
 			}
-			1 = {
+			100 = {
 				trigger = {
-					is_valid_to_hire_court_position_type = second_camp_officer
-				}
-				modifier = {
-					add = 99
-					AND = {
-						is_valid_to_hire_court_position_type = second_camp_officer
-						OR = {
-							NOT = { employs_court_position = second_camp_officer }
-							AND = {
-								employs_court_position = second_camp_officer
-								any_court_position_holder = {
-									type = second_camp_officer
-									aptitude:second_camp_officer < 4
-								}
-							}
-						}
-					}
+					unop_employer_can_have_cp = { COURT_POS = second_camp_officer }
 				}
 				journey_find_or_create_excellent_court_position_effect = {
 					COURT_POSITION = second_camp_officer
 					LOCATION = scope:location
 				}
 			}
-			1 = {
+			100 = {
 				trigger = {
-					is_valid_to_hire_court_position_type = court_tutor_court_position
-				}
-				modifier = {
-					add = 99
-					AND = {
-						is_valid_to_hire_court_position_type = court_tutor_court_position
-						OR = {
-							NOT = { employs_court_position = court_tutor_court_position }
-							AND = {
-								employs_court_position = court_tutor_court_position
-								any_court_position_holder = {
-									type = court_tutor_court_position
-									aptitude:court_tutor_court_position < 4
-								}
-							}
-						}
-					}
+					unop_employer_can_have_cp = { COURT_POS = court_tutor_court_position }
 				}
 				journey_find_or_create_excellent_court_position_effect = {
 					COURT_POSITION = court_tutor_court_position
 					LOCATION = scope:location
 				}
 			}
-			1 = {
+			100 = {
 				trigger = {
-					is_valid_to_hire_court_position_type = royal_architect_court_position
-				}
-				modifier = {
-					add = 99
-					AND = {
-						is_valid_to_hire_court_position_type = royal_architect_court_position
-						OR = {
-							NOT = { employs_court_position = royal_architect_court_position }
-							AND = {
-								employs_court_position = royal_architect_court_position
-								any_court_position_holder = {
-									type = royal_architect_court_position
-									aptitude:royal_architect_court_position < 4
-								}
-							}
-						}
-					}
+					unop_employer_can_have_cp = { COURT_POS = royal_architect_court_position }
 				}
 				journey_find_or_create_excellent_court_position_effect = {
 					COURT_POSITION = royal_architect_court_position
 					LOCATION = scope:location
 				}
 			}
-			1 = {
+			100 = {
 				trigger = {
-					is_valid_to_hire_court_position_type = cupbearer_court_position
-				}
-				modifier = {
-					add = 99
-					AND = {
-						is_valid_to_hire_court_position_type = cupbearer_court_position
-						OR = {
-							NOT = { employs_court_position = cupbearer_court_position }
-							AND = {
-								employs_court_position = cupbearer_court_position
-								any_court_position_holder = {
-									type = cupbearer_court_position
-									aptitude:cupbearer_court_position < 4
-								}
-							}
-						}
-					}
+					unop_employer_can_have_cp = { COURT_POS = cupbearer_court_position }
 				}
 				journey_find_or_create_excellent_court_position_effect = {
 					COURT_POSITION = cupbearer_court_position
 					LOCATION = scope:location
 				}
 			}
-			1 = {
+			100 = {
 				trigger = {
-					is_valid_to_hire_court_position_type = court_poet_court_position
-				}
-				modifier = {
-					add = 99
-					AND = {
-						is_valid_to_hire_court_position_type = court_poet_court_position
-						OR = {
-							NOT = { employs_court_position = court_poet_court_position }
-							AND = {
-								employs_court_position = court_poet_court_position
-								any_court_position_holder = {
-									type = court_poet_court_position
-									aptitude:court_poet_court_position < 4
-								}
-							}
-						}
-					}
+					unop_employer_can_have_cp = { COURT_POS = court_poet_court_position }
 				}
 				journey_find_or_create_excellent_court_position_effect = {
 					COURT_POSITION = court_poet_court_position
 					LOCATION = scope:location
 				}
 			}
-			1 = {
+			100 = {
 				trigger = {
-					is_valid_to_hire_court_position_type = chronicler_court_position
-				}
-				modifier = {
-					add = 99
-					AND = {
-						is_valid_to_hire_court_position_type = chronicler_court_position
-						OR = {
-							NOT = { employs_court_position = chronicler_court_position }
-							AND = {
-								employs_court_position = chronicler_court_position
-								any_court_position_holder = {
-									type = chronicler_court_position
-									aptitude:chronicler_court_position < 4
-								}
-							}
-						}
-					}
+					unop_employer_can_have_cp = { COURT_POS = chronicler_court_position }
 				}
 				journey_find_or_create_excellent_court_position_effect = {
 					COURT_POSITION = chronicler_court_position
 					LOCATION = scope:location
 				}
 			}
-			1 = {
+			100 = {
 				trigger = {
-					is_valid_to_hire_court_position_type = wet_nurse_court_position
-				}
-				modifier = {
-					add = 99
-					AND = {
-						is_valid_to_hire_court_position_type = court_tutor_court_position
-						OR = {
-							NOT = { employs_court_position = court_tutor_court_position }
-							AND = {
-								employs_court_position = court_tutor_court_position
-								any_court_position_holder = {
-									type = court_tutor_court_position
-									aptitude:court_tutor_court_position < 4
-								}
-							}
-						}
-					}
-				}
+					unop_employer_can_have_cp = { COURT_POS = wet_nurse_court_position }
+				}				
 				journey_find_or_create_excellent_court_position_effect = {
 					COURT_POSITION = wet_nurse_court_position
 					LOCATION = scope:location
@@ -4986,19 +4830,7 @@ bp3_journey.1900 = {
 			}
 			10 = {
 				trigger = {
-					AND = {
-						is_valid_to_hire_court_position_type = antiquarian_court_position
-						OR = {
-							NOT = { employs_court_position = antiquarian_court_position }
-							AND = {
-								employs_court_position = antiquarian_court_position
-								any_court_position_holder = {
-									type = antiquarian_court_position
-									aptitude:antiquarian_court_position < 4
-								}
-							}
-						}
-					}
+					unop_employer_can_have_cp = { COURT_POS = antiquarian_court_position }
 				}
 				journey_find_or_create_excellent_court_position_effect = {
 					COURT_POSITION = antiquarian_court_position
@@ -5668,7 +5500,7 @@ bp3_journey.2100 = {
 		scope:activity.activity_location = { save_scope_as = location }
 		if = {
 			limit = {
-				is_valid_to_hire_court_position_type = camp_cook_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = camp_cook_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -5707,7 +5539,7 @@ bp3_journey.2100 = {
 		}
 		else_if = {
 			limit = {
-				is_valid_to_hire_court_position_type = camp_cook_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = camp_cook_camp_officer }
 			}
 			create_character = {
 				template = camp_cook_camp_officer_template
@@ -5810,12 +5642,12 @@ bp3_journey.2100 = {
 		base = 1
 		modifier = {
 			add = 1
-			is_valid_to_hire_court_position_type = food_taster_court_position
+			unop_employer_can_have_cp = { COURT_POS = food_taster_court_position }
 			NOT = { employs_court_position = food_taster_court_position }
 		}
 		modifier = {
 			add = 1
-			is_valid_to_hire_court_position_type = camp_cook_camp_officer
+			unop_employer_can_have_cp = { COURT_POS = camp_cook_camp_officer }
 			NOT = { employs_court_position = camp_cook_camp_officer }
 		}
 		modifier = {
@@ -5963,8 +5795,8 @@ bp3_journey.2100 = {
 		
 		trigger = {
 			OR = {
-				is_valid_to_hire_court_position_type = camp_cook_camp_officer
-				is_valid_to_hire_court_position_type = food_taster_court_position
+				unop_employer_can_have_cp = { COURT_POS = camp_cook_camp_officer }
+				unop_employer_can_have_cp = { COURT_POS = food_taster_court_position }
 			}
 			NOT = { has_activity_intent = journey_curiosity_intent }
 		}
@@ -6044,9 +5876,9 @@ bp3_journey.2200 = {
 
 	trigger = {
 		OR = {
-			is_valid_to_hire_court_position_type = master_of_spoils_camp_officer
-			is_valid_to_hire_court_position_type = wet_nurse_court_position
-			is_valid_to_hire_court_position_type = bodyguard_court_position
+			unop_employer_can_have_cp = { COURT_POS = master_of_spoils_camp_officer }
+			unop_employer_can_have_cp = { COURT_POS = wet_nurse_court_position }
+			unop_employer_can_have_cp = { COURT_POS = bodyguard_court_position }
 		}
 	}
 
@@ -6064,7 +5896,7 @@ bp3_journey.2200 = {
 					is_available_healthy_ai_adult = yes
 					wet_nurse_validity_trigger = { EMPLOYER = root }
 				}
-				is_valid_to_hire_court_position_type = wet_nurse_court_position
+				unop_employer_can_have_cp = { COURT_POS = wet_nurse_court_position }
 			}
 			random_pool_character = {
 				province = scope:location
@@ -6094,7 +5926,7 @@ bp3_journey.2200 = {
 		}
 		else_if = {
 			limit = {
-				is_valid_to_hire_court_position_type = wet_nurse_court_position
+				unop_employer_can_have_cp = { COURT_POS = wet_nurse_court_position }
 			}
 			create_character = {
 				template = wet_nurse_court_position_template
@@ -6125,7 +5957,7 @@ bp3_journey.2200 = {
 		}
 		else_if = {
 			limit = {
-				is_valid_to_hire_court_position_type = master_of_spoils_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = master_of_spoils_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -6136,7 +5968,6 @@ bp3_journey.2200 = {
 					is_available_healthy_ai_adult = yes
 					bodyguard_validity_trigger = { EMPLOYER = root }
 				}
-				is_valid_to_hire_court_position_type = master_of_spoils_camp_officer
 			}
 			random_pool_character = {
 				province = scope:location
@@ -6166,7 +5997,7 @@ bp3_journey.2200 = {
 		}
 		else_if = {
 			limit = {
-				is_valid_to_hire_court_position_type = master_of_spoils_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = master_of_spoils_camp_officer }
 			}
 			create_character = {
 				template = master_of_spoils_camp_officer_template
@@ -6207,7 +6038,7 @@ bp3_journey.2200 = {
 					is_available_healthy_ai_adult = yes
 					bodyguard_validity_trigger = { EMPLOYER = root }
 				}
-				is_valid_to_hire_court_position_type = bodyguard_court_position
+				unop_employer_can_have_cp = { COURT_POS = bodyguard_court_position }
 			}
 			random_pool_character = {
 				province = scope:location
@@ -6291,7 +6122,7 @@ bp3_journey.2200 = {
 		modifier = {
 			add = 1
 			AND = {
-				is_valid_to_hire_court_position_type = wet_nurse_court_position
+				unop_employer_can_have_cp = { COURT_POS = wet_nurse_court_position }
 				NOT = { employs_court_position = wet_nurse_court_position }
 			}
 			# Bodyguard has a bespoke event
@@ -6299,7 +6130,7 @@ bp3_journey.2200 = {
 		modifier = {
 			add = 1
 			AND = {
-				is_valid_to_hire_court_position_type = bodyguard_court_position
+				unop_employer_can_have_cp = { COURT_POS = bodyguard_court_position }
 				NOT = { employs_court_position = bodyguard_court_position }
 			}
 		}
@@ -6773,7 +6604,7 @@ bp3_journey.2300 = {
 		}
 		if = {
 			limit = {
-				is_valid_to_hire_court_position_type = master_of_arms_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = master_of_arms_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -6812,7 +6643,7 @@ bp3_journey.2300 = {
 		}
 		else_if = {
 			limit = {
-				is_valid_to_hire_court_position_type = master_of_arms_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = master_of_arms_camp_officer }
 			}
 			create_character = {
 				template = master_of_arms_camp_officer_template
@@ -6914,7 +6745,7 @@ bp3_journey.2300 = {
 		base = 1
 		modifier = {
 			add = 1
-			is_valid_to_hire_court_position_type = champion_court_position
+			unop_employer_can_have_cp = { COURT_POS = champion_court_position }
 			NOT = { employs_court_position = champion_court_position }
 		}
 		modifier = {
@@ -7089,8 +6920,8 @@ bp3_journey.2300 = {
 		
 		trigger = {
 			OR = {
-				is_valid_to_hire_court_position_type = champion_court_position
-				is_valid_to_hire_court_position_type = master_of_arms_camp_officer
+				unop_employer_can_have_cp = { COURT_POS = champion_court_position }
+				unop_employer_can_have_cp = { COURT_POS = master_of_arms_camp_officer }
 			}
 			NOT = { has_activity_intent = journey_curiosity_intent }
 		}
