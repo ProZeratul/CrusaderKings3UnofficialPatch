@@ -1776,9 +1776,20 @@ south_asia.0041 = {
 		animation = personality_honorable
 	}
 
+	immediate = { #Unop: Added this part since proselytiser is needed for loc & portrait
+		if = {
+			limit = {
+				any_independent_ruler = {
+					has_character_flag = proselytiser
+				}
+			}
+		}
+		save_scope_as = proselytiser
+	}
+
 	option = {
 		name = { #Theravadan adherent is happy
-		text = south_asia.0041.a
+			text = south_asia.0041.a #Unop: Misc indent
 		}
 	}
 }
