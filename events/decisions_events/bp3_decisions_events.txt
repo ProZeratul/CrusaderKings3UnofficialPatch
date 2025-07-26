@@ -36,7 +36,12 @@ bp3_decisions.0100 = {
     # Become legitimists
     option = {
         name = bp3_decisions.0100.b
-        trigger = { NOT = { has_realm_law = camp_purpose_legitimists } }
+        #Unop Check if root can have legitimists camp purpose here since otherwise it will change automatically 
+        trigger = {
+            NOT = { has_realm_law = camp_purpose_legitimists }
+            ep3_can_have_legitimists_camp_purpose_trigger = yes
+        }
+        show_as_unavailable = { always = yes }
         add_realm_law_skip_effects = camp_purpose_legitimists
     }
 }
