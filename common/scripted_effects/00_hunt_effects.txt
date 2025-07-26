@@ -4392,7 +4392,11 @@ nerge_progression_effect = {
 			scope:activity = {
 				every_attending_character = {
 					limit = {
-						is_ai = no
+						#Unop Treat the AI host as a player to match the logic below
+						OR = {
+							is_ai = no
+							this = involved_activity.activity_host
+						}
 					}
 					add = 1
 				}
@@ -4405,12 +4409,14 @@ nerge_progression_effect = {
 		limit = {
 			OR = {
 				is_ai = no
-				AND = {
-					NOT = {
-						involved_activity = { any_attending_character = { is_ai = no } }
-					}
-					scope:root_scope = involved_activity.activity_host
-				}
+				#Unop Allow the AI host to influence the nerge progress
+				#AND = {
+				#	NOT = {
+				#		involved_activity = { any_attending_character = { is_ai = no } }
+				#	}
+				#	scope:root_scope = involved_activity.activity_host
+				#}
+				this = involved_activity.activity_host
 			}
 		}
 		scope:activity ?= {
