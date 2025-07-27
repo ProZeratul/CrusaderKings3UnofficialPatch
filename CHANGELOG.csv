@@ -1,0 +1,529 @@
+SHA|Author|Description|Version|Type|PR Link|Other Links
+e787398|pharaox|Fixed "Offer Courtier" and "Offer Concubine" interactions for landless adventurers to be restricted to nearby rulers only instead of being available to all rulers in diplomatic range|8.0.34|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/226|
+d3d74b7|pharaox|Fixed "Stock Up for Travels" Caravan Master task that was only providing +1 travel speed/safety instead of the intended scaled amount due to travel plan modifier scaling not working properly|8.0.34|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/225|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/224
+83f575f|ProZeratul|Added new exclusions to ck3-tiger configuration file to reduce false positive error reports|8.0.34|Internal||
+3c10f40|pharaox|Internal fix - moved modifier file from incorrect directory (events/dlc/ep3) to proper location (common/modifiers) to prevent startup errors and ck3-tiger complaints|8.0.34|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/228|
+f8a7cfe|ProZeratul|Bumped version to 8.0.33 for new release|8.0.33|Internal||
+8e880a8|ProZeratul|Fixed hunt.2510 event ("The White Stag" legendary hunt event) not using correct scope for legendary sight detection|8.0.33|Fix||
+35ede8c|pharaox|Fixed landless adventurer contract availability by scaling the employer treasury requirement with ruler tier preventing situations where only criminal contracts are offered due to poor low-tier rulers|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/223|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/222
+f4ba79c|ProZeratul|Fixed laamp_base_contract_schemes_1301_roll_other_duel_effect (used by "Bring Me His Head" landless adventurer contract) that wasn't properly incrementing the wins tally counter during contract scheme duels|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/219|
+30462ae|ProZeratul|Fixed aptitude checks in some events and decisions that were using 1-based indexing instead of 0-based causing incorrect skill calculations|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/218|
+6393ddb|ProZeratul|Fixed incorrect scope usage in generic_scheme_process_ending_effect (used by several hostile schemes) that could cause runtime errors when schemes conclude|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/217|
+b859fbf|ProZeratul|Fixed self opinion gain with diplomacy_foreign_special_1010_court_visit_join_seduction_successfully_effect (used by "Hospitality: Deception and Desire" statecraft lifestyle event)|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/216|
+80e1b77|ProZeratul|Fixed tooltip when you cannot start a "Meet Peers" activity|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/193|
+8dbce1b|ProZeratul|Fixed scope mistakes and ported previous pilgrimage event fixes|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/215|
+2c25779|ProZeratul|Fixed wingman potentially not being adult in intrigue_temptation.3010 event ("A Bloom In The Wilderness" temptation lifestyle event)|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/209|https://www.reddit.com/r/CrusaderKings/comments/1lw234e/what_sort_of_chad_did_i_just_breed/
+9eb88f3|ProZeratul|Fixed laamp_help_find_secrets_contract ("Eyes in the Shadows" landless adventurer contract) checking variable of another contract in case of invalidation|8.0.33|Fix||
+a5461b1|ProZeratul|Internal fix - is_valid_to_hire_court_position_type is run on the employee scope not employer and is not what we want to check|8.0.33|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/205|
+e18dfca|ProZeratul|Internal fix - made it impossible to have holdings in desert & desert mountains outside of the sahara region|8.0.33|Internal||
+8530b53|ProZeratul|Internal fix - wrong scope used in localization|8.0.33|Internal||
+3e90415|ProZeratul|Fixed bp2_yearly.4012.desc & bp2_yearly.4022.desc ("Shadows of Fame: Daylight" and "Shadows of Faith: Daylight" events) hardcoded his and added comments on mpo decisions|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/211|
+1c32bbe|ProZeratul|Fixed martial_authority_special.1501 ("The Deserter" martial authority lifestyle event) potentially firing without any valid character and missing rescope to root for location check|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/206|
+32eb62f|ProZeratul|Fixed "Ritualized Friendship" cultural tradition increasing scheme duration instead of reducing it|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/210|https://forum.paradoxplaza.com/forum/threads/ritualized-friendship-adds-20-or-40-days-to-scheme-length.1836232/
+c2b9a9d|ProZeratul|Fixed AI not creating legends|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/212|https://forum.paradoxplaza.com/forum/threads/ai-cant-start-legends.1759835/
+25d66e9|ProZeratul|Fixed prisoners that fall in love despite their sexual orientation|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/207|
+6b855d1|ProZeratul|Fixed chancellor_task.3104 ("Domestic Affairs" chancellor task random event) reducing current char partition instead of vassal|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/204|
+607e8e0|ProZeratul|Fixed court_chaplain_task.1002 ("Religious Relations" court chaplain task random event) potentially targeting itself|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/201|https://www.reddit.com/r/ck3/comments/1ltwbqu/it_must_have_been_a_tough_conversation/
+95bc9f1|ProZeratul|Fixed witch nickname checking doctrine instead of doctrine parameter|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/190|
+95bc9f1|ProZeratul|Fixed bp1_yearly.2021 ("Persona Grata" yearly event) not checking witchcraft doctrines properly|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/190|
+95bc9f1|ProZeratul|Fixed travel_events.2020 ("Haunted Manor: Which Witch") not checking witchcraft doctrines properly|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/190|
+95bc9f1|ProZeratul|Fixed other witchcraft doctrines checks|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/190|
+8b337c3|ProZeratul|Reverted Dev/fix tournament script values|8.0.33|Internal||
+b0c3d12|pharaox|Fixed ck3-tiger errors in newly added files|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/198|
+01ca2cf|pharaox|Fixed not being able to "Devise Pleasure Dome" in a barony if it has an unusable special building slot; added warning that a special building slot will be used if it exists|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/200|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/199
+2e8ab64|ProZeratul|Fixed prestige modifier when killing a boar/bison/hart/reindeer/elk during a hunt; added missing OR inside hunt_melee_danger_value|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/192|
+3f74231|ProZeratul|Fixed missing check for education_martial_prowess_5 ("Quicksilver Blade" education trait) in tournament script values|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/191|
+1d3f8a8|ProZeratul|Fixed ep3_laamp_decision_event.1031 ("Storyteller" settlement event) & ep3_laamp_decision_event.1035 ("The Potential Match" settlement event) options cooldown being way longer than intended|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/194|https://forum.paradoxplaza.com/forum/threads/i-know-this-one-option-has-wrong-cooldown.1822033/
+5e2d9aa|ProZeratul|Added the chariot race case in GetInviteToActivityFlavor|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/189|https://forum.paradoxplaza.com/forum/threads/chariot-race-invitation-wrongly-specifies-hunt-activity.1808088/
+927a962|ProZeratul|Fixed feast_default.5010 ("A Legendary Silence" feast event) potentially selecting someone who is already promoting our legend|8.0.33|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/195|
+4586ecb|ProZeratul|Bumped version to 8.0.32|8.0.32|Internal||
+b404883|pharaox|Restored fixes in birth_events.txt (various birth events)|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/188|
+e2db623|ProZeratul|Added comments on fixes|8.0.32|Internal||
+bf2faff|ProZeratul|Improved comment|8.0.32|Internal||
+f52a5d0|ProZeratul|Added fix comment|8.0.32|Internal||
+55db8f4|ProZeratul|Fixed cultural_festival.3070 ("The Feast of Fools" tour event) selecting traveling chars|8.0.32|Fix||
+3dc318e|ProZeratul|Resurrected some old fixes that are still needed|8.0.32|Fix||
+ca4c522|ProZeratul|Fixed hold_court.8180 ("Noble Privileges" hold court event) that would let a vassal get march contract when it is not valid|8.0.32|Fix||
+fc9b41e|ProZeratul|Small error log fix during cultural_festival.4300 & 4302 ("Gift Exchange" tour events)|8.0.32|Fix||
+739ccee|pharaox|Fixed various issues with "Summon Wealthy Visitors" decisions|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/183|https://www.reddit.com/r/CrusaderKings/comments/1l23rof/how_is_the_summon_wealthy_visitor_decision_sooooo/,https://forum.paradoxplaza.com/forum/threads/please-change-the-summon-wealthy-visitors-decision-this-is-ridiculous.1740273/,https://www.reddit.com/r/CrusaderKings/comments/1kdcli5/summon_wealthy_visitor_its_insanity/
+aaf4ff4|ProZeratul|Fixed "Cabinet of Curiosities" domicile building level 2 & 3 checking dynasty estate instead of house estate|8.0.32|Fix||
+e1f39d3|ProZeratul|Fixed again random county selected for a culture that does not have any provinces|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Prevented travel_danger_events.7000 ("Danger: Serpent" travel danger event) from firing at sea|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed typos in localization|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed ep2_locale_events.3002 ("Wanton Warriors" tournament event) firing without needed characters & limit ep2_locale_events.4050 ("Brace Yourself" tournament event) to fire if you already have the modifier|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed wrong scope used in ep2_locale_events.1500 event|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed ep2_locale_events.2501 ("A Pope-priate Cloting" tournament event) not setting the wealth & quality to the fake papal tiara|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed cultural_acceptance_enjoyed_music even more|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed ep2_locale_events.4505 ("Weaponsmith: Famous Blade" tournament event) that could not fire at all|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed ep2_locale_events.4520 ("Weaponsmith: Worthy Ichor" tournament event) not sending the notification to the player|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed ep3_laamp_flavour_ewan.2021 ("Bound Together" landless adventurer event) trying to create an invalid secret|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed ep3_laamps.8040 ("Let Sleeping Dogs Lie" event) reverse opinion gain|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed culture_court_yurt_effect checking wrong list|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed "Grant Vassal" interaction not triggering struggle catalysts|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed "Abandon Confederation" decision AI incentive|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed mpo_decisions_events.0112 ("The Wrath of the Gurkhan" MPO decision event) trigger|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed AI join score & Struggle Catalyst activation from factions|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed research & religious inspiration cost|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed mpo_greatest_of_khans.0040 ("Fading of the Great Dream" MPO event) not triggering when losing title to the heir when the character who had the khan story died|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed "Raid Estate" scheme invalidation message|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed bad if inside and else_if for stop_war_defender_likelihood_calculation|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed scope while checking if the inspiree has a liege with an estate with CoC|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed fp3_yearly.2020 setting up a self-selected char for fp3_yearly.2021|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed vassal checking liege realm law when asking to stop his war or to surrender|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed reindeer building using sheep keys|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed important action wrong text when tribal gov have nomadic/herder land|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed feudalize/tribalize not removing permafrost modifier properly|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed bp1_yearly.7055 using artifact scope that were not defined|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Prevented bp1_yearly.7010 to select a target that we already have a loyalty hook on|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|You can now plan a funeral for your best friend|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed get_animal_hunt_location_effect when you skin your pet|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed vatapi_caves desc|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed a broken alternative_limit|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed a typo in the Kurultai tutorial|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed ep2_locale_events.4505 ("Weaponsmith: Famous Blade") not setting quality & wealth|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed Byzantine Military Boots & Byzantine Officer's Boots being identical|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed non-clickable special building icon|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Prevented an error in the logs for duplicate claim creation|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed the Stargazer modifier from the seasonal task not being the correct one|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed AI not imprisoning according to tribal authority|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed wrong path for 2 landless adventurer buildings|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+e1f39d3|ProZeratul|Fixed wrong scheme type in court.7700 ("Winging It" court event)|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/186|
+114d4b2|pharaox|Fixed "Employ Executioner" option of "Negotiate Release" interaction being shown for nomadic rulers even though they can't employ an executioner court position|8.0.32|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/182|
+323006b|ProZeratul|Reapplied "Rites of passage is now useable by nomadic gov"|8.0.32|Internal||
+75e1c77|ProZeratul|Allow building in holding that are not corridors in the sahara|8.0.32|Fix||
+cc076de|ProZeratul|Fixed the violence option being shown even when the violence outcome is not possible|8.0.32|Fix||
+10c6898|ProZeratul|Misc|8.0.32|Internal||
+2649b3b|ProZeratul|Misc fix for laamp_base_contract_schemes.2322 ("Render Unto" landless adventurer contract conclusion event) if you choose to resolve the contract by violence|8.0.32|Fix||
+fb73d0d|ProZeratul|Bumped version to 8.0.30|8.0.30|Internal||
+720c8b7|ProZeratul|Fixed event "Viper" (hereweard story) not returning home after his travel|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/176|
+720c8b7|ProZeratul|Fixed some nomadic feast script errors & scope issues|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/176|
+720c8b7|ProZeratul|Fixed ep3_story_cycle_harrying.3010 ring creation|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/176|
+720c8b7|ProZeratul|Fixed bp2_yearly_6000 trying to get some councillors that do not exists with nomadic courts|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/176|
+720c8b7|ProZeratul|Foxed errors in log due to tooltips in some events|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/176|
+720c8b7|ProZeratul|Fixed host_dinner_events.3080 triggering without any character being selected|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/176|
+720c8b7|ProZeratul|Fixed agent_events.3041 broken localization|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/176|
+720c8b7|ProZeratul|Fixed laamp_base_learning_contract_events.4025 duel effect|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/176|
+720c8b7|ProZeratul|Fixed Serbia & Bosnia not being added to the dejure kingdoms when uniting all slavs|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/176|
+720c8b7|ProZeratul|Fixed fp2_yearly.9005 option A adding the modifier "Priesthood Slaughtered" with no expiration|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/176|
+720c8b7|ProZeratul|Fixed missing holder re-scope inside steward_task.0001|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/176|
+720c8b7|ProZeratul|Fixed confederation culture checks|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/176|
+720c8b7|ProZeratul|Fixed the voting for confederation scoring when checking character prowess|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/176|
+720c8b7|ProZeratul|Fixed logic when mercenary company contract expires|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/176|
+720c8b7|ProZeratul|Reviewed mercenary company disband effect logic|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/176|
+720c8b7|ProZeratul|Fixed ep3_found_despotate_scheme invalid scope reference|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/176|
+13b5afa|pharaox|Adapted to CK3 1.16.2.3|8.0.30|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/177|
+23315ed|ProZeratul|Fixed "Summon Fair Courtiers" to summon 3 courtiers instead of 1|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/175|https://forum.paradoxplaza.com/forum/threads/summon-fair-courtiers-only-summon-1-even-though-the-tooltip-say-3.1760683/
+6d666ca|ProZeratul|Fixed copy/paste issue preventing Food Taster from using the task "Keep an Ear to the Ground" if you have no courtly vassal|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/174|https://forum.paradoxplaza.com/forum/threads/food-taster-task-incorrectly-unavailable-based-on-cupbearer-task-requirement.1761672/
+44a29df|ProZeratul|Fixed "Mess Tent" building missing as a potential upgrade after a "Camp Revelry"|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/173|https://forum.paradoxplaza.com/forum/threads/mess-tent-does-not-upgrade-as-a-result-of-camp-revelry.1761344/
+119cb78|ProZeratul|Fixed relation check in travel_danger_events.7000|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/167|
+119cb78|ProZeratul|Fixed undefined scope in return_hostage_interaction|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/167|
+119cb78|ProZeratul|Fixed bodyguard court position losing their custom name|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/167|
+119cb78|ProZeratul|Fixed wrong scope used in nomad_events.0100|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/167|
+119cb78|ProZeratul|Fixed temujin scope not being available in all cases in Temujin MPO flavor events|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/167|
+119cb78|ProZeratul|Fixed Waldrada soulmate relation being invalidated right away in certain cases|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/167|
+119cb78|ProZeratul|Fixed eagle personality trait being reset instead of increased/decreased|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/167|
+119cb78|ProZeratul|Fixed intrigue_scheming_special.1302 not excluding non-secret scheme as a potential valid scheme|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/167|
+119cb78|ProZeratul|Fixed ep3_landless_admin.1020 not checking the domicile construction properly|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/167|
+119cb78|ProZeratul|Fixed dominate_title_current_ally_strength always taking the current army and not tributary & ally|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/167|
+119cb78|ProZeratul|Prevented warning "You send X to you" in "Offer Courtier" and "Offer Concubine" interactions|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/167|
+eed8b9d|pharaox|Fixed legitimacy loss and gain from marriage for nomadic rulers: corrected marriage legitimacy effects applying to wrong character scope, ensured proper legitimacy calculations for nomadic marriages|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/171|
+052206e|pharaox|Prevented adultery.0001 event ("Someone Else" adultery suspicion event chain) from firing if the character is in an army so they don't confront their spouse with adultery suspicions while on campaign|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/172|
+fbe5eb3|ProZeratul|Fixed text of activity_system.0310.desc.intro (leaving an activity due to a war event)|8.0.30|Fix||
+098ed05|pharaox|Fixed mpo_hunt.0020 event ("A Mother's Love" nomadic hunt event): corrected multiple issues with event logic and character selection|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/163|
+cf01ae1|ProZeratul|Reverted "Rites of passage is now useable by nomadic gov"|8.0.30|Internal||
+ce5e3dd|ProZeratul|Made "Rites of Passage" decision useable by nomadic government using Stargazer as Court Chaplain equivalent|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/170
+0212296|ProZeratul|Updated unop_fixed_keys_l_english.yml - cleaned up now existing keys in game|8.0.30|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/169|
+b560ff3|ProZeratul|Fixed errors from the mod (mistakes were made)|8.0.30|Internal||
+af5be77|pharaox|Fixed Falconry animal type selection when there is a sighting: corrected missing else logic in hunt.0530 event so sighting animals are properly suggested instead of always selecting random game|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/165|
+eef8f7e|pharaox|Fixed has_winter_trigger: corrected location_has_winter_trigger scope issues by adding proper county existence checks and enclosing logic in AND statement to prevent error log flooding|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/166|
+f0e4a35|ProZeratul|Fixed Caravanserai, Watermills and Windmills building restrictions|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/125|
+f0e4a35|ProZeratul|Watermills will now show the requirements to be built|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/125|
+f0e4a35|ProZeratul|Fixed event ep3_contract_event.0100 ("Find Secrets" contract opening event) option A text|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/125|
+f0e4a35|ProZeratul|Fixed "Prison Break" contract scheme using useless agent type|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/125|
+f0e4a35|ProZeratul|Fixed cities founded by landless adventurers not having enough slots for all buildings|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/125|
+f0e4a35|ProZeratul|Reviewed Watermills & Windmills upgrade conditions|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/125|
+f0e4a35|ProZeratul|Fixed missing reason icons in "Protect Heritage" and "Prison Break" contract scheme events|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/125|
+f0e4a35|ProZeratul|Fixed agent join chance from "Skull Collection" not showing the value|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/125|
+f0e4a35|ProZeratul|Fixed localization for the agent join chance when they are a Stooge|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/125|
+f0e4a35|ProZeratul|Fixed Stooge modifier to agent join chance not being applied|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/125|
+f0e4a35|ProZeratul|Followers will now have a boost to their agent join chance if they are valid for the auto-invite|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/125|
+99b1135|ProZeratul|Fixed another case of players game being bricked by the "Collect Taxes" contract|8.0.30|Fix||
+fdb6b64|ProZeratul|Fixed "Request Incursion" interaction not listing nomadic rulers|8.0.30|Fix||
+c98e5cb|ProZeratul|Create 00_fp3_interactions.txt|8.0.30|Internal||
+71e3629|ProZeratul|Fixed missing scope errors when creating Book artifacts|8.0.30|Fix||
+e3c0d1d|pharaox|Fixed ck3-tiger errors in newly added files|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/161|
+8a3aba0|pharaox|Added notifications to "Offer Courtier" and "Demand Courtier" interactions|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/164|
+6535f5d|pharaox|Fixed "Unexpected Reunion" peasant affair event firing for imprisoned peasants|8.0.30|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/162|
+788daae|ProZeratul|Bumped version to 8.0.29|8.0.29|Internal||
+788daae|ProZeratul|Fixed court position aptitude checks being off by 1 in some interactions and events|8.0.29|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/160|
+788daae|ProZeratul|Fixed Iberian Struggle phase change decision always shown|8.0.29|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/160|
+732b652|ProZeratul|Bumped version to 8.0.28|8.0.28|Internal||
+363e4a6|ProZeratul|Prevented scope pollution from breaking the options of the event hold_court.8340 ("Looking for Work" hold court event)|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed ck3-tiger errors in newly added files|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed AI incentive to setup a Tour when having many vassals|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed a potential undefined scope in Tour invalidation|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed wrong building being added by "Summon Wealthy Visitors" decision|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed Caravanserai building not being enabled properly|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed house & dynasty banner artifacts potentially not receiving the proper bonus|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed weird Caravan Master aptitude check in some Pilgrimage events|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed child education response if a child ruler is also the one being educated|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed county & duchy "De Jure" casus belli cost|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed variable not set on correct scope in "Tourney Troubles" event|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed missing background_terrain_scope for override_background in some childhood events|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed the conditions for changing the succession laws when you have "The Table of Princes" innovation|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed the conditions for adopting the House Seniority law when you have "The Table of Princes" innovation|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed adventurer artifact creation when they are at sea resulting in a non usable artifact|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Reviewed the feudal elective voting modifiers|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed the chance for children to get the extra trait from Republican Education|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed a potential issue in education_complete_notification_effect|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed friendship.1006 ("Support" friendship event) option B giving less gold than option A|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed mpo_events_ariana.0040 ("A Feast to Remember" yearly event) performing a duplicate check|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed duplicate opinion loss when legitimizing a bastard (in legitimize_bastard_interaction_opinions_effect)|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed reversed option loss in childhood.2400 ("Age of Reason" childhood event)|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed dynasty prestige calculation in "Romance" scheme outcome events (in end_court_scheme_effect)|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed broken event chain after the "City of ... - Deforestation" landless adventurer decision event|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed buildings shown in tooltips for some landless adventurer decision events|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Prevented sending Holy Order members to the Varangian Guard|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Ensured only usable hooks can be used in the "Negotiate Alliance" interaction|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed a typo in "The Fearless" nickname description|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed ep2_wedding.1140 ("A Misstep" wedding event) using the wrong spouse scope|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|You now cannot have the same upgrade on the same artifact, and prevented Horseshoe artifact flood|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Prevented an error in tournament_events.1101 ("Passage of Arms" tournament event)|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|You can now choose where to build "Glass Monument" and "Hall of Heroes" via their decisions|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed false report by tiger|8.0.28|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed the Conciliation modifier (from struggle ending decisions) giving a malus instead of a bonus|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed the penalty to "Convert Faith" from development (convert_faith_development_penalty) using the same modifier twice|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed the Greenhouse special building that could never be built|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+363e4a6|ProZeratul|Fixed wrong buildings when destroying random buildings (in destroy_random_building_variable_effect)|8.0.28|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/159|
+6b4bd16|ProZeratul|Bumped version to 8.0.27|8.0.27|Internal||
+ea76e7b|pharaox|Added "Fix The Great Steppe" decision to fix issues with the Great Steppe situation until a fix is provided by Parasox|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/158|
+bd85562|pharaox|Fixed ck3-tiger errors in newly added files|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/157|
+f5d4999|ProZeratul|Added missing events to learn the commanders traits: open_terrain_expert, rough_terrain_expert, forest_fighter, cautious_leader, organizer|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/156|
+f5d4999|ProZeratul|Fixed the Yeke Jarquchi Improve Court task always showing +0 aptitude|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/156|
+f5d4999|ProZeratul|Fixed Bodyguard not getting the correct bonus from the Cherbi|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/156|
+f5d4999|ProZeratul|Added some animations to "On My Own" events if your teacher is in house arrest or in dungeon|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/156|
+f5d4999|ProZeratul|Taltosism followers will now keep the head of their executed prisoners|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/156|
+f5d4999|ProZeratul|Fixed some murder scheme event text when a creature was used to perform the murder|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/156|
+f5d4999|ProZeratul|Fixed an issue when a Kurultai member is performing the Domestic Affairs task|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/156|
+f5d4999|ProZeratul|Fixed Blood Brother icon in memories|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/156|
+f5d4999|ProZeratul|Re-added the divorce memory|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/156|
+f5d4999|ProZeratul|The free feast given by the event "A Delicious Distraction" (mpo_nerge.1060) is now really free|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/156|
+f5d4999|ProZeratul|Added the missing court_position_aptitude_boon_voyager_trait to the "Eparch" court position|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/156|
+f5d4999|ProZeratul|Added missing text in the seduce poem if the rational option was taken|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/156|
+f5d4999|ProZeratul|Fixed some aptitude bonus & malus not being shown for some camp officer positions|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/156|
+f5d4999|ProZeratul|Prevented mercenary company commanders from being available for court positions|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/156|
+f5d4999|ProZeratul|Fixed "Creative Freedom" (fund_inspiration.2080) portrait|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/156|
+f5d4999|ProZeratul|Fixed players not being able to choose options to cheat on their spouses in events|8.0.27|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/156|
+39bf276|ProZeratul|Bumped version to 8.0.26|8.0.26|Internal||
+60f03b8|ProZeratul|Fixed Siege Engineer aptitude tooltip showing a wrong value|8.0.26|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/154|
+60f03b8|ProZeratul|Fixed scope issues in "Ask for Paiza" interaction|8.0.26|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/154|
+60f03b8|ProZeratul|Fixed missing nomad legacy track when starting new legacies (in can_start_new_legacy_track_trigger)|8.0.26|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/154|
+60f03b8|ProZeratul|Fixed missing scope in hunt.4014 ("Troublesome Terrain" hunt event)|8.0.26|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/154|
+60f03b8|ProZeratul|Fixed the check if wolf, hyena, or lynx could be the selected animal (in hunt_activity_dangerous_game_effect)|8.0.26|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/154|
+9a503e1|ProZeratul|Fixed many issues and improved QoL in fp1_other_decision_events.txt|8.0.26|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/153|
+9a503e1|ProZeratul|Fixed needed scopes not being saved in the "Romance" scheme|8.0.26|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/153|
+af0930e|pharaox|Fixed "Demand Herd" and other MPO interactions to consume hooks properly|8.0.26|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/151|
+ac2cc9e|pharaox|Fixed "Request Court Position" and "Grant Court Position" interaction UI checking the player's aptitude for the position|8.0.26|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/150|
+772f7d9|ProZeratul|Fixed mpo_paiza_improve_maa_effect not properly upgrading buildings from level 2 to 3|8.0.26|Fix||
+1961ecc|ProZeratul|Fixed outdated comment for the localization fix on county_herder|8.0.26|Internal||
+a23aeae|ProZeratul|Fixed county_herder localization to use the barony one, properly this time|8.0.26|Fix||
+a50e7c8|ProZeratul|Bumped version to 8.0.25|8.0.25|Internal||
+a50e7c8|ProZeratul|Fixed ck3-tiger errors in newly added files|8.0.25|Fix||
+3cc3b3c|pharaox|Fixed pool characters incorrectly applying marriage malus for nomadic rulers by adding proper is_ruler check|8.0.25|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/149|
+9b3f80a|pharaox|Adapted to CK3 1.16.1|8.0.25|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/148|
+0206c96|ProZeratul|Fixed culture check for MENA royal courts|8.0.25|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/144|
+0206c96|ProZeratul|Added 2 missing Persian headsets|8.0.25|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/144|
+0206c96|ProZeratul|Fixed adoption effect that didn't filter content child nor the adoptee itself|8.0.25|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/144|
+0206c96|ProZeratul|Created custom trigger to check if a character can adopt|8.0.25|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/144|
+0206c96|ProZeratul|Updated hold_court.8100 option to adopt to use proper adoption effect|8.0.25|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/144|
+0206c96|ProZeratul|Fixed raid loot intent percentage text display|8.0.25|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/144|
+0206c96|ProZeratul|Fixed Yeke Jarquchi improving court task not improving aptitude|8.0.25|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/144|
+0206c96|ProZeratul|Fixed court_position_aptitude_boon_voyager_trait missing for Stargazer court position|8.0.25|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/144|
+0206c96|ProZeratul|Fixed migration_title_and_vassal_change_effect scope|8.0.25|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/144|
+0206c96|ProZeratul|Fixed county_herder localization to use the barony one|8.0.25|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/144|
+0206c96|ProZeratul|Fixed nomad court position improvement with Yeke Jarquchi improve court position task|8.0.25|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/144|
+f0b2305|pharaox|Fixed opinions when offering or demanding courtiers or concubines|8.0.25|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/146|
+75cae88|pharaox|Fixed recruit court position decision not checking can_employ_court_position_type|8.0.25|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/145|
+b24d9f3|pharaox|Fixed ck3-tiger errors in newly added files|8.0.25|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/143|
+b24d9f3|pharaox|Updated Nomad Yurt parameter names and values|8.0.25|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/143|
+b24d9f3|pharaox|Fixed marriage_ai_accept_modifier|8.0.25|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/143|
+bb0180e|ProZeratul|Bumped version to 8.0.24|8.0.24|Internal||
+bb0180e|ProZeratul|Adapted to CK3 1.16 and removed no longer needed files|8.0.24|Internal||
+7f8fa07|ProZeratul|Added internal comment for future development|8.0.24|Internal||
+12babdb|ProZeratul|Fixed Iberian Struggle Status Quo ending computation|8.0.24|Fix||https://forum.paradoxplaza.com/forum/threads/unable-to-end-iberian-struggle-through-status-quo.1736461/
+623b2b0|ProZeratul|Bumped version to 8.0.23|8.0.23|Internal||
+d53dd5d|ProZeratul|Fixed Collect Taxes not resuming travel for adventurers|8.0.23|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/140|https://forum.paradoxplaza.com/forum/threads/entire-adventurer-camp-is-stuck-traveling-after-completing-a-collect-taxes-contract.1732075/, https://forum.paradoxplaza.com/forum/threads/my-adventurer-character-is-stuck-in-the-travel-screen-and-cant-get-out-of-it.1731615/
+35ff51f|ProZeratul|Bumped version to 8.0.22|8.0.22|Internal||
+29515b1|ProZeratul|Fixed joust end event that was killing too many characters|8.0.22|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/139|
+8063e72|ProZeratul|Fixed court brewmaster validity trigger for full time job|8.0.22|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/138|
+8063e72|ProZeratul|Fixed court_position_grant_effect from leftover tests|8.0.22|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/138|
+8063e72|ProZeratul|Fixed hold_court.8100 description to add proper rank reference|8.0.22|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/138|
+8063e72|ProZeratul|Fixed hold_court.8110 option to recruit jester to use proper effect|8.0.22|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/138|
+8063e72|ProZeratul|Fixed court.8160 where characters were not receiving aptitude boost|8.0.22|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/138|
+8063e72|ProZeratul|Fixed bodyguard replacement in travel_events_bp3.30|8.0.22|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/138|
+8063e72|ProZeratul|Fixed travel_events_bp3.30 to add to entourage at proper timing|8.0.22|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/138|
+645c243|ProZeratul|Updated ck3-tiger configuration to ignore yearly_on_actions.txt|8.0.22|Internal||
+c859c82|ProZeratul|Fixed spouse.2014 expecting a scope that does not exist|8.0.22|Fix||
+054d8a2|ProZeratul|Added spouse events localization file|8.0.22|Internal||
+f3b675d|ProZeratul|Fixed missing limit in internal trigger|8.0.22|Internal||
+3f406e4|ProZeratul|Fixed wet nurse promote competition child rivalry|8.0.22|Fix||
+2da15fb|ProZeratul|Added wet nurse tasks localization file|8.0.22|Internal||
+e6c9929|ProZeratul|Added executioner reason to Hold Court events|8.0.22|Fix||
+c053f83|ProZeratul|Fixed court_position_grant_effect not replacing character properly|8.0.22|Fix||
+1c3bb65|ProZeratul|Cleaned up internal trigger/effects no longer needed|8.0.22|Internal||
+247e66a|ProZeratul|Fixed court_yearly.5020 delta between trigger and immediate on courtier selection|8.0.22|Fix||https://forum.paradoxplaza.com/forum/threads/far-too-young-child-complains-about-cat-sleeping-on-their-pillow-in-eloquent-speech.1731550/
+e37f90e|ProZeratul|Fixed missing rain visual effects in pilgrimage.3001|8.0.22|Fix||
+575d600|ProZeratul|Fixed inspiration toast displaying DESCRIPTION instead of proper text|8.0.22|Fix||
+d776e82|ProZeratul|Fixed court scholar innovation research events missing OR statement|8.0.22|Fix||https://discord.com/channels/616881873506795550/1353025153809911879/1353025153809911879
+6e8ace3|ProZeratul|Added yearly on-actions file|8.0.22|Internal||
+8238fd0|ProZeratul|Added scholarship events file|8.0.22|Internal||
+d8d250c|ProZeratul|Fixed knight bodyguard selection to ensure the selected knight can be a bodyguard and fixed position not showing in tooltip in Hold Court events|8.0.22|Fix||
+d177854|ProZeratul|Changed culture_tradition_events.0100 to align with rite-tenet restrictions|8.0.22|Fix||
+160332c|ProZeratul|Added culture tradition events file|8.0.22|Internal||
+4d48ca9|ProZeratul|Re-added the Great Work emergency debug decision|8.0.22|Internal||
+5da03d0|ProZeratul|Fixed court tutor task effects not being shown to the player|8.0.22|Fix||
+67e4ce8|ProZeratul|Fixed missing sar_i_sang_mines_01 in 2 triggers|8.0.22|Fix||
+ba78524|ProZeratul|Added economic triggers file|8.0.22|Internal||
+cfbcf6a|ProZeratul|Updated descriptor.mod|8.0.22|Internal||
+f6efd08|ProZeratul|Updated README.md|8.0.22|Internal||
+dc6a44b|ProZeratul|Updated README.md|8.0.22|Internal||
+81d3b79|ProZeratul|Updated README.md|8.0.22|Internal||
+513dfdf|ProZeratul|Updated README.md|8.0.22|Internal||
+e1a0aa5|ProZeratul|Updated README.md|8.0.22|Internal||
+f3a5c21|ProZeratul|Added Makefile for manual mod installation|8.0.22|Internal||
+328c301|ProZeratul|Fixed Burma being checked instead of Tibet in Inspiration events|8.0.22|Fix||
+5eaa60e|ProZeratul|Adapted to CK3 1.15.0|8.0.21|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/133|
+5eaa60e|ProZeratul|Fixed 1031_been_to_effect that was still needed after 1.15.0 update|8.0.21|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/133|
+5eaa60e|ProZeratul|Fixed odds_dispute_border_scheme_misc_value|8.0.21|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/133|
+5eaa60e|ProZeratul|Fixed scope in reduce_partition_succession_law_effect|8.0.21|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/133|
+5eaa60e|ProZeratul|Fixed localization references for camp_party|8.0.21|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/133|
+5eaa60e|ProZeratul|Fixed secret_murder_attempt on_expose not registering owner scope|8.0.21|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/133|
+5eaa60e|ProZeratul|Fixed bp2_yearly.7012 that could fire for yourself|8.0.21|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/133|https://www.reddit.com/r/crusaderkings3/comments/1jhrusf/i_do_not_have_split_personality_disorder_gangy/
+5eaa60e|ProZeratul|Fixed ck3-tiger errors in newly added files|8.0.21|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/133|
+e496dc7|ProZeratul|Fixed travel_danger_events.6040 firing treatment event despite being intended for event option B|8.0.21|Fix||
+1f1bd35|ProZeratul|Fixed Armagnac being in Barcelona instead of Vasconia|8.0.21|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/129|
+1f1bd35|ProZeratul|Fixed Fezensac house being split between house and dynasty by harmonizing to house|8.0.21|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/129|
+5b397a8|ProZeratul|Fixed various localization issues|8.0.21|Fix||
+14ee1b4|ProZeratul|Adapted to CK3 1.14.3|8.0.19|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/130|
+631400b|ProZeratul|Bumped version to 8.0.18|8.0.18|Internal||
+6c673a4|ProZeratul|Fixed wrong character scope being saved|8.0.18|Fix||
+0c671c7|ProZeratul|Fixed feast request interaction cooldown not being shown|8.0.18|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/128|
+0c671c7|ProZeratul|Fixed Wallada heir event flooding logs and not setting designated heir|8.0.18|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/128|
+0c671c7|ProZeratul|Fixed adventurer marrying same-sex characters when they shouldn't|8.0.18|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/128|
+0c671c7|ProZeratul|Fixed adventurer siege_replenish and siege_provisions not working|8.0.18|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/128|
+badd001|ProZeratul|Fixed bishop.1001 spouse checking itself|8.0.18|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/126|
+badd001|ProZeratul|Fixed tournament owner scope creation and prize quality/wealth computation|8.0.18|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/126|
+badd001|ProZeratul|Fixed tournament_events.6900 faith selection|8.0.18|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/126|
+badd001|ProZeratul|Fixed tournament_events.6511/6512/6513/6514 potentially triggering after activity finished|8.0.18|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/126|
+badd001|ProZeratul|Fixed intrigue_temptation.3011 missing cheating check|8.0.18|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/126|
+badd001|ProZeratul|Fixed wrong toast title in hunt_physician_treatment_effect|8.0.18|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/126|
+badd001|ProZeratul|Fixed hunt.7100 not having intro in some cases and hunt.9002 scope saving|8.0.18|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/126|
+0a429f2|ProZeratul|Fixed feast_main_live_fowl.1001 not firing because activity was potentially over|8.0.18|Fix||
+f985902|ProZeratul|Added feast main live fowl events file|8.0.18|Internal||
+a384851|ProZeratul|Cleaned up activity_pulse_actions extra icons using path_overrides|8.0.18|Internal||
+302648e|ProZeratul|Added path overrides file|8.0.18|Internal||
+da78173|ProZeratul|Fixed guest_impressed_by_court_artifact showing host instead of artifact|8.0.18|Fix||
+da78173|ProZeratul|Fixed missing diplomacy icon in host_gains_diplo_xp|8.0.18|Fix||
+04feb3e|ProZeratul|Added feast pulse actions oltner file|8.0.18|Internal||
+369b340|ProZeratul|Fixed tournament_versus_dead_qualifier_effect not assigning character to correct phase|8.0.18|Fix||
+aeee75b|ProZeratul|Added missing HAS_CALLOUS_TRAIT localization|8.0.18|Fix||
+5273193|ProZeratul|Added missing SCHEME_TRAIT_BRAVE localization|8.0.18|Fix||
+fa90754|ProZeratul|Fixed mercenary strength not being properly computed|8.0.18|Fix||
+d92791c|ProZeratul|Reduced log flooding through various optimizations|8.0.18|Fix||
+bb9ab20|ProZeratul|Added story cycle peasant affair file|8.0.18|Internal||
+878166e|ProZeratul|Fixed barber tent not being checked properly for infection protection|8.0.18|Fix||
+db86b39|ProZeratul|Added epidemics values file|8.0.18|Internal||
+c7893ca|ProZeratul|Fixed contest disqualification flag not being set correctly when disqualified due to sabotage|8.0.18|Fix||
+d7d65f4|ProZeratul|Fixed archery event outcome when player actually resigns from the contest|8.0.18|Fix||
+dbb50cb|ProZeratul|Fixed some activity events firing for non-competing characters|8.0.18|Fix||
+3f317ff|ProZeratul|Fixed resigning from archery but still receiving events from it|8.0.18|Fix||
+3bf7ee1|ProZeratul|Added additional comments to code|8.0.18|Internal||
+1021746|ProZeratul|Added comments to all fixes|8.0.18|Internal||
+8f352ce|ProZeratul|Fixed missing implementation in previous fix|8.0.18|Internal||
+16d8934|ProZeratul|Fixed hold_court.8260.desc.intro localization missing space|8.0.18|Fix||
+dc97168|ProZeratul|Fixed ep2_tournament_events.0020 incorrect way of checking if scope exists|8.0.18|Fix||
+303c54f|ProZeratul|Fixed tournament_events.8000 outputting log error|8.0.18|Fix||
+2c75a08|ProZeratul|Added james tournament events file|8.0.18|Internal||
+781e4c7|ProZeratul|Fixed versus_contest_resignation_tooltip_effect using wrong modifier set|8.0.18|Fix||
+d37dcb5|ProZeratul|Fixed split gold with liege logic and if/else if logic for knight sharing gold with liege|8.0.18|Fix||
+e72c788|ProZeratul|Fixed many scope issues and missing logic|8.0.18|Fix||
+26108ed|ProZeratul|Fixed tournament_events.1407 error in log when trying to add temporary target with same name as permanent target|8.0.18|Fix||
+ec67549|ProZeratul|Reverted tournament_events.1407 fix due to issues|8.0.18|Internal||
+7fc483e|ProZeratul|Fixed tournament_events.1407 error in log when trying to add temporary target with same name as permanent target|8.0.18|Internal||
+0798ebb|ProZeratul|Removed old fix that was no longer needed|8.0.18|Internal||
+23451ca|ProZeratul|Added miscellaneous comment|8.0.18|Internal||
+a78a762|ProZeratul|Fixed miscellaneous issues in hold_court.5010 and hold_court.5030|8.0.18|Fix||
+7c71749|ProZeratul|Fixed tournament_events.0161 localization issues and added fallback option when no other is available|8.0.18|Fix||
+221c5f4|ProZeratul|Fixed contest_events.5010 inverted scopes on who progresses towards rivalry|8.0.18|Fix||
+5f721a9|ProZeratul|Added triggers to handle disqualification and resigning during a Grand Tournament|8.0.18|Internal||
+473c148|ProZeratul|Removed hidden effect on opinion gain when progressing towards friends|8.0.18|Fix||
+2752d03|ProZeratul|Fixed ep2_tournament_events.5505 reverse scope on who gains/loses opinion|8.0.18|Fix||
+45fd667|ProZeratul|Added activity localization file|8.0.18|Internal||
+9876e33|ProZeratul|Fixed scope to use current_character instead of root|8.0.18|Fix||
+f9a76e6|ProZeratul|Fixed some checks only checking the depressed_1 trait instead of all depression levels|8.0.18|Fix||
+e88ce01|ProZeratul|Fixed false_conversion.0030 scope issue and false_conversion.2000 memories check|8.0.18|Fix||
+0a62be6|ProZeratul|Added false conversion events file|8.0.18|Internal||
+3a48957|ProZeratul|Fixed progress friend and rival when inside an activity|8.0.18|Fix||
+46fb5d5|ProZeratul|Harmonized how progress_towards_friend_effect works based on rival effect|8.0.18|Fix||
+d492079|ProZeratul|Added relation effects file|8.0.18|Internal||
+179f2db|ProZeratul|Fixed and tweaked various localization issues|8.0.18|Fix||
+8a0a23b|ProZeratul|Fixed ep2_tournament_events.5502 wrong tag, wrong target, and wrong opinion|8.0.18|Fix||
+574c415|ProZeratul|Fixed background display for wilderness activity when seducing during a hunt to show castle|8.0.18|Fix||
+3fa3cbd|ProZeratul|Fixed error where actor must be the same as the current player|8.0.18|Fix||
+fbcbea6|ProZeratul|Fixed hunt.2001 returning a character to a court they were never in|8.0.18|Fix||
+3f49c8b|ProZeratul|Fixed miscellaneous character template generation scope|8.0.18|Fix||
+230b1b1|ProZeratul|Added tournament effects file|8.0.18|Internal||
+8fb189b|ProZeratul|Fixed false warning in ck3-tiger|8.0.18|Internal||
+275ca5d|ProZeratul|Added character templates file|8.0.18|Internal||
+3afb988|ProZeratul|Fixed contest_events.3020 option C spouse cheating event|8.0.18|Fix||
+19302bd|ProZeratul|Fixed errors flooding logs in prison effects|8.0.18|Fix||
+2bc6982|ProZeratul|Fixed missing re-scope to activity before calling contest_winner_dedicate_victory_effect|8.0.18|Fix||
+a00955d|ProZeratul|Fixed 3030_would_streak_trigger to ensure adult and AI character|8.0.18|Fix||
+c7b6d8d|ProZeratul|Fixed stress when shy character dedicates victory|8.0.18|Fix||
+7943bdf|ProZeratul|Added contest events file|8.0.18|Internal||
+ceb91a2|ProZeratul|Fixed yearly.9120 to ensure valid holding in valid county exists|8.0.18|Fix||
+a2f4648|ProZeratul|Added yearly events 6 file|8.0.18|Internal||
+29b4795|ProZeratul|Fixed child_personality.7031 to ensure not using scope:cook when undefined|8.0.18|Fix||
+183a28c|ProZeratul|Fixed artifact durability check using fixed value instead of percentage of durability left|8.0.18|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/110|
+183a28c|ProZeratul|Fixed fund_inspiration.6300 by using proper trigger for cheating on spouse|8.0.18|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/110|
+183a28c|ProZeratul|Fixed fund_inspiration.2100 where second multiplier of duel was not reversed|8.0.18|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/110|
+183a28c|ProZeratul|Added fallback in fund_inspiration.1071 as safety measure|8.0.18|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/110|
+2ca2676|pharaox|Fixed ck3-tiger errors in newly added files|8.0.18|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/120|
+e944932|ProZeratul|Added funding localization file|8.0.18|Internal||
+2080454|ProZeratul|Bumped version to 8.0.17|8.0.17|Internal||
+9ace3c2|ProZeratul|Fixed sex_memory_modifier being invisible in scheme UI|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/124|
+9ace3c2|ProZeratul|Fixed murder_memory_modifier being invisible in scheme UI|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/124|
+fa06494|ProZeratul|Fixed miscellaneous localization issues|8.0.17|Fix||
+cb7d414|ProZeratul|Fixed a mistake in tournament_events.7000.t|8.0.17|Fix||
+20ee15a|ProZeratul|Fixed hold_court.8290.desc using wrong scope|8.0.17|Fix||
+a379414|ProZeratul|Fixed intrigue_dread.2101.desc.intro localization|8.0.17|Fix||
+4ac141c|ProZeratul|Reverted obsolete fixes no longer needed|8.0.17|Internal||
+9779709|ProZeratul|Updated fixed localization keys file|8.0.17|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/123|
+35de573|ProZeratul|Fixed court.9000 "A Knight's Declaration" option B where spouse launched scheme against itself|8.0.17|Fix||
+6b3941d|ProZeratul|Applied small fix and tweaks for localization|8.0.17|Fix||
+0143294|ProZeratul|Added file for Quality of Life changes|8.0.17|Internal||
+184b4bc|ProZeratul|Fixed another mistake in previous commit|8.0.17|Internal||
+f87ca53|ProZeratul|Fixed uncorrected slip in previous changes|8.0.17|Internal||
+64ce849|ProZeratul|Fixed wet_nurse_title_revoked_effect to prevent bp2_yearly.7012 from firing if fired wet nurse is mother of child|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/114|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/111, https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/96, https://www.reddit.com/r/CrusaderKings/comments/1hvqtjh/sweethart_i_dont_know_how_to_tell_you_this/
+64ce849|ProZeratul|Fixed wrong scope used in court position effects|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/114|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/111, https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/96, https://www.reddit.com/r/CrusaderKings/comments/1hvqtjh/sweethart_i_dont_know_how_to_tell_you_this/
+2297132|ProZeratul|Fixed bp1_yearly.5727 (Khutulun Great Work marriage) not being matrilineal when player is a woman|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/115|
+2297132|ProZeratul|Fixed bp1_yearly.5306 to avoid unnecessary log trace|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/115|
+2297132|ProZeratul|Fixed bp1_yearly.8130, 8131, 8132 sycophant story events|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/115|
+2297132|ProZeratul|Matched bp1_yearly.5706 immediate and trigger conditions|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/115|
+2297132|ProZeratul|Added greedy stress gain in bp1_yearly.5804 options B and C|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/115|
+2297132|ProZeratul|Added could_marry_character_trigger to bp1_yearly.5727 options B and C|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/115|
+86ee1fc|ProZeratul|Fixed various localization issues in batch 1|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/118|
+97176f7|ProZeratul|Fixed duplicate entry for hold_court.3080|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/116|
+ef760d2|ProZeratul|Fixed undefined scope used inside send_interface_message in diarchy events|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/117|
+5296c93|ProZeratul|Fixed accolade including hunt danger values|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/113|https://forum.paradoxplaza.com/forum/threads/accolades-knight-huntsmaster-not-reduced-chance-for-negative-hunt-events.1725993/
+8f49cfc|ProZeratul|Fixed court.4750 to not show random character getting preset trait|8.0.17|Fix||
+66f978b|ProZeratul|Fixed log flooding due to dead scope in chariot race events|8.0.17|Fix||
+138e6fd|ProZeratul|Ported modifications from PR #103|8.0.17|Internal||
+7bf84e4|ProZeratul|Fixed gold destroy artifact effect where round parameter made gold gain multiplied by 0|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/108|https://forum.paradoxplaza.com/forum/threads/destroying-artifacts-as-a-landless-adventurer-gives-only-1-gold-no-matter-what.1725726/
+2511319|ProZeratul|Fixed language_soft_cap from learning not being rounded down|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/109|
+2e74a06|ProZeratul|Fixed tournament_events.1230 duplicate weight_multiplier|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/100|
+2e74a06|ProZeratul|Fixed tournament_events.1251 option A not boosting the scheme|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/100|
+2e74a06|ProZeratul|Fixed missing re-scope in tournament_1270_versus_effect|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/100|
+2e74a06|ProZeratul|Fixed tournament_events.6014 murderer opinion and event text|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/100|
+2e74a06|ProZeratul|Fixed tournament_1240_prize_child_effect mother/father existence and opinion loss|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/100|
+2e74a06|ProZeratul|Fixed tournament_events.6500 to not trigger during melee and not flag characters for resign if they denied request|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/100|
+2e74a06|ProZeratul|Fixed tournament_events.6010 not setting the killer properly|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/100|
+ca82762|ProZeratul|Fixed bp2_yearly.7001 to prevent triggering if spouse is the wet nurse|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/107|https://www.reddit.com/r/CrusaderKings/comments/1glsal0/my_wife_is_suspicious_of_my_wetnurse_who_is_my/
+5097c5d|ProZeratul|Fixed various extra ')' characters causing log errors|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/105|
+345f19a|ProZeratul|Updated new localization keys file|8.0.17|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/104|
+7ea72b2|pharaox|Fixed "Fabricate Hook" agent join chance incorrectly checking Adultery|8.0.17|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/102|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/101, https://forum.paradoxplaza.com/forum/threads/fabricate-hook-agent-acceptance-affected-by-their-faith-adultery-doctrines-which-makes-no-sense.1725589/
+cf037ca|ProZeratul|Fixed legend_events.0001.desc.mid.ancestral_saint localization not being saved|8.0.17|Fix||
+168545f|ProZeratul|Bumped version to 8.0.16|8.0.16|Internal||
+c528236|ProZeratul|Fixed legend_events.0001 localization when you have a saint ancestor|8.0.16|Fix||
+73f67b2|pharaox|Fixed "Find Secrets" issue for crypto-religionist secret|8.0.16|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/99|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/97, https://forum.paradoxplaza.com/forum/threads/find-secrets-spymaster-task-sometimes-shows-a-failure-message-but-actually-succeeds.1725502/
+f9997d5|ProZeratul|Fixed missing alchemy entry in get_artifact_quality_effect|8.0.16|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/94|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/93
+d062095|ProZeratul|Fixed martial_chivalry_special.1202 missing camera property|8.0.16|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/95|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/88
+23741ec|ProZeratul|Added county count display for favour_the_countryside_basques_decision|8.0.16|Fix||
+2d62df7|ProZeratul|Fixed all phases being cleared instead of just the current one|8.0.16|Internal||
+885b6a0|pharaox|Fixed "Request Raid Remit" paying double gold|8.0.16|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/91|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/89, https://forum.paradoxplaza.com/forum/threads/request-raid-remit-use-gold-pays-double-the-gold-amount.1725212/
+b5af1b5|pharaox|Fixed "Raid Estate" scheme discovery chance using secrecy instead of 100 minus secrecy|8.0.16|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/92|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/90, https://forum.paradoxplaza.com/forum/threads/raid-estate-scheme-is-discovery-chance-is-its-secrecy-instead-of-100-secrecy.1725220/
+719dbcc|ProZeratul|Fixed localization using wrong scope to display tournament request cooldown date|8.0.16|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/87|
+8a6cec6|ProZeratul|Fixed mass eviction effect tooltip showing "leave's" instead of proper text|8.0.16|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/83|
+d100838|ProZeratul|Fixed embrace Hebrew language decision requirements|8.0.16|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/82|https://forum.paradoxplaza.com/forum/threads/the-embrace-the-hebrew-language-decision-does-not-work.1723457/
+b58b62a|ProZeratul|Fixed suggestion declare war functionality|8.0.16|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/81|
+38e714f|ProZeratul|Fixed travel_events_bp3.105 not using same conditions to trigger as when it fires|8.0.16|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/80|
+38e714f|ProZeratul|Fixed travel_events_bp3.70 wrongly saving a scope|8.0.16|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/80|
+454a2b9|ProZeratul|Bumped version to 8.0.15|8.0.15|Internal||
+7c8db74|ProZeratul|Fixed invite to court interaction to prevent holy order members invitation and characters at sea|8.0.15|Fix||
+f56b564|pharaox|Fixed runtime errors from non-existing scopes|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/77|
+833610e|pharaox|Fixed travel danger events to ensure traveling and available character checks|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/78|
+2be7fa4|pharaox|Fixed ck3-tiger errors in newly added files|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/79|
+fd6d868|pharaox|Fixed ck3-tiger errors in newly added files|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/71|
+4857f60|pharaox|Fixed incorrect tooltip in contract success events|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/70|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/58, https://forum.paradoxplaza.com/forum/threads/some-contract-success-events-randomly-show-a-tooltip-for-the-wrong-success-type.1722125/
+ff67504|pharaox|Fixed Fight Corruption starting travel to the wrong county|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/74|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/73, https://forum.paradoxplaza.com/forum/threads/fight-corruption-contract-removes-adventurer-player-from-the-map.1720806/
+7045ddd|ProZeratul|Added giant, vengeful, journaller, and profligate trait scheme agent aptitude localizations|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/76|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/60
+0be5f0d|pharaox|Fixed "Aches and Pains" not upgrading the Pavilion if there is ongoing construction|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/69|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/63, https://forum.paradoxplaza.com/forum/threads/aches-and-pains-doesnt-upgrade-the-pavilion-if-there-is-an-ongoing-domicile-construction.1722174/
+da28da4|pharaox|Enabled landless adventurers to pilgrimage to their camp location|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/67|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/64, https://forum.paradoxplaza.com/forum/threads/landless-adventurers-cant-start-a-pilgrimage-to-their-camp-location.1722176/
+28ae71e|ProZeratul|Fixed missing scope registration in contest_events.5030|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/56|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/38
+6bfd377|pharaox|Fixed "Fire & Friends" and "Treasure Map" reversed opinions|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/72|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/57, https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/59
+28ce04e|pharaox|Fixed "Bound Together" firing for a follower who can't marry|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/68|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/61, https://forum.paradoxplaza.com/forum/threads/bound-together-may-fire-for-a-follower-who-cant-marry-and-the-marriage-fails.1722131/
+90f5c9b|pharaox|Fixed "Nary a Drop" firing for an adventurer located at sea|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/66|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/62, https://forum.paradoxplaza.com/forum/threads/nary-a-drop-may-fire-for-an-adventurer-located-at-sea-instead-of-a-desert-with-a-partially-empty-tooltip.1722137/
+762d67e|ProZeratul|Fixed missing trained knight removal when traveling|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/55|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/15
+f910980|ProZeratul|Fixed zealous_missionary_start_decision in multiplayer by adding missing root re-scope|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/54|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/26, https://forum.paradoxplaza.com/forum/threads/the-religion-path-prelude-decision-disappears-in-multiplayer-game.1719686/
+dab721d|ProZeratul|Fixed Kerala buff checking wrong barony (b_honnore instead of b_mahoyadapuram)|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/53|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/52, https://forum.paradoxplaza.com/forum/threads/kerala-holy-site-doesnt-have-any-effect.1721463/
+190ede6|pharaox|Fixed treasure map contract events for artifact decayed and employer dead|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/51|https://forum.paradoxplaza.com/forum/threads/a-treasure-map-breaking-also-breaks-certain-travels.1706415/
+d67aaeb|pharaox|Fixed legend_chronicle_great_deed_region|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/50|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/33, https://forum.paradoxplaza.com/forum/threads/tooltip-for-true-hero-legend-missing-error.1719971/
+3307156|pharaox|Fixed adding local_arbitration_perk boon modifier|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/49|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/18, https://forum.paradoxplaza.com/forum/threads/adventurers-always-benefit-from-the-right-hand-man-perk-regardless-of-whether-the-perk-is-activated-or-not.1716386/
+b5d341f|pharaox|Fixed destination_events.10 appointing wanderer|8.0.15|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/48|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/39, https://forum.paradoxplaza.com/forum/threads/experienced-wanderer-wont-hire-the-wanderer-as-caravan-master-if-you-already-have-one.1721144/
+f0d2084|ProZeratul|Fixed court position revoke cost and bumped version to 8.0.14|8.0.14|Internal||
+ff68653|pharaox|Fixed "Fireside Chat" event for recruiting locals localization|8.0.14|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/44|https://forum.paradoxplaza.com/forum/threads/fireside-chat-event-for-recruiting-local-characters-is-missing-some-text.1720944/
+4ee8747|ProZeratul|Fixed revoke cost not being set to 0 even with inner circle for court positions|8.0.14|Fix||
+c8aef33|pharaox|Removed trigger from faith_creation.0003 to enable AI usage|8.0.14|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/45|https://steamcommunity.com/workshop/filedetails/discussion/2871648329/4697908845434539387/
+6ac588a|pharaox|Fixed pilgrimage.6750 description|8.0.14|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/47|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/40, https://forum.paradoxplaza.com/forum/threads/lost-witch-trait-instead-of-flagellant-the-notification-was-about.1720286/
+3f2777b|pharaox|Fixed ck3-tiger errors in recently added vanilla code|8.0.14|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/46|
+640b7f2|pharaox|Fixed rescinding obligations on patron's death not removing from wars|8.0.14|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/42|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/29, https://forum.paradoxplaza.com/forum/threads/landless-characters-rescinding-obligation-from-stand-with-us-contract-upon-patron-death-doesnt-rescind-the-obligation.1718708/
+90ccaa8|pharaox|Fixed "Settle Boundary Dispute" contract event tooltips|8.0.14|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/43|https://forum.paradoxplaza.com/forum/threads/wrong-tooltip-for-camp-purpose-options-in-settle-boundary-dispute-contract-scheme-events.1720922/
+b740c69|pharaox|Fixed charioteer training task|8.0.14|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/41|
+a606223|ProZeratul|Bumped version to 8.0.13|8.0.13|Internal||
+4f72522|ProZeratul|Fixed tournament contestant not being re-evaluated when phase does not require martial gender|8.0.13|Fix||
+600c440|pharaox|Fixed more issues reported by ck3-tiger|8.0.13|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/35|
+7dad7b4|pharaox|Reverted balance change in "Steal Artifact" interaction|8.0.13|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/36|
+00bcad0|ProZeratul|Fixed county_chastised_beloved_adventurer_modifier missing localization|8.0.13|Fix||
+b67d4d4|ProZeratul|Fixed clear_ground_legendary_hunting_lodge_tt displaying wrong value and missing falconer mention|8.0.13|Fix||
+148d13c|ProZeratul|Fixed duplicate code on court jester discount and missing format for decimal|8.0.13|Fix||
+6724351|ProZeratul|Fixed royal architect trainee discount not showing properly|8.0.13|Fix||
+b7b74db|ProZeratul|Fixed activity_camp_party food option not checking camp_unlocks_camp_party_food_option parameter|8.0.13|Fix||
+cf40b37|ProZeratul|Fixed child_personality.7001/7030/7031 not clearing peasant_outfit flag|8.0.13|Fix||
+a154868|ProZeratul|Fixed multiple save_scope_as inside create_artifact block|8.0.13|Fix||
+1aa24d2|pharaox|Fixed more issues reported by ck3-tiger|8.0.13|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/31|
+6be286f|pharaox|Fixed issues reported by ck3-tiger|8.0.13|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/25|
+784ab42|pharaox|Added availability checks to laamp events that don't have it|8.0.13|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/32|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/30, https://forum.paradoxplaza.com/forum/threads/corridors-of-power-event-fires-when-sieging-a-holding.1718718/
+595fb3d|ProZeratul|Fixed hold triumph memory localization keys|8.0.13|Fix||
+d64dde5|pharaox|Fixed marriage interaction issues|8.0.13|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/20|https://forum.paradoxplaza.com/forum/threads/marrying-off-unrelated-characters-costs-prestige-if-you-have-granted-marriage-favor-to-a-vassal.1718960/, https://forum.paradoxplaza.com/forum/threads/as-a-landless-adventurer-you-can-elope-with-anyone-in-diplo-range.1718968/
+0520131|pharaox|Fixed university education result effects|8.0.13|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/24|https://forum.paradoxplaza.com/forum/threads/university-education-has-no-effect-on-educations-other-than-diplomacy-based-on-code.1717325/
+18de9ef|pharaox|Fixed contracts populated for wrong area after sea travel|8.0.13|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/23|https://forum.paradoxplaza.com/forum/threads/moving-your-your-camp-by-sea-generates-contracts-near-your-origin-location-not-your-destination.1719475/
+5a6c0eb|pharaox|Fixed roll of patrons visibility|8.0.13|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/22|https://forum.paradoxplaza.com/forum/threads/cant-see-roll-of-patrons-of-ai-adventurers.1706338/
+61a27e8|pharaox|Fixed issue allowing imprisonment of foreign court guests|8.0.13|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/21|https://forum.paradoxplaza.com/forum/threads/you-can-imprison-courtiers-that-are-visiting-foreign-courts-in-various-events.1718976/
+0741c6e|ProZeratul|Bumped version to 8.0.12 and fixed ep3_interactions_events.0121 being flagged as orphan|8.0.12|Internal||
+c43ee9c|ProZeratul|Merged updates from Slavic DLC|8.0.12|Internal||
+cc2d94b|ProZeratul|Merged updates from Slavic DLC|8.0.12|Internal||
+7a51e3e|ProZeratul|Removed duplicated newsletter_crown entry|8.0.12|Fix||
+ff86909|ProZeratul|Merged updates from Slavic DLC|8.0.12|Internal||
+3ff319a|ProZeratul|Updated for Slavic DLC|8.0.12|Internal||
+6e3bff8|ProZeratul|Fixed color_yellow localization for ep3_laamps.8111.desc|8.0.12|Fix||
+3a444a8|ProZeratul|Updated CHANGES.txt|8.0.12|Internal||
+c4d14fc|ProZeratul|First merge for patch 1.14.1|8.0.12|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/17|
+3bf3152|ProZeratul|Fixed ep3_contract_event.0591 travel destination not using proper scope|8.0.12|Fix||
+b7bae76|ProZeratul|Fixed ep3_story_cycle_admin_eunuch_downgrade_modifier_effect not using scope before sending top_liege|8.0.12|Fix||
+1d417ac|ProZeratul|Fixed ep3_laamp_flavour_ewan.1011 not handling master_of_spoils properly|8.0.12|Fix||
+61e453c|ProZeratul|Bumped version to 8.0.10|8.0.10|Internal||
+78ede4a|ProZeratul|Added veils to extra headgear for barbershop display|8.0.10|Fix||
+4b4b1e3|pharaox|Fixed "Steal Artifact" interaction being overpowered for landless adventurers with master thief followers|8.0.10|Internal|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/8|https://forum.paradoxplaza.com/forum/threads/steal-artifact-quite-overpowered-for-landless-adventurers-with-a-master-thief.1706325/
+97f81e6|pharaox|Removed unused Private Tents parameter that promised recruitment events which were completely missing from the game|8.0.10|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/9|https://forum.paradoxplaza.com/forum/threads/private-tents-camp-upgrade-does-not-have-any-of-the-recruitment-events-despite-description-stating-otherwise.1713949/
+3246c02|pharaox|Fixed issues with "Abduct Foe" contract schemes|8.0.10|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/7|https://forum.paradoxplaza.com/forum/threads/balanced-option-in-hostile-acquisitions-is-not-really-balanced.1709183/, https://forum.paradoxplaza.com/forum/threads/sucessful-abduct-foe-contract-leaves-captive-in-your-own-prison-afterwards-instead-of-transfering-him-her-to-the-contractor.1706194/
+bc86b14|pharaox|Fixed "spouse material" characters being generated as way too old for marriage|8.0.10|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/6|https://forum.paradoxplaza.com/forum/threads/spouse-material-characters-are-sometimes-way-too-old.1709184/
+19e1902|pharaox|Fixed false fugitive warnings appearing when landless adventurer is considered criminal by a ruler|8.0.10|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/5|https://forum.paradoxplaza.com/forum/threads/false-fugitive-warning-if-a-landless-adventurer-is-considered-criminal-by-a-ruler.1709191/
+311b037|pharaox|Fixed traveling as landless adventurer removing all army commanders and preventing reassignment, and ensured prisoners travel with adventurer|8.0.10|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/4|https://forum.paradoxplaza.com/forum/threads/traveling-as-a-landless-adventurer-removes-all-army-commanders-and-prevents-them-from-being-reassigned.1709203/
+d53d688|pharaox|Fixed "Scout for Talent" travel option doing nothing when selected|8.0.10|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/3|https://forum.paradoxplaza.com/forum/threads/scout-for-talent-travel-option-does-nothing.1709563/
+8340b4c|pharaox|Fixed AI landless adventurers not visiting settlements, which also prevented player from visiting when switching to them|8.0.10|Fix|https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/2|https://forum.paradoxplaza.com/forum/threads/ai-landless-adventurers-are-not-visiting-settlements-if-you-switch-to-any-of-them-you-cant-as-well.1712826/
+c5042f0|ProZeratul|Fixed tournament_joust_unhorsed incorrectly looking for recital phase|8.0.10|Fix||
+b69fc53|ProZeratul|Added tournament actions file|8.0.10|Internal||
+4e5cfe2|ProZeratul|Reimported events folder as of version 8.0.9|8.0.9|Internal||
+a9fcfc0|ProZeratul|Imported from version 8.0.9|8.0.9|Internal||
+7e1234e|ProZeratul|Began upload of UNOP as of version 8.0.9|8.0.9|Internal||
+882db69|ProZeratul|Initial commit|8.0.9|Internal||
