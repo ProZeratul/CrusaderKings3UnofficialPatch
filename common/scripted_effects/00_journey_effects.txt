@@ -139,46 +139,50 @@ journey_find_or_create_excellent_court_position_effect = {
 }
 
 journey_employ_in_court_position = {
-	show_as_tooltip = {
-		if = {
-			limit = {
-				is_valid_to_hire_court_position_type = $COURT_POSITION$_court_position
-			}
-			appoint_court_position = {
-				recipient = $CHARACTER$
-				court_position = $COURT_POSITION$_court_position
-			}
-		}
-	}
-	custom_tooltip = will_have_excellent_aptitude
+	#show_as_tooltip = {
+	#	if = {
+	#		limit = {
+	#			is_valid_to_hire_court_position_type = $COURT_POSITION$_court_position
+	#		}
+	#		appoint_court_position = {
+	#			recipient = $CHARACTER$
+	#			court_position = $COURT_POSITION$_court_position
+	#		}
+	#	}
+	#}
+	#custom_tooltip = will_have_excellent_aptitude
 	
 	hidden_effect = {
 		$CHARACTER$ = {
 			add_to_court_and_entourage_effect = yes
 		}
 	}
-	
-	if = {
-		limit = {
-			is_valid_to_hire_court_position_type = $COURT_POSITION$_court_position
-			NOT = { exists = scope:current_holder }
-		}
-		employ_character_as_position_in_current_scope_court_effect = {
-			CHARACTER = $CHARACTER$
-			POSITION = $COURT_POSITION$
-		}
+	employ_character_as_position_in_current_scope_court_effect = {
+		CHARACTER = $CHARACTER$
+		POSITION = $COURT_POSITION$
 	}
-	else_if = {
-		limit = {
-			exists = scope:current_holder
-			scope:local_character.aptitude:$COURT_POSITION$_court_position > scope:current_holder.aptitude:$COURT_POSITION$_court_position
-		}
-		replace_court_position = {
-			recipient = $CHARACTER$
-			holder = scope:current_holder
-			court_position = $COURT_POSITION$_court_position
-		}
-	}
+
+	#if = {
+	#	limit = {
+	#		$CHARACTER$ = { is_valid_to_hire_court_position_type = $COURT_POSITION$_court_position }
+	#		NOT = { exists = scope:current_holder }
+	#	}
+	#	employ_character_as_position_in_current_scope_court_effect = {
+	#		CHARACTER = $CHARACTER$
+	#		POSITION = $COURT_POSITION$
+	#	}
+	#}
+	#else_if = {
+	#	limit = {
+	#		exists = scope:current_holder
+	#		scope:local_character.aptitude:$COURT_POSITION$_court_position > scope:current_holder.aptitude:$COURT_POSITION$_court_position
+	#	}
+	#	replace_court_position = {
+	#		recipient = $CHARACTER$
+	#		holder = scope:current_holder
+	#		court_position = $COURT_POSITION$_court_position
+	#	}
+	#}
 }
 
 journey_employ_in_camp_position = {
