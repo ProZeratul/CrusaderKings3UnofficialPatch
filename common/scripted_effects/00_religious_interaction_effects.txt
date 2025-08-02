@@ -1058,6 +1058,7 @@ grab_spouses_and_family_to_convert_effect = {
 					is_vassal_of = scope:actor
 					is_vassal_of = scope:recipient
 				}
+				NOT = { has_character_flag = ai_will_not_convert } #Unop Prevent characters with the ai_will_not_convert flag from converting
 				NOT = { has_character_flag = spouse_or_family_to_convert }
 			}
 		add_to_list = spouses_and_family_to_convert
@@ -1076,6 +1077,7 @@ grab_spouses_and_family_to_convert_effect = {
 					faith = scope:recipient.faith
 					NOT = { faith = scope:actor.faith }
 					is_ai = yes
+					NOT = { has_character_flag = ai_will_not_convert } #Unop Prevent characters with the ai_will_not_convert flag from converting
 					NOT = { has_character_flag = spouse_or_family_to_convert }
 					# Don't add the recipient twice
 					#NOT = { root = scope:recipient }
