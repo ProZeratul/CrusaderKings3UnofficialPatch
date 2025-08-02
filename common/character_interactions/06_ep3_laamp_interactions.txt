@@ -2625,6 +2625,10 @@ complete_task_contract_interaction = {
 	}
 	
 	is_valid_showing_failures_only = {
+		#Unop Check full availability before starting travel
+		scope:actor = {
+			is_available = yes
+		}
 	}
 
 	is_highlighted = {
@@ -2636,6 +2640,17 @@ complete_task_contract_interaction = {
 	}
 
 	send_option = {
+		#Unop Ensure the LAAMP can't move camp to provinces they are exiled from
+		is_valid = {
+			custom_tooltip = {
+				text = the_wake_1
+				NOT = {
+					scope:recipient = {
+						is_laamp_exiled_from_holder_or_liege_trigger = { LAAMP = scope:actor }
+					}
+				}
+			}
+		}
 		flag = with_domicile
 	}
 
@@ -6856,9 +6871,11 @@ relocate_camp_to_interaction = {
 			NOT = { scope:actor.domicile.domicile_location = scope:recipient.capital_province }
 		}
 		scope:actor = {
-			is_travelling = no
-			is_in_army = no
-			is_imprisoned = no
+			#Unop Check full availability before starting travel
+			#is_travelling = no
+			#is_in_army = no
+			#is_imprisoned = no
+			is_available = yes
 		}
 		# Adventurers can't join wars in places they're exiled from.
 		custom_tooltip = {
