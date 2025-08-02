@@ -1312,8 +1312,10 @@ treasure_map_contract_decision = {
 		any_character_artifact = { has_variable = 1025_treasure_map }
 	}
 
-	is_valid_showing_failures_only = { 
-		is_available_allow_travelling = yes
+	is_valid_showing_failures_only = {
+		#Unop Check full availability before starting travel
+		#is_available_allow_travelling = yes
+		is_available = yes
 		custom_description = {
 			text = "decision_already_excavating_treasure"
 			subject = root
@@ -1333,6 +1335,22 @@ treasure_map_contract_decision = {
 		controller = decision_option_list_controller
 		decision_to_second_step_button = "TREASURE_MAP_CONTRACT_DECISION_NEXT_STEP_BUTTON"
 		item = {
+			#Unop Ensure the LAAMP can't move camp to provinces they are exiled from
+			is_valid = {
+				custom_tooltip = {
+					text = can_move_domicile_camp_exile.tt
+					any_character_task_contract = {
+						has_variable = contract_treasure_location
+						save_temporary_scope_as = task_contract
+						NOT = {
+							is_laamp_exiled_from_province_trigger = {
+								PROVINCE = scope:task_contract.var:contract_treasure_location
+								LAAMP = root
+							}
+						}
+					}
+				}
+			}
 			value = travel_with_camp
 			localization = option_travel_with_camp
 			icon = "gfx/interface/icons/travel/icon_travel_hud_placeholder.dds"
@@ -1352,7 +1370,18 @@ treasure_map_contract_decision = {
 
 	effect = {
 		random_character_task_contract = {
-			limit = { has_variable = contract_treasure_location }
+			#Unop Ensure the LAAMP can't move camp to provinces they are exiled from
+			limit = {
+				has_variable = contract_treasure_location
+				save_temporary_scope_as = task_contract
+				NOT = {
+					is_laamp_exiled_from_province_trigger = {
+						PROVINCE = scope:task_contract.var:contract_treasure_location
+						LAAMP = root
+					}
+				}
+			}
+			alternative_limit = { has_variable = contract_treasure_location }
 			save_scope_as = task_contract
 		}
 		switch = {

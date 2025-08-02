@@ -1155,7 +1155,12 @@ can_move_domicile = {
 						}
 					}
 				}
-				scope:owner = { has_raised_armies = no }
+				#Unop Check full availability before starting travel
+				scope:owner = {
+					is_available = yes
+				}
+				#Unop Disabled for consistency with other interactions and decisions
+				#scope:owner = { has_raised_armies = no } 
 			}
 		}
 	}
