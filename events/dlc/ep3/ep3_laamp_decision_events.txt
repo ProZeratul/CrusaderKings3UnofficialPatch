@@ -14401,6 +14401,11 @@ ep3_laamp_decision_event.1043 = {
 				}
 			}
 		}
+		#Unop Limit this to same religion
+		trigger = {
+			faith.religion = scope:visiting_location.faith.religion
+		}
+		show_as_unavailable = { always = yes }
 		if = {
 			limit = { NOT = { exists = var:visit_settlement_church_donation } }
 			set_variable = {
@@ -14482,6 +14487,8 @@ ep3_laamp_decision_event.1043 = {
 	option = {
 		name = ep3_laamp_decision_event.1043.b
 		trigger = {
+			#Unop Limit this to same religion
+			faith.religion = scope:visiting_location.faith.religion
 			NOR = { 
 				has_character_modifier = laamp_decision_church_blessing_stress_loss_modifier
 				has_character_modifier = laamp_decision_church_blessing_stress_gain_modifier
@@ -20344,14 +20351,15 @@ ep3_laamp_decision_event.1103 = {
 						subtract = location.county.county_opinion
 					}
 				}
-				modifier = {
-					factor = 0.75
-					location.county.faith.religion = root.religion
-				}
-				modifier = {
-					factor = 0.75
-					knows_language_of_culture = location.county.culture
-				}
+				#Unop Moved to below since these conditions should increase the success chance
+				#modifier = {
+				#	factor = 0.75
+				#	location.county.faith.religion = root.religion
+				#}
+				#modifier = {
+				#	factor = 0.75
+				#	knows_language_of_culture = location.county.culture
+				#}
 				send_interface_toast = {
 					type = event_toast_effect_good
 					title = ep3_laamp_decision_event.1103.a.success
@@ -20372,6 +20380,15 @@ ep3_laamp_decision_event.1103 = {
 				modifier = {
 					add = location.county.development_level
 				}
+				#Unop Moved from above since these conditions should increase the success chance
+				modifier = {
+					factor = 0.75
+					location.county.faith.religion = root.religion
+				}
+				modifier = {
+					factor = 0.75
+					knows_language_of_culture = location.county.culture
+				}
 				send_interface_toast = {
 					type = event_toast_effect_good
 					title = ep3_laamp_decision_event.1103.a.failure
@@ -20388,10 +20405,15 @@ ep3_laamp_decision_event.1103 = {
 			min = 20
 		}
 
-		reverse_add_opinion = {
-			modifier = vengeful_opinion
-			opinion = -75
-			target = location.county.holder
+		if = { #Unop The county holder should get a negative opinion only if they are of a different faith
+			limit = {
+				NOT = { location.county.holder.faith = root.faith }
+			}
+			reverse_add_opinion = {
+				modifier = vengeful_opinion
+				opinion = -75
+				target = location.county.holder
+			}
 		}
 
 		ai_chance = {
