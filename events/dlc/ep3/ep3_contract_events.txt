@@ -457,6 +457,19 @@ ep3_contract_event.0001 = {
 	#take the contract and start the travel with domicile
 	option = {
 		name = ep3_contract_event.0001.with_domicile
+		#Unop Ensure the LAAMP can't move camp to provinces they are exiled from
+		trigger = {
+			custom_tooltip = {
+				text = can_move_domicile_camp_exile.tt
+				NOT = {
+					is_laamp_exiled_from_province_trigger = {
+						PROVINCE = scope:task_contract_destination
+						LAAMP = root
+					}
+				}
+			}
+		}
+		show_as_unavailable = { always = yes }
 		scope:task_contract = {
 			 switch = {
 				trigger = has_task_contract_type
