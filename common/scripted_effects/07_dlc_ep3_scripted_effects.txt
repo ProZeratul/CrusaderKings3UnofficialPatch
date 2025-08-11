@@ -449,8 +449,10 @@ create_landless_adventurer_title_effect = {
 				scope:adventurer_creation_reason = flag:deposition
 				scope:adventurer_creation_reason = flag:conquest
 				scope:adventurer_creation_reason = flag:exile
-				NOT = { this = $FLAVOR_CHAR$ }
+				#Unop Move this out of the OR, likely the intention was to guard against self-opinion, not to always exile the adventurer
+				#NOT = { this = $FLAVOR_CHAR$ }
 			}
+			NOT = { this = $FLAVOR_CHAR$ }
 		}
 		add_opinion = {
 			target = $FLAVOR_CHAR$
@@ -524,7 +526,10 @@ create_landless_adventurer_title_effect = {
 			# Give us a couple of starting chars if we're almost completely bereft.
 			if = {
 				limit = {
-					any_courtier = { count <= 2 }
+					any_courtier = { #Unop Check only for adult followers
+						is_adult = yes
+						count <= 2
+					}
 				}
 				trigger_event = {
 					id = ep3_laamps.1001
