@@ -18,6 +18,7 @@ scripted_trigger appropriate_family_memory = {
 				killer = root
 			}
 		}
+		NOT = { this = root } #Unop: Exclude ourselves from the potential char selection pool
 	}
 }
 
@@ -131,6 +132,7 @@ bp1_yearly.4000 = {
 							killer = root
 						}
 					}
+					NOT = { this = root } #Unop: Exclude ourselves from the potential char selection pool
 				}
 				save_scope_as = family_memory_participant
 			}
@@ -143,7 +145,7 @@ bp1_yearly.4000 = {
 		trigger = {
 			has_trait = family_first
 		}
-		dynasty = { add_dynasty_prestige = minor_dynasty_prestige_gain }
+		dynasty ?= { add_dynasty_prestige = root.dynasty.minor_dynasty_prestige_gain } #Unop: Proper renown calculation
 		stress_impact = {
 			base = minor_stress_impact_loss
 			#honest = minor_stress_impact_gain
@@ -1396,6 +1398,7 @@ bp1_yearly.4030 = { # Rival nestles their way into marrying one of your vassals,
 		}
 		any_vassal = {
 			appopriate_vassal_trigger = yes
+			NOT = { this = scope:rival_check } #Unop: To not select the same char both time
 		}
 	}
 	
@@ -1421,6 +1424,7 @@ bp1_yearly.4030 = { # Rival nestles their way into marrying one of your vassals,
 		random_vassal = {
 			limit = {
 				appopriate_vassal_trigger = yes
+				NOT = { this = scope:marriage_rival } #Unop: Ensure to not select the same char twice
 			}
 			weight = {
 				base = 1
@@ -1438,6 +1442,15 @@ bp1_yearly.4030 = { # Rival nestles their way into marrying one of your vassals,
 				}
 			}
 			save_scope_as = marriage_vassal
+		}
+
+		if = { #Unop: Diag Traces
+			limit = {
+				debug_only = yes
+				NOT = { exists = scope:marriage_vassal }
+			}
+			debug_log = "Unop: bp1_yearly.4030 marriage_vassal is undefined" 
+			debug_log_scopes = yes
 		}
 		
 		scope:marriage_vassal = {
