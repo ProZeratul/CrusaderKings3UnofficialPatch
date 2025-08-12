@@ -23,7 +23,8 @@
 scripted_trigger has_multiple_consorts_trigger = {
 	any_consort = {
 		count > 2
-		is_available_ai_adult = yes 
+		is_available_ai_adult = yes
+		NOT = { this = root } #Unop: Our char can be the consort of the visited vassal
 	}
 }
 
@@ -180,12 +181,14 @@ tour_grounds_events.6000 = {
 			OR = {
 				is_attracted_to_gender_of = root
 				any_consort = {
+					NOT = { this = root } #Unop: The vassal can be our consort
 					is_attracted_to_gender_of = root
 				}
 			}
 			# Vassal has a partner/concubine(s)
 			any_consort = {
 				is_available_ai_adult = yes
+				NOT = { this = root } #Unop: The vassal can be our consort
 			}
 		}
 		# No close family members allowed in sexy time, unless you're already incestuous
@@ -229,6 +232,9 @@ tour_grounds_events.6000 = {
 		scope:stop_host_scope = {
 			# if stop host has 3 consorts, we save them all. otherwise, just the one
 			random_consort = {
+				limit = { 
+					NOT = { this = root } #Unop: The vassal can be our consort
+				}
 				save_scope_as = orgy_consort_1
 				add_character_flag = is_naked
 			}
@@ -236,7 +242,10 @@ tour_grounds_events.6000 = {
 				limit = { has_multiple_consorts_trigger = yes }
 				random_consort = {
 					limit = {
-						NOT = { this = scope:orgy_consort_1 }
+						NOR = { 
+							this = scope:orgy_consort_1
+							this = root #Unop: The vassal can be our consort
+						}
 					}
 					save_scope_as = orgy_consort_2
 					add_character_flag = is_naked
@@ -246,6 +255,7 @@ tour_grounds_events.6000 = {
 						NOR = {
 							this = scope:orgy_consort_1
 							this = scope:orgy_consort_2
+							this = root #Unop: The vassal can be our consort
 						}
 					}  
 					save_scope_as = orgy_consort_3
