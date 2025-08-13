@@ -260,11 +260,17 @@ can_contract_disease_trigger = {
 		}
 		AND = {
 			scope:disease_type_for_trigger = flag:measles
-			NOT = { has_character_flag = disease_immunity_measles }
+			NOR = { #Unop: There are 2 flags for measles immunity, so we'll check them both
+				has_character_flag = measles_immunity
+				has_character_flag = disease_immunity_measles
+			}
 		}
 		AND = {
 			scope:disease_type_for_trigger = flag:bubonic_plague
-			NOT = { has_character_flag = disease_immunity_bubonic_plague }
+			NOR = { #Unop: There are 2 flags for bubonic immunity, so we'll check them both
+				has_character_flag = disease_immunity_bubonic_plague
+				has_character_flag = bubonic_immunity 
+			}
 		}
 	}
 
