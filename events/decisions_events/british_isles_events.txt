@@ -449,14 +449,14 @@ british_isles.1021 = {
 		custom_tooltip = british_isles.1021.b.above_applies.tt
 		hidden_effect = { negotiate_the_danelaw_accept_effect = yes }
 		# And _also_ you switch faith and are accepted as a friend of scope:ntd_actor.
-		set_relation_friend = { reason = friend_partitioned_england target = scope:ntd_recipient }
+		set_relation_friend = { reason = friend_partitioned_england target = scope:ntd_actor } #Unop: Root is ntd_recipient so we need to set the friendship with ntd_actor
 		# If possible, switch to scope:ntd_actor's faith.
 		## Yeah, I realise that this is an easy way to skirt the restrictions from HumSac'ing a HoF. :) Benefits of having a godperson vouch for you.
 		if = {
 			limit = {
 				NOT = { scope:ntd_recipient.faith = scope:ntd_actor.faith }
 			}
-			scope:ntd_recipient = { set_character_faith_with_conversion = scope:ntd_actor }
+			scope:ntd_recipient = { set_character_faith_with_conversion = scope:ntd_actor.faith } #Unop: faith was missing after scope:ntd_actor
 		}
 
 		stress_impact = {
@@ -1242,7 +1242,7 @@ british_isles.4002 = {
 	type = character_event
 	title = british_isles.4001.t
 	desc = british_isles.4002.desc
-	theme = realm
+	#theme = realm #Unop: The diplomacy theme seems more fitting ? (duplicate theme entry just below)
 	theme = diplomacy
 	left_portrait = {
 		character = scope:founder
