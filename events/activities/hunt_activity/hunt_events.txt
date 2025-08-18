@@ -16686,8 +16686,8 @@ scripted_trigger hunt_4010_heir_trigger = {
 	scope:activity = {
 		any_attending_character = {
 			NOT = { this = root }
-			player_heir_position = { target = root value <= 1 }
-			player_heir_position = { target = root value >= 3 }
+			player_heir_position = { target = root value >= 1 } #Unop: Fix impossible condition (was <= 1 and >= 3)
+			player_heir_position = { target = root value <= 3 } #Unop: Fix impossible condition (was <= 1 and >= 3)
 			opinion = {
 				target = root.player_heir
 				value <= -10
@@ -16832,8 +16832,8 @@ hunt.4010 = {
 					scope:activity = {
 						random_attending_character = {
 							limit = {
-								player_heir_position = { target = root value <= 1 }
-								player_heir_position = { target = root value >= 3 }
+								player_heir_position = { target = root value >= 1 } #Unop: Fix impossible condition (was <= 1 and >= 3)
+								player_heir_position = { target = root value <= 3 } #Unop: Fix impossible condition (was <= 1 and >= 3)
 								opinion = {
 									target = root.player_heir
 									value <= -10
