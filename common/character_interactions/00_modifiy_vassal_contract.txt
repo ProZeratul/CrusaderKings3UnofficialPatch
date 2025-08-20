@@ -450,6 +450,7 @@ vassal_modify_vassal_contract_interaction = {
 	send_option = {
 		is_shown = {
 			scope:recipient = { is_diarch_of_target = scope:actor }
+			scope:actor = { has_diarchy_parameter = diarch_gets_a_free_change_on_vassal_contract } #Unop: Ensure this kind of diarchy have a free change
 		}
 		is_valid = {
 			scope:recipient = {
@@ -463,6 +464,7 @@ vassal_modify_vassal_contract_interaction = {
 					}
 				}
 			}
+			scope:actor = { has_diarchy_active_parameter = diarch_gets_a_free_change_on_vassal_contract } #Unop: Ensure the diarch as reach the required swing
 		}
 		flag = diarch
 		localization = CALL_IN_DIARCH_RIGHTS
