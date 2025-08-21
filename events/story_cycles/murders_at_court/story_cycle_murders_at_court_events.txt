@@ -243,6 +243,20 @@ murders_at_court.1002 = {
 		scope:story = {
 			var:escalation >= 1
 		}
+		any_courtier = { #Unop: Added this part to ensure we could get a valid victim
+			basic_is_available_ai = yes
+			NOT = { is_close_or_extended_family_of = root }
+			OR = { #You probably care more for highly skilled courtiers
+				martial > high_skill_rating
+				diplomacy > high_skill_rating
+				intrigue > high_skill_rating
+				learning > high_skill_rating
+				stewardship > high_skill_rating
+				prowess > high_skill_rating
+				has_friendly_relationship_with_root_trigger = yes
+			}
+			NOT = { this = scope:story.var:murderer }
+		}
 	}
 
 	immediate = {
@@ -272,6 +286,7 @@ murders_at_court.1002 = {
 						stewardship > high_skill_rating
 						prowess > high_skill_rating
 					}
+					NOT = { this = scope:murderer } #Unop: Prevent the murderer to target itself
 				}
 			}
 			random_courtier = {
@@ -279,6 +294,7 @@ murders_at_court.1002 = {
 					basic_is_available_ai = yes
 					NOT = { is_close_or_extended_family_of = root }
 					has_friendly_relationship_with_root_trigger = yes
+					NOT = { this = scope:murderer } #Unop: Prevent the murderer to target itself
 				}
 				alternative_limit = {
 					basic_is_available_ai = yes
@@ -291,6 +307,7 @@ murders_at_court.1002 = {
 						stewardship > high_skill_rating
 						prowess > high_skill_rating
 					}
+					NOT = { this = scope:murderer } #Unop: Prevent the murderer to target itself
 				}
 				save_scope_as = victim
 				show_as_tooltip = {
