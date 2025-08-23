@@ -3946,7 +3946,7 @@ cultural_festival.3001 = {
 	
 	after = {
 		clear_available_compliments_effect = yes
-		scope:visiting_liege = { trigger_event = { id = cultural_festival.3002 days = 3 } } #TODO_CD_EP2_VERONICA remove the delay after QA testing
+		scope:visiting_liege = { trigger_event = { id = cultural_festival.3002 } } #Unop: Removed the delay as it was only for debug purpose per devs comments and made it fire after the end event
 	}
 }
 
@@ -4379,7 +4379,7 @@ cultural_festival.3010 = {
 				years = 5
 			}
 			set_variable = alcohol_fountain_var
-			trigger_event = { id = cultural_festival.3011 days = 3 } #TODO_CD_EP2_VERONICA remove the delay after QA testing
+			trigger_event = { id = cultural_festival.3011 } #Unop: Removed the delay as it was only for debug purpose per devs comments and made it fire after the end event
 		}
 		if = {
 			limit = {
@@ -4453,7 +4453,7 @@ cultural_festival.3010 = {
 				years = 5
 			}
 			set_variable = juice_fountain_var
-			trigger_event = { id = cultural_festival.3011 days = 3 } #TODO_CD_EP2_VERONICA remove the delay after QA testing
+			trigger_event = { id = cultural_festival.3011 } #Unop: Removed the delay as it was only for debug purpose per devs comments and made it fire after the end event
 		}
 		stress_impact = {
 			greedy = minor_stress_impact_gain
@@ -4655,7 +4655,7 @@ cultural_festival.3020 = {
 	option = { # I sure do!
 		name = cultural_festival.3020.a
 		custom_tooltip = cultural_festival.3020.a.tt
-		trigger_event = { id = cultural_festival.3021 days = 3 } #TODO_CD_EP2_VERONICA remove the delay after QA testing
+		trigger_event = { id = cultural_festival.3021 } #Unop: Removed the delay as it was only for debug purpose per devs comments and made it fire after the end event
 		stress_impact = {
 			humble = minor_stress_impact_gain
 		}
@@ -4867,7 +4867,7 @@ cultural_festival.3021 = {
 	
 	after = {
 		scope:stop_host_scope = {
-			trigger_event = { id = cultural_festival.3022 days = 3 } #TODO_CD_EP2_VERONICA remove the delay after QA testing
+			trigger_event = { id = cultural_festival.3022 } #Unop: Removed the delay as it was only for debug purpose per devs comments and made it fire after the end event
 		}
 	}
 }
@@ -5849,7 +5849,7 @@ cultural_festival.3050 = {
 							has_trait = deceitful #they know you're lying
 						}
 					}
-					scope:stop_host_scope = { trigger_event = { id = cultural_festival.3051 days = 3 } } #TODO_CD_EP2_VERONICA remove days after testing
+					scope:stop_host_scope = { trigger_event = { id = cultural_festival.3051 } } #Unop: Removed the delay as it was only for debug purpose per devs comments and made it fire after the end event
 				}
 				40 = { #they don't notice
 					modifier = {
@@ -6202,7 +6202,7 @@ cultural_festival.3060 = {
 			increase_tour_success_effect = { POINTS = 1 }
 		}
 		hidden_effect = {
-			scope:stop_host_scope = { trigger_event = { id = cultural_festival.3061 days = 3 } }#TODO_CD_EP2_VERONICA remove after QA has tested them
+			scope:stop_host_scope = { trigger_event = { id = cultural_festival.3061 } } #Unop: Removed the delay as it was only for debug purpose per devs comments and made it fire after the end event
 		}
 		stress_impact = {
 			lustful = minor_stress_impact_loss
@@ -6701,7 +6701,7 @@ cultural_festival.3070 = {
 		}
 		add_piety = minor_piety_loss
 		cultural_festival.3070.bishop_angry_effect = yes
-		scope:visiting_liege = { trigger_event = { id = cultural_festival.3071 days = 3 } } #TODO_CD_EP2_VERONICA remove days after QA testing
+		scope:visiting_liege = { trigger_event = { id = cultural_festival.3071 } } #Unop: Removed the delay as it was only for debug purpose per devs comments and made it fire after the end event
 		stress_impact = {
 			forgiving = minor_stress_impact_gain
 			compassionate = minor_stress_impact_gain
@@ -6770,7 +6770,7 @@ cultural_festival.3070 = {
 		}
 		add_piety = minor_piety_loss
 		#bishop doesn't really care that much since they're sinful
-		scope:visiting_liege = { trigger_event = { id = cultural_festival.3071 days = 3 } } #TODO remove days after QA testing
+		scope:visiting_liege = { trigger_event = { id = cultural_festival.3071 } } #Unop: Removed the delay as it was only for debug purpose per devs comments and made it fire after the end event
 		stress_impact = {
 			compassionate = medium_stress_impact_gain
 			forgiving = medium_stress_impact_gain
@@ -6821,7 +6821,7 @@ cultural_festival.3070 = {
 		scope:visiting_liege = {
 			save_scope_as = final_jester
 			set_variable = im_the_jester_var
-			trigger_event = { id = cultural_festival.3071 days = 3 } #TODO_CD_EP2_VERONICA remove days after QA testing
+			trigger_event = { id = cultural_festival.3071 } #Unop: Removed the delay as it was only for debug purpose per devs comments and made it fire after the end event
 		}
 		stress_impact = {
 			compassionate = minor_stress_impact_gain
@@ -9458,6 +9458,13 @@ cultural_festival.4303 = { #Vassal: Get the gift from liege, mirror of cultural_
 					has_relation_soulmate = scope:stop_host_scope
 				}
 			}
+			modifier = { #Unop: If the AI can equip/benefit from gifted artifact, then boost their will to keep it
+				add = 100
+				OR = {
+					can_equip_artifact = scope:liege_chosen_gift
+					can_benefit_from_artifact = scope:liege_chosen_gift
+				}
+			}
 		}
 	}
 
@@ -9490,6 +9497,13 @@ cultural_festival.4303 = { #Vassal: Get the gift from liege, mirror of cultural_
 				OR = {
 					has_relation_rival = scope:stop_host_scope
 					has_relation_nemesis = scope:stop_host_scope
+				}
+			}
+			modifier = { #Unop: If the AI cannot equip/benefit from gifted artifact, then boost their will to trash it
+				add = 100
+				NAND = {
+					can_equip_artifact = scope:liege_chosen_gift
+					can_benefit_from_artifact = scope:liege_chosen_gift
 				}
 			}
 		}

@@ -2793,7 +2793,7 @@ laamp_base_2011_actual_surveyable_holdings_per_tier_value = {
 		limit = {
 			exists = holder #Unop
 			holder.highest_held_title_tier = tier_barony
-			NOT = { this = root.domicile.domicile_location.county } #Unop: Added the .county to prevent error: (left was 'landed_title', right was 'province')
+			NOT = { title_province = root.domicile.domicile_location } #Unop: Changed this to prevent error: (left was 'landed_title', right was 'province')
 		}
 		add = 1
 	}

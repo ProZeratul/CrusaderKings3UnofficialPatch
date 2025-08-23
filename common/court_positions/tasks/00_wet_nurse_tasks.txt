@@ -61,13 +61,14 @@ wet_nurse_instill_virtue = {
 				limit = {
 					is_adult = no
 					number_of_personality_traits < 3
+					age >= 6 # Unop: Added this to be in line with the code just above
 				}
 				random = {
 					chance = {
 						value = 1
 						add = {
 							value = "scope:wetnurse_trait_giver.aptitude(court_tutor_court_position)"
-							multiply = 1.5
+							multiply = 0.5 # Unop: Was 1.5 wich seems high, you'll still get your virtues, just not as quickly
 						}
 					}
 					instill_virtue_trait_effect = yes
