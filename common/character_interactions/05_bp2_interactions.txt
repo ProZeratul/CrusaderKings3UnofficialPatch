@@ -2197,7 +2197,7 @@ return_hostage_interaction = {
 		}
 		#DO NOT SEND BACK FRANKOKRATIA CLAIMANT
 		modifier = {
-			scope:recipient = { #Unop: Was scope:hostage but this scope does not exists
+			scope:hostage ?= { #Unop: Added ? since this scope might be undefined
 				has_character_flag = byz_claimant_flag
 			}
 			exists = global_var:byz_claimant_champion

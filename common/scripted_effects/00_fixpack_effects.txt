@@ -660,15 +660,14 @@ create_grand_wedding_matrilineal_betrothal = {
 	}
 }
 
-unop_change_renown = {
+unop_add_renown_effect = {
 	if = {
-		limit = { exists = $CHAR$.dynasty }
-		$CHAR$ = {
-			dynasty = { add_dynasty_prestige = $CHAR$.dynasty.$PRESTIGE_MODIFIER$ }
-		}
+		limit = { exists = dynasty }
+		save_scope_as = unop_char
+		dynasty = { add_dynasty_prestige = scope:unop_char.dynasty.$PRESTIGE_MODIFIER$ }
 	}
 	else = {
-		debug_log = "Unop: unop_change_renown called but char is lowborn"
+		debug_log = "Unop: unop_add_renown_effect called but char is lowborn or current scope is not a character"
 	}
 }
 
