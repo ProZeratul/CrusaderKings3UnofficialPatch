@@ -4023,7 +4023,12 @@ travel_events.4021 = {
 		}
 	}
 	after = {
-		scope:sacrificed_person_scope ?= {
+		if = {
+			limit = {
+				scope:sacrificed_person_scope ?= { #Unop: prevent scope is dead during effect execution
+					is_alive = yes
+				}
+			}
 			remove_character_flag = is_naked
 		}
 	}
