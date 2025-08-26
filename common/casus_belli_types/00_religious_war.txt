@@ -1248,6 +1248,7 @@ major_religious_war = {
 				OR = {
 					has_character_flag = bonus_major_holy_war
 					NOT = { has_character_flag = declared_major_religious_war_flag }
+					NOT = { has_character_flag = unop_pending_major_religious_war_flag } #Unop: New flag for ongoing major religious war
 				}
 			}
 		}
@@ -1370,7 +1371,40 @@ major_religious_war = {
 	}
 	
 	on_invalidated = {
-		
+		 scope:attacker = {
+            remove_character_flag = unop_pending_major_religious_war_flag #Unop: If the war is invalidated, you should be permitted to try again
+			# Refund their investment.
+			add_piety_no_experience = {
+				value = 0
+				add = {
+					value = 750
+					multiply = common_cb_piety_cost_multiplier
+					multiply = holy_war_cb_piety_cost_multiplier
+					if = {
+						limit = {
+							scope:attacker = {
+								any_active_accolade = {
+									has_accolade_parameter = acclaimed_knight_piety_from_battle
+								}
+							}
+						}
+						multiply = accolade_piety_reduction_value
+						min = 90
+					}
+					if = {
+						limit = {
+							scope:attacker = {
+								any_active_accolade = {
+									has_accolade_parameter = acclaimed_knight_piety_from_battle_high
+								}
+							}
+						}
+						multiply = accolade_piety_reduction_value_high
+						min = 90
+					}
+				}
+			}
+        }
 	}
 
 	cost = {
@@ -1408,16 +1442,8 @@ major_religious_war = {
 
 	on_declaration = {
 		on_declared_war = yes
-		scope:attacker = {
-			if = {
-				limit = {
-					has_character_flag = bonus_major_holy_war
-				}
-				remove_character_flag = bonus_major_holy_war
-			}
-			else = {
-				add_character_flag = declared_major_religious_war_flag
-			}
+		scope:attacker = { #Unop: Only flag that we started a holy war and handle the other flags in victory/defeat/white_peace & invalidation
+			add_character_flag = unop_pending_major_religious_war_flag
 		}
 	}
 
@@ -1441,10 +1467,12 @@ major_religious_war = {
 						AND = {
 							NOT = { has_character_flag = bonus_major_holy_war }
 							NOT = { has_character_flag = declared_major_religious_war_flag }
+							NOT = { has_character_flag = unop_pending_major_religious_war_flag } #Unop: New flag for ongoing major religious war
 						}
 						AND = {
 							has_character_flag = bonus_major_holy_war
 							has_character_flag = declared_major_religious_war_flag
+							has_character_flag = unop_pending_major_religious_war_flag #Unop: New flag for ongoing major religious war
 						}
 					}
 				}
@@ -1454,6 +1482,18 @@ major_religious_war = {
 	}
 
 	on_victory = {
+		scope:attacker = { #Unop: Handle the war flags here (to handle invalidation properly)
+			remove_character_flag = unop_pending_major_religious_war_flag
+            if = {
+                limit = {
+                    has_character_flag = bonus_major_holy_war
+                }
+                remove_character_flag = bonus_major_holy_war
+            }
+            else = {
+                add_character_flag = declared_major_religious_war_flag
+            }
+        }
 		scope:attacker = { show_pow_release_message_effect = yes }
 		
 		# Legitimacy
@@ -1564,6 +1604,18 @@ major_religious_war = {
 	}
 
 	on_white_peace = {
+		scope:attacker = { #Unop: Handle the war flags here (to handle invalidation properly)
+			remove_character_flag = unop_pending_major_religious_war_flag
+            if = {
+                limit = {
+                    has_character_flag = bonus_major_holy_war
+                }
+                remove_character_flag = bonus_major_holy_war
+            }
+            else = {
+                add_character_flag = declared_major_religious_war_flag
+            }
+        }
 		scope:attacker = { show_pow_release_message_effect = yes }
 
 		#EP2 accolade glory gain for doing ok against higher ranked enemy
@@ -1605,6 +1657,18 @@ major_religious_war = {
 	}
 
 	on_defeat = {
+		scope:attacker = { #Unop: Handle the war flags here (to handle invalidation properly)
+			remove_character_flag = unop_pending_major_religious_war_flag
+            if = {
+                limit = {
+                    has_character_flag = bonus_major_holy_war
+                }
+                remove_character_flag = bonus_major_holy_war
+            }
+            else = {
+                add_character_flag = declared_major_religious_war_flag
+            }
+        }
 		scope:attacker = { show_pow_release_message_effect = yes }
 		
 		# Legitimacy
@@ -4518,7 +4582,7 @@ directed_great_holy_war = {
 		}
 	}
 
-	on_invalidated_desc = msg_invalidate_war_title
+	#on_invalidated_desc = msg_invalidate_war_title #Unop: Duplicated line from above
 
 	max_ai_diplo_distance_to_title = 750
 }
