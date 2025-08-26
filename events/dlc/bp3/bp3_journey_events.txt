@@ -521,9 +521,9 @@ bp3_journey.0015 = {
 				name = special_building
 				value = scope:activity.activity_location
 			}
-			#if = { #Unop: Doing nothing ?
-			#	limit = { has_variable = special_building }
-			#}
+			if = { #Unop: "Variable 'special_building' is set but is never used"
+				limit = { has_variable = special_building }
+			}
 		}
 	}
 
