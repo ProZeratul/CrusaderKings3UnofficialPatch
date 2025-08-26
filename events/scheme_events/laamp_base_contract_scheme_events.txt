@@ -4875,6 +4875,19 @@ scripted_effect laamp_base_contract_schemes_0661_setup_difficulties_effect = {
 		}
 		save_scope_as = task_contract
 	}
+	if = {
+		limit = {
+			debug_only = yes
+			NOT = { exists = duel_diff }
+		}
+		error_log = "Unop: For laamp_base_contract_schemes_0661_setup_difficulties_effect diagnostic, no scope value duel_diff defined, fallback on a laamp_base_contract_schemes_on_going_duel_diff_t1_value"
+		debug_log = "Unop: For laamp_base_contract_schemes_0661_setup_difficulties_effect diagnostic, no scope value duel_diff defined, fallback on a laamp_base_contract_schemes_on_going_duel_diff_t1_value"
+		debug_log_scopes = yes
+		save_scope_value_as = {
+			name = duel_diff
+			value = @laamp_base_contract_schemes_on_going_duel_diff_t1_value
+		}
+	}
 }
 
 #	Diplomacy + martial + stewardship

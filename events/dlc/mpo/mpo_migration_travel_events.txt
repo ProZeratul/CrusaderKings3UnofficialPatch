@@ -959,6 +959,15 @@ mpo_migration_travel_events.0050 = {
                 save_scope_as = local
             }
         }
+        if = {
+            limit = {
+                debug_only = yes
+                NOT = { exists = scope:local }
+            }
+            error_log = "Unop: For mpo_migration_travel_events.0050 diagnostic, no scope local defined"
+            debug_log = "Unop: For mpo_migration_travel_events.0050 diagnostic, no scope local defined"
+            debug_log_scopes = yes
+        }
         hidden_effect = {
             scope:courtier = {
                 set_relation_lover = scope:local
