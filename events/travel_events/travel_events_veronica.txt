@@ -2240,6 +2240,11 @@ travel_events.3030 = {
 					INSTIGATING_LOVER = scope:fleeing_knight_candidate
 					TARGET_OF_LOVE = scope:courtier_candidate
 				}
+				is_travelling = no #Unop: Ensure this character is not already traveling & can join our activity
+				OR = {
+					not = { exists = scope:activity }
+					can_join_activity = scope:activity
+				}
 			}
 		}
     }
@@ -2290,6 +2295,11 @@ travel_events.3030 = {
 					are_characters_sensible_and_appropriate_open_lovers_trigger = {
 						INSTIGATING_LOVER = scope:fleeing_knight
 						TARGET_OF_LOVE = scope:courtier_candidate
+					}
+					is_travelling = no #Unop: Ensure this character is not already traveling & can join our activity
+					OR = {
+						not = { exists = scope:activity }
+						can_join_activity = scope:activity
 					}
 				}
 				save_scope_as = foreign_lady_scope
