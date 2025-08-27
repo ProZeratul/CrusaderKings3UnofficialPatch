@@ -575,6 +575,15 @@ travel_events.3010 = {
         is_playable_character = yes
 		has_alive_pet_trigger = yes #your pet rock cannot follow something into the forest
 		is_location_valid_for_travel_event_on_land = yes
+		OR = { #Unop: Ensure a character will be available for the pet_rescuer scope
+			exists = current_travel_plan.travel_leader
+			current_travel_plan = {
+				any_entourage_character = {
+					NOT = { this = ROOT }
+					NOT = { has_trait = one_legged }
+				}
+			}
+		}
     }
 	
     immediate = {
@@ -1441,7 +1450,7 @@ travel_events.3020 = {
 		name = travel_events.3020.d
 		custom_tooltip = travel_events.3020.d.tt
 		current_travel_plan = {
-			delay_travel_plan = { days = 7 }
+			delay_travel_plan = { days = 14 } #Unop: Bump from 7 because: REASON
 		}
 		hidden_effect = {
 			random_list = {
@@ -1701,7 +1710,7 @@ travel_events.3021 = {
 				}
 			}
 			60 = {
-				desc = travel_events.3021.a.failure
+				desc = travel_events.3021.a.failure #Unop: Was travel_events.3021.b.failure but does not exists
 				compare_modifier = {
 					value = scope:duel_value
 					multiplier = -3.5
@@ -2171,11 +2180,11 @@ travel_events.3022 = {
 		}
     }
 	
-	after = {
-		current_travel_plan = {
-			resume_travel_plan = yes
-		}
-	}
+	#after = { #Unop: This should not be done here: REASON
+	#	current_travel_plan = {
+	#		resume_travel_plan = yes
+	#	}
+	#}
 }
 
 ##################################################
@@ -3959,6 +3968,10 @@ travel_events.3090 = {
 		is_location_valid_for_travel_event_on_land = yes
 		exists = location.barony.holder
 		NOT = { location.barony.holder = root }
+		trigger_if = { #Unop: Also check the lessee
+			limit = { exists = location.barony.lessee }
+			NOT = { location.barony.lessee = root }
+		}
 		exists = involved_activity #there must be something there for the temples to prepare for
 		involved_activity.activity_host = { NOT = { this = root } } #you're not the host
 		exists = involved_activity.activity_location.barony.lessee
@@ -3983,7 +3996,13 @@ travel_events.3090 = {
 	
 	immediate = {
 		location = { save_scope_as = church_visit_location }
-		location.barony.holder = { save_scope_as = church_visit_holder }
+		if = { #Unop: Select the lessee instead of the holder
+			limit = { exists = location.barony.lessee }
+			location.barony.lessee = { save_scope_as = church_visit_holder }
+		}
+		else = {
+			location.barony.holder = { save_scope_as = church_visit_holder }
+		}
 		involved_activity = { save_scope_as = activity }
 		create_character = {
 			template = monk_character_template
