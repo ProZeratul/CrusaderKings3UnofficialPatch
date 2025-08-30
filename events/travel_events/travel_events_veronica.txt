@@ -575,15 +575,6 @@ travel_events.3010 = {
         is_playable_character = yes
 		has_alive_pet_trigger = yes #your pet rock cannot follow something into the forest
 		is_location_valid_for_travel_event_on_land = yes
-		OR = { #Unop: Ensure a character will be available for the pet_rescuer scope
-			exists = current_travel_plan.travel_leader
-			current_travel_plan = {
-				any_entourage_character = {
-					NOT = { this = ROOT }
-					NOT = { has_trait = one_legged }
-				}
-			}
-		}
     }
 	
     immediate = {
