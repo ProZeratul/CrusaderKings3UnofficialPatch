@@ -10362,10 +10362,12 @@ feast_default.6101 = {
 			target = scope:troubled_guest
 			opinion = -20
 		}
-		progress_towards_rival_effect = {
-			CHARACTER = scope:troubled_guest
-			REASON = rival_mercilessly_pushed
-			OPINION = 0
+		scope:troubled_guest = { #Unop: Fix the reverse opinion loss effect (THEY lose opinion of YOU)
+			progress_towards_rival_effect = {
+				CHARACTER = root
+				REASON = rival_mercilessly_pushed
+				OPINION = 0
+			}
 		}
 		scope:activity = {
 			every_attending_character = {
