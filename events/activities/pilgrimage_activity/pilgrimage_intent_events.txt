@@ -2151,6 +2151,14 @@ scripted_trigger suitable_smitten_heathen_trigger = {
 	can_marry_trigger = yes
 	is_concubine = no
 	is_attracted_to_gender_of = $ENTOURAGE_TARGET$
+	is_travelling = no #Unop: Ensure this character is not already traveling & can join our activity
+	OR = {
+		NOT = { exists = scope:activity }
+		trigger_if = {
+			limit = { exists = scope:activity }
+			can_join_activity = scope:activity
+		}
+	}
 }
 
 scripted_trigger suitable_entourage_character_trigger = {
