@@ -7209,7 +7209,7 @@ cultural_festival.4000 = { #Liege: You end up in a conversation in a language yo
 				random_courtier_or_guest = { #pick someone that can understand both of you in vassals court
 					limit = { 
 						bilingual_character_trigger = yes
-					 }
+					}
 					save_scope_as = local_translator_scope
 				}
 			}
@@ -7263,6 +7263,11 @@ cultural_festival.4000 = { #Liege: You end up in a conversation in a language yo
 				scope:local_translator_scope = {
 					NOT = {
 						is_courtier_of = scope:visiting_liege
+					}
+					is_travelling = no #Unop: Ensure this character is not already traveling & can join our activity
+					OR = {
+						NOT = { exists = scope:activity }
+						can_join_activity = scope:activity
 					}
 				}
 			}
