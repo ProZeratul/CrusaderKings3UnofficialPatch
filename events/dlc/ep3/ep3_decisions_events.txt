@@ -1006,7 +1006,7 @@ ep3_decisions_event.0005 = {
 			ai_value_modifier = {
 				ai_boldness = 0.5
 				ai_energy = 0.5
-				ai_boldness = 0.5
+				#ai_boldness = 0.5 #Unop: Duplicated just above
 			}
 		}
 	}
@@ -3936,7 +3936,7 @@ scripted_effect ask_help_crusade_setup_effect = {
 	#If no Claimant or Title Holder is available to be the Papal choice and the Crusade has not proceeded far enough to have a favoritebeneficiary, select a fallback Recipient so that the CB's tooltip does not appear incomplete.
 	if = { #Random Courtier in the Pope's court.
 		limit = {
-			NOT = { exists = faith.great_holy_war.ghw_title_recipient }
+			NOT = { exists = scope:the_faith.great_holy_war.ghw_title_recipient } #Unop: Use the the_faith scope instead as defined by ep3_decisions_event.4014
 			exists = scope:ghw_sponsor
 			exists = scope:the_faith.great_holy_war
 			scope:ghw_sponsor = {
@@ -3995,7 +3995,7 @@ scripted_effect ask_help_crusade_setup_effect = {
 	}
 	else_if = { #Else Generate a fallback recipient.
 		limit = {
-			NOT = { exists = faith.great_holy_war.ghw_title_recipient }
+			NOT = { exists = scope:the_faith.great_holy_war.ghw_title_recipient } #Unop: Use the the_faith scope instead as defined by ep3_decisions_event.4014
 		}
 		create_character = {
 			location = scope:ghw_sponsor.capital_province
@@ -6970,7 +6970,7 @@ ep3_decisions_event.5021 = {
 				scope:heretic = {
 					domicile ?= {
 						has_domicile_parameter = more_successful_heresies
-						location.county.faith = scope:heretic.faith
+						domicile_location.county.faith = scope:heretic.faith #Unop: Was location but we are in a domicile scope
 					}
 				}
 				add = 25
@@ -7024,7 +7024,7 @@ ep3_decisions_event.5021 = {
 				scope:heretic = {
 					domicile ?= {
 						has_domicile_parameter = more_successful_heresies
-						location.county.faith = scope:heretic.faith
+						domicile_location.county.faith = scope:heretic.faith #Unop: Was location but we are in a domicile scope
 					}
 				}
 				add = 15
@@ -7496,7 +7496,10 @@ ep3_decisions_event.6001 = {
 				add_trait = adventurer_follower
 			}
 		}
-		add_pressed_claim = scope:kingdom_title
+		if = { #Unop: Ensure this scope was defined before
+			limit = { exists = scope:kingdom_title }
+			add_pressed_claim = scope:kingdom_title
+		}
 		# Messages for nearby players
 		create_landed_ruler_message_effect = {
 			LANDED = root
