@@ -1103,8 +1103,16 @@ artisan_inspiration = {
 									}
 									modifier = {
 										add = 20
-										scope:inspiration_sponsor = {
-											ep3_orthodox_faith_trigger = yes
+										trigger_if = {
+											limit = { exists = scope:inspiration_sponsor }
+											scope:inspiration_sponsor = {
+												ep3_orthodox_faith_trigger = yes
+											}
+										}
+										trigger_else = {
+											liege = {
+												ep3_orthodox_faith_trigger = yes
+											}
 										}
 									}
 									set_variable = {
