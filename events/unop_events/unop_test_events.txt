@@ -565,3 +565,39 @@ unop_tests.0010 = {
 	}
 }
 
+unop_tests.0011 = { #Diag of tournament_events.1230 adding a new char but game said they are already traveling ???
+	orphan = yes
+	type = character_event
+	title = insult_poetry.0001.t
+	theme = skull
+	desc = insult_poetry.0001.t
+	
+	immediate = {
+		involved_activity = {
+			save_scope_as = activity
+		}
+		create_character = {
+			template = tournament_foot_character
+			location = root.location
+			culture = root.culture
+			faith = root.faith
+			dynasty = none
+			save_scope_as = battle_peasant
+		}
+	}
+
+	option = {
+		name = test_court_events.1.a
+		scope:battle_peasant = {
+			set_employer = root
+			add_to_activity_without_travel = scope:activity
+			##scope:activity = {
+			##	add_to_guest_subset = {
+			##		name = contestant
+			##		target = scope:battle_peasant						
+			##	}
+			##}		
+		}
+		current_travel_plan = { add_companion = scope:battle_peasant }
+	}
+}
