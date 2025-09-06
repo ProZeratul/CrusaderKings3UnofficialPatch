@@ -7241,8 +7241,15 @@ cultural_festival.4000 = { #Liege: You end up in a conversation in a language yo
 				save_scope_as = local_translator_scope
 			}
 			hidden_effect = {
-				scope:local_translator_scope = {
-					learn_language_of_culture = root.culture
+				scope:local_translator_scope = { #Unop: Check that the translator is actually speaking both language
+					if = {
+						limit = { NOT = { knows_language_of_culture = root.culture } }
+						learn_language_of_culture = root.culture
+					}
+					if = {
+						limit = { NOT = { knows_language_of_culture = scope:local_character_scope.culture } }
+						learn_language_of_culture = scope:local_character_scope.culture
+					}
 				}
 			}
 		}
