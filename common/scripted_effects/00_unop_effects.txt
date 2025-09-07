@@ -36,3 +36,393 @@ unop_get_worst_cp_holder = {
 		}
 	}
 }
+
+# I can't think of a name for now and it's terrible 
+# This function is there to handle cases 
+unop_recruit_best_cp_effect = {
+	if = {
+		limit = {
+			exists = $CURRENT_CP_OWNER$
+		}
+		if = {
+			limit = {
+				$CHARACTER$.aptitude:$COURT_POSITION$_court_position > $CURRENT_CP_OWNER$.aptitude:$COURT_POSITION$_court_position
+			}			
+			$CHARACTER$ = {
+				hidden_effect = {
+					add_to_court_and_entourage_effect = yes
+				}
+			}
+			add_character_flag = temporary_court_position_cost_removal
+			replace_court_position = {
+				recipient = $CHARACTER$
+				holder = $CURRENT_CP_OWNER$
+				court_position = $COURT_POSITION$_court_position
+			}
+			remove_character_flag = temporary_court_position_cost_removal
+			if = {
+				limit = {
+					has_activity_intent = journey_curiosity_intent
+				}
+				add_hook = {
+					type = strong_obligation_hook
+					target = $CHARACTER$
+				}
+				custom_tooltip = obligation_hook_tt
+			}
+		}
+		else = { #Just recruit the character
+			$CHARACTER$ = {
+				hidden_effect = {
+					add_to_court_and_entourage_effect = yes
+				}
+				show_as_tooltip = {
+					root = { add_courtier = prev }
+				}
+			}
+			if = {
+				limit = {
+					has_activity_intent = journey_curiosity_intent
+				}
+				add_hook = {
+					type = strong_obligation_hook
+					target = $CHARACTER$
+				}
+				#custom_tooltip = obligation_hook_tt
+			}
+		}
+	}
+	else = {
+		unop_hire_for_court_position_journey_effect = {
+			CHARACTER = $CHARACTER$
+			COURT_POSITION = $COURT_POSITION$
+		}
+	}
+}
+
+# I can't think of a name for now and it's terrible 
+# This function is there to handle cases 
+unop_recruit_best_both_effect = {
+	if = {
+		limit = {
+			exists = $CURRENT_CP_OWNER$
+		}
+		if = {
+			limit = {
+				OR = {
+					$CHARACTER$.aptitude:$COURT_POSITION$_court_position > $CURRENT_CP_OWNER$.aptitude:$COURT_POSITION$_court_position
+					$CHARACTER$.aptitude:$LAAMP_POSITION$_camp_officer > $CURRENT_CP_OWNER$.aptitude:$LAAMP_POSITION$_camp_officer
+				}
+			}
+			unop_hire_for_court_position_journey_laamp_replacement_effect = {
+				CHARACTER = $CHARACTER$
+				COURT_POSITION = $COURT_POSITION$
+				LAAMP_POSITION = $LAAMP_POSITION$
+				CURRENT_CP_OWNER = $CURRENT_CP_OWNER$
+			}
+		}
+		else = { #Just recruit the character
+			$CHARACTER$ = {
+				hidden_effect = {
+					add_to_court_and_entourage_effect = yes
+				}
+				show_as_tooltip = {
+					root = { add_courtier = prev }
+				}
+			}
+			if = {
+				limit = {
+					has_activity_intent = journey_curiosity_intent
+				}
+				add_hook = {
+					type = strong_obligation_hook
+					target = $CHARACTER$
+				}
+				#custom_tooltip = obligation_hook_tt
+			}
+		}
+	}
+	else = {
+		unop_hire_for_court_position_journey_laamp_replacement_effect = {
+			CHARACTER = $CHARACTER$
+			COURT_POSITION = $COURT_POSITION$
+			LAAMP_POSITION = $LAAMP_POSITION$
+			CURRENT_CP_OWNER = $CURRENT_CP_OWNER$
+		}
+	}
+}
+
+unop_hire_for_court_position_journey_effect = {
+	hidden_effect = {
+		$CHARACTER$ = {
+			add_to_court_and_entourage_effect = yes
+		}
+	}
+	# If the char is better than the curernt one, replace, if not just make the char join the court, entourage, activity & give the hook
+	save_scope_as = unop_employer
+	unop_get_worst_or_none_cp_holder_effect = {
+		EMPLOYER = scope:unop_employer
+		POS = $COURT_POSITION$
+	}
+
+	if = {
+		limit = { 
+			exists = scope:old_holder
+			$CHARACTER$.aptitude:$COURT_POSITION$_court_position <= scope:old_holder.aptitude:$COURT_POSITION$_court_position
+		}
+		show_as_tooltip = {
+			add_courtier = $CHARACTER$
+		}
+	}
+	else = {
+		add_character_flag = temporary_court_position_cost_removal
+		employ_character_as_position_in_current_scope_court_effect = {
+			CHARACTER = $CHARACTER$
+			POSITION = $COURT_POSITION$
+		}
+		remove_character_flag = temporary_court_position_cost_removal
+	}
+	if = {
+		limit = {
+			has_activity_intent = journey_curiosity_intent
+		}
+		add_hook = {
+			type = strong_obligation_hook
+			target = $CHARACTER$
+		}
+		custom_tooltip = obligation_hook_tt
+	}
+}
+
+unop_hire_for_court_position_journey_laamp_replacement_effect = {
+	hidden_effect = {
+		$CHARACTER$ = {
+			add_to_court_and_entourage_effect = yes
+		}
+	}
+	if = {
+		limit = {
+			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $COURT_POSITION$_court_position }
+			NOT = { exists = $CURRENT_CP_OWNER$ }
+		}
+		employ_character_as_position_in_current_scope_court_effect = {
+			CHARACTER = $CHARACTER$
+			POSITION = $COURT_POSITION$
+		}
+	}
+	else_if = {
+		limit = {
+			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $LAAMP_POSITION$_camp_officer }
+			NOT = { exists = $CURRENT_CP_OWNER$ }
+		}
+		employ_character_as_position_in_current_scope_camp_effect = {
+			CHARACTER = $CHARACTER$
+			POSITION = $LAAMP_POSITION$
+		}
+	}
+	else_if = {
+		limit = {
+			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $COURT_POSITION$_court_position }
+			exists = $CURRENT_CP_OWNER$
+			$CHARACTER$.aptitude:$COURT_POSITION$_court_position > $CURRENT_CP_OWNER$.aptitude:$COURT_POSITION$_court_position
+		}
+		add_character_flag = temporary_court_position_cost_removal
+		replace_court_position = {
+			recipient = $CHARACTER$
+			holder = $CURRENT_CP_OWNER$
+			court_position = $COURT_POSITION$_court_position
+		}
+		$CHARACTER$ = { save_scope_as = candidate }
+		$CURRENT_CP_OWNER$ = { save_scope_as = old_holder }
+		custom_tooltip = $COURT_POSITION$_old_holder_aptitude_tooltip
+		clear_saved_scope = candidate
+		clear_saved_scope = old_holder
+		remove_character_flag = temporary_court_position_cost_removal
+	}
+	else_if = {
+		limit = {
+			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $LAAMP_POSITION$_camp_officer }
+			exists = $CURRENT_CP_OWNER$
+			$CHARACTER$.aptitude:$LAAMP_POSITION$_camp_officer > $CURRENT_CP_OWNER$.aptitude:$LAAMP_POSITION$_camp_officer
+		}
+		add_character_flag = temporary_court_position_cost_removal
+		replace_court_position = {
+			recipient = $CHARACTER$
+			holder = $CURRENT_CP_OWNER$
+			court_position = $LAAMP_POSITION$_camp_officer
+		}
+		$CHARACTER$ = { save_scope_as = candidate }
+		$CURRENT_CP_OWNER$ = { save_scope_as = old_holder }
+		custom_tooltip = $COURT_POSITION$_old_holder_aptitude_tooltip
+		clear_saved_scope = candidate
+		clear_saved_scope = old_holder
+		remove_character_flag = temporary_court_position_cost_removal
+	}
+	else = {
+		show_as_tooltip = {
+			add_courtier = $CHARACTER$
+		}
+	}
+	
+	if = {
+		limit = {
+			has_activity_intent = journey_curiosity_intent
+		}
+		add_hook = {
+			type = strong_obligation_hook
+			target = $CHARACTER$
+		}
+		custom_tooltip = obligation_hook_tt
+	}
+}
+
+unop_get_worst_or_none_cp_holder_effect = {
+	if = {
+		limit = { unop_is_multi_slot_cp = { CP = flag:$POS$ } }
+		save_scope_value_as = { 
+			name = unop_multi_slot_cp
+			value = flag:$POS$_court_position
+		}
+		if = { # CP with 2 slots
+			limit = {
+				OR = {
+					scope:unop_multi_slot_cp = flag:bodyguard #2
+					scope:unop_multi_slot_cp = flag:lady_in_waiting #2
+					scope:unop_multi_slot_cp = flag:garuda #2
+				}
+			}
+			unop_get_worst_cp_holder = {
+				EMPLOYER = $EMPLOYER$
+				POS = $POS$
+				SLOT = 2
+			}
+		}
+		else_if = {
+			limit = { scope:unop_multi_slot_cp = flag:court_artificer } #3
+			unop_get_worst_cp_holder = {
+				EMPLOYER = $EMPLOYER$
+				POS = $POS$
+				SLOT = 3
+			}
+		}
+		if = {
+			limit = { exists = scope:unop_worst_char_for_cp }
+			save_scope_as = old_holder
+		}
+	}
+	else = {
+		$EMPLOYER$.court_position:$POS$_court_position ?= { save_scope_as = old_holder }
+	}
+}
+
+#Unop: Based on hire_for_two_court_position_journey_laamp_replacement_effect
+unop_hire_for_two_court_position_journey_laamp_replacement_effect = {
+	hidden_effect = {
+		$CHARACTER$ = {
+			add_to_court_and_entourage_effect = yes
+		}
+	}
+	if = {
+		limit = {
+			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $COURT_POSITION$_court_position }
+			NOT = { exists = $CURRENT_CP_OWNER$ }
+		}
+		employ_character_as_position_in_current_scope_court_effect = {
+			CHARACTER = $CHARACTER$
+			POSITION = $COURT_POSITION$
+		}
+	}
+	else_if = {
+		limit = {
+			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $COURT_POSITION_2$_court_position }
+			NOT = { exists = $CURRENT_CP_OWNER$ }
+		}
+		employ_character_as_position_in_current_scope_court_effect = {
+			CHARACTER = $CHARACTER$
+			POSITION = $COURT_POSITION_2$
+		}
+	}
+	else_if = {
+		limit = {
+			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $LAAMP_POSITION$_camp_officer }
+			NOT = { exists = $CURRENT_CP_OWNER$ }
+		}
+		employ_character_as_position_in_current_scope_camp_effect = {
+			CHARACTER = $CHARACTER$
+			POSITION = $LAAMP_POSITION$
+		}
+	}
+	else_if = {
+		limit = {
+			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $COURT_POSITION$_court_position }
+			exists = $CURRENT_CP_OWNER$
+			$CHARACTER$.aptitude:$COURT_POSITION$_court_position > $CURRENT_CP_OWNER$.aptitude:$COURT_POSITION$_court_position
+		}
+		add_character_flag = temporary_court_position_cost_removal
+		replace_court_position = {
+			recipient = $CHARACTER$
+			holder = $CURRENT_CP_OWNER$
+			court_position = $COURT_POSITION$_court_position
+		}
+		$CHARACTER$ = { save_scope_as = candidate }
+		$CURRENT_CP_OWNER$ = { save_scope_as = old_holder }
+		custom_tooltip = $COURT_POSITION$_old_holder_aptitude_tooltip
+		clear_saved_scope = candidate
+		clear_saved_scope = old_holder
+		remove_character_flag = temporary_court_position_cost_removal
+	}
+	else_if = {
+		limit = {
+			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $COURT_POSITION_2$_court_position }
+			exists = $CURRENT_CP_OWNER$
+			$CHARACTER$.aptitude:$COURT_POSITION_2$_court_position > $CURRENT_CP_OWNER$.aptitude:$COURT_POSITION_2$_court_position
+		}
+		add_character_flag = temporary_court_position_cost_removal
+		replace_court_position = {
+			recipient = $CHARACTER$
+			holder = $CURRENT_CP_OWNER$
+			court_position = $COURT_POSITION_2$_court_position
+		}		
+		$CHARACTER$ = { save_scope_as = candidate }
+		$CURRENT_CP_OWNER$ = { save_scope_as = old_holder }
+		custom_tooltip = $COURT_POSITION$_old_holder_aptitude_tooltip
+		clear_saved_scope = candidate
+		clear_saved_scope = old_holder
+		remove_character_flag = temporary_court_position_cost_removal
+	}
+	else_if = {
+		limit = {
+			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $LAAMP_POSITION$_camp_officer }
+			exists = $CURRENT_CP_OWNER$
+			$CHARACTER$.aptitude:$LAAMP_POSITION$_camp_officer > $CURRENT_CP_OWNER$.aptitude:$LAAMP_POSITION$_camp_officer
+		}
+		add_character_flag = temporary_court_position_cost_removal
+		replace_court_position = {
+			recipient = $CHARACTER$
+			holder = $CURRENT_CP_OWNER$
+			court_position = $LAAMP_POSITION$_camp_officer
+		}
+		$CHARACTER$ = { save_scope_as = candidate }
+		$CURRENT_CP_OWNER$ = { save_scope_as = old_holder }
+		custom_tooltip = $COURT_POSITION$_old_holder_aptitude_tooltip
+		clear_saved_scope = candidate
+		clear_saved_scope = old_holder
+		remove_character_flag = temporary_court_position_cost_removal
+	}
+	else = {
+		show_as_tooltip = {
+			add_courtier = $CHARACTER$
+		}
+	}
+	
+	if = {
+		limit = {
+			has_activity_intent = journey_curiosity_intent
+		}
+		add_hook = {
+			type = strong_obligation_hook
+			target = $CHARACTER$
+		}
+		custom_tooltip = obligation_hook_tt
+	}
+}

@@ -918,3 +918,11 @@ unop_employer_can_have_cp = {
 		}
 	}
 }
+
+unop_employer_can_have_cp_lax = {
+	#Unop: We need to have an OR since can_employ_court_position_type will return false if we have the maximum amount of character for a given slot (like 2 bodyguard)
+	OR = {
+		can_employ_court_position_type = $COURT_POS$
+		employs_court_position = $COURT_POS$
+	}
+}

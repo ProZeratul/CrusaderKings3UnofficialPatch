@@ -975,6 +975,16 @@ bp3_journey.1000 = {
 	}
 
 	immediate = {
+		if = { #Unop: To be able to launch those event from the debugger without too many scope issue
+			limit = {
+				debug_only = yes 
+				NOT = { exists = scope:activity }
+			}
+			involved_activity = { 
+				save_scope_as = activity
+				activity_host = { save_scope_as = host }
+			}
+		}
 		scope:activity.activity_location = { save_scope_as = location }
 		if = {
 			limit = {
@@ -1116,6 +1126,7 @@ bp3_journey.1000 = {
 				save_scope_as = current_holder
 			}
 		}
+		add_character_flag = temporary_court_position_cost_removal #Unop: Put this here instead of the option so the tooltip will show that replacement have no cost
 	}
 	
 	weight_multiplier = {
@@ -1161,10 +1172,10 @@ bp3_journey.1000 = {
 		name = bp3_journey.1000.curiosity
 		trigger = {
 			has_activity_intent = journey_curiosity_intent
-			unop_employer_can_have_cp = { COURT_POS = antiquarian_court_position }
+			unop_employer_can_have_cp_lax = { COURT_POS = antiquarian_court_position }
 		}
 		
-		hire_for_court_position_journey_effect = {
+		unop_hire_for_court_position_journey_effect = {
 			CHARACTER = scope:local_character
 			COURT_POSITION = antiquarian
 		}
@@ -1273,11 +1284,11 @@ bp3_journey.1000 = {
 		name = bp3_journey.1000.b
 		
 		trigger = {
-			unop_employer_can_have_cp = { COURT_POS = antiquarian_court_position }
+			unop_employer_can_have_cp_lax = { COURT_POS = antiquarian_court_position }
 			NOT = { has_activity_intent = journey_curiosity_intent }
 		}
 		
-		hire_for_court_position_journey_effect = {
+		unop_hire_for_court_position_journey_effect = {
 			CHARACTER = scope:local_character
 			COURT_POSITION = antiquarian
 		}
@@ -1316,7 +1327,7 @@ bp3_journey.1000 = {
 				}
 				destroy_artifact = scope:new_trinket
 			}
-		} 
+		}
 		if = { # Cleanup
 			limit = {
 				root = {
@@ -1331,6 +1342,7 @@ bp3_journey.1000 = {
 				silent_disappearance_effect = yes
 			}
 		}
+		remove_character_flag = temporary_court_position_cost_removal #Unop: Since the add of this flag is now in the immediate, we need to be sure it's cleared everytime
 	}
 }
 
@@ -1606,6 +1618,16 @@ bp3_journey.1200 = {
 	}
 
 	immediate = {
+		if = { #Unop: To be able to launch those event from the debugger without too many scope issue
+			limit = {
+				debug_only = yes 
+				NOT = { exists = scope:activity }
+			}
+			involved_activity = { 
+				save_scope_as = activity
+				activity_host = { save_scope_as = host }
+			}
+		}
 		scope:activity.activity_location = { save_scope_as = location }
 		if = {
 			limit = {
@@ -1728,7 +1750,7 @@ bp3_journey.1200 = {
 		name = bp3_journey.1200.curiosity
 		trigger = {
 			has_activity_intent = journey_curiosity_intent
-			unop_employer_can_have_cp = { COURT_POS = court_physician_court_position }
+			unop_employer_can_have_cp_lax = { COURT_POS = court_physician_court_position }
 		}
 		custom_tooltip = hair_will_change
 		add_character_flag = {
@@ -1738,7 +1760,7 @@ bp3_journey.1200 = {
 		
 		add_prestige = medium_prestige_gain
 
-		hire_for_court_position_journey_effect = {
+		unop_hire_for_court_position_journey_effect = {
 			CHARACTER = scope:local_character
 			COURT_POSITION = court_physician
 		}
@@ -1829,11 +1851,11 @@ bp3_journey.1200 = {
 		name = bp3_journey.1200.b
 		
 		trigger = {
-			unop_employer_can_have_cp = { COURT_POS = court_physician_court_position }
+			unop_employer_can_have_cp_lax = { COURT_POS = court_physician_court_position }
 			NOT = { has_activity_intent = journey_curiosity_intent }
 		}
 
-		hire_for_court_position_journey_effect = {
+		unop_hire_for_court_position_journey_effect = {
 			CHARACTER = scope:local_character
 			COURT_POSITION = court_physician
 		}
@@ -1919,10 +1941,20 @@ bp3_journey.1300 = {
 	}
 
 	immediate = {
+		if = { #Unop: To be able to launch those event from the debugger without too many scope issue
+			limit = {
+				debug_only = yes 
+				NOT = { exists = scope:activity }
+			}
+			involved_activity = { 
+				save_scope_as = activity
+				activity_host = { save_scope_as = host }
+			}
+		}
 		scope:activity.activity_location = { save_scope_as = location }
 		if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = stooge_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = stooge_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -1961,7 +1993,7 @@ bp3_journey.1300 = {
 		}
 		else_if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = stooge_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = stooge_camp_officer }
 			}
 			create_character = {
 				template = stooge_camp_officer_template
@@ -2054,7 +2086,7 @@ bp3_journey.1300 = {
 		}
 		if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = master_bard_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = master_bard_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -2095,7 +2127,7 @@ bp3_journey.1300 = {
 		}
 		else_if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = master_bard_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = master_bard_camp_officer }
 			}
 			create_character = {
 				template = master_bard_camp_officer_template
@@ -2189,6 +2221,7 @@ bp3_journey.1300 = {
 			}
 		}
 		scope:local_character = { add_character_flag = jester_outfit }
+		add_character_flag = temporary_court_position_cost_removal #Unop: Put this here instead of the option so the tooltip will show that replacement have no cost
 	}
 	
 	weight_multiplier = {
@@ -2203,6 +2236,14 @@ bp3_journey.1300 = {
 				AND = {
 					unop_employer_can_have_cp = { COURT_POS = court_musician_court_position }
 					NOT = { employs_court_position = court_musician_court_position }
+				}
+				AND = {
+					unop_employer_can_have_cp = { COURT_POS = master_bard_camp_officer }
+					NOT = { employs_court_position = master_bard_camp_officer }
+				}
+				AND = {
+					unop_employer_can_have_cp = { COURT_POS = stooge_camp_officer }
+					NOT = { employs_court_position = stooge_camp_officer }
 				}
 			}
 		}
@@ -2276,17 +2317,17 @@ bp3_journey.1300 = {
 		trigger = {
 			has_activity_intent = journey_curiosity_intent
 		}
-		
-		hire_for_court_position_journey_laamp_replacement_effect = {
+		unop_hire_for_court_position_journey_laamp_replacement_effect = {
 			CHARACTER = scope:local_character
 			COURT_POSITION = court_jester
 			LAAMP_POSITION = stooge
+			CURRENT_CP_OWNER = scope:current_holder
 		}
-
-		hire_for_court_position_journey_laamp_replacement_effect = {
+		unop_hire_for_court_position_journey_laamp_replacement_effect = {
 			CHARACTER = scope:local_character_2
 			COURT_POSITION = court_musician
 			LAAMP_POSITION = master_bard
+			CURRENT_CP_OWNER = scope:current_holder_2
 		}
 		
 		if = {
@@ -2326,8 +2367,8 @@ bp3_journey.1300 = {
 		
 		trigger = {
 			OR = {
-				unop_employer_can_have_cp = { COURT_POS = court_jester_court_position }
-				unop_employer_can_have_cp = { COURT_POS = stooge_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = court_jester_court_position }
+				unop_employer_can_have_cp_lax = { COURT_POS = stooge_camp_officer }
 			}
 			NOT = { has_activity_intent = journey_curiosity_intent }
 		}
@@ -2362,8 +2403,8 @@ bp3_journey.1300 = {
 		
 		trigger = {
 			OR = {
-				unop_employer_can_have_cp = { COURT_POS = court_musician_court_position }
-				unop_employer_can_have_cp = { COURT_POS = master_bard_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = court_musician_court_position }
+				unop_employer_can_have_cp_lax = { COURT_POS = master_bard_camp_officer }
 			}
 			NOT = { has_activity_intent = journey_curiosity_intent }
 		}
@@ -2471,10 +2512,20 @@ bp3_journey.1400 = {
 	}
 
 	immediate = {
+		if = { #Unop: To be able to launch those event from the debugger without too many scope issue
+			limit = {
+				debug_only = yes 
+				NOT = { exists = scope:activity }
+			}
+			involved_activity = { 
+				save_scope_as = activity
+				activity_host = { save_scope_as = host }
+			}
+		}
 		scope:activity.activity_location = { save_scope_as = location }
 		if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = master_bard_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = master_bard_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -2502,7 +2553,7 @@ bp3_journey.1400 = {
 		}
 		else_if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = huntperson_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = huntperson_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -2670,12 +2721,12 @@ bp3_journey.1400 = {
 		name = bp3_journey.1400.curiosity
 		trigger = {
 			has_activity_intent = journey_curiosity_intent
-			unop_employer_can_have_cp = { COURT_POS = master_of_hunt_court_position }
+			unop_employer_can_have_cp_lax = { COURT_POS = master_of_hunt_court_position }
 		}
 		
 		hunter_progress_point_gain_effect = { CHANGE = 3 RANDOM_CHANGE = 1 } #Gives Hunter Lifestyle XP
 
-		hire_for_court_position_journey_effect = {
+		unop_hire_for_court_position_journey_effect = {
 			CHARACTER = scope:local_character
 			COURT_POSITION = master_of_hunt
 		}
@@ -2748,11 +2799,11 @@ bp3_journey.1400 = {
 		name = bp3_journey.1400.b
 		
 		trigger = {
-			unop_employer_can_have_cp = { COURT_POS = master_of_hunt_court_position }
+			unop_employer_can_have_cp_lax = { COURT_POS = master_of_hunt_court_position }
 			NOT = { has_activity_intent = journey_curiosity_intent }
 		}
 
-		hire_for_court_position_journey_effect = {
+		unop_hire_for_court_position_journey_effect = {
 			CHARACTER = scope:local_character
 			COURT_POSITION = master_of_hunt
 		}
@@ -2843,10 +2894,20 @@ bp3_journey.1500 = {
 	}
 
 	immediate = {
+		if = { #Unop: To be able to launch those event from the debugger without too many scope issue
+			limit = {
+				debug_only = yes 
+				NOT = { exists = scope:activity }
+			}
+			involved_activity = { 
+				save_scope_as = activity
+				activity_host = { save_scope_as = host }
+			}
+		}
 		scope:activity.activity_location = { save_scope_as = location }
 		if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = chief_forager_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = chief_forager_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -2885,7 +2946,7 @@ bp3_journey.1500 = {
 		}
 		else_if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = chief_forager_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = chief_forager_camp_officer }
 			}
 			create_character = {
 				template = chief_forager_camp_officer_template
@@ -2914,7 +2975,7 @@ bp3_journey.1500 = {
 		}
 		else_if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = chief_qadi_court_position }
+				unop_employer_can_have_cp_lax = { COURT_POS = chief_qadi_court_position }
 				scope:location.religion = religion:islam_religion
 				any_pool_character = {
 					province = scope:location
@@ -2954,7 +3015,7 @@ bp3_journey.1500 = {
 		}
 		else_if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = chief_qadi_court_position }
+				unop_employer_can_have_cp_lax = { COURT_POS = chief_qadi_court_position }
 				scope:location.religion = religion:islam_religion
 			}
 			create_character = {
@@ -3082,13 +3143,13 @@ bp3_journey.1500 = {
 				}
 				random_court_position_holder = {
 					type = quartermaster_camp_officer
-					save_scope_as = current_holder
+					save_scope_as = current_holder_2
 				}
 			}
 		}
 		else_if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = quartermaster_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = quartermaster_camp_officer }
 			}
 			create_character = {
 				template = quartermaster_camp_officer_template
@@ -3111,7 +3172,7 @@ bp3_journey.1500 = {
 				}
 				random_court_position_holder = {
 					type = quartermaster_camp_officer
-					save_scope_as = current_holder
+					save_scope_as = current_holder_2
 				}
 			}
 		}
@@ -3151,7 +3212,7 @@ bp3_journey.1500 = {
 				}
 				random_court_position_holder = {
 					type = seneschal_court_position
-					save_scope_as = current_holder
+					save_scope_as = current_holder_2
 				}
 			}
 		}
@@ -3177,7 +3238,7 @@ bp3_journey.1500 = {
 				}
 				random_court_position_holder = {
 					type = seneschal_court_position
-					save_scope_as = current_holder
+					save_scope_as = current_holder_2
 				}
 			}
 		}
@@ -3187,10 +3248,10 @@ bp3_journey.1500 = {
 			if = {
 				limit = {
 					OR = {
-						unop_employer_can_have_cp = { COURT_POS = chief_qadi_court_position }
-						unop_employer_can_have_cp = { COURT_POS = high_almoner_court_position }
+						unop_employer_can_have_cp_lax = { COURT_POS = chief_qadi_court_position }
+						unop_employer_can_have_cp_lax = { COURT_POS = high_almoner_court_position }
 					}
-					unop_employer_can_have_cp = { COURT_POS = seneschal_court_position }
+					unop_employer_can_have_cp_lax = { COURT_POS = seneschal_court_position }
 				}
 				save_scope_as = unop_can_employ_both
 			}
@@ -3198,8 +3259,8 @@ bp3_journey.1500 = {
 		else = {
 			if = {
 				limit = {
-					unop_employer_can_have_cp = { COURT_POS = quartermaster_camp_officer }	
-					unop_employer_can_have_cp = { COURT_POS = chief_forager_camp_officer }
+					unop_employer_can_have_cp_lax = { COURT_POS = quartermaster_camp_officer }	
+					unop_employer_can_have_cp_lax = { COURT_POS = chief_forager_camp_officer }
 				}
 				save_scope_as = unop_can_employ_both
 			}
@@ -3322,17 +3383,19 @@ bp3_journey.1500 = {
 			exists = scope:unop_can_employ_both
 		}
 
-		hire_for_two_court_position_journey_laamp_replacement_effect = {
+		unop_hire_for_two_court_position_journey_laamp_replacement_effect = {
 			CHARACTER = scope:local_character
 			COURT_POSITION = chief_qadi
 			COURT_POSITION_2 = high_almoner
 			LAAMP_POSITION = chief_forager
+			CURRENT_CP_OWNER = scope:current_holder
 		}
 
-		hire_for_court_position_journey_laamp_replacement_effect = {
+		unop_hire_for_court_position_journey_laamp_replacement_effect = {
 			CHARACTER = scope:local_character_2
 			COURT_POSITION = seneschal
 			LAAMP_POSITION = quartermaster
+			CURRENT_CP_OWNER = scope:current_holder_2
 		}
 		
 		stress_impact = {
@@ -3408,9 +3471,9 @@ bp3_journey.1500 = {
 
 		trigger = {
 			OR = {
-				unop_employer_can_have_cp = { COURT_POS = chief_forager_camp_officer }
-				unop_employer_can_have_cp = { COURT_POS = chief_qadi_court_position }
-				unop_employer_can_have_cp = { COURT_POS = high_almoner_court_position }
+				unop_employer_can_have_cp_lax = { COURT_POS = chief_forager_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = chief_qadi_court_position }
+				unop_employer_can_have_cp_lax = { COURT_POS = high_almoner_court_position }
 			}
 			NAND = {
 				has_activity_intent = journey_curiosity_intent
@@ -3447,8 +3510,8 @@ bp3_journey.1500 = {
 		
 		trigger = {
 			OR = {
-				unop_employer_can_have_cp = { COURT_POS = seneschal_court_position }
-				unop_employer_can_have_cp = { COURT_POS = quartermaster_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = seneschal_court_position }
+				unop_employer_can_have_cp_lax = { COURT_POS = quartermaster_camp_officer }
 			}
 			NAND = {
 				has_activity_intent = journey_curiosity_intent
@@ -3746,10 +3809,20 @@ bp3_journey.1700 = {
 	}
 
 	immediate = {
+		if = { #Unop: To be able to launch those event from the debugger without too many scope issue
+			limit = {
+				debug_only = yes 
+				NOT = { exists = scope:activity }
+			}
+			involved_activity = { 
+				save_scope_as = activity
+				activity_host = { save_scope_as = host }
+			}
+		}
 		scope:activity.activity_location = { save_scope_as = location }
 		if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = head_groom_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = head_groom_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -3788,7 +3861,7 @@ bp3_journey.1700 = {
 		}
 		else_if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = head_groom_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = head_groom_camp_officer }
 			}
 			create_character = {
 				template = head_groom_camp_officer_template
@@ -4027,6 +4100,43 @@ bp3_journey.1700 = {
 				save_scope_as = maa
 			}
 		}
+	
+		if = {
+			limit = { employs_court_position = bodyguard_court_position }
+			if = {
+				limit = {
+					any_court_position_holder = {
+						type = bodyguard_court_position
+						count = 2
+					}
+				}
+				ordered_court_position_holder = {
+					type = bodyguard_court_position
+					order_by = {
+						value = aptitude:bodyguard_court_position
+						multiply = -1
+					}
+					save_scope_as = unop_old_bodyguard
+				}
+				random_court_position_holder = {
+					type = bodyguard_court_position
+					limit = {
+						NOT = { this = scope:unop_old_bodyguard } 
+					}
+					save_scope_as = unop_old_bodyguard_2
+				}
+			}
+			else = {
+				random_court_position_holder = {
+					type = bodyguard_court_position
+					save_scope_as = unop_old_bodyguard
+				}
+			}
+		}
+		else = {
+			save_scope_as = unop_bp3_journey_1700_both_bodyguard
+		}
+		add_character_flag = temporary_court_position_cost_removal #Unop: Put this here instead of the option so the tooltip will show that replacement have no cost
 	}
 	
 	weight_multiplier = {
@@ -4166,26 +4276,46 @@ bp3_journey.1700 = {
 			has_activity_intent = journey_curiosity_intent
 		}
 
-		hire_for_court_position_journey_laamp_replacement_effect = {
+		unop_recruit_best_both_effect = { 
 			CHARACTER = scope:local_character
 			COURT_POSITION = master_of_horse
 			LAAMP_POSITION = head_groom
+			CURRENT_CP_OWNER = scope:current_holder
 		}
 
-		add_character_flag = bodyguard_flag
-
-		hire_for_court_position_journey_effect = {
-			CHARACTER = scope:local_character_2
-			COURT_POSITION = bodyguard
+		if = {
+			limit = { exists = scope:unop_old_bodyguard }
+			unop_recruit_best_cp_effect = {
+				CHARACTER = scope:local_character_2
+				COURT_POSITION = bodyguard
+				CURRENT_CP_OWNER = scope:unop_old_bodyguard
+			}
+			if = {
+				limit = { exists = scope:unop_old_bodyguard_2 }
+				unop_recruit_best_cp_effect = {
+					CHARACTER = scope:local_character_3
+					COURT_POSITION = bodyguard
+					CURRENT_CP_OWNER = scope:unop_old_bodyguard_2
+				}
+			}
+			else = {
+				unop_hire_for_court_position_journey_effect = {
+					CHARACTER = scope:local_character_3
+					COURT_POSITION = bodyguard
+				}
+			}
+		}
+		else = {
+			unop_hire_for_court_position_journey_effect = {
+				CHARACTER = scope:local_character_2
+				COURT_POSITION = bodyguard
+			}
+			unop_hire_for_court_position_journey_effect = {
+				CHARACTER = scope:local_character_3
+				COURT_POSITION = bodyguard
+			}
 		}
 
-		hire_for_court_position_journey_effect = {
-			CHARACTER = scope:local_character_3
-			COURT_POSITION = bodyguard
-		}
-
-		remove_character_flag = bodyguard_flag
-		
 		if = {
 			limit = {
 				NOT = { culture = scope:local_character.culture }
@@ -4222,12 +4352,12 @@ bp3_journey.1700 = {
 
 		add_character_flag = bodyguard_flag
 
-		hire_for_court_position_journey_effect = {
+		unop_hire_for_court_position_journey_effect = {
 			CHARACTER = scope:local_character_2
 			COURT_POSITION = bodyguard
 		}
 
-		hire_for_court_position_journey_effect = {
+		unop_hire_for_court_position_journey_effect = {
 			CHARACTER = scope:local_character_3
 			COURT_POSITION = bodyguard
 		}
@@ -4309,6 +4439,7 @@ bp3_journey.1700 = {
 			remove_character_flag = military_outfit
 			silent_dissapear_ai_if_not_hired = yes
 		}
+		remove_character_flag = temporary_court_position_cost_removal #Unop: Since the add of this flag is now in the immediate, we need to be sure it's cleared everytime
 	}
 }
 
@@ -4337,6 +4468,16 @@ bp3_journey.1800 = {
 	}
 
 	immediate = {
+		if = { #Unop: To be able to launch those event from the debugger without too many scope issue
+			limit = {
+				debug_only = yes 
+				NOT = { exists = scope:activity }
+			}
+			involved_activity = { 
+				save_scope_as = activity
+				activity_host = { save_scope_as = host }
+			}
+		}
 		scope:activity.activity_location = { save_scope_as = location }
 		if = {
 			limit = {
@@ -4400,6 +4541,7 @@ bp3_journey.1800 = {
 				}
 			}
 		}
+		add_character_flag = temporary_court_position_cost_removal #Unop: Put this here instead of the option so the tooltip will show that replacement have no cost
 	}
 	
 	weight_multiplier = {
@@ -4561,7 +4703,7 @@ bp3_journey.1800 = {
 		name = bp3_journey.1800.curiosity
 		trigger = {
 			has_activity_intent = journey_curiosity_intent
-			unop_employer_can_have_cp = { COURT_POS = travel_leader_court_position }
+			unop_employer_can_have_cp_lax = { COURT_POS = travel_leader_court_position }
 			NOT = { has_trait = trusting }
 		}
 		
@@ -4570,7 +4712,7 @@ bp3_journey.1800 = {
 			gold = tiny_gold_value
 		}
 
-		hire_for_court_position_journey_effect = {
+		unop_hire_for_court_position_journey_effect = {
 			CHARACTER = scope:local_character
 			COURT_POSITION = travel_leader
 		}
@@ -4681,10 +4823,10 @@ bp3_journey.1800 = {
 				has_activity_intent = journey_curiosity_intent
 				has_trait = trusting
 			}
-			unop_employer_can_have_cp = { COURT_POS = travel_leader_court_position }
+			unop_employer_can_have_cp_lax = { COURT_POS = travel_leader_court_position }
 		}
 
-		hire_for_court_position_journey_effect = {
+		unop_hire_for_court_position_journey_effect = {
 			CHARACTER = scope:local_character
 			COURT_POSITION = travel_leader
 		}
@@ -4750,6 +4892,7 @@ bp3_journey.1800 = {
 				silent_disappearance_effect = yes
 			}
 		}
+		remove_character_flag = temporary_court_position_cost_removal #Unop: Since the add of this flag is now in the immediate, we need to be sure it's cleared everytime
 	}
 }
 
@@ -4775,20 +4918,30 @@ bp3_journey.1900 = {
 
 	trigger = {
 		OR = {
-			unop_employer_can_have_cp = { COURT_POS = court_tutor_court_position }
-			unop_employer_can_have_cp = { COURT_POS = royal_architect_court_position }
-			unop_employer_can_have_cp = { COURT_POS = head_porter_camp_officer }
-			unop_employer_can_have_cp = { COURT_POS = cupbearer_court_position }
-			unop_employer_can_have_cp = { COURT_POS = witness_camp_officer }
-			unop_employer_can_have_cp = { COURT_POS = court_poet_court_position }
-			unop_employer_can_have_cp = { COURT_POS = chronicler_court_position }
-			unop_employer_can_have_cp = { COURT_POS = second_camp_officer }
-			unop_employer_can_have_cp = { COURT_POS = wet_nurse_court_position }
-			unop_employer_can_have_cp = { COURT_POS = antiquarian_court_position }
+			unop_employer_can_have_cp_lax = { COURT_POS = court_tutor_court_position }
+			unop_employer_can_have_cp_lax = { COURT_POS = royal_architect_court_position }
+			unop_employer_can_have_cp_lax = { COURT_POS = head_porter_camp_officer }
+			unop_employer_can_have_cp_lax = { COURT_POS = cupbearer_court_position }
+			unop_employer_can_have_cp_lax = { COURT_POS = witness_camp_officer }
+			unop_employer_can_have_cp_lax = { COURT_POS = court_poet_court_position }
+			unop_employer_can_have_cp_lax = { COURT_POS = chronicler_court_position }
+			unop_employer_can_have_cp_lax = { COURT_POS = second_camp_officer }
+			unop_employer_can_have_cp_lax = { COURT_POS = wet_nurse_court_position }
+			unop_employer_can_have_cp = { COURT_POS = antiquarian_court_position } #Unop: It was the only one strictly restricted to aptitude
 		}
 	}
 
 	immediate = {
+		if = { #Unop: To be able to launch those event from the debugger without too many scope issue
+			limit = {
+				debug_only = yes 
+				NOT = { exists = scope:activity }
+			}
+			involved_activity = { 
+				save_scope_as = activity
+				activity_host = { save_scope_as = host }
+			}
+		}
 		scope:activity.activity_location = { save_scope_as = location }
 		random_list = {
 			100 = {
@@ -4886,6 +5039,7 @@ bp3_journey.1900 = {
 			add_character_flag = peasant_outfit
 			add_character_flag = no_hat
 		}
+		add_character_flag = temporary_court_position_cost_removal #Unop: Put this here instead of the option so the tooltip will show that replacement have no cost
 	}
 	
 	weight_multiplier = {
@@ -5322,6 +5476,7 @@ bp3_journey.1900 = {
 		remove_character_flag = chronicler_court_position
 		remove_character_flag = wet_nurse_court_position
 		remove_character_flag = antiquarian_court_position
+		remove_character_flag = temporary_court_position_cost_removal #Unop: Since the add of this flag is now in the immediate, we need to be sure it's cleared everytime
 	}
 }
 
@@ -5544,7 +5699,7 @@ bp3_journey.2100 = {
 		scope:activity.activity_location = { save_scope_as = location }
 		if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = camp_cook_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = camp_cook_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -5583,7 +5738,7 @@ bp3_journey.2100 = {
 		}
 		else_if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = camp_cook_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = camp_cook_camp_officer }
 			}
 			create_character = {
 				template = camp_cook_camp_officer_template
@@ -5680,6 +5835,7 @@ bp3_journey.2100 = {
 				change_current_weight = 150
 			}
 		}
+		add_character_flag = temporary_court_position_cost_removal #Unop: Put this here instead of the option so the tooltip will show that replacement have no cost
 	}
 	
 	weight_multiplier = {
@@ -5782,12 +5938,17 @@ bp3_journey.2100 = {
 		name = bp3_journey.2100.curiosity_2
 		trigger = {
 			has_activity_intent = journey_curiosity_intent
+			OR = { #Unop: Ensure we can actually employ the character in those CP
+				unop_employer_can_have_cp_lax = camp_cook_camp_officer
+				unop_employer_can_have_cp_lax = food_taster_court_position
+			}
 		}
 
-		hire_for_court_position_journey_laamp_replacement_effect = {
+		unop_hire_for_court_position_journey_laamp_replacement_effect = {
 			CHARACTER = scope:local_character
 			COURT_POSITION = food_taster
 			LAAMP_POSITION = camp_cook
+			CURRENT_CP_OWNER = scope:current_holder
 		}
 		
 		stress_impact = {
@@ -5839,8 +6000,8 @@ bp3_journey.2100 = {
 		
 		trigger = {
 			OR = {
-				unop_employer_can_have_cp = { COURT_POS = camp_cook_camp_officer }
-				unop_employer_can_have_cp = { COURT_POS = food_taster_court_position }
+				unop_employer_can_have_cp_lax = { COURT_POS = camp_cook_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = food_taster_court_position }
 			}
 			NOT = { has_activity_intent = journey_curiosity_intent }
 		}
@@ -5893,6 +6054,7 @@ bp3_journey.2100 = {
 				silent_disappearance_effect = yes
 			}
 		}
+		remove_character_flag = temporary_court_position_cost_removal #Unop: Since the add of this flag is now in the immediate, we need to be sure it's cleared everytime
 	}
 }
 
@@ -5920,13 +6082,23 @@ bp3_journey.2200 = {
 
 	trigger = {
 		OR = {
-			unop_employer_can_have_cp = { COURT_POS = master_of_spoils_camp_officer }
-			unop_employer_can_have_cp = { COURT_POS = wet_nurse_court_position }
-			unop_employer_can_have_cp = { COURT_POS = bodyguard_court_position }
+			unop_employer_can_have_cp_lax = { COURT_POS = master_of_spoils_camp_officer }
+			unop_employer_can_have_cp_lax = { COURT_POS = wet_nurse_court_position }
+			unop_employer_can_have_cp_lax = { COURT_POS = bodyguard_court_position }
 		}
 	}
 
 	immediate = {
+		if = { #Unop: To be able to launch those event from the debugger without too many scope issue
+			limit = {
+				debug_only = yes 
+				NOT = { exists = scope:activity }
+			}
+			involved_activity = { 
+				save_scope_as = activity
+				activity_host = { save_scope_as = host }
+			}
+		}
 		scope:activity.activity_location = { save_scope_as = location }
 		if = {
 			limit = {
@@ -5940,7 +6112,7 @@ bp3_journey.2200 = {
 					is_available_healthy_ai_adult = yes
 					wet_nurse_validity_trigger = { EMPLOYER = root }
 				}
-				unop_employer_can_have_cp = { COURT_POS = wet_nurse_court_position }
+				unop_employer_can_have_cp_lax = { COURT_POS = wet_nurse_court_position }
 			}
 			random_pool_character = {
 				province = scope:location
@@ -5970,7 +6142,7 @@ bp3_journey.2200 = {
 		}
 		else_if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = wet_nurse_court_position }
+				unop_employer_can_have_cp_lax = { COURT_POS = wet_nurse_court_position }
 			}
 			create_character = {
 				template = wet_nurse_court_position_template
@@ -6001,7 +6173,7 @@ bp3_journey.2200 = {
 		}
 		else_if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = master_of_spoils_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = master_of_spoils_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -6041,7 +6213,7 @@ bp3_journey.2200 = {
 		}
 		else_if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = master_of_spoils_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = master_of_spoils_camp_officer }
 			}
 			create_character = {
 				template = master_of_spoils_camp_officer_template
@@ -6082,7 +6254,7 @@ bp3_journey.2200 = {
 					is_available_healthy_ai_adult = yes
 					bodyguard_validity_trigger = { EMPLOYER = root }
 				}
-				unop_employer_can_have_cp = { COURT_POS = bodyguard_court_position }
+				unop_employer_can_have_cp_lax = { COURT_POS = bodyguard_court_position }
 			}
 			random_pool_character = {
 				province = scope:location
@@ -6104,8 +6276,12 @@ bp3_journey.2200 = {
 						type = bodyguard_court_position
 					}
 				}
-				random_court_position_holder = {
+				ordered_court_position_holder = {
 					type = bodyguard_court_position
+					order_by = {
+						value = aptitude:bodyguard_court_position
+						multiply = -1
+					}
 					save_scope_as = current_holder
 				}
 			}
@@ -6132,8 +6308,12 @@ bp3_journey.2200 = {
 						type = bodyguard_court_position
 					}
 				}
-				random_court_position_holder = {
+				ordered_court_position_holder = {
 					type = bodyguard_court_position
+					order_by = {
+						value = aptitude:bodyguard_court_position
+						multiply = -1
+					}
 					save_scope_as = current_holder
 				}
 			}
@@ -6159,6 +6339,7 @@ bp3_journey.2200 = {
 			}
 		}
 		set_random_entertainment_text_effect = yes
+		add_character_flag = temporary_court_position_cost_removal #Unop: Put this here instead of the option so the tooltip will show that replacement have no cost
 	}
 	
 	weight_multiplier = {
@@ -6166,7 +6347,7 @@ bp3_journey.2200 = {
 		modifier = {
 			add = 1
 			AND = {
-				unop_employer_can_have_cp = { COURT_POS = wet_nurse_court_position }
+				unop_employer_can_have_cp_lax = { COURT_POS = wet_nurse_court_position }
 				NOT = { employs_court_position = wet_nurse_court_position }
 			}
 			# Bodyguard has a bespoke event
@@ -6174,8 +6355,15 @@ bp3_journey.2200 = {
 		modifier = {
 			add = 1
 			AND = {
-				unop_employer_can_have_cp = { COURT_POS = bodyguard_court_position }
+				unop_employer_can_have_cp_lax = { COURT_POS = bodyguard_court_position }
 				NOT = { employs_court_position = bodyguard_court_position }
+			}
+		}
+		modifier = {
+			add = 1
+			AND = {
+				unop_employer_can_have_cp_lax = { COURT_POS = master_of_spoils_camp_officer }
+				NOT = { employs_court_position = master_of_spoils_camp_officer }
 			}
 		}
 		modifier = {
@@ -6272,11 +6460,12 @@ bp3_journey.2200 = {
 			}
 		}
 
-		hire_for_two_court_position_journey_laamp_replacement_effect = {
+		unop_hire_for_two_court_position_journey_laamp_replacement_effect = {
 			CHARACTER = scope:local_character
 			COURT_POSITION = wet_nurse
 			COURT_POSITION_2 = bodyguard
 			LAAMP_POSITION = master_of_spoils
+			CURRENT_CP_OWNER = scope:current_holder
 		}
 		
 		if = {
@@ -6484,11 +6673,12 @@ bp3_journey.2200 = {
 			NOT = { has_activity_intent = journey_curiosity_intent }
 		}
 
-		hire_for_two_court_position_journey_laamp_replacement_effect = {
+		unop_hire_for_two_court_position_journey_laamp_replacement_effect = {
 			CHARACTER = scope:local_character
 			COURT_POSITION = wet_nurse
 			COURT_POSITION_2 = bodyguard
 			LAAMP_POSITION = master_of_spoils
+			CURRENT_CP_OWNER = scope:current_holder
 		}
 
 		stress_impact = {
@@ -6534,6 +6724,7 @@ bp3_journey.2200 = {
 				silent_disappearance_effect = yes
 			}
 		}
+		remove_character_flag = temporary_court_position_cost_removal #Unop: Since the add of this flag is now in the immediate, we need to be sure it's cleared everytime
 	}
 }
 
@@ -6622,6 +6813,16 @@ bp3_journey.2300 = {
 	}
 
 	immediate = {
+		if = { #Unop: To be able to launch those event from the debugger without too many scope issue
+			limit = {
+				debug_only = yes 
+				NOT = { exists = scope:activity }
+			}
+			involved_activity = { 
+				save_scope_as = activity
+				activity_host = { save_scope_as = host }
+			}
+		}
 		scope:activity.activity_location = { save_scope_as = location }
 		scope:activity.activity_location.county.holder = {
 			save_scope_as = local_ruler
@@ -6648,7 +6849,7 @@ bp3_journey.2300 = {
 		}
 		if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = master_of_arms_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = master_of_arms_camp_officer }
 				any_pool_character = {
 					province = scope:location
 					culture = scope:location.culture
@@ -6687,7 +6888,7 @@ bp3_journey.2300 = {
 		}
 		else_if = {
 			limit = {
-				unop_employer_can_have_cp = { COURT_POS = master_of_arms_camp_officer }
+				unop_employer_can_have_cp_lax = { COURT_POS = master_of_arms_camp_officer }
 			}
 			create_character = {
 				template = master_of_arms_camp_officer_template
@@ -6783,6 +6984,7 @@ bp3_journey.2300 = {
 				add_character_flag = military_outfit
 			}
 		}
+		add_character_flag = temporary_court_position_cost_removal #Unop: Put this here instead of the option so the tooltip will show that replacement have no cost
 	}
 	
 	weight_multiplier = {
@@ -6791,6 +6993,11 @@ bp3_journey.2300 = {
 			add = 1
 			unop_employer_can_have_cp = { COURT_POS = champion_court_position }
 			NOT = { employs_court_position = champion_court_position }
+		}
+		modifier = { #Unop: To be harmonised with the other weight_multiplier
+			add = 1
+			unop_employer_can_have_cp = { COURT_POS = master_of_arms_camp_officer }
+			NOT = { employs_court_position = master_of_arms_camp_officer }
 		}
 		modifier = {
 			add = 1
@@ -6881,12 +7088,17 @@ bp3_journey.2300 = {
 		name = bp3_journey.2300.curiosity_2
 		trigger = {
 			has_activity_intent = journey_curiosity_intent
+			OR = { #Unop: Ensure we can actually recruit for said CP
+				unop_employer_can_have_cp_lax = { COURT_POS = champion_court_position }
+				unop_employer_can_have_cp_lax = { COURT_POS = master_of_arms_camp_officer }
+			}
 		}
 
-		hire_for_court_position_journey_laamp_replacement_effect = {
+		unop_hire_for_court_position_journey_laamp_replacement_effect = {
 			CHARACTER = scope:local_character
 			COURT_POSITION = champion
 			LAAMP_POSITION = master_of_arms
+			CURRENT_CP_OWNER = scope:current_holder
 		}
 		
 		progress_towards_friend_effect = {
@@ -6963,9 +7175,9 @@ bp3_journey.2300 = {
 		name = bp3_journey.2300.b
 		
 		trigger = {
-			OR = {
-				unop_employer_can_have_cp = { COURT_POS = champion_court_position }
-				unop_employer_can_have_cp = { COURT_POS = master_of_arms_camp_officer }
+			OR = { #Unop: Ensure we can actually recruit for said CP
+				unop_employer_can_have_cp_lax = { COURT_POS = champion_court_position }
+				unop_employer_can_have_cp_lax = { COURT_POS = master_of_arms_camp_officer }
 			}
 			NOT = { has_activity_intent = journey_curiosity_intent }
 		}
@@ -6976,10 +7188,11 @@ bp3_journey.2300 = {
 			opinion = -10
 		}
 
-		hire_for_court_position_journey_laamp_replacement_effect = {
+		unop_hire_for_court_position_journey_laamp_replacement_effect = {
 			CHARACTER = scope:local_character
 			COURT_POSITION = champion
 			LAAMP_POSITION = master_of_arms
+			CURRENT_CP_OWNER = scope:current_holder
 		}
 
 		stress_impact = {
@@ -7030,5 +7243,6 @@ bp3_journey.2300 = {
 				silent_disappearance_effect = yes
 			}
 		}
+		remove_character_flag = temporary_court_position_cost_removal #Unop: Since the add of this flag is now in the immediate, we need to be sure it's cleared everytime
 	}
 }
