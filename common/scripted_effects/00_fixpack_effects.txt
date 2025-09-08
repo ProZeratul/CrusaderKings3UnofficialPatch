@@ -630,7 +630,10 @@ create_grand_wedding_matrilineal_betrothal = {
 
 	# Unop: Little sanity checks (are one of them married ? is this a same sex wedding without the game rule ?)
 	if = {
-		limit = { debug_only = yes }
+		limit = {
+			#debug_only = yes
+			always = yes #Unop: It seems debug_only is false even in debug ??
+		}
 		if = {
 			limit = { $SPOUSE_1$ = { is_married = yes } }
 			debug_log = "Unop: create_grand_wedding_matrilineal_betrothal => SPOUSE_1 is already married"
