@@ -914,6 +914,16 @@ mpo_migration_travel_events.0050 = {
     }
 
     immediate = {
+        every_courtier = {
+            limit = { is_eligible_courtier_0050 = yes }
+            add_to_list = unop_potential_courtier
+        }
+        location = {
+            every_character_in_location = {
+                limit = { is_eligible_local_0050 = yes }
+                add_to_list = unop_potential_local
+            }
+        }
         random_courtier = {
             limit = {
                 is_eligible_courtier_0050 = yes
@@ -965,7 +975,44 @@ mpo_migration_travel_events.0050 = {
                 NOT = { exists = scope:local }
             }
             error_log = "Unop: For mpo_migration_travel_events.0050 diagnostic, no scope local defined"
-            debug_log = "Unop: For mpo_migration_travel_events.0050 diagnostic, no scope local defined"
+            debug_log_scopes = yes
+            if = {
+                limit = { NOT = { exists = scope:local } }
+                while = {
+                    limit = { NOT = { exists = scope:local } }
+                    scope:courtier = { add_to_list = blacklisted_courtier }
+                    #Re-Pick a courtier
+                    random_in_list = {
+                        list = unop_potential_courtier
+                        limit = { NOT = { is_in_list = blacklisted_courtier } }
+                        save_scope_as = courtier
+                    }
+                    #Re-Pick a local
+                    random_in_list = {
+                        list = unop_potential_local
+                        limit = {
+                            NOT = { this = scope:courtier }
+                            can_set_relation_lover_trigger = { CHARACTER = scope:courtier }
+                            is_similar_age_trigger = { CHARACTER = scope:courtier }
+                        }
+                        weight = {
+                            base = 10
+                            modifier = {
+                                add = 25
+                                might_cheat_on_every_partner_trigger = yes 
+                            }
+                        }
+                        save_scope_as = local
+                    }
+                }
+            }
+        }
+        if = {
+            limit = {
+                #debug_only = yes
+                NOT = { exists = scope:local }
+            }
+            error_log = "Unop: For mpo_migration_travel_events.0050 diagnostic. Sadly, even the hard fallback failed, local is still undefined"
             debug_log_scopes = yes
         }
         hidden_effect = {
