@@ -420,31 +420,35 @@ travel_events_oltner_2.1010 = {
 	option = {
 		name = travel_events_oltner_2.1010.c
 		
-		custom_tooltip = local_character_aptitude_physician
-		
-		scope:local_character = {
-			add_to_court_and_entourage_effect = yes
-		}
-		
-		if = {
-			limit = {
-				can_employ_court_position_type = court_physician_court_position
-				NOT = { has_court_position = court_physician_court_position }
-			}
-			employ_character_as_position_in_current_scope_court_effect = {
-				CHARACTER = scope:local_character
-				POSITION = court_physician
-			}
-		}
-		else_if = {
-			limit = {
-				scope:local_character.aptitude:court_physician_court_position > scope:current_physician.aptitude:court_physician_court_position
-			}
-			replace_court_position = {
-				recipient = scope:local_character
-				holder = scope:current_physician
-				court_position = court_physician_court_position
-			}
+		#custom_tooltip = local_character_aptitude_physician
+		#
+		#scope:local_character = {
+		#	add_to_court_and_entourage_effect = yes
+		#}
+		#
+		#if = {
+		#	limit = {
+		#		can_employ_court_position_type = court_physician_court_position
+		#		NOT = { has_court_position = court_physician_court_position }
+		#	}
+		#	employ_character_as_position_in_current_scope_court_effect = {
+		#		CHARACTER = scope:local_character
+		#		POSITION = court_physician
+		#	}
+		#}
+		#else_if = {
+		#	limit = {
+		#		scope:local_character.aptitude:court_physician_court_position > scope:current_physician.aptitude:court_physician_court_position
+		#	}
+		#	replace_court_position = {
+		#		recipient = scope:local_character
+		#		holder = scope:current_physician
+		#		court_position = court_physician_court_position
+		#	}
+		#}
+		unop_hire_for_court_position_journey_effect = {
+			CHARACTER = scope:local_character
+			COURT_POSITION = court_physician
 		}
 		
 		stress_impact = {
