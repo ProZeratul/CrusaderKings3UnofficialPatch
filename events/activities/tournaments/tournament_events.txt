@@ -9984,6 +9984,7 @@ tournament_events.1400 = {
 			any_guest_subset_current_phase = {
 				name = spectator
 				NOT = { this = root } #Unop: This is needed for AI to not potentially self-select itself as the tall_person
+				NOT = { is_courtier_of = root } #Unop: This event would not have much sense if the tall_person is one of your courtier
 				is_ai = yes
 				is_healthy = yes
 				is_adult = yes
@@ -10022,6 +10023,7 @@ tournament_events.1400 = {
 				name = spectator
 				limit = {
 					NOT = { this = root } #Unop: This is needed for AI to not potentially self-select itself as the tall_person
+					NOT = { is_courtier_of = root } #Unop: This event would not have much sense if the tall_person is one of your courtier
 					is_ai = yes
 					is_healthy = yes
 					is_adult = yes
@@ -16061,12 +16063,14 @@ tournament_events.6900 = {
 		scope:local_lancer = {
 			remove_character_flag = wear_armor
 		}
-		random_list = {
-			1 = {
-				try_to_create_recurring_character_effect = { CHARACTER = scope:local_lancer }
-			}
-			1 = {
-				try_to_create_recurring_character_effect = { CHARACTER = scope:bidder }
+		hidden_effect = { #Unop: To not show 50% Nothing happen twice to players...
+			random_list = {
+				1 = {
+					try_to_create_recurring_character_effect = { CHARACTER = scope:local_lancer }
+				}
+				1 = {
+					try_to_create_recurring_character_effect = { CHARACTER = scope:bidder }
+				}
 			}
 		}
 	}

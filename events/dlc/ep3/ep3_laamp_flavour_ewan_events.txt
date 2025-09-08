@@ -9489,7 +9489,7 @@ ep3_laamp_flavour_ewan.2011 = {
 						}
 					}
 					# Grab our scopes.
-					save_scope_as = victim
+					scope:char_temp = { save_scope_as = victim }
 					scope:rumourmonger_temp = { save_scope_as = rumourmonger }
 					# And note that the story was true.
 					save_scope_value_as = {
@@ -9507,31 +9507,41 @@ ep3_laamp_flavour_ewan.2011 = {
 						value = flag:false
 					}
 					# If we don't have a scope:victim by now, create one.
-					if = {
-						limit = { #Unop: Actually make sure the scope is undefined
-							NOT = { exists = scope:victim }
-						}
-						random_courtier = {
-							limit = {
-								ep3_laamp_flavour_ewan_2011_valid_courtier_for_gossip_trigger = yes
-								NOT = { this = scope:rumourmonger } #Unop: Sanity check to ensure the char won't gossip itself
-							}
-							save_scope_as = victim
-						}
+					random_courtier = {
+						limit = { ep3_laamp_flavour_ewan_2011_valid_courtier_for_gossip_trigger = yes }
+						save_scope_as = victim
 					}
 				}
 				# Plus stress out our victim a little.
 				scope:victim = { add_stress = medium_stress_gain }
 				if = { #Unop: Sanity & debug warning check
 					limit = {
-						debug_only = yes
+						#debug_only = yes
+						always = yes #Unop: It seems debug_only is false even in debug ??
 					}
 					if = {
-						limit = { scope:rumourmonger = scope:victim }
-						error_log = "Unop: rumourmonger and victim are the same character"
-						debug_log = "Unop: rumourmonger and victim are the same character"
+						limit = { NOT = { exists = scope:victim } }
+						error_log = "Unop: victim is not defined"
 						debug_log_scopes = yes
 					}
+					if = {
+						limit = { scope:gossip_veracity = flag:true }
+						if = {
+							limit = { NOT = { exists = scope:rumourmonger } }
+							error_log = "Unop: rumourmonger does not exists despite the veracity flag being true !"
+							debug_log = "Unop: rumourmonger does not exists despite the veracity flag being true !"
+							debug_log_scopes = yes
+						}
+						else = {
+							if = {
+								limit = { scope:rumourmonger = scope:victim }
+								error_log = "Unop: rumourmonger and victim are the same character"
+								debug_log = "Unop: rumourmonger and victim are the same character"
+								debug_log_scopes = yes
+							}
+						}
+					}
+
 				}
 			}
 			# Hidden feud.

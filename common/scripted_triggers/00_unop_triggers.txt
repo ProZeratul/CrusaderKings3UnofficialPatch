@@ -894,3 +894,35 @@ unop_can_have_vassal_succession_rights_contract = { #Unop: Taken from succession
 		can_have_confederate_partition_succession_law_trigger = yes
 	}
 }
+
+# Need a CP as a flag parameter without the _court_position suffix
+unop_is_multi_slot_cp = {
+	OR = {
+		$CP$_court_position = flag:bodyguard_court_position #2
+		$CP$_court_position = flag:lady_in_waiting_court_position #2
+		$CP$_court_position = flag:garuda_court_position #2
+		$CP$_court_position = flag:court_artificer_court_position #3
+	}
+}
+
+unop_employer_can_have_cp = {
+	#Unop: We need to have an OR since can_employ_court_position_type will return false if we have the maximum amount of character for a given slot (like 2 bodyguard)
+	OR = {
+		can_employ_court_position_type = $COURT_POS$
+		AND = {
+			employs_court_position = $COURT_POS$
+			any_court_position_holder = {
+				type = $COURT_POS$
+				aptitude:$COURT_POS$ < 4
+			}
+		}
+	}
+}
+
+unop_employer_can_have_cp_lax = {
+	#Unop: We need to have an OR since can_employ_court_position_type will return false if we have the maximum amount of character for a given slot (like 2 bodyguard)
+	OR = {
+		can_employ_court_position_type = $COURT_POS$
+		employs_court_position = $COURT_POS$
+	}
+}

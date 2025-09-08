@@ -7209,7 +7209,7 @@ cultural_festival.4000 = { #Liege: You end up in a conversation in a language yo
 				random_courtier_or_guest = { #pick someone that can understand both of you in vassals court
 					limit = { 
 						bilingual_character_trigger = yes
-					 }
+					}
 					save_scope_as = local_translator_scope
 				}
 			}
@@ -7241,8 +7241,15 @@ cultural_festival.4000 = { #Liege: You end up in a conversation in a language yo
 				save_scope_as = local_translator_scope
 			}
 			hidden_effect = {
-				scope:local_translator_scope = {
-					learn_language_of_culture = root.culture
+				scope:local_translator_scope = { #Unop: Check that the translator is actually speaking both language
+					if = {
+						limit = { NOT = { knows_language_of_culture = root.culture } }
+						learn_language_of_culture = root.culture
+					}
+					if = {
+						limit = { NOT = { knows_language_of_culture = scope:local_character_scope.culture } }
+						learn_language_of_culture = scope:local_character_scope.culture
+					}
 				}
 			}
 		}
@@ -7263,6 +7270,11 @@ cultural_festival.4000 = { #Liege: You end up in a conversation in a language yo
 				scope:local_translator_scope = {
 					NOT = {
 						is_courtier_of = scope:visiting_liege
+					}
+					is_travelling = no #Unop: Ensure this character is not already traveling & can join our activity
+					OR = {
+						NOT = { exists = scope:activity }
+						can_join_activity = scope:activity
 					}
 				}
 			}
@@ -9088,6 +9100,13 @@ cultural_festival.4301 = { #Liege: Get the gift from vassal and decide to keep i
 					has_relation_soulmate = scope:stop_host_scope
 				}
 			}
+			modifier = { #Unop: If the AI can equip/benefit from gifted artifact, then boost their will to keep it
+				add = 100
+				OR = {
+					can_equip_artifact = scope:gifted_artifact
+					can_benefit_from_artifact = scope:gifted_artifact
+				}
+			}
 		}
 	}
 
@@ -9120,6 +9139,13 @@ cultural_festival.4301 = { #Liege: Get the gift from vassal and decide to keep i
 				OR = {
 					has_relation_rival = scope:stop_host_scope
 					has_relation_nemesis = scope:stop_host_scope
+				}
+			}
+			modifier = { #Unop: If the AI cannot equip/benefit from gifted artifact, then boost their will to trash it
+				add = 100
+				NAND = {
+					can_equip_artifact = scope:gifted_artifact
+					can_benefit_from_artifact = scope:gifted_artifact
 				}
 			}
 		}
@@ -9461,8 +9487,8 @@ cultural_festival.4303 = { #Vassal: Get the gift from liege, mirror of cultural_
 			modifier = { #Unop: If the AI can equip/benefit from gifted artifact, then boost their will to keep it
 				add = 100
 				OR = {
-					can_equip_artifact = scope:liege_chosen_gift
-					can_benefit_from_artifact = scope:liege_chosen_gift
+					can_equip_artifact = scope:gifted_artifact
+					can_benefit_from_artifact = scope:gifted_artifact
 				}
 			}
 		}
@@ -9502,8 +9528,8 @@ cultural_festival.4303 = { #Vassal: Get the gift from liege, mirror of cultural_
 			modifier = { #Unop: If the AI cannot equip/benefit from gifted artifact, then boost their will to trash it
 				add = 100
 				NAND = {
-					can_equip_artifact = scope:liege_chosen_gift
-					can_benefit_from_artifact = scope:liege_chosen_gift
+					can_equip_artifact = scope:gifted_artifact
+					can_benefit_from_artifact = scope:gifted_artifact
 				}
 			}
 		}

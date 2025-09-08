@@ -676,7 +676,7 @@ yearly.0002 = {
 		#Unop: Bug tracking where councillor is undefined
 		if = {
 			limit = {
-				debug_only = yes
+				#debug_only = yes
 				NOT = { exists = scope:councillor }
 			}
 			error_log = "Unop:yearly.0002: scope:councillor is undefined"
@@ -972,7 +972,9 @@ yearly.0003 = {
 
 		#Unop Add debug logging
 		if = {
-			limit = { NOT = { exists = scope:secret } }
+			limit = {
+				NOT = { exists = scope:secret }
+			}
 			debug_log = "Unop: yearly.0003 does not create any secret"
 			debug_log_scopes = yes
 		}
