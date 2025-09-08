@@ -635,92 +635,82 @@ bp3_journey.0015 = {
 }
 
 scripted_effect hire_for_court_position_journey_effect = {
-	#hidden_effect = {
-	#	$CHARACTER$ = {
-	#		add_to_court_and_entourage_effect = yes
-	#	}
-	#	if = {
-	#		limit = {
-	#			any_court_position_holder = {
-	#				type = $COURT_POSITION$_court_position
-	#			}
-	#		}
-	#		random_court_position_holder = {
-	#			type = $COURT_POSITION$_court_position
-	#			save_scope_as = current_holder
-	#		}
-	#	}
-	#}
-
-	#show_as_tooltip = {
-	#	if = {
-	#		limit = {
-	#			unop_employer_can_have_cp = { COURT_POS = $COURT_POSITION$_court_position }
-	#			trigger_if = {
-	#				limit = {
-	#					exists = scope:current_holder
-	#				}
-	#				$CHARACTER$.aptitude:$COURT_POSITION$_court_position > scope:current_holder.aptitude:$COURT_POSITION$_court_position
-	#			}
-	#		}
-	#		appoint_court_position = {
-	#			recipient = $CHARACTER$
-	#			court_position = $COURT_POSITION$_court_position
-	#		}
-	#		custom_tooltip = will_have_excellent_aptitude
-	#	}
-	#	else = {
-	#		$CHARACTER$ = {
-	#			add_to_court_and_entourage_effect = yes
-	#		}
-	#	}
-	#}
-	
-	#if = {
-	#	limit = {
-	#		unop_employer_can_have_cp = { COURT_POS = $COURT_POSITION$_court_position }
-	#		OR = {
-	#			NOT = { exists = scope:current_holder }
-	#			trigger_if = {
-	#				limit = {
-	#					has_character_flag = bodyguard_flag
-	#				}
-	#				any_court_position_holder = {
-	#					type = bodyguard_court_position
-	#					count <= 1
-	#				}
-	#			}
-	#		}
-	#	}
-	#	employ_character_as_position_in_current_scope_court_effect = {
-	#		CHARACTER = $CHARACTER$
-	#		POSITION = $COURT_POSITION$
-	#	}
-	#}
-	#else_if = {
-	#	limit = {
-	#		exists = scope:current_holder
-	#		$CHARACTER$.aptitude:$COURT_POSITION$_court_position > scope:current_holder.aptitude:$COURT_POSITION$_court_position
-	#	}
-	#	add_character_flag = temporary_court_position_cost_removal
-	#	replace_court_position = {
-	#		recipient = $CHARACTER$
-	#		holder = scope:current_holder
-	#		court_position = $COURT_POSITION$_court_position
-	#	}
-	#	remove_character_flag = temporary_court_position_cost_removal
-	#}
-	hidden_effect = {		
+	hidden_effect = {
 		$CHARACTER$ = {
 			add_to_court_and_entourage_effect = yes
 		}
+		if = {
+			limit = {
+				any_court_position_holder = {
+					type = $COURT_POSITION$_court_position
+				}
+			}
+			random_court_position_holder = {
+				type = $COURT_POSITION$_court_position
+				save_scope_as = current_holder
+			}
+		}
 	}
-	#add_character_flag = temporary_court_position_cost_removal
-	employ_character_as_position_in_current_scope_court_effect = {
-		CHARACTER = $CHARACTER$
-		POSITION = $COURT_POSITION$
+
+	show_as_tooltip = {
+		if = {
+			limit = {
+				is_valid_to_hire_court_position_type = $COURT_POSITION$_court_position
+				trigger_if = {
+					limit = {
+						exists = scope:current_holder
+					}
+					$CHARACTER$.aptitude:$COURT_POSITION$_court_position > scope:current_holder.aptitude:$COURT_POSITION$_court_position
+				}
+			}
+			appoint_court_position = {
+				recipient = $CHARACTER$
+				court_position = $COURT_POSITION$_court_position
+			}
+			custom_tooltip = will_have_excellent_aptitude
+		}
+		else = {
+			$CHARACTER$ = {
+				add_to_court_and_entourage_effect = yes
+			}
+		}
 	}
-	#remove_character_flag = temporary_court_position_cost_removal
+	
+	if = {
+		limit = {
+			is_valid_to_hire_court_position_type = $COURT_POSITION$_court_position
+			OR = {
+				NOT = { exists = scope:current_holder }
+				trigger_if = {
+					limit = {
+						has_character_flag = bodyguard_flag
+					}
+					any_court_position_holder = {
+						type = bodyguard_court_position
+						count <= 1
+					}
+				}
+			}
+		}
+		employ_character_as_position_in_current_scope_court_effect = {
+			CHARACTER = $CHARACTER$
+			POSITION = $COURT_POSITION$
+		}
+	}
+	else_if = {
+		limit = {
+			exists = scope:current_holder
+			$CHARACTER$.aptitude:$COURT_POSITION$_court_position > scope:current_holder.aptitude:$COURT_POSITION$_court_position
+		}
+		add_character_flag = temporary_court_position_cost_removal
+		replace_court_position = {
+			recipient = $CHARACTER$
+			holder = scope:current_holder
+			court_position = $COURT_POSITION$_court_position
+		}
+		remove_character_flag = temporary_court_position_cost_removal
+	}
+	
 	if = {
 		limit = {
 			has_activity_intent = journey_curiosity_intent
@@ -734,33 +724,33 @@ scripted_effect hire_for_court_position_journey_effect = {
 }
 
 scripted_effect hire_for_court_position_journey_laamp_replacement_effect = {
-	#show_as_tooltip = {
-	#	if = {
-	#		limit = {
-	#			unop_employer_can_have_cp = { COURT_POS = $COURT_POSITION$_court_position }
-	#		}
-	#		appoint_court_position = {
-	#			recipient = $CHARACTER$
-	#			court_position = $COURT_POSITION$_court_position
-	#		}
-	#		#custom_tooltip = will_have_excellent_aptitude
-	#	}
-	#	else_if = {
-	#		limit = {
-	#			unop_employer_can_have_cp = { COURT_POS = $LAAMP_POSITION$_camp_officer }
-	#		}
-	#		appoint_court_position = {
-	#			recipient = $CHARACTER$
-	#			court_position = $LAAMP_POSITION$_camp_officer
-	#		}
-	#		#custom_tooltip = will_have_excellent_aptitude
-	#	}
-	#	else = {
-	#		$CHARACTER$ = {
-	#			add_to_court_and_entourage_effect = yes
-	#		}
-	#	}
-	#}
+	show_as_tooltip = {
+		if = {
+			limit = {
+				is_valid_to_hire_court_position_type = $COURT_POSITION$_court_position
+			}
+			appoint_court_position = {
+				recipient = $CHARACTER$
+				court_position = $COURT_POSITION$_court_position
+			}
+			custom_tooltip = will_have_excellent_aptitude
+		}
+		else_if = {
+			limit = {
+				is_valid_to_hire_court_position_type = $LAAMP_POSITION$_camp_officer
+			}
+			appoint_court_position = {
+				recipient = $CHARACTER$
+				court_position = $LAAMP_POSITION$_camp_officer
+			}
+			custom_tooltip = will_have_excellent_aptitude
+		}
+		else = {
+			$CHARACTER$ = {
+				add_to_court_and_entourage_effect = yes
+			}
+		}
+	}
 	
 	hidden_effect = {
 		$CHARACTER$ = {
@@ -770,7 +760,7 @@ scripted_effect hire_for_court_position_journey_laamp_replacement_effect = {
 	
 	if = {
 		limit = {
-			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $COURT_POSITION$_court_position }
+			is_valid_to_hire_court_position_type = $COURT_POSITION$_court_position
 			NOT = { exists = scope:current_holder }
 		}
 		employ_character_as_position_in_current_scope_court_effect = {
@@ -780,7 +770,7 @@ scripted_effect hire_for_court_position_journey_laamp_replacement_effect = {
 	}
 	else_if = {
 		limit = {
-			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $LAAMP_POSITION$_camp_officer }
+			is_valid_to_hire_court_position_type = $LAAMP_POSITION$_camp_officer
 			NOT = { exists = scope:current_holder }
 		}
 		employ_character_as_position_in_current_scope_camp_effect = {
@@ -790,7 +780,7 @@ scripted_effect hire_for_court_position_journey_laamp_replacement_effect = {
 	}
 	else_if = {
 		limit = {
-			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $COURT_POSITION$_court_position }
+			is_valid_to_hire_court_position_type = $COURT_POSITION$_court_position
 			exists = scope:current_holder
 			$CHARACTER$.aptitude:$COURT_POSITION$_court_position > scope:current_holder.aptitude:$COURT_POSITION$_court_position
 		}
@@ -804,7 +794,7 @@ scripted_effect hire_for_court_position_journey_laamp_replacement_effect = {
 	}
 	else_if = {
 		limit = {
-			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $LAAMP_POSITION$_camp_officer }
+			is_valid_to_hire_court_position_type = $LAAMP_POSITION$_camp_officer
 			exists = scope:current_holder
 			$CHARACTER$.aptitude:$LAAMP_POSITION$_camp_officer > scope:current_holder.aptitude:$LAAMP_POSITION$_camp_officer
 		}
@@ -828,7 +818,7 @@ scripted_effect hire_for_two_court_position_journey_laamp_replacement_effect = {
 	show_as_tooltip = {
 		if = {
 			limit = {
-				can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $COURT_POSITION$_court_position }
+				is_valid_to_hire_court_position_type = $COURT_POSITION$_court_position
 			}
 			appoint_court_position = {
 				recipient = $CHARACTER$
@@ -838,7 +828,7 @@ scripted_effect hire_for_two_court_position_journey_laamp_replacement_effect = {
 		}
 		else_if = {
 			limit = {
-				can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $COURT_POSITION_2$_court_position }
+				is_valid_to_hire_court_position_type = $COURT_POSITION_2$_court_position
 			}
 			appoint_court_position = {
 				recipient = $CHARACTER$
@@ -848,7 +838,7 @@ scripted_effect hire_for_two_court_position_journey_laamp_replacement_effect = {
 		}
 		else_if = {
 			limit = {
-				can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $LAAMP_POSITION$_camp_officer }
+				is_valid_to_hire_court_position_type = $LAAMP_POSITION$_camp_officer
 			}
 			appoint_court_position = {
 				recipient = $CHARACTER$
@@ -866,7 +856,7 @@ scripted_effect hire_for_two_court_position_journey_laamp_replacement_effect = {
 	
 	if = {
 		limit = {
-			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $COURT_POSITION$_court_position }
+			is_valid_to_hire_court_position_type = $COURT_POSITION$_court_position
 			NOT = { exists = scope:current_holder }
 		}
 		employ_character_as_position_in_current_scope_court_effect = {
@@ -876,7 +866,7 @@ scripted_effect hire_for_two_court_position_journey_laamp_replacement_effect = {
 	}
 	else_if = {
 		limit = {
-			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $COURT_POSITION_2$_court_position }
+			is_valid_to_hire_court_position_type = $COURT_POSITION_2$_court_position
 			NOT = { exists = scope:current_holder }
 		}
 		employ_character_as_position_in_current_scope_court_effect = {
@@ -886,7 +876,7 @@ scripted_effect hire_for_two_court_position_journey_laamp_replacement_effect = {
 	}
 	else_if = {
 		limit = {
-			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $LAAMP_POSITION$_camp_officer }
+			is_valid_to_hire_court_position_type = $LAAMP_POSITION$_camp_officer
 			NOT = { exists = scope:current_holder }
 		}
 		employ_character_as_position_in_current_scope_camp_effect = {
@@ -896,7 +886,7 @@ scripted_effect hire_for_two_court_position_journey_laamp_replacement_effect = {
 	}
 	else_if = {
 		limit = {
-			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $COURT_POSITION$_court_position }
+			is_valid_to_hire_court_position_type = $COURT_POSITION$_court_position
 			exists = scope:current_holder
 			$CHARACTER$.aptitude:$COURT_POSITION$_court_position > scope:current_holder.aptitude:$COURT_POSITION$_court_position
 		}
@@ -910,7 +900,7 @@ scripted_effect hire_for_two_court_position_journey_laamp_replacement_effect = {
 	}
 	else_if = {
 		limit = {
-			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $COURT_POSITION_2$_court_position }
+			is_valid_to_hire_court_position_type = $COURT_POSITION_2$_court_position
 			exists = scope:current_holder
 			$CHARACTER$.aptitude:$COURT_POSITION_2$_court_position > scope:current_holder.aptitude:$COURT_POSITION_2$_court_position
 		}
@@ -924,7 +914,7 @@ scripted_effect hire_for_two_court_position_journey_laamp_replacement_effect = {
 	}
 	else_if = {
 		limit = {
-			can_appoint_char_to_court_position = { CHAR = $CHARACTER$ COURT_POS = $LAAMP_POSITION$_camp_officer }
+			is_valid_to_hire_court_position_type = $LAAMP_POSITION$_camp_officer
 			exists = scope:current_holder
 			$CHARACTER$.aptitude:$LAAMP_POSITION$_camp_officer > scope:current_holder.aptitude:$LAAMP_POSITION$_camp_officer
 		}
