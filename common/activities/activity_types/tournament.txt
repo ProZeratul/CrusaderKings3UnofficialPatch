@@ -2065,8 +2065,8 @@
 			on_end = {
 				if = {
 					limit = { this = scope:activity.activity_host }
-					#Unop Add debug log
-					if = {
+					tournament_contest_team_winner_effect = { CONTEST = melee }					
+					if = { #Unop Add debug log
 						limit = {
 							NOT = {
 								scope:activity = {
@@ -2080,7 +2080,6 @@
 						debug_log = "Unop: melee_end did not have any winner"
 						debug_log_scopes = yes
 					}
-					tournament_contest_team_winner_effect = { CONTEST = melee }
 				}
 			}
 
