@@ -59,6 +59,11 @@ unop_recruit_best_cp_effect = {
 				holder = $CURRENT_CP_OWNER$
 				court_position = $COURT_POSITION$_court_position
 			}
+			$CHARACTER$ = { save_scope_as = candidate }
+			$CURRENT_CP_OWNER$ = { save_scope_as = old_holder }
+			custom_tooltip = $COURT_POSITION$_old_holder_aptitude_tooltip
+			clear_saved_scope = candidate
+			clear_saved_scope = old_holder
 			remove_character_flag = temporary_court_position_cost_removal
 			if = {
 				limit = {
