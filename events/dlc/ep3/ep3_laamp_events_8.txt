@@ -1599,8 +1599,16 @@ ep3_laamps.8080 = {
 		location = {
 			OR = {
 				is_coastal = yes
-				any_neighboring_province = { is_river_province = yes }
+				any_neighboring_province = {
+					OR = {
+						is_riverside_province = yes #Unop: Was is_river_province but it should have been riverside
+						is_coastal = yes #Unop: Also allow coastal neighboring province
+					}
+					is_sea_province = no
+					is_river_province = no
+				}
 			}
+			is_sea_province = no #Unop: Forbid this event to fire while at sea (hard to be in a bar at sea)
 		}
 		NOT = { employs_court_position = quartermaster_camp_officer }
 		can_employ_court_position_type = quartermaster_camp_officer
@@ -1617,11 +1625,30 @@ ep3_laamps.8080 = {
 		root.location = {
 			random_neighboring_province = {
 				limit = {
+					OR = {
+						is_riverside_province = yes
+						is_coastal = yes
+					}
 					is_sea_province = no
+					is_river_province = no
 				}
 				save_scope_as = sailor_home
 			}
 		}
+		if = { #Unop: Fallback in case there is no neighboring province (like madeira)
+			limit = { 
+				NOT = { exists = scope:sailor_home }
+			}
+			root.location = { save_scope_as = sailor_home }
+		}
+		if = { #Unop: Debug traces just in case
+			limit = {
+				NOT = { exists = scope:sailor_home.culture }
+			}
+			error_log = "Unop: ep3_laamps.8080 sailor_home culture is undef"
+			debug_log_scopes = yes
+		}
+
 		hidden_effect = {
 			random_pool_character = {
 				province = scope:sailor_home
