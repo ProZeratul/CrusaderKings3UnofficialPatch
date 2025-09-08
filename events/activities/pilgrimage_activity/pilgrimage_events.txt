@@ -2720,6 +2720,9 @@ pilgrimage.2003 = {
 			}
 		}
 		remove_short_term_gold = minor_gold_value
+		scope:2002_local_warrior = { #Unop: To let them join the activity despite being from another faith
+			add_character_flag = unop_force_join_pilgrimage
+		}
 		recruit_to_entourage_court_and_activity_effect = {
 			CHAR_TO_ADD = scope:2002_local_warrior
 			NEW_COURT_OWNER = root
@@ -5477,6 +5480,9 @@ pilgrimage.2101 = {
 		had_sex_with_effect = {
 			CHARACTER = scope:naked_tempter
 			PREGNANCY_CHANCE = pregnancy_chance
+		}
+		scope:naked_tempter = { #Unop: To let them join the activity despite being from another faith
+			add_character_flag = unop_force_join_pilgrimage
 		}
 		add_to_entourage_court_and_activity_effect = {
 			CHAR_TO_ADD = scope:naked_tempter
@@ -11915,6 +11921,9 @@ pilgrimage.6780 = {
 					value = scope:duel_value
 					multiplier = 3.5
 				}
+				scope:stolen_courtier = { #Unop: To let them join the activity despite being from another faith
+					add_character_flag = unop_force_join_pilgrimage
+				}
 				send_interface_toast = {
 					title = pilgrimage.6780.b.success.t
 					left_icon = root
@@ -12010,6 +12019,9 @@ pilgrimage.6780 = {
 		add_hook = {
 			type = obligation_hook
 			target = scope:stolen_courtier
+		}
+		scope:stolen_courtier = { #Unop: To let them join the activity despite being from another faith
+			add_character_flag = unop_force_join_pilgrimage
 		}
 		involved_activity ?= {
 			add_activity_log_entry = {
