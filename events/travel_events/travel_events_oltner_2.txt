@@ -6721,58 +6721,63 @@ travel_events_oltner_2.1240 = {
 	option = {
 		name = travel_events_oltner_2.1240.b
 		trigger = {
-			can_employ_court_position_type = court_jester_court_position
+			#can_employ_court_position_type = court_jester_court_position
+			unop_employer_can_have_cp_lax = { COURT_POS = court_jester_court_position }
 		}
 		
-		hidden_effect = {
-			scope:local_character = {
-				add_to_court_and_entourage_effect = yes
-			}
-		}
-		
-		if = {
-			limit = {
-				can_employ_court_position_type = court_jester_court_position
-				NOT = { has_court_position = court_jester_court_position }
-			}
-			show_as_tooltip = {
-				appoint_court_position = {
-					recipient = scope:local_character
-					court_position = court_jester_court_position
-				}
-			}
-			employ_character_as_position_in_current_scope_court_effect = {
-				CHARACTER = scope:local_character
-				POSITION = court_jester
-			}
-			custom_tooltip = will_have_excellent_aptitude
-		}
-		else_if = {
-			limit = {
-				exists = scope:current_jester
-				scope:local_character.aptitude:court_jester_court_position > scope:current_jester.aptitude:court_jester_court_position
-			}
-			replace_court_position = {
-				recipient = scope:local_character
-				holder = scope:current_jester
-				court_position = court_jester_court_position
-			}
-			custom_tooltip = will_have_excellent_aptitude
-		}
-		else = {
-			show_as_tooltip = {
-				scope:local_character = {
-					add_to_court_and_entourage_effect = yes
-				}
-			}
-		}
-		
-		root = {
-			custom_tooltip = obligation_hook_tt
-			add_hook = {
-				type = obligation_hook
-				target = scope:local_character
-			}
+		#hidden_effect = {
+		#	scope:local_character = {
+		#		add_to_court_and_entourage_effect = yes
+		#	}
+		#}
+		#
+		#if = {
+		#	limit = {
+		#		can_employ_court_position_type = court_jester_court_position
+		#		NOT = { has_court_position = court_jester_court_position }
+		#	}
+		#	show_as_tooltip = {
+		#		appoint_court_position = {
+		#			recipient = scope:local_character
+		#			court_position = court_jester_court_position
+		#		}
+		#	}
+		#	employ_character_as_position_in_current_scope_court_effect = {
+		#		CHARACTER = scope:local_character
+		#		POSITION = court_jester
+		#	}
+		#	custom_tooltip = will_have_excellent_aptitude
+		#}
+		#else_if = {
+		#	limit = {
+		#		exists = scope:current_jester
+		#		scope:local_character.aptitude:court_jester_court_position > scope:current_jester.aptitude:court_jester_court_position
+		#	}
+		#	replace_court_position = {
+		#		recipient = scope:local_character
+		#		holder = scope:current_jester
+		#		court_position = court_jester_court_position
+		#	}
+		#	custom_tooltip = will_have_excellent_aptitude
+		#}
+		#else = {
+		#	show_as_tooltip = {
+		#		scope:local_character = {
+		#			add_to_court_and_entourage_effect = yes
+		#		}
+		#	}
+		#}
+
+		#root = {
+		#	custom_tooltip = obligation_hook_tt
+		#	add_hook = {
+		#		type = obligation_hook
+		#		target = scope:local_character
+		#	}
+		#}
+		unop_hire_for_court_position_journey_effect = {
+			CHARACTER = scope:local_character
+			COURT_POSITION = court_jester
 		}
 		
 		reverse_add_opinion = {
