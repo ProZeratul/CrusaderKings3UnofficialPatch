@@ -4023,7 +4023,12 @@ travel_events.4021 = {
 		}
 	}
 	after = {
-		scope:sacrificed_person_scope ?= {
+		if = {
+			limit = {
+				scope:sacrificed_person_scope ?= { #Unop: prevent scope is dead during effect execution
+					is_alive = yes
+				}
+			}
 			remove_character_flag = is_naked
 		}
 	}
@@ -4068,6 +4073,7 @@ travel_events.4022 = {
 				faith = { has_doctrine_parameter = believes_in_harmony_with_nature_invisible }
 			}
 		}
+		NOT = { root = root.location.county.holder } #Unop: Prevent this event to trigger in our own holdings.
 	}
 	immediate = {
 		wayfarer_storyteller_fame_effect = { VALUE = roaming_reward_fame_medium }

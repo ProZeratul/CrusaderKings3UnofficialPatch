@@ -1885,8 +1885,11 @@
 
 	can_be_activity_guest = {
 		age > 5
-		#Unop Pilgrimage guests should share your religion
-		faith.religion = scope:host.faith.religion
+		#Unop Pilgrimage guests should share your religion (or have a flag for the events that are adding other faith char)
+		OR = {
+			faith.religion = scope:host.faith.religion
+			has_character_flag = unop_force_join_pilgrimage
+		}
 	}
 
 	max_guests = 30
@@ -2344,6 +2347,10 @@
 					target = scope:activity.activity_location.county
 				}
 			}
+		}
+		if = { #Unop: Remove the custom flag to allow guests to join the pilgrimage even with a different religion
+			limit = { has_character_flag = unop_force_join_pilgrimage }
+			remove_character_flag = unop_force_join_pilgrimage
 		}
 	}
 

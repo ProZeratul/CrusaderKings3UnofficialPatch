@@ -1103,8 +1103,16 @@ artisan_inspiration = {
 									}
 									modifier = {
 										add = 20
-										scope:inspiration_sponsor = {
-											ep3_orthodox_faith_trigger = yes
+										trigger_if = { #Unop: inspiration_sponsor can be undefined here, so if it is, use the liege
+											limit = { exists = scope:inspiration_sponsor }
+											scope:inspiration_sponsor = {
+												ep3_orthodox_faith_trigger = yes
+											}
+										}
+										trigger_else = {
+											liege = {
+												ep3_orthodox_faith_trigger = yes
+											}
 										}
 									}
 									set_variable = {

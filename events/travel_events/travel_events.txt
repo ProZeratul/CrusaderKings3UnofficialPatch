@@ -2852,6 +2852,9 @@ travel_events.5001 = {
 	# Take up the legend
 	option = { 
 		name = travel_events.5001.a
+		trigger = { #Unop: Prevent characters that are already promoting a legend to switch (or to promote something they already are)
+			NOT = { exists = promoted_legend }
+		}
 
 		set_promoted_legend = scope:potential_legend
 

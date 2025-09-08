@@ -557,7 +557,7 @@ fp2_struggle.0900 = { # Hostility
 		fp2_stuggle_ending_involved_list_effect = yes
 		give_nickname = nick_the_conquistador
 		#Unop Change renown correctly
-		unop_change_renown = { CHAR = root PRESTIGE_MODIFIER = raw_struggle_ending_dynasty_prestige_value }
+		unop_add_renown_effect = { PRESTIGE_MODIFIER = raw_struggle_ending_dynasty_prestige_value } #Unop: Use our custom effect to better handle renown
 		#dynasty ?= { add_dynasty_prestige = 10000 }
 	}
 
@@ -595,7 +595,7 @@ fp2_struggle.0900 = { # Hostility
 		if = {
 			limit = { exists = house }
 			#Unop Change renown correctly
-			unop_change_renown = { CHAR = root PRESTIGE_MODIFIER = raw_monumental_dynasty_prestige_value }
+			unop_add_renown_effect = { PRESTIGE_MODIFIER = raw_monumental_dynasty_prestige_value } #Unop: Use our custom effect to better handle renown
 			#dynasty ?= { add_dynasty_prestige = 1000 }
 			house = {
 				add_house_modifier = {
@@ -710,10 +710,9 @@ fp2_struggle.0910 = {
 		play_music_cue = "mx_Struggle_ending_hostility"
 		##### Major Effects #####
 		show_as_tooltip = {
-			#Unop Change renown correctly
-			unop_change_renown = { CHAR = scope:struggle_ender PRESTIGE_MODIFIER = raw_struggle_ending_dynasty_prestige_value }
 			scope:struggle_ender = {
 				#dynasty = { add_dynasty_prestige = 10000 }
+				unop_add_renown_effect = { PRESTIGE_MODIFIER = raw_struggle_ending_dynasty_prestige_value } #Unop: Use our custom effect to better handle renown
 				fp2_struggle_hostility_ender_effect = yes
 			}
 		}
