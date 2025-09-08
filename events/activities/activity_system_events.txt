@@ -594,7 +594,16 @@ activity_system.0320 = {
 	}
 
 	immediate = {
-		scope:activity.activity_location.county.holder = { #Unop: Scope needed for the portrait above
+		if = {
+			limit = {
+				NOT = {
+					exists = scope:host.location
+				}
+			}
+			error_log = "Unop: scope:host.location is undefined"
+			debug_log_scopes = yes
+		}
+		scope:host.location.county.holder = { #Unop: Scope needed for the portrait above #Note: Was using scope:activity.activity_location but activity is already disposed here
 			save_scope_as = new_holder
 		}
 	}
