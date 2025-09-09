@@ -1482,6 +1482,14 @@ major_religious_war = {
 	}
 
 	on_victory = {
+		scope:attacker = {
+			if = {
+				limit = {
+					has_variable = k_holy_war_crusader
+				}
+				add_trait = faith_warrior
+			}
+		}
 		scope:attacker = { #Unop: Handle the war flags here (to handle invalidation properly)
 			remove_character_flag = unop_pending_major_religious_war_flag
             if = {

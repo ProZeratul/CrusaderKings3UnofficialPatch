@@ -70,7 +70,9 @@ types Events
 	type button_eventoption = button_event_standard
 	{
 		name = "event_option_button"
-		size = { 500 36 }
+		block "button_size" {
+			size = { 500 36 }
+		}
 		enabled = "[EventOption.IsValid]"
 
 		default_clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
@@ -271,6 +273,14 @@ types Events
 								texture = "gfx/interface/icons/message_feed/friend.dds"
 								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_POSITIVE_RELATION"
 							}
+							
+							icon = {
+								name = "opinion_negative"
+								visible = "[ReasonItem.IsFlag( 'opinion_negative' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/message_feed/rival.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_NEGATIVE_OPINION"
+							}
 
 							icon = {
 								name = "scheme_success_icon"
@@ -286,6 +296,14 @@ types Events
 								size = { 34 34 }
 								texture = "gfx/interface/icons/schemes/icon_scheme_speed.dds"
 								tooltip = "EVENT_WINDOW_OPTION_GIVES_SCHEME_PHASE_DURATION"
+							}
+							
+							icon = {
+								name = "hostile_scheme_icon"
+								visible = "[ReasonItem.IsFlag( 'hostile_scheme' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/scheme_types/icon_scheme_murder.dds"
+								tooltip = "EVENT_WINDOW_OPTION_HOSTILE_SCHEME"
 							}
 
 							icon = {
@@ -318,6 +336,14 @@ types Events
 								size = { 34 34 }
 								texture = "gfx/interface/icons/schemes/icon_balanced_approach.dds"
 								tooltip = "EVENT_WINDOW_OPTION_AGENTS_BALANCED"
+							}
+							
+							icon = {
+								name = "artifact_icon"
+								visible = "[ReasonItem.IsFlag( 'artifact' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/artifact/artefact_icons_unique_artifact_excalibur.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_ARTIFACT"
 							}
 
 							icon = {
@@ -918,6 +944,26 @@ types Events
 								texture = "gfx/interface/icons/traits/education_diplomacy_base.dds"
 								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_DIPLOMACY_TRAIT"
 							}
+							
+							icon = {
+								name = "lifestyle_focus_icon"
+								visible = "[ReasonItem.IsFlag( 'lifestyle_focus' )]"
+								framesize = { 144 144 }
+								frame = 2
+								size = { 34 34 }
+								texture = "gfx/interface/icons/alerts/action_can_choose_lifestyle.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_LIFESTYLE_FOCUS"
+							}
+							icon = {
+								name = "lifestyle_icon"
+								visible = "[ReasonItem.IsFlag( 'lifestyle' )]"
+								framesize = { 144 144 }
+								frame = 2
+								size = { 34 34 }
+								texture = "gfx/interface/icons/alerts/action_can_choose_lifestyle.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_LIFESTYLE"
+							}
+							
 							icon = {
 								name = "martial_trait_icon"
 								visible = "[ReasonItem.IsFlag( 'has_martial_trait' )]"
@@ -1014,6 +1060,117 @@ types Events
 								size = { 34 34 }
 								texture = "gfx/interface/icons/court_position_types/royal_architect_court_position.dds"
 								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_TRADE_YURT"
+							}
+							# ACH - Coronation Oaths
+							icon = { 
+								name = "alliance_oath_icon"
+								visible = "[ReasonItem.IsFlag( 'alliance_oath' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/character_interactions/alliance.dds"
+							}
+							icon = { 
+								name = "children_oath_icon"
+								visible = "[ReasonItem.IsFlag( 'children_oath' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/court_position_types/wet_nurse_court_position.dds"
+							}
+							icon = { 
+								name = "reconquest_oath_icon"
+								visible = "[ReasonItem.IsFlag( 'reconquest_oath' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/character_interactions/grant_titles_interaction.dds"
+							}
+							icon = { 
+								name = "conquest_oath_icon"
+								visible = "[ReasonItem.IsFlag( 'conquest_oath' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/character_interactions/declare_war_interaction.dds"
+							}
+							icon = { 
+								name = "peace_oath_icon"
+								visible = "[ReasonItem.IsFlag( 'peace_oath' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/character_interactions/war_won_icon.dds"
+							}
+							icon = { 
+								name = "build_oath_icon"
+								visible = "[ReasonItem.IsFlag( 'build_oath' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/court_position_types/royal_architect_court_position.dds"
+							}
+							icon = { 
+								name = "university_oath_icon"
+								visible = "[ReasonItem.IsFlag( 'university_oath' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/court_position_types/court_tutor_court_position.dds"
+							}
+							icon = {
+								name  = "purge_pretenders_oath_icon"
+								visible = "[ReasonItem.IsFlag( 'purge_pretenders_oath' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/title_status/icon_claim_pressed.dds"
+							}
+							icon = {
+								name  = "end_the_struggle_oath_icon"
+								visible = "[ReasonItem.IsFlag( 'end_the_struggle_oath' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/struggle_types/struggle.dds"
+							}
+							icon = {
+								name  = "greatest_hunter_oath_icon"
+								visible = "[ReasonItem.IsFlag( 'greatest_hunter_oath' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/traits/hunter.dds"
+							}
+							icon = {
+								name  = "heir_preparation_oath_icon"
+								visible = "[ReasonItem.IsFlag( 'heir_preparation_oath' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/portraits/heir.dds"
+							}
+							icon = {
+								name  = "install_claimants_oath_icon"
+								visible = "[ReasonItem.IsFlag( 'install_claimants_oath' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/casus_bellis/claim_cb.dds"
+							}
+							icon = {
+								name  = "mend_the_fracture_oath_icon"
+								visible = "[ReasonItem.IsFlag( 'mend_the_fracture_oath' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/council_task_types/task_promote_culture.dds"
+							}
+							icon = {
+								name  = "provide_for_the_warriors_oath_icon"
+								visible = "[ReasonItem.IsFlag( 'provide_for_the_warriors_oath' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/vassal_stances/belligerent.dds"
+							}
+							icon = {
+								name  = "provide_for_the_faithful_oath_icon"
+								visible = "[ReasonItem.IsFlag( 'provide_for_the_faithful_oath' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/vassal_stances/zealot.dds"
+							}
+							icon = {
+								name  = "provide_for_the_poor_oath_icon"
+								visible = "[ReasonItem.IsFlag( 'provide_for_the_poor_oath' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/coat_of_arms/lowborn.dds"
+							}
+							icon = {
+								name  = "repent_oath_icon"
+								visible = "[ReasonItem.IsFlag( 'repent_oath' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/traits/sin.dds"
+							}
+
+							icon = {
+								name = "host_activity_intent_icon"
+								visible = "[ReasonItem.IsFlag( 'host_activity_intent' )]"
+								size = { 34 34 }
+								texture = "[GetPlayer.GetInvolvedActivity.GetType.GetIcon]"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_HOST_ACTIVITY_INTENT"
 							}
 							
 							
