@@ -3249,6 +3249,13 @@ birth.8011 = {
 			}
 			trigger_if = {
 				limit = {
+					has_ach_dlc_trigger = yes
+					NOT = { has_game_rule = coronation_laws_off }
+				}
+				NOT = { has_realm_law = uncrowned } # Must be coronated
+			}
+			trigger_if = {
+				limit = {
 					is_diarch = yes
 				}
 				liege_has_co_emperorship_trigger = yes
