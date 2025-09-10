@@ -502,7 +502,14 @@ on_travel_plan_movement = {
 						}
 					}
 					else_if = {
-						limit = { var:encounters_tally < var:encounters_max }
+						limit = {
+							var:encounters_tally < var:encounters_max
+							root = {
+								location = {
+									is_sea_province = no
+								}
+							}
+						}
 						root = { trigger_event = laamp_base_contract_schemes.1782 }
 						set_variable = {
 							name = event_ratio_tracker
