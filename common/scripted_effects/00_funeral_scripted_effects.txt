@@ -67,4 +67,22 @@ funeral_add_funeral_targets_to_list = {
 			}
 		}
 	}
+	
+	
+	# ACH dead officiator
+
+	if = {
+		limit = {
+			var:dead_officiator_funeral ?= {
+				body_is_available = yes
+			}
+		}
+		scope:list_scope = {
+			add_to_variable_list = {
+				name = $LIST_NAME$
+				target = var:dead_officiator_funeral
+			}
+		}
+	}
+
 }

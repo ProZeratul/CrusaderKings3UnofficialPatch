@@ -495,6 +495,12 @@ get_artifact_quality_effect = {
 					}
 					add = 20
 				}
+				
+				# Encouraging Words BP4 event
+				if = {
+					limit = { exists = scope:encouraging_words_quality_boost }
+					add = 100
+				}
 
 				# Can't have negative quality
 				min = 1
@@ -10570,6 +10576,7 @@ create_artifact_regalia_effect = {
 			description = artifact_regalia_description
 			visuals = regalia
 			type = regalia
+			template = regalia_template
 			modifier = artifact_placeholder_modifier
 			wealth = scope:wealth
 			quality = scope:quality
@@ -10589,6 +10596,7 @@ create_artifact_regalia_effect = {
 			creator = scope:goldsmith
 			visuals = regalia
 			type = regalia
+			template = regalia_template
 			modifier = artifact_placeholder_modifier
 			wealth = scope:wealth
 			quality = scope:quality
@@ -10770,6 +10778,7 @@ create_artifact_crown_effect = {
 			create_artifact = {
 				name = artifact_crown_name
 				description = placeholder # Will be updated in the post-creation effects
+				template = crown_wearable_template
 				visuals = crown
 				type = helmet
 				modifier = artifact_placeholder_modifier
@@ -10789,6 +10798,7 @@ create_artifact_crown_effect = {
 				name = artifact_crown_name
 				creator = scope:goldsmith
 				description = placeholder # Will be updated in the post-creation effects
+				template = crown_wearable_template
 				visuals = crown
 				type = helmet
 				modifier = artifact_placeholder_modifier
@@ -12648,6 +12658,7 @@ generate_trinket_effect = {
 				description = jira_stick.desc
 				type = miscellaneous
 				visuals = regalia
+				template = regalia_template
 				modifier = artifact_monthly_learning_lifestyle_xp_1_modifier
 				modifier = artifact_learning_1_modifier
 				modifier = artifact_prowess_2_modifier
@@ -13106,15 +13117,7 @@ set_bow_artifact_type_effect = {
 					}
 					25 = {
 						trigger = {
-							culture = {
-								OR = {
-									has_cultural_tradition = tradition_horse_lords
-									has_cultural_pillar = heritage_byzantine
-									has_cultural_pillar = heritage_caucasian
-									has_cultural_pillar = heritage_turkic
-									has_cultural_pillar = heritage_mongolic
-								}
-							}
+							culture = { is_composite_bow_culture_trigger = yes }
 						}
 						set_variable = {
 							name = artifact_bow_type
@@ -13438,6 +13441,7 @@ create_artifact_bow_effect = {
 		scope:newly_created_artifact = {
 			# Prowess from weapon rarity
 			add_scaled_artifact_modifier_prowess_effect = yes
+			add_scaled_artifact_modifier_trait_track_hunter_xp_gain_mult_effect = yes
 			if = {
 				limit = {
 					OR = {
@@ -15390,5 +15394,33 @@ select_random_saint_effect = {
 			value = flag:fallback
 			days = 5
 		}
+	}
+}
+
+add_scaled_artifact_modifier_trait_track_hunter_xp_gain_mult_effect = {
+	if = {
+		limit = { rarity = common }
+		random_list = {
+			20 = { add_artifact_modifier = artifact_trait_track_hunter_xp_gain_mult_1_modifier }
+			5 = { add_artifact_modifier = artifact_trait_track_hunter_xp_gain_mult_2_modifier }
+		}
+	}
+	else_if = {
+		limit = { rarity = masterwork }
+		random_list = {
+			20 = { add_artifact_modifier = artifact_trait_track_hunter_xp_gain_mult_2_modifier }
+			5 = { add_artifact_modifier = artifact_trait_track_hunter_xp_gain_mult_3_modifier }
+		}
+	}
+	else_if = {
+		limit = { rarity = famed }
+		random_list = {
+			20 = { add_artifact_modifier = artifact_trait_track_hunter_xp_gain_mult_3_modifier }
+			5 = { add_artifact_modifier = artifact_trait_track_hunter_xp_gain_mult_4_modifier }
+		}
+	}
+	else_if = {
+		limit = { rarity = illustrious }
+		add_artifact_modifier = artifact_trait_track_hunter_xp_gain_mult_4_modifier
 	}
 }

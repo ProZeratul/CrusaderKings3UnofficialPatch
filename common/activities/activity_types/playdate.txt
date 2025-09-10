@@ -1,5 +1,4 @@
 ﻿activity_playdate = {
-
 	can_always_plan = no #Unop: To not show when on CD
 
 	is_shown = {
@@ -20,9 +19,20 @@
 		}
 		is_adult = no
 		#age < less_than_two_years_to_adulthood_value #Consistency! #Unop: Move this in the can_start_showing_failures_only
+		#Every other activity must be blocked until an uncrowned AI crowns themselves
+		trigger_if = {
+			limit = {
+				is_ai = yes
+				age >= 12
+			}
+			NOT = {
+				has_realm_law = uncrowned
+			}
+		}
 	}
 
 	can_start_showing_failures_only = {
+		NOT = { is_activity_type_on_cooldown = activity_playdate }
 		is_available = yes
 		age >= 4
 		age < less_than_two_years_to_adulthood_value #Consistency!

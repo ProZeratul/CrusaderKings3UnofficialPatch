@@ -290,7 +290,7 @@ chancellor_task.1001 = {
 scripted_trigger chancellor_task_1002_target_trigger = {
 	is_landed = yes
 	NOT = {
-		this = root.cp:councillor_chancellor
+		scope:councillor ?= this #Unop: Use the councillor scope since now nomadic can use this task with a kurultai member and not a chancellor (was: root.cp:councillor_chancellor)
 	}
 }
 
@@ -361,7 +361,7 @@ chancellor_task.1002 = {
 scripted_trigger chancellor_task_1003_neighbor_trigger = {
 	is_available = yes
 	NOT = {
-		this = root.cp:councillor_chancellor
+		scope:councillor ?= this #Unop: Use the councillor scope since now nomadic can use this task with a kurultai member and not a chancellor (was: root.cp:councillor_chancellor)
 	}
 	NOR = {
 		is_at_war_with = root
@@ -536,7 +536,7 @@ scripted_trigger chancellor_task_1102_target_trigger = {
 	is_landed = yes
 	is_available_adult = yes
 	NOT = {
-		this = root.cp:councillor_chancellor
+		scope:councillor ?= this #Unop: Use the councillor scope since now nomadic can use this task with a kurultai member and not a chancellor (was: root.cp:councillor_chancellor)
 	}
 }
 
@@ -624,7 +624,7 @@ scripted_trigger chancellor_task_1103_neighbor_trigger = {
 		is_at_war_with = scope:councillor
 	}
 	NOT = {
-		this = root.cp:councillor_chancellor
+		scope:councillor ?= this #Unop: Use the councillor scope since now nomadic can use this task with a kurultai member and not a chancellor (was: root.cp:councillor_chancellor)
 	}
 }
 
@@ -1443,7 +1443,7 @@ scripted_trigger chancellor_task_3001_vassal_trigger = {
 			}
 		}
 		NOT = {
-			this = scope:councillor #Unop: Use the councillor scope since now nomadic can use this task with a kurultai member and not a chancellor (was: root.cp:councillor_chancellor)
+			scope:councillor ?= this #Unop: Use the councillor scope since now nomadic can use this task with a kurultai member and not a chancellor (was: root.cp:councillor_chancellor)
 		}
 	}
 }
@@ -1539,7 +1539,7 @@ scripted_trigger chancellor_task_3002_vassal_trigger = {
 			has_variable = chancellor_task_worsened_contract 
 		}
 		NOT = {
-			this = scope:councillor #Unop: Use the councillor scope since now nomadic can use this task with a kurultai member and not a chancellor (was: root.cp:councillor_chancellor)
+			scope:councillor ?= this #Unop: Use the councillor scope since now nomadic can use this task with a kurultai member and not a chancellor (was: root.cp:councillor_chancellor)
 		}
 	}
 }
