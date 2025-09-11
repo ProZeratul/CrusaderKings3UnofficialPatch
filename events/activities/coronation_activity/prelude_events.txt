@@ -725,7 +725,7 @@ prelude_events.0020 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			target_of_powerful_faction_trigger = yes
+			any_targeting_faction = { target_of_powerful_faction_trigger = yes } #Unop: Fix wrong scope used
 			factor = 2
 		}
 	}
@@ -2907,8 +2907,8 @@ prelude_events.0100 = {
 							name = major_supporter
 							target = prev
 						}
-						has_activity_intent = coronation_advocate_domain
 					}
+					has_activity_intent = coronation_advocate_domain #Unop: Fix wrong scope
 				}
 				alternative_limit = {
 					prelude_events_0100_appropriate_vassal = yes
