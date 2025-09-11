@@ -168,6 +168,10 @@ get_artifact_quality_effect = {
 								limit = { ep1_character_had_or_has_inspiration_type_trigger = { TYPE = alchemy } }
 								value = alchemy_inspiration_average_skill_value
 							}
+							else_if = { #Unop: Missing bow inspiration type (introduced in 1.17)
+								limit = { ep1_character_had_or_has_inspiration_type_trigger = { TYPE = bow } }
+								value = weapon_inspiration_average_skill_value #Unop: As there is no "bow_inspiration_average_skill_value", use the weapon one
+							}
 							multiply = {
 								value = quality_bonus_per_skill_level_value
 								add = scope:random_inspired_skill_quality_bonus # Replaces the random_quality_bonus when an artifact is created by a character so that skill matters more
@@ -180,6 +184,7 @@ get_artifact_quality_effect = {
 									ep1_character_had_or_has_inspiration_type_trigger = { TYPE = weapon }
 									ep1_character_had_or_has_inspiration_type_trigger = { TYPE = smith }
 									ep1_character_had_or_has_inspiration_type_trigger = { TYPE = armor }
+									ep1_character_had_or_has_inspiration_type_trigger = { TYPE = bow } #Unop: A bow is a weapon
 								}
 								court_owner ?= {
 									is_landless_adventurer = yes
@@ -201,7 +206,10 @@ get_artifact_quality_effect = {
 						# Bonus quality from Cultural Traditions
 						if = {
 							limit = {
-								ep1_character_had_or_has_inspiration_type_trigger = { TYPE = weapon }
+								OR = {
+									ep1_character_had_or_has_inspiration_type_trigger = { TYPE = weapon }
+									ep1_character_had_or_has_inspiration_type_trigger = { TYPE = bow } #Unop: A bow is a weapon
+								}
 								culture = { has_cultural_parameter = improved_weapon_inspiration }
 							}
 							add = 20
