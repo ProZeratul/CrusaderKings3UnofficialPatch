@@ -28,14 +28,32 @@ separatist_uprising_decision = {
 			text = separatist_uprising_culture_county_tt
 			location.county.culture = root.culture
 		}
-		custom_tooltip = {
-			text = separatist_uprising_capital_county_tt
-			NOT = { location.county = location.duchy.holder.liege.capital_county }
+		trigger_if = { #Unop: To not have an incomplete description when the duchy does not exists
+			limit = {
+				location.duchy = { 
+					is_title_created = yes
+				}				
+			}
+			custom_tooltip = {
+				text = separatist_uprising_capital_county_tt
+				NOT = { location.county = location.duchy.holder.liege.capital_county }
+			}
+			NOT = {
+				location.duchy.holder.culture = root.culture
+			}
 		}
-		NOT = {
-			location.duchy.holder.culture = root.culture
+		trigger_else = {
+			custom_tooltip = {
+				text = separatist_uprising_capital_county_tt
+				NOT = { location.county = location.duchy.title_capital_county.holder.liege.capital_county }
+			}
+			NOT = {
+				location.duchy.title_capital_county.holder.culture = root.culture
+			}
 		}
+
 		prestige_level >= 3
+		location.duchy.holder.liege = { save_temporary_scope_as = recipient } #Unop: For the ai_will_do block
 	}
 
 	is_valid_showing_failures_only = {
