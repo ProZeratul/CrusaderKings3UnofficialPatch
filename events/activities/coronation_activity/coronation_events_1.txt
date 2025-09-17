@@ -2464,9 +2464,11 @@ coronation_events.1014 = {
 			custom_tooltip = coronation_tt_positive_tiny
 			scope:activity = {
 				activity_special_type_progression_tiny = yes
-				coronation_add_magnificence_log_effect = {
-					VALUE = flag:positive_tiny
-					CHAR = root
+				root = { #Unop: Fix wrong scope
+					coronation_add_magnificence_log_effect = {
+						VALUE = flag:positive_tiny
+						CHAR = root
+					}
 				}
 				every_attending_character = {
 					limit = { NOT = { this = scope:host } }
@@ -2611,9 +2613,11 @@ coronation_events.1015 = {
 		scope:activity = {
 			custom_tooltip = coronation_tt_positive_tiny
 			activity_special_type_progression_tiny = yes
-			coronation_add_magnificence_log_effect = {
-				VALUE = flag:positive_tiny
-				CHAR = root
+			root = { #Unop: Fix wrong scope
+				coronation_add_magnificence_log_effect = {
+					VALUE = flag:positive_tiny
+					CHAR = root
+				}
 			}
 			every_attending_character = {
 				limit = {
@@ -3050,9 +3054,11 @@ coronation_events.1017 = {
 		scope:activity = {
 			custom_tooltip = coronation_tt_positive_tiny
 			activity_special_type_progression_tiny = yes
-			coronation_add_magnificence_log_effect = {
-				VALUE = flag:positive_tiny
-				CHAR = root
+			root = { #Unop: Fix wrong scope
+				coronation_add_magnificence_log_effect = {
+					VALUE = flag:positive_tiny
+					CHAR = root
+				}
 			}
 			activity_location.county = {
 				add_county_modifier = {
@@ -3111,7 +3117,7 @@ coronation_events.1017 = {
 			}
 		}
 
-		coronation_impress_attendees_opinion_effect = yes
+		#coronation_impress_attendees_opinion_effect = yes #Unop: We do NOT have this intent
 
 		stress_impact = {
 			paranoid = minor_stress_impact_gain
@@ -3240,41 +3246,15 @@ coronation_events.1017 = {
 				OPINION = 20
 			}
 		}
-		if = {
+		if = { #Unop: Ensure selected target can be appointed + use correct effect to handle tooltip & holder replacement 
 			limit = {
 				is_valid_to_hire_court_position_type = court_brewmaster_court_position
+				can_appoint_char_to_court_position = { CHAR = scope:supporter COURT_POS = court_brewmaster_court_position }
 			}
-			show_as_tooltip = {
-				appoint_court_position = {
-					recipient = scope:supporter
-					court_position = court_brewmaster_court_position
-				}
-			}
-		}
-		
-		hidden_effect = {
-			if = {
-				limit = {
-					is_valid_to_hire_court_position_type = court_brewmaster_court_position
-					NOT = { employs_court_position = court_brewmaster_court_position }
-				}
-				appoint_court_position = {
-					recipient = scope:supporter
-					court_position = court_brewmaster_court_position
-				}
-			}
-			else_if = {
-				limit = {
-					is_valid_to_hire_court_position_type = court_brewmaster_court_position
-					employs_court_position = court_brewmaster_court_position
-				}
-				add_character_flag = temporary_court_position_cost_removal
-				replace_court_position = {
-					recipient = scope:supporter
-					holder = court_position:court_brewmaster_court_position
-					court_position = court_brewmaster_court_position
-				}
-				remove_character_flag = temporary_court_position_cost_removal
+			court_position_grant_effect = {
+				EMPLOYER = root
+				POS = court_brewmaster
+				CANDIDATE = scope:supporter
 			}
 		}
 
@@ -3316,36 +3296,15 @@ coronation_events.1017 = {
 				has_activity_intent = coronation_embrace_supporters
 			}
 		}
-
-		show_as_tooltip = {
-			appoint_court_position = {
-				recipient = scope:supporter
-				court_position = court_brewmaster_court_position
+		if = { #Unop: Ensure selected target can be appointed + use correct effect to handle tooltip & holder replacement 
+			limit = {
+				is_valid_to_hire_court_position_type = court_brewmaster_court_position
+				can_appoint_char_to_court_position = { CHAR = scope:supporter COURT_POS = court_brewmaster_court_position }
 			}
-		}
-		hidden_effect = {
-			if = {
-				limit = {
-					is_valid_to_hire_court_position_type = court_brewmaster_court_position
-					NOT = { employs_court_position = court_brewmaster_court_position }
-				}
-				appoint_court_position = {
-					recipient = scope:supporter
-					court_position = court_brewmaster_court_position
-				}
-			}
-			else_if = {
-				limit = {
-					is_valid_to_hire_court_position_type = court_brewmaster_court_position
-					employs_court_position = court_brewmaster_court_position
-				}
-				add_character_flag = temporary_court_position_cost_removal
-				replace_court_position = {
-					recipient = scope:supporter
-					holder = court_position:court_brewmaster_court_position
-					court_position = court_brewmaster_court_position
-				}
-				remove_character_flag = temporary_court_position_cost_removal
+			court_position_grant_effect = {
+				EMPLOYER = root
+				POS = court_brewmaster
+				CANDIDATE = scope:supporter
 			}
 		}
 
