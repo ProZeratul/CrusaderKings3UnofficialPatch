@@ -15,29 +15,25 @@ separatist_uprising_decision = {
 		is_landless_adventurer = yes
 		NOT = { has_trait = populist_leader }
 		NOT = { has_variable = separatist_uprising_decision_var }
-		domicile.domicile_location.duchy = { #Unop: Only show this decision if the duchy exists
-			is_title_created = yes
-		}
 	}
 	
 	is_valid = {
-		exists = location.county
-		exists = domicile.domicile_location.duchy.holder.liege
-		
-		domicile.domicile_location.duchy.holder.liege = { save_temporary_scope_as = recipient } #Unop: For the ai_will_do block
-		domicile.domicile_location.duchy.title_capital_county = { save_temporary_scope_as = unop_uprising_capital_county } #Unop: For the yml
-		domicile.domicile_location.duchy.title_capital_county.culture = { save_temporary_scope_as = unop_uprising_culture } #Unop: For the yml
-
+		custom_tooltip = {
+			text = separatist_uprising_culture_duchy_check_tt
+			exists = location.county
+			exists = location.duchy
+			exists = location.duchy.holder.liege
+		}
 		custom_tooltip = {
 			text = separatist_uprising_culture_county_tt
-			domicile.domicile_location.duchy.title_capital_county.culture = root.culture
+			location.county.culture = root.culture
 		}
 		custom_tooltip = {
 			text = separatist_uprising_capital_county_tt
-			NOT = { domicile.domicile_location.county = domicile.domicile_location.duchy.holder.liege.capital_county }
+			NOT = { location.county = location.duchy.holder.liege.capital_county }
 		}
 		NOT = {
-			domicile.domicile_location.duchy.holder.culture = root.culture
+			location.duchy.holder.culture = root.culture
 		}
 		prestige_level >= 3
 	}
@@ -58,14 +54,14 @@ separatist_uprising_decision = {
 
 	effect = {
 		show_as_tooltip = {
-			add_pressed_claim = domicile.domicile_location.duchy
+			add_pressed_claim = location.duchy
 		}
 		custom_tooltip = separatist_uprising_decision_war_tt
 		if = {
 			limit = {
 				OR = {
-					can_set_relation_potential_lover_trigger = { CHARACTER = scope:recipient } #Unop: Use our new registered scope (domicile location based)
-					can_set_relation_lover_trigger = { CHARACTER = scope:recipient } #Unop: Use our new registered scope (domicile location based)
+					can_set_relation_potential_lover_trigger = { CHARACTER = location.duchy.holder.liege }
+					can_set_relation_lover_trigger = { CHARACTER = location.duchy.holder.liege }
 				}
 			}
 			custom_tooltip = separatist_uprising_decision_pacifist_option_friend_lover_tt
