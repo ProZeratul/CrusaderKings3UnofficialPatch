@@ -20,6 +20,7 @@ scripted_trigger feast_events_flavor_0001_appropriate_guest = {
 	save_temporary_scope_as = guest_temp
 	dynasty ?= {
 		any_dynasty_member = {
+			is_ai = yes #Unop: Sync this with the immediate block
 			NOT = { this = scope:guest_temp }
 			NOT = { is_spouse_of = scope:guest_temp } # We exclude their spouses to avoid weirdness
 			OR = {
