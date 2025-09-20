@@ -205,3 +205,58 @@ unop_debug_iberian_struggle_decision = {
 		base = 0
 	}
 }
+
+unop_replace_dead_regent_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+
+	decision_group_type = debug
+
+	desc = unop_debug_travel_stuck_decision_desc
+	selection_tooltip = unop_debug_travel_stuck_decision_tooltip
+
+	ai_check_interval = 0
+
+	is_shown = {
+		diarch ?= {
+			is_alive = no
+		}
+		has_diarchy_type = regency
+	}
+
+	effect = {
+		save_scope_value_as = {
+			name = unop_diarch_swing
+			value = {
+				add = diarchy_swing
+			}
+		}
+		every_diarchy_succession_character = {
+			count = 1
+			add_to_list = unop_diarchs
+		}
+		ordered_in_list = {
+			list = unop_diarchs
+			save_scope_as = next_diarch
+		}
+		hidden_effect = {
+			end_diarchy = yes
+		}
+		designate_diarch = scope:next_diarch
+		hidden_effect = {
+			try_start_diarchy = regency
+			set_diarchy_swing = scope:unop_diarch_swing
+		}
+	}
+
+	# TODO ?
+	ai_potential = {
+		always = no
+	}
+
+	# TODO ?
+	ai_will_do = {
+		base = 0
+	}
+}
