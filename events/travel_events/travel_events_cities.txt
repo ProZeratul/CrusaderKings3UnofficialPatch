@@ -29,7 +29,10 @@ scripted_trigger city_event_check = {
 	is_location_valid_for_travel_event_on_land = yes #Should not be needed...
 	NOT = { location.county.holder = root } #If I own it then it does not make sense to visit it.
 	trigger_if = {
-		limit = { has_domicile = yes }
+		limit = { 
+			has_domicile = yes
+			current_travel_plan = { is_travel_with_domicile = no } # Unop: Pdx forgot that if you are traveling with your domicile, its location will be updated each time 
+		}
 		NOT = { location = domicile.domicile_location }
 	} #If I live here then it does not make sense to visit it.
 	NOR = {
@@ -1585,16 +1588,16 @@ travel_events_cities.1020 = {
 			arrogant = minor_stress_impact_gain #Unwilling to learn from the past
 			lazy = medium_stress_impact_gain #Unwilling to learn period
 		}
-		ai_chance = {
-			base = 25
-			modifier = {
-				factor = 0
-				OR = {
-					has_trait = arrogant
-					has_trait = lazy
-				}
-			}
-		}
+		#ai_chance = {  #Unop: Disabled this entry as it's seems to be a copy/paste leftovers and another ai_chance is just below
+		#	base = 25
+		#	modifier = {
+		#		factor = 0
+		#		OR = {
+		#			has_trait = arrogant
+		#			has_trait = lazy
+		#		}
+		#	}
+		#}
 
 		ai_chance = {
 			base = 25
