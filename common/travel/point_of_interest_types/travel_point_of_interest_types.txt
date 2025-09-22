@@ -811,11 +811,35 @@ poi_battles = {
 					name = unop_poi_battles_bonus
 					value = flag:martial_xp
 				}
+				show_as_tooltip = {
+					add_poi_martial_experience_effect = yes
+				}
 			}
 			20 = {
 				save_scope_value_as = {
 					name = unop_poi_battles_bonus
 					value = flag:trait
+				}
+				show_as_tooltip = {
+					scope:province = {
+						switch = {
+							trigger = terrain
+							forest = { battle_poi_trait_effect = { TRAIT = forest_fighter } }
+							taiga = { battle_poi_trait_effect = { TRAIT = forest_fighter } }
+							farmlands = { battle_poi_trait_effect = { TRAIT = open_terrain_expert } }
+							plains = { battle_poi_trait_effect = { TRAIT = open_terrain_expert } }
+							steppe = { battle_poi_trait_effect = { TRAIT = open_terrain_expert } }
+							hills = { battle_poi_trait_effect = { TRAIT = rough_terrain_expert } }
+							mountains = { battle_poi_trait_effect = { TRAIT = rough_terrain_expert } }
+							wetlands = { battle_poi_trait_effect = { TRAIT = rough_terrain_expert } }
+							drylands = { battle_poi_trait_effect = { TRAIT = desert_warrior } }
+							desert = { battle_poi_trait_effect = { TRAIT = desert_warrior } }
+							desert_mountains = { battle_poi_trait_effect = { TRAIT = desert_warrior } }
+							oasis = { battle_poi_trait_effect = { TRAIT = desert_warrior } }
+							jungle = { battle_poi_trait_effect = { TRAIT = jungle_stalker } }
+							floodplains = { battle_poi_trait_effect = { TRAIT = flexible_leader } }
+						}
+					}
 				}
 			}
 		}
@@ -842,53 +866,53 @@ poi_battles = {
 			# Prestige for Wanderers
 			wanderer_lifestyle_destination_effect = yes
 		}
-
-		if = {
-			limit = {
-				NOR = {
-					has_variable = battle_poi_trait_gained
-					number_of_commander_traits > 1
-				}
-			}
+		hidden_effect = {
 			if = {
 				limit = {
-					scope:unop_poi_battles_bonus = flag:martial_xp
-				}
-				add_poi_martial_experience_effect = yes
-			}
-			else_if = {
-				limit = {
-					scope:unop_poi_battles_bonus = flag:trait
-				}
-				scope:province = {
-					switch = {
-						trigger = terrain
-						forest = { battle_poi_trait_effect = { TRAIT = forest_fighter } }
-						taiga = { battle_poi_trait_effect = { TRAIT = forest_fighter } }
-						farmlands = { battle_poi_trait_effect = { TRAIT = open_terrain_expert } }
-						plains = { battle_poi_trait_effect = { TRAIT = open_terrain_expert } }
-						steppe = { battle_poi_trait_effect = { TRAIT = open_terrain_expert } }
-						hills = { battle_poi_trait_effect = { TRAIT = rough_terrain_expert } }
-						mountains = { battle_poi_trait_effect = { TRAIT = rough_terrain_expert } }
-						wetlands = { battle_poi_trait_effect = { TRAIT = rough_terrain_expert } }
-						drylands = { battle_poi_trait_effect = { TRAIT = desert_warrior } }
-						desert = { battle_poi_trait_effect = { TRAIT = desert_warrior } }
-						desert_mountains = { battle_poi_trait_effect = { TRAIT = desert_warrior } }
-						oasis = { battle_poi_trait_effect = { TRAIT = desert_warrior } }
-						jungle = { battle_poi_trait_effect = { TRAIT = jungle_stalker } }
-						floodplains = { battle_poi_trait_effect = { TRAIT = flexible_leader } }
-					}
-					root = {
-						set_variable = battle_poi_trait_gained
+					NOR = {
+						has_variable = battle_poi_trait_gained
+						number_of_commander_traits > 1
 					}
 				}
-			}
-			else = {
-				error_log = "Unop: poi_battles > on_visit > unop_poi_battles_bonus is undefined"
-				debug_log_scopes = yes
+				if = {
+					limit = {
+						scope:unop_poi_battles_bonus = flag:martial_xp
+					}
+					add_poi_martial_experience_effect = yes
+				}
+				else_if = {
+					limit = {
+						scope:unop_poi_battles_bonus = flag:trait
+					}
+					scope:province = {
+						switch = {
+							trigger = terrain
+							forest = { battle_poi_trait_effect = { TRAIT = forest_fighter } }
+							taiga = { battle_poi_trait_effect = { TRAIT = forest_fighter } }
+							farmlands = { battle_poi_trait_effect = { TRAIT = open_terrain_expert } }
+							plains = { battle_poi_trait_effect = { TRAIT = open_terrain_expert } }
+							steppe = { battle_poi_trait_effect = { TRAIT = open_terrain_expert } }
+							hills = { battle_poi_trait_effect = { TRAIT = rough_terrain_expert } }
+							mountains = { battle_poi_trait_effect = { TRAIT = rough_terrain_expert } }
+							wetlands = { battle_poi_trait_effect = { TRAIT = rough_terrain_expert } }
+							drylands = { battle_poi_trait_effect = { TRAIT = desert_warrior } }
+							desert = { battle_poi_trait_effect = { TRAIT = desert_warrior } }
+							desert_mountains = { battle_poi_trait_effect = { TRAIT = desert_warrior } }
+							oasis = { battle_poi_trait_effect = { TRAIT = desert_warrior } }
+							jungle = { battle_poi_trait_effect = { TRAIT = jungle_stalker } }
+							floodplains = { battle_poi_trait_effect = { TRAIT = flexible_leader } }
+						}
+						root = {
+							set_variable = battle_poi_trait_gained
+						}
+					}
+				}
+				else = {
+					error_log = "Unop: poi_battles > on_visit > unop_poi_battles_bonus is undefined"
+					debug_log_scopes = yes
+				}
 			}
 		}
-
 		traveler_danger_xp_effect = {
 			MIN = 1
 			MAX = 3
@@ -954,11 +978,17 @@ poi_battles_historical = {
 					name = unop_poi_battles_historical_bonus
 					value = flag:martial_xp
 				}
+				show_as_tooltip = {
+					add_poi_martial_experience_effect = yes
+				}
 			}
 			20 = {
 				save_scope_value_as = {
 					name = unop_poi_battles_historical_bonus
 					value = flag:trait
+				}
+				show_as_tooltip = {
+
 				}
 			}
 		}
@@ -982,59 +1012,59 @@ poi_battles_historical = {
 					VALUE = travel_minor_lifestyle_xp
 				}
 			}
-
-			if = {
-				limit = {
-					NOR = {
-						has_variable = battle_poi_trait_gained
-						number_of_commander_traits > 1
-					}
-				}
+			hidden_effect = {
 				if = {
 					limit = {
-						scope:unop_poi_battles_historical_bonus = flag:martial_xp
-					}
-					add_poi_martial_experience_effect = yes
-				}
-				else_if = {
-					limit = {
-						scope:unop_poi_battles_historical_bonus = flag:trait
-					}
-					scope:province = {
-						switch = {
-							trigger = this
-							# Tours
-							province:2253 = { battle_poi_trait_effect = { TRAIT = unyielding_defender } }
-							# Lechfeld
-							province:2778 = { battle_poi_trait_effect = { TRAIT = open_terrain_expert } }
-							# Hastings
-							province:1509 = { battle_poi_trait_effect = { TRAIT = aggressive_attacker } }
-							# Stamford Bridge
-							province:1595 = { battle_poi_trait_effect = { TRAIT = organizer } }
-							# Manzikert
-							province:701 = { battle_poi_trait_effect = { TRAIT = flexible_leader } }
-							# Yarmuk
-							province:5954 = { battle_poi_trait_effect = { TRAIT = reckless } }
-							# Dandanaqan
-							province:4008 = { battle_poi_trait_effect = { TRAIT = desert_warrior } }
-							# Battle of Aror
-							province:1175 = { battle_poi_trait_effect = { TRAIT = flexible_leader } }
-							# Battle of Svolder
-							province:2811 = { battle_poi_trait_effect = { TRAIT = holy_warrior } }
-							# Battle of Civitate
-							province:2605 = { battle_poi_trait_effect = { TRAIT = open_terrain_expert } }
-							# Battle of Talas
-							province:7132 = { battle_poi_trait_effect = { TRAIT = desert_warrior } }
+						NOR = {
+							has_variable = battle_poi_trait_gained
+							number_of_commander_traits > 1
 						}
 					}
-					set_variable = battle_poi_trait_gained
-				}
-				else = {
-					error_log = "Unop: poi_battles_historical > on_visit > unop_poi_battles_historical_bonus is undefined"
-					debug_log_scopes = yes
+					if = {
+						limit = {
+							scope:unop_poi_battles_historical_bonus = flag:martial_xp
+						}
+						add_poi_martial_experience_effect = yes
+					}
+					else_if = {
+						limit = {
+							scope:unop_poi_battles_historical_bonus = flag:trait
+						}
+						scope:province = {
+							switch = {
+								trigger = this
+								# Tours
+								province:2253 = { battle_poi_trait_effect = { TRAIT = unyielding_defender } }
+								# Lechfeld
+								province:2778 = { battle_poi_trait_effect = { TRAIT = open_terrain_expert } }
+								# Hastings
+								province:1509 = { battle_poi_trait_effect = { TRAIT = aggressive_attacker } }
+								# Stamford Bridge
+								province:1595 = { battle_poi_trait_effect = { TRAIT = organizer } }
+								# Manzikert
+								province:701 = { battle_poi_trait_effect = { TRAIT = flexible_leader } }
+								# Yarmuk
+								province:5954 = { battle_poi_trait_effect = { TRAIT = reckless } }
+								# Dandanaqan
+								province:4008 = { battle_poi_trait_effect = { TRAIT = desert_warrior } }
+								# Battle of Aror
+								province:1175 = { battle_poi_trait_effect = { TRAIT = flexible_leader } }
+								# Battle of Svolder
+								province:2811 = { battle_poi_trait_effect = { TRAIT = holy_warrior } }
+								# Battle of Civitate
+								province:2605 = { battle_poi_trait_effect = { TRAIT = open_terrain_expert } }
+								# Battle of Talas
+								province:7132 = { battle_poi_trait_effect = { TRAIT = desert_warrior } }
+							}
+						}
+						set_variable = battle_poi_trait_gained
+					}
+					else = {
+						error_log = "Unop: poi_battles_historical > on_visit > unop_poi_battles_historical_bonus is undefined"
+						debug_log_scopes = yes
+					}
 				}
 			}
-
 			traveler_danger_xp_effect = {
 				MIN = 1
 				MAX = 3
