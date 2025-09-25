@@ -592,9 +592,12 @@
 
 		#Cleanup
 		scope:host = {
-			remove_variable = coronation_primary_title
-			remove_variable = hide_make_primary_title
-			remove_character_flag = no_coronation_events
+			if = { #Unop: To not output dirty logs
+				limit = { is_alive = yes }
+				remove_variable = coronation_primary_title
+				remove_variable = hide_make_primary_title
+				remove_character_flag = no_coronation_events
+			}
 		}
 		var:officiator ?= {
 			remove_character_flag = coronation_officiator
