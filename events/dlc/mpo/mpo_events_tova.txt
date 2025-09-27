@@ -1788,17 +1788,30 @@ mpo_events_tova.0045 = { # Anda comes bearing gifts
 						has_character_flag = axe_gift
 					}
 				}
- 				hidden_effect = {
+ 				hidden_effect_new_object = {
+					# Get artifact quality and wealth.
+					get_artifact_quality_effect = yes
+					get_artifact_wealth_effect = yes
  					create_artifact = {
-					name = gifted_axe_name
-					description = gifted_axe_desc
-					modifier = artifact_prowess_3_modifier
-					type = axe
-					visuals = axe
-					save_scope_as = gift
+						name = gifted_axe_name
+						description = gifted_axe_desc
+						modifier = artifact_prowess_3_modifier
+						type = axe
+						visuals = axe
+						save_scope_as = gift
 					}
  				}
 				add_character_flag = axe_gift
+				scope:gift = { #Unop: We need to register both wealth & quality ont the artifact itself !
+					set_variable = {
+						name = quality
+						value = scope:quality
+					}
+					set_variable = {
+						name = wealth
+						value = scope:wealth
+					}
+				}
 			}
 		}
 	}
