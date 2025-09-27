@@ -4620,19 +4620,19 @@ coronation_events.0312 = { #Guest ending event
 				trigger = {
 					exists = scope:high_magnificence
 				}
-				desc = coronation_events.0310.desc.high_magnificence
+				desc = coronation_events.0312.desc.high_magnificence #Unop: Fix event yml ref
 			}
 			triggered_desc = {
 				trigger = {
 					exists = scope:mid_magnificence
 				}
-				desc = coronation_events.0310.desc.mid_magnificence
+				desc = coronation_events.0312.desc.mid_magnificence #Unop: Fix event yml ref
 			}
 			triggered_desc = {
 				trigger = {
 					exists = scope:low_magnificence
 				}
-				desc = coronation_events.0310.desc.low_magnificence
+				desc = coronation_events.0312.desc.low_magnificence #Unop: Fix event yml ref
 			}
 		}
 	}
@@ -4702,12 +4702,12 @@ coronation_events.0312 = { #Guest ending event
 	}
 
 	immediate = {
-		create_character_memory = {
-			type = witnessed_a_coronation_memory
-			participants = {
-				host = scope:activity.activity_host
-			}
-		}
+		#create_character_memory = { #Unop: Disable this entry as it is handled inside the on_complete of the activity_coronation making it a duplicate entry.
+		#	type = witnessed_a_coronation_memory
+		#	participants = {
+		#		host = scope:activity.activity_host
+		#	}
+		#}
 		if = {
 			limit = {
 				OR = {
