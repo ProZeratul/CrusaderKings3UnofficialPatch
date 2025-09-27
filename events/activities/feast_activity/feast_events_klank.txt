@@ -34,7 +34,7 @@ feast_events_klank.1001 = {
 				is_ai = yes
 				opinion = {
 					target = root
-					value >= 20
+					value >= medium_positive_opinion #Unop: Was magic number 20 but immediate had medium_positive_opinion leading to undefined characters
 				}
 				intrigue <= root.intrigue
 				NOT = {
@@ -76,9 +76,9 @@ feast_events_klank.1001 = {
 						has_trait = torturer
 						has_trait = callous
 						has_trait = sadistic
-						NOT = {
+						#NOT = { #Unop: Why a not here ? we already are in a NOR and we DO want to exclude root !
 							this = root
-						}
+						#}
 					}
 				}
 				save_scope_as = terrified_onlooker
