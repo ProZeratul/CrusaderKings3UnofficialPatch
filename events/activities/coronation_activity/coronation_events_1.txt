@@ -2471,7 +2471,12 @@ coronation_events.1014 = {
 					}
 				}
 				every_attending_character = {
-					limit = { NOT = { this = scope:host } }
+					limit = { 
+						NOR = { 
+							this = scope:host 
+							this = root
+						} 
+					}
 					custom = custom.every_attending_character
 					add_opinion = {
 						target = root
@@ -2484,7 +2489,12 @@ coronation_events.1014 = {
 		else = {
 			scope:activity = {
 				every_attending_character = {
-					limit = { NOT = { this = scope:host } }
+					limit = { 
+						NOR = { 
+							this = scope:host 
+							this = root
+						} 
+					}
 					custom = custom.every_attending_character
 					add_opinion = {
 						target = root
