@@ -5431,8 +5431,16 @@ scripted_effect coronation_events_6101_self_crowning_effect = {
 			save_scope_as = judger
 		}
 	}
-	else = {
+	else_if = { #Unop: Need to check if there is acutally a chaplain !
+		limit = { exists = cp:councillor_court_chaplain }
 		cp:councillor_court_chaplain ?= {
+			save_scope_as = judger
+		}
+	}
+	else_if = { #Unop: Maybe a nomad, so fallback on the astrologer ?
+		limit = { employs_court_position = court_astrologer_court_position }
+		random_court_position_holder = {
+			type = court_astrologer_court_position
 			save_scope_as = judger
 		}
 	}
@@ -5452,7 +5460,7 @@ scripted_effect coronation_events_6101_self_crowning_effect = {
 			limit = {
 				has_vassal_stance = zealot
 				NOT = {
-					this = scope:judger
+					scope:judger ?= this #Unop: Reverse the check as judge can be undefined ! 
 				}
 			}
 			add_opinion = {
@@ -5478,7 +5486,7 @@ scripted_effect coronation_events_6101_self_crowning_effect = {
 			limit = {
 				has_vassal_stance = zealot
 				NOT = {
-					this = scope:judger
+					scope:judger ?= this #Unop: Reverse the check as judge can be undefined ! 
 				}
 			}
 			add_opinion = {
@@ -5504,7 +5512,7 @@ scripted_effect coronation_events_6101_self_crowning_effect = {
 			limit = {
 				has_vassal_stance = zealot
 				NOT = {
-					this = scope:judger
+					scope:judger ?= this #Unop: Reverse the check as judge can be undefined ! 
 				}
 			}
 			add_opinion = {
@@ -13804,7 +13812,7 @@ scripted_trigger coronation_events_6150_vassal_trigger = {
 	is_vassal_of = root
 	NOT = { is_obedient_to = root }
 	NOR = {
-		this = scope:advisor
+		scope:advisor ?= this #Unop: scope:advisor can be undefined since this trigger is used in the weight_multiplier and the immediate has not yet run 
 		is_in_guest_subset = { name = detractor }
 		trigger_if = {
 			limit = {
