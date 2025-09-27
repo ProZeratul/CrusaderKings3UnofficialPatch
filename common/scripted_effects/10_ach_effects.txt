@@ -2039,109 +2039,114 @@ coronation_move_towards_detractor_effect = {
 				}
 			}
 		}
-		#re you a detractor? Stop that
-		if = {
+		if = { # Unop: Since the character can be selected outside of activity participant, ensure this case to avoid log errors
 			limit = {
-				is_in_guest_subset = {
-					name = supporter
-				}
+				is_in_an_activity = yes
 			}
+			#re you a detractor? Stop that
 			if = {
 				limit = {
-					root = scope:host
-				}
-				custom_tooltip = hater_leaves_supporters_tt
-			}
-			else = {
-				custom_tooltip = hater_leaves_supporters_tt.guest
-			}
-			scope:activity = {
-				remove_from_guest_subset = {
-					name = supporter
-					target = $CHARACTER$
-				}
-				add_to_variable_list = {
-					name = blocked_from_supporters
-					target = $CHARACTER$
+					is_in_guest_subset = {
+						name = supporter
+					}
 				}
 				if = {
 					limit = {
-						has_variable_list = locked_into_detractors
+						root = scope:host
 					}
-					remove_list_variable = {
+					custom_tooltip = hater_leaves_supporters_tt
+				}
+				else = {
+					custom_tooltip = hater_leaves_supporters_tt.guest
+				}
+				scope:activity = {
+					remove_from_guest_subset = {
+						name = supporter
+						target = $CHARACTER$
+					}
+					add_to_variable_list = {
+						name = blocked_from_supporters
+						target = $CHARACTER$
+					}
+					if = {
+						limit = {
+							has_variable_list = locked_into_detractors
+						}
+						remove_list_variable = {
+							name = locked_into_detractors
+							target = $CHARACTER$
+						}
+					}
+				}
+			}
+			#Not a supporter? Make them a supporter
+			else_if = {
+				limit = {
+					NOT = {
+						is_in_guest_subset = {
+							name = detractor
+						}
+					}
+				}
+				if = {
+					limit = {
+						root = scope:host
+					}
+					custom_tooltip = hater_becomes_detractor_tt
+				}
+				else = {
+					custom_tooltip = hater_becomes_detractor_tt.guest
+				}
+				scope:activity = {
+					add_to_guest_subset = {
+						name = detractor
+						target = $CHARACTER$
+					}
+					add_to_variable_list = {
 						name = locked_into_detractors
 						target = $CHARACTER$
 					}
-				}
-			}
-		}
-		#Not a supporter? Make them a supporter
-		else_if = {
-			limit = {
-				NOT = {
-					is_in_guest_subset = {
-						name = detractor
+					if = {
+						limit = {
+							has_variable_list = blocked_from_detractors
+						}
+						remove_list_variable = {
+							name = blocked_from_detractors
+							target = $CHARACTER$
+						}
 					}
 				}
 			}
 			if = {
 				limit = {
-					root = scope:host
-				}
-				custom_tooltip = hater_becomes_detractor_tt
-			}
-			else = {
-				custom_tooltip = hater_becomes_detractor_tt.guest
-			}
-			scope:activity = {
-				add_to_guest_subset = {
-					name = detractor
-					target = $CHARACTER$
-				}
-				add_to_variable_list = {
-					name = locked_into_detractors
-					target = $CHARACTER$
-				}
-				if = {
-					limit = {
-						has_variable_list = blocked_from_detractors
+					NOT = {
+						scope:activity = {
+							any_in_list = {
+								variable = major_detractor
+								count = all
+								coronation_detractor_sort_value > $CHARACTER$.coronation_detractor_sort_value
+							}
+						}
 					}
-					remove_list_variable = {
-						name = blocked_from_detractors
+				}
+				scope:activity = {
+					ordered_in_list = {
+						variable = major_detractor
+						order_by = {
+							value = coronation_detractor_sort_value
+							multiply = -1
+						}
+						scope:activity = {
+							remove_list_variable = {
+								name = major_detractor
+								target = prev
+							}
+						}
+					}
+					add_to_variable_list = {
+						name = major_detractor
 						target = $CHARACTER$
 					}
-				}
-			}
-		}
-		if = {
-			limit = {
-				NOT = {
-					scope:activity = {
-						any_in_list = {
-							variable = major_detractor
-							count = all
-							coronation_detractor_sort_value > $CHARACTER$.coronation_detractor_sort_value
-						}
-					}
-				}
-			}
-			scope:activity = {
-				ordered_in_list = {
-					variable = major_detractor
-					order_by = {
-						value = coronation_detractor_sort_value
-						multiply = -1
-					}
-					scope:activity = {
-						remove_list_variable = {
-							name = major_detractor
-							target = prev
-						}
-					}
-				}
-				add_to_variable_list = {
-					name = major_detractor
-					target = $CHARACTER$
 				}
 			}
 		}
@@ -3283,7 +3288,7 @@ ach_cultural_acceptance_host_reward_effect = {
 						culture != scope:first_reward_target
 					}
 					culture = { save_scope_as = second_reward_target add_to_list = culture_rewards}
-					add_to_list = culture_rewards
+					#add_to_list = culture_rewards #Unop: This have nothing to do here !
 				}
 				ordered_attending_character = {
 					order_by = coronation_supporter_sort_value
