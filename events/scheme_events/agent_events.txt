@@ -2871,6 +2871,7 @@ scripted_trigger agent_events_2021_valid_competing_agents_trigger = {
 	save_temporary_scope_as = char_temp
 	scope:scheme = {
 		any_scheme_agent_character = {
+			NOT = { this = scope:char_temp } #Unop: To not select twice the same character for both role
 			number_of_opposing_traits = {
 				target = scope:char_temp
 				value >= 2
