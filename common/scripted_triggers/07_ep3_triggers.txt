@@ -934,11 +934,11 @@ ep3_laamp_diplo_range_trigger = {
 can_recruit_archer_cavalry_trigger = {
 	custom_tooltip = {
 		text = can_recruit_archer_cavalry_trigger_desc
-		OR = {
-			can_create_maa = horse_archers
-			can_create_maa = mangudai
-			can_create_maa = asawira
-			can_create_maa = accolade_maa_horse_archers
+		OR = { #Unop: Replace all can_create_maa with has_access_to_maa since if all MAA slot are full it will return false
+			has_access_to_maa = horse_archers
+			has_access_to_maa = mangudai
+			has_access_to_maa = asawira
+			has_access_to_maa = accolade_maa_horse_archers
 		}
 	}
 }
