@@ -2081,6 +2081,10 @@ add_random_economic_building_effect = {
 	save_scope_as = building_scope
 	custom_tooltip = random_economic_building_tt
 	hidden_effect = {
+		if = { #Unop: # If it doesn't have a free building slot, give it one.
+			limit = { free_building_slots = 0 }
+			add_province_modifier = extra_building_slot
+		}
 		random_list = {
 			10 = { # Caravanserai
 				trigger = {
@@ -2260,6 +2264,10 @@ add_random_fortification_building_effect = {
 	save_scope_as = building_scope
 	custom_tooltip = random_fortification_building_tt
 	hidden_effect = {
+		if = { #Unop: # If it doesn't have a free building slot, give it one.
+			limit = { free_building_slots = 0 }
+			add_province_modifier = extra_building_slot
+		}
 		random_list = {
 			10 = { # Ramparts
 				trigger = {
@@ -2301,6 +2309,10 @@ add_random_military_building_effect = {
 	save_scope_as = building_scope
 	custom_tooltip = random_military_building_tt
 	hidden_effect = {
+		if = { #Unop: # If it doesn't have a free building slot, give it one.
+			limit = { free_building_slots = 0 }
+			add_province_modifier = extra_building_slot
+		}
 		random_list = {
 			10 = { # Wind Furnace
 				trigger = {
