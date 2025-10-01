@@ -2245,6 +2245,14 @@ pilgrimage_intent.9000 = {
 				opinion = 30
 			}
 		}
+		if = { #Unop: To let them join the activity despite being from another faith
+			limit = {
+				involved_activity ?= { has_activity_type = activity_pilgrimage }
+			}
+			scope:smitten_heathen = {
+				add_character_flag = unop_force_join_pilgrimage
+			}
+		}
 		add_to_entourage_court_and_activity_effect = { 
 			CHAR_TO_ADD = scope:smitten_heathen 
 			NEW_COURT_OWNER = root 
@@ -2438,6 +2446,14 @@ pilgrimage_intent.9000 = {
 					}
 					else = {
 						marry = scope:smitten_heathen
+					}
+					if = { #Unop: To let them join the activity despite being from another faith
+						limit = {
+							involved_activity ?= { has_activity_type = activity_pilgrimage }
+						}
+						scope:smitten_heathen = {
+							add_character_flag = unop_force_join_pilgrimage
+						}
 					}
 					add_to_entourage_court_and_activity_effect = { 
 						CHAR_TO_ADD = scope:smitten_heathen 
