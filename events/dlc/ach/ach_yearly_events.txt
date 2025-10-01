@@ -881,6 +881,7 @@ ach_yearly_events.1003 = {
 		basic_is_valid_for_yearly_events_trigger = yes
 		is_at_war = no
 		liege = { is_landed = yes }
+		NOT = { root = liege } #Unop: This events is supposed to fire when you have a liege, not when you are the liege
 	}
 	immediate = {
 		liege ?= {
@@ -908,7 +909,7 @@ ach_yearly_events.1003 = {
 			liege = {
 				save_scope_as = show_liege
 			}
-		}	
+		}
 	}
 	cooldown = { years = 10 }
 
@@ -989,6 +990,7 @@ ach_yearly_events.1003 = {
 	#I AM HONORABLE AND WILL FIGHT TOO
 	option = {
 		name = ach_yearly_events.1003.b
+		trigger = { exists = scope:liege_war } #Unop: Will prevent a huge number of issue, this is caused by the fact that this event can be launch in a combat ending context
 		save_scope_as = marshal
 		scope:liege = {
 			send_interface_message = {
