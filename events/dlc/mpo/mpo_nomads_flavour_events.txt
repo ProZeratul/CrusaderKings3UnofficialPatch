@@ -2333,7 +2333,7 @@ nomad_events.0110 = {
 		base = 1
 		modifier = {
 			add = 3
-			situation:the_great_steppe = {
+			situation:the_great_steppe ?= { #Unop: Added ?= to not flood the logs of those who don't own the DLC
 				OR = {
 					any_situation_sub_region = {
 					    sub_region_current_phase = situation_steppe_white_zud_season
@@ -4209,7 +4209,7 @@ nomad_events.0210 = {
 				herd <= minor_herd_value
 			}
 		}
-		situation:the_great_steppe = {
+		situation:the_great_steppe ?= { #Unop: Added ?= to not flood the logs of those who don't own the DLC
 			NOR = {
 			    any_situation_sub_region = {
 			    	sub_region_current_phase = situation_steppe_abundant_grazing_season
