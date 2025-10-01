@@ -583,71 +583,108 @@ yearly.0002 = {
 	}
 
 	immediate = {
-		#Find a valid councillor to use for the seducer.
-		random_councillor = {
+		every_child = {
 			limit = {
-				yearly_0002_valid_councillor = yes
+				is_available_ai_adult = yes
+				NOT = { has_trait = chaste }
+				is_married = no
+				is_concubine = no
+				might_cheat_on_every_partner_trigger = yes
+				is_in_the_same_court_as_or_guest = root
 			}
-
-			weight = {
-				base = 10
-
-				modifier = {
-					factor = 2
-					has_trait = lustful
-				}
-				modifier = {
-					factor = 2
-					is_married = no
+			add_to_list = unop_potential_child
+		}
+		every_councillor = {
+			limit = {
+				might_cheat_on_every_partner_trigger = yes
+				is_available_ai_adult = yes
+				NOR = {
+					has_trait = chaste
+					is_spouse_of = root
 				}
 			}
+			add_to_list = unop_potential_councillor
+		}
+		every_court_position_holder = {
+			limit = {
+				might_cheat_on_every_partner_trigger = yes
+				is_available_ai_adult = yes
+				NOR = {
+					has_trait = chaste
+					is_spouse_of = root
+				}
+			}
+			add_to_list = unop_potential_councillor
+		}
 
+		#Pick a councillor
+		random_in_list = {
+			list = unop_potential_councillor
 			save_scope_as = councillor
 		}
-		#Find a valid court position to use for the seducer.
-		if = {
+		#Pick a child
+		random_in_list = {
+			list = unop_potential_child
 			limit = {
-				NOT = { exists = scope:councillor }
+				NOT = { this = scope:councillor }
+				NOT = { this = scope:councillor }
+				can_set_relation_lover_trigger = { CHARACTER = scope:councillor }
+				is_attracted_to_gender_of = scope:councillor
+				scope:councillor = { is_attracted_to_gender_of = prev }
 			}
-			random_court_position_holder = {
-				limit = {
-					yearly_0002_valid_councillor = yes
-				}
-				weight = {
-					base = 10
+			save_scope_as = child
+		}
+		if = {
+			limit = { NOT = { exists = scope:child } }
+			while = {
+				limit = { NOT = { exists = scope:child } }
+				scope:councillor = { add_to_list = blacklisted_councillor }
+				#Re-Pick a councillor
+				random_in_list = {
+					list = unop_potential_councillor
+					limit = { NOT = { is_in_list = blacklisted_councillor } }
+					weight = {
+						base = 10
 
-					modifier = {
-						factor = 2
-						has_trait = lustful
+						modifier = {
+							factor = 2
+							has_trait = lustful
+						}
+						modifier = {
+							factor = 2
+							is_married = no
+						}
 					}
-					modifier = {
-						factor = 2
-						is_married = no
-					}
+					save_scope_as = councillor
 				}
-				save_scope_as = councillor
+				#Re-Pick a child
+				random_in_list = {
+					list = unop_potential_child
+					limit = {
+						NOT = { this = scope:councillor }
+						can_set_relation_lover_trigger = { CHARACTER = scope:councillor }
+						is_attracted_to_gender_of = scope:councillor
+						scope:councillor = { is_attracted_to_gender_of = prev }
+					}			
+					weight = {
+						base = 10
+
+						modifier = {
+							factor = 2
+							has_trait = lustful
+						}
+					}
+					save_scope_as = child
+				}
 			}
 		}
-
-		#Find one of your valid children to be the seducee.
-		random_child = {
-			limit = {
-				yearly_0002_valid_child = yes
-			}
-
-			weight = {
-				base = 10
-
-				modifier = {
-					factor = 2
-					has_trait = lustful
-				}
-			}
-
-			save_scope_as = child
-
+		scope:child = {
 			#Create the relationship between the two characters.
-			set_relation_lover = { reason = lover_indiscreet target = scope:councillor involved_character = root }
+			set_relation_lover = { 
+				reason = lover_indiscreet
+				target = scope:councillor
+				involved_character = root
+			}
 
 			#Chance to get pregnant
 			hidden_effect = {
@@ -656,7 +693,7 @@ yearly.0002 = {
 					CHARACTER = scope:councillor
 					PREGNANCY_CHANCE = pregnancy_chance
 				}
-			}			
+			}
 		}
 
 		#Save the councillor's lover secret.
@@ -680,7 +717,31 @@ yearly.0002 = {
 				NOT = { exists = scope:councillor }
 			}
 			error_log = "Unop:yearly.0002: scope:councillor is undefined"
-			debug_log = "Unop:yearly.0002: scope:councillor is undefined"
+			debug_log_scopes = yes
+		}
+		if = {
+			limit = {
+				NOT = { exists = scope:secret }
+			}
+			scope:councillor = {
+				add_secret = {
+					target = scope:child
+					type = secret_lover
+				}
+				random_secret = {
+					limit = {
+						secret_type = secret_lover
+						secret_target = scope:child
+					}
+					save_scope_as = secret
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = { exists = scope:secret }
+			}
+			error_log = "Unop:yearly.0002: scope:secret is still undefined !"
 			debug_log_scopes = yes
 		}
 	}
