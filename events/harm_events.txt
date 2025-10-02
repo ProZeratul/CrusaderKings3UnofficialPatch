@@ -591,8 +591,9 @@ scripted_trigger harm_0011_valid_emergency_medic_trigger = {
 		# Any character with obscenely high learning will also do.
 		learning >= 26
 	}
-	NOT = {
+	NOR = {
 		has_any_bad_relationship_with_character_trigger = { CHARACTER = root.side_commander }
+		this = root.side_commander #Unop: The commander won't self-treat 
 	}
 }
 
