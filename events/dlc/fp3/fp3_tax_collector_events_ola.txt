@@ -749,6 +749,9 @@ fp3_clan.8011 = { #A Proper Paymaster
 		random_tax_collector = {
 			limit = {
 				fp3_suitable_extra_tax_collector_competence_traits_trigger = yes
+				NOT = { #Unop: Exclude the marshal since it needs to be 2 different characters
+					this = root.cp:councillor_marshal
+				}
 			}
 			save_scope_as = competent_tax_collector
 		}
