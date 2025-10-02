@@ -6691,6 +6691,23 @@ harm.1071 = {
 			}
 			harm_1071_grab_rival_courtiers_effect = yes
 		}
+
+		if = { #Unop: Sanity & debug warning check
+			limit = {
+				#debug_only = yes
+				root = scope:killer
+			}
+			error_log = "Unop: harm.1071 scope:killer is also root"
+			debug_log_scopes = yes
+		}
+		if = { #Unop: Sanity & debug warning check
+			limit = {
+				#debug_only = yes
+				root = scope:other
+			}
+			error_log = "Unop: harm.1071 scope:other is also root"
+			debug_log_scopes = yes
+		}
 	}
 
 	# Dodge the knife.

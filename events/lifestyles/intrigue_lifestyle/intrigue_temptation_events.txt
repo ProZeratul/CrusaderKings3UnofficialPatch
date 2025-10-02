@@ -962,6 +962,15 @@ intrigue_temptation.3010 = { #by Mathilda Bjarnehed
 				}
 			}
 		}
+	
+		if = { #Unop: Sanity & debug warning check
+			limit = {
+				#debug_only = yes
+				NOT = { exists = scope:wingman }
+			}
+			error_log = "Unop: wingman is undefined"
+			debug_log_scopes = yes
+		}
 	}
 
 	# Accept help
