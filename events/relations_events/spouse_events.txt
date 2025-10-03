@@ -1619,6 +1619,7 @@ scripted_trigger spouse_2014_base_scheme_trigger = {
 		scheme_owner = root
 		is_scheme_agent_exposed = scope:agent_check
 	}
+	is_type_secret = yes # Unop: We don't care about non-secret scheme (like learn language)
 }
 
 #You suspect a plot against spouse
@@ -1762,11 +1763,18 @@ spouse.2014 = {
 						target = root
 						modifier = spouse_warned_me_opinion
 					}
-					random_targeting_scheme = {
-						limit = {
-							NOT = { is_scheme_agent_exposed = scope:agent }
+					scope:scheme_in_question = {
+						if = {
+							limit = { is_scheme_exposed = yes }
+							if = {
+								limit = { NOT = { is_scheme_agent_exposed = scope:agent } }
+								expose_scheme_agent = scope:agent
+							}
 						}
-						expose_scheme_agent = scope:agent
+						else = { #Unop: If the scheme was not discovered, expose it and the agent
+							expose_scheme = yes
+							expose_scheme_agent = scope:agent
+						}
 					}
 				}
 			}
@@ -1812,11 +1820,18 @@ spouse.2015 = {
 				value > neutral_opinion
 			}
 		}
-		random_targeting_scheme = {
-			limit = {
-				NOT = { is_scheme_agent_exposed = scope:agent }
+		scope:scheme_in_question = {
+			if = {
+				limit = { is_scheme_exposed = yes }
+				if = {
+					limit = { NOT = { is_scheme_agent_exposed = scope:agent } }
+					expose_scheme_agent = scope:agent
+				}
 			}
-			expose_scheme_agent = scope:agent
+			else = { #Unop: If the scheme was not discovered, expose it and the agent
+				expose_scheme = yes
+				expose_scheme_agent = scope:agent
+			}
 		}
 		add_opinion = {
 			target = scope:first_spouse
