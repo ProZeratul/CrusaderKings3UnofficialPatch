@@ -42,19 +42,56 @@ disease_outbreak_pulse = {
 		chance_to_happen = 10
 
 		chance_of_no_event = {
+			value = 0 #Unop: All the cases where overriding the given value, fixing this with values 
+			max = 90 #Unop: Didn't want to make you immune (open to debate)
+			#Unop: Reordering all this to be a little clearer
+			if = { # Game Rule
+				limit = { has_game_rule = fewer_minor_disease_frequency }
+				add = 30
+			}
+			if = { # Very Easy Difficulty
+				limit = { has_game_rule = very_easy_difficulty }
+				if = { # Am I a living being ?
+					limit = { is_ai = no }
+					add = 75
+				}
+				else = { # I'm a robot !
+					if = {
+						limit = { any_parent = { is_ai = no } }
+						add = 50
+					}
+				}
+			}
+			else_if = { # Easy Difficulty
+				limit = { has_game_rule = easy_difficulty }
+				if = { # Am I a living being ?
+					limit = { is_ai = no }
+					add = 25
+				}
+				else = { # I'm a robot !
+					if = {
+						limit = { any_parent = { is_ai = no } }
+						add = 15
+					}
+				}
+			}
+			if = { # Special conqueror case
+				limit = { ai_should_get_extreme_conqueror_bonuses = yes }
+				add = 75
+			}
 			# Perk reduces chance of sickness for yourself and for Courtiers/Guests
 			if = {
 				limit = {
 					has_perk = wash_your_hands_perk
 				}
-				value = 50
+				add = 50
 			}
 			else_if = {
 				limit = {
 					exists = host
 					host = { has_perk = wash_your_hands_perk }
 				}
-				value = 25
+				add = 25
 			}
 			if = { #Wet Nurse reduces chance of sickness for children
 				limit = {
@@ -74,53 +111,7 @@ disease_outbreak_pulse = {
 					}
 					root = { is_adult = no }
 				}
-				value = 25
-			}
-			if = { # Difficulty
-				limit = {
-					is_ai = no
-					has_game_rule = easy_difficulty
-				}
-				value = 25
-			}
-			else_if = {
-				limit = {
-					is_ai = no
-					has_game_rule = very_easy_difficulty
-				}
-				value = 75
-			}
-			else_if = {
-				limit = {
-					ai_should_get_extreme_conqueror_bonuses = yes
-				}
-				value = 75
-			}
-			else_if = {
-				limit = {
-					is_ai = yes
-					has_game_rule = easy_difficulty
-					any_parent = {
-						is_ai = no
-					}
-				}
-				value = 15
-			}
-			else_if = {
-				limit = {
-					is_ai = no
-					has_game_rule = very_easy_difficulty
-					any_parent = {
-						is_ai = no
-					}
-				}
-				value = 50
-			}
-			if = { # Game Rule
-				limit = {
-					has_game_rule = fewer_minor_disease_frequency
-				}
-				value = 30
+				add = 25
 			}
 		}
 
