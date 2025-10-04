@@ -1459,15 +1459,15 @@ antiquarian_court_position = {
 				desc = court_position_overseer_trait
 			}
 		}
-		if = {
-			limit = {
-				has_variable = fund_inspiration_6508_architect_improvement
-			}
-			add = {
-				value = 5
-				desc = court_position_architect_study_experience
-			}
-		}
+		#if = { #Unop: Commented out since this modifier is for the ARCHITECT (set only in fund_inspiration.6508 as of 1.17.1 so nothing to do in the antiquarian !)
+		#	limit = {
+		#		has_variable = fund_inspiration_6508_architect_improvement
+		#	}
+		#	add = {
+		#		value = 5
+		#		desc = court_position_architect_study_experience
+		#	}
+		#}
 		if = {
 			limit = {
 				liege ?= {
@@ -9902,6 +9902,15 @@ royal_architect_court_position = { # EP1
 			add = {
 				value = liege.court_position:yeke_jarquchi_court_position.yeke_jarquchi_improve_court_value
 				desc = yeke_jarquchi_improve_court_aptitude_desc
+			}
+		}
+		if = { #Unop: Added this since it was on the antiquarian instead (set only in fund_inspiration.6508 as of 1.17.1 so nothing to do in the antiquarian !)
+			limit = {
+				has_variable = fund_inspiration_6508_architect_improvement
+			}
+			add = {
+				value = 5
+				desc = court_position_architect_study_experience
 			}
 		}
 	}
