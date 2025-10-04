@@ -957,16 +957,13 @@ fp3_yearly.2020 = {
 		has_religion = religion:islam_religion
 		piety_level > low_negative_piety_level
 		exists = liege
-
+		is_independent_ruler = no #Unop: Since when we are independent we are our own liege, need to ensure this
 		liege = {
 			has_religion = religion:islam_religion
 			employs_tax_collector = yes
 			any_tax_collector = {
-				any_tax_collector_vassal = { #Unop: We want someone that is taxed by the tax collector that is not the tax collector himself !
-					NOT = {
-						this = root
-					}
-				}
+				NOT = { this = root } #Unop: If we are a tax collector, don't complain about ourselves
+				any_tax_collector_vassal = { this = root }
 				fp3_yearly_2020_is_valid_tax_collector = yes
 			}
 			# Liege has not been bothered about this tax collector in the last 5 years
@@ -991,11 +988,8 @@ fp3_yearly.2020 = {
 			}
 			random_tax_collector = {
 				limit = {
-					any_tax_collector_vassal = { #Unop: We want someone that is taxed by the tax collector that is not the tax collector himself !
-						NOT = {
-							this = root
-						}
-					}
+					NOT = { this = root } { #Unop: If we are a tax collector, don't complain about ourselves
+					any_tax_collector_vassal = { this = root }
 					fp3_yearly_2020_is_valid_tax_collector = yes
 				}
 				save_scope_as = sinful_tax_collector
@@ -1043,6 +1037,14 @@ fp3_yearly.2020 = {
 					}
 				}
 			}
+		}
+		if = { #Unop: Sanity & debug warning check
+			limit = {
+				#debug_only = yes
+				root = scope:sinful_tax_collector
+			}
+			error_log = "Unop: fp3_yearly.2020 scope:sinful_tax_collector is also root"
+			debug_log_scopes = yes
 		}
 	}
 
