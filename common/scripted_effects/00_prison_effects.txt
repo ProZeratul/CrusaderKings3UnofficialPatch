@@ -875,9 +875,12 @@ execute_prisoner_effect = {
 				}
 			}
 			
-			trigger_event = {
-				id = mpo_nomad_events.1010
-				days = 1
+			if = { #Unop: Do not fire this if there was not any heir defined
+				limit = { exists = scope:headless_heir }
+				trigger_event = {
+					id = mpo_nomad_events.1010
+					days = 1
+				}
 			}
 		}
 	}
