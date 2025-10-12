@@ -4002,6 +4002,14 @@ epidemic_events.1101 = {
 	}
 
 	immediate = {
+		if = {
+			limit = {
+				NOT = { exists = scope:province }
+			}
+			error_log = "Unop: epidemic_events.1101 called but scope:province is not defined"
+			debug_log_scopes = yes
+		}
+
 		play_music_cue = apocalyptic_plague
 		scope:province.county = {
 			save_scope_as = infected_county

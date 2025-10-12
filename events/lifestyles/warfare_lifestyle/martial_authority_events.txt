@@ -1690,6 +1690,7 @@ martial_authority_special.1501 = {
 		OR = {
 			any_relation = {
 				type = soldier_friend
+				is_councillor = no #Unop: Harmonise with what was found in the immediate
 				save_temporary_scope_as = deserting_soldier_temp
 			}
 			any_courtier_or_guest = {
@@ -1793,6 +1794,11 @@ martial_authority_special.1501 = {
 				}
 				save_scope_as = deserting_soldier
 			}
+		}
+		if = {
+			limit = { NOT = { exists = scope:deserting_soldier } }
+			error_log = "Unop: martial_authority_special.1501 scope:deserting_soldier is not defined"
+			debug_log_scopes = yes
 		}
 	}
 
