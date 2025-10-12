@@ -236,13 +236,13 @@ scripted_effect prelude_events_0010_screw_over_guest_effect = {
 	if = {
 		limit = {
 			any_targeting_faction = {
-				exists = yes
+				exists = this #Unop: Was exists = yes but it will ALWAYS return true !
 				NOT = { exists = faction_war }
 			}
 		}
 		random_targeting_faction = {
 			limit = {
-				exists = yes
+				exists = this #Unop: Was exists = yes but it will ALWAYS return true !
 				NOT = { exists = faction_war }
 			}
 			faction_leader ?= { save_scope_as = leader }
@@ -344,7 +344,7 @@ prelude_events.0010 = {
 					modifier = {
 						add = 5
 						any_targeting_faction = {
-							exists = yes
+							exists = this #Unop: Was exists = yes but it will ALWAYS return true !
 							NOT = { exists = faction_war }
 						}
 					}
@@ -707,7 +707,7 @@ prelude_events.0020 = {
 	trigger = {
 		has_activity_intent = coronation_weaken_detractors
 		any_targeting_faction = {
-			exists = yes
+			exists = this #Unop: Was exists = yes but it will ALWAYS return true !
 			NOT = { exists = faction_war }
 			any_faction_member = {
 				is_participant_in_activity = root.involved_activity
@@ -733,7 +733,7 @@ prelude_events.0020 = {
 	immediate = {
 		ordered_targeting_faction = { # We grab the most pressing faction
 			limit = {
-				exists = yes
+				exists = this #Unop: Was exists = yes but it will ALWAYS return true !
 				NOT = { exists = faction_war }
 				any_faction_member = {
 					is_participant_in_activity = root.involved_activity

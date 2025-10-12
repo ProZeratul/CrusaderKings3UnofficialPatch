@@ -11976,7 +11976,9 @@ contest_events.3020 = {
 	cooldown = { years = 1 }
 
 	trigger = {
-		root.var:horse_race_jockey ?= { exists = yes}
+		root.var:horse_race_jockey ?= { 
+			exists = this #Unop: Was exists = yes but it will ALWAYS return true !
+		}
 	}
 
 	immediate = {

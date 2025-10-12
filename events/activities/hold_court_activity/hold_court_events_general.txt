@@ -20211,7 +20211,7 @@ hold_court.8142 = { # Event on puppy adoption
 ##################################################
 
 scripted_trigger hold_court_8150_faction_trigger = {
-	exists = yes
+	exists = this #Unop: Was exists = yes but it will ALWAYS return true !
 	NOT = { exists = faction_war }
 	exists = faction_leader
 	faction_leader = {
@@ -20817,7 +20817,7 @@ scripted_trigger hold_court_8160_valid_existing_hostile_trigger = {
 			}
 		}
 		any_close_family_member = {
-			exists = yes
+			exists = this #Unop: Was exists = yes but it will ALWAYS return true !
 			OR = {
 				is_vassal_or_below_of = prev.liege # victim.root
 				is_courtier_of = prev.liege # victim.root
@@ -21216,7 +21216,7 @@ hold_court.8160 = {
 			}
 			alternative_limit = {
 				any_close_family_member = {
-					exists = yes
+					exists = this #Unop: Was exists = yes but it will ALWAYS return true !
 					OR = {
 						is_vassal_or_below_of = prev.liege # victim.root
 						is_courtier_of = prev.liege # victim.root
@@ -23232,7 +23232,9 @@ hold_court.8180 = {
 			}
 			if = {
 				limit = {
-					any_character_artifact = { exists = yes }
+					any_character_artifact = { 
+						exists = this #Unop: Was exists = yes but it will ALWAYS return true ! 
+					}
 				}
 				ordered_character_artifact = {
 					order_by = artifact_rarity
@@ -25759,7 +25761,7 @@ hold_court.8211 = {
 ##################################################
 
 scripted_trigger hold_court_8260_faction_trigger = {
-	exists = yes
+	exists = this #Unop: Was exists = yes but it will ALWAYS return true !
 	OR = {
 		faction_is_type = liberty_faction
 		faction_is_type = claimant_faction
