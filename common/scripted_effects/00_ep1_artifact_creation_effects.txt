@@ -9838,7 +9838,23 @@ create_artifact_weapon_effect = {
 					3 = {
 						trigger = {
 							has_fp3_dlc_trigger = yes
-							scope:smith ?= { artifact_should_use_gfx_type_trigger = { TYPE = iranian_building } }
+							trigger_if = { #Unop: Since the artifact does not exists yet, we can't use artifact_should_use_gfx_type_trigger
+								limit = {
+									exists = scope:smith
+									exists = scope:smith.culture
+								}
+								scope:smith = { artifact_use_iranian_building_visuals_trigger = yes }
+							}
+							trigger_else_if = { #If the creator is not found we use the owner. Often this would be if the creator is a dummy, which has no culture
+								limit = {
+									exists = scope:owner
+									exists = scope:owner.culture
+								}
+								scope:owner = { artifact_use_iranian_building_visuals_trigger = yes }
+							}
+							trigger_else = {
+								always = no #We should never get here as all created artifacts should have an owner.
+							}
 						}
 						create_artifact = {
 							name = artifact_sassanian_replica_sword_name
@@ -9854,7 +9870,30 @@ create_artifact_weapon_effect = {
 						scope:newly_created_artifact = { set_variable = replica_sassanian_sword }
 					}
 					1 = {
-						trigger = { sword_could_be_longsword_trigger = yes }
+						trigger = {
+							trigger_if = { #Unop: Since the artifact does not exists yet, we can't use artifact_should_use_gfx_type_trigger
+								limit = {
+									exists = scope:smith
+									exists = scope:smith.culture
+								}
+								scope:smith = { artifact_use_iranian_building_visuals_trigger = yes }
+							}
+							trigger_else_if = { #If the creator is not found we use the owner. Often this would be if the creator is a dummy, which has no culture
+								limit = {
+									exists = scope:owner
+									exists = scope:owner.culture
+								}
+								scope:owner = {
+									culture = {
+										has_unit_gfx = western_unit_gfx
+										has_cultural_era_or_later = culture_era_late_medieval
+									}
+								}
+							}
+							trigger_else = {
+								always = no #We should never get here as all created artifacts should have an owner.
+							}
+						}
 						create_artifact = {
 							name = artifact_longsword_name
 							description = placeholder # Will be re-generated once decorations are added in the post-creation effects.
