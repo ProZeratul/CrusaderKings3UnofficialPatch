@@ -2756,13 +2756,9 @@ on_game_start_after_lobby = {
 					}
 				}
 				pay_short_term_gold = {
-					target = character:83355
+					target = character:906 #Unop: Was 83355 so Toirdelbach never got his money from Murchad :/
 					gold = gold
 				}
-			}
-			random_player = {
-				limit = { this = character:83355 }
-				set_player_character = character:906
 			}
 			resolve_title_and_vassal_change = scope:title_change
 			# Since Murchad is back to his historical self, he gets to suck.
@@ -2791,6 +2787,17 @@ on_game_start_after_lobby = {
 					allied_through_owner = character:906
 					allied_through_target = character:922
 				}
+			}
+			#Unop: Now fix control being 25 instead of 100 due to the title being considered conquered (due to the hot swap)
+			character:906 = {
+				every_held_title = {
+					limit = { tier = tier_county }
+					change_county_control = 100
+				}
+			}
+			random_player = { #Unop: Moved this here as there seems to be an issue where you could start without rally point & without the possibility to create one :/
+				limit = { this = character:83355 }
+				set_player_character = character:906
 			}
 		}
 
@@ -4197,6 +4204,8 @@ on_game_start_after_lobby = {
 				every_vassal = {
 					limit = {
 						vassal_contract_has_modifiable_obligations = yes
+						vassal_contract_obligation_level_can_be_decreased = feudal_government_taxes #Unop: Just in case you play with random faith game rule to not flood the logs !
+						vassal_contract_obligation_level_can_be_decreased = feudal_government_levies #Unop: Just in case you play with random faith game rule to not flood the logs !
 					}
 					vassal_contract_decrease_obligation_level = feudal_government_taxes
 					vassal_contract_decrease_obligation_level = feudal_government_levies
