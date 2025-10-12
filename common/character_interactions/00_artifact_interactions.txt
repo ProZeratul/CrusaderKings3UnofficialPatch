@@ -881,22 +881,22 @@ gift_artifact_interaction = {
 		
 		modifier = {
 			add = 100
-			scope:recipient = {
+			scope:actor = {
 				OR = {
-					has_relation_friend = scope:actor
-					has_relation_lover = scope:actor
-					is_close_or_extended_family_of = scope:actor
+					has_relation_friend = scope:recipient
+					has_relation_lover = scope:recipient
+					is_close_or_extended_family_of = scope:recipient
 					AND = {
 						exists = dynasty
-						exists = scope:actor.dynasty
-						dynasty = scope:actor.dynasty
+						exists = scope:recipient.dynasty
+						dynasty = scope:recipient.dynasty
 					}
 					
 					AND = {
 						ai_greed <= low_negative_ai_value
 						OR = { # Lieges/vassals, within realm
-							is_vassal_of = scope:actor
-							target_is_vassal_or_below = scope:actor
+							is_vassal_of = scope:recipient
+							target_is_vassal_or_below = scope:recipient
 						}
 						opinion = {
 							target = scope:recipient
