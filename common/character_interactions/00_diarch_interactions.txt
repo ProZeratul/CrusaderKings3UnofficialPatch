@@ -6139,12 +6139,31 @@ swing_scales_currency_interaction = {
 		influence = {
 			if = {
 				limit = { always = scope:swing_influence }
-				value = scope:actor.swing_scales_influence_cost_value
-				# LEGITIMACY OF RULER AFFECTS COSTS FOR REGENTS
+				value = 0
+				# Diarch version.
 				if = {
-					limit = { scope:actor = { is_valid_for_legitimacy_change = yes } }
-					multiply = legitimacy_regent_swing_scale_multipler_value
+					limit = { scope:actor = { is_diarch_of_target = scope:recipient } }
+					# Costs should always be applied on the diarch.
+					add = scope:actor.swing_scales_influence_cost_value
+					# LEGITIMACY OF RULER AFFECTS COSTS FOR REGENTS
+					if = {
+						limit = { scope:recipient = { is_valid_for_legitimacy_change = yes } }
+						multiply = scope:recipient.unop_legitimacy_regent_swing_scale_multipler_value
+					}
 				}
+				# Liege version.
+				else = {
+					# Costs should always be applied on the diarch.
+					add = scope:recipient.swing_scales_influence_cost_value
+					# LEGITIMACY OF RULER AFFECTS COSTS FOR REGENTS
+					if = {
+						limit = { scope:actor = { is_valid_for_legitimacy_change = yes } }
+						multiply = scope:actor.unop_legitimacy_regent_swing_scale_multipler_value
+					}
+				}
+				
+				# Cost scaling mults.
+				multiply = scope:actor.swing_scales_discounts_multiplier_value
 			}
 		}
 		prestige = {

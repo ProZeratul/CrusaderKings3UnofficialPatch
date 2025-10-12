@@ -151,3 +151,44 @@ unop_paiza_merchant_distance_modifier_value = {
 		add = 5
 	}
 }
+
+unop_legitimacy_regent_swing_scale_multipler_value = {
+	value = 1
+	# LEGITIMACY OF RULER AFFECTS COSTS
+	if = {
+		limit = {
+			has_legitimacy_flag = massively_increased_swing_scales_cost
+		}
+		multiply = 1.75
+	}
+	if = {
+		limit = {
+			has_legitimacy_flag = very_increased_swing_scales_cost
+		}
+		multiply = 1.5
+	}
+	if = {
+		limit = {
+			has_legitimacy_flag = increased_swing_scales_cost
+		}
+		multiply = 1.25
+	}
+	if = {
+		limit = {
+			has_legitimacy_flag = reduced_swing_scales_cost
+		}
+		multiply = 0.85
+	}
+	if = {
+		limit = {
+			has_legitimacy_flag = very_reduced_swing_scales_cost
+		}
+		multiply = 0.75
+	}
+	if = {
+		limit = {
+			has_legitimacy_flag = extra_reduced_swing_scales_cost
+		}
+		multiply = 0.5
+	}
+}
