@@ -260,32 +260,49 @@ remove_strife_per_invited_powerful_vassal_effect = {
 # Character Interactions
 
 diarch_changed_own_contract_effect = {
-	if = {
+	if = { #Unop: Rewrite this a little to be scope-reverse-error-proof
 		limit = { always = scope:diarch }
-		scope:recipient = {
-			custom_tooltip = liege_modify_vassal_contract_interaction.tt.diarch_powers_used
-			# Co-rulers lose a fair bit less & can change multiple times.
-			if = {
-				limit = {
-					diarch ?= scope:actor
-					has_diarchy_active_parameter = diarchy_is_co_rulership
+		if = {
+			limit = { scope:recipient = { is_diarch_of_target = scope:actor } }
+			scope:actor = { save_scope_as = unop_liege }
+			scope:recipient = { save_scope_as = unop_diarch }
+		}
+		else_if = {
+			limit = { scope:actor = { is_diarch_of_target = scope:recipient } }
+			scope:recipient = { save_scope_as = unop_liege }
+			scope:actor = { save_scope_as = unop_diarch }
+		}
+		else = { # Houston we got a problem here ! no one is diarch, what are we doing here !?
+ 			error_log = "Unop: diarch_changed_own_contract_effect called but neither scope is a diarch"
+			debug_log_scopes = yes
+		}
+		if = {
+			limit = { exists = scope:unop_diarch }
+			scope:unop_diarch = {
+				custom_tooltip = liege_modify_vassal_contract_interaction.tt.diarch_powers_used
+				# Co-rulers lose a fair bit less & can change multiple times.
+				if = {
+					limit = {
+						diarch ?= scope:unop_liege
+						has_diarchy_active_parameter = diarchy_is_co_rulership
+					}
+					add_opinion = {
+						target = scope:unop_liege
+						modifier = abused_position_of_trust_opinion
+						opinion = -10
+					}
 				}
-				add_opinion = {
-					target = scope:actor
-					modifier = abused_position_of_trust_opinion
-					opinion = -10
-				}
-			}
-			# Everyone else loses much more.
-			else = {
-				add_to_variable_list = {
-					name = diarch_contract_rights_used_list
-					target = scope:actor
-				}
-				add_opinion = {
-					target = scope:actor
-					modifier = abused_position_of_trust_opinion
-					opinion = -40
+				# Everyone else loses much more.
+				else = {
+					add_to_variable_list = {
+						name = diarch_contract_rights_used_list
+						target = scope:unop_liege
+					}
+					add_opinion = {
+						target = scope:unop_liege
+						modifier = abused_position_of_trust_opinion
+						opinion = -40
+					}
 				}
 			}
 		}
@@ -1710,7 +1727,7 @@ diarch_demand_despotate_interaction_accepted_effect = {
 							any_liege_or_above = { this = scope:recipient }
 						}
 					}
-					limit = {
+					alternative_limit = { #Unop: Was another limit instead of alternative_limit
 						holder = {
 							any_liege_or_above = { this = scope:recipient }
 						}
