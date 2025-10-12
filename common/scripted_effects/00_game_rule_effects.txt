@@ -863,11 +863,19 @@ game_rule_randomize_faith_randomization_effect = {
 	if = {
 		limit = {
 			trigger_if = {
-				limit = { is_independent_ruler = no }
-				NOT = { faith = liege.faith } #We don't want to override faiths which "trickled down" via conversion effect
+				limit = {
+					NOT = { faith.religious_head ?= this } #Unop: If this char is a HoF, it won't convert
+				}
+				trigger_if = {
+					limit = { is_independent_ruler = no }
+					NOT = { faith = liege.faith } #We don't want to override faiths which "trickled down" via conversion effect
+				}
+				trigger_else = {
+					always = yes
+				}
 			}
-			trigger_else = {
-				always = yes
+			trigger_else = { #Unop: HoF Will never convert
+				always = no
 			}
 		}
 
@@ -919,7 +927,7 @@ game_rule_randomize_faith_effect = {
 	every_ruler = {
 		if = {
 			limit = { highest_held_title_tier = tier_barony }
-			add_to_list = random_faith_barony_list
+			#add_to_list = random_faith_barony_list #Unop: baronnies have the faith of the county
 		}
 		else_if = {
 			limit = { highest_held_title_tier = tier_county }
@@ -956,10 +964,10 @@ game_rule_randomize_faith_effect = {
 		list = random_faith_county_list
 		game_rule_randomize_faith_randomization_effect = yes
 	}
-	every_in_list = {
-		list = random_faith_barony_list
-		set_character_faith = scope:liege.faith
-	}
+	#every_in_list = { #Unop: baronnies have the faith of the county
+	#	list = random_faith_barony_list
+	#	set_character_faith = liege.faith #Unop: scope:liege does not exists
+	#}
 }
 
 ####################
