@@ -647,6 +647,7 @@ assassination_ongoing.0004 = {
 			value = medium_skill_rating
 
 			20 = {
+				desc = assassination_console.success
 				compare_modifier = {
 					value = scope:duel_value
 					multiplier = 2
@@ -655,20 +656,18 @@ assassination_ongoing.0004 = {
 					title = assassination_console_toast.success
 					left_icon = scope:assassin
 
-					custom_tooltip = assassination_console.success	
-
-					add_piety = medium_piety_gain 
-
+					add_piety = medium_piety_gain
 					scope:scheme = {
 						add_scheme_modifier = {
 							type = scheme_strengthened_resolve_modifier
 						}
 						change_opportunities = 2
 					}
-					custom_tooltip = high_risk_of_dying.tt
+					#custom_tooltip = high_risk_of_dying.tt #Unop: Actually no ? Found nothing that would cause him to die more :???
 				}	
 			}
 			20 = {
+				desc = assassination_console.failure
 				compare_modifier = {
 					value = scope:duel_value
 					multiplier = -1
@@ -676,9 +675,7 @@ assassination_ongoing.0004 = {
 				scope:owner = {
 					send_interface_toast = {
 						title = assassination_console_toast.failure
-						left_icon = root
-						
-						custom_tooltip = assassination_console.failure
+						left_icon = root						
 
 						scope:scheme = {
 							add_scheme_modifier = {
@@ -963,6 +960,7 @@ assassination_ongoing.0006 = {
 			skill = intrigue
 			value = medium_skill_rating
 			20 = {
+				desc = assassination_hunted_down.success
 				compare_modifier = {
 					value = scope:duel_value
 					multiplier = 2
@@ -970,7 +968,6 @@ assassination_ongoing.0006 = {
 				send_interface_toast = {
 					title = assassination_hunted_down_toast.success
 					left_icon = scope:assassin
-					custom_tooltip = assassination_hunted_down.success	
 					add_dread = medium_dread_gain 
 					scope:scheme = {
 						remove_scheme_modifier = scheme_renegade_assassin_modifier
@@ -978,6 +975,7 @@ assassination_ongoing.0006 = {
 				}	
 			}
 			20 = {
+				desc = assassination_hunted_down.failure
 				compare_modifier = {
 					value = scope:duel_value
 					multiplier = -1
@@ -986,7 +984,6 @@ assassination_ongoing.0006 = {
 					send_interface_toast = {
 						title = assassination_hunted_down_toast.failure
 						left_icon = root
-						custom_tooltip = assassination_hunted_down.failure
 						add_prestige = minor_prestige_loss
 					}
 				}
