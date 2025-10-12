@@ -875,7 +875,7 @@ fp3_yearly.2011 = {
 
 # This tax collector is guilty of at least one vice condemned of public officials in the Quran
 scripted_trigger fp3_yearly_2020_is_valid_tax_collector = {
-	is_available_ai_adult = yes
+	is_available_adult = yes #Unop: Allow players to be valid targets of this event
 	OR = {
 		AND = {
 			has_trait = greedy
@@ -988,7 +988,7 @@ fp3_yearly.2020 = {
 			}
 			random_tax_collector = {
 				limit = {
-					NOT = { this = root } { #Unop: If we are a tax collector, don't complain about ourselves
+					NOT = { this = root } #Unop: If we are a tax collector, don't complain about ourselves
 					any_tax_collector_vassal = { this = root }
 					fp3_yearly_2020_is_valid_tax_collector = yes
 				}
