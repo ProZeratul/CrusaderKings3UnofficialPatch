@@ -5470,6 +5470,7 @@ royal_architect_total_salary_value = {
 		multiply = {
 			value = 0.5
 			desc = trainee_salary_mod
+			format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE" #Unop: To properly show the discount (Will show -0 if not present)
 		}
 	}
 	# Halved salary
@@ -6177,6 +6178,7 @@ court_jester_total_salary_value = {
 		multiply = {
 			value = 0.25
 			desc = king_of_fools_salary
+			format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE" #Unop: To properly show the discount (Will show -0 if not present)
 		}
 	}
 	if = {
@@ -6192,23 +6194,24 @@ court_jester_total_salary_value = {
 		multiply = {
 			value = 0.5
 			desc = generic_cp_discount
+			format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE" #Unop: To properly show the discount (Will show -0 if not present)
 		}
 	}
-	if = {
-		limit = {
-			scope:liege = {
-				employs_court_position = court_jester_court_position
-				any_court_position_holder = {
-					type = court_jester_court_position
-					has_character_flag = cp_discount
-				}
-			}
-		}
-		multiply = {
-			value = 0.5
-			desc = generic_cp_discount
-		}
-	}
+	#if = { #Unop: Exact duplicate from above
+	#	limit = {
+	#		scope:liege = {
+	#			employs_court_position = court_jester_court_position
+	#			any_court_position_holder = {
+	#				type = court_jester_court_position
+	#				has_character_flag = cp_discount
+	#			}
+	#		}
+	#	}
+	#	multiply = {
+	#		value = 0.5
+	#		desc = generic_cp_discount
+	#	}
+	#}
 	# Halved salary
 	if = {
 		limit = {
