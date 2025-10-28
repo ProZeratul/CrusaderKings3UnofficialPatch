@@ -192,3 +192,111 @@ unop_legitimacy_regent_swing_scale_multipler_value = {
 		multiply = 0.5
 	}
 }
+
+unop_swing_scales_influence_cost_value = {
+	value = 0
+	if = {
+		limit = { scope:actor = { is_diarch_of_target = scope:recipient } }
+		# Gate by liege tier.
+		## Count.
+		if = {
+			limit = { scope:recipient.highest_held_title_tier <= tier_county }
+			add = minor_influence_value
+		}
+		## Duke.
+		else_if = {
+			limit = { scope:recipient.highest_held_title_tier <= tier_duchy }
+			add = medium_influence_value
+		}
+		## King or Emperor
+		else = { add = major_influence_value }
+
+		# Adjust how much this swing costs due to Legitimacy
+		## Should only affect the regent, not the ruler
+		# 1
+		if = {
+			limit = { scope:recipient.legitimacy_level = 1 }
+			add = miniscule_influence_value
+		}
+		# 2
+		else_if = {
+			limit = { scope:recipient.legitimacy_level = 2 }
+			add = minor_influence_value
+		}
+		# 3
+		else_if = {
+			limit = { scope:recipient.legitimacy_level = 3 }
+			add = medium_influence_value
+		}
+		# 4
+		else_if = {
+			limit = { scope:recipient.legitimacy_level = 4 }
+			add = major_influence_value
+		}
+		# 5
+		else_if = {
+			limit = { scope:recipient.legitimacy_level = 5 }
+			add = massive_influence_value
+		}
+		else = {
+			# Deliberately empty
+			# Adjustable in the future if necessary
+		}
+	}
+	else_if = {
+		limit = { scope:recipient = { is_diarch_of_target = scope:actor } }
+		# Gate by liege tier.
+		## Count.
+		if = {
+			limit = { scope:actor.highest_held_title_tier <= tier_county }
+			add = minor_influence_value
+		}
+		## Duke.
+		else_if = {
+			limit = { scope:actor.highest_held_title_tier <= tier_duchy }
+			add = medium_influence_value
+		}
+		## King or Emperor
+		else = { add = major_influence_value }
+
+		# Adjust how much this swing costs due to Legitimacy
+		## Should only affect the regent, not the ruler
+		# 1
+		if = {
+			limit = { scope:actor.legitimacy_level = 1 }
+			add = miniscule_influence_value
+		}
+		# 2
+		else_if = {
+			limit = { scope:actor.legitimacy_level = 2 }
+			add = minor_influence_value
+		}
+		# 3
+		else_if = {
+			limit = { scope:actor.legitimacy_level = 3 }
+			add = medium_influence_value
+		}
+		# 4
+		else_if = {
+			limit = { scope:actor.legitimacy_level = 4 }
+			add = major_influence_value
+		}
+		# 5
+		else_if = {
+			limit = { scope:actor.legitimacy_level = 5 }
+			add = massive_influence_value
+		}
+		else = {
+			# Deliberately empty
+			# Adjustable in the future if necessary
+		}
+	}
+	else_if = {
+		limit = { scope:actor = { is_liege_or_above_of = scope:recipient } }
+		add = 666
+	}
+	else_if = {
+		limit = { scope:recipient = { is_liege_or_above_of = scope:actor } }
+		add = 999
+	}
+}

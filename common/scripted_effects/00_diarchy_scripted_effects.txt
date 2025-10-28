@@ -1000,6 +1000,7 @@ diarch_swing_scales_guts_effect = {
 		show_as_tooltip = {
 			change_influence = {
 				value = swing_scales_influence_cost_value
+				add = 40
 				# LEGITIMACY OF RULER AFFECTS COSTS FOR REGENTS
 				multiply = legitimacy_regent_swing_scale_multipler_value
 				multiply = -1
@@ -1084,9 +1085,8 @@ diarch_swing_scales_guts_effect = {
 			}
 		}
 	}
-	if = {
+	if = { #Unop: Rewrote this whole effect to handle both type of actor/recipient and display the correct increase/reduce amount cost regarding the legitimacy !
 		limit = {
-			scope:actor = { is_diarch_of_target = scope:recipient }
 			OR = {
 				scope:swing_influence = yes
 				scope:swing_prestige = yes
@@ -1095,10 +1095,59 @@ diarch_swing_scales_guts_effect = {
 			}
 		}
 		if = {
-			limit = { scope:recipient.legitimacy_level <= 2 }
-			custom_tooltip = legitimacy_swing_scales_cheaper_tt
+			limit = { scope:actor = { is_diarch_of_target = scope:recipient } }
+			if = {
+				limit = {
+					scope:recipient = {
+						OR = {
+							has_legitimacy_flag = massively_increased_swing_scales_cost
+							has_legitimacy_flag = very_increased_swing_scales_cost
+							has_legitimacy_flag = increased_swing_scales_cost
+						}
+					}
+				}
+				custom_tooltip = legitimacy_swing_scales_dearer_tt
+			}
+			else_if = {
+				limit = {
+					scope:recipient = {
+						OR = {
+							has_legitimacy_flag = reduced_swing_scales_cost
+							has_legitimacy_flag = very_reduced_swing_scales_cost
+							has_legitimacy_flag = extra_reduced_swing_scales_cost
+						}
+					}
+				}
+				custom_tooltip = legitimacy_swing_scales_cheaper_tt
+			}
 		}
-		else = { custom_tooltip = legitimacy_swing_scales_dearer_tt }
+		else_if = {
+			limit = { scope:recipient = { is_diarch_of_target = scope:actor } }
+			if = {
+				limit = {
+					scope:actor = {
+						OR = {
+							has_legitimacy_flag = massively_increased_swing_scales_cost
+							has_legitimacy_flag = very_increased_swing_scales_cost
+							has_legitimacy_flag = increased_swing_scales_cost
+						}
+					}
+				}
+				custom_tooltip = legitimacy_swing_scales_dearer_tt
+			}
+			else_if = {
+				limit = {
+					scope:actor = {
+						OR = {
+							has_legitimacy_flag = reduced_swing_scales_cost
+							has_legitimacy_flag = very_reduced_swing_scales_cost
+							has_legitimacy_flag = extra_reduced_swing_scales_cost
+						}
+					}
+				}
+				custom_tooltip = legitimacy_swing_scales_cheaper_tt
+			}
+		}
 	}
 }
 
