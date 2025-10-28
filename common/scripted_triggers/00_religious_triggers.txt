@@ -1318,54 +1318,55 @@ valid_demand_conversion_conditions_trigger = {
 				domicile = { has_domicile_parameter = camp_enable_conversion }
 			}
 		}
-	custom_tooltip = { #Unop: Add a tooltip so char with both trait will know they cannot convert people
-		text = unop_zealous_nomad_cannot_convert
-		NAND = {
-			has_trait = nomadic_philosophy
-			has_trait = zealous
-		}
-	}
-
-	custom_description = {
-		text = "is_head_of_religion"
-		subject = scope:recipient
-		scope:recipient.faith.religious_head != scope:recipient
-	}
-	custom_description = {
-		text = "is_protected_via_contract"
-		subject = scope:recipient
-		# Vassal Contract forbids meddling by liege
-		NAND = {
-			exists = scope:recipient.liege
-			scope:recipient.liege = scope:actor
-			scope:recipient = {
-				is_ruler = yes
-				vassal_contract_has_flag = religiously_protected
+		custom_tooltip = { #Unop: Add a tooltip so char with both trait will know they cannot convert people
+			text = unop_zealous_nomad_cannot_convert
+			NAND = {
+				has_trait = nomadic_philosophy
+				has_trait = zealous
 			}
 		}
-	}
-	trigger_if = {
-		limit = {
-			scope:recipient = {
-				AND = {
-					has_variable = cannot_be_converted_by_value
-					var:cannot_be_converted_by_value = scope:actor
+
+		custom_description = {
+			text = "is_head_of_religion"
+			subject = scope:recipient
+			scope:recipient.faith.religious_head != scope:recipient
+		}
+		custom_description = {
+			text = "is_protected_via_contract"
+			subject = scope:recipient
+			# Vassal Contract forbids meddling by liege
+			NAND = {
+				exists = scope:recipient.liege
+				scope:recipient.liege = scope:actor
+				scope:recipient = {
+					is_ruler = yes
+					vassal_contract_has_flag = religiously_protected
+				}
+			}
+		}
+		trigger_if = {
+			limit = {
+				scope:recipient = {
+					AND = {
+						has_variable = cannot_be_converted_by_value
+						var:cannot_be_converted_by_value = scope:actor
+					}
+				}
+			}
+			custom_tooltip = {
+				text = promised_to_not_convert_character
+				scope:recipient = {
+					NOR = {
+						has_variable = cannot_be_converted_by_value
+						var:cannot_be_converted_by_value = scope:actor
+					}
 				}
 			}
 		}
 		custom_tooltip = {
-			text = promised_to_not_convert_character
-			scope:recipient = {
-				NOR = {
-					has_variable = cannot_be_converted_by_value
-					var:cannot_be_converted_by_value = scope:actor
-				}
-			}
+			text = cannot_take_overt_hostile_actions_against_diarch.tt
+			NOT = { scope:recipient ?= scope:actor.diarch }
 		}
-	}
-	custom_tooltip = {
-		text = cannot_take_overt_hostile_actions_against_diarch.tt
-		NOT = { scope:recipient ?= scope:actor.diarch }
 	}
 }
 
