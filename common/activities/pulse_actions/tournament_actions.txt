@@ -72,7 +72,7 @@ tournament_entry_fee = {
 	is_valid = {
 		any_guest_subset = {
 			name = contestant
-			NOT = { this = scope:host }
+			this != scope:host
 			activity_is_valid_tournament_contestant = yes
 			gold > 5
 			is_ai = yes
@@ -86,7 +86,7 @@ tournament_entry_fee = {
 		random_guest_subset = {
 			name = contestant
 			limit = { 
-				NOT = { this = scope:host }
+				this != scope:host
 				activity_is_valid_tournament_contestant = yes
 				gold > 5
 				is_ai = yes

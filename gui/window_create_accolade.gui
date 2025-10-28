@@ -1,4 +1,4 @@
-######################################################
+﻿######################################################
 ################# CREATE ACCOLADE VIEW ###################
 ######################################################
 
@@ -147,7 +147,12 @@ window = {
 									datacontext = "[AccoladeType.GetPrimaryMaaUnlock]"
 									texture = "[MenAtArmsType.GetIcon]"
 									tooltipwidget = {
-										using = maa_type_container_tooltip
+										widget_maa_type_container_tooltip = {
+											blockoverride "maa_texture"
+											{
+												texture = "[MenAtArmsType.GetHorizontalImageForCulture( GetPlayer.GetCulture )]"
+											}
+										}
 									}
 									size = { 30 30 }
 								}
@@ -217,7 +222,12 @@ window = {
 									datacontext = "[AccoladeType.GetPrimaryMaaUnlock]"
 									texture = "[MenAtArmsType.GetIcon]"
 									tooltipwidget = {
-										using = maa_type_container_tooltip
+										widget_maa_type_container_tooltip = {
+											blockoverride "maa_texture"
+											{
+												texture = "[MenAtArmsType.GetHorizontalImageForCulture( GetPlayer.GetCulture )]"
+											}
+										}
 									}
 									size = { 30 30 }
 
@@ -368,7 +378,7 @@ window = {
 							size = { 0 130 }
 
 							# has at least 2 potential accolade types
-							visible = "[And( Or( Not( Character.HasLandedTitles ), Character.GetPrimaryTitle.IsBarony ), KnightsView.HasPotentialAccolade( Character.Self ) )]" #Unop Remove closing brace
+							visible = "[And( Or( Not( Character.HasLandedTitles ), Character.GetPrimaryTitle.IsBarony ), KnightsView.HasPotentialAccolade( Character.Self ) )]"
 							onclick = "[CreateAccoladeView.SetSelectedKnight( Character.Self )]"
 							tooltip = "CREATE_ACCOLADE_ASSIGN_TT"
 							using = tooltip_nw
@@ -621,7 +631,12 @@ window = {
 								visible = "[MenAtArmsType.IsValid]"
 								texture = "[MenAtArmsType.GetIcon]"
 								tooltipwidget = {
-									using = maa_type_container_tooltip
+									widget_maa_type_container_tooltip = {
+										blockoverride "maa_texture"
+										{
+											texture = "[MenAtArmsType.GetHorizontalImageForCulture( GetPlayer.GetCulture )]"
+										}
+									}
 								}
 								size = { 30 30 }
 
@@ -638,7 +653,12 @@ window = {
 								visible = "[MenAtArmsType.IsValid]"
 								texture = "[MenAtArmsType.GetIcon]"
 								tooltipwidget = {
-									using = maa_type_container_tooltip
+									widget_maa_type_container_tooltip = {
+										blockoverride "maa_texture"
+										{
+											texture = "[MenAtArmsType.GetHorizontalImageForCulture( GetPlayer.GetCulture )]"
+										}
+									}
 								}
 								size = { 30 30 }
 							}

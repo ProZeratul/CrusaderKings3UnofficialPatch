@@ -14,8 +14,7 @@ bookmark.0001 = { #by Mathilda Bjarnehed
 	trigger = {
 		this = character:33358 #Æthelred
 		is_ai = yes
-		exists = player_heir
-		player_heir = character:7627 #Alfred the Great
+		player_heir ?= character:7627 #Alfred the Great
 	}
 
 	immediate = {
@@ -88,7 +87,7 @@ bookmark.0002 = { #by Mathilda Bjarnehed
 	
 	trigger = {
 		is_ai = no
-		is_independent_ruler = yes
+		top_liege = this
 	}
 
 	#Resend
@@ -106,7 +105,7 @@ bookmark.0002 = { #by Mathilda Bjarnehed
 		play_music_cue = "mx_cue_positive_effect"
 		capital_province = { save_scope_as = capital }
 		random_realm_province = {
-			limit = { NOT = { this = scope:capital } }
+			limit = { this != scope:capital }
 			save_scope_as = province
 		}
 		give_nickname = nick_the_great
@@ -130,8 +129,7 @@ bookmark.0003 = { #by Mathilda Bjarnehed
 		scope:imprisoner = {
 			any_close_family_member = {
 				even_if_dead = yes
-				exists = killer
-				killer = root
+				killer ?= root
 				save_temporary_scope_as = killed_character
 			}
 		}
@@ -139,7 +137,7 @@ bookmark.0003 = { #by Mathilda Bjarnehed
 		trigger_if = {
 			limit = {
 				any_secret = {
-					secret_type = secret_murder
+					type = secret_murder
 					secret_target = scope:killed_character
 					NOT = { any_secret_knower = { this = scope:imprisoner } }
 				}
@@ -180,13 +178,11 @@ bookmark.0003 = { #by Mathilda Bjarnehed
 			random_close_family_member = {
 				even_if_dead = yes
 				limit = {
-					exists = killer
-					killer = root
+					killer ?= root
 					this = character:163109 #Lodbrok
 				}
 				alternative_limit = {
-					exists = killer
-					killer = root
+					killer ?= root
 				}
 				save_scope_as = dead
 			}
@@ -207,7 +203,7 @@ bookmark.0004 = { #by Mathilda Bjarnehed
 			    trigger = { #You did not know they had killed your family-member
 					scope:prisoner = {
 						any_secret = {
-	    					secret_type = secret_murder
+	    					type = secret_murder
 	    					secret_target = scope:dead
 	    					NOT = { any_secret_knower = { this = root } }
 	    				}
@@ -240,7 +236,7 @@ bookmark.0004 = { #by Mathilda Bjarnehed
 			limit = {
 				scope:prisoner = {
 					any_secret = {
-    					secret_type = secret_murder
+    					type = secret_murder
     					secret_target = scope:dead
     					NOT = { any_secret_knower = { this = root } }
     				}
@@ -248,8 +244,8 @@ bookmark.0004 = { #by Mathilda Bjarnehed
 			}
 			scope:prisoner = {
 				random_secret = {
+					type = secret_murder
 					limit = {
-						secret_type = secret_murder
 						secret_target = scope:dead
 						NOT = { any_secret_knower = { this = root } }
 					}
@@ -274,7 +270,7 @@ bookmark.0004 = { #by Mathilda Bjarnehed
 		scope:dead = {
 			every_close_family_member = {
 				custom = bookmark.0004.a.custom
-				limit = { NOT = { this = root } }
+				limit = { this != root }
 				add_opinion = {
 					modifier = pleased_opinion
 					opinion = 30
@@ -308,7 +304,7 @@ bookmark.0004 = { #by Mathilda Bjarnehed
 		scope:dead = {
 			every_close_family_member = {
 				custom = bookmark.0004.a.custom
-				limit = { NOT = { this = root } }
+				limit = { this != root }
 				add_opinion = {
 					modifier = pleased_opinion
 					opinion = 30
@@ -747,7 +743,7 @@ bookmark.1066 = {
 			limit = {
 				NOT = {
 					any_scheme = {
-						scheme_type = murder
+						type = murder
 						scheme_target_character = scope:hunchback
 					}
 				}
@@ -760,8 +756,8 @@ bookmark.1066 = {
 		custom_tooltip = diplomacy_family.2250.b.tt
 		hidden_effect = {
 			random_scheme = {
+				type = murder
 				limit = {
-					scheme_type = murder
 					scheme_target_character = scope:hunchback
 				}
 				add_scheme_modifier = {
@@ -1011,7 +1007,7 @@ bookmark.1068 = {
 			title:d_meissen.holder = root
 		}
 		title:e_hre.holder ?= {
-			NOT = { this = root }
+			this != root
 		}
 		is_vassal_of = title:e_hre.holder
 	}
@@ -1441,7 +1437,7 @@ bookmark.1071 = {
 		gold >= 100
 		is_at_war = no
 		title:e_byzantium.holder ?= {
-			NOT = { this = root }
+			this != root
 		}
 	}
 	
@@ -1449,7 +1445,7 @@ bookmark.1071 = {
 		if = {
 			limit = {
 				title:e_byzantium.holder ?= {
-					NOT = { this = root }
+					this != root
 				}
 			}
 			trigger_event = {
@@ -2057,7 +2053,7 @@ bookmark.1073 = {
 }
 
 ###We let the player decide which dynasty Sibylla's son will belong to avoid undesirable potential game overs
-bookmark.0300 = { # by Nicholas Legault
+bookmark.0300 = {
 	type = character_event
 	title = bookmark.0300.t
 	desc = bookmark.0300.desc
@@ -2077,11 +2073,9 @@ bookmark.0300 = { # by Nicholas Legault
 
 	trigger = {
 		is_ai = no
-		AND = {
-			character:223541 = {
-				is_ai = yes
-				is_alive = yes
-			}
+		character:223541 = {
+			is_ai = yes
+			is_alive = yes
 		}
 	}
 
@@ -2110,3 +2104,212 @@ bookmark.0300 = { # by Nicholas Legault
 	}
 }
 
+bookmark.0400 = {
+	type = character_event
+	title = bookmark.0400.t
+	desc = bookmark.0400.desc
+
+	theme = family
+
+	left_portrait = {
+		character = root
+		animation = disapproval
+	}
+	lower_left_portrait = {
+		character = scope:brother
+	}
+	lower_right_portrait = {
+		character = scope:child
+	}
+	right_portrait = {
+		character = scope:emperor
+		animation = pain
+	}
+
+	trigger = {
+		is_ai = no
+		character:206651 = { # your husband
+			is_alive = yes
+			is_ai = yes
+			is_landed = yes
+		}
+		character:206653 = { # your child
+			is_alive = yes
+			is_ai = yes
+			top_liege = root.top_liege
+		}
+		character:tangut_liang_2 = { # your brother
+			is_alive = yes
+			is_ai = yes
+			top_liege = root.top_liege
+		}
+	}
+
+	immediate = {
+		character:206651 = { save_scope_as = emperor }
+		character:206653 = { save_scope_as = child }
+		character:tangut_liang_2 = { save_scope_as = brother }
+		scope:emperor.primary_title = { save_scope_as = xia }
+	}
+	
+	option = {
+		name = bookmark.0400.a
+
+		custom_tooltip = {
+			text = bookmark.0400.a.tt
+
+			scope:emperor = {
+				every_held_title = {
+					limit = {
+						tier >= tier_county
+						is_landless_type_title = no
+					}
+					add_to_list = titles_to_transfer
+				}
+			}
+
+			create_title_and_vassal_change = {
+				type = usurped
+				save_scope_as = change
+				add_claim_on_loss = yes
+			}
+
+			every_in_list = {
+				list = titles_to_transfer
+				change_title_holder = {
+					holder = root
+					change = scope:change
+				}
+			}
+
+			scope:emperor = {
+				every_vassal = {
+					limit = {
+						NOT = {
+							this = root
+						}
+					}
+					change_liege = {
+						LIEGE = root
+						CHANGE = scope:change
+					}
+				}
+			}
+
+			resolve_title_and_vassal_change = scope:change
+
+			scope:emperor = {
+				death = {
+					death_reason = death_wounds
+				}
+			}
+		}
+
+		if = {
+			limit = { 
+				exists = cp:councillor_chancellor
+				cp:councillor_chancellor != character:tangut_liang_2
+			}
+			fire_councillor = cp:councillor_chancellor
+			assign_councillor_type = {
+				type = councillor_chancellor
+				target = character:tangut_liang_2
+			}
+		}
+
+		every_child = {
+			limit = {
+				house != root.house
+			}
+			set_house = root.house
+		}
+
+		ai_chance = {
+			base = 0
+		}
+	}
+
+	option = {
+		name = bookmark.0400.b
+
+		custom_tooltip = {
+			text = bookmark.0400.b.tt
+			add_character_flag = has_had_diarch_intro_event_flag
+
+			scope:emperor = {
+				designate_diarch = root
+				try_start_diarchy = regency
+				set_diarchy_swing = 100
+				if = {
+					limit = { 
+						exists = cp:councillor_chancellor
+						cp:councillor_chancellor != character:tangut_liang_2
+					}
+					fire_councillor = cp:councillor_chancellor
+					scope:brother = {
+						set_employer = scope:emperor
+					}
+					assign_councillor_type = {
+						type = councillor_chancellor
+						target = character:tangut_liang_2
+					}
+				}
+			}
+		}
+		change_influence = monumental_influence_gain
+		add_prestige = monumental_prestige_gain
+
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = bookmark.0400.c
+
+		custom_tooltip = {
+			text = bookmark.0400.c.tt
+			add_character_flag = has_had_diarch_intro_event_flag
+
+			scope:emperor = {
+				death = {
+					death_reason = death_wounds
+				}
+			}
+			scope:brother = {
+				set_employer = scope:child
+			}
+			scope:child = {
+				set_diarch = root
+				set_diarchy_swing = 100
+				if = {
+					limit = { 
+						exists = cp:councillor_chancellor
+						cp:councillor_chancellor != character:tangut_liang_2
+					}
+					fire_councillor = cp:councillor_chancellor
+					assign_councillor_type = {
+						type = councillor_chancellor
+						target = character:tangut_liang_2
+					}
+				}
+			}
+		}
+		change_influence = monumental_influence_gain
+		add_prestige = monumental_prestige_gain
+
+		ai_chance = {
+			base = 0
+		}
+	}
+	after = {
+		add_hook = {
+			type = loyalty_hook
+			target = scope:brother
+		}
+
+		scope:brother = {
+			change_influence = massive_influence_gain
+			add_prestige = massive_prestige_gain
+		}
+	}
+}

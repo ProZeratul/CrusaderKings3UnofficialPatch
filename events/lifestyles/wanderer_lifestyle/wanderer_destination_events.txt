@@ -22,6 +22,7 @@ destination_events.10 = { # A good Caravan Master for hire
 	lower_right_portrait = scope:travel_leader_character
 
 	trigger = {
+		is_ai = no
 		has_lifestyle = wanderer_lifestyle
 		any_councillor = {
 			OR = {
@@ -113,7 +114,7 @@ destination_events.10 = { # A good Caravan Master for hire
 
 	option = {
 		name = destination_events.10.a
-		remove_short_term_gold = tiny_gold_value
+		remove_treasury_or_gold = tiny_treasury_or_gold_value
 		custom_tooltip = destination_events.10.a.tt
 		court_position_grant_effect = { #Unop Use court_position_grant_effect instead of appoint_court_position
 			EMPLOYER = root
@@ -135,7 +136,7 @@ destination_events.10 = { # A good Caravan Master for hire
 	option = {
 		name = destination_events.10.b
 		scope:travel_leader_character = {
-			silent_dissapear_ai_if_not_hired = yes
+			silent_disappear_ai_if_not_hired = yes
 		}
 		ai_chance = {
 			base = 0
@@ -397,12 +398,13 @@ destination_events.40 = { # Remember the language of <X>?
 	}
 
 	trigger = {
+		is_ai = no
 		has_lifestyle = wanderer_lifestyle
 		has_variable_list = visited_poi
 		num_of_known_languages < language_soft_cap
 		NOT = {
 			any_scheme = {
-				scheme_type = learn_language
+				type = learn_language
 			}
 		}
 		any_in_list = {
@@ -476,7 +478,7 @@ destination_events.40 = { # Remember the language of <X>?
 		name = destination_events.40.b
 		scope:teacher_character = {
 			move_to_pool = yes # This is for the tooltip
-			silent_dissapear_ai_if_not_hired = yes
+			silent_disappear_ai_if_not_hired = yes
 		}
 	}
 }

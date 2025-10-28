@@ -1,4 +1,4 @@
-#
+﻿#
 # Put widgets we reuse within the tournament plugin widgets here.
 #
 types TournamentWidgetTypes
@@ -70,7 +70,7 @@ types TournamentWidgetTypes
 
 				## Debug info
 				hbox = {
-					visible = "[InDebugMode]"
+					visible = "[AIWatchWindowsEnabled]"
 
 					text_single = {
 						visible = "[GreaterThan_CFixedPoint( Character.MakeScope.Var('progress_to_victory').GetValue, Activity.MakeScope.Var('progress_to_victory_threshold').GetValue )]"
@@ -236,7 +236,7 @@ types TournamentWidgetTypes
 							## Debug info
 							hbox = {
 								margin_right = 8
-								visible = "[InDebugMode]"
+								visible = "[AIWatchWindowsEnabled]"
 
 								text_single = {
 									visible = "[GreaterThan_CFixedPoint( Character.MakeScope.Var('progress_to_victory').GetValue, Activity.MakeScope.Var('progress_to_victory_threshold').GetValue )]"
@@ -510,7 +510,7 @@ types TournamentWidgetTypes
 		}
 
 		text_single = {
-			visible = "[And( InDebugMode, And( CharacterHasPtV, IsCharacterQualified ) )]"
+			visible = "[And( AIWatchWindowsEnabled, And( CharacterHasPtV, IsCharacterQualified ) )]"
 			raw_text = "#I [GetPlayerPtV]#! -- vs -- #X [Character.MakeScope().ScriptValue( 'debug_opposing_progress_to_victory' )]#!"
 			parentanchor = right
 			default_format = "#D"
@@ -628,7 +628,7 @@ types TournamentWidgetTypes
 			{
 				size = { 20 20 }
 			}
-			visible = "[IsContestType( 'tournament_phase_joust' )]" #Unop Remove closing brace
+			visible = "[IsContestType( 'tournament_phase_joust' )]"
 			tooltip = "FOOT_EXPERIENCE_REGULAR_TOOLTIP"
 		}
 
@@ -648,7 +648,7 @@ types TournamentWidgetTypes
 			{
 				size = { 14 14 }
 			}
-			visible = "[IsContestType( 'tournament_phase_joust' )]" #Unop Remove closing brace
+			visible = "[IsContestType( 'tournament_phase_joust' )]"
 			tooltip = "FOOT_EXPERIENCE_REGULAR_TOOLTIP"
 		}
 

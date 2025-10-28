@@ -222,7 +222,7 @@ house_arrest_ongoing.0003 = {
 			random_prisoner = {
 				limit = {
 					OR = {
-						NOT = { this = root }
+						this != root
 						root = { has_trait = lunatic }
 					}
 					is_ai = yes
@@ -332,11 +332,9 @@ house_arrest_ongoing.0003 = {
 	option = { #All alone
 		name = house_arrest_ongoing.0003.a
 		trigger = {
-			NOT = {
-				OR ={
-					has_character_flag = lover
-					has_character_flag = friend
-				}
+			NOR ={
+				has_character_flag = lover
+				has_character_flag = friend
 			}
 		}
 		trait = shy
@@ -374,7 +372,7 @@ house_arrest_ongoing.0003 = {
 		name = house_arrest_ongoing.0003.c
 		trigger = {
 			has_character_flag = friend
-			NOT = { scope:friendly_prisoner = root }
+			scope:friendly_prisoner != root
 		}
 		if = {
 			limit = {
@@ -389,7 +387,7 @@ house_arrest_ongoing.0003 = {
 		trigger = {
 			has_character_flag = lover
 			is_adult = yes
-			NOT = { scope:friendly_prisoner = root }
+			scope:friendly_prisoner != root
 		}
 		if = {
 			limit = {
@@ -466,11 +464,10 @@ house_arrest_ongoing.0004 = {
 
 	trigger = {
 		NOT = { has_character_flag = had_event_house_arrest_ongoing_0004 }
-		imprisoner = {
-			any_courtier_or_guest = {
-				is_available_healthy_ai_adult = yes
-				has_relation_friend = root
-			}
+		any_relation = {
+			type = friend
+			is_available_healthy_ai_adult = yes
+			is_courtier_of = root.imprisoner
 		}
 	}
 
@@ -486,7 +483,7 @@ house_arrest_ongoing.0004 = {
 		}
 		imprisoner = {
 			save_scope_as = bg_override_char
-			random_courtier_or_guest = {
+			random_courtier = {
 				limit = {
 					is_available_healthy_ai_adult = yes
 					has_relation_friend = root
@@ -582,16 +579,12 @@ house_arrest_ongoing.0005 = {
 
 	trigger = {
 		NOT = { has_character_flag = had_event_house_arrest_ongoing_0005 }
-		imprisoner = {
+		any_relation = {
+			type = rival
+			is_available_healthy_ai_adult = yes
 			OR = {
-				AND = {
-					is_available_healthy_ai_adult = yes
-					has_relation_rival = root
-				}
-				any_courtier_or_guest = {
-					is_available_healthy_ai_adult = yes
-					has_relation_rival = root
-				}
+				this = root.imprisoner
+				is_courtier_of = root.imprisoner
 			}
 		}
 	}
@@ -617,7 +610,7 @@ house_arrest_ongoing.0005 = {
 				save_scope_as = rival_at_court
 			}
 			else = {
-				random_courtier_or_guest = {
+				random_courtier = {
 					limit = {
 						is_available_healthy_ai_adult = yes
 						has_relation_rival = root

@@ -798,7 +798,7 @@ chariot_race.3020 = {
 
 	trigger = {
 		has_variable = wager_target
-		var:wager_target = { NOT = { this = root } }
+		var:wager_target = { this != root }
 	}
 
 	immediate = {
@@ -1207,7 +1207,7 @@ chariot_race.3030 = {
 		change_influence = medium_influence_loss
 		scope:trailing_charioteer = {
 			if = {
-				limit = { NOT = { employer = root } }
+				limit = { employer != root }
 				set_employer = root
 			}
 		}
@@ -1498,7 +1498,7 @@ chariot_race.4000 = {
 				is_governor = yes
 				top_liege = root.top_liege
 				is_ai = yes
-				NOT = { this = root }
+				this != root
 			}
 		}
 	}
@@ -1549,7 +1549,7 @@ chariot_race.4000 = {
 						is_governor = yes
 						top_liege = root.top_liege
 						is_ai = yes
-						NOT = { this = root }
+						this != root
 					}
 					save_scope_as = target_governor
 				}
@@ -2006,27 +2006,27 @@ chariot_race.4010 = {
 			order_by = {
 				value = ai_greed
 				if = {
-					limit = { num_sinful_traits = { value = 1 faith = root.faith } }
+					limit = { num_sinful_traits = { value = 1 target = root.faith } }
 					add = 10
 				}
 				else_if = {
-					limit = { num_sinful_traits = { value = 2 faith = root.faith } }
+					limit = { num_sinful_traits = { value = 2 target = root.faith } }
 					add = 30
 				}
 				else_if = {
-					limit = { num_sinful_traits = { value > 2 faith = root.faith } }
+					limit = { num_sinful_traits = { value > 2 target = root.faith } }
 					add = 60
 				}
 				if = {
-					limit = { num_virtuous_traits = { value = 1 faith = root.faith } }
+					limit = { num_virtuous_traits = { value = 1 target = root.faith } }
 					add = -5
 				}
 				else_if = {
-					limit = { num_virtuous_traits = { value = 2 faith = root.faith } }
+					limit = { num_virtuous_traits = { value = 2 target = root.faith } }
 					add = -15
 				}
 				else_if = {
-					limit = { num_virtuous_traits = { value > 2 faith = root.faith } }
+					limit = { num_virtuous_traits = { value > 2 target = root.faith } }
 					add = -30
 				}
 				if = {
@@ -2267,7 +2267,7 @@ scripted_trigger chariot_race_4020_house_head_trigger = {
 	has_domicile = yes
 	save_temporary_scope_as = notable_temp
 
-	NOT = { scope:notable_temp.domicile.domicile_location = root.capital_province }
+	scope:notable_temp.domicile.domicile_location != root.capital_province
 }
 
 # House Head is considering moving their estate
@@ -2300,7 +2300,7 @@ chariot_race.4020 = {
 	}
 
 	trigger = {
-		NOT = { this = scope:host }
+		this != scope:host
 		is_governor = yes
 		scope:activity = {
 			any_guest_subset = {
@@ -2430,7 +2430,6 @@ chariot_race.4020 = {
 			save_scope_as = current_estate
 		}
 
-		# TODO_CD_EP3_JC: save governor house head scope
 		scope:notable = {
 			add_character_flag = {
 				flag = had_chariot_race_4020
@@ -2742,7 +2741,7 @@ scripted_trigger chariot_race_4030_john_trigger = {
 		has_trait = celibate
 	}
 	possibly_interested_in_character_trigger = { CHARACTER = scope:prostitute }
-	NOT = { this = scope:host }
+	this != scope:host
 	NOT = {
 		faith = {
 			trait_is_virtue = lustful
@@ -3196,7 +3195,6 @@ chariot_race.4030 = {
 			skill = intrigue
 			value = medium_skill_rating
 			60 = {
-				# TODO_CD_EP3_JC: double check that modifiers are working appropriately
 				compare_modifier = {
 					value = scope:duel_value
 					multiplier = 2
@@ -3241,7 +3239,7 @@ chariot_race.4030 = {
 					add = 20
 					OR = {
 						has_trait = lustful
-						has_trait = poet
+						has_trait = lifestyle_poet
 						has_trait = adventurer
 						has_trait = rakish
 						has_trait = lifestyle_reveler
@@ -3669,15 +3667,20 @@ chariot_race.4030 = {
 		if = {
 			limit = {
 				is_ai = yes
-				NAND = {
+			}
+			if = {
+				limit = {
+					highest_held_title_tier >= tier_kingdom
 					exists = scope:besexed
 					scope:prostitute = {
 						this = scope:besexed
 					}
 				}
 			}
-			scope:prostitute = {
-				silent_disappearance_effect = yes
+			else = {
+				scope:prostitute = {
+					silent_disappearance_effect = yes
+				}
 			}
 		}
 	}
@@ -4036,7 +4039,6 @@ chariot_race.4040 = {
 	type = activity_event
 	title = chariot_race.4040.t
 	desc = chariot_race.4040.desc
-	# TODO_CD_EP3_JC: different desc for emp
 	theme = chariot_race
 
 	left_portrait = {
@@ -4211,7 +4213,7 @@ chariot_race.4040 = {
 			is_landed = yes
 			exists = capital_county
 			top_liege = scope:host
-			NOT = { this = scope:host }
+			this != scope:host
 		}
 
 		capital_county  = {
@@ -4283,7 +4285,7 @@ chariot_race.4040 = {
 							root = {
 								if = {
 									limit = {
-										NOT = { this = scope:host }
+										this != scope:host
 									}
 									if = {
 										limit = {
@@ -4523,8 +4525,6 @@ chariot_race.4050 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					# TODO_CD_EP3_JC: remove?
-					# NOT = { faith.religion = { is_in_family = rf_abrahamic } }
 					religion_has_angels_trigger = no
 				}
 				desc = chariot_race.4050.desc.non_abrahamic
@@ -4872,7 +4872,7 @@ chariot_race.4050 = {
 									scope:victim = {
 										chariot_race_0201_sitting_in_kathisma_trigger = yes
 									}
-									NOT = { this = scope:host }
+									this != scope:host
 								}
 								rightfully_imprison_character_less_verbose_effect = {
 									TARGET = root
@@ -5083,7 +5083,7 @@ chariot_race.4051 = {
 				trigger = {
 					has_character_flag = self_failed_survive
 					scope:victim = { chariot_race_0201_sitting_in_kathisma_trigger = yes }
-					NOT = { this = scope:host }
+					this != scope:host
 				}
 				desc = chariot_race.4051.self_failed_survive_kathisma
 			}
@@ -5158,7 +5158,7 @@ chariot_race.4051 = {
 			trigger = {
 				has_character_flag = self_failed_survive
 				scope:victim = { chariot_race_0201_sitting_in_kathisma_trigger = yes }
-				NOT = { this = scope:host }
+				this != scope:host
 			}
 			animation = prisonhouse
 		}
@@ -5565,7 +5565,7 @@ chariot_race.4051 = {
 								scope:victim = {
 									chariot_race_0201_sitting_in_kathisma_trigger = yes
 								}
-								NOT = { this = scope:host }
+								this != scope:host
 							}
 							rightfully_imprison_character_less_verbose_effect = {
 								TARGET = root

@@ -13,7 +13,7 @@ fp3_demand_submission_interaction = {
 	notification_text = DEMAND_SUBMISSION_NOTIFICATION
 
 	is_shown = {
-		NOT = { scope:actor = scope:recipient }
+		scope:actor != scope:recipient
 		struggle:persian_struggle ?= { has_struggle_phase_parameter = demand_submission_interaction_unlocked }
 		scope:actor = { has_title = title:d_sunni }
 		scope:recipient = {
@@ -247,7 +247,14 @@ fp3_demand_submission_interaction = {
 		ai_recipients = neighboring_rulers
 	}
 
-	ai_frequency = 12
+	ai_frequency_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 12
+		empire = 12
+		hegemony = 12
+	}
 
 	# Very similar to ai_accept, but ignores effects that are < 10 in value for brevity's sake
 	ai_will_do = {
@@ -347,19 +354,43 @@ fp3_request_turkic_invasion_interaction = {
 
 	is_shown = {
 		scope:actor = {
-			has_trait = fp3_struggle_detractor
-			any_character_struggle = { is_struggle_type = persian_struggle }
+			OR = {
+				AND = {
+					has_trait = fp3_struggle_detractor
+					any_character_struggle = { is_struggle_type = persian_struggle }
+				}
+				top_participant_group:dynastic_cycle ?= {
+					participant_group_type = expansion_movement
+				}
+			}
 		}
 		scope:recipient = {
 			is_playable_character = yes
-			OR = {
-				any_character_struggle = { is_struggle_type = persian_struggle }
-				title:d_sunni.holder ?= this
+			trigger_if = {
+				limit = {
+					scope:actor = {
+						top_participant_group:dynastic_cycle ?= {
+							participant_group_type = expansion_movement
+						}
+					}
+				}
+				scope:actor.top_liege = {
+					any_vassal_or_below = {
+						this = scope:recipient
+					}
+				}
 			}
-			is_independent_ruler = yes
+			trigger_else = {
+				OR = {
+					any_character_struggle = { is_struggle_type = persian_struggle }
+					title:d_sunni.holder ?= this
+				}
+				top_liege = this
+
+			}
 			is_ai = yes
 		}
-		NOT = { scope:actor = scope:recipient }
+		scope:actor != scope:recipient
 	}
 
 	is_valid_showing_failures_only = {
@@ -373,21 +404,58 @@ fp3_request_turkic_invasion_interaction = {
 					is_landed = yes
 					is_physically_able = yes
 					has_raised_armies = no
+					is_at_war = no
 					in_diplomatic_range = scope:actor
-					OR = {
-						government_has_flag = government_is_clan
-						government_has_flag = government_is_tribal
-						government_has_flag = government_is_nomadic
-					}
-					culture = { has_cultural_pillar = heritage_turkic }
 					highest_held_title_tier >= tier_county
 					NOR = {
-						is_at_war_with = scope:actor
-						is_at_war_with = scope:recipient
 						is_allied_to = scope:recipient
 						has_truce = scope:recipient
 						this = scope:actor
 						this = scope:recipient
+						is_tributary_of = scope:recipient
+					}
+					OR = {
+						trigger_if = {
+							limit = {
+								NOT = {
+									scope:actor = {
+										top_participant_group:dynastic_cycle ?= {
+											participant_group_type = expansion_movement
+										}
+									}
+								}
+							}
+							government_has_flag = government_is_clan
+						}
+						government_has_flag = government_is_tribal
+						government_has_flag = government_is_nomadic
+						government_has_flag = government_is_wanua
+						government_has_flag = government_is_landless_adventurer
+					}
+					trigger_if = {
+						limit = {
+							scope:actor = {
+								top_participant_group:dynastic_cycle ?= {
+									participant_group_type = expansion_movement
+								}
+							}
+						}
+						any_neighboring_top_liege_realm = {
+							OR = {
+								title:h_china ?= this
+								any_title_to_title_neighboring_empire = {
+									title:h_china ?= hegemony
+								}
+							}
+						}
+					}
+					trigger_else = {
+						culture = {
+							OR = {
+								has_cultural_pillar = heritage_turkic
+								has_cultural_pillar = heritage_mongolic
+							}
+						}
 					}
 				}
 				add_to_list = characters
@@ -457,7 +525,7 @@ fp3_request_turkic_invasion_interaction = {
 				if = {
 					limit = {
 						any_realm_county = {
-							NOT = { this = scope:recipient.capital_county }
+							this != scope:recipient.capital_county
 							any_neighboring_county = { holder.top_liege = scope:secondary_recipient.top_liege }
 							any_county_province = { geographical_region = world_persian_empire }
 							NOR = {
@@ -468,7 +536,7 @@ fp3_request_turkic_invasion_interaction = {
 					}
 					random_realm_county = {
 						limit = {
-							NOT = { this = scope:recipient.capital_county }
+							this != scope:recipient.capital_county
 							any_neighboring_county = { holder.top_liege = scope:secondary_recipient.top_liege }
 							any_county_province = { geographical_region = world_persian_empire }
 							NOR = {
@@ -482,12 +550,10 @@ fp3_request_turkic_invasion_interaction = {
 				else_if = {
 					limit = {
 						any_realm_county = {
-							NOT = { this = scope:recipient.capital_county }
+							this != scope:recipient.capital_county
 							any_neighboring_county = {
 								any_county_province = { geographical_region = world_persian_empire }
-								NOT = {
-									holder.top_liege = prev.holder.top_liege
-								}
+								holder.top_liege != prev.holder.top_liege
 							}
 							NOR = {
 								holder = scope:actor
@@ -497,12 +563,10 @@ fp3_request_turkic_invasion_interaction = {
 					}
 					random_realm_county = {
 						limit = {
-							NOT = { this = scope:recipient.capital_county }
+							this != scope:recipient.capital_county
 							any_neighboring_county = {
 								any_county_province = { geographical_region = world_persian_empire }
-								NOT = {
-									holder.top_liege = prev.holder.top_liege
-								}
+								holder.top_liege != prev.holder.top_liege
 							}
 							NOR = {
 								holder = scope:actor
@@ -515,7 +579,7 @@ fp3_request_turkic_invasion_interaction = {
 				else_if = {
 					limit = {
 						any_realm_county = {
-							NOT = { this = scope:recipient.capital_county }
+							this != scope:recipient.capital_county
 							NOR = {
 								holder = scope:actor
 								holder = { is_vassal_or_below_of = scope:actor }
@@ -524,7 +588,7 @@ fp3_request_turkic_invasion_interaction = {
 					}
 					random_realm_county = {
 						limit = {
-							NOT = { this = scope:recipient.capital_county }
+							this != scope:recipient.capital_county
 							NOR = {
 								holder = scope:actor
 								holder = { is_vassal_or_below_of = scope:actor }
@@ -717,7 +781,7 @@ fp3_request_turkic_invasion_interaction = {
 					has_relation_nemesis = scope:actor
 				}
 			}
-			add = -30
+			add = -100
 		}
 		modifier = { # Same Dynasty modifier.
 			desc = offer_vassalization_interaction_aibehavior_dynasty_tt_2
@@ -799,6 +863,24 @@ fp3_request_turkic_invasion_interaction = {
 			scope:secondary_recipient.culture = { has_cultural_parameter = reduced_cost_for_conversion_to_pacifist_faith }
 			desc = PT_AI_IS_PACIFIST_CULTURE_2
 		}
+		# Distance
+		modifier = {
+			add = -25
+			"scope:secondary_recipient.capital_province.squared_distance(scope:recipient.capital_province)" >= squared_distance_medium
+			"scope:secondary_recipient.capital_province.squared_distance(scope:recipient.capital_province)" < squared_distance_almost_massive
+			desc = PT_AI_IS_FAR_AWAY
+		}
+		modifier = {
+			add = -75
+			"scope:secondary_recipient.capital_province.squared_distance(scope:recipient.capital_province)" >= squared_distance_almost_massive
+			desc = PT_AI_IS_VERY_FAR_AWAY
+		}
+		modifier = {
+			add = 20
+			exists = scope:actor.var:movement_power
+			scope:actor.var:movement_power >= very_high_movement_power_value
+			desc = ACTOR_HIGH_MOVEMENT_POWER
+		}
 
 		# Offered proportional gold
 		modifier = {
@@ -815,21 +897,32 @@ fp3_request_turkic_invasion_interaction = {
 			max = 25
 		}
 	}
-	#auto_accept = {
-	#	scope:recipient = { is_ai = yes }
-	#}
 	can_send_despite_rejection = no
-	ai_frequency = 24
+	ai_frequency_by_tier = {
+		barony = 0
+		county = 72
+		duchy = 72
+		kingdom = 36
+		empire = 24
+		hegemony = 24
+	}
 	ai_targets = {
 		ai_recipients = neighboring_rulers
 		ai_recipients = liege
 	}
 	ai_potential = {
-		has_trait = fp3_struggle_detractor
+		OR = {
+			has_trait = fp3_struggle_detractor
+			AND = {
+				top_participant_group:dynastic_cycle ?= {
+					participant_group_type = expansion_movement
+				}
+				vassal_contract_has_flag = celestial_military_appointment
+			}
+		}
 		is_at_war = no
-		NOT = { ai_has_economical_boom_personality = yes }
+		ai_has_builder_or_pious_builder_personality = no
 		ai_greed <= 25
-		highest_held_title_tier > tier_barony
 		NOT = { culture = { has_cultural_pillar = heritage_turkic } }
 	}
 	ai_will_do = {
@@ -937,15 +1030,19 @@ fp3_challenge_house_head_interaction = {
 	is_shown = {
 		has_fp3_dlc_trigger = yes
 		scope:actor = {
-			NOT = { this = scope:recipient }
-			government_has_flag = government_is_clan
-		}
-		scope:actor.house ?= {
-			house_head = scope:recipient
+			this != scope:recipient
 			OR = {
-				has_house_unity_parameter = unity_can_challenge_house_head
-				scope:actor = {
-					any_character_struggle = { has_struggle_phase_parameter = unlocks_challenge_house_head_for_clans }
+				government_has_flag = government_is_clan
+				government_is_japanese_trigger = yes
+			}
+			house ?= {
+				house_head = scope:recipient
+				OR = {
+					has_house_unity_parameter = unity_can_challenge_house_head
+					scope:actor = {
+						any_character_struggle = { has_struggle_phase_parameter = unlocks_challenge_house_head_for_clans }
+					}
+					house_head ?= { government_is_japanese_trigger = yes }
 				}
 			}
 		}
@@ -972,6 +1069,7 @@ fp3_challenge_house_head_interaction = {
 				text = fp3_challenge_house_head_interaction_recent_tt
 				NOT = { has_character_flag = fp3_challenge_house_head_recent_flag }
 			}
+			tgp_is_ceremonial_liege_trigger = no
 		}
 	}
 
@@ -1037,8 +1135,9 @@ fp3_challenge_house_head_interaction = {
 		scope:recipient = { save_scope_as = house_head }
 		if = {
 			limit = {
-				scope:recipient = {
-					is_ruler = no
+				OR = {
+					scope:recipient = { is_vassal_or_below_of = scope:actor }
+					scope:recipient = { is_ruler = no }
 				}
 			}
 			scope:actor.house = { set_house_head = scope:actor }
@@ -1093,6 +1192,26 @@ fp3_challenge_house_head_interaction = {
 							}
 						}
 					}
+					# Admin Japanese can duel, but it is frowned upon
+					scope:actor = {
+						custom_description_no_bullet = {
+							text = challenge_house_head_japanese_admin
+						}
+						if = {
+							limit = {
+								government_is_japanese_trigger = yes
+								tgp_soryo_or_bushido_trigger = no
+							}
+							if = {
+								limit = { scope:lethal = no }
+								add_prestige = medium_prestige_loss
+							}
+							else = {
+								add_prestige = major_prestige_loss
+								add_prestige_level = -1
+							}
+						}
+					}
 					trigger_event = fp3_misc_decisions.0022
 				}
 			}
@@ -1118,6 +1237,9 @@ fp3_challenge_house_head_interaction = {
 	send_option = {
 		flag = diplomacy
 		localization = CHALLENGE_HOUSE_HEAD_DIPLOMACY_DUEL
+		starts_enabled = {
+			scope:actor = { tgp_soryo_or_bushido_trigger = no }
+		}
 		is_valid = {
 			custom_tooltip = {
 				text = CHALLENGE_HOUSE_HEAD_LETHAL_DUEL_INVALID_TT
@@ -1129,7 +1251,14 @@ fp3_challenge_house_head_interaction = {
 		flag = lethal
 		localization = CHALLENGE_HOUSE_HEAD_LETHAL_DUEL
 		is_valid = {
-			scope:actor = { has_relation_rival = scope:recipient }
+			scope:actor = {
+				has_relation_rival = scope:recipient
+				trigger_if = {
+					limit = { government_is_japanese_trigger = yes }
+					tgp_soryo_or_bushido_trigger = yes
+					scope:recipient = { tgp_soryo_or_bushido_trigger = yes }
+				}
+			}
 			custom_tooltip = {
 				text = CHALLENGE_HOUSE_HEAD_LETHAL_DUEL_INVALID_TT
 				NOT = { scope:diplomacy = yes }
@@ -1149,6 +1278,10 @@ fp3_challenge_house_head_interaction = {
 
 	# AI
 
+	auto_accept = {
+		scope:recipient = { is_vassal_or_below_of = scope:actor }
+	}
+	
 	ai_accept = {
 		base = 25
 		modifier = {
@@ -1223,7 +1356,17 @@ fp3_challenge_house_head_interaction = {
 				}
 				NOT = { has_relation_rival = scope:actor }
 			}
+			factor = 0.5
 			desc = AI_AVOID_LETHAL_DUEL_WITH_FAMILY
+		}
+		modifier = {
+			NOT = { scope:diplomacy = yes }
+			scope:recipient = {
+				government_is_japanese_trigger = yes
+				tgp_soryo_or_bushido_trigger = no
+			}
+			factor = 0.5
+			desc = AI_NOT_SORYO_OR_BUSHIDO
 		}
 		opinion_modifier = {
 			opinion_target = scope:actor
@@ -1231,18 +1374,26 @@ fp3_challenge_house_head_interaction = {
 		}
 	}
 
-	ai_frequency = 24
+	ai_frequency_by_tier = {
+		barony = 0
+		county = 36
+		duchy = 24
+		kingdom = 6
+		empire = 1
+		hegemony = 1
+	}
 
 	ai_target_quick_trigger = {
 		adult = yes
 	}
 
 	ai_potential = {
-		NOR = {
-			has_trait = craven
-			has_trait = content
+		is_ruler = yes
+		is_house_head = no
+		OR = {
+			government_has_flag = government_is_clan
+			government_is_japanese_trigger = yes
 		}
-		government_has_flag = government_is_clan
 		is_physically_able = yes
 	}
 
@@ -1271,23 +1422,23 @@ fp3_challenge_house_head_interaction = {
 		# Base requirements for AI
 		modifier = {
 			add = -1000
-			NOR = {
-				AND = {
-					is_independent_ruler = yes
-					highest_held_title_tier >= scope:recipient.highest_held_title_tier
+			AND = {
+				NOT = {
+					scope:recipient = { is_vassal_or_below_of = scope:actor }
 				}
-				is_powerful_vassal = yes
-				is_close_or_extended_family_of = scope:recipient
-				opinion = {
-					target = scope:recipient
-					value >= 25
+				OR = {
+					AND = {
+						top_liege = this
+						highest_held_title_tier >= scope:recipient.highest_held_title_tier
+					}
+					is_powerful_vassal = yes
+					is_close_or_extended_family_of = scope:recipient
+					opinion = {
+						target = scope:recipient
+						value >= 25
+					}
 				}
 			}
-		}
-		# Stop AI constantly challenging players
-		modifier = {
-			scope:recipient = { has_character_flag = ai_cooldown_house_head_challenge_flag }
-			add = -1000
 		}
 		# Tiers
 		modifier = {
@@ -1350,6 +1501,47 @@ fp3_challenge_house_head_interaction = {
 			ai_sociability = 100
 			add = 10
 		}
+		# Higher in stature
+		modifier = {
+			is_independent_ruler = yes
+			scope:recipient = { is_independent_ruler = no }
+			add = 1000
+		}
+		modifier = {
+			highest_held_title_tier > scope:recipient.highest_held_title_tier
+			scope:recipient = { is_independent_ruler = no }
+			add = {
+				value = highest_held_title_tier
+				add = scope:recipient.highest_held_title_tier
+				multiply = 10
+			}
+		}
+		modifier = {
+			scope:recipient = { is_vassal_or_below_of = scope:actor }
+			add = 500
+		}
+		# Remove non dominant gender
+		modifier = {
+			scope:actor = { is_faith_dominant_gender = yes }
+			scope:recipient = { is_faith_dominant_gender = no }
+			factor = 2
+		}
+		# Stop AI constantly challenging players
+		modifier = { 
+			scope:recipient = { has_character_flag = ai_cooldown_house_head_challenge_flag }
+			factor = 0
+		}
+		# Stop AI game-overing players
+		modifier = { 
+			scope:recipient = {
+				trigger_if = {
+					limit = { is_ai = no }
+					is_landed = no
+					any_held_title = { is_noble_family_title = yes }
+				}
+			}
+			factor = 0
+		}
 	}
 }
 
@@ -1396,7 +1588,7 @@ fp3_change_allegiance = {
 		# There has to be a caliph around to sway on.
 		## Arguably narratively not, but mechanically, everything will break if we don't.
 		exists = title:d_sunni.holder
-		NOT = { scope:recipient = scope:actor }
+		scope:recipient != scope:actor
 		scope:actor = {
 			any_character_struggle = { is_struggle_type = persian_struggle }
 			OR = {
@@ -1762,7 +1954,14 @@ fp3_change_allegiance = {
 			}
 		}
 	}
-	ai_frequency = 120
+	ai_frequency_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 120
+		kingdom = 120
+		empire = 120
+		hegemony = 120
+	}
 
 	ai_potential = {
 		primary_title.tier >= tier_duchy
@@ -1915,7 +2114,7 @@ fp3_change_allegiance = {
 ###################################
 # Request honorary titles
 ###################################
-fp3_request_honorary_titles_interaction = { # todo_cd_polish add different option to pick different titles
+fp3_request_honorary_titles_interaction = {
 	interface_priority = 30
 	category = interaction_category_religion
 	common_interaction = yes
@@ -2146,7 +2345,14 @@ fp3_request_honorary_titles_interaction = { # todo_cd_polish add different optio
 		}
 	}
 
-	ai_frequency = 60
+	ai_frequency_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 60
+		empire = 60
+		hegemony = 60
+	}
 
 	ai_potential = {
 		any_vassal = {
@@ -2157,7 +2363,6 @@ fp3_request_honorary_titles_interaction = { # todo_cd_polish add different optio
 	}
 
 	ai_targets = {
-		# For the AI, we limit it to neighboring_rulers
 		ai_recipients = vassals
 	}
 
@@ -2244,7 +2449,14 @@ fp3_request_house_unity_change_interaction = {
 		}
 	}
 
-	ai_frequency = 60
+	ai_frequency_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 60
+		empire = 60
+		hegemony = 60
+	}
 
 	ai_potential = {
 		any_vassal = {

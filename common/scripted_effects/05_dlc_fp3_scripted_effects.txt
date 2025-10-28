@@ -43,7 +43,7 @@ fp3_end_persian_struggle_effect = {
 	every_in_list = { # Then we *actually* notify palyers, making sure the struggle has already ended
 		list = player_to_notify
 		limit = {
-			NOT = { this = root }
+			this != root
 		}
 		trigger_event = $EVENT$
 	}
@@ -173,7 +173,7 @@ fp3_ending_effects_assertion = {
 		# Vassalize supporters
 		every_involved_ruler = {
 			limit = {
-				is_independent_ruler = yes
+				top_liege = this
 				OR = {
 					has_trait = fp3_struggle_supporter
 					scope:struggle_liege = {
@@ -202,12 +202,12 @@ fp3_ending_effects_assertion = {
 		}
 		# Involved event
 		every_involved_ruler = {
-			limit = { NOT = { this = root } }
+			limit = { this != root }
 			trigger_event = fp3_struggle.0072
 		}
 		# Interloper event
 		every_interloper_ruler = {
-			limit = { NOT = { this = root } }
+			limit = { this != root }
 			trigger_event = fp3_struggle.0072
 		}
 	}
@@ -223,7 +223,7 @@ fp3_ending_effects_assertion = {
 			struggle:persian_struggle = {
 				every_involved_county = {
 					limit = {
-						NOT = { faith = root.faith }
+						faith != root.faith
 					}
 					random = {
 						chance = fp3_strengthen_caliphate_ending_conversion_chance_percent_value
@@ -341,7 +341,7 @@ fp3_struggle_ending_shia_caliphate_effects = {
 			struggle:persian_struggle = {
 				every_involved_county = {
 					limit = {
-						NOT = { faith = root.faith }
+						faith != root.faith
 					}
 					random = {
 						chance = fp3_shia_caliphate_ending_conversion_chance_percent_value
@@ -403,7 +403,7 @@ fp3_struggle_ending_vassalize_caliph_effects = {
 		every_in_list = {
 			list = vassals_to_transfer
 			limit = {
-				NOT = { root = liege }
+				root != liege
 			}
 			change_liege = {
 				liege = root
@@ -713,7 +713,7 @@ fp3_struggle_ending_concession_effects = {
 		struggle:persian_struggle = {
 			every_involved_ruler = {
 				limit = {
-					is_independent_ruler = yes
+					top_liege = this
 					NOT = {
 						primary_title = { is_mercenary_company = yes }
 					}
@@ -722,7 +722,7 @@ fp3_struggle_ending_concession_effects = {
 				scope:peace_target = {
 					every_primary_war_enemy = {
 						limit = {
-							is_independent_ruler = yes
+							top_liege = this
 							NOT = {
 								primary_title = { is_mercenary_company = yes }
 							}
@@ -741,6 +741,9 @@ fp3_struggle_ending_concession_effects = {
 				}
 			}
 		}
+		
+		# Silk Road bonus towards prosperity if and when Persia's turmoil comes to an end
+		tgp_silk_road_iranian_intermezzo_ending_effect = yes
 	}
 
 	# All the involved independent rulers gain truces with each other
@@ -749,7 +752,7 @@ fp3_struggle_ending_concession_effects = {
 		struggle:persian_struggle = {
 			every_involved_ruler = {
 				limit = {
-					is_independent_ruler = yes
+					top_liege = this
 					NOT = {
 						primary_title = { is_mercenary_company = yes }
 					}
@@ -763,7 +766,7 @@ fp3_struggle_ending_concession_effects = {
 								this = scope:first_truce
 								primary_title = { is_mercenary_company = yes }
 							}
-							is_independent_ruler = yes
+							top_liege = this
 						}
 						add_truce_both_ways = {
 							character = scope:first_truce
@@ -911,7 +914,7 @@ fp3_struggle_rekindle_iran_effects = {
 				every_involved_county = {
 					limit = {
 						culture = { has_cultural_pillar = heritage_iranian }
-						NOT = { faith = scope:propagated_faith }
+						faith != scope:propagated_faith
 					}
 					random = {
 						chance = fp3_iranian_faith_for_rekindle_persia_conversion_chance_percent_value
@@ -921,7 +924,7 @@ fp3_struggle_rekindle_iran_effects = {
 				every_involved_ruler = {
 					limit = {
 						culture = { has_cultural_pillar = heritage_iranian }
-						NOT = { faith = scope:propagated_faith }
+						faith != scope:propagated_faith
 						NOT = {
 							primary_title = { is_mercenary_company = yes }
 						}
@@ -996,7 +999,7 @@ fp3_struggle_rekindle_iran_effects = {
 				}
 				if = {
 					limit = {
-						is_independent_ruler = no
+						top_liege != this
 						NOT = {
 							liege.culture = { has_cultural_pillar = heritage_iranian }
 						}
@@ -1022,7 +1025,7 @@ fp3_struggle_rekindle_iran_effects = {
 			every_culture_global = {
 				limit = {
 					has_cultural_pillar = heritage_iranian
-					NOT = { this = root.culture }
+					this != root.culture
 				}
 				change_cultural_acceptance = {
 					target = root.culture
@@ -1128,7 +1131,7 @@ fp3_sundered_caliphate_effects = {
 				 	fp3_character_involved_in_struggle_trigger = yes
 				 	this = scope:the_caliph
 				}
-				NOT = { this = scope:sunderer }
+				this != scope:sunderer
 			}
 			trigger_event = fp3_struggle.0192
 		}

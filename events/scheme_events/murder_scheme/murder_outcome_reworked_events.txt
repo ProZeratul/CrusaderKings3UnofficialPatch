@@ -135,7 +135,7 @@ murder_outcome_reworked.0001 = {
 			## House feud.
 			triggered_desc = {
 				trigger = {
-					existing_feud_against_target_trigger = { TARGET = scope:target }
+					house_has_feud_relation_with_trigger = { TARGET = scope:target }
 				}
 				desc = murder_outcome_reworked.0000.memories.bad.house_feud
 			}
@@ -225,7 +225,7 @@ murder_outcome_reworked.0001 = {
 					# House feud.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome.2001.b
 					}
@@ -246,10 +246,18 @@ murder_outcome_reworked.0001 = {
 		name = murder_outcome.2001.c
 		trigger = {
 			is_ai = no
-			existing_feud_against_target_trigger = { TARGET = scope:target }
+			house_has_feud_relation_with_trigger = { TARGET = scope:target }
 		}
-		show_as_tooltip = { house_feud_end_modifier_effect = yes }
-		house_feud_end_story_effect = yes
+		house ?= {
+			change_house_relation_effect = {
+				HOUSE = scope:target.house
+				VALUE = house_relation_improve_major_value
+				REASON = de_escalation
+                CHAR = root
+                TARGET_CHAR = scope:dummy_gender
+                TITLE = scope:dummy_gender
+			}
+		}
 	}
 
 	# Fire the rest of the outcome.
@@ -294,7 +302,7 @@ murder_outcome_reworked.0002 = {
 						# Reference house feud if appropriate.
 						triggered_desc = {
 							trigger = {
-								existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+								house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 							}
 							desc = murder_outcome_reworked.0000.addendum.house_feud.2
 						}
@@ -358,7 +366,7 @@ murder_outcome_reworked.0003 = {
 					# Reference house feud if appropriate.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome_reworked.0000.addendum.house_feud.1
 					}
@@ -454,7 +462,7 @@ murder_outcome_reworked.0004 = {
 				# Reference house feud if appropriate.
 				triggered_desc = {
 					trigger = {
-						existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+						house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 					}
 					desc = murder_outcome_reworked.0000.addendum.house_feud.2
 				}
@@ -555,7 +563,7 @@ murder_outcome_reworked.0011 = {
 			## House feud.
 			triggered_desc = {
 				trigger = {
-					existing_feud_against_target_trigger = { TARGET = scope:target }
+					house_has_feud_relation_with_trigger = { TARGET = scope:target }
 				}
 				desc = murder_outcome_reworked.0000.memories.bad.house_feud
 			}
@@ -626,7 +634,7 @@ murder_outcome_reworked.0011 = {
 					# House feud.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome.2001.b
 					}
@@ -658,10 +666,18 @@ murder_outcome_reworked.0011 = {
 		name = murder_outcome.2001.c
 		trigger = {
 			is_ai = no
-			existing_feud_against_target_trigger = { TARGET = scope:target }
+			house_has_feud_relation_with_trigger = { TARGET = scope:target }
 		}
-		show_as_tooltip = { house_feud_end_modifier_effect = yes }
-		house_feud_end_story_effect = yes
+		house ?= {
+			change_house_relation_effect = {
+				HOUSE = scope:target.house
+				VALUE = house_relation_improve_major_value
+				REASON = de_escalation
+                CHAR = root
+                TARGET_CHAR = scope:dummy_gender
+                TITLE = scope:dummy_gender
+			}
+		}
 	}
 
 	# Fire the rest of the outcome.
@@ -713,7 +729,7 @@ murder_outcome_reworked.0012 = {
 						# Reference house feud if appropriate.
 						triggered_desc = {
 							trigger = {
-								existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+								house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 							}
 							desc = murder_outcome_reworked.0000.addendum.house_feud.2
 						}
@@ -784,7 +800,7 @@ murder_outcome_reworked.0013 = {
 					# Reference house feud if appropriate.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome_reworked.0000.addendum.house_feud.1
 					}
@@ -896,7 +912,7 @@ murder_outcome_reworked.0014 = {
 				# Reference house feud if appropriate.
 				triggered_desc = {
 					trigger = {
-						existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+						house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 					}
 					desc = murder_outcome_reworked.0000.addendum.house_feud.2
 				}
@@ -977,7 +993,7 @@ murder_outcome_reworked.0021 = {
 			## House feud.
 			triggered_desc = {
 				trigger = {
-					existing_feud_against_target_trigger = { TARGET = scope:target }
+					house_has_feud_relation_with_trigger = { TARGET = scope:target }
 				}
 				desc = murder_outcome_reworked.0000.memories.bad.house_feud
 			}
@@ -1039,7 +1055,7 @@ murder_outcome_reworked.0021 = {
 					# House feud.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome.2001.b
 					}
@@ -1065,10 +1081,18 @@ murder_outcome_reworked.0021 = {
 		name = murder_outcome.2001.c
 		trigger = {
 			is_ai = no
-			existing_feud_against_target_trigger = { TARGET = scope:target }
+			house_has_feud_relation_with_trigger = { TARGET = scope:target }
 		}
-		show_as_tooltip = { house_feud_end_modifier_effect = yes }
-		house_feud_end_story_effect = yes
+		house ?= {
+			change_house_relation_effect = {
+				HOUSE = scope:target.house
+				VALUE = house_relation_improve_major_value
+				REASON = de_escalation
+                CHAR = root
+                TARGET_CHAR = scope:dummy_gender
+                TITLE = scope:dummy_gender
+			}
+		}
 	}
 
 	# Fire the rest of the outcome.
@@ -1100,7 +1124,7 @@ murder_outcome_reworked.0022 = {
 				# Reference house feud if appropriate.
 				triggered_desc = {
 					trigger = {
-						existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+						house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 					}
 					desc = murder_outcome_reworked.0000.addendum.house_feud.2
 				}
@@ -1157,7 +1181,7 @@ murder_outcome_reworked.0023 = {
 					# Reference house feud if appropriate.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome_reworked.0000.addendum.house_feud.1
 					}
@@ -1251,7 +1275,7 @@ murder_outcome_reworked.0024 = {
 				# Reference house feud if appropriate.
 				triggered_desc = {
 					trigger = {
-						existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+						house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 					}
 					desc = murder_outcome_reworked.0000.addendum.house_feud.2
 				}
@@ -1324,7 +1348,7 @@ murder_outcome_reworked.0031 = {
 			## House feud.
 			triggered_desc = {
 				trigger = {
-					existing_feud_against_target_trigger = { TARGET = scope:target }
+					house_has_feud_relation_with_trigger = { TARGET = scope:target }
 				}
 				desc = murder_outcome_reworked.0000.memories.bad.house_feud
 			}
@@ -1423,7 +1447,7 @@ murder_outcome_reworked.0031 = {
 					# House feud.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome.2001.b
 					}
@@ -1444,10 +1468,18 @@ murder_outcome_reworked.0031 = {
 		name = murder_outcome.2001.c
 		trigger = {
 			is_ai = no
-			existing_feud_against_target_trigger = { TARGET = scope:target }
+			house_has_feud_relation_with_trigger = { TARGET = scope:target }
 		}
-		show_as_tooltip = { house_feud_end_modifier_effect = yes }
-		house_feud_end_story_effect = yes
+		house ?= {
+			change_house_relation_effect = {
+				HOUSE = scope:target.house
+				VALUE = house_relation_improve_major_value
+				REASON = de_escalation
+                CHAR = root
+                TARGET_CHAR = scope:dummy_gender
+                TITLE = scope:dummy_gender
+			}
+		}
 	}
 
 	# Fire the rest of the outcome.
@@ -1494,7 +1526,7 @@ murder_outcome_reworked.0032 = {
 				# Reference house feud if appropriate.
 				triggered_desc = {
 					trigger = {
-						existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+						house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 					}
 					desc = murder_outcome_reworked.0000.addendum.house_feud.2
 				}
@@ -1551,7 +1583,7 @@ murder_outcome_reworked.0033 = {
 					# Reference house feud if appropriate.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome_reworked.0000.addendum.house_feud.1
 					}
@@ -1659,7 +1691,7 @@ murder_outcome_reworked.0034 = {
 				# Reference house feud if appropriate.
 				triggered_desc = {
 					trigger = {
-						existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+						house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 					}
 					desc = murder_outcome_reworked.0000.addendum.house_feud.2
 				}
@@ -1738,7 +1770,7 @@ murder_outcome_reworked.0041 = {
 			## House feud.
 			triggered_desc = {
 				trigger = {
-					existing_feud_against_target_trigger = { TARGET = scope:target }
+					house_has_feud_relation_with_trigger = { TARGET = scope:target }
 				}
 				desc = murder_outcome_reworked.0000.memories.bad.house_feud
 			}
@@ -1822,7 +1854,7 @@ murder_outcome_reworked.0041 = {
 					# House feud.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome.2001.b
 					}
@@ -1856,10 +1888,18 @@ murder_outcome_reworked.0041 = {
 		name = murder_outcome.2001.c
 		trigger = {
 			is_ai = no
-			existing_feud_against_target_trigger = { TARGET = scope:target }
+			house_has_feud_relation_with_trigger = { TARGET = scope:target }
 		}
-		show_as_tooltip = { house_feud_end_modifier_effect = yes }
-		house_feud_end_story_effect = yes
+		house ?= {
+			change_house_relation_effect = {
+				HOUSE = scope:target.house
+				VALUE = house_relation_improve_major_value
+				REASON = de_escalation
+                CHAR = root
+                TARGET_CHAR = scope:dummy_gender
+                TITLE = scope:dummy_gender
+			}
+		}
 	}
 
 	# Fire the rest of the outcome.
@@ -1904,7 +1944,7 @@ murder_outcome_reworked.0042 = {
 						# Reference house feud if appropriate.
 						triggered_desc = {
 							trigger = {
-								existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+								house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 							}
 							desc = murder_outcome_reworked.0000.addendum.house_feud.2
 						}
@@ -1973,7 +2013,7 @@ murder_outcome_reworked.0043 = {
 					# Reference house feud if appropriate.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome_reworked.0000.addendum.house_feud.1
 					}
@@ -2080,7 +2120,7 @@ murder_outcome_reworked.0044 = {
 				# Reference house feud if appropriate.
 				triggered_desc = {
 					trigger = {
-						existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+						house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 					}
 					desc = murder_outcome_reworked.0000.addendum.house_feud.2
 				}
@@ -2163,7 +2203,7 @@ murder_outcome_reworked.0051 = {
 			## House feud.
 			triggered_desc = {
 				trigger = {
-					existing_feud_against_target_trigger = { TARGET = scope:target }
+					house_has_feud_relation_with_trigger = { TARGET = scope:target }
 				}
 				desc = murder_outcome_reworked.0000.memories.bad.house_feud
 			}
@@ -2230,7 +2270,7 @@ murder_outcome_reworked.0051 = {
 					# House feud.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome.2001.b
 					}
@@ -2251,10 +2291,18 @@ murder_outcome_reworked.0051 = {
 		name = murder_outcome.2001.c
 		trigger = {
 			is_ai = no
-			existing_feud_against_target_trigger = { TARGET = scope:target }
+			house_has_feud_relation_with_trigger = { TARGET = scope:target }
 		}
-		show_as_tooltip = { house_feud_end_modifier_effect = yes }
-		house_feud_end_story_effect = yes
+		house ?= {
+			change_house_relation_effect = {
+				HOUSE = scope:target.house
+				VALUE = house_relation_improve_major_value
+				REASON = de_escalation
+                CHAR = root
+                TARGET_CHAR = scope:dummy_gender
+                TITLE = scope:dummy_gender
+			}
+		}
 	}
 
 	# Fire the rest of the outcome.
@@ -2287,7 +2335,7 @@ murder_outcome_reworked.0052 = {
 				# Reference house feud if appropriate.
 				triggered_desc = {
 					trigger = {
-						existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+						house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 					}
 					desc = murder_outcome_reworked.0000.addendum.house_feud.2
 				}
@@ -2360,7 +2408,7 @@ murder_outcome_reworked.0053 = {
 					# Reference house feud if appropriate.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome_reworked.0000.addendum.house_feud.1
 					}
@@ -2457,7 +2505,7 @@ murder_outcome_reworked.0054 = {
 				# Reference house feud if appropriate.
 				triggered_desc = {
 					trigger = {
-						existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+						house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 					}
 					desc = murder_outcome_reworked.0000.addendum.house_feud.2
 				}
@@ -2553,7 +2601,7 @@ murder_outcome_reworked.0061 = {
 			## House feud.
 			triggered_desc = {
 				trigger = {
-					existing_feud_against_target_trigger = { TARGET = scope:target }
+					house_has_feud_relation_with_trigger = { TARGET = scope:target }
 				}
 				desc = murder_outcome_reworked.0000.memories.bad.house_feud
 			}
@@ -2611,7 +2659,7 @@ murder_outcome_reworked.0061 = {
 					# House feud.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome.2001.b
 					}
@@ -2631,10 +2679,18 @@ murder_outcome_reworked.0061 = {
 	option = {
 		name = murder_outcome.2001.c
 		trigger = {
-			existing_feud_against_target_trigger = { TARGET = scope:target }
+			house_has_feud_relation_with_trigger = { TARGET = scope:target }
 		}
-		show_as_tooltip = { house_feud_end_modifier_effect = yes }
-		house_feud_end_story_effect = yes
+		house ?= {
+			change_house_relation_effect = {
+				HOUSE = scope:target.house
+				VALUE = house_relation_improve_major_value
+				REASON = de_escalation
+                CHAR = root
+                TARGET_CHAR = scope:dummy_gender
+                TITLE = scope:dummy_gender
+			}
+		}
 	}
 
 	# Fire the rest of the outcome.
@@ -2680,7 +2736,7 @@ murder_outcome_reworked.0062 = {
 				# Reference house feud if appropriate.
 				triggered_desc = {
 					trigger = {
-						existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+						house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 					}
 					desc = murder_outcome_reworked.0000.addendum.house_feud.2
 				}
@@ -2737,7 +2793,7 @@ murder_outcome_reworked.0063 = {
 					# Reference house feud if appropriate.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome_reworked.0000.addendum.house_feud.1
 					}
@@ -2831,7 +2887,7 @@ murder_outcome_reworked.0064 = {
 				# Reference house feud if appropriate.
 				triggered_desc = {
 					trigger = {
-						existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+						house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 					}
 					desc = murder_outcome_reworked.0000.addendum.house_feud.2
 				}
@@ -2904,7 +2960,7 @@ murder_outcome_reworked.0071 = {
 			## House feud.
 			triggered_desc = {
 				trigger = {
-					existing_feud_against_target_trigger = { TARGET = scope:target }
+					house_has_feud_relation_with_trigger = { TARGET = scope:target }
 				}
 				desc = murder_outcome_reworked.0000.memories.bad.house_feud
 			}
@@ -2966,7 +3022,7 @@ murder_outcome_reworked.0071 = {
 					# House feud.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome.2001.b
 					}
@@ -2986,10 +3042,18 @@ murder_outcome_reworked.0071 = {
 	option = {
 		name = murder_outcome.2001.c
 		trigger = {
-			existing_feud_against_target_trigger = { TARGET = scope:target }
+			house_has_feud_relation_with_trigger = { TARGET = scope:target }
 		}
-		show_as_tooltip = { house_feud_end_modifier_effect = yes }
-		house_feud_end_story_effect = yes
+		house ?= {
+			change_house_relation_effect = {
+				HOUSE = scope:target.house
+				VALUE = house_relation_improve_major_value
+				REASON = de_escalation
+                CHAR = root
+                TARGET_CHAR = scope:dummy_gender
+                TITLE = scope:dummy_gender
+			}
+		}
 	}
 
 	# Fire the rest of the outcome.
@@ -3030,7 +3094,7 @@ murder_outcome_reworked.0072 = {
 				# Reference house feud if appropriate.
 				triggered_desc = {
 					trigger = {
-						existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+						house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 					}
 					desc = murder_outcome_reworked.0000.addendum.house_feud.2
 				}
@@ -3087,7 +3151,7 @@ murder_outcome_reworked.0073 = {
 					# Reference house feud if appropriate.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome_reworked.0000.addendum.house_feud.1
 					}
@@ -3181,7 +3245,7 @@ murder_outcome_reworked.0074 = {
 				# Reference house feud if appropriate.
 				triggered_desc = {
 					trigger = {
-						existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+						house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 					}
 					desc = murder_outcome_reworked.0000.addendum.house_feud.2
 				}
@@ -3267,7 +3331,7 @@ murder_outcome_reworked.4001 = {
 			## House feud.
 			triggered_desc = {
 				trigger = {
-					existing_feud_against_target_trigger = { TARGET = scope:target }
+					house_has_feud_relation_with_trigger = { TARGET = scope:target }
 				}
 				desc = murder_outcome_reworked.0000.memories.bad.house_feud
 			}
@@ -3342,7 +3406,7 @@ murder_outcome_reworked.4001 = {
 					# House feud.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome.2001.b
 					}
@@ -3362,15 +3426,23 @@ murder_outcome_reworked.4001 = {
 	option = {
 		name = murder_outcome.2001.c
 		trigger = {
-			existing_feud_against_target_trigger = { TARGET = scope:target }
+			house_has_feud_relation_with_trigger = { TARGET = scope:target }
 		}
-		show_as_tooltip = { house_feud_end_modifier_effect = yes }
-		house_feud_end_story_effect = yes
+		house ?= {
+			change_house_relation_effect = {
+				HOUSE = scope:target.house
+				VALUE = house_relation_improve_major_value
+				REASON = de_escalation
+				CHAR = root
+				TARGET_CHAR = scope:dummy_gender
+				TITLE = scope:dummy_gender
+			}
+		}
 	}
 
 	# Fire the rest of the outcome.
 	after = {
-		scope:target = { trigger_event = murder_outcome_reworked.4002 }
+		scope:target ?= { trigger_event = murder_outcome_reworked.4002 }
 	}
 }
 
@@ -3403,7 +3475,7 @@ murder_outcome_reworked.4002 = {
 		# Reference house feud if appropriate.
 		triggered_desc = {
 			trigger = {
-				existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+				house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 			}
 			desc = murder_outcome_reworked.0000.addendum.house_feud.2.2
 		}
@@ -3437,7 +3509,7 @@ murder_outcome_reworked.4002 = {
 
 	after = {
 		hidden_effect = {
-			scope:assassin = { silent_disappearance_effect = yes }
+			scope:assassin ?= { silent_disappearance_effect = yes }
 		}
 	}
 }
@@ -3471,7 +3543,7 @@ murder_outcome_reworked.4003 = {
 					# Reference house feud if appropriate.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome_reworked.0000.addendum.house_feud.1
 					}
@@ -3558,7 +3630,7 @@ murder_outcome_reworked.4004 = {
 				# Reference house feud if appropriate.
 				triggered_desc = {
 					trigger = {
-						existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+						house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 					}
 					desc = murder_outcome_reworked.0000.addendum.house_feud.2.servants
 				}
@@ -3625,7 +3697,7 @@ murder_outcome_reworked.4011 = {
 			## House feud.
 			triggered_desc = {
 				trigger = {
-					existing_feud_against_target_trigger = { TARGET = scope:target }
+					house_has_feud_relation_with_trigger = { TARGET = scope:target }
 				}
 				desc = murder_outcome_reworked.0000.memories.bad.house_feud
 			}
@@ -3719,10 +3791,18 @@ murder_outcome_reworked.4011 = {
 	option = {
 		name = murder_outcome.2001.c
 		trigger = {
-			existing_feud_against_target_trigger = { TARGET = scope:target }
+			house_has_feud_relation_with_trigger = { TARGET = scope:target }
 		}
-		show_as_tooltip = { house_feud_end_modifier_effect = yes }
-		house_feud_end_story_effect = yes
+		house ?= {
+			change_house_relation_effect = {
+				HOUSE = scope:target.house
+				VALUE = house_relation_improve_major_value
+				REASON = de_escalation
+                CHAR = root
+                TARGET_CHAR = scope:dummy_gender
+                TITLE = scope:dummy_gender
+			}
+		}
 	}
 
 	# Fire the rest of the outcome.
@@ -3752,7 +3832,7 @@ murder_outcome_reworked.4012 = {
 		# Reference house feud if appropriate.
 		triggered_desc = {
 			trigger = {
-				existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+				house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 			}
 			desc = murder_outcome_reworked.0000.addendum.house_feud.2.2
 		}
@@ -3819,7 +3899,7 @@ murder_outcome_reworked.4013 = {
 					# Reference house feud if appropriate.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome_reworked.0000.addendum.house_feud.1
 					}
@@ -3906,7 +3986,7 @@ murder_outcome_reworked.4014 = {
 		# Reference house feud if appropriate.
 		triggered_desc = {
 			trigger = {
-				existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+				house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 			}
 			desc = murder_outcome_reworked.0000.addendum.house_feud.2.2
 		}
@@ -3972,7 +4052,7 @@ murder_outcome_reworked.4021 = {
 			## House feud.
 			triggered_desc = {
 				trigger = {
-					existing_feud_against_target_trigger = { TARGET = scope:target }
+					house_has_feud_relation_with_trigger = { TARGET = scope:target }
 				}
 				desc = murder_outcome_reworked.0000.memories.bad.house_feud
 			}
@@ -4075,7 +4155,7 @@ murder_outcome_reworked.4022 = {
 		# Reference house feud if appropriate.
 		triggered_desc = {
 			trigger = {
-				existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+				house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 			}
 			desc = murder_outcome_reworked.0000.addendum.house_feud.2.2
 		}
@@ -4131,7 +4211,7 @@ murder_outcome_reworked.4023 = {
 					# Reference house feud if appropriate.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome_reworked.0000.addendum.house_feud.1
 					}
@@ -4216,7 +4296,7 @@ murder_outcome_reworked.4024 = {
 		# Reference house feud if appropriate.
 		triggered_desc = {
 			trigger = {
-				existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+				house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 			}
 			desc = murder_outcome_reworked.0000.addendum.house_feud.2.2
 		}
@@ -4282,7 +4362,7 @@ murder_outcome_reworked.4031 = {
 			## House feud.
 			triggered_desc = {
 				trigger = {
-					existing_feud_against_target_trigger = { TARGET = scope:target }
+					house_has_feud_relation_with_trigger = { TARGET = scope:target }
 				}
 				desc = murder_outcome_reworked.0000.memories.bad.house_feud
 			}
@@ -4387,7 +4467,7 @@ murder_outcome_reworked.4032 = {
 		# Reference house feud if appropriate.
 		triggered_desc = {
 			trigger = {
-				existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+				house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 			}
 			desc = murder_outcome_reworked.0000.addendum.house_feud.2.2
 		}
@@ -4442,7 +4522,7 @@ murder_outcome_reworked.4033 = {
 					# Reference house feud if appropriate.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome_reworked.0000.addendum.house_feud.1
 					}
@@ -4528,7 +4608,7 @@ murder_outcome_reworked.4034 = {
 				# Reference house feud if appropriate.
 				triggered_desc = {
 					trigger = {
-						existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+						house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 					}
 					desc = murder_outcome_reworked.0000.addendum.house_feud.2.servants
 				}
@@ -4599,7 +4679,7 @@ murder_outcome_reworked.4041 = {
 			## House feud.
 			triggered_desc = {
 				trigger = {
-					existing_feud_against_target_trigger = { TARGET = scope:target }
+					house_has_feud_relation_with_trigger = { TARGET = scope:target }
 				}
 				desc = murder_outcome_reworked.0000.memories.bad.house_feud
 			}
@@ -4716,7 +4796,7 @@ murder_outcome_reworked.4042 = {
 		# Reference house feud if appropriate.
 		triggered_desc = {
 			trigger = {
-				existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+				house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 			}
 			desc = murder_outcome_reworked.0000.addendum.house_feud.2.2
 		}
@@ -4748,7 +4828,7 @@ murder_outcome_reworked.4042 = {
 			}
 			scope:target = {
 				random_owned_story = {
-					limit = { story_type = story_cycle_pet_dog }
+					type = story_cycle_pet_dog
 					hidden_effect = { end_story = yes }
 				}
 			}
@@ -4767,7 +4847,7 @@ murder_outcome_reworked.4042 = {
 			}
 			scope:target = {
 				random_owned_story = {
-					limit = { story_type = story_cycle_pet_cat }
+					type = story_cycle_pet_cat
 					hidden_effect = { end_story = yes }
 				}
 			}
@@ -4823,7 +4903,7 @@ murder_outcome_reworked.4043 = {
 					# Reference house feud if appropriate.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome_reworked.0000.addendum.house_feud.1
 					}
@@ -4925,7 +5005,7 @@ murder_outcome_reworked.4044 = {
 				# Reference house feud if appropriate.
 				triggered_desc = {
 					trigger = {
-						existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+						house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 					}
 					desc = murder_outcome_reworked.0000.addendum.house_feud.2.servants
 				}
@@ -5010,7 +5090,7 @@ murder_outcome_reworked.7001 = {
 			## House feud.
 			triggered_desc = {
 				trigger = {
-					existing_feud_against_target_trigger = { TARGET = scope:target }
+					house_has_feud_relation_with_trigger = { TARGET = scope:target }
 				}
 				desc = murder_outcome_reworked.0000.memories.bad.house_feud
 			}
@@ -5068,7 +5148,7 @@ murder_outcome_reworked.7001 = {
 					# House feud.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome.2001.b
 					}
@@ -5088,10 +5168,18 @@ murder_outcome_reworked.7001 = {
 	option = {
 		name = murder_outcome.2001.c
 		trigger = {
-			existing_feud_against_target_trigger = { TARGET = scope:target }
+			house_has_feud_relation_with_trigger = { TARGET = scope:target }
 		}
-		show_as_tooltip = { house_feud_end_modifier_effect = yes }
-		house_feud_end_story_effect = yes
+		house ?= {
+			change_house_relation_effect = {
+				HOUSE = scope:target.house
+				VALUE = house_relation_improve_major_value
+				REASON = de_escalation
+                CHAR = root
+                TARGET_CHAR = scope:dummy_gender
+                TITLE = scope:dummy_gender
+			}
+		}
 	}
 
 	# Fire the rest of the outcome.
@@ -5136,7 +5224,7 @@ murder_outcome_reworked.7002 = {
 						# Reference house feud if appropriate.
 						triggered_desc = {
 							trigger = {
-								existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+								house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 							}
 							desc = murder_outcome_reworked.0000.addendum.house_feud.2
 						}
@@ -5195,7 +5283,7 @@ murder_outcome_reworked.7003 = {
 					# Reference house feud if appropriate.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome_reworked.0000.addendum.house_feud.1
 					}
@@ -5286,7 +5374,7 @@ murder_outcome_reworked.7004 = {
 		# Reference house feud if appropriate.
 		triggered_desc = {
 			trigger = {
-				existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+				house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 			}
 			desc = murder_outcome_reworked.0000.addendum.house_feud.2
 		}
@@ -5360,7 +5448,7 @@ murder_outcome_reworked.7011 = {
 			## House feud.
 			triggered_desc = {
 				trigger = {
-					existing_feud_against_target_trigger = { TARGET = scope:target }
+					house_has_feud_relation_with_trigger = { TARGET = scope:target }
 				}
 				desc = murder_outcome_reworked.0000.memories.bad.house_feud
 			}
@@ -5418,7 +5506,7 @@ murder_outcome_reworked.7011 = {
 					# House feud.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome.2001.b
 					}
@@ -5438,10 +5526,18 @@ murder_outcome_reworked.7011 = {
 	option = {
 		name = murder_outcome.2001.c
 		trigger = {
-			existing_feud_against_target_trigger = { TARGET = scope:target }
+			house_has_feud_relation_with_trigger = { TARGET = scope:target }
 		}
-		show_as_tooltip = { house_feud_end_modifier_effect = yes }
-		house_feud_end_story_effect = yes
+		house ?= {
+			change_house_relation_effect = {
+				HOUSE = scope:target.house
+				VALUE = house_relation_improve_major_value
+				REASON = de_escalation
+                CHAR = root
+                TARGET_CHAR = scope:dummy_gender
+                TITLE = scope:dummy_gender
+			}
+		}
 	}
 
 	# Fire the rest of the outcome.
@@ -5486,7 +5582,7 @@ murder_outcome_reworked.7012 = {
 						# Reference house feud if appropriate.
 						triggered_desc = {
 							trigger = {
-								existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+								house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 							}
 							desc = murder_outcome_reworked.0000.addendum.house_feud.2
 						}
@@ -5545,7 +5641,7 @@ murder_outcome_reworked.7013 = {
 					# Reference house feud if appropriate.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome_reworked.0000.addendum.house_feud.1
 					}
@@ -5639,7 +5735,7 @@ murder_outcome_reworked.7014 = {
 				# Reference house feud if appropriate.
 				triggered_desc = {
 					trigger = {
-						existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+						house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 					}
 					desc = murder_outcome_reworked.0000.addendum.house_feud.2
 				}
@@ -5724,7 +5820,7 @@ murder_outcome_reworked.8001 = {
 			## House feud.
 			triggered_desc = {
 				trigger = {
-					existing_feud_against_target_trigger = { TARGET = scope:target }
+					house_has_feud_relation_with_trigger = { TARGET = scope:target }
 				}
 				desc = murder_outcome_reworked.0000.memories.bad.house_feud
 			}
@@ -5780,7 +5876,7 @@ murder_outcome_reworked.8001 = {
 					# House feud.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome.2401.a.discovered
 					}
@@ -5800,10 +5896,18 @@ murder_outcome_reworked.8001 = {
 	option = {
 		name = murder_outcome.2001.c
 		trigger = {
-			existing_feud_against_target_trigger = { TARGET = scope:target }
+			house_has_feud_relation_with_trigger = { TARGET = scope:target }
 		}
-		show_as_tooltip = { house_feud_end_modifier_effect = yes }
-		house_feud_end_story_effect = yes
+		house ?= {
+			change_house_relation_effect = {
+				HOUSE = scope:target.house
+				VALUE = house_relation_improve_major_value
+				REASON = de_escalation
+                CHAR = root
+                TARGET_CHAR = scope:dummy_gender
+                TITLE = scope:dummy_gender
+			}
+		}
 	}
 
 	# Fire the rest of the outcome.
@@ -5833,7 +5937,7 @@ murder_outcome_reworked.8002 = {
 		# Reference house feud if appropriate.
 		triggered_desc = {
 			trigger = {
-				existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+				house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 			}
 			desc = murder_outcome_reworked.0000.addendum.house_feud.2.2
 		}
@@ -5888,7 +5992,7 @@ murder_outcome_reworked.8003 = {
 					# Reference house feud if appropriate.
 					triggered_desc = {
 						trigger = {
-							existing_feud_against_target_trigger = { TARGET = scope:target }
+							house_has_feud_relation_with_trigger = { TARGET = scope:target }
 						}
 						desc = murder_outcome_reworked.0000.addendum.house_feud.1
 					}
@@ -5969,7 +6073,7 @@ murder_outcome_reworked.8004 = {
 		# Reference house feud if appropriate.
 		triggered_desc = {
 			trigger = {
-				existing_feud_against_target_trigger = { TARGET = scope:owner_to_reveal }
+				house_has_feud_relation_with_trigger = { TARGET = scope:owner_to_reveal }
 			}
 			desc = murder_outcome_reworked.0000.addendum.house_feud.2.2
 		}

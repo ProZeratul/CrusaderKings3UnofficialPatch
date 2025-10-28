@@ -121,11 +121,17 @@
 	ai_targets = {
 		ai_recipients = vassals
 	}
-	ai_frequency = 12
+	ai_frequency_by_tier = {
+		barony = 0
+		county = 60
+		duchy = 12
+		kingdom = 12
+		empire = 12
+		hegemony = 12
+	}
 
 	ai_potential = {
 		is_playable_character = yes
-		highest_held_title_tier > tier_barony
 		piety >= cancel_holy_order_piety_cost # Unop: Prevent AI to go into negative piety
 	}
 
@@ -137,7 +143,7 @@
 			add = 100
 			scope:recipient = {
 				government_has_flag = government_is_holy_order
-				NOT = { faith = scope:actor.faith }
+				faith != scope:actor.faith
 			}
 		}
 	}

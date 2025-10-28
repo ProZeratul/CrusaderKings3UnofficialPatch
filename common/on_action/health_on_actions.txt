@@ -20,7 +20,8 @@ yearly_health_pulse = { #Fired from the birthday pulse
 		## Rare but not never-seen on reduced values.
 		## Increased without being ludicrous on high values.
 		### Reduced down drastically per community feedback.
-		600 = 0
+		chance_to_happen = 50
+		400 = 0
 		
 		#Infirm 
 		20 = health.7000	# Become infirm
@@ -85,8 +86,7 @@ disease_outbreak_pulse = {
 			}
 			else_if = {
 				limit = {
-					exists = host
-					host = { has_perk = wash_your_hands_perk }
+					host ?= { has_perk = wash_your_hands_perk }
 				}
 				add = 25
 			}

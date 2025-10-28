@@ -37,22 +37,13 @@
 	ai_can_target_all_titles = { always = yes }
 	ai_score_mult = {
 		value = ep3_laamp_invasion_ai_targeting_value
-		#Declaring war on the frankokratia leader can really ruin the whole thing
-		if = {
-			limit = {
-				scope:defender = {
-					any_owned_story = {
-						story_type = frankokratia_story
-						NOT = { has_variable = franko_war_complete }
-					}
-				}
-			}
-			multiply = 0
-		}
+		
+		add = frankokratia_leader_protection_value #Set back to 0. Declaring war on the frankokratia leader can really ruin the whole thing
 	}
 
 	valid_to_start = {
 		scope:target = {
+			is_landless_type_title = no
 			# Also make sure you can't war for, like, the Papal States
 			trigger_if = {
 				limit = { holder.faith ?= root.faith }
@@ -212,7 +203,7 @@
 					triggered_desc = {
 						trigger = {
 							scope:attacker.var:adventurer_invasion_supporter ?= {
-								NOT = { this = scope:defender }
+								this != scope:defender
 								is_close_family_of = scope:defender
 								opinion = {
 									target = scope:defender
@@ -479,8 +470,15 @@
 	on_defeat = {
 		scope:attacker = { ep3_laamp_support_variable_cleanup_effect = yes }
 
-		#EP2 accolade glory gain for winning against higher ranked enemy
-		scope:defender = { accolade_defender_war_end_glory_gain_med_effect = yes }
+		scope:defender = { 
+			mandala_peacemaker_perk_serenity_effect = yes
+			#EP2 accolade glory gain for winning against higher ranked enemy
+			accolade_defender_war_end_glory_gain_high_effect = yes
+			# Prestige for Defender
+			add_prestige_war_defender_effect = {
+				PRESTIGE_VALUE = medium_prestige_value
+			}
+		}
 
 		# Prestige loss for the attacker
 		scope:attacker = {
@@ -490,13 +488,6 @@
 			add_prestige = {
 				value = medium_prestige_value #Less for counties
 				multiply = -1.0
-			}
-		}
-
-		# Prestige for Defender
-		scope:defender = {
-			add_prestige_war_defender_effect = {
-				PRESTIGE_VALUE = medium_prestige_value #Less for counties
 			}
 		}
 
@@ -584,18 +575,8 @@ ep3_laamp_adventurer_duchy_invasion = {
 	ai_can_target_all_titles = { always = yes }
 	ai_score_mult = {
 		value = ep3_laamp_invasion_ai_targeting_value
-		#Declaring war on the frankokratia leader can really ruin the whole thing
-		if = {
-			limit = {
-				scope:defender = {
-					any_owned_story = {
-						story_type = frankokratia_story
-						NOT = { has_variable = franko_war_complete }
-					}
-				}
-			}
-			multiply = 0
-		}
+		
+		add = frankokratia_leader_protection_value #Set back to 0. Declaring war on the frankokratia leader can really ruin the whole thing
 	}
 
 	valid_to_start = {
@@ -778,7 +759,7 @@ ep3_laamp_adventurer_duchy_invasion = {
 					triggered_desc = {
 						trigger = {
 							scope:attacker.var:adventurer_invasion_supporter ?= {
-								NOT = { this = scope:defender }
+								this != scope:defender
 								is_close_family_of = scope:defender
 								opinion = {
 									target = scope:defender
@@ -1070,8 +1051,15 @@ ep3_laamp_adventurer_duchy_invasion = {
 	on_defeat = {
 		scope:attacker = { ep3_laamp_support_variable_cleanup_effect = yes }
 
-		#EP2 accolade glory gain for winning against higher ranked enemy
-		scope:defender = { accolade_defender_war_end_glory_gain_med_effect = yes }
+		scope:defender = { 
+			mandala_peacemaker_perk_serenity_effect = yes
+			#EP2 accolade glory gain for winning against higher ranked enemy
+			accolade_defender_war_end_glory_gain_high_effect = yes
+			# Prestige for Defender
+			add_prestige_war_defender_effect = {
+				PRESTIGE_VALUE = medium_prestige_value
+			}
+		}
 
 		# Prestige loss for the attacker
 		scope:attacker = {
@@ -1081,13 +1069,6 @@ ep3_laamp_adventurer_duchy_invasion = {
 			add_prestige = {
 				value = major_prestige_value
 				multiply = -1.0
-			}
-		}
-
-		# Prestige for Defender
-		scope:defender = {
-			add_prestige_war_defender_effect = {
-				PRESTIGE_VALUE = major_prestige_value
 			}
 		}
 
@@ -1188,18 +1169,8 @@ ep3_laamp_adventurer_kingdom_invasion = {
 	ai_can_target_all_titles = { always = yes }
 	ai_score_mult = {
 		value = ep3_laamp_invasion_ai_targeting_value
-		#Declaring war on the frankokratia leader can really ruin the whole thing
-		if = {
-			limit = {
-				scope:defender = {
-					any_owned_story = {
-						story_type = frankokratia_story
-						NOT = { has_variable = franko_war_complete }
-					}
-				}
-			}
-			multiply = 0
-		}
+		
+		add = frankokratia_leader_protection_value #Set back to 0. Declaring war on the frankokratia leader can really ruin the whole thing
 	}
 
 	valid_to_start = {
@@ -1382,7 +1353,7 @@ ep3_laamp_adventurer_kingdom_invasion = {
 					triggered_desc = {
 						trigger = {
 							scope:attacker.var:adventurer_invasion_supporter ?= {
-								NOT = { this = scope:defender }
+								this != scope:defender
 								is_close_family_of = scope:defender
 								opinion = {
 									target = scope:defender
@@ -1675,8 +1646,15 @@ ep3_laamp_adventurer_kingdom_invasion = {
 	on_defeat = {
 		scope:attacker = { ep3_laamp_support_variable_cleanup_effect = yes }
 
-		#EP2 accolade glory gain for winning against higher ranked enemy
-		scope:defender = { accolade_defender_war_end_glory_gain_med_effect = yes }
+		scope:defender = { 
+			mandala_peacemaker_perk_serenity_effect = yes
+			#EP2 accolade glory gain for winning against higher ranked enemy
+			accolade_defender_war_end_glory_gain_high_effect = yes
+			# Prestige for Defender
+			add_prestige_war_defender_effect = {
+				PRESTIGE_VALUE = medium_prestige_value
+			}
+		}
 
 		# Prestige loss for the attacker
 		scope:attacker = {
@@ -1686,13 +1664,6 @@ ep3_laamp_adventurer_kingdom_invasion = {
 			add_prestige = {
 				value = massive_prestige_value #More for kingdoms
 				multiply = -1.0
-			}
-		}
-
-		# Prestige for Defender
-		scope:defender = {
-			add_prestige_war_defender_effect = {
-				PRESTIGE_VALUE = massive_prestige_value #More for kingdoms
 			}
 		}
 
@@ -1790,18 +1761,8 @@ ep3_laamp_adventurer_empire_invasion = {
 	ai_can_target_all_titles = { always = yes }
 	ai_score_mult = {
 		value = ep3_laamp_invasion_ai_targeting_value
-		#Declaring war on the frankokratia leader can really ruin the whole thing
-		if = {
-			limit = {
-				scope:defender = {
-					any_owned_story = {
-						story_type = frankokratia_story
-						NOT = { has_variable = franko_war_complete }
-					}
-				}
-			}
-			multiply = 0
-		}
+		
+		add = frankokratia_leader_protection_value #Set back to 0. Declaring war on the frankokratia leader can really ruin the whole thing
 	}
 
 	valid_to_start = {
@@ -1984,7 +1945,7 @@ ep3_laamp_adventurer_empire_invasion = {
 					triggered_desc = {
 						trigger = {
 							scope:attacker.var:adventurer_invasion_supporter ?= {
-								NOT = { this = scope:defender }
+								this != scope:defender
 								is_close_family_of = scope:defender
 								opinion = {
 									target = scope:defender
@@ -2277,8 +2238,15 @@ ep3_laamp_adventurer_empire_invasion = {
 	on_defeat = {
 		scope:attacker = { ep3_laamp_support_variable_cleanup_effect = yes }
 
-		#EP2 accolade glory gain for winning against higher ranked enemy
-		scope:defender = { accolade_defender_war_end_glory_gain_med_effect = yes }
+		scope:defender = { 
+			mandala_peacemaker_perk_serenity_effect = yes
+			#EP2 accolade glory gain for winning against higher ranked enemy
+			accolade_defender_war_end_glory_gain_high_effect = yes
+			# Prestige for Defender
+			add_prestige_war_defender_effect = {
+				PRESTIGE_VALUE = medium_prestige_value
+			}
+		}
 
 		# Prestige loss for the attacker
 		scope:attacker = {
@@ -2288,13 +2256,6 @@ ep3_laamp_adventurer_empire_invasion = {
 			add_prestige = {
 				value = monumental_prestige_value #More for empires
 				multiply = -1.0
-			}
-		}
-
-		# Prestige for Defender
-		scope:defender = {
-			add_prestige_war_defender_effect = {
-				PRESTIGE_VALUE = monumental_prestige_value #More for empires
 			}
 		}
 
@@ -2355,13 +2316,13 @@ ep3_laamp_raid_contract_cb = {
 	# scope:defender is the defender
 	allowed_for_character = {
 		any_character_active_contract = {
-			has_task_contract_type = laamp_raid_contract
+			task_contract_type = laamp_raid_contract
 		}
 	}
 	allowed_against_character = {
 		scope:attacker = {
 			any_character_active_contract = {
-				has_task_contract_type = laamp_raid_contract
+				task_contract_type = laamp_raid_contract
 				var:task_contract_target ?= scope:defender
 			}
 		}
@@ -2374,7 +2335,7 @@ ep3_laamp_raid_contract_cb = {
 		scope:attacker = {
 			NOT = {
 				any_character_active_contract = {
-					has_task_contract_type = laamp_raid_contract
+					task_contract_type = laamp_raid_contract
 					var:task_contract_target ?= scope:defender
 				}
 			}
@@ -2388,13 +2349,13 @@ ep3_laamp_raid_contract_cb = {
 			if = {
 				limit = {
 					any_character_active_contract = {
-						has_task_contract_type = laamp_raid_contract
+						task_contract_type = laamp_raid_contract
 						var:task_contract_target ?= scope:defender
 					}
 				}
 				every_character_active_contract = {
+					task_contract_type = laamp_raid_contract
 					limit = {
-						has_task_contract_type = laamp_raid_contract
 						var:task_contract_target ?= scope:defender
 					}
 					invalidate_contract = yes
@@ -2416,8 +2377,8 @@ ep3_laamp_raid_contract_cb = {
 			show_pow_release_message_effect = yes
 			accolade_attacker_war_end_glory_gain_low_effect = yes
 			random_character_active_contract = {
+				task_contract_type = laamp_raid_contract
 				limit = {
-					has_task_contract_type = laamp_raid_contract
 					var:task_contract_target = scope:defender
 				}
 				save_scope_as = raid_contract
@@ -2782,8 +2743,8 @@ ep3_laamp_raid_contract_cb = {
 		add_truce_attacker_victory_effect = yes
 		scope:attacker = {
 			random_character_active_contract = {
+				task_contract_type = laamp_raid_contract
 				limit = {
-					has_task_contract_type = laamp_raid_contract
 					var:task_contract_target = scope:defender
 				}
 				save_scope_as = raid_contract
@@ -2808,8 +2769,11 @@ ep3_laamp_raid_contract_cb = {
 	on_defeat = {
 		scope:attacker = { show_pow_release_message_effect = yes }
 
-		#EP2 Accolade glory gain from winning against higher ranked enemy
-		scope:defender = { accolade_defender_war_end_glory_gain_low_effect = yes }
+		scope:defender = { 
+			mandala_peacemaker_perk_serenity_effect = yes
+			#EP2 accolade glory gain for winning against higher ranked enemy
+			accolade_defender_war_end_glory_gain_high_effect = yes
+		}
 
 		scope:attacker = {
 			switch = {
@@ -2828,8 +2792,8 @@ ep3_laamp_raid_contract_cb = {
 				}
 			}
 			random_character_active_contract = {
+				task_contract_type = laamp_raid_contract
 				limit = {
-					has_task_contract_type = laamp_raid_contract
 					var:task_contract_target = scope:defender
 				}
 				save_scope_as = raid_contract
@@ -2917,7 +2881,7 @@ ep3_laamp_raid_contract_cb = {
 			if = {
 				limit = {
 					scope:attacker = {
-						is_independent_ruler = no
+						top_liege != this
 						vassal_contract_has_flag = vassal_contract_cheaper_religious_war
 					}
 				}
@@ -2991,9 +2955,7 @@ crusading_claim_cb = {
 					save_temporary_scope_as = war_attackers
 					scope:attacker = {
 						random_owned_story = {
-							limit = {
-								story_type = frankokratia_story
-							}
+							type = frankokratia_story
 							add_to_variable_list = {
 								name = frankokratia_leaders
 								target = scope:war_attackers
@@ -3012,8 +2974,7 @@ crusading_claim_cb = {
 					list = target_titles
 					any_in_de_jure_hierarchy = {
 						tier >= tier_county
-						exists = holder
-						holder = {
+						holder ?= {
 							OR = {
 								this = scope:defender
 								target_is_liege_or_above = scope:defender
@@ -3032,7 +2993,7 @@ crusading_claim_cb = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					NOT = { scope:claimant = scope:attacker } 
+					scope:claimant != scope:attacker 
 					scope:claimant = { is_alive = no }
 				}
 				desc = msg_claim_war_invalidated_claimant_unavailable_dead_message
@@ -3046,9 +3007,7 @@ crusading_claim_cb = {
 			add_prestige = medium_prestige_loss
 			add_piety = medium_piety_loss
 			random_owned_story = {
-				limit = {
-					story_type = frankokratia_story
-				}
+				type = frankokratia_story
 				set_variable = {
 					name = franko_war_complete
 				}
@@ -3085,9 +3044,7 @@ crusading_claim_cb = {
 					save_temporary_scope_as = war_attackers
 					scope:attacker = {
 						random_owned_story = {
-							limit = {
-								story_type = frankokratia_story
-							}
+							type = frankokratia_story
 							add_to_variable_list = {
 								name = frankokratia_leaders
 								target = scope:war_attackers
@@ -3097,9 +3054,7 @@ crusading_claim_cb = {
 				}
 			}
 			random_owned_story = {
-				limit = {
-					story_type = frankokratia_story
-				}
+				type = frankokratia_story
 				set_variable = {
 					name = franko_war_complete
 				}
@@ -3114,14 +3069,14 @@ crusading_claim_cb = {
 		scope:defender ?= {
 			if = {
 				limit = {
-					is_independent_ruler = yes
+					top_liege = this
 					government_allows = administrative
 					primary_title = { is_in_list = target_titles }
 				}
 				every_held_title = {
+					title_tier >= county
 					limit = {
 						is_noble_family_title = no
-						tier >= tier_county
 					}
 					add_to_list = target_titles
 				}
@@ -3151,7 +3106,7 @@ crusading_claim_cb = {
 
 		if = {
 			limit = {
-				NOT = { scope:claimant = scope:attacker }
+				scope:claimant != scope:attacker
 				scope:attacker = {
 					can_add_hook = {
 					  	type = favor_hook
@@ -3189,6 +3144,9 @@ crusading_claim_cb = {
 
 		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
 		laamp_as_mercenary_payout_tooltip_effect = yes
+
+		#Mandalas gain or lose piety/devotion depending on Decree
+		mandala_war_victory_effects = yes
 	}
 
 	on_white_peace_desc = {
@@ -3212,9 +3170,7 @@ crusading_claim_cb = {
 					save_temporary_scope_as = war_attackers
 					scope:attacker = {
 						random_owned_story = {
-							limit = {
-								story_type = frankokratia_story
-							}
+							type = frankokratia_story
 							add_to_variable_list = {
 								name = frankokratia_leaders
 								target = scope:war_attackers
@@ -3224,9 +3180,7 @@ crusading_claim_cb = {
 				}
 			}
 			random_owned_story = {
-				limit = {
-					story_type = frankokratia_story
-				}
+				type = frankokratia_story
 				set_variable = {
 					name = franko_war_complete
 				}
@@ -3286,7 +3240,7 @@ crusading_claim_cb = {
 
 		if = {
 			limit = {
-				NOT = { scope:claimant = scope:attacker }
+				scope:claimant != scope:attacker
 				scope:attacker = {
 					can_add_hook = {
 					  	type = favor_hook
@@ -3340,7 +3294,7 @@ crusading_claim_cb = {
 			limit = {
 				global_var:byz_claimant_champion ?= {
 					any_owned_story = {
-						story_type = frankokratia_story
+						type = frankokratia_story
 					}
 				}
 			}
@@ -3385,9 +3339,7 @@ crusading_claim_cb = {
 					save_temporary_scope_as = war_attackers
 					scope:attacker = {
 						random_owned_story = {
-							limit = {
-								story_type = frankokratia_story
-							}
+							type = frankokratia_story
 							add_to_variable_list = {
 								name = frankokratia_leaders
 								target = scope:war_attackers
@@ -3397,9 +3349,7 @@ crusading_claim_cb = {
 				}
 			}
 			random_owned_story = {
-				limit = {
-					story_type = frankokratia_story
-				}
+				type = frankokratia_story
 				set_variable = {
 					name = franko_war_complete
 				}
@@ -3407,8 +3357,11 @@ crusading_claim_cb = {
 		}
 		scope:attacker = { show_pow_release_message_effect = yes }
 
-		#EP2 accolade glory gain for winning against higher ranked enemy
-		scope:defender = { accolade_defender_war_end_glory_gain_high_effect = yes }
+		scope:defender = { 
+			mandala_peacemaker_perk_serenity_effect = yes
+			#EP2 accolade glory gain for winning against higher ranked enemy
+			accolade_defender_war_end_glory_gain_high_effect = yes
+		}
 
 		# lose claims
 		every_in_list = {
@@ -3420,7 +3373,7 @@ crusading_claim_cb = {
 
 		if = {
 			limit = {
-				NOT = { scope:claimant = scope:attacker }
+				scope:claimant != scope:attacker
 				scope:attacker = {
 					can_add_hook = {
 					  	type = favor_hook
@@ -3509,7 +3462,7 @@ crusading_claim_cb = {
 			limit = {
 				global_var:byz_claimant_champion ?= {
 					any_owned_story = {
-						story_type = frankokratia_story
+						type = frankokratia_story
 					}
 				}
 			}
@@ -3523,6 +3476,9 @@ crusading_claim_cb = {
 
 		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
 		laamp_as_mercenary_payout_tooltip_effect = yes
+
+		#Mandalas gain or lose piety/devotion depending on Decree
+		mandala_war_defeat_effects = yes
 	}
 
 	on_primary_attacker_death = inherit
@@ -3560,7 +3516,6 @@ ep3_hasan_assassin_war = {
 
 	on_declaration = {
 		on_declared_war = yes
-		# TODO_CD_EP3, add every same-faith vassal to attacker's side?
 	}
 
 	on_victory_desc = {
@@ -3658,13 +3613,11 @@ ep3_hasan_assassin_war = {
 				if = {
 					limit = {
 						any_owned_story = {
-							story_type = story_hasan
+							type = story_hasan
 						}
 					}
 					random_owned_story = {
-						limit = {
-							story_type = story_hasan
-						}
+						type = story_hasan
 						end_story = yes
 					}
 				}
@@ -3697,15 +3650,18 @@ ep3_hasan_assassin_war = {
 	on_defeat = {
 		scope:attacker = { show_pow_release_message_effect = yes }
 		scope:defender = {
+			mandala_peacemaker_perk_serenity_effect = yes
+			#EP2 accolade glory gain for winning against higher ranked enemy
+			accolade_defender_war_end_glory_gain_high_effect = yes
+			# Prestige for Defender
+			add_prestige_war_defender_effect = {
+				PRESTIGE_VALUE = medium_prestige_value
+			}
 			add_character_flag = {
 				flag = recent_nation_fracturing_faction_war
 				years = faction_nation_fracturing_war_defeat_cooldown
 			}
 			add_dread = medium_dread_gain
-			# Prestige for Defender
-			add_prestige_war_defender_effect = {
-				PRESTIGE_VALUE = medium_prestige_value
-			}
 			add_achievement_flag_effect = { FLAG = achievement_know_your_place_flag }
 
 			# LEGITIMACY FROM WINNING FACTION WAR
@@ -3717,13 +3673,11 @@ ep3_hasan_assassin_war = {
 				if = {
 					limit = {
 						any_owned_story = {
-							story_type = story_hasan
+							type = story_hasan
 						}
 					}
 					random_owned_story = {
-						limit = {
-							story_type = story_hasan
-						}
+						type = story_hasan
 						end_story = yes
 					}
 				}
@@ -3773,7 +3727,7 @@ imperial_expedition_cb = {
 	defender_score_from_battles_scale = 150
 
 	allowed_for_character = {
-		is_independent_ruler = no
+		top_liege != this
 		liege ?= { has_diarchy_active_parameter = unlock_diarch_requests_military_expedition_interaction } #Unop: Replace has_diarchy_parameter since the parameter need a certain level of swing
 		is_diarch_of_target = liege
 		NOT = {
@@ -3830,23 +3784,15 @@ imperial_expedition_cb = {
 				}
 			}
 		}
+		# HOUSE RELATIONS
+		add = house_relation_ai_score_value
 		# Tell the Romans to stop going adventuring into the steppe for no gods-damned reason.
 		multiply = byzantium_conquests_ai_score_value
 	}
 	ai_score_mult = {
 		value = 1
-		#Declaring war on the frankokratia leader can really ruin the whole thing
-		if = {
-			limit = {
-				scope:defender = {
-					any_owned_story = {
-						story_type = frankokratia_story
-						NOT = { has_variable = franko_war_complete }
-					}
-				}
-			}
-			multiply = 0
-		}
+		
+		add = frankokratia_leader_protection_value #Set back to 0. Declaring war on the frankokratia leader can really ruin the whole thing
 	}
 
 	valid_to_start = {
@@ -3915,7 +3861,7 @@ imperial_expedition_cb = {
 			value = 0
 			if = {
 				limit = {
-					NOT = { scope:defender.faith = scope:attacker.faith }
+					scope:defender.faith != scope:attacker.faith
 				}
 				add = {
 					value = 150
@@ -4043,7 +3989,7 @@ imperial_expedition_cb = {
 		# Track which titles scope:attacker already has, so that we can leave them with holdings that should stay under their pre-existing titles if they opt to hand their gains over.
 		scope:attacker = {
 			every_held_title = {
-				limit = { tier >= tier_duchy }
+				title_tier >= duchy
 				add_to_list = attacker_pre_held_titles
 			}
 		}
@@ -4182,8 +4128,15 @@ imperial_expedition_cb = {
 		# Legitimacy
 		add_legitimacy_attacker_defeat_effect = yes
 
-		#EP2 accolade glory gain for winning against higher ranked enemy
-		scope:defender = { accolade_defender_war_end_glory_gain_med_effect = yes }
+		scope:defender = { 
+			mandala_peacemaker_perk_serenity_effect = yes
+			#EP2 accolade glory gain for winning against higher ranked enemy
+			accolade_defender_war_end_glory_gain_high_effect = yes
+			# Prestige for Defender
+			add_prestige_war_defender_effect = {
+				PRESTIGE_VALUE = medium_prestige_value
+			}
+		}
 
 		# Prestige loss for the attacker
 		scope:attacker = {
@@ -4191,13 +4144,6 @@ imperial_expedition_cb = {
 			add_prestige = {
 				value = major_prestige_value
 				multiply = -1.0
-			}
-		}
-
-		# Prestige for Defender
-		scope:defender = {
-			add_prestige_war_defender_effect = {
-				PRESTIGE_VALUE = major_prestige_value
 			}
 		}
 
@@ -4277,10 +4223,10 @@ ep3_pillaging_foray = {
 				character_is_land_realm_neighbor = scope:attacker.liege
 			}
 		}
-		is_independent_ruler = yes
+		top_liege = this
 		OR = {
 			scope:attacker = {
-				is_independent_ruler = yes
+				top_liege = this
 			}
 			NOR = {
 				has_truce = scope:attacker.liege
@@ -4299,18 +4245,8 @@ ep3_pillaging_foray = {
 
 	ai_score_mult = {
 		value = fp2_border_raid_ai_targeting_value
-		#Declaring war on the frankokratia leader can really ruin the whole thing
-		if = {
-			limit = {
-				scope:defender = {
-					any_owned_story = {
-						story_type = frankokratia_story
-						NOT = { has_variable = franko_war_complete }
-					}
-				}
-			}
-			multiply = 0
-		}
+		
+		add = frankokratia_leader_protection_value #Set back to 0. Declaring war on the frankokratia leader can really ruin the whole thing
 	}
 
 	valid_to_start = {
@@ -4473,22 +4409,6 @@ ep3_pillaging_foray = {
 			}
 		}
 
-		show_as_tooltip = {
-			create_title_and_vassal_change = {
-				type = conquest
-				save_scope_as = change
-				add_claim_on_loss = yes
-			}
-			every_in_list = {
-				list = target_titles
-				change_title_holder = {
-					holder = scope:attacker
-					change = scope:change
-				}
-			}
-			resolve_title_and_vassal_change = scope:change
-		}
-
 		# Prestige Progress for the Attacker
 		every_in_list = {
 			list = target_titles
@@ -4617,8 +4537,15 @@ ep3_pillaging_foray = {
 		scope:attacker = {
 			change_influence = medium_influence_value
 		}
-		#EP2 accolade glory gain for winning against higher ranked enemy
-		scope:defender = { accolade_defender_war_end_glory_gain_low_effect = yes }
+		scope:defender = { 
+			mandala_peacemaker_perk_serenity_effect = yes
+			#EP2 accolade glory gain for winning against higher ranked enemy
+			accolade_defender_war_end_glory_gain_high_effect = yes
+			# Prestige for Defender
+			add_prestige_war_defender_effect = {
+				PRESTIGE_VALUE = medium_prestige_value
+			}
+		}
 
 		# Prestige loss for the attacker
 		scope:attacker = {
@@ -4628,13 +4555,6 @@ ep3_pillaging_foray = {
 			add_prestige = {
 				value = medium_prestige_value
 				multiply = -1.0
-			}
-		}
-
-		# Prestige for Defender
-		scope:defender = {
-			add_prestige_war_defender_effect = {
-				PRESTIGE_VALUE = medium_prestige_value
 			}
 		}
 
@@ -4710,14 +4630,20 @@ ep3_roman_empire_border_war = {
 	defender_score_from_battles_scale = 150
 
 	allowed_for_character = {
-		any_neighboring_and_across_water_top_liege_realm_owner = {
-			OR = {
+		OR = {
+			title:h_roman_empire ?= { is_title_created = yes }
+			title:h_eastern_roman_empire ?= { is_title_created = yes }
+			any_player = {
 				any_owned_story = {
-					story_type = ep3_story_cycle_restoring_rome
+					type = ep3_story_cycle_restoring_rome
 				}
-				has_title = title:e_roman_empire
 			}
+			is_ai = no
 		}
+	}
+
+	allowed_for_character_display_regardless = {
+		tgp_japan_offensive_wars_ban_trigger = yes
 	}
 
 	allowed_against_character = {
@@ -4725,9 +4651,9 @@ ep3_roman_empire_border_war = {
 		top_liege = {
 			OR = {
 				any_owned_story = {
-					story_type = ep3_story_cycle_restoring_rome
+					type = ep3_story_cycle_restoring_rome
 				}
-				has_title = title:e_roman_empire
+				is_roman_emperor_excluding_byzantium_trigger = yes
 			}
 		}
 	}
@@ -4743,18 +4669,8 @@ ep3_roman_empire_border_war = {
 			limit = { scope:attacker.prestige < scope:attacker.massive_prestige_value }
 			multiply = 0
 		}
-		#Declaring war on the frankokratia leader can really ruin the whole thing
-		if = {
-			limit = {
-				scope:defender = {
-					any_owned_story = {
-						story_type = frankokratia_story
-						NOT = { has_variable = franko_war_complete }
-					}
-				}
-			}
-			multiply = 0
-		}
+		
+		add = frankokratia_leader_protection_value #Set back to 0. Declaring war on the frankokratia leader can really ruin the whole thing
 	}
 
 	valid_to_start = {
@@ -5002,8 +4918,15 @@ ep3_roman_empire_border_war = {
 		# Legitimacy
 		add_legitimacy_attacker_defeat_effect = yes
 		
-		#EP2 accolade glory gain for winning against higher ranked enemy
-		scope:defender = { accolade_defender_war_end_glory_gain_low_effect = yes }
+		scope:defender = { 
+			mandala_peacemaker_perk_serenity_effect = yes
+			#EP2 accolade glory gain for winning against higher ranked enemy
+			accolade_defender_war_end_glory_gain_high_effect = yes
+			# Prestige for Defender
+			add_prestige_war_defender_effect = {
+				PRESTIGE_VALUE = medium_prestige_value
+			}
+		}
 
 		# Prestige loss for the attacker
 		scope:attacker = {
@@ -5013,13 +4936,6 @@ ep3_roman_empire_border_war = {
 			add_prestige = {
 				value = medium_prestige_value
 				multiply = -1.0
-			}
-		}
-
-		# Prestige for Defender
-		scope:defender = {
-			add_prestige_war_defender_effect = {
-				PRESTIGE_VALUE = medium_prestige_value
 			}
 		}
 
@@ -5140,9 +5056,9 @@ ep3_laamp_apprehend_adventurer_cb = {
 				add_claim_on_loss = yes
 			}
 			every_held_title = {
+				title_tier >= county
 				limit = {
 					is_landless_type_title = no
-					tier >= tier_county
 				}
 				change_title_holder_include_vassals = {
 					holder = scope:attacker
@@ -5231,6 +5147,9 @@ ep3_laamp_apprehend_adventurer_cb = {
 				}
 			}
 		}
+		scope:defender = { 
+			mandala_peacemaker_perk_serenity_effect = yes
+		}
 		# Allies on both sides get full prestige value for helping in the war, based on their war participation.
 		modify_allies_of_participants_fame_values = {
 			WINNER = scope:defender
@@ -5318,6 +5237,7 @@ greek_anarchy_cb = {
 		}
 		#Must have interests within the danger zone
 		any_held_title = {
+			tier <= tier_empire
 			OR = {
 				this = title:e_byzantium
 				this = title:e_latin_empire
@@ -5369,6 +5289,8 @@ greek_anarchy_cb = {
 	ai_score_mult = {
 		value = struggle_conquest_ai_score_value
 		add = 1
+		# HOUSE RELATIONS
+		add = house_relation_ai_score_value
 		if = {
 			limit = {
 				scope:attacker.top_liege.primary_title = {
@@ -5405,18 +5327,8 @@ greek_anarchy_cb = {
 			}
 			multiply = 3
 		}
-		#Declaring war on the frankokratia leader can really ruin the whole thing
-		if = {
-			limit = {
-				scope:defender = {
-					any_owned_story = {
-						story_type = frankokratia_story
-						NOT = { has_variable = franko_war_complete }
-					}
-				}
-			}
-			multiply = 0
-		}
+		
+		add = frankokratia_leader_protection_value #Set back to 0. Declaring war on the frankokratia leader can really ruin the whole thing
 	}
 
 	valid_to_start = {
@@ -5536,7 +5448,7 @@ greek_anarchy_cb = {
 			value = 0
 			if = {
 				limit = {
-					NOT = { scope:defender.faith = scope:attacker.faith }
+					scope:defender.faith != scope:attacker.faith
 				}
 				add = {
 					value = 150
@@ -5794,7 +5706,7 @@ greek_anarchy_cb = {
 				limit = {
 					scope:defender = {
 						any_held_title = {
-							tier = tier_county
+							title_tier = county
 							NOT = { target_is_de_jure_liege_or_above = scope:de_jure_target }
 						}
 					}
@@ -5886,8 +5798,15 @@ greek_anarchy_cb = {
 		# Legitimacy
 		add_legitimacy_attacker_defeat_effect = yes
 
-		#EP2 accolade glory gain for winning against higher ranked enemy
-		scope:defender = { accolade_defender_war_end_glory_gain_med_effect = yes }
+		scope:defender = { 
+			mandala_peacemaker_perk_serenity_effect = yes
+			#EP2 accolade glory gain for winning against higher ranked enemy
+			accolade_defender_war_end_glory_gain_high_effect = yes
+			# Prestige for Defender
+			add_prestige_war_defender_effect = {
+				PRESTIGE_VALUE = medium_prestige_value
+			}
+		}
 
 		# Prestige loss for the attacker
 		scope:attacker = {
@@ -5897,13 +5816,6 @@ greek_anarchy_cb = {
 			add_prestige = {
 				value = major_prestige_value
 				multiply = -1.0
-			}
-		}
-
-		# Prestige for Defender
-		scope:defender = {
-			add_prestige_war_defender_effect = {
-				PRESTIGE_VALUE = major_prestige_value
 			}
 		}
 
@@ -6354,6 +6266,7 @@ ep3_laamp_peasant_war = {
 					type = dungeon
 				}
 			}
+			mandala_peacemaker_perk_serenity_effect = yes
 		}
 
 		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
@@ -6398,20 +6311,19 @@ admin_barbarian_conquest_cb = {
 	defender_score_from_battles_scale = 150
 
 	allowed_for_character = {
-		NOR = {
+		NOT = {
 			government_has_flag = government_is_landless_adventurer
-			government_allows = administrative
 		}
+		is_landed = yes
 	}
 
 	allowed_for_character_display_regardless = {
-		
+		tgp_japan_offensive_wars_ban_trigger = yes
 	}
 
 	allowed_against_character = {
 		scope:defender = {
 			government_allows = administrative
-			highest_held_title_tier >= tier_kingdom
 		}
 		scope:attacker = {
 			ALL_FALSE = {
@@ -6434,38 +6346,12 @@ admin_barbarian_conquest_cb = {
 		multiply = struggle_wars_prioritise_struggle_targets_value
 		multiply = muslim_invasions_prefer_nonmuslims_ai_score_value
 
-		#Declaring war on the frankokratia leader can really ruin the whole thing
-		if = {
-			limit = {
-				scope:defender = {
-					any_owned_story = {
-						story_type = frankokratia_story
-						NOT = { has_variable = franko_war_complete }
-					}
-				}
-			}
-			multiply = 0
-		}
+		add = frankokratia_leader_protection_value #Set back to 0. Declaring war on the frankokratia leader can really ruin the whole thing
 	}
 
 	valid_to_start = {
 		scope:target = {
-			trigger_if = {
-				limit = {
-					scope:defender = { is_in_civil_war = yes }
-				}
-				# In civil wars, you only cannot take the capital duchy
-				this != scope:defender.capital_county.duchy
-			}
-			trigger_else_if = {
-				limit = {
-					scope:defender.primary_title.tier = tier_empire
-				}
-				empire != scope:defender.primary_title
-			}
-			trigger_else = {
-				kingdom != scope:defender.primary_title
-			}
+			# You need to border the targeted area, unless it's coastal
 			any_in_de_jure_hierarchy = {
 				tier = tier_county
 				OR = {
@@ -6476,6 +6362,22 @@ admin_barbarian_conquest_cb = {
 						}
 					}
 				}
+			}
+			# You may never take the capital duchy
+			this != scope:defender.top_liege.capital_county.duchy
+			# If the top liege is an emperor or hegemon, we cannot target their de jure empire
+			trigger_if = {
+				limit = {
+					scope:defender.top_liege.primary_title.tier >= tier_empire
+				}
+				empire != scope:defender.top_liege.capital_county.empire
+			}
+			# If the top liege is a king, we cannot target their de jure kingdom
+			trigger_if = {
+				limit = {
+					scope:defender.top_liege.primary_title.tier = tier_kingdom
+				}
+				kingdom != scope:defender.top_liege.primary_title
 			}
 		}
 	}
@@ -6725,8 +6627,15 @@ admin_barbarian_conquest_cb = {
 		# Legitimacy
 		add_legitimacy_attacker_defeat_effect = yes
 
-		#EP2 accolade glory gain for winning against higher ranked enemy
-		scope:defender = { accolade_defender_war_end_glory_gain_med_effect = yes }
+		scope:defender = { 
+			mandala_peacemaker_perk_serenity_effect = yes
+			#EP2 accolade glory gain for winning against higher ranked enemy
+			accolade_defender_war_end_glory_gain_high_effect = yes
+			# Prestige for Defender
+			add_prestige_war_defender_effect = {
+				PRESTIGE_VALUE = medium_prestige_value
+			}
+		}
 
 		# Prestige loss for the attacker
 		scope:attacker = {
@@ -6736,13 +6645,6 @@ admin_barbarian_conquest_cb = {
 			add_prestige = {
 				value = major_prestige_value
 				multiply = -1.0
-			}
-		}
-
-		# Prestige for Defender
-		scope:defender = {
-			add_prestige_war_defender_effect = {
-				PRESTIGE_VALUE = major_prestige_value
 			}
 		}
 

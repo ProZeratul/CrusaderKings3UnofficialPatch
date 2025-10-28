@@ -44,9 +44,7 @@ feast_main_live_fowl.0001 = {
 			}
 			any_attending_character = {
 				feast_default_participant_including_player_trigger = yes
-				NOT = {
-					this = scope:activity.activity_host
-				}
+				this != scope:activity.activity_host
 				save_temporary_scope_as = fowl_dinner_target
 			}
 			any_attending_character = {
@@ -78,9 +76,7 @@ feast_main_live_fowl.0001 = {
 			random_attending_character = {
 				limit = {
 					feast_default_participant_including_player_trigger = yes
-					NOT = {
-						this = scope:activity.activity_host
-					}
+					this != scope:activity.activity_host
 				}
 				save_scope_as = fowl_dinner_target
 			}
@@ -125,11 +121,9 @@ feast_main_live_fowl.0001 = {
 				}
 				if = {
 					limit = {
-						NOT = {
-							AND = {
-								exists = scope:fowl_bird_killer
-								this = scope:fowl_bird_killer
-							}
+						NAND = {
+							exists = scope:fowl_bird_killer
+							this = scope:fowl_bird_killer
 						}
 					}
 

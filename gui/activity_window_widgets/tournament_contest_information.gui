@@ -1,4 +1,4 @@
-window = {
+﻿window = {
 	name = "tournament_contest_information"
 	visible = "[And(CanDisplayLocaleView('phase_information'), ActivityLocaleWindow.HasSelectedPhase)]"
 
@@ -100,7 +100,7 @@ window = {
 					button_tab = {
 						name = "contest_info_contents_tabs_participants"
 						layoutpolicy_horizontal = expanding
-						visible = "[And( Or( Activity.IsPhaseInTheFuture(PlannedActivityPhase.Self), Activity.IsPhaseOngoing(PlannedActivityPhase.Self) ), Not( Activity.IsComplete ) )]" #Unop Remove closing brace
+						visible = "[And( Or( Activity.IsPhaseInTheFuture(PlannedActivityPhase.Self), Activity.IsPhaseOngoing(PlannedActivityPhase.Self) ), Not( Activity.IsComplete ) )]"
 
 						raw_text = "[SelectLocalization( Activity.IsCurrentPhaseActive, 'locale_window_tab_button_qualified', 'locale_window_tab_button_participants' )]"
 
@@ -111,7 +111,7 @@ window = {
 					button_tab = {
 						name = "contest_info_contents_tabs_log"
 						layoutpolicy_horizontal = expanding
-						visible = "[Or( Activity.IsPhaseInThePast(PlannedActivityPhase.Self), Activity.IsComplete )]" #Unop Remove closing brace
+						visible = "[Or( Activity.IsPhaseInThePast(PlannedActivityPhase.Self), Activity.IsComplete )]"
 
 
 						text = locale_window_tab_button_log
@@ -123,7 +123,7 @@ window = {
 					button_tab = {
 						name = "contest_info_contents_tabs_debugging"
 						layoutpolicy_horizontal = expanding
-						visible = "[InDebugMode]"
+						visible = "[AIWatchWindowsEnabled]"
 
 						raw_text = "DEBUGGING"
 

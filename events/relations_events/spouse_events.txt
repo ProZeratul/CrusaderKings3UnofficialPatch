@@ -500,7 +500,7 @@ spouse.0008 = {
 				has_trait = paranoid
 				scope:first_spouse = {
 					any_secret = {
-						secret_type = secret_lover
+						type = secret_lover
 						secret_target = {
 							this = scope:friend_in_common
 						}
@@ -976,8 +976,8 @@ spouse.2001 = {
 
 scripted_trigger spouse_2002_told_of_character_trigger = {
 	is_available_healthy_ai_adult = yes
-	NOT = { this = root }
-	NOT = { this = scope:spouse }
+	this != root
+	this != scope:spouse
 	NOT = { is_in_list = potential_targets }
 	NOT = {
 		has_opinion_modifier = {
@@ -1023,7 +1023,7 @@ spouse.2002 = {
 				}
 				AND = {
 					exists = liege
-					NOT = { this = liege }
+					this != liege
 					liege = {
 						spouse_2002_told_of_character_trigger = yes
 					}
@@ -1608,7 +1608,7 @@ spouse.2013 = {
 
 
 scripted_trigger spouse_2014_base_agent_trigger = {
-	NOT = { this = root }
+	this != root
 	is_scheming_against = {
 		target = scope:spouse_check
 	}
@@ -1999,7 +1999,7 @@ spouse.3002 = {
 			save_temporary_scope_as = spouse
 			OR = {
 				any_vassal = {
-					NOT = { this = root }
+					this != root
 					NOT = {
 						has_opinion_modifier = {
 							target = prev
@@ -2021,7 +2021,7 @@ spouse.3002 = {
 					NOT = { has_relation_rival = scope:spouse }
 				}
 				liege = {
-					NOT = { this = root }
+					this != root
 					NOT = {
 						has_opinion_modifier = {
 							target = prev
@@ -2073,7 +2073,7 @@ spouse.3002 = {
 						is_available_healthy_ai_adult = yes
 						save_temporary_scope_as = spouse_check
 						any_vassal = {
-							NOT = { this = root }
+							this != root
 							NOT = {
 								has_opinion_modifier = {
 									target = prev
@@ -2101,7 +2101,7 @@ spouse.3002 = {
 						is_available_healthy_ai_adult = yes
 						save_temporary_scope_as = spouse_check
 						any_vassal = {
-							NOT = { this = root }
+							this != root
 							NOT = {
 								has_opinion_modifier = {
 									target = prev
@@ -2126,7 +2126,7 @@ spouse.3002 = {
 					save_scope_as = spouse
 					random_vassal = {
 						limit = {
-							NOT = { this = root }
+							this != root
 							NOT = {
 								has_opinion_modifier = {
 									target = prev
@@ -2157,7 +2157,7 @@ spouse.3002 = {
 						is_available_healthy_ai_adult = yes
 						save_temporary_scope_as = spouse_check
 						liege = {
-							NOT = { this = root }
+							this != root
 							NOT = {
 								has_opinion_modifier = {
 									target = prev
@@ -2185,7 +2185,7 @@ spouse.3002 = {
 						is_available_healthy_ai_adult = yes
 						save_temporary_scope_as = spouse_check
 						liege = {
-							NOT = { this = root }
+							this != root
 							NOT = {
 								has_opinion_modifier = {
 									target = prev
@@ -2591,11 +2591,11 @@ spouse.3012 = {
 		}
 		OR = {
 			any_courtier_or_guest = {
-				NOT = { this = scope:spouse_check }
+				this != scope:spouse_check
 			}
 			scope:spouse_check = {
 				any_courtier_or_guest = {
-					NOT = { this = root }
+					this != root
 				}
 			}
 		}
@@ -2626,7 +2626,7 @@ spouse.3012 = {
 			scope:spouse = {
 				random_courtier_or_guest = {
 					limit = {
-						NOT = { this = root }
+						this != root
 					}
 					save_scope_as = agent
 				}

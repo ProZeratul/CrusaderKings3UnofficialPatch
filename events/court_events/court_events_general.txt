@@ -12,7 +12,7 @@
 # 7000 - 8000		George
 # 8001 - 8999		Joe
 # 9000 - 9999		Oltner
-# 
+#
 ##################################################
 
 
@@ -66,7 +66,7 @@
 #				# 				is_female = no
 #				# 			}
 #				# 		}
-#				# 
+#				#
 #				# 		both syntaxes are supported
 #				# 		animation = { rage anger sadness } # randomly chooses one of these animations
 #				# 		animation = sadness # selects just one animation
@@ -83,7 +83,7 @@
 #
 #	weight_multiplier = {
 #		base = 1
-#		
+#
 #		# Court weightings: plug in a court type that should see this event more often.
 #		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_diplomatic }
 #	}
@@ -93,7 +93,7 @@
 #		random_courtier_or_guest = { save_scope_as = character_a }
 #		random_courtier_or_guest = {
 #			limit = {
-#				NOT = { this = scope:character_a }
+#				this != scope:character_a
 #			}
 #			save_scope_as = character_b
 #		}
@@ -160,28 +160,28 @@ court.0107 = {
 			has_court_event_flag = no
 		}
 	}
-	
+
 	# More likely to trigger if the tutor likes writing things
 	weight_multiplier = {
 		base = 1
-		modifier = { 
+		modifier = {
 			add = 0.5
 			court_position:court_tutor_court_position = { has_trait = journaller }
 		}
-		modifier = { 
+		modifier = {
 			add = 0.5
 			court_position:court_tutor_court_position = {
-				OR = { 
+				OR = {
 					has_trait = intellect_good_1
 					has_trait = intellect_good_2
 					has_trait = intellect_good_3
 				}
 			}
 		}
-		modifier = { 
+		modifier = {
 			add = -0.5
 			court_position:court_tutor_court_position = {
-				OR = { 
+				OR = {
 					has_trait = intellect_bad_1
 					has_trait = intellect_bad_2
 					has_trait = intellect_bad_3
@@ -219,7 +219,7 @@ court.0107 = {
 	}
 
 	# Option A: Scold the child for being brazen
-	option = { 
+	option = {
 		name = court.0107.a
 		progress_towards_friend_effect = {
 			REASON = friend_upheld_educational_tactics
@@ -258,7 +258,7 @@ court.0107 = {
 	}
 
 	#Option B: Buy the book yourself
-	option = { 
+	option = {
 		name = court.0107.b
 		trigger = {
 			scope:tutor = { has_education_rank_trigger = { RANK = 2 OPERATOR = greater } }
@@ -273,7 +273,7 @@ court.0107 = {
 			gold = medium_gold_value
 		}
 		custom_tooltip = court.0107.b.tt
-		if = { 
+		if = {
 			limit = {
 				scope:tutor = {
 					has_trait = education_martial
@@ -286,7 +286,7 @@ court.0107 = {
 				SET_TOPIC = flag:no
 			}
 		}
-		else_if = { 
+		else_if = {
 			limit = {
 				scope:tutor = {
 					has_trait = education_stewardship
@@ -299,7 +299,7 @@ court.0107 = {
 				SET_TOPIC = flag:no
 			}
 		}
-		else_if = { 
+		else_if = {
 			limit = {
 				scope:tutor = {
 					has_trait = education_diplomacy
@@ -312,7 +312,7 @@ court.0107 = {
 				SET_TOPIC = flag:no
 			}
 		}
-		else_if = { 
+		else_if = {
 			limit = {
 				scope:tutor = {
 					has_trait = education_intrigue
@@ -325,7 +325,7 @@ court.0107 = {
 				SET_TOPIC = flag:no
 			}
 		}
-		else_if = { 
+		else_if = {
 			limit = {
 				scope:tutor = {
 					has_trait = education_learning
@@ -346,7 +346,7 @@ court.0107 = {
 			save_scope_as = old_owner
 		}
 		hidden_effect = {
-			send_interface_toast = {	
+			send_interface_toast = {
 				title = artifact.0012.t
 				left_icon = scope:this_artifact
 				right_icon = scope:old_owner
@@ -373,7 +373,7 @@ court.0107 = {
 	}
 
 	#Option C: Suggest another book - opt out
-	option = { 
+	option = {
 		name = court.0107.c
 		add_opinion = {
 	 		target = scope:tutor
@@ -416,12 +416,11 @@ court.0107 = {
 scripted_effect spawn_foreign_prince_effect = {
 	random_kingdom = {
 		limit = {
-			exists = holder
-			holder = {
+			holder ?= {
 				is_ai = yes
 				NOT = {
-					in_diplomatic_range = root 
-				} 
+					in_diplomatic_range = root
+				}
 			}
 		}
 		holder = { save_scope_as = foreign_realm_target }
@@ -496,6 +495,7 @@ court.0108 = {
 
 	trigger = {
 		is_available_adult = yes
+		is_valid_for_east_asian_events_trigger = no
 		any_child = {
 			is_available_ai_adult = yes
 			allowed_more_spouses = yes
@@ -508,17 +508,16 @@ court.0108 = {
 			NOT = { has_trait_with_flag = can_not_marry } #Unop: Make sure the selected child CAN marry
 		}
 		any_kingdom = {
-			exists = holder
-			holder = {
+			holder ?= {
 				is_ai = yes
 				NOT = {
-					in_diplomatic_range = root 
-				} 
+					in_diplomatic_range = root
+				}
 			}
 		}
 		court_grandeur_current_level >= medium_court_grandeur_level
 	}
-	
+
 	weight_multiplier = {
 		base = 1
 		modifier = {
@@ -656,7 +655,7 @@ court.0108 = {
 	}
 
 	#Option B: Imprison the Prince
-	option = { 
+	option = {
 		name = court.0108.b
 		scope:foreign_prince = {
 			pay_short_term_gold = {
@@ -700,7 +699,7 @@ court.0108 = {
 	}
 
 	#Option C: Send them away
-	option = { 
+	option = {
 		name = court.0108.c
 		scope:available_child = {
 			add_opinion = {
@@ -758,7 +757,7 @@ court.0109 = {
 
 	cooldown = { years = 20 }
 
-	trigger = { 
+	trigger = {
 		employs_court_position = executioner_court_position
 		court_position:executioner_court_position = {
 			is_available_ai_adult = yes
@@ -778,31 +777,31 @@ court.0109 = {
 		}
 		is_available_adult = yes
 	}
-	
+
 	# More likely to trigger if the executioner is smart and cares about other humans
 	weight_multiplier = {
 		base = 1
-		modifier = { 
+		modifier = {
 			add = 0.5
 			court_position:executioner_court_position = { has_trait = scholar }
 		}
-		modifier = { 
+		modifier = {
 			add = 0.5
 			court_position:executioner_court_position = { has_trait = compassionate }
 		}
-		modifier = { 
+		modifier = {
 			add = 0.5
 			court_position:executioner_court_position = { has_trait = education_learning }
 		}
-		modifier = { 
+		modifier = {
 			add = 0.5
 			court_position:executioner_court_position = { has_trait = lifestyle_herbalist }
 		}
-		modifier = { 
+		modifier = {
 			add = 0.5
 			court_position:executioner_court_position = { has_trait = lifestyle_physician }
 		}
-		modifier = { 
+		modifier = {
 			add = 0.5
 			court_position:executioner_court_position = {
 				OR = {
@@ -812,7 +811,7 @@ court.0109 = {
 				}
 			}
 		}
-		modifier = { 
+		modifier = {
 			add = -0.5
 			court_position:executioner_court_position = {
 				OR = {
@@ -823,11 +822,11 @@ court.0109 = {
 			}
 		}
 		#Executioner less likely to help the sick and needy if they don't care about the sick and needy
-		modifier = { 
+		modifier = {
 			add = -0.5
 			court_position:executioner_court_position = { has_trait = sadistic }
 		}
-		modifier = { 
+		modifier = {
 			add = -0.5
 			court_position:executioner_court_position = { has_trait = callous }
 		}
@@ -891,19 +890,19 @@ court.0109 = {
 			limit = {
 				employs_court_position = court_physician_court_position
 				court_position:court_physician_court_position = {
-					NOT = { this = scope:executioner }
+					this != scope:executioner
 				}
 			}
 			random_court_position_holder = {
 				type = court_physician_court_position
-				limit = { NOT = { this = scope:executioner } }
+				limit = { this != scope:executioner }
 				save_scope_as = current_physician
 			}
 		}
 	}
 
 	# Option A: Employ executioner as physician
-	option = { 
+	option = {
 		name = court.0109.a
 		progress_towards_friend_effect = {
 			REASON = friend_hired_physician
@@ -921,7 +920,7 @@ court.0109 = {
 	 	}
 
 	 	court_position_grant_effect = { POS = court_physician CANDIDATE = scope:executioner EMPLOYER = root }
-		
+
 		ai_chance = {
 			base = 50
 			ai_value_modifier = {
@@ -942,7 +941,7 @@ court.0109 = {
 	}
 
 	#Option C: Learn from the executioner
-	option = { 
+	option = {
 		name = court.0109.c
 		trigger = {
 			OR = {
@@ -990,7 +989,7 @@ court.0109 = {
 	}
 
 	#Option D: Tell them to continue tending to the sick and needy
-	option = { 
+	option = {
 		name = court.0109.d
 		primary_title.title_capital_county = {
 			change_development_progress = medium_development_progress_gain
@@ -1058,7 +1057,7 @@ court.0111 = {
 			}
 		}
 	}
-	
+
 	cooldown = { years = 50 }
 
 	trigger = {
@@ -1080,17 +1079,17 @@ court.0111 = {
 		}
 		any_prisoner = { enticingly_skulled_prisoner = yes }
 	}
-	
+
 	# More likely to trigger if the executioner is kind of evil
 	weight_multiplier = {
 		base = 3
-		modifier = { 
+		modifier = {
 			add = 1
 			court_position:executioner_court_position = {
 				has_trait = sadistic
 			}
 		}
-		modifier = { 
+		modifier = {
 			add = 1
 			court_position:executioner_court_position = {
 				has_trait = callous
@@ -1165,7 +1164,7 @@ court.0111 = {
 				save_scope_as = newly_created_artifact
 			}
 		}
-		
+
 		else_if = {
 		 	limit = {
 		 		scope:rival = {
@@ -1184,7 +1183,7 @@ court.0111 = {
 		 		save_scope_as = newly_created_artifact
 		 	}
 		}
-		
+
 		hidden_effect = {
 			scope:newly_created_artifact = {
 				add_artifact_modifier = artifact_dread_gain_mult_3_modifier
@@ -1198,7 +1197,7 @@ court.0111 = {
 			save_scope_as = old_owner
 		}
 		hidden_effect = {
-			send_interface_toast = {	
+			send_interface_toast = {
 				title = artifact.0012.t
 				left_icon = scope:this_artifact
 				right_icon = scope:old_owner
@@ -1317,7 +1316,7 @@ court.0112 = {
 			}
 		}
 	}
-	
+
 	cooldown = { years = 20 }
 
 	trigger = {
@@ -1331,12 +1330,12 @@ court.0112 = {
 		}
 		is_available_adult = yes
 	}
-	
+
 	weight_multiplier = {
 		base = 0.5
 		modifier = {
 			amenity_level = {
-				type = court_fashion
+				target = court_fashion
 				value > medium_amenity_level
 			}
 			add = 0.5
@@ -1401,12 +1400,12 @@ court.0112 = {
     }
 
 	# Option A: I'll forget I saw this, for the good of fashion
-	option = { 
+	option = {
 		name = court.0112.a
 		scope:guilty_courtier = {
 			random_secret = {
+				type = secret_murder
 				limit = {
-					secret_type = secret_murder
 					secret_target = scope:corpse
 					NOT = { any_secret_knower = { this = root } }
 				}
@@ -1427,7 +1426,7 @@ court.0112 = {
 			save_scope_as = old_owner
 		}
 		hidden_effect = {
-			send_interface_toast = {	
+			send_interface_toast = {
 				title = artifact.0012.t
 				left_icon = scope:this_artifact
 				right_icon = scope:old_owner
@@ -1459,7 +1458,7 @@ court.0112 = {
 	}
 
 	#Option B: Expose the murder
-	option = { 
+	option = {
 		name = court.0112.b
 		reverse_add_opinion = {
 	 		target = scope:guilty_courtier
@@ -1468,8 +1467,8 @@ court.0112 = {
 	 	}
 	 	scope:guilty_courtier = {
 			random_secret = {
+				type = secret_murder
 				limit = {
-					secret_type = secret_murder
 					secret_target = scope:corpse
 					NOT = { any_secret_knower = { this = root } }
 				}
@@ -1493,7 +1492,7 @@ court.0112 = {
 	}
 
 	#Option C: Leave without saying anything
-	option = { 
+	option = {
 		name = court.0112.c
 		reverse_add_opinion = {
 	 		target = scope:guilty_courtier
@@ -1502,8 +1501,8 @@ court.0112 = {
 	 	}
 		 scope:guilty_courtier = {
 			random_secret = {
+				type = secret_murder
 				limit = {
-					secret_type = secret_murder
 					secret_target = scope:corpse
 					NOT = { any_secret_knower = { this = root } }
 				}
@@ -1547,8 +1546,7 @@ court.0112 = {
 
 scripted_trigger court_2201_valid_basic_heir_child_trigger = {
 	exists = root.dynasty
-	exists = dynasty
-	dynasty = root.dynasty
+	dynasty ?= root.dynasty
 	# Must be available, and at least a teenager.
 	is_available_ai = yes
 	OR = {
@@ -1577,8 +1575,7 @@ scripted_trigger court_2201_valid_younger_heir_child_trigger = {
 	court_2201_valid_basic_heir_child_trigger = yes
 	# Is getting *some* kind of inheritance through partition.
 	any_heir_title = {
-		exists = holder
-		holder = root
+		holder ?= root
 	}
 	# Is *NOT* the eldest heir of root.
 	save_temporary_scope_as = younger_heir_temp
@@ -1634,7 +1631,7 @@ court.2201 = {
 
 	weight_multiplier = {
 		base = 1
-		
+
 		# Court weightings.
 		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_administrative }
 	}
@@ -1740,7 +1737,7 @@ court.2201 = {
 			}
 		}
 	}
-	
+
 	# Sad to say, scope:younger_heir, GetSheHe makes a good point.
 	option = {
 		name = court.2201.b
@@ -1892,7 +1889,7 @@ scripted_trigger court_2401_valid_neighbouring_ruler_trigger = {
 	has_royal_court = yes
 	# Is more fashionable.
 	amenity_level = {
-		type = court_fashion
+		target = court_fashion
 		value > medium_amenity_level
 	}
 }
@@ -1930,7 +1927,7 @@ court.2401 = {
 		is_landed = yes
 		# Low fashion amenity.
 		amenity_level = {
-			type = court_fashion
+			target = court_fashion
 			value <= medium_amenity_level
 		}
 		# Any neighbour with a better fashion amenity.
@@ -1947,7 +1944,7 @@ court.2401 = {
 		base = 1
 		modifier = {
 			amenity_level = {
-				type = court_fashion
+				target = court_fashion
 				value <= low_amenity_level
 			}
 			add = 1
@@ -1956,13 +1953,13 @@ court.2401 = {
 			any_neighboring_and_across_water_realm_same_rank_owner = {
 				court_2401_valid_neighbouring_ruler_trigger = yes
 				amenity_level = {
-					type = court_fashion
+					target = court_fashion
 					value >= high_amenity_level
 				}
 			}
 			add = 1
 		}
-		
+
 		# Court weightings.
 		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_diplomatic }
 	}
@@ -2029,7 +2026,7 @@ court.2401 = {
 			}
 		}
 	}
-	
+
 	# Get those out of here! We don't need foreign nonsense in my court!
 	option = {
 		name = court.2401.b
@@ -2061,7 +2058,7 @@ court.2401 = {
 			}
 		}
 	}
-	
+
 	# Who cares what people wear?
 	option = {
 		name = court.2401.c
@@ -2111,7 +2108,7 @@ court.2401 = {
 #####################################
 
 #scripted_effect court_3010_inspired_work_neutral_toast_effect = {
-#	hidden_effect = { 
+#	hidden_effect = {
 #		send_interface_toast = {
 #			title = court.3010.t
 #			right_icon = scope:inspired_writer
@@ -2137,9 +2134,9 @@ court.2401 = {
 #		}
 #	}
 #	else = { add_stress = minor_stress_gain }
-#	
+#
 #	hidden_effect = {
-#		root = { 
+#		root = {
 #			send_interface_toast = {
 #				title = court.3010.t
 #				right_icon = scope:inspired_writer
@@ -2172,11 +2169,11 @@ court.2401 = {
 
 scripted_trigger court_3010_inspired_work_courtier_trigger = {
 	is_available_ai_adult = yes
-	NOR = { 
-		exists = scope:inspiration 
+	NOR = {
+		exists = scope:inspiration
 		exists = inspiration
 	}
-	NOR = {	
+	NOR = {
 		has_trait = blind
 		has_relation_rival = root
 		has_relation_potential_rival = root
@@ -2194,19 +2191,19 @@ court.3011 = {
 		desc = court.3011.desc.opening
 		first_valid = {
 			triggered_desc = {
-				trigger = { 
-					OR = {
-						scope:inspired_writer = {
+				trigger = {
+					scope:inspired_writer = {
+						OR = {
 							has_trait = shy
 							has_trait = chaste
 						}
 					}
-				} 
+				}
 				desc = court.3011.desc.shy_or_chaste
 			}
 			triggered_desc = {
-				trigger = { 
-					scope:inspired_writer = { 
+				trigger = {
+					scope:inspired_writer = {
 						OR = {
 							has_trait = adventurer
 							has_trait = pilgrim
@@ -2231,7 +2228,7 @@ court.3011 = {
 		character = scope:inspired_writer
 		animation = happiness
 	}
-	
+
 	trigger = {
 		has_ep1_dlc_trigger = yes
 		NOT = { has_trait = blind }
@@ -2251,7 +2248,7 @@ court.3011 = {
 	}
 
 	# Option A: Encourage them to keep writing
-	option = { 
+	option = {
 		name = court.3011.a
 		custom_tooltip = court.3011.c.tt.gain_inspiration
 		scope:inspired_writer = { create_inspiration = book_inspiration }
@@ -2274,7 +2271,7 @@ court.3011 = {
 	}
 
 	# Option C: You tell them to stop
-	option = { 
+	option = {
 		name = court.3011.c
 		custom_tooltip = court.3011.c.tt.hurt
 		add_prestige = minor_prestige_gain
@@ -2322,7 +2319,7 @@ court.3031 = {
 			}
 		}
 	}
-	 
+
 	weight_multiplier = {
 		base = 1
 		# Court weightings.
@@ -2365,14 +2362,14 @@ court.3031 = {
 					has_court_event_flag = no
 				}
 			}
-		}		
-		any_vassal = {
-			count > 0
-			has_vassal_stance = minority
 		}
 		any_vassal = {
 			count > 0
-			has_vassal_stance = barons_and_minor_landholders
+			vassal_stance = minority
+		}
+		any_vassal = {
+			count > 0
+			vassal_stance = barons_and_minor_landholders
 		}
 		any_sub_realm_county = {
 			culture = {
@@ -2469,12 +2466,10 @@ court.3031 = {
 	}
 
 	# Option A: Minority vassals
-	option = { 
+	option = {
 		name = court.3031.a
 		every_vassal = {
-			limit = {
-				has_vassal_stance = minority
-			}
+			vassal_stance = minority
 			custom = every_minority_vassal
 			add_opinion = {
 				target = root
@@ -2494,9 +2489,7 @@ court.3031 = {
 	option = {
 		name = court.3031.b
 		every_vassal = {
-			limit = {
-				has_vassal_stance = barons_and_minor_landholders
-			}
+			vassal_stance = barons_and_minor_landholders
 			custom = every_baron_vassal
 			add_opinion = {
 				target = root
@@ -2511,7 +2504,7 @@ court.3031 = {
 			}
 		}
 	}
-	
+
 	# Option C: Minority culture
 	option = {
 		name = court.3031.c
@@ -2542,11 +2535,11 @@ court.3031 = {
 			base = 10
 			modifier = {
 				has_trait = lazy
-				add = 10 
+				add = 10
 			}
 			modifier = {
 				has_trait = content
-				add = 10 
+				add = 10
 			}
 		}
 	}
@@ -2587,7 +2580,7 @@ court.3040 = {
 		}
 	}
 	lower_left_portrait = scope:jester
-	 
+
 	weight_multiplier = {
 		base = 1
 		# Court weightings.
@@ -2599,9 +2592,7 @@ court.3040 = {
 		any_parent = {
 			has_court_event_flag = no
 			is_courtier_of = root
-			NOT = { 
-				culture = root.culture 
-			}
+			culture != root.culture
 			save_temporary_scope_as = temp_parent_scope
 		}
 		capital_province.culture = root.culture
@@ -2613,9 +2604,7 @@ court.3040 = {
 			limit = {
 				has_court_event_flag = no
 				is_courtier_of = root
-				NOT = { 
-					culture = root.culture 
-				}
+				culture != root.culture
 			}
 			save_scope_as = homesick_parent
 			court_event_character_flag_effect = yes
@@ -2648,7 +2637,7 @@ court.3040 = {
 				save_scope_as = jester
 			}
 		}
-		
+
 		if = {
 			limit = {
 				OR = {
@@ -2738,7 +2727,7 @@ court.3040 = {
 	}
 
 	# Option A: increase amenities
-	option = { 
+	option = {
 		name = court.3040.a
 		trigger = {
 			# The culture of origin has higher court grandeur's courts
@@ -2753,19 +2742,19 @@ court.3040 = {
 			#Your amenities are not all top level
 			OR = {
 				amenity_level = {
-					type = court_fashion
+					target = court_fashion
 					value < max_amenity_level
 				}
 				amenity_level = {
-					type = court_lodging_standards
+					target = court_lodging_standards
 					value < max_amenity_level
 				}
 				amenity_level = {
-					type = court_food_quality
+					target = court_food_quality
 					value < max_amenity_level
 				}
 				amenity_level = {
-					type = court_servants
+					target = court_servants
 					value < max_amenity_level
 				}
 			}
@@ -2776,7 +2765,7 @@ court.3040 = {
 				25 = {
 					trigger = {
 						amenity_level = {
-							type = court_fashion
+							target = court_fashion
 							value < max_amenity_level
 						}
 					}
@@ -2792,7 +2781,7 @@ court.3040 = {
 				25 = {
 					trigger = {
 						amenity_level = {
-							type = court_lodging_standards
+							target = court_lodging_standards
 							value < max_amenity_level
 						}
 					}
@@ -2808,7 +2797,7 @@ court.3040 = {
 				25 = {
 					trigger = {
 						amenity_level = {
-							type = court_food_quality
+							target = court_food_quality
 							value < max_amenity_level
 						}
 					}
@@ -2824,7 +2813,7 @@ court.3040 = {
 				25 = {
 					trigger = {
 						amenity_level = {
-							type = court_servants
+							target = court_servants
 							value < max_amenity_level
 						}
 					}
@@ -2844,7 +2833,7 @@ court.3040 = {
 				target = root
 				modifier = listened_opinion
 			}
-		}	
+		}
 		stress_impact = {
 			greedy = major_stress_impact_gain
 			humble = medium_stress_impact_gain
@@ -2852,7 +2841,7 @@ court.3040 = {
 		}
 		ai_chance = {
 			base = 100
-			
+
 			ai_value_modifier = {
 				ai_greed = -1
 			}
@@ -2922,7 +2911,7 @@ court.3040 = {
 		}
 		ai_chance = {
 			base = 100
-			
+
 			modifier = {
 				has_trait = lazy
 				add = -25
@@ -2933,7 +2922,7 @@ court.3040 = {
 			}
 		}
 	}
-	
+
 	# Option C: parent's culture's jester
 	option = {
 		name = court.3040.c
@@ -2949,7 +2938,7 @@ court.3040 = {
 		}
 		ai_chance = {
 			base = 100
-			
+
 			modifier = {
 				has_trait = shy
 				add = -50
@@ -2957,7 +2946,7 @@ court.3040 = {
 		}
 	}
 
-	# Option D: Don't care, go sulk elsewhere 
+	# Option D: Don't care, go sulk elsewhere
 	option = {
 		name = court.3040.d
 		scope:homesick_parent = {
@@ -3025,7 +3014,7 @@ court.3060 = {
 			}
 		}
 	}
-	 
+
 	weight_multiplier = {
 		base = 0.5
 
@@ -3043,7 +3032,7 @@ court.3060 = {
 
 	trigger = {
 		NOR = {
-			any_owned_story = { story_type = story_cycle_pet_cat }
+			any_owned_story = { type = story_cycle_pet_cat }
 			has_character_modifier = cat_story_modifier
 		}
 		OR = {
@@ -3108,14 +3097,14 @@ court.3060 = {
 	}
 
 	# Option A: Adopt!
-	option = { 
+	option = {
 		name = court.3060.a
 		start_cat_story_cycle_effect = yes
 		hidden_effect = { add_character_modifier = rat_hunting_cat_modifier }
 
 		ai_chance = {
 			base = 20
-			
+
 			ai_value_modifier = {
 				ai_compassion = 1
 			}
@@ -3132,7 +3121,7 @@ court.3060 = {
 				opinion = -10
 			}
 		}
-		
+
 		ai_chance = {
 			base = 10
 			ai_value_modifier = {
@@ -3206,7 +3195,7 @@ scripted_trigger caligula_trigger = {
 		has_title = title:k_romagna
 		has_title = title:k_sardinia
 		has_title = title:e_italy
-		has_title = title:e_roman_empire
+		is_roman_emperor_excluding_byzantium_trigger = yes
 		capital_province = {
 			geographical_region = world_europe_west_britannia
 			geographical_region = world_europe_west_germania
@@ -3254,6 +3243,19 @@ court.4750 = {
 	trigger = {
 		has_court_event_flag = no
 		can_employ_court_position_type = court_poet_court_position
+		trigger_if = {
+			limit = {
+				is_ai = yes
+			}
+			any_pool_character = {
+				province = root.location
+				OR = {
+					diplomacy >= 14
+					has_trait = lifestyle_poet
+				}
+				is_available_ai_adult = yes
+			}
+		}
 	}
 	cooldown = { years = 25 }
 	court_scene = {
@@ -3285,7 +3287,7 @@ court.4750 = {
 					province = root.location
 					OR = {
 						diplomacy >= 14
-						has_trait = poet
+						has_trait = lifestyle_poet
 					}
 					is_available_ai_adult = yes
 				}
@@ -3295,7 +3297,7 @@ court.4750 = {
 				limit = {
 					OR = {
 						diplomacy >= 14
-						has_trait = poet
+						has_trait = lifestyle_poet
 					}
 					is_available_ai_adult = yes
 				}
@@ -3304,11 +3306,11 @@ court.4750 = {
 			if = {
 				limit = {
 					scope:poet = {
-						NOT = { has_trait = poet }
+						NOT = { has_trait = lifestyle_poet }
 					}
 				}
 				hidden_effect = { #Unop: Put this into an hidden_effect to not be displayed in event tooltip
-					scope:poet = { add_trait = poet }
+					scope:poet = { add_trait = lifestyle_poet }
 				}
 			}
 		}
@@ -3325,7 +3327,7 @@ court.4750 = {
 		}
 	}
 
-	option = { 
+	option = {
 		name = court.4750.a
 		add_character_flag = pope_joan
 		trigger = {
@@ -3357,7 +3359,7 @@ court.4750 = {
 			}
 		}
 	}
-	
+
 	option = {
 		name = court.4750.c
 		add_character_flag = sinbad
@@ -3433,7 +3435,7 @@ court.4750 = {
 	}
 	option = {
 		name = court.4750.g
-		add_character_flag = ruler_hero	
+		add_character_flag = ruler_hero
 		change_current_court_grandeur = minor_court_grandeur_gain
 		add_courtier = scope:poet
 		ai_chance = {
@@ -3449,7 +3451,7 @@ court.4750 = {
 		name = court.4750.h
 		add_character_flag = rejected_poet
 		stress_impact = {
-			poet = major_stress_impact_gain
+			lifestyle_poet = major_stress_impact_gain
 		}
 		ai_chance = {
 			base = 50
@@ -3640,11 +3642,11 @@ court.4751 = {
 				}
 			}
 		}
-	
+
 		save_scope_as = owner
 	}
 
-	option = { 
+	option = {
 		name = court.4751.a
 		trigger = {
 			has_character_flag = pope_joan
@@ -3657,7 +3659,7 @@ court.4751 = {
 			set_relation_potential_lover = scope:poet
 		}
 		if = {
-			limit = { artifact_use_indian_building_visuals_trigger = yes }
+			limit = { artifacts_use_indian_books_trigger = yes }
 			create_artifact = {
 				name = pope_joan_book_name
 				description = pope_joan_book_desc
@@ -3702,10 +3704,10 @@ court.4751 = {
 		name = court.4751.b
 		trigger = {
 			has_character_flag = pope_joan
-			NOT = { root = scope:current_head_of_faith }
+			root != scope:current_head_of_faith
 		}
 		if = {
-			limit = { artifact_use_indian_building_visuals_trigger = yes }
+			limit = { artifacts_use_indian_books_trigger = yes }
 			create_artifact = {
 				name = pope_joan_book_name
 				description = pope_joan_book_desc
@@ -3745,7 +3747,7 @@ court.4751 = {
 			}
 		}
 	}
-	
+
 	option = {
 		name = court.4751.c
 		flavor = court.4751.c.tt
@@ -3773,7 +3775,7 @@ court.4751 = {
 			}
 		}
 		if = {
-			limit = { artifact_use_indian_building_visuals_trigger = yes }
+			limit = { artifacts_use_indian_books_trigger = yes }
 			create_artifact = {
 				name = lady_godiva_book_name
 				description = lady_godiva_book_desc
@@ -3831,7 +3833,7 @@ court.4751 = {
 			save_scope_as = artifact
 		}
 		if = {
-			limit = { artifact_use_indian_building_visuals_trigger = yes }
+			limit = { artifacts_use_indian_books_trigger = yes }
 			create_artifact = {
 				name = nasreddin_book_name
 				description = nasreddin_book_desc
@@ -3884,7 +3886,7 @@ court.4751 = {
 				years = 5
 			}
 			if = {
-				limit = { artifact_use_indian_building_visuals_trigger = yes }
+				limit = { artifacts_use_indian_books_trigger = yes }
 				create_artifact = {
 					name = valmiki_book_name
 					description = valmiki_book_desc
@@ -3914,7 +3916,7 @@ court.4751 = {
 				years = 5
 			}
 			if = {
-				limit = { artifact_use_indian_building_visuals_trigger = yes }
+				limit = { artifacts_use_indian_books_trigger = yes }
 				create_artifact = {
 					name = caligula_book_name
 					description = caligula_book_desc
@@ -3940,7 +3942,7 @@ court.4751 = {
 		if = {
 			limit = { has_character_flag = ruler_hero }
 			if = {
-				limit = { artifact_use_indian_building_visuals_trigger = yes }
+				limit = { artifacts_use_indian_books_trigger = yes }
 				create_artifact = {
 					name = ruler_hero_book_name
 					description = ruler_hero_book_desc
@@ -3972,7 +3974,7 @@ court.4751 = {
 				years = 5
 			}
 			if = {
-				limit = { artifact_use_indian_building_visuals_trigger = yes }
+				limit = { artifacts_use_indian_books_trigger = yes }
 				create_artifact = {
 					name = sinbad_book_name
 					description = sinbad_book_desc
@@ -4033,7 +4035,7 @@ court.4751 = {
 				scope:poet = {
 					NOT = { has_court_position = court_poet_court_position }
 				}
-				is_ai = yes			
+				is_ai = yes
 			}
 			scope:poet = { silent_disappearance_effect = yes }
 		}
@@ -4085,7 +4087,7 @@ court.5030 = {
 			}
 		}
 	}
-	
+
 	trigger = {
 		NOT = { has_character_flag = had_event_court_5030 }
 		age >= 4
@@ -4189,7 +4191,7 @@ scripted_trigger court_5055_child_painter_trigger = {
 	is_of_major_or_minor_interest_trigger = { CHARACTER = root }
 }
 
-#A young courtier is exploring their artistic side - encourage or dissuade? 
+#A young courtier is exploring their artistic side - encourage or dissuade?
 court.5055 = {
 	type = court_event
 	title = court.5055.t
@@ -4206,7 +4208,7 @@ court.5055 = {
 		}
 	}
 	cooldown = { years = 25 }
-	
+
 	trigger = {
 		is_available_adult = yes
 		any_courtier = {
@@ -4284,7 +4286,7 @@ court.5060 = {
 			}
 		}
 	}
-	
+
 	trigger = {
 		NOT = { has_character_flag = had_event_court_5060 }
 		age >= 10
@@ -4295,8 +4297,8 @@ court.5060 = {
 			has_court_event_flag = no
 		}
 		any_held_title = {
-			tier = tier_county
-			NOT = { this = root.capital_county }
+			title_tier = county
+			this != root.capital_county
 		}
 	}
 
@@ -4337,7 +4339,7 @@ court.5060 = {
 				flag = was_the_target_of_event_court_5060
 				years = 10
 			}
-			
+
 			weight = {
 				base = 1
 				modifier = {
@@ -4497,7 +4499,7 @@ court.5060 = {
 #Maintenance event for the impressive knight variables - variables decrease over time or is removed
 court.5061 = {
 	hidden = yes
-	
+
 	trigger = {
 		exists = var:number_of_impressive_knight_things
 	}
@@ -4563,7 +4565,7 @@ court.5070 = {
 			}
 		}
 	}
-	
+
 	trigger = {
 		NOT = { has_character_flag = had_event_court_5070 }
 		age >= 10
@@ -4734,20 +4736,20 @@ court.5075 = {
 			}
 		}
 	}
-	
+
 	trigger = {
 		NOT = { has_character_flag = had_event_court_5075 }
 		age >= 14
 		OR = {
 			AND = {
-				is_independent_ruler = yes
+				top_liege = this
 				any_neighboring_top_liege_realm_owner = {
 					court_5075_neighbor_trigger = yes
 					has_court_event_flag = no
 				}
 			}
 			AND = {
-				is_independent_ruler = no
+				top_liege != this
 				any_neighboring_realm_same_rank_owner = {
 					court_5075_neighbor_trigger = yes
 					has_court_event_flag = no
@@ -4779,7 +4781,7 @@ court.5075 = {
 		}
 		if = {
 			limit = {
-				is_independent_ruler = yes
+				top_liege = this
 			}
 			random_neighboring_top_liege_realm_owner = {
 				limit = {
@@ -4852,7 +4854,7 @@ court.5075 = {
 		name = court.5075.c
 		trigger = {
 			NOT = {
-				any_owned_story = { story_type = story_cycle_martial_lifestyle_warhorse }
+				any_owned_story = { type = story_cycle_martial_lifestyle_warhorse }
 			}
 		}
 		add_prestige = medium_prestige_gain
@@ -4872,7 +4874,7 @@ court.5075 = {
 				}
 				#To assign the correct gender to the horse
 				random_owned_story = {
-					limit = { story_type = story_cycle_martial_lifestyle_warhorse }
+					type = story_cycle_martial_lifestyle_warhorse
 					if = {
 						limit = { scope:dummy_gender = { is_female = yes } }
 						assign_horse_gender_effect = { GENDER = female }
@@ -4974,7 +4976,7 @@ scripted_trigger court_6000_has_valid_secret_trigger = {
 }
 
 # A book detailing the nefarious deeds of your predecessor and their court is being circulated at your court. #
-	
+
 court.6000 = {
 	type = court_event
 	title = court.6000.t
@@ -5060,9 +5062,7 @@ court.6000 = {
 		random_courtier_or_guest = {
 			limit = {
 				age >= 14
-				NOT = {
-					this = scope:author
-				}
+				this != scope:author
 			}
 			save_scope_as = courtier
 			court_event_character_flag_effect = yes
@@ -5070,9 +5070,7 @@ court.6000 = {
 		if = {
 			limit = {
 				primary_title.previous_holder = {
-					NOT = {
-						this = root
-					}
+					this != root
 				}
 			}
 			primary_title.previous_holder = {
@@ -5191,7 +5189,7 @@ court.6001 = {
 		}
 	}
 }
-	
+
 court.6002 = {
 	title = court.6000.t
 	type = character_event
@@ -5426,7 +5424,7 @@ court.6010 = {
 			limit = {
 				exists = scope:preacher_liege
 				scope:preacher_liege = {
-					NOT = { this = root }
+					this != root
 					faith = scope:preacher.faith
 					is_ai = yes
 				}
@@ -5809,7 +5807,7 @@ court.6020 = {
 					}
 				}
 				has_trait = cynical
-				faith = { 
+				faith = {
 					OR = {
 						trait_is_sin = possessed_1
 						trait_is_sin = possessed_genetic
@@ -5844,7 +5842,7 @@ court.6020 = {
 					root.religion = religion:islam_religion
 					root.religion = { is_in_family = rf_eastern }
 				}
-			}			
+			}
 			add_learning_lifestyle_xp = major_lifestyle_xp
 		}
 		change_current_court_grandeur = major_court_grandeur_gain
@@ -5956,7 +5954,7 @@ court.6050 = {
 						root.culture = { has_cultural_pillar = language_occitano_romance }
 						root.culture = { has_cultural_pillar = heritage_latin }
 					}
-					
+
 				}
 				desc = court.6050.desc_sonetti
 			}
@@ -6060,7 +6058,7 @@ court.6050 = {
 				opinion = 30
 			}
 		}
-		
+
 		stress_impact = {
 			compassionate = medium_stress_impact_gain
 			patient = medium_stress_impact_gain
@@ -6106,7 +6104,7 @@ court.6050 = {
 			flag = supported_indecent_books
 			years = 20
 		}
-		
+
 		stress_impact = {
 			zealous = major_stress_impact_gain
 		}
@@ -6198,7 +6196,7 @@ court.6050 = {
 #########################
 
 # Your chaplain preaches against wine; your physician (and the court drunkard!) disagrees #
-	
+
 court.6060 = {
 	type = court_event
 	title = court.6060.t
@@ -6522,7 +6520,7 @@ court.6060 = {
 #############################
 
 # Your courtiers are dissatisfied with you being completely illiterate. How do you react? #
-	
+
 court.6070 = {
 	type = court_event
 	title = court.6070.t
@@ -6838,7 +6836,7 @@ court.6071 = {
 			 		limit = { is_available_ai_adult = yes }
 					save_scope_as = tutor_6070
 				}
-			}		
+			}
 			else_if = {
 				limit = {
 					exists = cp:councillor_court_chaplain
@@ -6866,7 +6864,7 @@ court.6071 = {
 				create_character = {
 					location = root.location
 					template = scholar_character
-					save_scope_as = tutor_6070			
+					save_scope_as = tutor_6070
 				}
 			}
 		}
@@ -6960,7 +6958,7 @@ court.6072 = {
 scripted_trigger court_6080_valid_visitor_trigger = {
 	is_available_healthy_ai_adult = yes
 	is_travelling = yes
-	is_independent_ruler = yes
+	top_liege = this
 	OR = {
 		has_trait = generous
 		has_trait = improvident
@@ -7075,14 +7073,14 @@ court.6080 = {
 				any_courtier_or_guest = {
 					is_available_ai_adult = yes
 					has_court_event_flag = no
-					NOT = { this = scope:beneficiary_1 }
+					this != scope:beneficiary_1
 				}
 			}
 			random_courtier_or_guest = {
 				limit = {
 					is_available_ai_adult = yes
 					has_court_event_flag = no
-					NOT = { this = scope:beneficiary_1 }
+					this != scope:beneficiary_1
 				}
 				save_scope_as = beneficiary_2
 				court_event_character_flag_effect = yes
@@ -7268,7 +7266,7 @@ court.6080 = {
 			}
 		}
 	}
-	after = { 
+	after = {
 		scope:6080_visitor = {
 			clear_court_event_participation = yes
 		}
@@ -7378,7 +7376,7 @@ court.6090 = {
 		random_court_position_holder = {
 			type = court_poet_court_position
 			limit = { is_available_ai_adult = yes }
-			save_scope_as = 6090_poet			
+			save_scope_as = 6090_poet
 		}
 		if = {
 			limit = {
@@ -7387,7 +7385,7 @@ court.6090 = {
 			random_court_position_holder = {
 				type = court_tutor_court_position
 				limit = { is_available_ai_adult = yes }
-				save_scope_as = 6090_poet		
+				save_scope_as = 6090_poet
 			}
 		}
 		if = {
@@ -7477,7 +7475,7 @@ court.6090 = {
 			}
 			else = {
 				add_diplomacy_skill = 1
-			}	
+			}
 		}
 		scope:6090_child_b = {
 			add_opinion = {
@@ -7523,7 +7521,7 @@ court.6090 = {
 				}
 				else = {
 					add_diplomacy_skill = 1
-				}	
+				}
 			}
 		}
 		stress_impact = {
@@ -7631,7 +7629,7 @@ court.6090 = {
 		scope:6090_child_c ?= {
 			clear_court_event_participation = yes
 		}
-	}	
+	}
 }
 
 
@@ -7665,7 +7663,7 @@ court.7300 = {
 	title = court.7300.t
 	desc = court.7300.desc
 	theme = court
-	
+
 	court_scene = {
 		button_position_character = scope:taster
 		roles = {
@@ -7698,7 +7696,7 @@ court.7300 = {
 		}
 		# The level of food amenities are crap
 		amenity_level = {
-			type = court_food_quality
+			target = court_food_quality
 			value <= medium_amenity_level
 		}
 		NOT = {
@@ -8233,7 +8231,7 @@ court.8001 = {
 			}
 		}
 	}
-	
+
 	trigger = {
 		any_courtier_or_guest = {
 			count >= 1
@@ -8677,7 +8675,7 @@ court.8010 = {
         			}
 		        	random_court_position_holder = {
 						type = bodyguard_court_position
-						limit = { 
+						limit = {
 							court_8010_underequipped_trigger = yes
 							location = root.location
 						}
@@ -8695,7 +8693,7 @@ court.8010 = {
         			}
 					random_court_position_holder = {
 						type = champion_court_position
-						limit = { 
+						limit = {
 							court_8010_underequipped_trigger = yes
 							location = root.location
 						}
@@ -8713,7 +8711,7 @@ court.8010 = {
         			}
 					random_court_position_holder = {
 						type = akolouthos_court_position
-						limit = { 
+						limit = {
 							court_8010_underequipped_trigger = yes
 							location = root.location
 						}
@@ -8730,7 +8728,7 @@ court.8010 = {
 						}
         			}
 					random_knight = {
-						limit = { 
+						limit = {
 							court_8010_underequipped_trigger = yes
 							location = root.location
 							is_landed = no
@@ -8854,11 +8852,11 @@ court.8010 = {
             }
             modifier = {	#Weight down for stress.
             	add = -15
-            	has_trait = greedy            	
+            	has_trait = greedy
             }
             modifier = {	#Weight down for stress.
             	add = -15
-            	has_trait = callous            	
+            	has_trait = callous
             }
         }
     }
@@ -8903,11 +8901,11 @@ court.8010 = {
             }
             modifier = {	#Weight down for stress.
             	add = -30
-            	has_trait = greedy            	
+            	has_trait = greedy
             }
             modifier = {	#Weight down for stress.
             	add = -15
-            	has_trait = arrogant            	
+            	has_trait = arrogant
             }
         }
     }
@@ -8948,11 +8946,11 @@ court.8010 = {
             }
             modifier = {	#Weight down for stress.
             	add = -15
-            	has_trait = generous            	
+            	has_trait = generous
             }
             modifier = {	#Weight down for stress.
             	add = -15
-            	has_trait = paranoid            	
+            	has_trait = paranoid
             }
 
         }
@@ -8992,7 +8990,7 @@ court.8020 = {
     }
 
     trigger = {
-    	amenity_level = { type = court_fashion value <= medium_amenity_level }
+    	amenity_level = { target = court_fashion value <= medium_amenity_level }
         is_married = yes
         primary_spouse = {
         	is_alive = yes
@@ -9002,7 +9000,7 @@ court.8020 = {
         	is_available_ai_adult = yes
         	has_court_event_flag = no
 		}
-		
+
 		NOT = {
 			government_has_flag = government_is_tribal # No changing amenities above what's legal for tribals
 		}
@@ -9024,7 +9022,7 @@ court.8020 = {
     			base = 1
     			modifier = {
     				factor = 20
-    				NOT = { culture = root.culture }
+    				culture != root.culture
     			}
     			modifier = {
     				factor = 10
@@ -9067,15 +9065,15 @@ court.8020 = {
             }
             modifier = {	#Weight down for stress.
             	add = -15
-            	has_trait = greedy            	
+            	has_trait = greedy
             }
             modifier = {	#Weight down for stress.
             	add = -15
-            	has_trait = content            	
+            	has_trait = content
             }
             modifier = {	#Weight down for stress.
             	add = -15
-            	has_trait = humble            	
+            	has_trait = humble
             }
             modifier = {
             	gold < minor_gold_value
@@ -9109,15 +9107,15 @@ court.8020 = {
             }
             modifier = {	#Weight down for stress.
             	add = -15
-            	has_trait = arrogant            	
+            	has_trait = arrogant
             }
             modifier = {	#Weight down for stress.
             	add = -15
-            	has_trait = wrathful            	
+            	has_trait = wrathful
             }
             modifier = {	#Weight down for stress.
             	add = -15
-            	has_trait = vengeful            	
+            	has_trait = vengeful
             }
         }
     }
@@ -9226,13 +9224,13 @@ court.8030 = {
     		limit = {
     			any_child = {
     				court_8030_child_trigger = yes
-    				NOT = { this = scope:child_1 }
+    				this != scope:child_1
     			}
     		}
     		random_child = {
     			limit = {
     				court_8030_child_trigger = yes
-    				NOT = { this = scope:child_1 }
+    				this != scope:child_1
     			}
 	    		weight = {
 	    			base = 1
@@ -9255,7 +9253,7 @@ court.8030 = {
     	}
     }
 
-    option = { 
+    option = {
         name = court.8030.a
         change_current_court_grandeur = medium_court_grandeur_gain
         add_character_modifier = {
@@ -9277,12 +9275,12 @@ court.8030 = {
             }
             modifier = {	#Weight up.
             	add = 30
-            	has_trait = lifestyle_hunter       	
+            	has_trait = lifestyle_hunter
             }
         }
     }
 
-    option = { 
+    option = {
         name = court.8030.b
         scope:child_1 = {
         	start_dog_story_cycle_effect = yes
@@ -9315,20 +9313,20 @@ court.8030 = {
             }
             modifier = {	#Weight up.
             	add = -15
-            	has_trait = lifestyle_hunter       	
+            	has_trait = lifestyle_hunter
             }
             modifier = {	#Weight up.
             	add = -5
-            	has_trait = just       	
+            	has_trait = just
             }
             modifier = {	#Weight up.
             	add = -15
-            	has_trait = callous       	
+            	has_trait = callous
             }
         }
     }
 
-    option = { 
+    option = {
         name = court.8030.c
         trigger = { exists = scope:child_2 }
         scope:child_2 = {
@@ -9359,20 +9357,20 @@ court.8030 = {
             }
             modifier = {	#Weight up.
             	add = -15
-            	has_trait = lifestyle_hunter       	
+            	has_trait = lifestyle_hunter
             }
             modifier = {	#Weight up.
             	add = -5
-            	has_trait = just       	
+            	has_trait = just
             }
             modifier = {	#Weight up.
             	add = -15
-            	has_trait = callous       	
+            	has_trait = callous
             }
         }
     }
 
-    option = { 
+    option = {
         name = court.8030.d
         trigger = {
         	NOT = { has_character_modifier = dog_story_modifier }
@@ -9408,15 +9406,15 @@ court.8030 = {
             }
             modifier = {	#Weight up.
             	add = -15
-            	has_trait = lifestyle_hunter       	
+            	has_trait = lifestyle_hunter
             }
             modifier = {	#Weight up.
             	add = -5
-            	has_trait = just       	
+            	has_trait = just
             }
             modifier = {	#Weight up.
             	add = -15
-            	has_trait = generous       	
+            	has_trait = generous
             }
         }
     }
@@ -9443,7 +9441,7 @@ court.8030 = {
 scripted_trigger court_8040_courtier_trigger = {
 	is_available_healthy_ai_adult = yes
 	any_held_title = { count = 0 }
-	NOR = { 
+	NOR = {
 		is_close_family_of = root
 		has_trait = content
 		has_trait = humble
@@ -9502,7 +9500,7 @@ scripted_effect court_8040_grant_effect = {
 					type = indebted_hook
 				}
 			}
-			scope:new_noble = { 
+			scope:new_noble = {
 				add_character_flag = {
 					flag = joining_faction_block
 					years = 20
@@ -9512,7 +9510,7 @@ scripted_effect court_8040_grant_effect = {
 			every_in_list = {
 				list = court_8040_list
 				limit = {
-					NOT = { this = scope:new_noble }
+					this != scope:new_noble
 				}
 				add_opinion = {
 					target = root
@@ -9664,14 +9662,14 @@ court.8040 = {
         }
         OR = {
         	any_held_title = {
-	        	tier = tier_barony
+	        	title_tier = barony
 	        	is_capital_barony = no
 	        	is_leased_out = no
-	        	NOT = { this = root.capital_barony }
+	        	this != root.capital_barony
 	        }
 	        any_held_title = {
 	        	count >= 4
-	        	tier = tier_county
+	        	title_tier = county
 				is_landless_type_title = no
 	        }
 	    }
@@ -9720,18 +9718,18 @@ court.8040 = {
         if = { # Find a valid barony to give away
         	limit = {
         		any_held_title = {
-        			tier = tier_barony
+        			title_tier = barony
         			is_capital_barony = no
         			is_leased_out = no
-        			NOT = { this = root.capital_barony }
+        			this != root.capital_barony
         		}
         	}
         	ordered_held_title = {
+				title_tier = barony
 	        	limit = {
-	        		tier = tier_barony
 	        		is_capital_barony = no
         			is_leased_out = no
-        			NOT = { this = root.capital_barony }
+        			this != root.capital_barony
 	        	}
 	        	order_by = {
 	        		value = 0
@@ -9742,9 +9740,9 @@ court.8040 = {
         }
         else = { # Find a valid county to give away
 	        ordered_held_title = {
+				title_tier = county
 	        	limit = {
-	        		tier = tier_county
-	        		NOT = { this = root.capital_county }
+	        		this != root.capital_county
 					is_landless_type_title = no
 	        	}
 	        	order_by = {
@@ -9953,7 +9951,7 @@ court.8040 = {
         	}
         }
         stress_impact = {
-			poet = medium_stress_impact_loss # Poetry duels are my jam
+			lifestyle_poet = medium_stress_impact_loss # Poetry duels are my jam
 			gregarious = medium_stress_impact_loss # Having fun with friends was the real reward
 			diplomat = medium_stress_impact_loss # Solving problems with words is the coolest
 			greedy = medium_stress_impact_gain # But, titles
@@ -9969,7 +9967,7 @@ court.8040 = {
    			}
             modifier = {	#Weight up for stress.
 				add = 15
-				has_trait = poet
+				has_trait = lifestyle_poet
 			}
 			modifier = {	#Weight up for stress.
 				add = 15
@@ -10103,7 +10101,7 @@ court.8050 = {
         roles = {
             ROOT = {
                 group = event_group
-                animation = throne_room_conversation_4 
+                animation = throne_room_conversation_4
             }
             scope:servant = {
                 group = event_group
@@ -10116,7 +10114,7 @@ court.8050 = {
     	has_royal_court = yes
     	has_court_event_flag = no
     	OR = {
-    		any_vassal = { 
+    		any_vassal = {
     			court_8050_secrets_trigger = yes
     			has_court_event_flag = no
 			}
@@ -10127,7 +10125,7 @@ court.8050 = {
     		}
     	}
 		amenity_level = {
-			type = court_servants
+			target = court_servants
 			value > high_amenity_level
 		}
     }
@@ -10137,7 +10135,7 @@ court.8050 = {
         modifier = {
         	factor = 2
         	amenity_level = {
-				type = court_servants
+				target = court_servants
 				value = max_amenity_level
 			}
 		}
@@ -10196,12 +10194,12 @@ court.8050 = {
     		limit = {
 	        	any_in_list = {
 	        		list = court_8050_secret_list
-	        		NOT = { this = scope:vassal }
+	        		this != scope:vassal
 	        	}
 	        }
 	        random_in_list = {
 	        	list = court_8050_secret_list
-	        	limit = { NOT = { this = scope:vassal } }
+	        	limit = { this != scope:vassal }
 	        	save_scope_as = vassal_2
 	        	random_secret = {
 	        		limit = {
@@ -10369,7 +10367,7 @@ scripted_trigger court_8090_barony_trigger = {
 	tier = tier_barony
 	is_leased_out = no
 	title_province.free_building_slots > 0
-	NOT = { county = scope:my_county }
+	county != scope:my_county
 }
 
 court.8090 = {
@@ -10429,7 +10427,7 @@ court.8090 = {
     		has_court_event_flag = no
     	}
     	any_held_title = {
-    		tier = tier_barony
+    		title_tier = barony
     		is_leased_out = no
     		title_province.free_building_slots > 0
 			title_province.county = {
@@ -10501,20 +10499,20 @@ court.8090 = {
     	}
     	scope:architect = { court_event_character_flag_effect = yes }
 		ordered_held_title = { # Save barony with least buildings
+			title_tier = barony
 			limit = {
-				tier = tier_barony
 				is_leased_out = no
     			title_province.free_building_slots > 0
 			}
 			order_by = {
-				value = 0 
+				value = 0
 				subtract = title_province.combined_building_level
 			}
 			save_scope_as = my_barony
 			county = { save_scope_as = my_county }
 			scope:my_barony.title_province = { add_random_building_variable_effect = yes }
 		}
-		scope:my_county = { 
+		scope:my_county = {
 			ordered_county_province = { # Save church in same county
 				limit = {
 					has_holding_type = church_holding
@@ -10540,7 +10538,7 @@ court.8090 = {
 						NOT = { exists = scope:temple_barony }
 					}
 					any_held_title = {
-						tier = tier_county
+						title_tier = county
 						any_county_province = {
 							has_holding_type = church_holding
 							free_building_slots > 0
@@ -10554,8 +10552,8 @@ court.8090 = {
 					NOT = { exists = scope:temple_barony }
 				}
 				random_held_title = {
+					title_tier = county
 					limit = {
-						tier = tier_county
 						any_county_province = {
 							has_holding_type = church_holding
 							free_building_slots > 0
@@ -10576,7 +10574,7 @@ court.8090 = {
 
     option = { # For my barony
 		name = court.8090.a
-		remove_short_term_gold = court_8090_half_building_cost_value
+		remove_treasury_or_gold = court_8090_half_building_cost_value
 		scope:my_barony.title_province = { add_random_building_construct_effect = yes }
 		stress_impact = {
 			architect = medium_stress_impact_loss # A good idea
@@ -10591,15 +10589,15 @@ court.8090 = {
             }
             modifier = {	#Weight up.
             	add = 15
-            	has_trait = architect       	
+            	has_trait = architect
             }
             modifier = {	#Weight down for stress.
             	add = -15
-            	has_trait = lazy       	
+            	has_trait = lazy
             }
             modifier = {	#Weight down for stress.
             	add = -15
-            	has_trait = greedy       	
+            	has_trait = greedy
             }
             modifier = {
             	gold < court_8090_half_building_cost_value
@@ -10615,7 +10613,7 @@ court.8090 = {
 			exists = scope:temple_barony
 		}
 		add_piety = minor_piety_value
-		remove_short_term_gold = court_8090_half_building_cost_value
+		remove_treasury_or_gold = court_8090_half_building_cost_value
 		reverse_add_opinion = {
 			target = scope:chaplain
 			modifier = pleased_opinion
@@ -10635,15 +10633,15 @@ court.8090 = {
             }
             modifier = {	#Weight up.
             	add = 5
-            	has_trait = architect       	
+            	has_trait = architect
             }
             modifier = {	#Weight down for stress.
             	add = -15
-            	has_trait = cynical       	
+            	has_trait = cynical
             }
             modifier = {	#Weight down for stress.
             	add = -15
-            	has_trait = greedy       	
+            	has_trait = greedy
             }
              modifier = {
             	gold < court_8090_half_building_cost_value
@@ -10659,7 +10657,7 @@ court.8090 = {
 			is_ai = no
 		}
 		flavor = court.8090.c.tt
-		remove_short_term_gold = hold_court_holding_cost_architect_cheaper_value
+		remove_treasury_or_gold = hold_court_holding_cost_architect_cheaper_value
 		scope:empty_holding = {
 			begin_create_holding = {
 				type = castle_holding
@@ -10699,15 +10697,15 @@ court.8090 = {
             }
             modifier = {	#Weight down for stress.
             	add = -15
-            	has_trait = architect       	
+            	has_trait = architect
             }
             modifier = {	#Weight down for stress.
             	add = -30
-            	has_trait = callous       	
+            	has_trait = callous
             }
             modifier = {	#Weight down for stress.
             	add = -30
-            	has_trait = diligent       	
+            	has_trait = diligent
             }
         }
 	}
@@ -10842,7 +10840,7 @@ court.8140 = {
     			trigger = {
     				NOT = {
     					any_owned_story = {
-							story_type = story_cycle_martial_lifestyle_warhorse
+							type = story_cycle_martial_lifestyle_warhorse
 						}
 					}
 					exists = court_position:master_of_horse_court_position #Unop Add court position check
@@ -11003,7 +11001,7 @@ court.8140 = {
         	base = 100
         	ai_value_modifier = {
         		ai_energy = 1
-			}	
+			}
         }
     }
 
@@ -11065,23 +11063,23 @@ scripted_trigger court_8150_vassal_trigger = {
 	court_8150_foodie_trigger = yes
 	trigger_if = {
 		limit = { exists = scope:chaplain }
-		NOT = { this = scope:chaplain }
+		this != scope:chaplain
 	}
 	trigger_if = {
 		limit = { exists = scope:food_taster }
-		NOT = { this = scope:food_taster }
+		this != scope:food_taster
 	}
 	trigger_if = {
 		limit = { exists = scope:high_almoner }
-		NOT = { this = scope:high_almoner }
+		this != scope:high_almoner
 	}
 	trigger_if = {
 		limit = { exists = scope:vassal_1 }
-		NOT = { this = scope:vassal_1 }
+		this != scope:vassal_1
 	}
 	trigger_if = {
 		limit = { exists = scope:vassal_2 }
-		NOT = { this = scope:vassal_2 }
+		this != scope:vassal_2
 	}
 }
 
@@ -11134,7 +11132,10 @@ court.8150 = {
     }
 
     trigger = {
-    	amenity_level = { type = court_food_quality value >= high_amenity_level }
+		NOT = {
+			faith = { has_doctrine = tenet_ritual_celebrations }
+		}
+    	amenity_level = { target = court_food_quality value >= high_amenity_level }
     	OR = {
     		AND = {
     			is_married = yes
@@ -11160,7 +11161,7 @@ court.8150 = {
         base = 1
         modifier = {
         	add = 1
-        	amenity_level = { type = court_food_quality value > very_high_amenity_level }
+        	amenity_level = { target = court_food_quality value > very_high_amenity_level }
         }
         modifier = {
         	add = 1
@@ -11200,7 +11201,7 @@ court.8150 = {
 					}
 					trigger_if = {
 						limit = { exists = scope:chaplain }
-						NOT = { this = scope:chaplain }
+						this != scope:chaplain
 					}
 				}
     		}
@@ -11215,7 +11216,7 @@ court.8150 = {
 					}
 					trigger_if = {
 						limit = { exists = scope:chaplain }
-						NOT = { this = scope:chaplain }
+						this != scope:chaplain
 					}
 		        }
 				save_scope_as = high_almoner
@@ -11847,7 +11848,7 @@ scripted_trigger sodomite_crime_trigger = {
 }
 
 scripted_trigger incest_crime_trigger = {
-	AND = {	
+	AND = {
 		liege.faith = {
 			NOT = { has_doctrine = doctrine_consanguinity_unrestricted }
 		}
@@ -11912,10 +11913,10 @@ scripted_trigger court_8170_criminal_trigger = {
 	is_imprisoned = no
 	is_landed = no
 	is_illegal_criminal_trigger = yes
-	NOR = { 
+	NOR = {
 		has_relation_lover = root
 		has_relation_soulmate = root
-	}	
+	}
 }
 
 scripted_effect court_8170_torture_etc_end_effect = {
@@ -12200,9 +12201,7 @@ court.8170 = {
 				custom_tooltip = public_execution_control_effect
 				hidden_effect = {
 					every_held_title = {
-						limit = {
-							tier = tier_county
-						}
+						title_tier = county
 						change_county_control = executioner_control_value
 					}
 				}
@@ -12471,11 +12470,11 @@ court.9000 = {
 			}
 		}
 	}
-	
+
 	cooldown = {
 		years = 10
 	}
-	
+
 	trigger = {
 		is_available_adult = yes
 		is_married = yes
@@ -12533,22 +12532,22 @@ court.9000 = {
 				}
 				modifier = {
 					add = 10
-					has_trait = poet
+					has_trait = lifestyle_poet
 				}
 			}
 			hidden_effect = {
 				if = {
 					limit = {
 						NOT = {
-							has_trait = poet
+							has_trait = lifestyle_poet
 						}
 					}
-					add_trait = poet
+					add_trait = lifestyle_poet
 				}
 			}
 			save_scope_as = flirty_knight
 			court_event_character_flag_effect = yes
-			
+
 			# Set up a subject gender.
 			select_poem_subject_gender_effect = {
 				SUBJECT = flag:specific
@@ -12561,9 +12560,9 @@ court.9000 = {
 
 	option = { # Stop this at once!
 		name = court.9000.b
-		
+
 		custom_tooltip = court_9000_b_tt
-		
+
 		add_prestige = minor_prestige_loss
 		add_character_modifier = {
 			modifier = detractor_of_courtly_love_modifier
@@ -12588,7 +12587,7 @@ court.9000 = {
 				}
 			}
 		}
-		
+
 		stress_impact = {
 			trusting = massive_stress_impact_gain
 			forgiving = medium_stress_impact_gain
@@ -12608,12 +12607,12 @@ court.9000 = {
 			}
 		}
 	}
-	
+
 	option = { # Let it go on!
 		name = court.9000.c
-		
+
 		custom_tooltip = court_9000_c_tt
-		
+
 		change_current_court_grandeur = major_court_grandeur_gain
 		add_character_modifier = {
 			modifier = promoter_of_courtly_love_modifier
@@ -12629,7 +12628,7 @@ court.9000 = {
 				}
 			}
 		}
-		
+
 		stress_impact = {
 			paranoid = massive_stress_impact_gain
 			arrogant = major_stress_impact_gain
@@ -12680,11 +12679,11 @@ court.9001 = {
 			}
 		}
 	}
-	
+
 	cooldown = {
 		years = 30
 	}
-	
+
 	trigger = {
 		is_available_adult = yes
 		is_married = yes
@@ -12696,7 +12695,7 @@ court.9001 = {
 				has_relation_soulmate = root
 			}
 			might_cheat_on_every_partner_trigger = yes
-			
+
 			any_targeting_scheme = {
 				scheme_owner = {
 					is_available_adult = yes
@@ -12706,7 +12705,7 @@ court.9001 = {
 				}
 				scheme_type = courting
 			}
-			
+
 			is_attracted_to_gender_of = scope:attraction_check
 		}
 	}
@@ -12747,7 +12746,7 @@ court.9001 = {
 
 	option = { # Duel them
 		name = court.9001.a
-		
+
 		trigger = {
 			can_start_single_combat_trigger = yes
 			scope:flirty_knight = {
@@ -12756,7 +12755,7 @@ court.9001 = {
 			}
 		}
 		custom_tooltip = court.9001.a.tt
-		
+
 		configure_start_single_combat_effect = {
 			SC_INITIATOR = root
 			SC_ATTACKER = root
@@ -12783,22 +12782,22 @@ court.9001 = {
 
 	option = { # Banish the knight
 		name = court.9001.b
-		
+
 		add_gold = 5
-		
+
 		scope:flirty_knight = {
 			banish_effect = { BANISHER = root }
-			hidden_effect = {	
+			hidden_effect = {
 				if = {
 					limit = {
 						any_scheme = {
-							scheme_type = courting
+							type = courting
 							scheme_target_character = scope:flirty_spouse
 						}
 					}
 					random_scheme = {
+						type = courting
 						limit = {
-							scheme_type = courting
 							scheme_target_character = scope:flirty_spouse
 						}
 						end_scheme = yes
@@ -12825,20 +12824,20 @@ court.9001 = {
 				type = loyalty_hook
 			}
 		}
-		
+
 		scope:flirty_spouse = {
 			progress_towards_rival_effect = {
 				CHARACTER = root
 				REASON = rival_banished_knight
 				OPINION = 0
 			}
-			
+
 			add_opinion = {
 				modifier = how_could_you_opinion
 				target = root
 			}
 		}
-		
+
 		stress_impact = {
 			trusting = massive_stress_impact_gain
 			forgiving = medium_stress_impact_gain
@@ -12859,10 +12858,10 @@ court.9001 = {
 			}
 		}
 	}
-	
+
 	option = { # Let it go on!
 		name = court.9001.c
-		
+
 		change_current_court_grandeur = major_court_grandeur_gain
 		if = {
 			limit = {
@@ -12878,7 +12877,7 @@ court.9001 = {
 			custom_tooltip = court_9000.c.tt
 		}
 		else =  { add_prestige = medium_prestige_gain }
-		
+
 		stress_impact = {
 			paranoid = massive_stress_impact_gain
 			arrogant = major_stress_impact_gain
@@ -12915,7 +12914,7 @@ court.9002 = {
 	immediate = {
 		# Inform both parties that the duel has invalidated.
 		scope:root_for_loc = {
-			send_interface_toast = {	
+			send_interface_toast = {
 				title = court.9002.trigger_failure
 				left_icon = scope:flirty_knight
 			}
@@ -12960,23 +12959,23 @@ court.9004 = {
 	}
 
 	immediate = {
-		
+
 	}
 
 	option = { # Leave my spouse alone!
 		name = court.9004.a
-		
+
 		scope:flirty_knight = {
 			if = {
 				limit = {
 					any_scheme = {
-						scheme_type = courting
+						type = courting
 						scheme_target_character = scope:flirty_spouse
 					}
 				}
 				random_scheme = {
+					type = courting
 					limit = {
-						scheme_type = courting
 						scheme_target_character = scope:flirty_spouse
 					}
 					end_scheme = yes
@@ -13014,7 +13013,7 @@ court.9004 = {
 				target = scope:flirty_knight
 			}
 		}
-		
+
 		add_character_modifier = {
 			modifier = knight_of_love_modifier
 			years = 20
@@ -13037,7 +13036,7 @@ court.9004 = {
 				set_relation_lover = { reason = lover_dueled_for_love target = root involved_character = scope:flirty_knight }
 			}
 		}
-		
+
 		ai_chance = {
 			base = 100
 		}
@@ -13065,12 +13064,12 @@ court.9005 = {
 	}
 
 	immediate = {
-		
+
 	}
 
 	option = {
 		name = court.9005.a
-		
+
 		scope:flirty_knight = {
 			hidden_effect = {
 				if = {
@@ -13093,7 +13092,7 @@ court.9005 = {
 				}
 			}
 		}
-		
+
 		scope:flirty_spouse = {
 			add_opinion = {
 				target = root
@@ -13136,7 +13135,7 @@ court.9005 = {
 		else = {
 			scope:flirty_knight = { add_prestige = major_prestige_gain }
 		}
-		
+
 		ai_chance = {
 			base = 100
 		}
@@ -13172,15 +13171,15 @@ court.9100 = {
 			}
 		}
 	}
-	
+
 	cooldown = {
 		years = 10
 	}
-	
+
 	trigger = {
 		is_available = yes
 		age >= 10
-		amenity_level = { type = court_food_quality value >= 3 }
+		amenity_level = { target = court_food_quality value >= 3 }
 		any_courtier_or_guest = {
 			is_available_ai_adult = yes
 			has_court_event_flag = no
@@ -13241,9 +13240,7 @@ court.9100 = {
 						has_relation_rival = root
 					}
 					is_of_major_or_minor_interest_trigger = { CHARACTER = root }
-					NOT = {
-						this = scope:food_lover_1
-					}
+					this != scope:food_lover_1
 				}
 				weight = {
 					base = 1
@@ -13302,6 +13299,9 @@ court.9100 = {
 
 	option = { # More working, less stuffing faces!
 		name = court.9100.a
+		trigger = {
+			NOT = { government_has_flag = government_is_mandala }
+		}
 		add_character_modifier = {
 			modifier = more_work_less_fun_modifier
 			years = 15
@@ -13347,7 +13347,7 @@ court.9100 = {
 			CHARACTER = scope:food_lover_3
 			OPINION = default_friend_opinion
 		}
-		
+
 		stress_impact = {
 			sadistic = massive_stress_impact_gain
 			greedy = medium_stress_impact_gain
@@ -13369,14 +13369,14 @@ court.9100 = {
 			}
 		}
 	}
-	
+
 	option = { # Let them enjoy themselves in peace!
 		name = court.9100.d
-		
+
 		change_current_court_grandeur = medium_court_grandeur_gain
-		
+
 		add_prestige = minor_prestige_gain
-		
+
 		stress_impact = {
 			gregarious = minor_stress_impact_gain
 			gluttonous = minor_stress_impact_gain
@@ -13433,15 +13433,15 @@ court.9300 = {
 			}
 		}
 	}
-	
+
 	cooldown = {
 		years = 30
 	}
-	
+
 	trigger = {
 		is_available = yes
 		age >= 10
-		amenity_level = { type = court_food_quality value >= 4 }
+		amenity_level = { target = court_food_quality value >= 4 }
 		any_courtier = {
 			is_available_ai_adult = yes
 			has_court_event_flag = no
@@ -13497,9 +13497,7 @@ court.9300 = {
 		random_courtier = {
 			limit = {
 				is_available_ai_adult = yes
-				NOT = {
-					this = scope:overindulger_target
-				}
+				this != scope:overindulger_target
 			}
 			weight = {
 				base = 1
@@ -13538,7 +13536,7 @@ court.9300 = {
 				gold = root.tiny_gold_value
 			}
 		}
-		
+
 		stress_impact = {
 			forgiving = massive_stress_impact_gain
 			compassionate = major_stress_gain
@@ -13557,7 +13555,7 @@ court.9300 = {
 
 	option = { # By the gods, man, stop eating!
 		name = court.9300.b
-		
+
 		duel = {
 			skill = diplomacy
 			value = 12
@@ -13633,7 +13631,7 @@ court.9300 = {
 				}
 			}
 		}
-		
+
 		stress_impact = {
 			vengeful = massive_stress_impact_gain
 			paranoid = major_stress_gain
@@ -13651,7 +13649,7 @@ court.9300 = {
 
 	option = { # You're barred from the pantry...
 		name = court.9300.d
-		
+
 		scope:overindulger_target = {
 			add_opinion = {
 				target = root
@@ -13670,7 +13668,7 @@ court.9300 = {
 				}
 			}
 		}
-		
+
 		stress_impact = {
 			greedy = medium_stress_impact_gain
 			ambitious = medium_stress_impact_gain
@@ -13731,16 +13729,16 @@ court.9400 = {
 			}
 		}
 	}
-	
+
 	cooldown = {
 		years = 15
 	}
-	
+
 	trigger = {
 		is_available = yes
 		age >= 10
-		amenity_level = { type = court_food_quality value >= 2 }
-		amenity_level = { type = court_servants value >= 2 }
+		amenity_level = { target = court_food_quality value >= 2 }
+		amenity_level = { target = court_servants value >= 2 }
 		OR = {
 			AND = {
 				any_courtier = {
@@ -13751,7 +13749,7 @@ court.9400 = {
 				any_courtier = {
 					court_9400_courtier_trigger = yes
 					has_court_event_flag = no
-					NOT = { this = scope:jester_check }
+					this != scope:jester_check
 				}
 			}
 			any_vassal = {
@@ -13763,7 +13761,7 @@ court.9400 = {
 				}
 			}
 		}
-		
+
 	}
 
 	weight_multiplier = {
@@ -13785,14 +13783,14 @@ court.9400 = {
 				}
 			}
 			save_scope_as = pie_presenting_courtier
-			court_event_character_flag_effect = yes 
+			court_event_character_flag_effect = yes
 			random_courtier = {
 				limit = {
 					court_9400_court_jester_trigger = yes
 					has_court_event_flag = no
 				}
 				save_scope_as = court_jester
-				court_event_character_flag_effect = yes 
+				court_event_character_flag_effect = yes
 			}
 		}
 		if = {
@@ -13828,7 +13826,7 @@ court.9400 = {
 				court_event_character_flag_effect = yes
 			}
 		}
-		scope:pie_presenting_courtier = {	
+		scope:pie_presenting_courtier = {
 			progress_towards_friend_effect = {
 				REASON = friend_played_trick_on_liege
 				CHARACTER = scope:court_jester
@@ -13839,25 +13837,25 @@ court.9400 = {
 
 	option = { # My favorite meal!
 		name = court.9400.a
-		
+
 		trait = cannibal
-		
+
 		trigger = {
 			is_cannibal_trigger = yes
 		}
-		
+
 		if = {
 			limit = {
 				any_secret = {
-					secret_type = secret_cannibal
+					type = secret_cannibal
 					NOT = {
 						is_known_by = scope:pie_presenting_courtier
 					}
 				}
 			}
 			random_secret = {
+				type = secret_cannibal
 				limit = {
-					secret_type = secret_cannibal
 					NOT = {
 						is_known_by = scope:pie_presenting_courtier
 					}
@@ -13865,25 +13863,25 @@ court.9400 = {
 				reveal_to = scope:pie_presenting_courtier
 			}
 		}
-		
+
 		scope:pie_presenting_courtier = {
 			add_opinion = {
 				target = root
 				modifier = absolutely_horrified_opinion
 			}
 		}
-		
+
 		add_character_modifier = {
 			modifier = best_meal_of_my_life_modifier
 			years = 15
 		}
-		
+
 		unknown_murder_effect = {
 			VICTIM = scope:court_jester
 			MURDERER = root
 			REASON = death_eaten
 		}
-		
+
 		stress_impact = {
 			base = massive_stress_impact_loss
 			compassionate = massive_stress_impact_gain
@@ -13899,7 +13897,7 @@ court.9400 = {
 
 	option = { # Reward them
 		name = court.9400.b
-		
+
 		pay_short_term_gold = {
 			target = scope:court_jester
 			gold = root.tiny_gold_value
@@ -13907,7 +13905,7 @@ court.9400 = {
 		if = {
 			limit = {
 				scope:court_jester.location = {
-					NOT = { this = root.location }
+					this != root.location
 				}
 			}
 			scope:court_jester = {
@@ -13936,7 +13934,7 @@ court.9400 = {
 			CHARACTER = scope:court_jester
 			OPINION = 0
 		}
-		
+
 		scope:pie_presenting_courtier = {
 			add_opinion = {
 				target = root
@@ -13944,9 +13942,9 @@ court.9400 = {
 				opinion = 25
 			}
 		}
-		
+
 		change_current_court_grandeur = medium_court_grandeur_gain
-		
+
 		stress_impact = {
 			base = medium_stress_impact_loss
 			paranoid = massive_stress_impact_gain
@@ -13981,7 +13979,7 @@ court.9400 = {
 			TARGET = scope:court_jester
 			IMPRISONER = root
 		}
-		
+
 		if = {
 			limit = {
 				is_ai = yes
@@ -14005,15 +14003,15 @@ court.9400 = {
 			modifier = suspicious_against_pies_modifier
 			years = 15
 		}
-		
-		scope:pie_presenting_courtier = {	
+
+		scope:pie_presenting_courtier = {
 			add_opinion = {
 				target = root
 				modifier = disappointed_opinion
 				opinion = -25
 			}
 		}
-		
+
 		stress_impact = {
 			base = massive_stress_impact_loss
 			compassionate = medium_stress_impact_gain
@@ -14026,7 +14024,7 @@ court.9400 = {
 
 	option = { # Har har! Fantastic!
 		name = court.9400.d
-		
+
 		scope:pie_presenting_courtier = {
 			add_opinion = {
 				target = root
@@ -14034,7 +14032,7 @@ court.9400 = {
 				opinion = 10
 			}
 		}
-		
+
 		stress_impact = {
 			base = medium_stress_impact_loss
 			paranoid = medium_stress_impact_gain
@@ -14101,11 +14099,11 @@ court.9500 = {
 	title = court.9500.t
 	desc = court.9500.desc
 	theme = court
-	
+
 	cooldown = {
 		years = 10
 	}
-	
+
 	court_scene = {
 		button_position_character = scope:child_to_learn_language
 		roles = {
@@ -14121,7 +14119,7 @@ court.9500 = {
 			}
 		}
 	}
-	
+
 	trigger = {
 		is_landed = yes
 		is_available_adult = yes
@@ -14150,7 +14148,7 @@ court.9500 = {
 		any_courtier_or_guest = {
 			appropriate_tutor_trigger = yes
 			has_court_event_flag = no
-			NOT = { this = scope:temp_child_to_learn_lang }
+			this != scope:temp_child_to_learn_lang
 		}
 	}
 
@@ -14176,7 +14174,7 @@ court.9500 = {
 			save_scope_as = child_to_learn_language
 			court_event_character_flag_effect = yes
 		}
-		
+
 		every_sub_realm_county = { # Pick a culture to take the language from
 			limit = {
 				has_a_good_language_trigger = yes
@@ -14240,7 +14238,7 @@ court.9500 = {
 				add_to_list = potential_language_cultures
 			}
 		}
-		
+
 		random_in_list = { # Pick the best culture language
 			list = potential_language_cultures
 			weight = {
@@ -14257,13 +14255,11 @@ court.9500 = {
 			}
 			save_scope_as = culture_language_to_learn
 		}
-		
+
 		random_courtier_or_guest = {
 			limit = {
 				appropriate_tutor_trigger = yes
-				NOT = {
-					this = scope:child_to_learn_language
-				}
+				this != scope:child_to_learn_language
 			}
 			weight = {
 				base = 1
@@ -14294,12 +14290,12 @@ court.9500 = {
 
 	option = { # Pay more than needed; your child must learn!
 		name = court.9500.a
-		
+
 		pay_short_term_gold = {
 			target = scope:teacher_target
 			gold = root.medium_gold_value
 		}
-		
+
 		scope:child_to_learn_language = {
 			learn_language_of_culture = scope:culture_language_to_learn
 		}
@@ -14324,7 +14320,7 @@ court.9500 = {
 			}
 			court_position_grant_effect = { POS = court_tutor CANDIDATE = scope:teacher_target EMPLOYER = root }
 		}
-		
+
 		stress_impact = {
 			greedy = massive_stress_impact_gain
 			paranoid = major_stress_gain
@@ -14343,12 +14339,12 @@ court.9500 = {
 
 	option = { # Pay what they ask, and hope your child manages
 		name = court.9500.b
-		
+
 		pay_short_term_gold = {
 			target = scope:teacher_target
 			gold = root.tiny_gold_value
 		}
-		
+
 		scope:child_to_learn_language = {
 			duel = {
 				skill = learning
@@ -14360,7 +14356,7 @@ court.9500 = {
 						multiplier = 3.5
 						min = -49
 					}
-					
+
 
 					desc = court.9500.b.success
 					root = {
@@ -14368,7 +14364,7 @@ court.9500 = {
 							title = court.9500.b.success
 							left_icon = scope:child_to_learn_language
 							right_icon = scope:teacher_target
-							
+
 							scope:child_to_learn_language = {
 								learn_language_of_culture = scope:culture_language_to_learn
 							}
@@ -14388,7 +14384,7 @@ court.9500 = {
 							title = court.9500.b.failure
 							left_icon = scope:child_to_learn_language
 							right_icon = scope:teacher_target
-							
+
 							scope:child_to_learn_language = {
 								add_stress = major_stress_gain
 							}
@@ -14397,7 +14393,7 @@ court.9500 = {
 				}
 			}
 		}
-		
+
 		stress_impact = {
 			generous = major_stress_impact_gain
 			patient = medium_stress_impact_gain
@@ -14414,7 +14410,7 @@ court.9500 = {
 
 	option = { # Deny
 		name = court.9500.c
-		
+
 		scope:teacher_target = {
 			add_opinion = {
 				target = root
@@ -14422,7 +14418,7 @@ court.9500 = {
 				modifier = disappointed_opinion
 			}
 		}
-		
+
 		stress_impact = {
 			diligent = medium_stress_impact_gain
 			gregarious = medium_stress_impact_gain

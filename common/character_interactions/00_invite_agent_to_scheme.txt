@@ -11,6 +11,7 @@ invite_agent_to_scheme_interaction = {
 			if = {
 				limit = {
 					OR = {
+						always = scope:mandala_trickster
 						always = scope:gift
 						always = scope:gift_significant
 						always = scope:offer_hook
@@ -41,6 +42,7 @@ invite_agent_to_scheme_interaction = {
 			if = {
 				limit = {
 					NOR = {
+						always = scope:mandala_trickster
 						always = scope:gift
 						always = scope:gift_significant
 						always = scope:offer_hook
@@ -58,6 +60,14 @@ invite_agent_to_scheme_interaction = {
 					}
 				}
 				custom_tooltip = offer_bribes.tt.window_jump_fix
+			}
+			# Mandala Trickster
+			if = {
+				limit = { always = scope:mandala_trickster }
+				add_piety = {
+					value = trickster_mandala_force_agent_bribe_value
+					multiply = -1
+				}
 			}
 			# Bribe
 			if = {
@@ -235,7 +245,7 @@ invite_agent_to_scheme_interaction = {
 						}
 						scope:recipient = {
 							add_gold = {
-								value = herd_bribe_value
+								value = domicile.herd_bribe_value
 								multiply = 0.1
 							}
 						}
@@ -300,6 +310,13 @@ invite_agent_to_scheme_interaction = {
 				scope:recipient.var:devotee_agent_var ?= scope:actor # They are a devotee of yours
 			}
 			custom_tooltip = devotee_agent_desc
+		}
+		trigger_else_if = {
+			limit = { scope:mandala_trickster = yes }
+			custom_tooltip = {
+				text = SCHEME_AGENT_MANDALA_TRICKSTER
+				always = yes
+			}
 		}
 		trigger_else_if = {
 			limit = {
@@ -386,6 +403,47 @@ invite_agent_to_scheme_interaction = {
 			would_agent_accept_petty_bribes_against_target_trigger = yes
 		}
 		localization = SCHEME_AGENT_OPPORTUNITIES_T2
+	}
+	## Mandala Trickery Aspect
+	send_option = {
+		flag = mandala_trickster
+		is_shown = {
+			# We don't show bribes for schemes where agents will always auto-accept or else deny.
+			NAND = {
+				scope:scheme = { is_scheme_category = contract }
+				scope:recipient = { is_courtier_of = scope:actor }
+			}
+			scope:actor = { 
+				government_has_flag = government_is_mandala
+				house = { has_house_head_parameter = unlock_force_agent_using_piety }
+				is_house_head = yes
+			}
+		}
+		is_valid = {
+			scope:actor.piety >= trickster_mandala_force_agent_bribe_value
+			custom_tooltip = {
+				text = offer_gold.tt.cannot_offer_both_bribes
+				scope:piety = no
+			}
+			custom_tooltip = {
+				text = not_two_overrides
+				trigger_if = {
+					limit = { scope:hook = yes }
+					NOT = { 
+						scope:actor = { has_strong_hook = scope:recipient }
+					}
+				}
+			}
+			would_agent_accept_petty_bribes_against_target_trigger = yes
+		}
+		localization = SCHEME_AGENT_MANDALA_TRICKSTER
+		current_description = {
+			# Triggered desc so that we don't get a weird double tooltip.
+			triggered_desc = {
+				trigger = { scope:actor.piety >= trickster_mandala_force_agent_bribe_value }
+				desc = SCHEME_AGENT_MANDALA_TRICKSTER_VALID
+			}
+		}
 	}
 	## Gold
 	send_option = {
@@ -493,6 +551,15 @@ invite_agent_to_scheme_interaction = {
 		flag = hook
 		is_valid = {
 			scope:actor = { has_usable_hook = scope:recipient }
+			custom_tooltip = {
+				text = not_two_overrides
+				trigger_if = {
+					limit = {
+						scope:actor = { has_strong_hook = scope:recipient }
+					}
+					scope:mandala_trickster = no
+				}	
+			}
 			would_agent_accept_petty_bribes_against_target_trigger = yes
 		}
 		localization = SCHEME_HOOK_EXPLICIT
@@ -630,7 +697,7 @@ invite_agent_to_scheme_interaction = {
 				scope:recipient = {
 					is_ruler = no
 					# And you don't want them _because_ they're in your target's court.
-					NOT = { host = scope:scheme.scheme_target_character }
+					host != scope:scheme.scheme_target_character
 				}
 			}
 			trigger_if = {
@@ -640,7 +707,7 @@ invite_agent_to_scheme_interaction = {
 				scope:recipient = {
 					is_ruler = no
 					# And you don't want them _because_ they're in your target's court.
-					NOT = { host = scope:scheme.scheme_target_title.holder }
+					host != scope:scheme.scheme_target_title.holder
 				}
 			}
 			# We don't show bribes for schemes where agents will always auto-accept or else deny.
@@ -653,7 +720,7 @@ invite_agent_to_scheme_interaction = {
 			scope:recipient = {
 				trigger_if = {
 					limit = {
-						any_claim = { count >= 1 }
+						any_claim = { }
 					}
 					custom_tooltip = {
 						text = claimed_title.tt.no_valid_county
@@ -708,24 +775,35 @@ invite_agent_to_scheme_interaction = {
 	send_option = {
 		flag = piety
 		is_shown = {
-			## Target amenable to this argument.
-			scope:recipient = {
-				OR = {
-					has_trait = devoted
-					has_trait = zealous
-					has_council_position = councillor_court_chaplain
-					government_has_flag = government_is_theocracy
+			trigger_if = { #Mandala override
+				limit = { 
+					scope:actor = { government_has_flag = government_is_mandala }
+				}
+				scope:actor = {
+					house = { has_house_head_parameter = unlock_agent_piety_bribe }
+					is_house_head = yes
 				}
 			}
-			## In-group out-group requirements.
-			OR = {
-				## Either we share a faith.
-				scope:actor.faith = scope:recipient.faith
-				## Or our faiths *really* get along.
-				scope:recipient.faith = {
-					faith_hostility_level = {
-						target = scope:actor.faith
-						value <= faith_fully_accepted_level
+			trigger_else = { #Everyone else
+				## Target amenable to this argument.
+				scope:recipient = {
+					OR = {
+						has_trait = devoted
+						has_trait = zealous
+						has_council_position = councillor_court_chaplain
+						government_has_flag = government_is_theocracy
+					}
+				}
+				## In-group out-group requirements.
+				OR = {
+					## Either we share a faith.
+					scope:actor.faith = scope:recipient.faith
+					## Or our faiths *really* get along.
+					scope:recipient.faith = {
+						faith_hostility_level = {
+							target = scope:actor.faith
+							value <= faith_fully_accepted_level
+						}
 					}
 				}
 			}
@@ -737,8 +815,19 @@ invite_agent_to_scheme_interaction = {
 		}
 		is_valid = {
 			scope:actor.piety >= piety_bribe_value
-			NOT = {
-				scope:recipient = { has_trait = cynical }
+			trigger_if = { #Mandala override
+				limit = { 
+					scope:actor = { 
+						NOT = { government_has_flag = government_is_mandala }
+					}
+				}
+				NOT = {
+					scope:recipient = { has_trait = cynical }
+				}
+			}
+			custom_tooltip = {
+				text = offer_gold.tt.cannot_offer_both_bribes
+				scope:mandala_trickster = no
 			}
 			would_agent_accept_petty_bribes_against_target_trigger = yes
 		}

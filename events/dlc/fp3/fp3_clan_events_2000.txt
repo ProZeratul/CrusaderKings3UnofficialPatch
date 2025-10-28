@@ -20,9 +20,7 @@ scripted_trigger clan_event_2000_suitable_tax_collector_trigger = {
 		has_trait = lazy
 		has_trait = dull
 	}
-	any_tax_collector_vassal = {
-		count >= 1
-	}
+	any_tax_collector_vassal = { }
 }
 
 clan_event.2000 = {
@@ -39,9 +37,9 @@ clan_event.2000 = {
 		character = root
 		animation = thinking
 	}
-	
+
 	cooldown = { years = 5 }
-	
+
 	trigger = {
 		has_fp3_dlc_trigger = yes
 		basic_is_valid_for_yearly_events_trigger = yes
@@ -50,7 +48,7 @@ clan_event.2000 = {
 			clan_event_2000_suitable_tax_collector_trigger = yes
 		}
 	}
-	
+
 	immediate = {
 		# First, let's find a tax collector.
 		random_tax_collector = {
@@ -88,12 +86,12 @@ clan_event.2000 = {
 			save_scope_as = improved_tax_collector
 			save_scope_as = tax_collector_name # For localization
 		}
-		
+
 		# Let's randomize which skills the Tax Collector may improve. Weighted slightly on personality and education.
 		random_list = {
 			pick = 2
 			unique = yes
-			
+
 			20 = { # Diplomacy
 				save_scope_value_as = {
 					name = clan_event_2000_diplomacy
@@ -215,7 +213,7 @@ clan_event.2000 = {
 				}
 			}
 		}
-		
+
 		scope:improved_tax_collector = {
 			if = {
 				limit = { # If the tax collector doesn't have a maxed out education trait, let's make it more likely for them to be picked in clan_event.2001, should it trigger
@@ -236,12 +234,12 @@ clan_event.2000 = {
 			}
 		}
 	}
-	
+
 	option = { # Attend to the needs of the people.
 		name = clan_event.2000.a
-		
+
 		trigger = { exists = scope:clan_event_2000_diplomacy }
-		
+
 		scope:improved_tax_collector = {
 			add_diplomacy_skill = 1
 		}
@@ -254,11 +252,11 @@ clan_event.2000 = {
 				}
 				max = 75
 			}
-			
+
 			send_interface_toast = {
 				title = clan_event.2000.a.success
 				left_icon = scope:improved_tax_collector
-				
+
 				scope:improved_tax_collector = {
 					every_tax_collector_vassal = {
 						custom = every_taxed_vassal_tt
@@ -271,16 +269,16 @@ clan_event.2000 = {
 				}
 			}
 		}
-		
+
 		stress_impact = {
 			impatient = medium_stress_impact_gain
 			arbitrary = major_stress_impact_gain
 			arrogant = medium_stress_impact_gain
 		}
-		
+
 		ai_chance = {
 			base = 10
-			
+
 			modifier = {
 				factor = 5
 				has_trait = gregarious
@@ -299,12 +297,12 @@ clan_event.2000 = {
 			}
 		}
 	}
-	
+
 	option = { # Arrange guard patrols. That will keep the vassals in line.
 		name = clan_event.2000.b
-		
+
 		trigger = { exists = scope:clan_event_2000_martial }
-		
+
 		scope:improved_tax_collector = {
 			add_martial_skill = 1
 		}
@@ -317,22 +315,22 @@ clan_event.2000 = {
 				}
 				max = 75
 			}
-			
+
 			send_interface_toast = {
 				title = clan_event.2000.b.success
 				left_icon = scope:improved_tax_collector
 				add_dread = minor_dread_gain
 			}
 		}
-		
+
 		stress_impact = {
 			forgiving = medium_stress_impact_gain
 			compassionate = major_stress_impact_gain
 		}
-		
+
 		ai_chance = {
 			base = 10
-			
+
 			modifier = {
 				factor = 5
 				has_trait = wrathful
@@ -350,12 +348,12 @@ clan_event.2000 = {
 			}
 		}
 	}
-	
+
 	option = { # Keep a ledger, and organize your work.
 		name = clan_event.2000.c
-		
+
 		trigger = { exists = scope:clan_event_2000_stewardship }
-		
+
 		scope:improved_tax_collector = {
 			add_stewardship_skill = 1
 		}
@@ -368,7 +366,7 @@ clan_event.2000 = {
 				}
 				max = 75
 			}
-			
+
 			send_interface_toast = {
 				title = clan_event.2000.c.success
 				left_icon = scope:improved_tax_collector
@@ -378,14 +376,14 @@ clan_event.2000 = {
 				}
 			}
 		}
-		
+
 		stress_impact = {
 			lazy = medium_stress_impact_gain
 		}
-		
+
 		ai_chance = {
 			base = 10
-			
+
 			modifier = {
 				factor = 2
 				has_trait = education_stewardship
@@ -396,12 +394,12 @@ clan_event.2000 = {
 			}
 		}
 	}
-	
+
 	option = { # Spy on my subjects. You'll learn much by keeping a watchful eye.
 		name = clan_event.2000.d
-		
+
 		trigger = { exists = scope:clan_event_2000_intrigue }
-		
+
 		scope:improved_tax_collector = {
 			add_intrigue_skill = 1
 		}
@@ -414,13 +412,13 @@ clan_event.2000 = {
 				}
 				max = 75
 			}
-			
+
 			custom_tooltip = clan_event.2000.d.tt
-			
+
 			send_interface_toast = {
 				title = clan_event.2000.d.success
 				left_icon = scope:improved_tax_collector
-				
+
 				if = {
 					limit = {
 						scope:improved_tax_collector = {
@@ -446,15 +444,15 @@ clan_event.2000 = {
 				}
 			}
 		}
-		
+
 		stress_impact = {
 			honest = major_stress_impact_gain
 			trusting = major_stress_impact_gain
 		}
-		
+
 		ai_chance = {
 			base = 10
-			
+
 			modifier = {
 				factor = 5
 				has_trait = deceitful
@@ -472,7 +470,7 @@ clan_event.2000 = {
 			}
 		}
 	}
-	
+
 	option = { # Devote your time to matters of faith/scholarly studies.
 		name = {
 			trigger = { always = yes }
@@ -482,9 +480,9 @@ clan_event.2000 = {
 			trigger = { scope:improved_tax_collector.faith = root.faith }
 			text = clan_event.2000.e2
 		}
-		
+
 		trigger = { exists = scope:clan_event_2000_learning }
-		
+
 		scope:improved_tax_collector = {
 			add_learning_skill = 1
 		}
@@ -500,15 +498,15 @@ clan_event.2000 = {
 			}
 			add_piety = miniscule_piety_gain
 		}
-		
+
 		stress_impact = {
 			zealous = medium_stress_impact_loss
 			cynical = major_stress_impact_gain
 		}
-		
+
 		ai_chance = {
 			base = 10
-			
+
 			modifier = {
 				factor = 5
 				has_trait = zealous
@@ -519,12 +517,12 @@ clan_event.2000 = {
 			}
 		}
 	}
-	
+
 	option = { # You are here to collect taxes, yes? Then GET me taxes!
 		name = clan_event.2000.option_f
-		
+
 		# First, let's add a sizable amount of gold
-		add_gold = {
+		add_treasury_or_gold = {
 			value = 0
 			scope:improved_tax_collector = { # Let's add gold based on the vassals the tax collector has assigned
 				every_tax_collector_vassal = {
@@ -536,7 +534,7 @@ clan_event.2000 = {
 			}
 			min = minor_gold_value # But we don't want the amount to be too small
 		}
-		
+
 		# Now, let's make the affected vassals upset
 		scope:improved_tax_collector = {
 			every_tax_collector_vassal = {
@@ -547,16 +545,16 @@ clan_event.2000 = {
 				}
 			}
 		}
-		
+
 		stress_impact = {
 			greedy = minor_stress_impact_loss
 			just = major_stress_impact_gain
 			generous = major_stress_impact_gain
 		}
-		
+
 		ai_chance = {
 			base = 20
-			
+
 			modifier = {
 				factor = 0
 				NOR = {
@@ -566,15 +564,14 @@ clan_event.2000 = {
 			}
 		}
 	}
-	
+
 	option = { # Speak favourably of ME.
 		name = clan_event.2000.g
-		
+
 		if = {
 			limit = {
 				scope:improved_tax_collector = {
-					exists = house
-					house = root.house
+					house ?= root.house
 				}
 			}
 			dynasty ?= { add_dynasty_prestige = minor_dynasty_prestige_gain }
@@ -583,15 +580,15 @@ clan_event.2000 = {
 		else = {
 			add_prestige = medium_prestige_gain
 		}
-		
+
 		stress_impact = {
 			arrogant = medium_stress_impact_loss
 			humble = major_stress_impact_gain
 		}
-		
+
 		ai_chance = {
 			base = 10
-			
+
 			modifier = {
 				factor = 5
 				has_trait = arrogant
@@ -656,9 +653,9 @@ clan_event.2001 = {
 		character = root
 		animation = personality_content
 	}
-	
+
 	cooldown = { years = 10 }
-	
+
 	trigger = {
 		has_fp3_dlc_trigger = yes
 		basic_is_valid_for_yearly_events_trigger = yes
@@ -680,7 +677,7 @@ clan_event.2001 = {
 			}
 		}
 	}
-	
+
 	immediate = {
 		random_tax_collector = {
 			limit = {
@@ -712,7 +709,7 @@ clan_event.2001 = {
 			}
 			save_scope_as = educational_tax_collector
 		}
-		
+
 		scope:educational_tax_collector = {
 			if = {
 				limit = {
@@ -722,17 +719,17 @@ clan_event.2001 = {
 			}
 		}
 	}
-	
+
 	option = { # Taxes are great for the both of us!
 		name = clan_event.2001.a
-		
+
 		scope:educational_tax_collector = {
 			rank_up_education_effect = yes
 		}
-		
+
 		ai_chance = {
 			base = 20
-			
+
 			modifier = {
 				factor = 10
 				has_trait = content
@@ -743,13 +740,13 @@ clan_event.2001 = {
 			}
 		}
 	}
-	
+
 	option = { # Push them to do even more
 		name = clan_event.2001.b
-		
+
 		scope:educational_tax_collector = {
 			rank_up_education_effect = yes
-			
+
 			# Chance to increase the skill matching their education. Chance is affected by their energy.
 			if = {
 				limit = { has_trait = education_diplomacy }
@@ -763,12 +760,12 @@ clan_event.2001 = {
 						max = 90
 						min = 10
 					}
-					
+
 					root = {
 						send_interface_toast = {
 							title = clan_event.2001.success
 							left_icon = scope:educational_tax_collector
-							
+
 							scope:educational_tax_collector = { add_diplomacy_skill = 2 }
 						}
 					}
@@ -786,12 +783,12 @@ clan_event.2001 = {
 						max = 90
 						min = 10
 					}
-					
+
 					root = {
 						send_interface_toast = {
 							title = clan_event.2001.success
 							left_icon = scope:educational_tax_collector
-							
+
 							scope:educational_tax_collector = { add_martial_skill = 2 }
 						}
 					}
@@ -809,12 +806,12 @@ clan_event.2001 = {
 						max = 90
 						min = 10
 					}
-					
+
 					root = {
 						send_interface_toast = {
 							title = clan_event.2001.success
 							left_icon = scope:educational_tax_collector
-							
+
 							scope:educational_tax_collector = { add_stewardship_skill = 2 }
 						}
 					}
@@ -832,12 +829,12 @@ clan_event.2001 = {
 						max = 90
 						min = 10
 					}
-					
+
 					root = {
 						send_interface_toast = {
 							title = clan_event.2001.success
 							left_icon = scope:educational_tax_collector
-							
+
 							scope:educational_tax_collector = { add_intrigue_skill = 2 }
 						}
 					}
@@ -855,40 +852,40 @@ clan_event.2001 = {
 						max = 90
 						min = 10
 					}
-					
+
 					root = {
 						send_interface_toast = {
 							title = clan_event.2001.success
 							left_icon = scope:educational_tax_collector
-							
+
 							scope:educational_tax_collector = { add_learning_skill = 2 }
 						}
 					}
 				}
 			}
-			
+
 			stress_impact = {
 				base = massive_stress_impact_gain
 			}
 		}
-		
+
 		progress_towards_rival_effect = {
 			CHARACTER = scope:educational_tax_collector
 			REASON = rival_grave_insult
 			OPINION = -30
 		}
-		
+
 		add_prestige = medium_prestige_loss
-		
+
 		stress_impact = {
 			patient = medium_stress_impact_gain
 			just = medium_stress_impact_gain
 			compassionate = major_stress_impact_gain
 		}
-		
+
 		ai_chance = {
 			base = 10
-			
+
 			modifier = {
 				factor = 0
 				OR = {
@@ -921,41 +918,37 @@ clan_event.2002 = {
 		character = root
 		animation = personality_compassionate
 	}
-	
+
 	cooldown = { years = 15 }
-	
+
 	trigger = {
 		has_fp3_dlc_trigger = yes
 		basic_is_valid_for_yearly_events_trigger = yes
 		is_commanding_army = no
 		any_tax_collector = { # Any tax collector with at least one tax payer will do
 			is_ai = yes
-			any_tax_collector_vassal = {
-				count >= 1
-			}
+			any_tax_collector_vassal = { }
 		}
 	}
-	
+
 	immediate = {
 		random_tax_collector = {
 			limit = {
 				is_ai = yes
-				any_tax_collector_vassal = {
-					count >= 1
-				}
+				any_tax_collector_vassal = { }
 			}
 			save_scope_as = troubled_tax_collector
 			save_scope_as = tax_collector_name # For localization
 		}
 	}
-	
+
 	option = { # Allow me to help!
 		name = clan_event.2002.a
 		# While the event offers you the choice to increase opinion with your tax collector or the assigned vassals, you get both if your stewardship is high!
 		trigger = {
 			stewardship >= high_skill_rating
 		}
-		
+
 		scope:troubled_tax_collector = {
 			add_opinion = {
 				modifier = fp3_thankful_tax_collector_opinion
@@ -963,7 +956,7 @@ clan_event.2002 = {
 				years = 10
 				target = root
 			}
-			
+
 			every_tax_collector_vassal = {
 				custom = every_taxed_vassal_tt
 				add_opinion = {
@@ -973,10 +966,10 @@ clan_event.2002 = {
 				}
 			}
 		}
-		
+
 		ai_chance = {
 			base = 50
-			
+
 			modifier = {
 				factor = 2
 				has_trait = diligent
@@ -990,10 +983,10 @@ clan_event.2002 = {
 			}
 		}
 	}
-	
+
 	option = { # Why don't you take a break?
 		name = clan_event.2002.b
-		
+
 		scope:troubled_tax_collector = {
 			add_opinion = {
 				modifier = fp3_thankful_tax_collector_opinion
@@ -1002,10 +995,10 @@ clan_event.2002 = {
 				target = root
 			}
 		}
-		
+
 		ai_chance = {
 			base = 10
-			
+
 			modifier = {
 				factor = 4
 				OR = {
@@ -1016,10 +1009,10 @@ clan_event.2002 = {
 			}
 		}
 	}
-	
+
 	option = { # Good. My vassals expects their taxes to be handled efficiently...
 		name = clan_event.2002.c
-		
+
 		scope:troubled_tax_collector = {
 			every_tax_collector_vassal = {
 				custom = every_taxed_vassal_tt
@@ -1030,10 +1023,10 @@ clan_event.2002 = {
 				}
 			}
 		}
-		
+
 		ai_chance = {
 			base = 10
-			
+
 			modifier = {
 				factor = 4
 				OR = {
@@ -1063,24 +1056,25 @@ clan_event.2005 = {
 		character = scope:tax_collector_replacement
 		animation = reading
 	}
-	
+
 	cooldown = { years = 20 }
-	
+
 	trigger = {
+		is_ai = no
 		has_fp3_dlc_trigger = yes
 		basic_is_valid_for_yearly_events_trigger = yes
 		is_commanding_army = no
-		
+
 		# We need to have a tax collector with fairly low aptitude, as to have someone to replace
 		any_tax_collector = {
 			is_ai = yes
 			tax_collector_aptitude = {
-				tax_slot_type = clan_tax_slot
+				target = clan_tax_slot
 				value <= 2
 			}
 			save_temporary_scope_as = unop_temp_bad_collector #Unop: To be use in the vassal check
 		}
-		
+
 		# We also need a vassal who, in some shape or form, would like to help you
 		any_vassal = {
 			is_ai = yes
@@ -1097,20 +1091,20 @@ clan_event.2005 = {
 			NOT = { this = scope:unop_temp_bad_collector } #Unop: Ensure the selected vassal that wants to kick the bad collector is himself
 		}
 	}
-	
+
 	immediate = {
 		# First, let's find that bad tax collector the vassal wants to replace
 		random_tax_collector = {
 			limit = {
 				is_ai = yes
 				tax_collector_aptitude = {
-					tax_slot_type = clan_tax_slot
+					target = clan_tax_slot
 					value <= 2
 				}
 			}
 			save_scope_as = bad_tax_collector
 		}
-		
+
 		# Then find an appropiate vassal
 		random_vassal = {
 			limit = {
@@ -1156,7 +1150,7 @@ clan_event.2005 = {
 			}
 			save_scope_as = loyal_vassal
 		}
-		
+
 		# Let's create the character the vassal is offering us as a tax collector
 		create_character = {
 			template = administrator_character
@@ -1179,13 +1173,13 @@ clan_event.2005 = {
 			save_scope_as = tax_collector_replacement
 		}
 	}
-	
+
 	option = { # A most appreciated gift!
 		name = clan_event.2005.a
-		
+
 		# Recruit the courtier to your own court
 		add_courtier = scope:tax_collector_replacement
-		
+
 		# And let's add some extra opinion to make sure the character likes you (which also increase their potential aptitude as tax collector)
 		hidden_effect = {
 			scope:tax_collector_replacement = {
@@ -1196,10 +1190,10 @@ clan_event.2005 = {
 				}
 			}
 		}
-		
+
 		ai_chance = {
 			base = 50
-			
+
 			modifier = {
 				factor = 2
 				OR = {
@@ -1213,10 +1207,10 @@ clan_event.2005 = {
 			}
 		}
 	}
-	
+
 	option = { # You may keep your servant. Your loyalty is enough.
 		name = clan_event.2005.b
-		
+
 		# Instead of the courtier, you can choose to get a hook
 		if = {
 			limit = {
@@ -1233,10 +1227,10 @@ clan_event.2005 = {
 		else = { # If we can't get a hook, get some prestige instead
 			add_prestige = medium_prestige_gain
 		}
-		
+
 		ai_chance = {
 			base = 20
-			
+
 			modifier = {
 				factor = 3
 				OR = {
@@ -1254,22 +1248,22 @@ clan_event.2005 = {
 			}
 		}
 	}
-	
+
 	option = { # My tax collector will simply have to work harder...
 		name = clan_event.2005.c
-		
+
 		# You may also make your existing tax collector SLIGHTLY better
 		scope:bad_tax_collector = {
 			add_stewardship_skill = 1
-			
+
 			stress_impact = {
 				base = massive_stress_impact_gain
 			}
 		}
-		
+
 		ai_chance = {
 			base = 10
-			
+
 			modifier = {
 				factor = 4
 				has_trait = stubborn
@@ -1298,31 +1292,31 @@ clan_event.2007 = {
 		character = scope:helping_tax_collector
 		animation = thinking
 	}
-	
+
 	cooldown = { years = 10 }
-	
+
 	trigger = {
 		has_fp3_dlc_trigger = yes
 		is_available_adult = yes
 		government_has_flag = government_is_clan
-		
+
 		# We need to have a tax collector with decent to high aptitude
 		any_tax_collector = {
 			is_ai = yes
 			tax_collector_aptitude = {
-				tax_slot_type = clan_tax_slot
+				target = clan_tax_slot
 				value >= 2
 			}
 		}
 	}
-	
+
 	immediate = {
 		# We'll start by finding our tax collector
 		random_tax_collector = {
 			limit = {
 				is_ai = yes
 				tax_collector_aptitude = {
-					tax_slot_type = clan_tax_slot
+					target = clan_tax_slot
 					value >= 2
 				}
 			}
@@ -1331,14 +1325,14 @@ clan_event.2007 = {
 				modifier = {
 					add = 30
 					tax_collector_aptitude = {
-						tax_slot_type = clan_tax_slot
+						target = clan_tax_slot
 						value >= 3
 					}
 				}
 				modifier = {
 					add = 50
 					tax_collector_aptitude = {
-						tax_slot_type = clan_tax_slot
+						target = clan_tax_slot
 						value >= 4
 					}
 				}
@@ -1346,16 +1340,16 @@ clan_event.2007 = {
 			save_scope_as = helping_tax_collector
 		}
 	}
-	
+
 	option = { # Maybe you could help me finish this?
 		name = clan_event.2007.a
-		
+
 		# Gain stewardship lifestyle XP scaled on the aptitude of the tax collector
 		if = {
 			limit = {
 				scope:helping_tax_collector = {
 					tax_collector_aptitude = {
-						tax_slot_type = clan_tax_slot
+						target = clan_tax_slot
 						value >= 4
 					}
 				}
@@ -1366,7 +1360,7 @@ clan_event.2007 = {
 			limit = {
 				scope:helping_tax_collector = {
 					tax_collector_aptitude = {
-						tax_slot_type = clan_tax_slot
+						target = clan_tax_slot
 						value >= 3
 					}
 				}
@@ -1376,15 +1370,15 @@ clan_event.2007 = {
 		else = {
 			add_stewardship_lifestyle_xp = medium_lifestyle_xp
 		}
-		
+
 		stress_impact = {
 			stubborn = medium_stress_impact_gain
 			paranoid = medium_stress_impact_gain
 		}
-		
+
 		ai_chance = {
 			base = 10
-			
+
 			modifier = {
 				factor = 4
 				OR = {
@@ -1401,10 +1395,10 @@ clan_event.2007 = {
 			}
 		}
 	}
-	
+
 	option = { # I can do this myself, thank you very much.
 		name = clan_event.2007.b
-		
+
 		# Let's do a skill duel here to see how likely you are to manage it yourself - If successful, get a perk point
 		duel = {
 			skill = stewardship
@@ -1437,15 +1431,15 @@ clan_event.2007 = {
 				}
 			}
 		}
-		
+
 		stress_impact = {
 			lazy = major_stress_impact_gain
 			impatient = medium_stress_impact_gain
 		}
-		
+
 		ai_chance = {
 			base = 10
-			
+
 			modifier = {
 				factor = 4
 				OR = {
@@ -1463,10 +1457,10 @@ clan_event.2007 = {
 			}
 		}
 	}
-	
+
 	option = { # Did you just volunteer to take care of it? Thank you!
 		name = clan_event.2007.c
-		
+
 		# Lose some opinion in exchange for a chance to get some extra gold
 		scope:helping_tax_collector = {
 			add_opinion = {
@@ -1477,18 +1471,18 @@ clan_event.2007 = {
 		}
 		random = {
 			chance = 25
-			
+
 			custom_tooltip = clan_event.2007.tt
 			send_interface_toast = {
 				title = clan_event.2007.successful_tax_collector
 				left_icon = root
-				add_gold = medium_gold_value
+				add_treasury_or_gold = medium_treasury_or_gold_value
 			}
 		}
-		
+
 		ai_chance = {
 			base = 10
-			
+
 			modifier = {
 				factor = 4
 				OR = {

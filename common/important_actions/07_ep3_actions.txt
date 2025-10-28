@@ -1,7 +1,7 @@
 ﻿# LAAMP SUPPORTER EXPIRING
 action_laamp_support_expiring_legend = {
 	type = alert
-	icon = _frame_red # TODO_CD_EP3
+	icon = action_can_start_legend
 
 	check_create_action = {
 		if = {
@@ -35,7 +35,7 @@ action_laamp_apprehension_threat = {
 	check_create_action = {
 		if = {
 			limit = {
-				is_landless_adventurer = yes
+				has_government = landless_adventurer_government
 				domicile.domicile_location.county.holder ?= {
 					OR = {
 						#Unop Check if they can actually imprison you
@@ -94,13 +94,13 @@ action_laamp_apprehension_threat = {
 
 action_laamp_camp_purpose = {
 	type = alert
-	icon = mercenary_contract_expiring # TODO_CD_EP3 
+	icon = action_camp
 
 	check_create_action = {
 		if = {
 			limit = {
 				AND = {
-					is_landless_adventurer = yes
+					has_government = landless_adventurer_government
 					# Wanderers are default camp purpose, therefore only show when you DO have Wanderers
 					has_realm_law = camp_purpose_wanderers
 				}
@@ -180,9 +180,7 @@ action_ep3_laamp_contract_travel = {
 		}
 		random_duchy = {
 			limit = {
-				NOT = {
-					this = scope:original_duchy
-				}
+				this != scope:original_duchy
 				NOT = {
 					any_title_to_title_neighboring_duchy = {
 						this = scope:original_duchy

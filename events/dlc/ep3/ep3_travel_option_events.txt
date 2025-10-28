@@ -351,7 +351,7 @@ ep3_travel_option_events.0001 = {
 
 	trigger = {
 		NOT = { has_character_flag = had_talent_event }
-		is_landless_adventurer = yes
+		has_government = landless_adventurer_government
 		any_pool_character = {
 			province = root.location
 			is_available_healthy_ai_adult = yes
@@ -3548,7 +3548,7 @@ ep3_travel_option_events.0002 = { # Entourage member gets married
 						is_close_family_of = root
 						has_relation_lover = root
 					}
-					NOT = { this = scope:lonely_courtier }
+					this != scope:lonely_courtier
 				}
 			}
 			any_pool_character = {
@@ -3592,7 +3592,7 @@ ep3_travel_option_events.0002 = { # Entourage member gets married
 							is_close_family_of = root
 							has_relation_lover = root
 						}
-						NOT = { this = scope:lonely_courtier }
+						this != scope:lonely_courtier
 					}
 					any_pool_character = {
 						province = root.location
@@ -3623,7 +3623,7 @@ ep3_travel_option_events.0002 = { # Entourage member gets married
 							is_close_family_of = root
 							has_relation_lover = root
 						}
-						NOT = { this = scope:courtier_to_marry }
+						this != scope:courtier_to_marry
 					}
 				}
 				random_relation = {
@@ -3640,7 +3640,7 @@ ep3_travel_option_events.0002 = { # Entourage member gets married
 							is_close_family_of = root
 							has_relation_lover = root
 						}
-						NOT = { this = scope:courtier_to_marry }
+						this != scope:courtier_to_marry
 					}
 					save_scope_as = marriage_material
 				}
@@ -3714,9 +3714,7 @@ ep3_travel_option_events.0003 = { # Entourage member friendship
 			is_physically_able = yes
 			age >= 8
 			num_of_relation_friend = 0
-			NOT = {
-				this = scope:courtier_searching_for_friend
-			}
+			this != scope:courtier_searching_for_friend
 			can_set_relation_friend_trigger = { CHARACTER = scope:courtier_searching_for_friend }
 			OR = {
 				NOR = {
@@ -3775,9 +3773,7 @@ ep3_travel_option_events.0003 = { # Entourage member friendship
 						is_physically_able = yes
 						age >= 8
 						num_of_relation_friend = 0
-						NOT = {
-							this = scope:courtier_searching_for_friend
-						}
+						this != scope:courtier_searching_for_friend
 						can_set_relation_friend_trigger = { CHARACTER = scope:courtier_searching_for_friend }
 						OR = {
 							NOR = {
@@ -3831,9 +3827,7 @@ ep3_travel_option_events.0003 = { # Entourage member friendship
 						is_physically_able = yes
 						age >= 8
 						num_of_relation_friend = 0
-						NOT = {
-							this = scope:courtier_to_befriend
-						}
+						this != scope:courtier_to_befriend
 						can_set_relation_friend_trigger = { CHARACTER = scope:courtier_to_befriend }
 						OR = {
 							NOR = {
@@ -3935,9 +3929,7 @@ ep3_travel_option_events.0004 = { # Entourage member lovers
 		}
 		OR = {
 			any_courtier = {
-				NOT = {
-					this = scope:loving_courtier
-				}
+				this != scope:loving_courtier
 				is_physically_able_adult = yes
 				trigger_if = {
 					limit = {
@@ -3977,9 +3969,7 @@ ep3_travel_option_events.0004 = { # Entourage member lovers
 			}
 			any_pool_character = {
 				province = root.location
-				NOT = {
-					this = scope:loving_courtier
-				}
+				this != scope:loving_courtier
 				is_physically_able_adult = yes
 				trigger_if = {
 					limit = {
@@ -4042,9 +4032,7 @@ ep3_travel_option_events.0004 = { # Entourage member lovers
 				OR = {
 					root = {
 						any_courtier = {
-							NOT = {
-								this = scope:loving_courtier
-							}
+							this != scope:loving_courtier
 							is_physically_able_adult = yes
 							trigger_if = {
 								limit = {
@@ -4085,9 +4073,7 @@ ep3_travel_option_events.0004 = { # Entourage member lovers
 					}
 					any_pool_character = {
 						province = root.location
-						NOT = {
-							this = scope:loving_courtier
-						}
+						this != scope:loving_courtier
 						is_physically_able_adult = yes
 						trigger_if = {
 							limit = {
@@ -4132,9 +4118,7 @@ ep3_travel_option_events.0004 = { # Entourage member lovers
 				limit = {
 					root = {
 						any_courtier = {
-							NOT = {
-								this = scope:courtier_to_love
-							}
+							this != scope:courtier_to_love
 							is_physically_able_adult = yes
 							trigger_if = {
 								limit = {
@@ -4177,9 +4161,7 @@ ep3_travel_option_events.0004 = { # Entourage member lovers
 				root = {
 					random_courtier = {
 						limit = {
-							NOT = {
-								this = scope:courtier_to_love
-							}
+							this != scope:courtier_to_love
 							is_physically_able_adult = yes
 							trigger_if = {
 								limit = {
@@ -4225,9 +4207,7 @@ ep3_travel_option_events.0004 = { # Entourage member lovers
 				random_pool_character = {
 					province = root.location
 					limit = {
-						NOT = {
-							this = scope:courtier_to_love
-						}
+						this != scope:courtier_to_love
 						is_physically_able_adult = yes
 						trigger_if = {
 							limit = {
@@ -4280,8 +4260,8 @@ ep3_travel_option_events.0004 = { # Entourage member lovers
 				set_random_lover_reason = { TARGET = scope:pls_love_me }
 				hidden_effect = {
 					random_secret = {
+						type = secret_lover
 						limit = {
-							secret_type = secret_lover
 							secret_target = scope:pls_love_me
 						}
 						reveal_to_without_events_effect = { CHARACTER = root }
