@@ -579,49 +579,9 @@ caravanserai_08 = {
 watermills_01 = {
 	construction_time = slow_construction_time
 
-	can_construct_potential = {
-		OR = {
-			building_watermills_requirement_terrain = yes
-			AND = {
-				has_building_or_higher = logging_camps_04
-				culture = {
-					has_cultural_parameter = watermills_forestries_unlock
-				}
-			}
-		}
+	can_construct_potential = { #Unop: Trim this so we will be able to see the requirements to build it
+		building_watermills_requirement_terrain = yes #Unop: Since building_watermills_requirement_terrain share the same kind, it's okay
 		building_requirement_castle_city_church = { LEVEL = 01 }
-		trigger_if = {
-			limit = {
-				NOR = {
-					scope:holder.culture = {
-						has_cultural_parameter = next_level_w_mills
-					}
-					culture = {
-						has_cultural_parameter = watermills_forestries_unlock
-					}
-				}
-			}
-			scope:holder.culture = {
-				has_innovation = innovation_windmills
-			}
-		}
-		trigger_else = {
-			OR = {
-				scope:holder.culture = {
-					has_innovation = innovation_windmills
-				}
-				scope:holder.culture = {
-					has_cultural_parameter = next_level_w_mills
-					has_innovation = innovation_manorialism
-				}
-				AND = {
-					has_building_or_higher = logging_camps_04
-					culture = {
-						has_cultural_parameter = watermills_forestries_unlock
-					}
-				}
-			}
-		}
 	}
 
 	can_construct_showing_failures_only = {
@@ -659,6 +619,48 @@ watermills_01 = {
 	show_disabled = yes
 	
 	can_construct = {
+		trigger_if = {
+			limit = {
+				has_holding_type = city_holding
+			}
+			has_building_or_higher = city_01
+			culture = {
+				has_cultural_parameter = watermills_windmills_cities
+			}
+			NOR = {
+				has_building_or_higher = windmills_01
+				has_building_or_higher = caravanserai_01
+			}
+		}
+		trigger_else_if = {
+			limit = {
+				OR = {
+					has_holding_type = castle_holding
+					has_holding_type = church_holding
+					has_holding_type = temple_citadel_holding
+				}
+			}
+			building_requirement_castle_city_church = { LEVEL = 01 }
+			is_county_capital = yes
+		}
+		trigger_else = {
+			always = no
+		}
+		OR = {
+			culture = { # Standard unlock from inovation (High medieval)
+				has_innovation = innovation_windmills
+			}
+			culture = { # Unlock from culture trad early but still need the previous Civic economic building inovation (Early medieval)
+				has_cultural_parameter = next_level_w_mills
+				has_innovation = innovation_manorialism
+			}
+			AND = { # Unlock from Culture trad
+				has_building_or_higher = logging_camps_04
+				culture = {
+					has_cultural_parameter = watermills_forestries_unlock
+				}
+			}
+		}
 	}
 
 	cost_gold = expensive_building_tier_1_cost
@@ -708,45 +710,23 @@ watermills_02 = {
 	construction_time = slow_construction_time
 
 	can_construct_potential = {
-		OR = {
-			building_watermills_requirement_terrain = yes
-			AND = {
-				has_building_or_higher = logging_camps_04
-				culture = {
-					has_cultural_parameter = watermills_forestries_unlock
-				}
-			}
-		}
+		building_watermills_requirement_terrain = yes
 		building_requirement_castle_city_church = { LEVEL = 01 }
 	}
 	
 	can_construct = {
-		trigger_if = {
-			limit = {
-				NOT = {
-					scope:holder.culture = {
-						has_cultural_parameter = next_level_w_mills
-					}
-					culture = {
-						has_cultural_parameter = watermills_forestries_unlock
-					}
-				}
-			}
-			scope:holder.culture = {
+		OR = {
+			culture = { # Standard unlock from inovation (High medieval)
 				has_innovation = innovation_windmills
 			}
-		}
-		trigger_else = {
-			OR = {
-				scope:holder.culture = {
-					has_cultural_parameter = next_level_w_mills
-					has_innovation = innovation_manorialism
-				}
-				AND = {
-					has_building_or_higher = logging_camps_04
-					culture = {
-						has_cultural_parameter = watermills_forestries_unlock
-					}
+			culture = { # Unlock from culture trad early but still need the previous Civic economic building inovation (Early medieval)
+				has_cultural_parameter = next_level_w_mills
+				has_innovation = innovation_manorialism
+			}
+			AND = { # Unlock from Culture trad
+				has_building_or_higher = logging_camps_04
+				culture = {
+					has_cultural_parameter = watermills_forestries_unlock
 				}
 			}
 		}
@@ -791,47 +771,27 @@ watermills_03 = {
 	construction_time = slow_construction_time
 
 	can_construct_potential = {
+		building_watermills_requirement_terrain = yes
+		building_requirement_castle_city_church = { LEVEL = 01 }
+	}
+	can_construct = {
 		OR = {
-			building_watermills_requirement_terrain = yes
 			AND = {
+				building_requirement_castle_city_church = { LEVEL = 02 }
+				culture = { # Standard unlock from inovation (High medieval)
+					has_innovation = innovation_windmills
+				}
+			}
+			culture = { # Unlock from culture trad early but still need the previous Civic economic building inovation (Early medieval)
+				has_cultural_parameter = next_level_w_mills
+				has_innovation = innovation_manorialism
+			}
+			AND = { # Unlock from Culture trad
 				has_building_or_higher = logging_camps_04
 				culture = {
 					has_cultural_parameter = watermills_forestries_unlock
 				}
 			}
-		}
-	}
-	can_construct = {
-		trigger_if = {
-			limit = {
-				NOT = {
-					scope:holder.culture = {
-						has_cultural_parameter = next_level_w_mills
-					}
-					culture = {
-						has_cultural_parameter = watermills_forestries_unlock
-					}
-				}
-			}
-			scope:holder.culture = {
-				has_innovation = innovation_windmills
-			}
-			building_requirement_castle_city_church = { LEVEL = 02 }
-		}
-		trigger_else = {
-			OR = {
-				scope:holder.culture = {
-						has_cultural_parameter = next_level_w_mills
-						has_innovation = innovation_windmills
-					}
-				AND = {
-					has_building_or_higher = logging_camps_04
-					culture = {
-						has_cultural_parameter = watermills_forestries_unlock
-					}
-				}
-			}
-			building_requirement_castle_city_church = { LEVEL = 01 }
 		}
 	}
 
@@ -872,47 +832,27 @@ watermills_04 = {
 	construction_time = slow_construction_time
 
 	can_construct_potential = {
+		building_watermills_requirement_terrain = yes
+		building_requirement_castle_city_church = { LEVEL = 01 }
+	}
+	can_construct = {
 		OR = {
-			building_watermills_requirement_terrain = yes
 			AND = {
+				building_requirement_castle_city_church = { LEVEL = 02 }
+				culture = { # Standard unlock from inovation (High medieval)
+					has_innovation = innovation_windmills
+				}
+			}
+			culture = { # Unlock from culture trad early but still need the previous Civic economic building inovation (Early medieval)
+				has_cultural_parameter = next_level_w_mills
+				has_innovation = innovation_manorialism
+			}
+			AND = { # Unlock from Culture trad
 				has_building_or_higher = logging_camps_04
 				culture = {
 					has_cultural_parameter = watermills_forestries_unlock
 				}
 			}
-		}
-	}
-	can_construct = {
-		trigger_if = {
-			limit = {
-				NOT = {
-					scope:holder.culture = {
-						has_cultural_parameter = next_level_w_mills
-					}
-					culture = {
-						has_cultural_parameter = watermills_forestries_unlock
-					}
-				}
-			}
-			scope:holder.culture = {
-				has_innovation = innovation_windmills
-			}
-			building_requirement_castle_city_church = { LEVEL = 02 }
-		}
-		trigger_else = {
-			OR = {
-				scope:holder.culture = {
-						has_cultural_parameter = next_level_w_mills
-						has_innovation = innovation_windmills
-					}
-				AND = {
-					has_building_or_higher = logging_camps_04
-					culture = {
-						has_cultural_parameter = watermills_forestries_unlock
-					}
-				}
-			}
-			building_requirement_castle_city_church = { LEVEL = 01 }
 		}
 	}
 
@@ -956,24 +896,16 @@ watermills_05 = {
 		building_watermills_requirement_terrain = yes
 	}
 	can_construct = {
-		scope:holder.culture = {
-			has_innovation = innovation_windmills
+		culture = {
 		}
-		trigger_if = {
-			limit = {
-				NOT = {
-					scope:holder.culture = {
-						has_cultural_parameter = next_level_w_mills
-					}
+		OR = {
+			building_requirement_castle_city_church = { LEVEL = 03 }
+			AND = {
+				building_requirement_castle_city_church = { LEVEL = 02 }
+				culture = { # Unlock from culture trad early but still need the previous Civic economic building inovation (High medieval)
+					has_cultural_parameter = next_level_w_mills
 				}
 			}
-			building_requirement_castle_city_church = { LEVEL = 03 }
-		}
-		trigger_else = {
-			scope:holder.culture = {
-				has_cultural_parameter = next_level_w_mills
-			}
-			building_requirement_castle_city_church = { LEVEL = 02 }
 		}
 	}
 
@@ -1017,26 +949,19 @@ watermills_06 = {
 		building_watermills_requirement_terrain = yes
 	}
 	can_construct = {
-		trigger_if = {
-			limit = {
-				NOT = {
-					scope:holder.culture = {
-						has_cultural_parameter = next_level_w_mills
-					}
+		OR = {
+			AND = {
+				building_requirement_castle_city_church = { LEVEL = 03 }
+				culture = { # Standard unlock from inovation (Late medieval)
+					has_innovation = innovation_cranes
 				}
 			}
-			building_requirement_castle_city_church = { LEVEL = 03 }
-			scope:holder.culture = {
-			has_innovation = innovation_cranes
-			}
-		}
-		trigger_else = {
-			scope:holder.culture = {
-				has_cultural_parameter = next_level_w_mills
-			}
-			building_requirement_castle_city_church = { LEVEL = 02 }
-			scope:holder.culture = {
-			has_innovation = innovation_windmills
+			AND = {
+				building_requirement_castle_city_church = { LEVEL = 02 }
+				culture = { # Unlock from culture trad early but still need the previous Civic economic building inovation (High medieval)
+					has_cultural_parameter = next_level_w_mills
+					has_innovation = innovation_windmills
+				}
 			}
 		}
 	}
@@ -1081,26 +1006,19 @@ watermills_07 = {
 		building_watermills_requirement_terrain = yes
 	}
 	can_construct = {
-		trigger_if = {
-			limit = {
-				NOT = {
-					scope:holder.culture = {
-						has_cultural_parameter = next_level_w_mills
-					}
+		OR = {
+			AND = {
+				building_requirement_castle_city_church = { LEVEL = 04 }
+				culture = { # Standard unlock from inovation (Late medieval)
+					has_innovation = innovation_cranes
 				}
 			}
-			building_requirement_castle_city_church = { LEVEL = 04 }
-			scope:holder.culture = {
-			has_innovation = innovation_cranes
-			}
-		}
-		trigger_else = {
-			scope:holder.culture = {
-				has_cultural_parameter = next_level_w_mills
-			}
-			building_requirement_castle_city_church = { LEVEL = 03 }
-			scope:holder.culture = {
-			has_innovation = innovation_windmills
+			AND = {
+				building_requirement_castle_city_church = { LEVEL = 03 }
+				culture = { # Unlock from culture trad early but still need the previous Civic economic building inovation (High medieval)
+					has_cultural_parameter = next_level_w_mills
+					has_innovation = innovation_windmills
+				}
 			}
 		}
 	}
@@ -1145,26 +1063,19 @@ watermills_08 = {
 		building_watermills_requirement_terrain = yes
 	}
 	can_construct = {
-		trigger_if = {
-			limit = {
-				NOT = {
-					scope:holder.culture = {
-						has_cultural_parameter = next_level_w_mills
-					}
+		OR = {
+			AND = {
+				building_requirement_castle_city_church = { LEVEL = 04 }
+				culture = { # Standard unlock from inovation (Late medieval)
+					has_innovation = innovation_cranes
 				}
 			}
-			building_requirement_castle_city_church = { LEVEL = 04 }
-			scope:holder.culture = {
-			has_innovation = innovation_cranes
-			}
-		}
-		trigger_else = {
-			scope:holder.culture = {
-				has_cultural_parameter = next_level_w_mills
-			}
-			building_requirement_castle_city_church = { LEVEL = 03 }
-			scope:holder.culture = {
-			has_innovation = innovation_windmills
+			AND = {
+				building_requirement_castle_city_church = { LEVEL = 03 }
+				culture = { # Unlock from culture trad early but still need the previous Civic economic building inovation (High medieval)
+					has_cultural_parameter = next_level_w_mills
+					has_innovation = innovation_windmills
+				}
 			}
 		}
 	}
