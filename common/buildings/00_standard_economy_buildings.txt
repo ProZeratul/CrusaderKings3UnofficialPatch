@@ -1119,7 +1119,15 @@ windmills_01 = {
 	construction_time = slow_construction_time
 
 	can_construct_potential = {
-		building_windmills_requirement_terrain = yes
+		OR = {
+			building_windmills_requirement_terrain = yes
+			AND = {
+				has_building_or_higher = hill_farms_04
+				culture = {
+					has_cultural_parameter = windmills_hill_farms_unlock
+				}
+			}
+		}
 		building_requirement_castle_city_church = { LEVEL = 01 }
 	}
 
@@ -1176,6 +1184,7 @@ windmills_01 = {
 				OR = {
 					has_holding_type = castle_holding
 					has_holding_type = church_holding
+					has_holding_type = temple_citadel_holding
 				}
 			}
 			is_county_capital = yes
