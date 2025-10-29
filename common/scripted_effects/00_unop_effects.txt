@@ -294,6 +294,7 @@ unop_get_worst_or_none_cp_holder_effect = {
 					scope:unop_multi_slot_cp = flag:bodyguard #2
 					scope:unop_multi_slot_cp = flag:lady_in_waiting #2
 					scope:unop_multi_slot_cp = flag:garuda #2
+					scope:unop_multi_slot_cp = flag:minister_bureaucrat_court_position #2
 				}
 			}
 			unop_get_worst_cp_holder = {
@@ -438,16 +439,30 @@ unop_distribute_determined_court_position_effect = {
 			limit = { $CANDIDATE$ = { has_character_flag = physician_flag } }
 			court_position_grant_effect = {
 				EMPLOYER = $EMPLOYER$
-				POS = court_physician
 				CANDIDATE = $CANDIDATE$
+				POS = court_physician
 			}
 		}
 		else_if = {
-			limit = { $CANDIDATE$ = { has_character_flag = tutor_flag } }
+			limit = { 
+				$CANDIDATE$ = { has_character_flag = tutor_flag } 
+				NOT = { government_has_flag = government_is_mandala }
+			}
 			court_position_grant_effect = {
 				EMPLOYER = $EMPLOYER$
 				CANDIDATE = $CANDIDATE$
 				POS = court_tutor
+			}
+		}
+		else_if = {
+			limit = { 
+				$CANDIDATE$ = { has_character_flag = tutor_flag } 
+				government_has_flag = government_is_mandala
+			}
+			court_position_grant_effect = {
+				EMPLOYER = $EMPLOYER$
+				CANDIDATE = $CANDIDATE$
+				POS = court_guru
 			}
 		}
 		else_if = {
@@ -632,6 +647,46 @@ unop_distribute_determined_court_position_effect = {
 				EMPLOYER = $EMPLOYER$
 				CANDIDATE = $CANDIDATE$
 				POS = court_astrologer
+			}
+		}
+		else_if = {
+			limit = { $CANDIDATE$ = { has_character_flag = grand_preceptor_flag } }
+			court_position_grant_effect = {
+				EMPLOYER = $EMPLOYER$
+				CANDIDATE = $CANDIDATE$
+				POS = grand_preceptor
+			}
+		}
+		else_if = {
+			limit = { $CANDIDATE$ = { has_character_flag = grand_guardian_flag } }
+			court_position_grant_effect = {
+				EMPLOYER = $EMPLOYER$
+				CANDIDATE = $CANDIDATE$
+				POS = grand_guardian
+			}
+		}
+		else_if = {
+			limit = { $CANDIDATE$ = { has_character_flag = grand_mentor_flag } }
+			court_position_grant_effect = {
+				EMPLOYER = $EMPLOYER$
+				CANDIDATE = $CANDIDATE$
+				POS = grand_mentor
+			}
+		}
+		else_if = {
+			limit = { $CANDIDATE$ = { has_character_flag = fire_dragon_engineer_flag } }
+			court_position_grant_effect = {
+				EMPLOYER = $EMPLOYER$
+				CANDIDATE = $CANDIDATE$
+				POS = fire_dragon_engineer
+			}
+		}
+		else_if = {
+			limit = { $CANDIDATE$ = { has_character_flag = keeper_of_the_harem_flag } }
+			court_position_grant_effect = {
+				EMPLOYER = $EMPLOYER$
+				CANDIDATE = $CANDIDATE$
+				POS = keeper_of_the_harem
 			}
 		}
 		else_if = {
