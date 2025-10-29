@@ -9862,7 +9862,7 @@ coronation_events.1036 = {
 			}
 		}
 
-        scope:activity.host = {
+        scope:activity.activity_host = { #Unop: Was scope:activity.host
             progress_towards_rival_effect = {
                 CHARACTER = root
                 REASON = rival_poetry
@@ -10098,34 +10098,34 @@ coronation_events.1037 = {
             	}
             	save_scope_as = respected_elder
             }
-            location.county = {
-            	random_county_situation ?= {
-            		limit = {
-            			OR = {
-							situation_type = natural_disaster_flood
-							situation_type = natural_disaster_earthquake
-						}
-            		}
-            		save_scope_as = omen_happening
-				}
-            }
-            if = {
+        }
+        location.county = {
+        	random_county_situation ?= {
             	limit = {
-            		NOT = {
-            			exists = scope:omen_happening
-            		}
+            		OR = {
+						situation_type = natural_disaster_flood
+						situation_type = natural_disaster_earthquake
+					}
             	}
-            	random_sub_realm_county = {
-					random_county_province = {
-						random_province_epidemic = {
-							limit = {
-								outbreak_intensity > minor
-							}
-							save_scope_as = omen_happening
+            	save_scope_as = omen_happening
+			}
+        }
+        if = {
+            limit = {
+            	NOT = {
+            		exists = scope:omen_happening
+            	}
+            }
+           	random_sub_realm_county = {
+				random_county_province = {
+					random_province_epidemic = {
+						limit = {
+							outbreak_intensity > minor
 						}
+						save_scope_as = omen_happening
 					}
 				}
-            }
+			}
         }
     }
 
