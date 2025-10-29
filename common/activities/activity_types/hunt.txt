@@ -75,6 +75,9 @@
 			is_imprisoned = no
 			is_playable_character = yes
 			NOT = { is_incapable = yes }
+			top_liege = {
+				NOT = { has_variable = banned_falconry_hunts }
+			}
 		}
 		NOT = { has_variable = hunt_invalidated }
 		trigger_if = {
@@ -100,8 +103,8 @@
 					is_ai = no
 					is_alive = yes
 					NOR = {
-						this ?= scope:invalidated_culprit
-						this = scope:activity.activity_host
+						scope:invalidated_culprit ?= this
+						scope:activity.activity_host = this
 					}
 				}
 				add_to_list = attendees
@@ -4618,7 +4621,6 @@
 				}
 			}
 			hunt_party_size_normal = {
-
 				is_valid = {
 					trigger_if = {
 						limit = {
