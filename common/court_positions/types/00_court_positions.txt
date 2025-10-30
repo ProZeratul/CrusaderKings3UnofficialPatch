@@ -264,7 +264,7 @@ court_physician_court_position = {
 			}
 		}
 		if = {
-			limit = { employer.domicile ?= { has_domicile_parameter = estate_increase_physician_aptitude_1 } }
+			limit = { exists = employer.domicile } #Unop: Do not check on a specific parameter as it will vanish after the upgrade
 			add = {
 				value = 0
 				if = {
@@ -287,7 +287,10 @@ court_physician_court_position = {
 					limit = { employer.domicile ?= { has_domicile_parameter = estate_increase_physician_aptitude_2 } }
 					add = estate_increase_gardener_aptitude_value_2
 				}
-				else = { add = estate_increase_gardener_aptitude_value_1 }
+				else_if = {
+					limit = { employer.domicile ?= { has_domicile_parameter = estate_increase_physician_aptitude_1 } }
+					add = estate_increase_gardener_aptitude_value_1
+				}
 				desc = estate_physician_building
 			}
 		}
@@ -2472,30 +2475,33 @@ court_tutor_court_position = {
 			}
 		}
 		if = {
-			limit = { employer.domicile ?= { has_domicile_parameter = increased_tutor_aptitude_1 } }
+			limit = { exists = employer.domicile } #Unop: Do not check on a specific parameter as it will vanish after the upgrade
 			add = {
 				value = 0
 				if = {
 					limit = { employer.domicile ?= { has_domicile_parameter = increased_tutor_aptitude_6 } }
-					add = estate_increase_gardener_aptitude_value_6
+					add = estate_increase_tutor_aptitude_value_6
 				}
 				else_if = {
 					limit = { employer.domicile ?= { has_domicile_parameter = increased_tutor_aptitude_5 } }
-					add = estate_increase_gardener_aptitude_value_5
+					add = estate_increase_tutor_aptitude_value_5
 				}
 				else_if = {
 					limit = { employer.domicile ?= { has_domicile_parameter = increased_tutor_aptitude_4 } }
-					add = estate_increase_gardener_aptitude_value_4
+					add = estate_increase_tutor_aptitude_value_4
 				}
 				else_if = {
 					limit = { employer.domicile ?= { has_domicile_parameter = increased_tutor_aptitude_3 } }
-					add = estate_increase_gardener_aptitude_value_3
+					add = estate_increase_tutor_aptitude_value_3
 				}
 				else_if = {
 					limit = { employer.domicile ?= { has_domicile_parameter = increased_tutor_aptitude_2 } }
-					add = estate_increase_gardener_aptitude_value_2
+					add = estate_increase_tutor_aptitude_value_2
 				}
-				else = { add = estate_increase_gardener_aptitude_value_1 }
+				else_if = {
+					limit = { employer.domicile ?= { has_domicile_parameter = increased_tutor_aptitude_1 } }
+					add = estate_increase_tutor_aptitude_value_1
+				}
 				desc = estate_tutor_building
 			}
 		}
@@ -6858,7 +6864,7 @@ court_gardener_court_position = {
 			}
 		}
 		if = {
-			limit = { employer.domicile ?= { has_domicile_parameter = increased_gardener_aptitude_1 } }
+			limit = { exists = employer.domicile } #Unop: Do not check on a specific parameter as it will vanish after the upgrade
 			add = {
 				value = 0
 				if = {
@@ -6881,7 +6887,10 @@ court_gardener_court_position = {
 					limit = { employer.domicile ?= { has_domicile_parameter = increased_gardener_aptitude_2 } }
 					add = estate_increase_gardener_aptitude_value_2
 				}
-				else = { add = estate_increase_gardener_aptitude_value_1 }
+				else_if = {
+					limit = { employer.domicile ?= { has_domicile_parameter = increased_gardener_aptitude_1 } }
+					add = estate_increase_gardener_aptitude_value_1
+				}
 				desc = estate_garden_building
 			}
 		}
@@ -9907,7 +9916,7 @@ court_poet_court_position = { # EP1
 			}
 		}
 		if = {
-			limit = { employer.domicile ?= { has_domicile_parameter = increased_poet_aptitude_1 } }
+			limit = { exists = employer.domicile } #Unop: Do not check on a specific parameter as it will vanish after the upgrade
 			add = {
 				value = 0
 				if = {
@@ -9930,7 +9939,10 @@ court_poet_court_position = { # EP1
 					limit = { employer.domicile ?= { has_domicile_parameter = increased_poet_aptitude_2 } }
 					add = estate_increase_gardener_aptitude_value_2
 				}
-				else = { add = estate_increase_gardener_aptitude_value_1 }
+				else_if = {
+					limit = { employer.domicile ?= { has_domicile_parameter = increased_poet_aptitude_1 } }
+					add = estate_increase_gardener_aptitude_value_1
+				}
 				desc = estate_poet_building
 			}
 		}
@@ -10350,7 +10362,7 @@ court_musician_court_position = {
 			}
 		}
 		if = {
-			limit = { employer.domicile ?= { has_domicile_parameter = increased_musician_aptitude_1 } }
+			limit = { exists = employer.domicile } #Unop: Do not check on a specific parameter as it will vanish after the upgrade
 			add = {
 				value = 0
 				if = {
@@ -10373,7 +10385,10 @@ court_musician_court_position = {
 					limit = { employer.domicile ?= { has_domicile_parameter = increased_musician_aptitude_2 } }
 					add = estate_increase_gardener_aptitude_value_2
 				}
-				else = { add = estate_increase_gardener_aptitude_value_1 }
+				else_if = {
+					limit = { employer.domicile ?= { has_domicile_parameter = increased_musician_aptitude_1 } }
+					add = estate_increase_gardener_aptitude_value_1
+				}
 				desc = estate_musician_building
 			}
 		}
