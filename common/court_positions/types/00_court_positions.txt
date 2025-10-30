@@ -9761,8 +9761,8 @@ court_poet_court_position = { # EP1
 
 	court_position_asset = {
 		trigger = {
-			root.culture ?= {
-				has_cultural_pillar = heritage_north_germanic
+			root ?= {
+				culture = { has_cultural_pillar = heritage_north_germanic }
 			}
 		}
 		animation = storyteller
@@ -9996,6 +9996,13 @@ court_poet_court_position = { # EP1
 				has_realm_law = nomadic_authority_3
 			}
 		}
+		trigger_else_if = { #Unop: Just put this one before the one with better_court_poets since you would be still needing duchy of you have this dynasty perk with the culture
+			limit = {
+				dynasty ?= { has_dynasty_perk = tgp_japan_legacy_2 }
+				is_house_head = yes #Unop: This dynasty perk state that you must be the house head
+			}
+			highest_held_title_tier >= tier_county
+		}
 		trigger_else_if = {
 			limit = {
 				root.culture ?= {
@@ -10003,12 +10010,6 @@ court_poet_court_position = { # EP1
 				}
 			}
 			highest_held_title_tier >= tier_duchy
-		}
-		trigger_else_if = {
-			limit = {
-				dynasty ?= { has_dynasty_perk = tgp_japan_legacy_2 }
-			}
-			highest_held_title_tier >= tier_county
 		}
 		trigger_else = {
 			highest_held_title_tier >= tier_kingdom
