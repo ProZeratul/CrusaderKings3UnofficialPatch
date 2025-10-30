@@ -271,6 +271,16 @@
 				}
 			}
 		}
+		# If a suitable Escalated Faction exists, prefer to join it instead.
+		modifier = {
+			desc = "FACTION_REASON_PREFER_ESCALATED_FACTION"
+			add = -100
+			scope:target = {
+				any_targeting_faction = {
+					faction_type = escalated_peasant_faction
+				}
+			}
+		}
 
 		# Summary of score weights (base + modifiers):
 		#	Different Culture Group + Evil Faith: 100% chance at -32 opinion, 1% chance at -19 opinion
@@ -335,6 +345,7 @@
 		# Defiant Ambushers
 		modifier = {
 			add = 25
+			county_opinion < 0
 			culture != scope:target.culture
 			culture = { has_cultural_parameter = county_peasant_and_populist_factions_more_common }
 		}
@@ -425,6 +436,16 @@
 				NOT = { this.title_province.culture = { has_same_culture_heritage = scope:faction.var:faction_culture } }
 			}
 		}
+		# If a suitable Escalated Faction exists, prefer to join it instead.
+		modifier = {
+			desc = "FACTION_REASON_PREFER_ESCALATED_FACTION"
+			add = -100
+			scope:faction.faction_target = {
+				any_targeting_faction = {
+					faction_type = escalated_peasant_faction
+				}
+			}
+		}
 
 		# Summary of score weights (base + modifiers):
 		#	Different Culture Group + Evil Faith: 100% chance at -28 opinion, 1% chance at -15 opinion
@@ -512,6 +533,7 @@
 		# Defiant Ambushers
 		modifier = {
 			add = 25
+			county_opinion < 0
 			culture != scope:faction.faction_target.culture
 			culture = { has_cultural_parameter = county_peasant_and_populist_factions_more_common }
 		}
@@ -1220,7 +1242,10 @@ escalated_peasant_faction = {
 	}
 
 	can_county_join = {	
-		has_county_modifier = peasant_war_lost_county_modifier
+		OR = {
+			has_county_modifier = peasant_war_lost_county_modifier
+			holder = scope:faction.faction_target
+		}
 	}
 
 	can_character_create = {
@@ -1287,6 +1312,7 @@ escalated_peasant_faction = {
 		# Defiant Ambushers
 		modifier = {
 			add = 25
+			county_opinion < 0
 			culture != scope:faction.faction_target.culture
 			culture = { has_cultural_parameter = county_peasant_and_populist_factions_more_common }
 		}
@@ -1405,6 +1431,7 @@ escalated_peasant_faction = {
 		modifier = {
 			desc = "FACTION_REASON_DYNASTIC_CYCLE_INSTABILITY"
 			add = 25
+			county_opinion < 0
 			scope:faction.faction_target = {
 				top_participant_group:dynastic_cycle ?= {
 					has_participant_group_parameter = dynastic_cycle_more_peasant_factions
@@ -1414,6 +1441,7 @@ escalated_peasant_faction = {
 		# Pure Land
 		modifier = {
 			add = 25
+			county_opinion < 0
 			faith != scope:faction.faction_target.faith
 			faith = {
 				has_doctrine_parameter = peasant_and_populist_factions_more_common
