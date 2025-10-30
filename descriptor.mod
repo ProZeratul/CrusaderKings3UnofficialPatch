@@ -1,8 +1,8 @@
-version="8.0.38"
+version="9.0.0"
 tags={
 	"Fixes"
 }
 name="Unofficial Patch"
 picture="thumbnail.png"
-supported_version="1.17.*"
+supported_version="1.18.*"
 remote_file_id="2871648329"
