@@ -2173,7 +2173,10 @@ launch_hungarian_migration_scripted_effect = {
 						tier = tier_county
 						tier = tier_duchy
 					}
-					this != scope:reserved_title
+					trigger_if = { #Unop: To not have a flood wave in the logs
+						limit = { exists = scope:reserved_title }
+						this != scope:reserved_title
+					}
 				}
 				add_to_list = spare_pannonian_titles_list
 			}
