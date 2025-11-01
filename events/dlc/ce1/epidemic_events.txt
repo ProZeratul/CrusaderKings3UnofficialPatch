@@ -4940,14 +4940,7 @@ epidemic_events.3000 = {
 				save_scope_as = sick_peasant
 			}
 			scope:sick_peasant = {
-				if = {
-					limit = {
-						#unop_can_contract_disease_trigger = { DISEASE = scope:epidemic_scope.epidemic_type.epidemic_trait }
-						always = yes
-					}
-					show_as_tooltip = { add_trait = scope:epidemic_scope.epidemic_type.epidemic_trait }
-					hidden_effect = { infect_with_epidemic = scope:epidemic_scope }
-				}
+				add_trait = scope:epidemic_scope.epidemic_type.epidemic_trait
 			}
 		}
 	}
