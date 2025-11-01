@@ -1147,11 +1147,9 @@ tradition_mountaineer_ruralism = {
 		custom_description = {
 			text = culture_in_mountains_desc
 			any_culture_county = {
-				any_county_province = {
-					OR = {
-						terrain = mountains
-						terrain = desert_mountains
-					}
+				county_has_province_with_terrain = {
+					terrain = mountains
+					terrain = desert_mountains
 				}
 			}
 		}
@@ -1199,7 +1197,7 @@ tradition_mountaineer_ruralism = {
 					NOT = {
 						any_culture_county = {
 							percent >= 0.3
-							any_county_province = {
+							county_has_province_with_terrain = {
 								terrain = mountains
 							}
 						}
@@ -1233,11 +1231,9 @@ tradition_mountaineer_ruralism = {
 					scope:character = {
 						any_sub_realm_county = {
 							culture = scope:character.culture
-							any_county_province = {
-								OR = {
-									terrain = mountains
-									terrain = hills
-								}
+							county_has_province_with_terrain = {
+								terrain = mountains
+								terrain = hills
 							}
 						}
 					}
@@ -1249,11 +1245,9 @@ tradition_mountaineer_ruralism = {
 			limit = {
 				any_culture_county = {
 					percent >= 0.6
-					any_county_province = {
-						OR = {
-							terrain = mountains
-							terrain = hills
-						}
+					county_has_province_with_terrain = {
+						terrain = mountains
+						terrain = hills
 					}
 				}
 			}
@@ -1353,7 +1347,7 @@ tradition_steppe_tolerance = {
 			limit = {
 				any_culture_county = {
 					percent >= 0.6
-					any_county_province = {
+					county_has_province_with_terrain = {
 						terrain = steppe
 					}
 				}

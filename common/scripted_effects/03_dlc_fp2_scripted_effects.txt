@@ -28,7 +28,7 @@ fp2_stuggle_ending_involved_list_effect = {
 	struggle:iberian_struggle = {
 		every_involved_ruler = {
 			limit = {
-				is_independent_ruler = yes
+				top_liege = this
 				primary_title = { is_mercenary_company = no }
 			}
 			add_to_list = struggle_involvees
@@ -164,7 +164,7 @@ fp2_struggle_compromise_create_new_kingdom_effect = {
 			limit = {
 				title_capital_county = de_jure_liege.title_capital_county
 				exists = de_jure_liege.holder
-				NOT = { holder = de_jure_liege.holder }
+				holder != de_jure_liege.holder
 			}
 			de_jure_liege = {
 				# So kingdom has a capital
@@ -392,8 +392,7 @@ fp2_struggle_compromise_distribute_the_actual_titles = {
 				save_temporary_scope_as = new_owner_temp
 				primary_title = {
 					tier = tier_duchy
-					exists = de_jure_liege
-					de_jure_liege = { fp2_struggle_ending_compromise_create_title_trigger = yes }
+					de_jure_liege ?= { fp2_struggle_ending_compromise_create_title_trigger = yes }
 				}
 			}
 			save_scope_as = new_owner
@@ -410,8 +409,7 @@ fp2_struggle_compromise_distribute_the_actual_titles = {
 				save_temporary_scope_as = new_owner_temp
 				primary_title = {
 					tier = tier_kingdom
-					exists = de_jure_liege
-					de_jure_liege = { fp2_struggle_ending_compromise_create_title_trigger = yes }
+					de_jure_liege ?= { fp2_struggle_ending_compromise_create_title_trigger = yes }
 				}
 			}
 			save_scope_as = new_owner
@@ -445,7 +443,7 @@ fp2_struggle_compromise_modifier_rewards_effect = {
 		hidden_effect = {
 			every_involved_ruler = {
 				limit = {
-					is_independent_ruler = yes
+					top_liege = this
 					primary_title = { is_mercenary_company = no }
 					exists = house
 					NOT = {
@@ -456,7 +454,7 @@ fp2_struggle_compromise_modifier_rewards_effect = {
 			}
 			every_involved_ruler = {
 				limit = {
-					is_independent_ruler = yes
+					top_liege = this
 					primary_title = { is_mercenary_company = no }
 				}
 				fp2_struggle_compromise_modifier_rewards_personal_county_effect = yes
@@ -492,7 +490,7 @@ fp2_struggle_compromise_truce_effect = {
 				struggle:iberian_struggle = {
 					any_involved_ruler = {
 						count > 1
-						is_independent_ruler = yes
+						top_liege = this
 						primary_title = { is_mercenary_company = no }
 					}
 				}
@@ -500,7 +498,7 @@ fp2_struggle_compromise_truce_effect = {
 			struggle:iberian_struggle = {
 				every_involved_ruler = {
 					limit = {
-						is_independent_ruler = yes
+						top_liege = this
 						primary_title = { is_mercenary_company = no }
 					}
 					add_to_list = fp2_struggle_compromise_truce_list
@@ -558,7 +556,7 @@ fp2_struggle_conciliation_modifier_rewards_effect = {
 		}
 		every_involved_ruler = {
 			limit = {
-				is_independent_ruler = yes
+				top_liege = this
 				primary_title = { is_mercenary_company = no }
 				exists = house
 				NOT = {
@@ -1221,7 +1219,7 @@ generate_troops_from_revolt_county_modifiers_effect = {
 						}
 
 						spawn_army = {
-							name = event_troop_default_name
+							name = peasant_troops_name
 							levies = var:number_rebel_reinforcements
 							location = scope:chosen_location
 							war = scope:war
@@ -1456,7 +1454,7 @@ fp2_lyonese_monk_return_territories_effect = {
 		}
 		scope:acolyte = {
 			every_held_title = {
-				limit = { tier >= tier_county }
+				title_tier >= county
 				change_title_holder = {
 					holder = scope:acolyte_host
 					change = scope:change
@@ -2047,8 +2045,8 @@ fp2_struggle_found_kingdom_toledo_empire_effect = {
 	if = {
 		limit = { NOT = { exists = scope:has_kingdom_toledo_absorb_list_been_created } }
 		ordered_held_title = {
+			title_tier = duchy
 			limit = {
-				tier = tier_duchy
 				is_titular = no
 				NOT = { this = title:d_toledo }
 				root = { completely_controls = prev }
@@ -2075,7 +2073,7 @@ fp2_struggle_found_kingdom_toledo_empire_effect = {
 		if = {
 			limit = {
 				exists = de_jure_liege.holder
-				NOT = { de_jure_liege.holder = root }
+				de_jure_liege.holder != root
 			}
 			de_jure_liege.holder = { add_to_list = kingdom_toledo_opinion_list }
 		}
@@ -2118,7 +2116,7 @@ fp2_struggle_compromise_tooltip_effect = {
 			struggle:iberian_struggle = {
 				any_involved_ruler = {
 					count > 1
-					is_independent_ruler = yes
+					top_liege = this
 					primary_title = { is_mercenary_company = no }
 				}
 			}

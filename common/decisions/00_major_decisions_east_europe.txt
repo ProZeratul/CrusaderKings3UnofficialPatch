@@ -11,7 +11,14 @@ unite_the_western_slavs_decision = {
 		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
 	}
 	decision_group_type = major
-	ai_check_interval = 120
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 120
+		kingdom = 120
+		empire = 120
+		hegemony = 120
+	}
 	desc = unite_the_western_slavs_decision_desc
 
 	is_shown = {
@@ -68,7 +75,7 @@ unite_the_western_slavs_decision = {
 		trigger_event = east_europe.0001
 		every_player = {
 			limit = {
-				NOT = { this = scope:western_slav_uniter }
+				this != scope:western_slav_uniter
 				is_within_diplo_range = { CHARACTER = scope:western_slav_uniter }
 			}
 			trigger_event = east_europe.0002
@@ -105,7 +112,14 @@ unite_the_southern_slavs_decision = {
 		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
 	}
 	decision_group_type = major
-	ai_check_interval = 120
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 120
+		kingdom = 120
+		empire = 120
+		hegemony = 120
+	}
 	desc = unite_the_southern_slavs_decision_desc
 
 	is_shown = {
@@ -146,7 +160,7 @@ unite_the_southern_slavs_decision = {
 		trigger_event = east_europe.0005
 		every_player = {
 			limit = {
-				NOT = { this = scope:southern_slav_uniter }
+				this != scope:southern_slav_uniter
 				is_within_diplo_range = { CHARACTER = scope:southern_slav_uniter }
 			}
 			trigger_event = east_europe.0006
@@ -183,7 +197,14 @@ unite_the_slavs_decision = {
 		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
 	}
 	decision_group_type = major
-	ai_check_interval = 120
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 120
+		kingdom = 120
+		empire = 120
+		hegemony = 120
+	}
 	desc = unite_the_slavs_decision_desc
 
 	is_shown = {
@@ -223,7 +244,7 @@ unite_the_slavs_decision = {
 		trigger_event = east_europe.0010
 		every_player = {
 			limit = {
-				NOT = { this = scope:slav_uniter }
+				this != scope:slav_uniter
 				is_within_diplo_range = { CHARACTER = scope:slav_uniter }
 			}
 			trigger_event = east_europe.0011
@@ -241,7 +262,26 @@ unite_the_slavs_decision = {
 	}
 
 
-	cost = { gold = { value = 600 } }
+	cost = {
+		gold = {
+			value = 0
+			if = {
+				limit = {
+					has_treasury = no
+				}
+				add = 600
+			}
+		}
+		treasury = {
+			value = 0
+			if = {
+				limit = {
+					has_treasury = yes
+				}
+				add = 600
+			}
+		}
+	}
 
 	ai_potential = {
 		always = yes
@@ -258,7 +298,14 @@ defenders_of_highgod_decision = {
 		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
 	}
 	decision_group_type = major
-	ai_check_interval = 120
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 120
+		kingdom = 120
+		empire = 120
+		hegemony = 120
+	}
 	desc = defenders_of_highgod_decision_desc
 
 	is_shown = {
@@ -358,7 +405,7 @@ defenders_of_highgod_decision = {
 	}
 
 	is_valid_showing_failures_only = {
-		is_independent_ruler = yes
+		top_liege = this
 		is_landed = yes
 	}
 
@@ -397,7 +444,26 @@ defenders_of_highgod_decision = {
 		}
 	}
 
-	cost = { gold = { value = 100 } }
+	cost = {
+		gold = {
+			value = 0
+			if = {
+				limit = {
+					has_treasury = no
+				}
+				add = 100
+			}
+		}
+		treasury = {
+			value = 0
+			if = {
+				limit = {
+					has_treasury = yes
+				}
+				add = 100
+			}
+		}
+	}
 
 	ai_potential = {
 		always = yes
@@ -466,7 +532,7 @@ promote_hungarian_settlement_decision = {
 		is_landed = yes
 		is_capable_adult = yes
 		is_imprisoned = no
-		is_independent_ruler = yes
+		top_liege = this
 		is_at_war = no
 	}
 
@@ -586,7 +652,7 @@ revive_magyar_paganism_decision = {
 		is_capable_adult = yes
 		is_imprisoned = no
 		is_at_war = no
-		is_independent_ruler = yes
+		top_liege = this
 	}
 
 	cost = {
@@ -621,7 +687,14 @@ found_kingdom_of_bosnia_decision = {
 	}
 	decision_group_type = major
 
-	ai_check_interval = 120
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 120
+		kingdom = 0
+		empire = 0
+		hegemony = 0
+	}
 
 	desc = found_kingdom_of_bosnia_decision_desc
 	selection_tooltip = found_kingdom_of_bosnia_decision_tooltip
@@ -671,7 +744,7 @@ found_kingdom_of_bosnia_decision = {
 
 	is_valid = {
 		#You must have sufficient clout.
-		is_independent_ruler = yes
+		top_liege = this
 
 		#You must control the kingdom's heartlands.
 		has_title = title:d_bosna
@@ -698,7 +771,7 @@ found_kingdom_of_bosnia_decision = {
 		#Notify other players.
 		every_player = {
 			limit = {
-				NOT = { this = scope:founder }
+				this != scope:founder
 				top_liege = {
 					OR = {
 						this = scope:founder
@@ -721,7 +794,24 @@ found_kingdom_of_bosnia_decision = {
 	}
 
 	cost = {
-		gold = 300
+		gold = {
+			value = 0
+			if = {
+				limit = {
+					has_treasury = no
+				}
+				add = 300
+			}
+		}
+		treasury = {
+			value = 0
+			if = {
+				limit = {
+					has_treasury = yes
+				}
+				add = 300
+			}
+		}
 		prestige = 200
 	}
 
@@ -744,13 +834,20 @@ accuse_krstjani_of_heresy_decision = {
 	}
 	decision_group_type = major
 
-	ai_check_interval = 120
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 120
+		kingdom = 120
+		empire = 120
+		hegemony = 120
+	}
 
 	desc = accuse_krstjani_of_heresy_decision_desc
 	selection_tooltip = accuse_krstjani_of_heresy_decision_tooltip
 
 	is_shown = {
-		is_independent_ruler = yes
+		top_liege = this
 		is_landed_or_landless_administrative = yes
 		exists = dynasty
 		#Gotta be an ecumenical Christian...
@@ -898,7 +995,14 @@ launch_hungarian_migration_decision = {
 	}
 	decision_group_type = major
 
-	ai_check_interval = 60
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 60
+		kingdom = 60
+		empire = 0
+		hegemony = 0
+	}
 
 	desc = launch_hungarian_migration_decision_desc
 	selection_tooltip = launch_hungarian_migration_decision_tooltip
@@ -909,7 +1013,7 @@ launch_hungarian_migration_decision = {
 		exists = dynasty
 		#Either be independent, or else not beneath another Mogyer.
 		OR = {
-			is_independent_ruler = yes
+			top_liege = this
 			NOT = { liege = { culture = culture:mogyer } }
 		}
 		#Must be a steppe Hungarian.
@@ -998,7 +1102,14 @@ found_kingdom_of_livonia_decision = {
 	}
 	decision_group_type = major
 
-	ai_check_interval = 120
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 120
+		kingdom = 0
+		empire = 0
+		hegemony = 0
+	}
 
 	desc = found_kingdom_of_livonia_decision_desc
 	selection_tooltip = found_kingdom_of_livonia_decision_tooltip
@@ -1043,7 +1154,7 @@ found_kingdom_of_livonia_decision = {
 
 	is_valid = {
 		OR = { #Independent or vassal of an Emperor
-			is_independent_ruler = yes
+			top_liege = this
 			top_liege.primary_title.tier >= tier_empire
 		}
 		prestige_level >= medium_prestige_level
@@ -1068,7 +1179,7 @@ found_kingdom_of_livonia_decision = {
 		#Notify other players.
 		every_player = {
 			limit = {
-				NOT = { this = scope:founder }
+				this != scope:founder
 				top_liege = {
 					OR = {
 						this = scope:founder
@@ -1087,7 +1198,24 @@ found_kingdom_of_livonia_decision = {
 	}
 
 	cost = {
-		gold = major_gold_value
+		gold = {
+			value = 0
+			if = {
+				limit = {
+					has_treasury = no
+				}
+				add = major_gold_value
+			}
+		}
+		treasury = {
+			value = 0
+			if = {
+				limit = {
+					has_treasury = yes
+				}
+				add = major_gold_value
+			}
+		}
 	}
 
 	ai_potential = {

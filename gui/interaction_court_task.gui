@@ -223,8 +223,8 @@ types CourtPositionButton
 							align = nobaseline
 						}
 						text_single = {
-							visible = "[Not(ObjectsEqual( GetPlayer.Self, CharacterInteractionConfirmationWindow.GetActor.Self ))]"
-							datacontext = "[CharacterInteractionConfirmationWindow.GetActor]" #Unop Use correct character
+							visible = "[Not(ObjectsEqual( GetPlayer.Self, CharacterInteractionConfirmationWindow.GetRecipient.GetLiege.Self ))]" #Unop: Fix actor check
+							datacontext = "[CharacterInteractionConfirmationWindow.GetActor]" #Unop: Use correct character
 							layoutpolicy_horizontal = expanding
 							margin_top = -2
 							margin_left = 2
@@ -235,12 +235,12 @@ types CourtPositionButton
 							align = nobaseline
 						}
 						text_single = {
-							visible = "[ObjectsEqual( GetPlayer.Self, CharacterInteractionConfirmationWindow.GetActor.Self )]"
-							datacontext = "[CharacterInteractionConfirmationWindow.GetRecipient]" #Unop Use correct character
+							visible = "[ObjectsEqual( GetPlayer.Self, CharacterInteractionConfirmationWindow.GetRecipient.GetLiege.Self )]" #Unop: Fix actor check
+							datacontext = "[CharacterInteractionConfirmationWindow.GetRecipient]" #Unop: Use correct character
 							layoutpolicy_horizontal = expanding
 							margin_top = -2
 							margin_left = 2
-
+						
 							name = "aptitude_label_2"
 							alwaystransparent = yes
 							text = "[Character.GetCourtPositionAptitude( CourtPositionType.Self )]"
@@ -252,8 +252,8 @@ types CourtPositionButton
 						margin_top = -4
 						default_format = "#high"
 						using = tooltip_ne
-						text = "[CourtPositionType.GetSalaryTextFor( GetPlayer )]"
-						tooltip = "[CourtPositionType.GetSalaryBreakdownFor( GetPlayer )]"
+						text = "[CourtPositionType.GetEmployerSalaryTextFor( GetPlayer )]"
+						tooltip = "[CourtPositionType.GetEmployerSalaryBreakdownFor( GetPlayer )]"
 						alwaystransparent = yes
 					}
 				}

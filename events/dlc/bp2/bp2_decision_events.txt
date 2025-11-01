@@ -34,9 +34,7 @@ bp2_decision.0001 = { #find wet nurse candidates
 	immediate = {
 		if = {
 			limit = {
-				any_spouse = {
-					count >= 1
-				}
+				any_spouse = { }
 			}
 			random_spouse = {
 				save_scope_as = spouse
@@ -62,7 +60,7 @@ bp2_decision.0001 = { #find wet nurse candidates
 						any_pool_character = {
 							province = root.capital_province
 							can_be_employed_as = wet_nurse_court_position
-							NOT = { this = scope:wet_nurse_candidate_1 }
+							this != scope:wet_nurse_candidate_1
 						}
 					}
 					save_scope_as = wet_nurse_candidate_2
@@ -113,9 +111,9 @@ bp2_decision.0001 = { #find wet nurse candidates
 	option = {
 		name = bp2_decision.0001.a
 		custom_tooltip = bp2_decision.0001.a.aptitude
-		pay_short_term_gold = {
+		pay_treasury_or_gold = {
 			target = scope:wet_nurse_candidate_1
-			gold = tiny_gold_value
+			value = tiny_treasury_or_gold_value
 		}
 		hidden_effect = {
 			add_courtier = scope:wet_nurse_candidate_1
@@ -161,10 +159,10 @@ bp2_decision.0001 = { #find wet nurse candidates
 	option = {
 		name = bp2_decision.0001.b
 		custom_tooltip = bp2_decision.0001.b.aptitude
-		pay_short_term_gold = {
+		pay_treasury_or_gold = {
 			target = scope:wet_nurse_candidate_2
-			gold = {
-				value = tiny_gold_value
+			value = {
+				add = tiny_treasury_or_gold_value
 				divide = 3
 			}
 		}
@@ -252,7 +250,7 @@ bp2_decision.0002 = { #rites of passage
 	desc = {
 		first_valid = {
 			triggered_desc = {
-				trigger = { NOT = { scope:teentribal = root } }
+				trigger = { scope:teentribal != root }
 				desc = bp2_decision.0002.desc
 			}
 			desc = bp2_decision.0002.desc_root
@@ -314,7 +312,7 @@ bp2_decision.0002 = { #rites of passage
 		}
 		first_valid = {
 			triggered_desc = {
-				trigger = { NOT = { scope:teentribal = root } }
+				trigger = { scope:teentribal != root }
 				desc = bp2_decision.0002.desc_end
 			}
 			desc = bp2_decision.0002.desc_end_root
@@ -330,7 +328,7 @@ bp2_decision.0002 = { #rites of passage
 		animation = war_defender
 	}
 	right_portrait = {
-		trigger = { NOT = { scope:teentribal = root } } 
+		trigger = { scope:teentribal != root } 
 		character = scope:teentribal
 		animation = throne_room_bow_1
 	}

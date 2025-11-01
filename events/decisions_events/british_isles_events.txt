@@ -81,7 +81,7 @@ british_isles.1001 = {
 	title = british_isles.1001.t
 	desc = british_isles.1001.desc
 	theme = realm
-	orphan = yes # TODO [CD] - Figure out why
+	orphan = yes
 	left_portrait = {
 		character = scope:restorer
 		animation = personality_honorable
@@ -102,7 +102,7 @@ british_isles.1001 = {
 british_isles.1002 = {
 	type = character_event
 	title = british_isles.1002.t
-	orphan = yes # TODO [CD] - Figure out why
+	orphan = yes
 	desc = {
 		first_valid = {
 			triggered_desc = {
@@ -138,7 +138,7 @@ british_isles.1002 = {
 	option = { # Give players close to restorer a chance to convert
 		name = british_isles.1002.c
 		trigger = {
-			NOT = { root.culture = scope:restorer.culture }
+			root.culture != scope:restorer.culture
 			OR = {
 				is_close_family_of = scope:restorer
 				is_vassal_of = scope:restorer
@@ -205,8 +205,7 @@ british_isles.1011 = {
 		title:k_england = {
 			every_in_de_jure_hierarchy = {
 				limit = {
-					exists = holder
-					holder = { negotiate_the_danelaw_valid_danelaw_opponent_trigger = yes }
+					holder ?= { negotiate_the_danelaw_valid_danelaw_opponent_trigger = yes }
 				}
 				holder = { add_to_list = possible_danelaw_partners_list }
 			}
@@ -454,7 +453,7 @@ british_isles.1021 = {
 		## Yeah, I realise that this is an easy way to skirt the restrictions from HumSac'ing a HoF. :) Benefits of having a godperson vouch for you.
 		if = {
 			limit = {
-				NOT = { scope:ntd_recipient.faith = scope:ntd_actor.faith }
+				scope:ntd_recipient.faith != scope:ntd_actor.faith
 			}
 			scope:ntd_recipient = { set_character_faith_with_conversion = scope:ntd_actor.faith } #Unop: faith was missing after scope:ntd_actor
 		}
@@ -569,6 +568,7 @@ british_isles.1022 = {
 #	Partition Result - Destruction
 british_isles.1031 = {
 	hidden = yes
+	orphan = yes
 
 	trigger = {
 		# Partition must be active.
@@ -1059,7 +1059,7 @@ british_isles.2001 = {
 			# Send event to other players
 			every_player = {
 				limit = {
-					NOT = { this = root }
+					this != root
 					OR = {
 						primary_title = {
 							OR = {
@@ -1139,7 +1139,7 @@ british_isles.3001 = {
 		name = british_isles.3001.a
 		every_player = {
 			limit = {
-				NOT = { this = root }
+				this != root
 				OR = {
 					culture = { has_cultural_pillar = heritage_west_germanic }
 					culture = { has_cultural_pillar = heritage_goidelic }

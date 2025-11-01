@@ -73,8 +73,8 @@ spouse_gives_host_prestige = {
 			location = scope:province
 		}
 		any_attending_character = {
-			NOT = { this = scope:host }
-			NOT = { this = scope:host.primary_spouse }
+			this != scope:host
+			this != scope:host.primary_spouse
 			OR = {
 				is_ruler = yes
 				is_councillor = yes
@@ -111,8 +111,8 @@ spouse_gives_host_prestige = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
-				NOT = { this = scope:host.primary_spouse }
+				this != scope:host
+				this != scope:host.primary_spouse
 				OR = {
 					is_ruler = yes
 					is_councillor = yes
@@ -208,7 +208,7 @@ spouse_manages_feast_splendidly = {
 				if = {
 					limit = {
 						any_vassal = {
-							has_vassal_stance = parochial
+							vassal_stance = parochial
 						}
 					}
 					every_vassal = {
@@ -241,8 +241,8 @@ spouse_impresses_clergy = {
 			location = scope:province
 		}
 		any_attending_character = {
-			NOT = { this = scope:host }
-			NOT = { this = scope:host.primary_spouse }
+			this != scope:host
+			this != scope:host.primary_spouse
 			OR = {
 				is_clergy = yes
 				has_council_position = councillor_court_chaplain
@@ -282,8 +282,8 @@ spouse_impresses_clergy = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
-				NOT = { this = scope:host.primary_spouse }
+				this != scope:host
+				this != scope:host.primary_spouse
 				OR = {
 					is_clergy = yes
 					has_council_position = councillor_court_chaplain
@@ -330,8 +330,8 @@ spouse_gives_hook = {
 			location = scope:province
 		}
 		any_attending_character = {
-			NOT = { this = scope:host }
-			NOT = { this = scope:host.primary_spouse }
+			this != scope:host
+			this != scope:host.primary_spouse
 			is_ruler = yes
 			primary_title.tier > tier_barony
 			intrigue < scope:host.primary_spouse.intrigue
@@ -376,8 +376,8 @@ spouse_gives_hook = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
-				NOT = { this = scope:host.primary_spouse }
+				this != scope:host
+				this != scope:host.primary_spouse
 				is_ruler = yes
 				primary_title.tier > tier_barony
 				intrigue < scope:host.primary_spouse.intrigue
@@ -422,7 +422,7 @@ relation_gains_friend = {
 		is_current_phase_active = yes
 		coronation_feast_phase = yes # If Coronation, only in feast phase
 		any_attending_character = {
-			NOT = { this = scope:host }
+			this != scope:host
 			OR = {
 				is_close_family_of = scope:host
 				is_spouse_of = scope:host
@@ -433,8 +433,8 @@ relation_gains_friend = {
 			save_temporary_scope_as = trait_check
 		}
 		any_attending_character = {
-			NOT = { this = scope:host }
-			NOT = { this = scope:trait_check }
+			this != scope:host
+			this != scope:trait_check
 			is_physically_able_ai_adult = yes
 			num_of_relation_friend < 2
 			location = scope:province
@@ -457,15 +457,15 @@ relation_gains_friend = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
+				this != scope:host
 				is_physically_able_ai_adult = yes
 				num_of_relation_friend < 2
 				location = scope:province
 				save_temporary_scope_as = check_scope
 				scope:activity = {
 					any_attending_character = {
-						NOT = { this = scope:host }
-						NOT = { this = scope:check_scope }
+						this != scope:host
+						this != scope:check_scope
 						OR = {
 							is_close_family_of = scope:host
 							is_spouse_of = scope:host
@@ -486,8 +486,8 @@ relation_gains_friend = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
-				NOT = { this = scope:second }
+				this != scope:host
+				this != scope:second
 				OR = {
 					is_close_family_of = scope:host
 					is_spouse_of = scope:host
@@ -566,7 +566,7 @@ lauded_food = {
 			}
 		}
 		any_attending_character = {
-			NOT = { this = scope:host }
+			this != scope:host
 			is_physically_able_ai_adult = yes
 			location = scope:province
 			OR = {
@@ -611,7 +611,7 @@ lauded_food = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
+				this != scope:host
 				is_physically_able_ai_adult = yes
 				location = scope:province
 				OR = {
@@ -769,7 +769,7 @@ children_bonding = {
 		is_current_phase_active = yes
 		coronation_feast_phase = yes # If Coronation, only in feast phase
 		any_attending_character = {
-			NOT = { this = scope:host }
+			this != scope:host
 			OR = {
 				is_close_family_of = scope:host
 				is_spouse_of = scope:host
@@ -781,8 +781,8 @@ children_bonding = {
 			save_temporary_scope_as = trait_check
 		}
 		any_attending_character = {
-			NOT = { this = scope:host }
-			NOT = { this = scope:trait_check }
+			this != scope:host
+			this != scope:trait_check
 			is_physically_able_ai = yes
 			is_adult = no
 			num_of_relation_friend < 2
@@ -802,7 +802,7 @@ children_bonding = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
+				this != scope:host
 				is_physically_able_ai = yes
 				is_adult = no
 				num_of_relation_friend < 2
@@ -810,8 +810,8 @@ children_bonding = {
 				save_temporary_scope_as = check_scope
 				scope:activity = {
 					any_attending_character = {
-						NOT = { this = scope:host }
-						NOT = { this = scope:check_scope }
+						this != scope:host
+						this != scope:check_scope
 						OR = {
 							is_close_family_of = scope:host
 							is_spouse_of = scope:host
@@ -829,8 +829,8 @@ children_bonding = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
-				NOT = { this = scope:second }
+				this != scope:host
+				this != scope:second
 				OR = {
 					is_close_family_of = scope:host
 					is_spouse_of = scope:host
@@ -881,7 +881,7 @@ guest_impressed_by_court_artifact = {
 			}
 		}
 		any_attending_character = {
-			NOT = { this = scope:host }
+			this != scope:host
 			is_physically_able_ai_adult = yes
 			location = scope:province
 		}
@@ -907,7 +907,7 @@ guest_impressed_by_court_artifact = {
 		}
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
+				this != scope:host
 				is_physically_able_ai_adult = yes
 				location = scope:province
 			}
@@ -983,7 +983,7 @@ guest_chokes_on_bone = {
 			}
 		}
 		any_attending_character = {
-			NOT = { this = scope:host }
+			this != scope:host
 			is_physically_able_ai_adult = yes
 			location = scope:province
 			NOR = {
@@ -1041,7 +1041,7 @@ guest_chokes_on_bone = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
+				this != scope:host
 				is_physically_able_ai_adult = yes
 				location = scope:province
 				NOR = {
@@ -1071,12 +1071,12 @@ guest_brawl = {
 		is_current_phase_active = yes
 		coronation_feast_phase = yes # If Coronation, only in feast phase
 		any_attending_character = {
-			NOT = { this = scope:host }
+			this != scope:host
 			is_physically_able_ai_adult = yes
 			location = scope:province
 			any_relation = {
 				type = rival
-				NOT = { this = scope:host }
+				this != scope:host
 				is_physically_able_ai_adult = yes
 				location = scope:province
 			}
@@ -1094,12 +1094,12 @@ guest_brawl = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
+				this != scope:host
 				is_physically_able_ai_adult = yes
 				location = scope:province
 				any_relation = {
 					type = rival
-					NOT = { this = scope:host }
+					this != scope:host
 					is_physically_able_ai_adult = yes
 					location = scope:province
 				}
@@ -1108,7 +1108,7 @@ guest_brawl = {
 			random_relation = {
 				type = rival
 				limit = {
-					NOT = { this = scope:host }
+					this != scope:host
 					is_physically_able_ai_adult = yes
 					location = scope:province
 				}
@@ -1157,13 +1157,13 @@ friend_lauds_efforts = {
 		is_current_phase_active = yes
 		coronation_feast_phase = yes # If Coronation, only in feast phase
 		any_attending_character = {
-			NOT = { this = scope:host }
+			this != scope:host
 			is_physically_able_ai_adult = yes
 			location = scope:province
 			has_relation_friend = scope:host
 		}
 		any_attending_character = {
-			NOT = { this = scope:host }
+			this != scope:host
 			is_physically_able_ai_adult = yes
 			location = scope:province
 			is_ruler = yes
@@ -1182,7 +1182,7 @@ friend_lauds_efforts = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
+				this != scope:host
 				is_physically_able_ai_adult = yes
 				location = scope:province
 				has_relation_friend = scope:host
@@ -1192,7 +1192,7 @@ friend_lauds_efforts = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
+				this != scope:host
 				is_physically_able_ai_adult = yes
 				location = scope:province
 				is_ruler = yes
@@ -1259,7 +1259,7 @@ courtly_vassals_appeased = {
 		}
 		any_attending_character = {
 			count >= 2
-			NOT = { this = scope:host }
+			this != scope:host
 			is_physically_able_ai_adult = yes
 			location = scope:province
 			is_vassal_of = scope:host
@@ -1326,7 +1326,7 @@ courtly_vassals_appeased = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
+				this != scope:host
 				is_physically_able_ai_adult = yes
 				location = scope:province
 				is_vassal_of = scope:host
@@ -1337,8 +1337,8 @@ courtly_vassals_appeased = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
-				NOT = { this = scope:first }
+				this != scope:host
+				this != scope:first
 				is_physically_able_ai_adult = yes
 				location = scope:province
 				is_vassal_of = scope:host
@@ -1399,8 +1399,8 @@ spouse_insults_host = {
 			location = scope:province
 		}
 		any_attending_character = {
-			NOT = { this = scope:host }
-			NOT = { this = scope:host.primary_spouse }
+			this != scope:host
+			this != scope:host.primary_spouse
 			is_physically_able_ai_adult = yes
 			location = scope:province
 		}
@@ -1433,8 +1433,8 @@ spouse_insults_host = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
-				NOT = { this = scope:host.primary_spouse }
+				this != scope:host
+				this != scope:host.primary_spouse
 				is_physically_able_ai_adult = yes
 				location = scope:province
 			}
@@ -1470,7 +1470,7 @@ host_gains_diplo_xp = {
 			location = scope:province
 		}
 		any_attending_character = {
-			NOT = { this = scope:host }
+			this != scope:host
 			is_physically_able_ai_adult = yes
 			location = scope:province
 		}
@@ -1487,7 +1487,7 @@ host_gains_diplo_xp = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
+				this != scope:host
 				is_physically_able_ai_adult = yes
 				location = scope:province
 			}
@@ -1574,7 +1574,7 @@ host_gains_intrigue_xp = {
 			location = scope:province
 		}
 		any_attending_character = {
-			NOT = { this = scope:host }
+			this != scope:host
 			is_physically_able_ai_adult = yes
 			location = scope:province
 			scope:host = {
@@ -1597,7 +1597,7 @@ host_gains_intrigue_xp = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
+				this != scope:host
 				is_physically_able_ai_adult = yes
 				location = scope:province
 				scope:host = {
@@ -1692,7 +1692,7 @@ ridiculed_food = {
 			}
 		}
 		any_attending_character = {
-			NOT = { this = scope:host }
+			this != scope:host
 			is_physically_able_ai_adult = yes
 			location = scope:province
 			NOR = {
@@ -1750,7 +1750,7 @@ ridiculed_food = {
 		
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
+				this != scope:host
 				is_physically_able_ai_adult = yes
 				location = scope:province
 				NOR = {
@@ -1787,7 +1787,7 @@ guest_tells_fantastic_joke = {
 		is_current_phase_active = yes
 		coronation_feast_phase = yes # If Coronation, only in feast phase
 		any_attending_character = {
-			NOT = { this = scope:host }
+			this != scope:host
 			is_physically_able_ai_adult = yes
 			location = scope:province
 			OR = {
@@ -1817,7 +1817,7 @@ guest_tells_fantastic_joke = {
 	effect = {
 		random_attending_character = {
 			limit = {
-				NOT = { this = scope:host }
+				this != scope:host
 				is_physically_able_ai_adult = yes
 				location = scope:province
 				OR = {

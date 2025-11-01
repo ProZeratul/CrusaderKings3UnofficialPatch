@@ -6,7 +6,7 @@
 		exists = scope:owner.house
 		exists = scope:target.house
 		house = scope:owner.house
-		existing_feud_against_target_trigger = { TARGET = scope:target }
+		house_has_feud_relation_with_trigger = { TARGET = scope:target }
 		has_opinion_modifier = {
 			modifier = house_feud_opinion
 			target = scope:target.house.house_head
@@ -21,7 +21,7 @@ house_feud_hostile_scheme_success_modifier = {
 		exists = scope:owner.house
 		exists = scope:target.house
 		scope:owner = {
-			existing_feud_against_target_trigger = { TARGET = scope:target }
+			house_has_feud_relation_with_trigger = { TARGET = scope:target }
 			has_opinion_modifier = {
 				modifier = house_feud_opinion
 				target = scope:target.house.house_head
@@ -38,7 +38,7 @@ house_feud_title_hostile_scheme_success_modifier = {
 		exists = scope:owner.house
 		exists = scope:target.holder.house
 		scope:owner = {
-			existing_feud_against_target_trigger = { TARGET = scope:target.holder }
+			house_has_feud_relation_with_trigger = { TARGET = scope:target.holder }
 			has_opinion_modifier = {
 				modifier = house_feud_opinion
 				target = scope:target.holder.house.house_head
@@ -55,10 +55,10 @@ house_feud_sway_scheme_success_modifier = {
 		exists = scope:target.house
 		OR = {
 			scope:owner = {
-				existing_feud_against_target_trigger = { TARGET = scope:target }
+				house_has_feud_relation_with_trigger = { TARGET = scope:target }
 			}
 			scope:target = {
-				existing_feud_against_target_trigger = { TARGET = scope:owner }
+				house_has_feud_relation_with_trigger = { TARGET = scope:owner }
 			}
 		}
 		desc = SWAY_FAMILY_FEUD_SCHEMER_MALUS

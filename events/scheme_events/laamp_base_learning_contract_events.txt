@@ -142,7 +142,7 @@ scripted_trigger 4001_shoddy_situation_trigger = {
 scripted_trigger 4001_secret_is_active_trigger = {
 	exists = scope:potential_secret
 	#A feeble attempt at controlling when you can investigate the secret
-	NOT = { scope:secret_check = root }
+	scope:secret_check != root
 }
 
 scripted_effect 4001_show_score_effect = {
@@ -689,7 +689,7 @@ laamp_base_learning_contract_events.4001 = {
 					random_culture_global = {
 						limit = {
 							root = { knows_language_of_culture = prev }
-							NOT = { this = root.culture }
+							this != root.culture
 						}
 						save_scope_as = additional_language_culture
 					}
@@ -6361,13 +6361,13 @@ laamp_base_learning_contract_events.4100 = {
 			triggered_desc = {
 				trigger = {
 					scope:task_contract = { var:education_approach_var ?= flag:support }
-					NOT = { scope:support_person = root }
+					scope:support_person != root
 				}
 				desc = laamp_base_learning_contract_events.4100.desc.outro_other
 			}
 			triggered_desc = {
 				trigger = {
-					NOT = { scope:support_person = root }
+					scope:support_person != root
 				}
 				desc = laamp_base_learning_contract_events.4100.desc.outro
 			}
@@ -6376,7 +6376,7 @@ laamp_base_learning_contract_events.4100 = {
 	theme = learning
 	left_portrait = {
 		trigger = {
-			NOT = { scope:support_person = root }
+			scope:support_person != root
 		}
 		character = scope:support_person
 		triggered_animation = {
@@ -6401,7 +6401,7 @@ laamp_base_learning_contract_events.4100 = {
 		character = root
 		triggered_animation = {
 			trigger = {
-				NOT = { scope:support_person = root }
+				scope:support_person != root
 			}
 			animation = happy_teacher
 		}

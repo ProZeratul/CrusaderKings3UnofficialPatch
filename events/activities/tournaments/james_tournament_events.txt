@@ -191,7 +191,7 @@ tournament_events.8000 = { # Start
 					random_in_list = {
 						list = potential_favour_givers
 						limit = {
-							NOT = { this = scope:favor_giver_1 }
+							this != scope:favor_giver_1
 						}
 						weight = {
 							base = 20
@@ -280,13 +280,13 @@ tournament_events.8000 = { # Start
 					# They are not wooing me
 					scope:favor_giver_1 = {
 						any_scheme = {
-							scheme_type = courting
+							type = courting
 							scheme_target_character = root
 						}
 					}
 					# I am not wooing them
 					any_scheme = {
-						scheme_type = courting
+						type = courting
 						scheme_target_character = root
 					}
 				}
@@ -380,13 +380,13 @@ tournament_events.8000 = { # Start
 					# They are not wooing me
 					scope:favor_giver_2 = {
 						any_scheme = {
-							scheme_type = courting
+							type = courting
 							scheme_target_character = root
 						}
 					}
 					# I am not wooing them
 					any_scheme = {
-						scheme_type = courting
+						type = courting
 						scheme_target_character = root
 					}
 				}

@@ -77,7 +77,7 @@ south_asia.0002 = {
 		show_as_tooltip = {
 			scope:chakravarti = {
 				add_trait_force_tooltip = chakravarti
-				hidden_effect = { set_primary_title_to = title:e_india }
+				hidden_effect = { set_primary_title_to = title:h_india }
 				faith = {
 					add_doctrine = divine_destiny_doctrine
 					change_fervor = {
@@ -107,7 +107,7 @@ south_asia.0002 = {
 	option = {
 		name = south_asia.0002.b
 		trigger = {
-			NOT = { faith = scope:chakravarti.faith }
+			faith != scope:chakravarti.faith
 		}
 		set_character_faith_with_conversion = scope:chakravarti.faith
 		scope:chakravarti = {
@@ -138,7 +138,7 @@ south_asia.0003 = {
 		show_as_tooltip = {
 			scope:chakravarti = {
 				add_trait_force_tooltip = chakravarti
-				hidden_effect = { set_primary_title_to = title:e_india }
+				hidden_effect = { set_primary_title_to = title:h_india }
 				faith = {
 					add_doctrine = divine_destiny_doctrine
 					change_fervor = {
@@ -223,7 +223,7 @@ south_asia.0004 = {
 		show_as_tooltip = {
 			scope:chakravarti = {
 				add_trait_force_tooltip = chakravarti
-				hidden_effect = { set_primary_title_to = title:e_india }
+				hidden_effect = { set_primary_title_to = title:h_india }
 				faith = {
 					add_doctrine = divine_destiny_doctrine
 					change_fervor = {
@@ -493,7 +493,7 @@ south_asia.0030 = {
 			compassionate = miniscule_stress_impact_gain
 		}
 
-				every_county_in_region = {
+		every_county_in_region = {
 			region = world_burma
 			custom = south_asia.0030.a.tt
 			limit = {
@@ -508,8 +508,8 @@ south_asia.0030 = {
 
 		every_player = {
 			limit = {
-				NOT = { this = root }
-				is_independent_ruler = no
+				this != root
+				top_liege != this
 				capital_province = {
 					geographical_region = world_burma
 				}
@@ -587,8 +587,8 @@ south_asia.0030 = {
 
 		every_player = {
 			limit = {
-				NOT = { this = root }
-				is_independent_ruler = no
+				this != root
+				top_liege != this
 				capital_province = {
 					geographical_region = world_burma
 				}
@@ -716,8 +716,8 @@ south_asia.0031 = {
 
 		every_player = {
 			limit = {
-				NOT = { this = root }
-				is_independent_ruler = no
+				this != root
+				top_liege != this
 				capital_province = {
 					geographical_region = world_burma
 				}
@@ -1119,7 +1119,7 @@ south_asia.0033 = {
 		name = south_asia.0033.c
 		
 		add_prestige = medium_piety_value
-		add_gold = major_gold_value
+		add_treasury_or_gold = major_treasury_or_gold_value
 		add_dread = medium_dread_gain
 		give_nickname = nick_the_tyrant
 
@@ -1304,7 +1304,7 @@ south_asia.0035 = {
 					geographical_region = custom_lanka
 				}
 				faith = faith:theravada
-				is_independent_ruler = yes
+				top_liege = this
 			}
 		trigger_event = south_asia.0041
 		}
@@ -1438,7 +1438,7 @@ south_asia.0036 = {
 		name = south_asia.0036.b
 		
 		add_prestige = medium_prestige_value
-		add_gold = minor_gold_value
+		add_treasury_or_gold = minor_treasury_or_gold_value
 
 		save_scope_value_as = {
 			name = forests
@@ -1447,8 +1447,8 @@ south_asia.0036 = {
 
 		every_player = {
 			limit = {
-				NOT = { this = root }
-				is_independent_ruler = no
+				this != root
+				top_liege != this
 				capital_province = {
 					geographical_region = world_burma
 				}

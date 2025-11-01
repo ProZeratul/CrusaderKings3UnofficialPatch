@@ -2,7 +2,15 @@
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/ep3_decision_hold_triumph.dds"
 	}
-	ai_check_interval = 60
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 0
+		empire = 60
+		hegemony = 60
+	}
 
 	sort_order = 110
 
@@ -12,19 +20,13 @@
 
 	is_shown = {
 		has_ep3_dlc_trigger = yes
-		OR = {
-			has_title = title:e_byzantium
-			has_title = title:e_roman_empire
-		}
+		is_roman_emperor_trigger = yes
 		culture = { has_cultural_parameter = holds_triumphs }
 	}
 
 	is_valid = {
 		is_at_war = no
-		OR = {
-			has_title = title:e_byzantium
-			has_title = title:e_roman_empire
-		}
+		is_roman_emperor_trigger = yes
 		culture = { has_cultural_parameter = holds_triumphs }
 	}
 
@@ -40,6 +42,19 @@
 			value = 0
 			if = {
 				limit = {
+					NOR = { 
+						has_treasury = yes
+						has_character_flag = free_triumph_flag
+					}
+				}
+				add = ep3_triumph_gold_cost
+			}
+		}
+		treasury = {
+			value = 0
+			if = {
+				limit = {
+					has_treasury = yes
 					NOT = { has_character_flag = free_triumph_flag }
 				}
 				add = ep3_triumph_gold_cost
@@ -93,7 +108,14 @@ restore_backwater_counties_decision = {
 		reference = "gfx/interface/illustrations/decisions/ep3_decision_estate.dds"
 	}
 	#decision_group_type = major #Unop: Duplicate as "roman" just below
-	ai_check_interval = 120
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 120
+		kingdom = 120
+		empire = 0
+		hegemony = 0
+	}
 
 	sort_order = 70
 
@@ -147,6 +169,50 @@ restore_backwater_counties_decision = {
 						development_level >= 50
 					}
 					add = 1
+				}
+			}
+		}
+		gold = {
+			value = 0
+			if = {
+				limit = {
+					has_treasury = no
+				}
+				add = medium_gold_value
+				multiply = {
+					value = 1
+					every_sub_realm_county = {
+						limit = {
+							title_province = {
+								geographical_region = greek_backwater_modifier_region
+							}
+							has_county_modifier = backwater_county_modifier
+							development_level >= 50
+						}
+						add = 1
+					}
+				}
+			}
+		}
+		treasury = {
+			value = 0
+			if = {
+				limit = {
+					has_treasury = yes
+				}
+				add = medium_gold_value
+				multiply = {
+					value = 1
+					every_sub_realm_county = {
+						limit = {
+							title_province = {
+								geographical_region = greek_backwater_modifier_region
+							}
+							has_county_modifier = backwater_county_modifier
+							development_level >= 50
+						}
+						add = 1
+					}
 				}
 			}
 		}
@@ -228,7 +294,15 @@ prepare_greek_fire_dromons_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/decision_smith.dds"
 	}
-	ai_check_interval = 60
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 120
+		kingdom = 120
+		empire = 120
+		hegemony = 120
+	}
 
 	sort_order = 110
 
@@ -329,7 +403,15 @@ retake_eastern_provinces_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/ep3_decision_roman_restoration.dds"
 	}
-	ai_check_interval = 120
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 0
+		empire = 120
+		hegemony = 120
+	}
 
 	sort_order = 50
 
@@ -483,7 +565,15 @@ refound_pandidakterion_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/decision_golden_age.dds"
 	}
-	ai_check_interval = 120
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 0
+		empire = 120
+		hegemony = 120
+	}
 
 	sort_order = 110
 
@@ -524,7 +614,22 @@ refound_pandidakterion_decision = {
 
 	cost = {
 		gold = {
-			value = 1000		
+			value = 0
+			if = {
+				limit = {
+					has_treasury = no
+				}
+				add = 1000
+			}
+		}
+		treasury = {
+			value = 0
+			if = {
+				limit = {
+					has_treasury = yes
+				}
+				add = 1000
+			}
 		}
 	}
 
@@ -555,7 +660,15 @@ ask_western_help_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/ep3_cerimonial_decision.dds"
 	}
-	ai_check_interval = 80
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 0
+		empire = 80
+		hegemony = 80
+	}
 
 	sort_order = 110
 
@@ -612,8 +725,7 @@ ask_western_help_decision = {
 				religion:christianity_religion = {
 					any_faith = {
 						has_doctrine_parameter = great_holy_wars_active
-						exists = religious_head
-						religious_head = {
+						religious_head ?= {
 							trigger_if = {
 								limit = {
 									has_variable = asked_for_help_by
@@ -722,8 +834,7 @@ ask_western_help_decision = {
 					random_faith = {
 						limit = {
 							has_doctrine_parameter = great_holy_wars_active
-							exists = religious_head
-							religious_head = {
+							religious_head ?= {
 								trigger_if = {
 									limit = {
 										has_variable = asked_for_help_by
@@ -809,7 +920,15 @@ evangelize_the_slavs_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/decision_major_religion.dds"
 	}
-	ai_check_interval = 80
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 0
+		empire = 80
+		hegemony = 80
+	}
 
 	sort_order = 120
 
@@ -874,7 +993,7 @@ evangelize_the_slavs_decision = {
 	}
 
 	cost = {
-		piety = massive_piety_value #TODO balance
+		piety = massive_piety_value
 	}
 
 	effect = {
@@ -911,7 +1030,15 @@ recreate_byzantine_empire_decision = {
 		reference = "gfx/interface/illustrations/decisions/ep3_cerimonial_decision.dds"
 	}
 	#decision_group_type = major #Unop: Duplicate as "roman" just below
-	ai_check_interval = 6
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 6
+		empire = 6
+		hegemony = 0
+	}
 
 	desc = recreate_byzantine_empire_decision_desc
 	selection_tooltip = recreate_byzantine_empire_decision_tooltip
@@ -921,8 +1048,10 @@ recreate_byzantine_empire_decision = {
 		has_dlc_feature = roads_to_power
 		NOR = {
 			exists = title:e_byzantium.holder
-			exists = title:e_roman_empire.holder
+			exists = title:h_roman_empire.holder
+			exists = title:h_eastern_roman_empire.holder
 		}
+		title:e_byzantium = { is_titular = no }
 		OR = {
 			culture = {
 				OR = {
@@ -936,6 +1065,7 @@ recreate_byzantine_empire_decision = {
 					faith = faith:hellenic_pagan
 				}
 				primary_title = {
+					tier <= tier_empire
 					empire = title:e_latin_empire
 				}
 			}
@@ -945,6 +1075,7 @@ recreate_byzantine_empire_decision = {
 					faith = faith:hellenic_pagan
 				}
 				primary_title = {
+					tier <= tier_empire
 					empire = title:e_byzantium
 				}
 			}
@@ -958,7 +1089,7 @@ recreate_byzantine_empire_decision = {
 			}
 			text = no_byz_emp_exists_tt
 		}
-		is_independent_ruler = yes
+		top_liege = this
 		OR = {
 			custom_tooltip = {
 				culture = {
@@ -992,6 +1123,7 @@ recreate_byzantine_empire_decision = {
 			text = pandidakterion_tt
 		}
 		primary_title = {
+			tier <= tier_empire
 			OR = {
 				empire = title:e_latin_empire
 				empire = title:e_byzantium
@@ -1105,7 +1237,7 @@ recreate_byzantine_empire_decision = {
 	ai_potential = {
 		NOT = { exists = title:e_byzantium.holder }
 		any_held_title = {
-			tier = tier_kingdom
+			title_tier = kingdom
 			OR = {
 				empire = title:e_latin_empire
 				empire = title:e_byzantium
@@ -1120,6 +1252,7 @@ recreate_byzantine_empire_decision = {
 			}
 			ep3_orthodox_faith_trigger = yes
 			primary_title = {
+				tier <= tier_empire
 				empire = title:e_latin_empire
 			}
 		}
@@ -1129,6 +1262,7 @@ recreate_byzantine_empire_decision = {
 		base = 100
 		modifier = {
 			primary_title = {
+				tier <= tier_empire
 				empire = title:e_latin_empire
 			}
 			add = -60
@@ -1155,7 +1289,14 @@ found_varangian_guard_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/ep3_decision_varangian_guard.dds"
 	}
-	ai_check_interval = 60
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 0
+		empire = 60
+		hegemony = 60
+	}
 
 	sort_order = 100
 
@@ -1221,7 +1362,15 @@ reinstitute_grain_dole_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/ep3_decision_hold_triumph.dds"
 	}
-	ai_check_interval = 60
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 60
+		empire = 60
+		hegemony = 0
+	}
 	sort_order = 40
 
 	desc = reinstitute_grain_dole_decision_desc
@@ -1230,10 +1379,7 @@ reinstitute_grain_dole_decision = {
 
 	is_shown = {
 		has_ep3_dlc_trigger = yes
-		OR = {
-			has_title = title:e_byzantium
-			has_title = title:e_roman_empire
-		}
+		is_roman_emperor_trigger = yes
 		NOT = {
 			is_target_in_global_variable_list = {
 				name = unavailable_unique_decisions
@@ -1274,7 +1420,24 @@ reinstitute_grain_dole_decision = {
 	}
 
 	cost = {
-		gold = grain_dole_cost
+		gold = {
+			value = 0
+			if = {
+				limit = {
+					has_treasury = no
+				}
+				add = grain_dole_cost
+			}
+		}
+		treasury = {
+			value = 0
+			if = {
+				limit = {
+					has_treasury = yes
+				}
+				add = grain_dole_cost
+			}
+		}
 	}
 
 	effect = {
@@ -1287,10 +1450,7 @@ reinstitute_grain_dole_decision = {
 	}
 
 	ai_potential = {
-		OR = {
-			has_title = title:e_byzantium
-			has_title = title:e_roman_empire
-		}
+		is_roman_emperor_trigger = yes
 	}
 
 	ai_will_do = {
@@ -1302,7 +1462,15 @@ reconfirm_grain_dole_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/decision_spend_money.dds"
 	}
-	ai_check_interval = 60
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 60
+		empire = 60
+		hegemony = 0
+	}
 	sort_order = 90
 
 	desc = reconfirm_grain_dole_decision_desc
@@ -1311,10 +1479,7 @@ reconfirm_grain_dole_decision = {
 
 	is_shown = {
 		has_ep3_dlc_trigger = yes
-		OR = {
-			has_title = title:e_byzantium
-			has_title = title:e_roman_empire
-		}
+		is_roman_emperor_trigger = yes
 		is_target_in_global_variable_list = {
 			name = unavailable_unique_decisions
 			target = flag:reinstitute_grain_dole_decision
@@ -1354,10 +1519,29 @@ reconfirm_grain_dole_decision = {
 
 	cost = {
 		gold = {
-			value = grain_dole_cost
-			multiply = {
-				value = 0.5
-				desc = unlocked_grain_dole
+			value = 0
+			if = {
+				limit = {
+					has_treasury = no
+				}
+				add = grain_dole_cost
+				multiply = {
+					value = 0.5
+					desc = unlocked_grain_dole
+				}
+			}
+		}
+		treasury = {
+			value = 0
+			if = {
+				limit = {
+					has_treasury = yes
+				}
+				add = grain_dole_cost
+				multiply = {
+					value = 0.5
+					desc = unlocked_grain_dole
+				}
 			}
 		}
 	}
@@ -1372,10 +1556,7 @@ reconfirm_grain_dole_decision = {
 	}
 
 	ai_potential = {
-		OR = {
-			has_title = title:e_byzantium
-			has_title = title:e_roman_empire
-		}
+		is_roman_emperor_trigger = yes
 		capital_county = { has_variable = unlocked_grain_dole }
 	}
 
@@ -1410,9 +1591,7 @@ reconfirm_grain_dole_decision = {
 #	is_valid_showing_failures_only = {
 #		NOT = { exists = involved_activity }
 #		is_imprisoned = no
-#		any_powerful_family = {
-#			count >= 1
-#		}
+#		any_powerful_family = { }
 #	}
 #
 #	cost = {
@@ -1470,8 +1649,7 @@ change_state_faith = {
 					OR = {
 						culture = { has_cultural_pillar = heritage_byzantine }
 						capital_barony ?= title:b_constantinople
-						primary_title ?= title:e_byzantium
-						primary_title ?= title:e_roman_empire
+						is_roman_emperor_primary_title_trigger = yes
 					}
 				}
 			}
@@ -1488,7 +1666,14 @@ change_state_faith = {
 		reference = "gfx/interface/illustrations/decisions/decision_major_religion.dds"
 	}
 
-	ai_check_interval = 60
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 60
+		empire = 60
+		hegemony = 0
+	}
 	sort_order = 110
 	decision_group_type = admin
 
@@ -1640,8 +1825,8 @@ change_state_faith = {
 		# Opinion malus with Zealot vassals
 		save_scope_as = root_scope
 		every_vassal = {
+			vassal_stance = zealot
 			limit = {
-				has_vassal_stance = zealot
 				faith != root.faith
 			}
 			custom = every_zealot_vassal
@@ -1718,8 +1903,7 @@ adopt_state_faith = {
 					OR = {
 						culture = { has_cultural_pillar = heritage_byzantine }
 						capital_barony ?= title:b_constantinople
-						primary_title ?= title:e_byzantium
-						primary_title ?= title:e_roman_empire
+						is_roman_emperor_primary_title_trigger = yes
 					}
 				}
 			}
@@ -1736,7 +1920,14 @@ adopt_state_faith = {
 		reference = "gfx/interface/illustrations/decisions/decision_major_religion.dds"
 	}
 
-	ai_check_interval = 60
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 60
+		duchy = 60
+		kingdom = 60
+		empire = 60
+		hegemony = 0
+	}
 	sort_order = 110
 	decision_group_type = admin
 
@@ -1889,7 +2080,7 @@ adopt_state_faith = {
 		}
 		modifier = { # Don't adopt the state faith if you have the same faith as the top liege (if the emperor can have this faith, so can we!)
 			faith = top_liege.faith
-			is_independent_ruler = no
+			top_liege != this
 			factor = 0
 		}
 		
@@ -1939,7 +2130,7 @@ found_salon_decision = {
 		custom_tooltip = {
 			text = found_salon_decision_trigger_tt
 			any_courtier = {
-				has_trait = poet
+				has_trait = lifestyle_poet
 				count > 4
 			}
 		}
@@ -1947,12 +2138,33 @@ found_salon_decision = {
 
 	cost = {
 		gold = {
-			value = 350
+			value = 0
 			if = {
 				limit = {
-					has_character_modifier = ep3_power_couple_modifier
+					has_treasury = no
 				}
-				subtract = 125
+				add = 350
+				if = {
+					limit = {
+						has_character_modifier = ep3_power_couple_modifier
+					}
+					subtract = 125
+				}
+			}
+		}
+		treasury = {
+			value = 0
+			if = {
+				limit = {
+					has_treasury = yes
+				}
+				add = 350
+				if = {
+					limit = {
+						has_character_modifier = ep3_power_couple_modifier
+					}
+					subtract = 125
+				}
 			}
 		}
 	}
@@ -2008,7 +2220,14 @@ split_roman_empire_decision = {
 		reference = "gfx/interface/illustrations/decisions/ep3_decision_hold_triumph.dds"
 	}
 
-	ai_check_interval = 360
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 0
+		empire = 0
+		hegemony = 360
+	}
 	sort_order = 110
 
 	desc = split_roman_empire_decision_desc
@@ -2017,8 +2236,14 @@ split_roman_empire_decision = {
 
 	is_shown = {
 		has_ep3_dlc_trigger = yes
-		primary_title = title:e_roman_empire
-		NOT = { exists = title:e_byzantium.holder }
+		primary_title = title:h_roman_empire
+		NOT = { exists = title:h_eastern_roman_empire.holder }
+	}
+
+	is_valid = {
+		realm_size >= 150
+		capital_county = title:c_roma
+		has_title = title:c_byzantion
 	}
 
 	is_valid_showing_failures_only = {
@@ -2060,6 +2285,9 @@ split_roman_empire_decision = {
 			text = form_eastern_roman_empire_tt
 			create_eastern_roman_empire_scripted_effect = yes
 		}
+		title:h_roman_empire = {
+			set_title_name = h_roman_empire_western
+		}
 
 		# Add truce with new Byzantine Emperor
 		add_truce_both_ways = {
@@ -2076,7 +2304,10 @@ split_roman_empire_decision = {
 
 		if = {
 			limit = {
-				any_owned_story = { story_type = ep3_story_cycle_restoring_rome }
+				any_owned_story = { 
+					type = ep3_story_cycle_restoring_rome 
+					has_variable = roman_empire_hard_mode
+				}
 			}
 			custom_tooltip = {
 				text = ending_of_restore_rome_trials_tt
@@ -2089,7 +2320,7 @@ split_roman_empire_decision = {
 	}
 
 	ai_potential = {
-		primary_title = title:e_roman_empire
+		primary_title = title:h_roman_empire
 	}
 
 	ai_will_do = {
@@ -2264,6 +2495,20 @@ commission_icon_decision = {
 				save_scope_as = local_artisan
 			}
 		}
+		else_if = {
+			limit = {
+				is_ai = yes
+				any_courtier_or_guest = {
+					is_available_healthy_ai_adult = yes
+				}
+			}
+			random_courtier_or_guest = {
+				limit = {
+					is_available_healthy_ai_adult = yes
+				}
+				save_scope_as = local_artisan
+			}
+		}
 		else = {
 			# Artisan Generation
 			hidden_effect = {
@@ -2289,14 +2534,21 @@ commission_icon_decision = {
 		}
 	}
 
-	ai_check_interval = 36
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 36
+		kingdom = 36
+		empire = 36
+		hegemony = 36
+	}
 	
 	ai_potential = {
 		is_at_war = no
 		ai_greed < medium_positive_ai_value
 		short_term_gold > ai_war_chest_desired_gold_value
 		war_chest_gold >= halved_ai_war_chest_gold_maximum
-		ai_has_conqueror_personality = no
+		NOT = { has_variable = conqueror }
 		ai_should_focus_on_building_in_their_capital = no
 	}
 
@@ -2322,18 +2574,15 @@ embrace_heresy_decision = {
 	is_shown = {
 		government_allows = state_faith
 		is_adult = yes
-		is_independent_ruler = no
-		exists = top_liege
-		top_liege = { is_ai = yes }
+		top_liege != this
+		top_liege ?= { is_ai = yes }
 		top_liege.primary_title.state_faith ?= {
 			OR = {
 				NOT = { has_doctrine = eastern_hostility_doctrine }
 				has_doctrine = heresy_hostility_doctrine #Zoroastrians also get heresies, despite being Eastern.
 			}
 		}
-		NOT = {
-			this = top_liege.primary_title.state_faith.religious_head
-		}
+		this != top_liege.primary_title.state_faith.religious_head
 	}
 
 	is_valid = {
@@ -2348,9 +2597,7 @@ embrace_heresy_decision = {
 						}
 						any_neighboring_county = {
 							holder.top_liege ?= {
-								NOT = {
-									this = root.top_liege
-								}
+								this != root.top_liege
 							}
 							faith = {
 								faith_is_interesting_heresy_to_state_faith_trigger = yes
@@ -2406,9 +2653,8 @@ push_heresy_as_state_faith = {
 	is_shown = {
 		government_allows = state_faith
 		is_adult = yes
-		is_independent_ruler = no
-		exists = top_liege
-		top_liege = { is_ai = yes }
+		top_liege != this
+		top_liege ?= { is_ai = yes }
 		top_liege.primary_title.state_faith ?= {
 			OR = {
 				NOT = { has_doctrine = eastern_hostility_doctrine }
@@ -2474,7 +2720,7 @@ establish_silk_production_decision = {
 	desc = {
 		first_valid = {
 			triggered_desc = {
-				trigger = { is_independent_ruler = yes }
+				trigger = { top_liege = this }
 				desc = establish_silk_production_decision_desc.emperor
 			}
 			desc = establish_silk_production_decision_desc
@@ -2497,10 +2743,7 @@ establish_silk_production_decision = {
 			is_domicile_type = estate
 		}
 		top_liege ?= {
-			OR = {
-				primary_title = title:e_byzantium
-				primary_title = title:e_roman_empire
-			}
+			is_roman_emperor_primary_title_trigger = yes
 		}
 		NOT = {
 			house = {
@@ -2511,11 +2754,8 @@ establish_silk_production_decision = {
 
 	is_valid = {
 		trigger_if = {
-			limit = { is_independent_ruler = yes }
-			OR = {
-				has_title = title:e_byzantium
-				has_title = title:e_roman_empire
-			}
+			limit = { top_liege = this }
+			is_roman_emperor_trigger = yes
 			OR = {
 				has_realm_law = imperial_bureaucracy_2
 				has_realm_law = imperial_bureaucracy_3
@@ -2555,7 +2795,7 @@ establish_silk_production_decision = {
 		}
 		if = {
 			limit = {
-				is_independent_ruler = no
+				top_liege != this
 				NOT = {
 					exists = house
 					top_liege.house ?= house
@@ -2571,7 +2811,14 @@ establish_silk_production_decision = {
 		}
 	}
 
-	ai_check_interval = 120
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 120
+		kingdom = 120
+		empire = 120
+		hegemony = 120
+	}
 
 	ai_will_do = {
 		base = 50
@@ -2681,14 +2928,21 @@ commission_silk_regalia_decision = {
 		}
 	}
 
-	ai_check_interval = 60
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 60
+		duchy = 60
+		kingdom = 60
+		empire = 60
+		hegemony = 60
+	}
 	
 	ai_potential = {
 		is_at_war = no
 		ai_greed < medium_positive_ai_value
 		short_term_gold > ai_war_chest_desired_gold_value
 		war_chest_gold >= halved_ai_war_chest_gold_maximum
-		ai_has_conqueror_personality = no
+		NOT = { has_variable = conqueror }
 		ai_should_focus_on_building_in_their_capital = no
 	}
 
@@ -2838,7 +3092,14 @@ foster_integration_decision = {
 		}
 	}
 
-	ai_check_interval = 36
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 36
+		duchy = 36
+		kingdom = 36
+		empire = 36
+		hegemony = 0
+	}
 	
 	ai_potential = {
 		government_allows = administrative
@@ -2889,8 +3150,7 @@ gather_faction_support_decision = {
 	is_valid = {
 		custom_tooltip = {
 			text = belong_to_claimant_liberty_faction_tt
-			exists = joined_faction
-			joined_faction = {
+			joined_faction ?= {
 				OR = {
 					faction_is_type = claimant_faction
 					faction_is_type = liberty_faction
@@ -2926,7 +3186,14 @@ gather_faction_support_decision = {
 		}
 	}
 
-	ai_check_interval = 60
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 60
+		duchy = 60
+		kingdom = 60
+		empire = 60
+		hegemony = 0
+	}
 	
 	ai_potential = {
 		government_allows = administrative
@@ -2969,9 +3236,7 @@ legitimize_latin_dominion_decision = {
 		has_dlc_feature = roads_to_power
 		primary_title = title:e_latin_empire
 		title:e_byzantium = {
-			any_de_jure_county = {
-				count >= 1
-			}
+			any_de_jure_county = { }
 		}
 	}
 
@@ -3015,8 +3280,7 @@ legitimize_latin_dominion_decision = {
 				any_in_de_jure_hierarchy = {
 					tier = tier_kingdom
 					NOT = { this = title:e_byzantium }
-					exists = holder
-					holder = {
+					holder ?= {
 						OR = {
 							this = root
 							top_liege = root
@@ -3116,7 +3380,14 @@ legitimize_latin_dominion_decision = {
 		trigger_event = ep3_frankokratia_events.0080
 	}
 
-	ai_check_interval = 6
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 0
+		empire = 6
+		hegemony = 0
+	}
 	
 	ai_potential = {
 		primary_title ?= {
@@ -3180,8 +3451,12 @@ expunge_latin_dominion_decision = {
 				this = title:e_byzantium.holder
 			}
 			AND = {
-				exists = title:e_roman_empire.holder
-				this = title:e_roman_empire.holder
+				exists = title:h_roman_empire.holder
+				this = title:h_roman_empire.holder
+			}
+			AND = {
+				exists = title:h_eastern_roman_empire.holder
+				this = title:h_eastern_roman_empire.holder
 			}
 		}
 		OR = {
@@ -3199,8 +3474,12 @@ expunge_latin_dominion_decision = {
 				this = title:e_byzantium.holder
 			}
 			AND = {
-				exists = title:e_roman_empire.holder
-				this = title:e_roman_empire.holder
+				exists = title:h_roman_empire.holder
+				this = title:h_roman_empire.holder
+			}
+			AND = {
+				exists = title:h_eastern_roman_empire.holder
+				this = title:h_eastern_roman_empire.holder
 			}
 		}
 	}
@@ -3208,7 +3487,7 @@ expunge_latin_dominion_decision = {
 	is_valid = {
 		trigger_if = {
 			limit = {
-				is_independent_ruler = no
+				top_liege != this
 			}
 			custom_tooltip = {
 				text = liege_isnt_latin_emp_tt
@@ -3228,8 +3507,13 @@ expunge_latin_dominion_decision = {
 					text = holds_byz_emp_tt
 				}
 				custom_tooltip = {
-					exists = title:e_roman_empire.holder
-					this = title:e_roman_empire.holder
+					exists = title:h_roman_empire.holder
+					this = title:h_roman_empire.holder
+					text = holds_roman_emp_tt
+				}
+				custom_tooltip = {
+					exists = title:h_eastern_roman_empire.holder
+					this = title:h_eastern_roman_empire.holder
 					text = holds_roman_emp_tt
 				}
 			}
@@ -3252,8 +3536,13 @@ expunge_latin_dominion_decision = {
 				text = holds_byz_emp_tt
 			}
 			custom_tooltip = {
-				exists = title:e_roman_empire.holder
-				this = title:e_roman_empire.holder
+				exists = title:h_roman_empire.holder
+				this = title:h_roman_empire.holder
+				text = holds_roman_emp_tt
+			}
+			custom_tooltip = {
+				exists = title:h_eastern_roman_empire.holder
+				this = title:h_eastern_roman_empire.holder
 				text = holds_roman_emp_tt
 			}
 		}
@@ -3281,8 +3570,7 @@ expunge_latin_dominion_decision = {
 					any_in_de_jure_hierarchy = {
 						tier = tier_kingdom
 						NOT = { this = title:e_latin_empire }
-						exists = holder
-						holder = {
+						holder ?= {
 							OR = {
 								this = root
 								top_liege = root
@@ -3372,7 +3660,14 @@ expunge_latin_dominion_decision = {
 		trigger_event = ep3_frankokratia_events.0090
 	}
 
-	ai_check_interval = 9
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 12
+		kingdom = 9
+		empire = 9
+		hegemony = 9
+	}
 	
 	ai_potential = {
 		is_available = yes
@@ -3412,8 +3707,7 @@ expunge_latin_dominion_decision = {
 				any_in_de_jure_hierarchy = {
 					tier = tier_kingdom
 					NOT = { this = title:e_latin_empire }
-					exists = holder
-					holder = {
+					holder ?= {
 						OR = {
 							this = root
 							top_liege = root
@@ -3454,14 +3748,22 @@ go_fishing_decision = {
 	picture = { reference = "gfx/interface/illustrations/event_scenes/bp1_docks_tribal.dds" }
 	desc = go_fishing_decision_desc
 	selection_tooltip = go_fishing_decision_tooltip
-	ai_check_interval = 24
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 24
+		kingdom = 0
+		empire = 0
+		hegemony = 0
+	}
 	cooldown = { years = 2 }
 	decision_group_type = adventurer_minor
 
 	is_shown = {
 		#DLC check.
 		has_ep3_dlc_trigger = yes
-		is_landless_adventurer = yes
+		has_government = landless_adventurer_government
 	}
 
 	is_valid_showing_failures_only = {

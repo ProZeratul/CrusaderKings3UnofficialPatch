@@ -375,9 +375,7 @@ scripted_trigger tg_6100_appropriate_loved_one_memory_trigger = {
 				is_alive = no
 				exists = killer
 			}
-			NOT = {
-				killer = root
-			}
+			killer != root
 		}
 	}
 }
@@ -386,7 +384,7 @@ scripted_trigger tg_6100_not_religious_trigger = {
 	OR = {
 		has_trait = cynical
 		any_secret = {
-			secret_type = secret_non_believer
+			type = secret_non_believer
 		}
 	}
 }
@@ -543,9 +541,7 @@ tour_grounds_events.6100 = {
 		flavor = tour_grounds_events.6100.a.tt
 		every_vassal_or_below = {
 			custom = zealot_approves_of_religious_display
-			limit = {
-				has_vassal_stance = zealot
-			}
+			vassal_stance = zealot
 			add_opinion = {
 				target = prev
 				modifier = zealot_approves_of_religious_display_opinion
@@ -595,9 +591,7 @@ tour_grounds_events.6100 = {
 		flavor = tour_grounds_events.6100.b.tt
 		every_vassal_or_below = {
 			custom = zealot_approves_of_religious_display
-			limit = {
-				has_vassal_stance = zealot
-			}
+			vassal_stance = zealot
 			add_opinion = {
 				target = prev
 				modifier = zealot_approves_of_religious_display_opinion
@@ -693,7 +687,7 @@ tour_grounds_events.6100 = {
 				if = {
 					limit = {
 						any_secret = {
-							secret_type = secret_non_believer
+							type = secret_non_believer
 						}
 					}
 					send_interface_toast = {
@@ -713,9 +707,7 @@ tour_grounds_events.6100 = {
 						title = tour_grounds_events.6100.d.success
 						every_vassal = {
 							custom = zealot_approves_of_religious_display
-							limit = {
-								has_vassal_stance = zealot
-							}
+							vassal_stance = zealot
 							add_opinion = {
 								target = prev
 								modifier = zealot_approves_of_religious_display_opinion
@@ -734,7 +726,7 @@ tour_grounds_events.6100 = {
 				if = {
 					limit = {
 						any_secret = {
-							secret_type = secret_non_believer
+							type = secret_non_believer
 						}
 					}
 					send_interface_toast = {
@@ -742,7 +734,7 @@ tour_grounds_events.6100 = {
 						right_icon = scope:stop_host_scope
 						title = tour_grounds_events.6100.d.failure
 						random_secret = {
-							limit = { secret_type = secret_non_believer }
+							type = secret_non_believer
 							reveal_to = scope:stop_host_scope
 						}
 					}
@@ -754,9 +746,7 @@ tour_grounds_events.6100 = {
 						title = tour_grounds_events.6100.d.failure
 						every_vassal = {
 							custom = zealot_disapproves_of_cynicism
-							limit = {
-								has_vassal_stance = zealot
-							}
+							vassal_stance = zealot
 							add_opinion = {
 								target = prev
 								modifier = zealot_disapproves_of_cynicism_opinion
@@ -1942,7 +1932,7 @@ tour_grounds_events.6201 = {
 
 	option = { # deny your liege's demand
 		name = tour_grounds_events.6201.c
-		add_gold = medium_gold_value
+		add_treasury_or_gold = medium_treasury_or_gold_value
 		# give imprisonment reason
 		scope:visiting_liege = {
 			send_interface_toast = {
@@ -2127,7 +2117,7 @@ tour_grounds_events.6202 = {
 		name = tour_grounds_events.6202.c
 		add_piety = major_piety_gain
 		every_vassal_or_below = {
-			limit = { has_vassal_stance = parochial }
+			vassal_stance = parochial
 			custom = every_parochial_vassal
 			add_opinion = {
 				modifier = disapproving_opinion
@@ -2396,7 +2386,7 @@ tour_grounds_events.6204 = {
 		}
 
 		every_vassal_or_below = {
-			limit = { has_vassal_stance = courtly }
+			vassal_stance = courtly
 			custom = every_courtly_vassal
 			add_opinion = {
 				modifier = disapproving_opinion
@@ -2728,7 +2718,7 @@ tour_grounds_events.6300 = {
 					title = tour_grounds_events.6300.a.success
 					# opinion bonus with glory hound vassals
 					every_vassal_or_below = {
-						limit = { has_vassal_stance = glory_hound }
+						vassal_stance = glory_hound
 						custom = every_glory_hound_vassal
 						add_opinion = {
 							modifier = respect_opinion
@@ -2768,9 +2758,9 @@ tour_grounds_events.6300 = {
 					title = tour_grounds_events.6300.a.failure
 					# opinion malus with glory hound vassals
 					every_vassal_or_below = {
+						vassal_stance = glory_hound
 						limit = { 
 							is_ai = yes
-							has_vassal_stance = glory_hound 
 						}
 						custom = every_glory_hound_vassal
 						add_opinion = {
@@ -2878,7 +2868,7 @@ tour_grounds_events.6300 = {
 	option = { # Decline
 		name = tour_grounds_events.6300.c
 		every_vassal_or_below = {
-			limit = { has_vassal_stance = glory_hound }
+			vassal_stance = glory_hound
 			custom = every_glory_hound_vassal
 			add_opinion = {
 				modifier = disappointed_opinion

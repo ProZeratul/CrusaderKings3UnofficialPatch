@@ -88,7 +88,7 @@ hunt_mystical_animal.1002 = {
 
 	trigger = {		
 		any_owned_story = {
-			story_type = story_cycle_hunt_mystical_animal
+			type = story_cycle_hunt_mystical_animal
 			NOT = { exists = var:had_event_hunt_mystical_animal_1002 }
 			save_temporary_scope_as = story
 		}
@@ -98,8 +98,8 @@ hunt_mystical_animal.1002 = {
 
 	immediate = {
 		random_owned_story = {
+			type = story_cycle_hunt_mystical_animal
 			limit = {
-				story_type = story_cycle_hunt_mystical_animal
 				NOT = { exists = var:had_event_hunt_mystical_animal_1002 }
 			}			
 			save_scope_as = story
@@ -255,7 +255,7 @@ hunt_mystical_animal.1004 = {
 			var:encounters >= 2
 			exists = var:animal_type
 			var:legendary_county = {
-				NOT = { this = root.location.county }
+				this != root.location.county
 				any_neighboring_county = { this = root.location.county }
 			}
 		}
@@ -381,7 +381,7 @@ hunt_mystical_animal.1005 = {
 				}
 			}
 		}
-		any_owned_story = { story_type = story_cycle_hunt_mystical_animal }
+		any_owned_story = { type = story_cycle_hunt_mystical_animal }
 	}
 
 	immediate = {
@@ -473,7 +473,7 @@ hunt_mystical_animal.1007 = {
 
 	trigger = {
 		any_owned_story = {
-			story_type = story_cycle_hunt_mystical_animal
+			type = story_cycle_hunt_mystical_animal
 			NOT = { exists = var:had_event_hunt_mystical_animal_1007 }
 			NOT = { exists = var:had_event_hunt_mystical_animal_1004 }
 			var:encounters >= 1
@@ -805,7 +805,7 @@ hunt_mystical_animal.9001 = {
 				}
 			}
 		}
-		any_owned_story = { story_type = story_cycle_hunt_mystical_animal }
+		any_owned_story = { type = story_cycle_hunt_mystical_animal }
 	}
 
 	immediate = {

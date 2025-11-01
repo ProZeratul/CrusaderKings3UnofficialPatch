@@ -2660,7 +2660,7 @@ mpo_decisions_events_friend_fail_effect = {
 					is_ai = yes
 					government_has_flag = government_is_nomadic
 					exists = domicile
-					domicile.herd >= domicile.minor_herd_value #Unop Use correct scope
+					domicile.herd >= domicile.minor_herd_value
 				}
 				government_has_flag = government_is_nomadic
 			}
@@ -2841,7 +2841,7 @@ mpo_heir_lifestyle_xp_gain_effect = {
 	else_if = {
 		limit = {
 			scope:lifestyle_trait = {
-				this = trait:poet
+				this = trait:lifestyle_poet
 			}
 		}
 		scope:heir = {
@@ -3138,7 +3138,7 @@ mpo_target_lifestyle_xp_gain_effect = {
 	else_if = {
 		limit = {
 			scope:lifestyle_trait = {
-				this = trait:poet
+				this = trait:lifestyle_poet
 			}
 		}
 		scope:friendship_target = {
@@ -4361,27 +4361,37 @@ make_blood_brother_save_common_enemy_effect = {
 			NOT = {
 				house = scope:recipient.house
 			}
-			house.house_head = {
-				any_owned_story = {
-					story_type = story_cycle_house_feud
-					var:house_feud_house.house_head ?= {
-						mpo_blood_brother_common_enemy_sub_trigger = yes
-						mpo_ideal_common_foe_trigger = yes
+			house = {
+				any_house_relation = {
+					has_house_relation_level = feud
+					any_relation_house = {
+						house_head = {
+							mpo_blood_brother_common_enemy_sub_trigger = yes
+							mpo_ideal_common_foe_trigger = yes
+						}
 					}
 				}
 			}
 		}
-		house.house_head = {
-			random_owned_story = {
+		house = {
+			random_house_relation = {
 				limit = {
-					story_type = story_cycle_house_feud
-					var:house_feud_house.house_head ?= {
-						mpo_blood_brother_common_enemy_sub_trigger = yes
-						mpo_ideal_common_foe_trigger = yes
+					has_house_relation_level = feud
+					any_relation_house = {
+						house_head = {
+							mpo_blood_brother_common_enemy_sub_trigger = yes
+							mpo_ideal_common_foe_trigger = yes
+						}
 					}
 				}
-				var:house_feud_house.house_head = {
-						save_scope_as = shared_foe
+				random_relation_house = {
+					limit = {
+						house_head = {
+							mpo_blood_brother_common_enemy_sub_trigger = yes
+							mpo_ideal_common_foe_trigger = yes
+						}
+					}
+					house_head = { save_scope_as = shared_foe }
 				}
 			}
 		}
@@ -4561,25 +4571,28 @@ make_blood_brother_save_common_enemy_effect = {
 			NOT = {
 				house = scope:recipient.house
 			}
-			house.house_head = {
-				any_owned_story = {
-					story_type = story_cycle_house_feud
-					var:house_feud_house.house_head ?= {
-						mpo_blood_brother_common_enemy_sub_trigger = yes
+			house = {
+				any_house_relation = {
+					has_house_relation_level = feud
+					any_relation_house = {
+						house_head = { mpo_blood_brother_common_enemy_sub_trigger = yes }
 					}
 				}
 			}
 		}
-		house.house_head = {
-			random_owned_story = {
+		house = {
+			random_house_relation = {
 				limit = {
-					story_type = story_cycle_house_feud
-					var:house_feud_house.house_head ?= {
-						mpo_blood_brother_common_enemy_sub_trigger = yes
+					has_house_relation_level = feud
+					any_relation_house = {
+						house_head = { mpo_blood_brother_common_enemy_sub_trigger = yes }
 					}
 				}
-				var:house_feud_house.house_head = {
-						save_scope_as = shared_foe
+				random_relation_house = {
+					limit = {
+						house_head = { mpo_blood_brother_common_enemy_sub_trigger = yes }
+					}
+					house_head = { save_scope_as = shared_foe }
 				}
 			}
 		}
@@ -5875,7 +5888,7 @@ culture_court_yurt_effect = {
 
 	random = {
 		chance = {
-			value = "list_size(yurt_culture_list)" #Unop: Fix from culture_list to yurt_culture_list
+			value = "list_size(yurt_culture_list)"
 			multiply = $CHANCE$
 			min = 0
 		}
@@ -6089,6 +6102,7 @@ expanding_steppe_effect = {
 				SUB_REGION = west
 				REGION = ghw_region_anatolia
 			}
+			tgp_silk_road_expand_steppe_effect = { SUB_REGION = occident }
 		}
 		scope:custom_eastern_balkans = {
 			expanding_steppe_add_region_effect = {
@@ -6131,6 +6145,8 @@ expanding_steppe_effect = {
 				SUB_REGION = west
 				REGION = dlc_mpo_steppe_caucasus_expansion
 			}
+			tgp_silk_road_expand_steppe_effect = { SUB_REGION = transcaspia }
+			tgp_silk_road_expand_steppe_effect = { SUB_REGION = occident }
 		}
 		# Central
 		scope:world_transoxiana = {
@@ -6138,18 +6154,24 @@ expanding_steppe_effect = {
 				SUB_REGION = central
 				REGION = world_transoxiana
 			}
+			tgp_silk_road_expand_steppe_effect = { SUB_REGION = transcaspia }
+			tgp_silk_road_expand_steppe_effect = { SUB_REGION = central_asia }
+			tgp_silk_road_expand_steppe_effect = { SUB_REGION = occident }
 		}
 		scope:world_khorasan = {
 			expanding_steppe_add_region_effect = {
 				SUB_REGION = central
 				REGION = world_khorasan
 			}
+			tgp_silk_road_expand_steppe_effect = { SUB_REGION = central_asia }
+			tgp_silk_road_expand_steppe_effect = { SUB_REGION = occident }
 		}
 		scope:dlc_mpo_steppe_persia_expansion = {
 			expanding_steppe_add_region_effect = {
 				SUB_REGION = central
 				REGION = dlc_mpo_steppe_persia_expansion
 			}
+			tgp_silk_road_expand_steppe_effect = { SUB_REGION = occident }
 		}
 		scope:dlc_mpo_steppe_siberia_further_expansion = {
 			expanding_steppe_add_region_effect = {
@@ -6163,6 +6185,9 @@ expanding_steppe_effect = {
 				SUB_REGION = east
 				REGION = world_steppe_tarim
 			}
+			tgp_silk_road_expand_steppe_effect = { SUB_REGION = central_asia }
+			tgp_silk_road_expand_steppe_effect = { SUB_REGION = transcaspia }
+			tgp_silk_road_expand_steppe_effect = { SUB_REGION = occident }
 		}
 	}
 }

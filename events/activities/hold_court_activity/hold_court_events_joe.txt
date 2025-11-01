@@ -79,9 +79,7 @@ scripted_effect hold_court_8290_grant_effect = {
 				this = scope:city_vassal
 				has_vassal_stance = glory_hound
 			}
-			NOR = {
-				this = scope:city_mayor
-			}
+			this != scope:city_mayor
 		}
 		custom = every_glory_hound_and_owner_actor
 		add_opinion = {
@@ -228,9 +226,9 @@ hold_court.8290 = {
 	option = { # ...for money
 		name = hold_court.8290.b
 		scope:city_mayor = {
-			pay_short_term_gold = {
+			pay_treasury_or_gold = {
 				target = root
-				gold = root.medium_gold_value
+				value = root.medium_treasury_or_gold_value
 			}
 		}
 		hold_court_8290_grant_effect = yes
@@ -250,7 +248,7 @@ hold_court.8290 = {
 	option = { # Dismiss
 		name = hold_court.8290.c
 		every_vassal = {
-			limit = { has_vassal_stance = parochial }
+			vassal_stance = parochial
 			custom = every_parochial_vassal_actor
 			add_opinion = {
 				target = root
@@ -346,7 +344,7 @@ scripted_trigger hold_court_8300_vassal_trigger = {
 		dynasty_prestige_level < medium_dynasty_prestige_level
 		NOT = {
 			any_dynasty_member = {
-				NOT = { this = scope:vassal_temp }
+				this != scope:vassal_temp
 				highest_held_title_tier >= tier_county
 			}
 		}
@@ -522,9 +520,9 @@ hold_court.8300 = {
 		}
 		resolve_title_and_vassal_change = scope:change
 		every_vassal = {
+			vassal_stance = parochial
 			limit = {
-				has_vassal_stance = parochial
-				NOT = { this = scope:city_vassal }
+				this != scope:city_vassal
 			}
 			custom = every_parochial_vassal_actor
 			add_opinion = {
@@ -569,9 +567,9 @@ hold_court.8300 = {
 		resolve_title_and_vassal_change = scope:change
 		add_tyranny = minor_tyranny_gain
 		every_vassal = {
+			vassal_stance = glory_hound
 			limit = {
-				has_vassal_stance = glory_hound
-				NOT = { this = scope:city_vassal }
+				this != scope:city_vassal
 			}
 			custom = every_glory_hound_vassal_actor
 			add_opinion = {
@@ -596,9 +594,9 @@ hold_court.8300 = {
 	option = { # Dismiss
 		name = hold_court.8300.c
 		every_vassal = {
+			vassal_stance = courtly
 			limit = {
-				has_vassal_stance = courtly
-				NOT = { this = scope:city_vassal }
+				this != scope:city_vassal
 			}
 			custom = every_courtly_vassal_actor
 			add_opinion = {
@@ -638,7 +636,7 @@ scripted_trigger hold_court_8310_duchy_trigger = {
 	save_temporary_scope_as = duchy_temp
 	root = {
 		any_held_title = {
-			tier = tier_kingdom
+			title_tier = kingdom
 			save_temporary_scope_as = kingdom_temp
 		}
 	}
@@ -813,8 +811,8 @@ hold_court.8310 = {
 				save_scope_as = drifting_duchy
 				root = {
 					random_held_title = {
+						title_tier = kingdom
 						limit = {
-							tier = tier_kingdom
 							save_temporary_scope_as = kingdom_temp # We don't go to PREVenholm anymore
 							scope:drifting_duchy = { de_jure_drifting_towards = scope:kingdom_temp }
 						}
@@ -1124,11 +1122,13 @@ hold_court.8320 = {
 	trigger = {
 		any_vassal = { hold_court_8320_vassal_trigger = yes }
 		# Not too many theocratic vassals already
-		NOT = {
+		NOR = {
 			any_sub_realm_county = {
 				percent > 0.1
 				holder ?= { government_has_flag = government_is_theocracy }
 			}
+			#There can only be one GodKing!
+			government_has_flag = government_is_mandala
 		}
 	}
 
@@ -1190,7 +1190,7 @@ hold_court.8320 = {
 			primary_title.previous_holder = { save_scope_as = probate_dead }
 			random_held_county = {
 				limit = {
-					NOT = { this = scope:probate_vassal.capital_county }
+					this != scope:probate_vassal.capital_county
 					hold_court_8320_county_trigger = { FAITH = scope:probate_dead.faith }
 				}
 				alternative_limit = {
@@ -1275,7 +1275,7 @@ hold_court.8320 = {
 			}
 			every_close_family_member ={
 				limit = {
-					NOT = { this = scope:probate_vassal }
+					this != scope:probate_vassal
 				}
 				custom = every_close_family_hold_court_8320_tooltip
 				add_opinion = {
@@ -1286,8 +1286,8 @@ hold_court.8320 = {
 			}
 		}
 		every_vassal = {
+			vassal_stance = glory_hound
 			limit = {
-				has_vassal_stance = glory_hound
 				NOR = {
 					this = scope:probate_vassal
 					is_close_family_of = scope:probate_vassal
@@ -1374,9 +1374,9 @@ hold_court.8320 = {
 			target = scope:probate_vassal
 		}
 		every_vassal = {
+			vassal_stance = zealot
 			limit = {
 				faith = scope:probate_county.faith
-				NOT = { this = scope:probate_vassal }
 				has_vassal_stance = zealot
 			}
 			custom = every_zealot_vassal_actor
@@ -1423,9 +1423,9 @@ hold_court.8320 = {
 			target = scope:probate_vassal
 		}
 		every_vassal = {
+			vassal_stance = zealot
 			limit = {
-				has_vassal_stance = zealot
-				NOT = { this = scope:probate_vassal }
+				this != scope:probate_vassal
 			}
 			custom = every_zealot_vassal_actor
 			add_opinion = {
@@ -1962,6 +1962,10 @@ hold_court.8340 = {
 		container = "custom_widgets_container"
 		controller = event_chain_progress
 	}
+	
+	trigger = {
+		is_ai = no
+	}
 
 	weight_multiplier = {
 		base = 1
@@ -1977,7 +1981,7 @@ hold_court.8340 = {
 		save_scope_as = actor
 		random_sub_realm_county = {
 			limit = {
-				NOT = { holder = root }
+				holder != root
 			}
 			alternative_limit = { always = yes }
 			save_scope_as = birthplace
@@ -2049,9 +2053,9 @@ hold_court.8340 = {
 	option = { # Hire
 		name = hold_court.8340.a
 		trigger = { exists = scope:candidate.var:target_court_position }
-		pay_short_term_gold = {
-			gold = {
-				value = bribe_value
+		pay_treasury_or_gold = {
+			value = {
+				add = bribe_value
 				multiply = 0.5
 			}
 			target = scope:candidate
@@ -2075,9 +2079,9 @@ hold_court.8340 = {
 			exists = scope:candidate.var:second_court_position
 			NOT = { scope:candidate.var:second_court_position ?= scope:candidate.var:target_court_position }
 		}
-		pay_short_term_gold = {
-			gold = {
-				value = bribe_value
+		pay_treasury_or_gold = {
+			value = {
+				add = bribe_value
 				multiply = 0.5
 			}
 			target = scope:candidate
@@ -2104,9 +2108,9 @@ hold_court.8340 = {
 				scope:candidate.var:backup_court_position ?= scope:candidate.var:second_court_position
 			}
 		}
-		pay_short_term_gold = {
-			gold = {
-				value = bribe_value
+		pay_treasury_or_gold = {
+			value = {
+				add = bribe_value
 				multiply = 0.5
 			}
 			target = scope:candidate

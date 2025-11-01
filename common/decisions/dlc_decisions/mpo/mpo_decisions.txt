@@ -3,7 +3,15 @@
 		reference = "gfx/interface/illustrations/decisions/mpo_decision_confederation.dds"
 	}
 	decision_group_type = major
-	ai_check_interval = 8
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 8
+		duchy = 8
+		kingdom = 0
+		empire = 0
+		hegemony = 0
+	}
 
 	desc = call_for_confederation_decision_desc
 	selection_tooltip = call_for_confederation_decision_tooltip
@@ -53,10 +61,19 @@
 			has_trait = conqueror
 			has_trait = greatest_of_khans
 		}
-		OR = {
-			has_trait = diplomat
-			has_trait = family_first
-			confederation_foe_trigger = { CHARACTER = root }
+		trigger_if = {
+			limit = {
+				NOT = {
+					culture = {
+						has_cultural_parameter = forming_confederations_is_easier 
+					}
+				}
+			} #When adjusting, adjust culture_parameter_forming_confederations_is_easier string
+			OR = {
+				has_trait = diplomat
+				has_trait = family_first
+				confederation_foe_trigger = { CHARACTER = root }
+			}
 		}
 		#This is just meant to stop player exploits
 		trigger_if = {
@@ -362,8 +379,7 @@
 		}
 		#Another confederation of your culture already exists
 		modifier = {
-			any_in_global_list = {
-				variable = confederations
+			any_confederation = {
 				has_variable = confederation_culture
 				var:confederation_culture = root.culture
 			}
@@ -371,13 +387,15 @@
 		}
 		#There's already another confederation nearby
 		modifier = {
-			any_in_global_list = {
-				variable = confederations
-				any_confederation_member = {
-					in_diplomatic_range = root
-				}
+			any_confederation = {
+				is_house_based = no # any_confederation_member is not performant for house blocs
+				any_confederation_member = { in_diplomatic_range = root }
 			}
 			factor = 0.1
+		}
+		modifier = {
+			add = 300
+			culture = { has_cultural_parameter = forming_confederations_is_easier }
 		}
 	}
 }
@@ -386,13 +404,21 @@ leave_confederation_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/mpo_decision_confederation.dds"
 	}
-	ai_check_interval = 12
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 12
+		duchy = 12
+		kingdom = 0
+		empire = 0
+		hegemony = 0
+	}
 
 	desc = leave_confederation_decision_desc
 	selection_tooltip = leave_confederation_decision_tooltip
 
 	is_shown = {
-		is_confederation_member = yes
+		confederation ?= { is_house_based = no }
 	}
 
 	is_valid = {
@@ -973,7 +999,7 @@ leave_confederation_decision = {
 				confederation = {
 					any_confederation_member = {
 						exists = root.house
-						house ?= root.house #Unop: Fix the house being compared to a dynasty
+						house ?= root.house
 					}
 				}
 			}
@@ -1642,6 +1668,15 @@ leave_confederation_decision = {
 				}
 			}
 		}
+		modifier = {
+			desc = "BARANGAY_TRADITION_REASON"
+			trigger = {
+				culture = {
+					has_cultural_parameter = invite_to_confederation_extra_reasons
+				}
+			}
+			add = -20
+		}
 	}
 }
 
@@ -1650,8 +1685,15 @@ study_commander_trait_decision = {
 		reference = "gfx/interface/illustrations/decisions/fp3/fp3_decision_concession.dds"
 	} 
 	decision_group_type = nomad_minor
-
-	ai_check_interval = 72
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 144
+		duchy = 144
+		kingdom = 72
+		empire = 72
+		hegemony = 72
+	}
 
 	desc = study_commander_trait_decision_desc
 	selection_tooltip = study_commander_trait_decision_tooltip
@@ -1812,8 +1854,15 @@ mpo_decision_fertility_dance = {
             }
         }
     }
-
-    ai_check_interval = 12
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 36
+		duchy = 12
+		kingdom = 12
+		empire = 12
+		hegemony = 12
+	}
 
     ai_potential = {
         is_landed = yes
@@ -2021,8 +2070,15 @@ mpo_decision_introduce_heir = {
 			}
 		}
 	}
-
-	ai_check_interval = 18
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 36
+		duchy = 36
+		kingdom = 18
+		empire = 18
+		hegemony = 18
+	}
 	
 	ai_potential = {
 		exists = player_heir
@@ -2275,7 +2331,15 @@ expand_the_steppe_decision = {
         reference = "gfx/interface/illustrations/event_scenes/mpo_raid_burning_asian.dds"
     }
     decision_group_type = nomad_major
-    ai_check_interval = 8
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 8
+		empire = 8
+		hegemony = 8
+	}
 
 	title = expand_the_steppe_decision_generic
 
@@ -2832,8 +2896,9 @@ expand_the_steppe_decision = {
         }
     }
 
-    effect = {
-    	# Send a toast to yourself, as a confirmation that the Steppe Expansion happened
+	effect = {
+		# Send a toast to yourself, as a confirmation that the Steppe Expansion happened
+		save_scope_as = steppe_expander
 		send_interface_toast = {
 			type = steppe_expansion_happened
 			title = expand_the_steppe_decision_notification_toast
@@ -2939,7 +3004,15 @@ develop_fertility_decision = {
 
 # New Tier Title for Nomads
 nomad_higher_tier_title_decision = {
-	ai_check_interval = 6
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 6
+		duchy = 6
+		kingdom = 6
+		empire = 0
+		hegemony = 0
+	}
 	picture = {
         reference = "gfx/interface/illustrations/event_scenes/mpo_steppe_evening.dds"
     }
@@ -3198,8 +3271,15 @@ mpo_become_greatest_of_khans_decision = {
 	cooldown = {
 		years = 5
 	}
-
-	ai_check_interval = 12
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 0
+		empire = 12
+		hegemony = 12
+	}
 	sort_order = 200
 
 	decision_group_type = nomad_major
@@ -3275,12 +3355,14 @@ mpo_become_greatest_of_khans_decision = {
 				text = greatest_of_khans_vassal_culture_req_tt
 				OR = {
 					any_vassal = {
+						highest_held_title_tier >= tier_duchy
 						government_has_flag = government_is_nomadic
 						culture = {
 							save_temporary_scope_as = culture_1
 						}
 					}
 					any_tributary = {
+						highest_held_title_tier >= tier_duchy
 						government_has_flag = government_is_nomadic
 						culture = {
 							save_temporary_scope_as = culture_1
@@ -3289,6 +3371,7 @@ mpo_become_greatest_of_khans_decision = {
 				}
 				OR = {
 					any_vassal = {
+						highest_held_title_tier >= tier_duchy
 						government_has_flag = government_is_nomadic
 						NOT = {
 							culture = scope:culture_1
@@ -3298,6 +3381,7 @@ mpo_become_greatest_of_khans_decision = {
 						}
 					}
 					any_tributary = {
+						highest_held_title_tier >= tier_duchy
 						government_has_flag = government_is_nomadic
 						NOT = {
 							culture = scope:culture_1
@@ -3309,6 +3393,7 @@ mpo_become_greatest_of_khans_decision = {
 				}
 				OR = {
 					any_vassal = {
+						highest_held_title_tier >= tier_duchy
 						government_has_flag = government_is_nomadic
 							NOR = {
 							culture = scope:culture_1
@@ -3319,6 +3404,7 @@ mpo_become_greatest_of_khans_decision = {
 						}
 					}
 					any_tributary = {
+						highest_held_title_tier >= tier_duchy
 						government_has_flag = government_is_nomadic
 						NOR = {
 							culture = scope:culture_1
@@ -3335,6 +3421,7 @@ mpo_become_greatest_of_khans_decision = {
 					}
 					OR = {
 						any_vassal = {
+							highest_held_title_tier >= tier_duchy
 							government_has_flag = government_is_nomadic
 							NOR = {
 								culture = scope:culture_1
@@ -3346,6 +3433,7 @@ mpo_become_greatest_of_khans_decision = {
 							}
 						}
 						any_tributary = {
+							highest_held_title_tier >= tier_duchy
 							government_has_flag = government_is_nomadic
 							NOR = {
 								culture = scope:culture_1
@@ -3359,6 +3447,7 @@ mpo_become_greatest_of_khans_decision = {
 					}
 					OR = {
 						any_vassal = {
+							highest_held_title_tier >= tier_duchy
 							government_has_flag = government_is_nomadic
 							NOR = {
 								culture = scope:culture_1
@@ -3371,6 +3460,7 @@ mpo_become_greatest_of_khans_decision = {
 							}
 						}
 						any_tributary = {
+							highest_held_title_tier >= tier_duchy
 							government_has_flag = government_is_nomadic
 							NOR = {
 								culture = scope:culture_1
@@ -3464,7 +3554,6 @@ mpo_become_greatest_of_khans_decision = {
 	}
 
 	effect = {
-		
 		custom_description_no_bullet = { text = mpo_gok_war_of_submission_will_happen_tt }
 		custom_tooltip = mpo_gok_cravens_wont_fight_tt
 		custom_tooltip = mpo_gok_obedient_vassals_join_war_tt
@@ -4011,8 +4100,15 @@ mpo_gok_world_conquest_decision = {
 	}
 	decision_group_type = nomad_major
 	desc = mpo_gok_world_conquest_decision_desc
-
-	ai_check_interval = 36
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 0
+		empire = 36
+		hegemony = 36
+	}
 	sort_order = 300
 
 	is_shown = {
@@ -4371,8 +4467,15 @@ settle_people_decision = {
 		reference = "gfx/interface/illustrations/holding_types/city_western.dds"
 	} 
 	decision_group_type = nomad_major
-
-	ai_check_interval = 36
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 36
+		duchy = 36
+		kingdom = 36
+		empire = 36
+		hegemony = 36
+	}
 
 	desc = settle_people_decision_desc
 	selection_tooltip = settle_people_decision_tooltip
@@ -4414,6 +4517,9 @@ settle_people_decision = {
 	}
 
 	effect = {
+		#GoK stops really being GoK
+		gok_government_change_story_end_effect = yes
+
 		save_scope_as = nomad_settling_down
 		domicile.domicile_culture = { save_scope_as = invading_culture }
 		domicile.domicile_faith = { save_scope_as = invading_faith }
@@ -5244,6 +5350,12 @@ settle_people_decision = {
 		NOR = {
 			has_trait = greatest_of_khans
 			has_trait = conqueror
+			any_owned_story = {
+				OR = {
+					story_type = story_mongol_invasion
+					story_type = story_greatest_of_khans
+				}
+			}
 		}
 		OR = {
 			has_trait = content
@@ -5414,8 +5526,15 @@ step_away_from_the_steppe_decision = {
 		reference = "gfx/interface/illustrations/event_scenes/mpo_rural_village_asian.dds"
 	} 
 	decision_group_type = nomad_minor
-
-	ai_check_interval = 36
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 36
+		duchy = 36
+		kingdom = 36
+		empire = 36
+		hegemony = 36
+	}
 
 	desc = step_away_from_the_steppe_decision_desc
 	selection_tooltip = step_away_from_the_steppe_decision_tooltip
@@ -5452,6 +5571,8 @@ step_away_from_the_steppe_decision = {
 	}
 
 	effect = {
+		#GoK stops really being GoK
+		gok_government_change_story_end_effect = yes
 		nomad_domicile_refund_effect = yes
 		nomad_convert_herds_to_gold_special_troops_effect = yes
 		every_sub_realm_county = {
@@ -6007,6 +6128,12 @@ step_away_from_the_steppe_decision = {
 	ai_potential = {
 		NOR = {
 			has_trait = greatest_of_khans
+			any_owned_story = {
+				OR = {
+					story_type = story_greatest_of_khans
+					story_type = story_mongol_invasion
+				}
+			}
 			has_trait = conqueror
 			has_realm_law = nomadic_authority_3
 			has_realm_law = nomadic_authority_4
@@ -6181,13 +6308,24 @@ confederation_kingdom_decision = {
 		reference = "gfx/interface/illustrations/decisions/mpo_decision_confederation.dds"
 	}
 	decision_group_type = major
-	ai_check_interval = 12
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 12
+		duchy = 12
+		kingdom = 0
+		empire = 0
+		hegemony = 0
+	}
+	
 	desc = confederation_kingdom_decision_desc
 
 	is_shown = {
 		is_confederation_member = yes
+		exists = confederation
 		is_landed = yes
 		is_playable_character = yes
+		NOT = { exists = confederation.leading_house }
 	}
 
 	is_valid = {
@@ -6264,7 +6402,7 @@ confederation_kingdom_decision = {
 					limit = {
 						government_has_flag = government_is_nomadic
 					}
-					add = medium_herd_value_static
+					add = domicile.medium_herd_value_static
 				}
 			}
 		}
@@ -6297,7 +6435,7 @@ confederation_kingdom_decision = {
 				tier = kingdom
 				name = CONFEDERATION_CULTURE_NAME
 				adj = CONFEDERATION_CULTURE_NAME_ADJ
-				pre = article_CONFEDERATION_CULTURE_NAME
+				article = article_CONFEDERATION_CULTURE_NAME
 			}
 			scope:new_title = {
 				set_variable = {
@@ -6405,8 +6543,15 @@ settle_the_steppe_decision = {
 		reference = "gfx/interface/illustrations/event_story/mpo_steppe_region.dds"
 	} 
 	decision_group_type = nomad_major
-
-	ai_check_interval = 360
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 360
+		empire = 360
+		hegemony = 360
+	}
 
 	desc = settle_the_steppe_decision_desc
 	selection_tooltip = settle_the_steppe_decision_tooltip
@@ -6571,6 +6716,8 @@ settle_the_steppe_decision = {
 	}
 
 	effect = {
+		#GoK stops really being GoK
+		gok_government_change_story_end_effect = yes
 		# MPO ACHIEVEMENT Settling In
 		if = {
 			limit = { is_ai = no }
@@ -6938,6 +7085,12 @@ settle_the_steppe_decision = {
 		NOR = {
 			has_trait = greatest_of_khans
 			has_trait = conqueror
+			any_owned_story = {
+				OR = {
+					story_type = story_mongol_invasion
+					story_type = story_greatest_of_khans
+				}
+			}
 		}
 		OR = {
 			has_realm_law = nomadic_authority_4
@@ -6970,7 +7123,10 @@ become_nomadic_decision = {
 
 	is_shown = {
 		has_mpo_dlc_trigger = yes
-		NOT = { government_has_flag = government_is_nomadic }
+		NOR = {
+			government_has_flag = government_is_nomadic
+			government_has_flag = government_is_steppe_admin
+		}
 		is_playable_character = yes
 		capital_county = {
 			any_county_situation = {

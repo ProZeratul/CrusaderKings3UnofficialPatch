@@ -50,11 +50,13 @@ mpo_pleasure_dome_decision = {
 		}
 	}
 
-    cost = {
-        gold = 1000
-        prestige = 1500
-        herd = 2000
-    }
+	cost = {
+		treasury_or_gold = {
+			value = massive_treasury_or_gold_value
+		}
+		prestige = massive_prestige_value
+		herd = 2000
+	}
 
     widget = {
         controller = create_holy_order
@@ -91,7 +93,15 @@ mpo_pleasure_dome_decision = {
             value = yes
         }
     }
-    ai_check_interval = 60
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 0
+		empire = 60
+		hegemony = 60
+	}
     ai_potential = {
         is_at_war = no
 		gold >= 1500
@@ -158,16 +168,30 @@ mpo_establish_paiza_system_decision = {
                     }
                 }
             }
-        }   
+        }
     }
 
-    cost = {
+	cost = {
         gold = {
-            value = massive_prestige_value
+            value = 0
+            if = {
+                limit = {
+                    has_treasury = no
+                }
+                add = massive_prestige_value
+           }
         }
-        prestige = {
-            value = massive_prestige_value
+
+        treasury = {
+            value = 0
+            if = {
+                limit = {
+                    has_treasury = yes
+                }
+                add = 250
+            }
         }
+
         herd = {
             value = 2000
         }
@@ -200,8 +224,15 @@ mpo_establish_paiza_system_decision = {
         
         trigger_event = mpo_decisions_events.0099
     }
-
-    ai_check_interval = 10
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 10
+		empire = 10
+		hegemony = 10
+	}
 
     ai_will_do = { 
         base = 100
@@ -268,8 +299,15 @@ mpo_call_for_merchants_decision = {
         custom_tooltip = mpo_call_for_merchants_decision.gold_needed
         custom_tooltip = mpo_call_for_merchants_decision.buildings
     }
-
-    ai_check_interval = 100
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 100
+		kingdom = 100
+		empire = 100
+		hegemony = 100
+	}
 
     ai_will_do = {
         base = 0
@@ -355,8 +393,15 @@ mpo_call_for_merchants_small_decision = {
         custom_tooltip = mpo_call_for_merchants_decision.gold_needed_smol
         custom_tooltip = mpo_call_for_merchants_decision.buildings
     }
-
-    ai_check_interval = 100
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 100
+		kingdom = 100
+		empire = 100
+		hegemony = 100
+	}
 
     ai_will_do = {
         base = 0
@@ -487,7 +532,14 @@ mpo_abuse_authority_paiza_decision = {
         }
     }
 
-    ai_check_interval = 10 
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 100
+		duchy = 10
+		kingdom = 10
+		empire = 10
+		hegemony = 10
+	}
 
     ai_will_do = {
         base = -20

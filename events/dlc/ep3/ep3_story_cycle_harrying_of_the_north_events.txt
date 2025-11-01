@@ -48,7 +48,7 @@ ep3_story_cycle_harrying.0001 = {
 		animation = thinking
 	}
 	right_portrait = {
-		trigger = { NOT = { root = this } }
+		trigger = { root != this }
 		character = scope:ruler_england
 		animation = personality_honorable
 	}
@@ -139,7 +139,7 @@ ep3_story_cycle_harrying.0002 = {
 		animation = thinking
 	}
 	right_portrait = {
-		trigger = { NOT = { root = this } }
+		trigger = { root != this }
 		character = scope:ruler_england
 		animation = personality_honorable
 	}
@@ -213,7 +213,7 @@ ep3_story_cycle_harrying.0003 = {
 		animation = thinking
 	}
 	right_portrait = {
-		trigger = { NOT = { root = this } }
+		trigger = { root != this }
 		character = scope:ruler_england
 		animation = personality_honorable
 	}
@@ -304,7 +304,7 @@ ep3_story_cycle_harrying.0004 = {
 		animation = thinking
 	}
 	right_portrait = {
-		trigger = { NOT = { root = this } }
+		trigger = { root != this }
 		character = scope:ruler_england
 		animation = personality_honorable
 	}
@@ -516,7 +516,7 @@ ep3_story_cycle_harrying.1000 = {
 	option = { #Exact a levy of crops
 		name = ep3_story_cycle_harrying.1000.c
 
-		add_gold = medium_gold_value
+		add_treasury_or_gold = medium_treasury_or_gold_value
 
 		scope:crop_duchy = {
 			change_county_control = -10
@@ -531,7 +531,7 @@ ep3_story_cycle_harrying.1000 = {
 
 		every_vassal = {
 			custom = every_minority_vassal
-			limit = { has_vassal_stance = minority }
+			vassal_stance = minority
 			add_opinion = {
 				target = root 
 				modifier = annoyed_opinion
@@ -624,7 +624,7 @@ ep3_story_cycle_harrying.1005 = {
 	option = { #Rebuild and stock the road with armed guards
 		name = ep3_story_cycle_harrying.1005.a
 
-		remove_short_term_gold = major_gold_value
+		remove_treasury_or_gold = major_treasury_or_gold_value
 
 		every_in_list = {
 			list = great_north_road
@@ -654,7 +654,7 @@ ep3_story_cycle_harrying.1005 = {
 	option = { #Rebuild the road
 		name = ep3_story_cycle_harrying.1005.b
 
-		remove_short_term_gold = major_gold_value
+		remove_treasury_or_gold = major_treasury_or_gold_value
 
 		every_in_list = {
 			list = great_north_road
@@ -853,9 +853,7 @@ ep3_story_cycle_harrying.1010 = {
 	
 					add_prestige = medium_prestige_loss
 					every_vassal = { 
-						limit = {
-							has_vassal_stance = glory_hound
-						}
+						vassal_stance = glory_hound
 						custom = every_glory_hound_vassal
 						add_opinion = {
 							modifier = tournament_mocked_opinion #Re-using
@@ -1680,8 +1678,8 @@ ep3_story_cycle_harrying.2005 = {
 		custom_tooltip = diplomacy_family.2250.b.tt
 		hidden_effect = {
 			random_scheme = {
+				type = murder
 				limit = {
-					scheme_type = murder
 					scheme_target_character = scope:willy_family
 				}
 				add_scheme_modifier = {
@@ -2047,9 +2045,7 @@ ep3_story_cycle_harrying.2015 = {
 			limit = {
 				scope:william = {
 					any_vassal = {
-						NOT = {
-							this = root
-						}
+						this != root
 						culture = culture:anglo_saxon
 					}
 				}
@@ -2057,9 +2053,7 @@ ep3_story_cycle_harrying.2015 = {
 			scope:william = {
 				random_vassal = {
 					limit = {
-						NOT = {
-							this = root
-						}
+						this != root
 						culture = culture:anglo_saxon
 					}
 					save_scope_as = other_vassal
@@ -3787,9 +3781,7 @@ ep3_story_cycle_harrying.3022 = {
 				random_sub_realm_duchy = {
 					limit = {
 						holder.culture = culture:norman
-						NOT = {
-							this = scope:saved_duchy
-						}
+						this != scope:saved_duchy
 					}
 					show_as_tooltip = {
 						add_county_modifier = {
@@ -4104,9 +4096,7 @@ ep3_story_cycle_harrying.3052 = {
 		if = {
 			limit = {
 				scope:cambridgeshire.holder = {
-					NOT = {
-						this = scope:william
-					}
+					this != scope:william
 				}
 			}
 			scope:cambridgeshire.holder = {

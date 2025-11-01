@@ -89,6 +89,9 @@ temperate_seasons_trigger = {
 			geographical_region = world_africa_north
 			geographical_region = world_steppe
 			geographical_region = world_tibet
+			geographical_region = world_asia_china
+			geographical_region = world_asia_japan
+			geographical_region = world_asia_korea
 		}
 	}
 }
@@ -105,6 +108,8 @@ tropical_seasons_region_trigger = {
 		geographical_region = world_africa_east
 		geographical_region = world_india_deccan
 		geographical_region = world_burma
+		geographical_region = world_asia_china
+		geographical_region = world_asia_southeast
 	}
 }
 
@@ -182,17 +187,6 @@ current_season_winter = {
 			current_month < 2
 		}
 	}
-	trigger_else_if = {
-		limit = {
-			location = {
-				geographical_region = seasonal_region_burma
-			}
-		}
-		OR = {
-			current_month >= 11
-			current_month < 3
-		}
-	}
 	trigger_else = {
 		#Generic Northern Hemisphere
 		OR = {
@@ -204,6 +198,8 @@ current_season_winter = {
 			NOR = {
 				geographical_region = seasonal_region_east_africa
 				geographical_region = seasonal_region_west_africa
+				geographical_region = seasonal_region_maritime_southeast_asia
+				geographical_region = seasonal_region_peninsular_southeast_asia
 			}
 		}
 	}
@@ -247,7 +243,8 @@ current_season_autumn = {
 			NOR = {
 				geographical_region = seasonal_region_west_africa
 				geographical_region = seasonal_region_deccan
-				geographical_region = seasonal_region_burma
+				geographical_region = seasonal_region_peninsular_southeast_asia
+				geographicaL_region = seasonal_region_maritime_southeast_asia
 			}
 		}
 	}
@@ -282,15 +279,6 @@ current_season_summer = {
 		current_month >= 4
 		current_month < 6
 	}
-	trigger_else_if = {
-		limit = {
-			location = {
-				geographical_region = seasonal_region_burma
-			}
-		}
-		current_month >= 3
-		current_month < 5
-	}
 	trigger_else = {
 		#Generic Northern Hemisphere
 		current_month >= 6
@@ -300,6 +288,8 @@ current_season_summer = {
 			NOR = {
 				geographical_region = seasonal_region_west_africa
 				geographical_region = seasonal_region_east_africa
+				geographical_region = seasonal_region_peninsular_southeast_asia
+				geographical_region = seasonal_region_maritime_southeast_asia
 			}
 		}
 	}
@@ -335,7 +325,8 @@ current_season_spring = {
 				geographical_region = seasonal_region_west_africa
 				geographical_region = seasonal_region_rajasthan
 				geographical_region = seasonal_region_deccan
-				geographical_region = seasonal_region_burma
+				geographical_region = seasonal_region_peninsular_southeast_asia
+				geographical_region = seasonal_region_maritime_southeast_asia
 			}
 		}
 	}
@@ -347,6 +338,10 @@ current_season_dry_season = {
 		OR = {
 			geographical_region = seasonal_region_west_africa
 			geographical_region = seasonal_region_east_africa
+			geographical_region = seasonal_region_peninsular_southeast_asia
+			geographical_region = seasonal_region_maritime_southeast_asia
+			geographical_region = seasonal_region_bengal
+			geographical_region = seasonal_region_deccan
 		}
 	}
 	trigger_if = {
@@ -358,9 +353,51 @@ current_season_dry_season = {
 			current_month < 5
 		}
 	}
+	trigger_else_if = {
+		limit = {
+			location = {
+				geographical_region = seasonal_region_east_africa
+			}
+		}
+		OR = {
+			current_month >= 12
+			current_month < 3
+		}
+	}
+	trigger_else_if = {
+		limit = {
+			location = {
+				geographical_region = seasonal_region_maritime_southeast_asia
+			}#April to September
+		}
+		current_month >= 4
+		current_month < 10
+	}
+	trigger_else_if = {
+		limit = {
+			location = {
+				geographical_region = seasonal_region_peninsular_southeast_asia
+			}
+		}
+		OR = { #November to May
+			current_month >= 11
+			current_month < 6
+		}
+	}
+	trigger_else_if = {
+		limit = {
+			location = {
+				geographical_region = seasonal_region_bengal
+			}
+		}
+		OR = {
+			current_month >= 12
+			current_month < 3
+		}
+	}
 	trigger_else = {
 		location = {
-			geographical_region = seasonal_region_east_africa
+			geographical_region = seasonal_region_deccan
 		}
 		OR = {
 			current_month >= 12
@@ -373,12 +410,13 @@ current_season_rainy_season = {
 	#Jasons triggers here
 	location = {
 		OR = {
-			geographical_region = seasonal_region_deccan
-			geographical_region = seasonal_region_rajasthan
-			geographical_region = seasonal_region_bengal
-			geographical_region = seasonal_region_burma
 			geographical_region = seasonal_region_west_africa
 			geographical_region = seasonal_region_east_africa
+			geographical_region = seasonal_region_peninsular_southeast_asia
+			geographical_region = seasonal_region_maritime_southeast_asia
+			geographical_region = seasonal_region_bengal
+			geographical_region = seasonal_region_deccan
+			geographical_region = seasonal_region_rajasthan
 		}
 	}
 	#southern region with rainy/dry seasons
@@ -412,20 +450,22 @@ current_season_rainy_season = {
 	trigger_else_if = {
 		limit = {
 			location = {
-				geographical_region = seasonal_region_burma
+				geographical_region = seasonal_region_peninsular_southeast_asia
 			}
-		}
-		current_month >= 5
+		} #June to October
+		current_month >= 6
 		current_month < 11
 	}
 	trigger_else_if = {
 		limit = {
 			location = {
-				geographical_region = seasonal_region_west_africa
+				geographical_region = seasonal_region_maritime_southeast_asia
 			}
+		} #October to March
+		OR = {
+			current_month >= 10
+			current_month < 4
 		}
-		current_month >= 5
-		current_month < 11
 	}
 	trigger_else = {
 		location = {

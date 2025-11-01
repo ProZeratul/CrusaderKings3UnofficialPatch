@@ -1142,10 +1142,23 @@ laamp_extra_contract_schemes.0021 = {
 				}
 			}
 		}
-		scope:scheme.task_contract = {
-			change_variable = {
-				name = secrets_found
-				add = 1
+		if = {
+			limit = {
+				exists = scope:scheme.task_contract	
+			}
+			scope:scheme.task_contract = {
+				change_variable = {
+					name = secrets_found
+					add = 1
+				}
+			}
+		}
+		else = {
+			scope:active_councillor = {
+				change_variable = {
+					name = secrets_found
+					add = 1
+				}
 			}
 		}
 	}

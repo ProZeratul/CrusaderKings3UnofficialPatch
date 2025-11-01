@@ -248,7 +248,7 @@ east_europe.0016 = { #by Mathilda Bjarnehed
 	after = {
 		every_player = {
 			limit = {
-				NOT = { this = scope:defender_of_highgod }
+				this != scope:defender_of_highgod
 				is_within_diplo_range = { CHARACTER = root }
 			}
 			trigger_event = east_europe.0017
@@ -282,7 +282,7 @@ east_europe.0017 = { #by Mathilda Bjarnehed
 			text = east_europe.0016.a
 		}
 		name = {
-			trigger = { NOT = { faith = scope:defender_of_highgod.faith } }
+			trigger = { faith != scope:defender_of_highgod.faith }
 			text = name_i_see
 		}
 	}
@@ -311,7 +311,7 @@ east_europe.0030 = { # by Flavio Verna
 		name = east_europe.0030.a
 		every_player = {
 			limit = {
-				NOT = { this = root }
+				this != root
 				capital_province = {
 					geographical_region = world_europe_east
 				}
@@ -372,7 +372,7 @@ east_europe.0031 = { # by Flavio Verna
 scripted_effect revive_magyar_paganism_notify_players_effect = {
 	every_player = {
 		limit = {
-			NOT = { this = root }
+			this != root
 			capital_province = {
 				geographical_region = world_europe_east
 			}
@@ -718,7 +718,7 @@ scripted_trigger generic_invalidation_criteria_trigger = {
 				#Scope:hof has died.
 				is_alive = no
 				#Scope:hof has been deposed.
-				NOT = { this = scope:hof.faith.religious_head }
+				this != scope:hof.faith.religious_head
 			}
 		}
 		scope:heretic = {
@@ -726,7 +726,7 @@ scripted_trigger generic_invalidation_criteria_trigger = {
 				#Scope:heretic has died.
 				is_alive = no
 				#Scope:heretic is no longer an independent ruler (including being deposed).
-				is_independent_ruler = no
+				top_liege != this
 				#Scope:heretic has become a different flavour of ecumenical Christian.
 				faith = {
 					NOT = { this = faith:bosnian_church }
@@ -2241,7 +2241,7 @@ east_europe.0123 = {
 		else_if = {
 			limit = {
 				scope:hof = {
-					NOT = { this = scope:hof.faith.religious_head}
+					this != scope:hof.faith.religious_head
 				}
 			}
 			save_scope_value_as = {
@@ -2254,7 +2254,7 @@ east_europe.0123 = {
 		##Scope:heretic is no longer independent.
 		else_if = {
 			limit = {
-				scope:heretic = { is_independent_ruler = no }
+				scope:heretic = { top_liege != this }
 			}
 			save_scope_value_as = {
 				name = invalidation_type
@@ -2455,7 +2455,7 @@ east_europe.0124 = {
 		else_if = {
 			limit = {
 				scope:hof = {
-					NOT = { this = scope:hof.faith.religious_head}
+					this != scope:hof.faith.religious_head
 				}
 			}
 			save_scope_value_as = {
@@ -2468,7 +2468,7 @@ east_europe.0124 = {
 		##Scope:heretic is no longer independent.
 		else_if = {
 			limit = {
-				scope:heretic = { is_independent_ruler = no }
+				scope:heretic = { top_liege != this }
 			}
 			save_scope_value_as = {
 				name = invalidation_type
@@ -2743,7 +2743,7 @@ east_europe.0141 = {
 		save_scope_as = mogyer_invader
 		every_player = {
 			limit = {
-				NOT = { this = scope:mogyer_invader }
+				this != scope:mogyer_invader
 			}
 			if = {
 				limit = {
@@ -2820,7 +2820,7 @@ east_europe.0143 = {
 			triggered_desc = {
 				trigger = {
 					any_held_title = {
-						tier = tier_county
+						title_tier = county
 						title_province = { geographical_region = custom_hungary }
 					}
 				}
