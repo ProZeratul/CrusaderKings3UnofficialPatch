@@ -235,8 +235,10 @@ relation_with_character_is_incestuous_in_faith_trigger = {
 			$FAITH$ = { has_doctrine = doctrine_consanguinity_dynastic }
 			OR = {
 				is_close_or_extended_family_of = $CHARACTER$
-				is_lowborn = no #Unop Lowborn characters having the same dynasty is ok
-				dynasty = $CHARACTER$.dynasty
+				AND = { #Unop Lowborn characters having the same dynasty is ok
+					is_lowborn = no
+					dynasty = $CHARACTER$.dynasty
+				}
 			}
 		}	
 		#doctrine_consanguinity_restricted; absolutely no family business
