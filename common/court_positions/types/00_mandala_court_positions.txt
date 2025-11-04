@@ -191,7 +191,7 @@ court_guru_court_position = {
 			if = {
 				limit = {
 					court_position_obligation_hook_salary_trigger = {
-						POS = court_tutor
+						POS = court_guru #Unop Use correct position
 						LIEGE = root
 					}
 				}
@@ -464,7 +464,7 @@ court_brahmin_court_position = {
 			if = {
 				limit = {
 					court_position_obligation_hook_salary_trigger = {
-						POS = high_almoner
+						POS = court_brahmin #Unop Use correct position
 						LIEGE = root
 					}
 				}
@@ -574,7 +574,7 @@ court_brahmin_court_position = {
 	}
 	on_court_position_vacated = {
 		court_position_vacated_event_effect = {
-			COURT_POSITION_TYPE = high_almoner_court_position
+			COURT_POSITION_TYPE = court_brahmin_court_position #Unop Use correct position
 		}
 	}
 
@@ -680,13 +680,13 @@ khlon_glan_court_position = {
 		add = court_position_aptitude_family_business_value
 		add = court_position_aptitude_low_penalty_value
 		# Bonus from court.8311
-		if = {
-			limit = { var:bonus_aptitude_role ?= flag:seneschal }
-			add = {
-				value = cp_bonus_aptitude_value
-				desc = cp_bonus_aptitude
-			}
-		}
+		#if = { #Unop Not possible
+		#	limit = { var:bonus_aptitude_role ?= flag:seneschal }
+		#	add = {
+		#		value = cp_bonus_aptitude_value
+		#		desc = cp_bonus_aptitude
+		#	}
+		#}
 	}
 
 	is_shown = {
@@ -726,7 +726,7 @@ khlon_glan_court_position = {
 			if = {
 				limit = {
 					court_position_obligation_hook_salary_trigger = {
-						POS = khlon_glan
+						POS = khlon_glan #Unop Use correct position
 						LIEGE = root
 					}
 				}
