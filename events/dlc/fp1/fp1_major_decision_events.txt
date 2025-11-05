@@ -1294,7 +1294,11 @@ fp1_major_decisions.1011 = {
 			if = {
 				limit = {
 					is_alive = yes
-					NOT = { is_consort_of = root } #ck3uop: Original trigger is highly unlikely to ever allow this option.
+					#ck3uop: Original trigger is highly unlikely to ever allow this option, so we replace it.
+					NOR = {
+						is_consort_of = root
+						betrothed ?= { this = root }
+					}
 					has_any_bad_relationship_with_root_trigger = no
 					is_ai = yes
 				}
@@ -1331,9 +1335,17 @@ fp1_major_decisions.1011 = {
 
 		#ck3uop: Make space for Gyda.
 		if = {
-			limit = { is_married = yes }
-			divorce = primary_spouse
+			limit = { allowed_more_spouses = no } #ck3uop: Highly unlikely, but still check it.
+			if = {
+				limit = { is_married = yes }
+				divorce = primary_spouse
+			}
+			else_if = {
+				limit = { is_betrothed = yes }
+				break_betrothal = betrothed
+			}
 		}
+
 		scope:gyda = {
 			if = {
 				limit = { is_married = yes }
@@ -1344,6 +1356,10 @@ fp1_major_decisions.1011 = {
 				this.concubinist = {
 					remove_concubine = prev
 				}
+			}
+			else_if = {
+				limit = { is_betrothed = yes }
+				break_betrothal = betrothed
 			}
 		}
 
