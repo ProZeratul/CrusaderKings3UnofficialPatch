@@ -285,6 +285,10 @@ court_astrologer_court_position = { ### MPO
 	}
 
 	# Scripted value to determine whether an AI will hire/fire a position or not. Hires over 0, fires under -50. Look in _court_positions.info for more extensive documentation!
+	ai_position_score = { #Unop Added so that AI can hire this position
+		value = 100
+		add = court_position_debt_considerations_value
+	}
 	ai_candidate_score = {
 		value = 100
 		add = scope:base_value
@@ -299,7 +303,7 @@ court_astrologer_court_position = { ### MPO
 			add = 1000
 		}
 		
-		add = court_position_debt_considerations_value
+		#add = court_position_debt_considerations_value #Unop Moved above
     }
 }
 
@@ -564,21 +568,21 @@ boyan_court_position = { ### MPO
 					scope:liege = {
 						has_treasury = no
 					}
-				court_position_inner_circle_salary_trigger = { POS = boyan }
-				}
-				multiply = {
-					value = 0.0
-					desc = inner_circle_salary_mod
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
-				}
-			}
-			# Halved with obligation hook
-			else_if = {
-				limit = {
-					court_position_obligation_hook_salary_trigger = {
-						POS = boyan
-						LIEGE = scope:liege
-					}
+			#	court_position_inner_circle_salary_trigger = { POS = boyan } #Unop Remove obsolete lines
+			#	}
+			#	multiply = {
+			#		value = 0.0
+			#		desc = inner_circle_salary_mod
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#	}
+			#}
+			## Halved with obligation hook
+			#else_if = {
+			#	limit = {
+			#		court_position_obligation_hook_salary_trigger = {
+			#			POS = boyan
+			#			LIEGE = scope:liege
+			#		}
 				}
 				add = boyan_total_salary_value
 			}
@@ -590,23 +594,23 @@ boyan_court_position = { ### MPO
 					scope:liege = {
 						has_treasury = yes
 					}
-					court_position_halved_salary_trigger = { POS = boyan }
-				}
-				multiply = {
-					value = 0.5
-					desc = court_position_halved_salary
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
-				}
-			}
-			#You're working with LAAMPS now
-			if = {
-				limit = { 
-					scope:liege ?= { government_has_flag = government_is_landless_adventurer }
-				}
-				multiply = {
-					value = 0
-					desc = court_position_laamps_free
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#		court_position_halved_salary_trigger = { POS = boyan } #Unop Remove obsolete lines
+			#	}
+			#	multiply = {
+			#		value = 0.5
+			#		desc = court_position_halved_salary
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#	}
+			#}
+			##You're working with LAAMPS now
+			#if = {
+			#	limit = { 
+			#		scope:liege ?= { government_has_flag = government_is_landless_adventurer }
+			#	}
+			#	multiply = {
+			#		value = 0
+			#		desc = court_position_laamps_free
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
 				}
 				add = boyan_total_salary_value
 			}
@@ -675,6 +679,10 @@ boyan_court_position = { ### MPO
 	}
 
 	# Scripted value to determine whether an AI will hire/fire a position or not. Hires over 0, fires under -50. Look in _court_positions.info for more extensive documentation!
+	ai_position_score = { #Unop Added so that AI can hire this position
+		value = 100
+		add = court_position_debt_considerations_value
+	}
 	ai_candidate_score = {
 		value = 100
 		add = scope:base_value
@@ -689,7 +697,7 @@ boyan_court_position = { ### MPO
 			add = 1000
 		}
 		
-		add = court_position_debt_considerations_value
+		#add = court_position_debt_considerations_value #Unop Moved above
     }
 }
 
@@ -891,21 +899,21 @@ siege_engineer_court_position = { ### MPO
 					scope:liege = {
 						has_treasury = no
 					}
-					court_position_inner_circle_salary_trigger = { POS = siege_engineer }
-				}
-				multiply = {
-					value = 0.0
-					desc = inner_circle_salary_mod
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
-				}
-			}
-			# Halved with obligation hook
-			else_if = {
-				limit = {
-					court_position_obligation_hook_salary_trigger = {
-						POS = siege_engineer
-						LIEGE = scope:liege
-					}
+			#		court_position_inner_circle_salary_trigger = { POS = siege_engineer } #Unop Remove obsolete lines
+			#	}
+			#	multiply = {
+			#		value = 0.0
+			#		desc = inner_circle_salary_mod
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#	}
+			#}
+			## Halved with obligation hook
+			#else_if = {
+			#	limit = {
+			#		court_position_obligation_hook_salary_trigger = {
+			#			POS = siege_engineer
+			#			LIEGE = scope:liege
+			#		}
 				}
 				add = siege_engineer_total_salary_value
 			}
@@ -917,23 +925,23 @@ siege_engineer_court_position = { ### MPO
 					scope:liege = {
 						has_treasury = yes
 					}
-					court_position_halved_salary_trigger = { POS = siege_engineer }
-				}
-				multiply = {
-					value = 0.5
-					desc = court_position_halved_salary
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
-				}
-			}
-			#You're working with LAAMPS now
-			if = {
-				limit = { 
-					scope:liege ?= { government_has_flag = government_is_landless_adventurer }
-				}
-				multiply = {
-					value = 0
-					desc = court_position_laamps_free
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#		court_position_halved_salary_trigger = { POS = siege_engineer } #Unop Remove obsolete lines
+			#	}
+			#	multiply = {
+			#		value = 0.5
+			#		desc = court_position_halved_salary
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#	}
+			#}
+			##You're working with LAAMPS now
+			#if = {
+			#	limit = { 
+			#		scope:liege ?= { government_has_flag = government_is_landless_adventurer }
+			#	}
+			#	multiply = {
+			#		value = 0
+			#		desc = court_position_laamps_free
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
 				}
 				add = siege_engineer_total_salary_value
 			}
@@ -989,6 +997,10 @@ siege_engineer_court_position = { ### MPO
 	}
 
 	# Scripted value to determine whether an AI will hire/fire a position or not. Hires over 0, fires under -50. Look in _court_positions.info for more extensive documentation!
+	ai_position_score = { #Unop Added so that AI can hire this position
+		value = 100
+		add = court_position_debt_considerations_value
+	}
 	ai_candidate_score = {
 		value = 100
 		add = scope:base_value
@@ -1003,7 +1015,7 @@ siege_engineer_court_position = { ### MPO
 			add = 1000
 		}
 		
-		add = court_position_debt_considerations_value
+		#add = court_position_debt_considerations_value #Unop Moved above
     }
 }
 
@@ -1207,21 +1219,21 @@ yurtchi_court_position = { ### MPO
 					scope:liege = {
 						has_treasury = no
 					}
-					court_position_inner_circle_salary_trigger = { POS = yurtchi }
-				}
-				multiply = {
-					value = 0.0
-					desc = inner_circle_salary_mod
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
-				}
-			}
-			# Halved with obligation hook
-			else_if = {
-				limit = {
-					court_position_obligation_hook_salary_trigger = {
-						POS = yurtchi
-						LIEGE = scope:liege
-					}
+			#		court_position_inner_circle_salary_trigger = { POS = yurtchi }#Unop Remove obsolete lines
+			#	}
+			#	multiply = {
+			#		value = 0.0
+			#		desc = inner_circle_salary_mod
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#	}
+			#}
+			## Halved with obligation hook
+			#else_if = {
+			#	limit = {
+			#		court_position_obligation_hook_salary_trigger = {
+			#			POS = yurtchi
+			#			LIEGE = scope:liege
+			#		}
 				}
 				add = yurtchi_total_salary_value
 			}
@@ -1233,23 +1245,23 @@ yurtchi_court_position = { ### MPO
 					scope:liege = {
 						has_treasury = yes
 					}
-					court_position_halved_salary_trigger = { POS = yurtchi }
-				}
-				multiply = {
-					value = 0.5
-					desc = court_position_halved_salary
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
-				}
-			}
-			#You're working with LAAMPS now
-			if = {
-				limit = { 
-					scope:liege ?= { government_has_flag = government_is_landless_adventurer }
-				}
-				multiply = {
-					value = 0
-					desc = court_position_laamps_free
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#		court_position_halved_salary_trigger = { POS = yurtchi } #Unop Remove obsolete lines
+			#	}
+			#	multiply = {
+			#		value = 0.5
+			#		desc = court_position_halved_salary
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#	}
+			#}
+			##You're working with LAAMPS now
+			#if = {
+			#	limit = { 
+			#		scope:liege ?= { government_has_flag = government_is_landless_adventurer }
+			#	}
+			#	multiply = {
+			#		value = 0
+			#		desc = court_position_laamps_free
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
 				}
 				add = yurtchi_total_salary_value
 			}
@@ -1316,6 +1328,10 @@ yurtchi_court_position = { ### MPO
 	}
 
 	# Scripted value to determine whether an AI will hire/fire a position or not. Hires over 0, fires under -50. Look in _court_positions.info for more extensive documentation!
+	ai_position_score = { #Unop Added so that AI can hire this position
+		value = 100
+		add = court_position_debt_considerations_value
+	}
 	ai_candidate_score = {
 		value = 100
 		add = scope:base_value
@@ -1330,7 +1346,7 @@ yurtchi_court_position = { ### MPO
 			add = 1000
 		}
 		
-		add = court_position_debt_considerations_value
+		#add = court_position_debt_considerations_value #Unop Moved above
     }
 }
 
@@ -1604,21 +1620,21 @@ cherbi_court_position = { ### MPO
 					scope:liege = {
 						has_treasury = no
 					}
-					court_position_inner_circle_salary_trigger = { POS = cherbi }
-				}
-				multiply = {
-					value = 0.0
-					desc = inner_circle_salary_mod
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
-				}
-			}
-			# Halved with obligation hook
-			else_if = {
-				limit = {
-					court_position_obligation_hook_salary_trigger = {
-						POS = cherbi
-						LIEGE = scope:liege
-					}
+			#		court_position_inner_circle_salary_trigger = { POS = cherbi } #Unop Remove obsolete lines
+			#	}
+			#	multiply = {
+			#		value = 0.0
+			#		desc = inner_circle_salary_mod
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#	}
+			#}
+			## Halved with obligation hook
+			#else_if = {
+			#	limit = {
+			#		court_position_obligation_hook_salary_trigger = {
+			#			POS = cherbi
+			#			LIEGE = scope:liege
+			#		}
 				}
 				add = cherbi_total_salary_value
 			}
@@ -1630,23 +1646,23 @@ cherbi_court_position = { ### MPO
 					scope:liege = {
 						has_treasury = yes
 					}
-					court_position_halved_salary_trigger = { POS = cherbi }
-				}
-				multiply = {
-					value = 0.5
-					desc = court_position_halved_salary
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
-				}
-			}
-			#You're working with LAAMPS now
-			if = {
-				limit = { 
-					scope:liege ?= { government_has_flag = government_is_landless_adventurer }
-				}
-				multiply = {
-					value = 0
-					desc = court_position_laamps_free
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#		court_position_halved_salary_trigger = { POS = cherbi } #Unop Remove obsolete lines
+			#	}
+			#	multiply = {
+			#		value = 0.5
+			#		desc = court_position_halved_salary
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#	}
+			#}
+			##You're working with LAAMPS now
+			#if = {
+			#	limit = { 
+			#		scope:liege ?= { government_has_flag = government_is_landless_adventurer }
+			#	}
+			#	multiply = {
+			#		value = 0
+			#		desc = court_position_laamps_free
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
 				}
 				add = cherbi_total_salary_value
 			}
@@ -1718,6 +1734,10 @@ cherbi_court_position = { ### MPO
 	}
 
 	# Scripted value to determine whether an AI will hire/fire a position or not. Hires over 0, fires under -50. Look in _court_positions.info for more extensive documentation!
+	ai_position_score = { #Unop Added so that AI can hire this position
+		value = 100
+		add = court_position_debt_considerations_value
+	}
 	ai_candidate_score = {
 		value = 100
 		add = scope:base_value
@@ -1732,7 +1752,7 @@ cherbi_court_position = { ### MPO
 			add = 1000
 		}
 		
-		add = court_position_debt_considerations_value
+		#add = court_position_debt_considerations_value #Unop Moved above
     }
 }
 
@@ -1964,21 +1984,21 @@ yeke_jarquchi_court_position = { ### MPO
 					scope:liege = {
 						has_treasury = no
 					}
-					court_position_inner_circle_salary_trigger = { POS = yeke_jarquchi }
-				}
-				multiply = {
-					value = 0.0
-					desc = inner_circle_salary_mod
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
-				}
-			}
-			# Halved with obligation hook
-			else_if = {
-				limit = {
-					court_position_obligation_hook_salary_trigger = {
-						POS = yeke_jarquchi
-						LIEGE = scope:liege
-					}
+			#		court_position_inner_circle_salary_trigger = { POS = yeke_jarquchi } #Unop Remove obsolete lines
+			#	}
+			#	multiply = {
+			#		value = 0.0
+			#		desc = inner_circle_salary_mod
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#	}
+			#}
+			## Halved with obligation hook
+			#else_if = {
+			#	limit = {
+			#		court_position_obligation_hook_salary_trigger = {
+			#			POS = yeke_jarquchi
+			#			LIEGE = scope:liege
+			#		}
 				}
 				add = yeke_jarquchi_total_salary_value
 			}
@@ -1990,23 +2010,23 @@ yeke_jarquchi_court_position = { ### MPO
 					scope:liege = {
 						has_treasury = yes
 					}
-					court_position_halved_salary_trigger = { POS = yeke_jarquchi }
-				}
-				multiply = {
-					value = 0.5
-					desc = court_position_halved_salary
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
-				}
-			}
-			#You're working with LAAMPS now
-			if = {
-				limit = { 
-					scope:liege ?= { government_has_flag = government_is_landless_adventurer }
-				}
-				multiply = {
-					value = 0
-					desc = court_position_laamps_free
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#		court_position_halved_salary_trigger = { POS = yeke_jarquchi } #Unop Remove obsolete lines
+			#	}
+			#	multiply = {
+			#		value = 0.5
+			#		desc = court_position_halved_salary
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#	}
+			#}
+			##You're working with LAAMPS now
+			#if = {
+			#	limit = { 
+			#		scope:liege ?= { government_has_flag = government_is_landless_adventurer }
+			#	}
+			#	multiply = {
+			#		value = 0
+			#		desc = court_position_laamps_free
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
 				}
 				add = yeke_jarquchi_total_salary_value
 			}
@@ -2076,6 +2096,10 @@ yeke_jarquchi_court_position = { ### MPO
 	}
 
 	# Scripted value to determine whether an AI will hire/fire a position or not. Hires over 0, fires under -50. Look in _court_positions.info for more extensive documentation!
+	ai_position_score = { #Unop Added so that AI can hire this position
+		value = 100
+		add = court_position_debt_considerations_value
+	}
 	ai_candidate_score = {
 		value = 100
 		add = scope:base_value
@@ -2090,7 +2114,7 @@ yeke_jarquchi_court_position = { ### MPO
 			add = 1000
 		}
 		
-		add = court_position_debt_considerations_value
+		#add = court_position_debt_considerations_value #Unop Moved above
     }
 }
 
@@ -2301,21 +2325,21 @@ foreign_emissary_court_position = { ### MPO
 					scope:liege = {
 						has_treasury = no
 					}
-					court_position_inner_circle_salary_trigger = { POS = foreign_emissary }
-				}
-				multiply = {
-					value = 0.0
-					desc = inner_circle_salary_mod
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
-				}
-			}
-			# Halved with obligation hook
-			else_if = {
-				limit = {
-					court_position_obligation_hook_salary_trigger = {
-						POS = foreign_emissary
-						LIEGE = scope:liege
-					}
+			#		court_position_inner_circle_salary_trigger = { POS = foreign_emissary } #Unop Remove obsolete lines
+			#	}
+			#	multiply = {
+			#		value = 0.0
+			#		desc = inner_circle_salary_mod
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#	}
+			#}
+			## Halved with obligation hook
+			#else_if = {
+			#	limit = {
+			#		court_position_obligation_hook_salary_trigger = {
+			#			POS = foreign_emissary
+			#			LIEGE = scope:liege
+			#		}
 				}
 				add = foreign_emissary_total_salary_value
 			}
@@ -2327,23 +2351,23 @@ foreign_emissary_court_position = { ### MPO
 					scope:liege = {
 						has_treasury = yes
 					}
-					court_position_halved_salary_trigger = { POS = foreign_emissary }
-				}
-				multiply = {
-					value = 0.5
-					desc = court_position_halved_salary
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
-				}
-			}
-			#You're working with LAAMPS now
-			if = {
-				limit = { 
-					scope:liege ?= { government_has_flag = government_is_landless_adventurer }
-				}
-				multiply = {
-					value = 0
-					desc = court_position_laamps_free
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#		court_position_halved_salary_trigger = { POS = foreign_emissary } #Unop Remove obsolete lines
+			#	}
+			#	multiply = {
+			#		value = 0.5
+			#		desc = court_position_halved_salary
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#	}
+			#}
+			##You're working with LAAMPS now
+			#if = {
+			#	limit = { 
+			#		scope:liege ?= { government_has_flag = government_is_landless_adventurer }
+			#	}
+			#	multiply = {
+			#		value = 0
+			#		desc = court_position_laamps_free
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
 				}
 				add = foreign_emissary_total_salary_value
 			}
@@ -2403,6 +2427,10 @@ foreign_emissary_court_position = { ### MPO
 	}
 
 	# Scripted value to determine whether an AI will hire/fire a position or not. Hires over 0, fires under -50. Look in _court_positions.info for more extensive documentation!
+	ai_position_score = { #Unop Added so that AI can hire this position
+		value = 100
+		add = court_position_debt_considerations_value
+	}
 	ai_candidate_score = {
 		value = 100
 		add = scope:base_value
@@ -2417,7 +2445,7 @@ foreign_emissary_court_position = { ### MPO
 			add = 1000
 		}
 		
-		add = court_position_debt_considerations_value
+		#add = court_position_debt_considerations_value #Unop Moved above
     }
 }
 
@@ -2645,21 +2673,21 @@ keeper_of_the_horses_court_position = { ### MPO
 					scope:liege = {
 						has_treasury = no
 					}
-					court_position_inner_circle_salary_trigger = { POS = keeper_of_the_horses }
-				}
-				multiply = {
-					value = 0.0
-					desc = inner_circle_salary_mod
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
-				}
-			}
-			# Halved with obligation hook
-			else_if = {
-				limit = {
-					court_position_obligation_hook_salary_trigger = {
-						POS = keeper_of_the_horses
-						LIEGE = scope:liege
-					}
+			#		court_position_inner_circle_salary_trigger = { POS = keeper_of_the_horses } #Unop Remove obsolete lines
+			#	}
+			#	multiply = {
+			#		value = 0.0
+			#		desc = inner_circle_salary_mod
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#	}
+			#}
+			## Halved with obligation hook
+			#else_if = {
+			#	limit = {
+			#		court_position_obligation_hook_salary_trigger = {
+			#			POS = keeper_of_the_horses
+			#			LIEGE = scope:liege
+			#		}
 				}
 				add = keeper_of_the_horses_total_salary_value
 			}
@@ -2671,23 +2699,23 @@ keeper_of_the_horses_court_position = { ### MPO
 					scope:liege = {
 						has_treasury = yes
 					}
-					court_position_halved_salary_trigger = { POS = keeper_of_the_horses }
-				}
-				multiply = {
-					value = 0.5
-					desc = court_position_halved_salary
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
-				}
-			}
-			#You're working with LAAMPS now
-			if = {
-				limit = { 
-					scope:liege ?= { government_has_flag = government_is_landless_adventurer }
-				}
-				multiply = {
-					value = 0
-					desc = court_position_laamps_free
-					format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#		court_position_halved_salary_trigger = { POS = keeper_of_the_horses } #Unop Remove obsolete lines
+			#	}
+			#	multiply = {
+			#		value = 0.5
+			#		desc = court_position_halved_salary
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
+			#	}
+			#}
+			##You're working with LAAMPS now
+			#if = {
+			#	limit = { 
+			#		scope:liege ?= { government_has_flag = government_is_landless_adventurer }
+			#	}
+			#	multiply = {
+			#		value = 0
+			#		desc = court_position_laamps_free
+			#		format = "BASE_VALUE_FORMAT_DECIMALS_MINUS_POSITIVE"
 				}
 				add = keeper_of_the_horses_total_salary_value
 			}
@@ -2753,6 +2781,10 @@ keeper_of_the_horses_court_position = { ### MPO
 	}
 
 	# Scripted value to determine whether an AI will hire/fire a position or not. Hires over 0, fires under -50. Look in _court_positions.info for more extensive documentation!
+	ai_position_score = { #Unop Added so that AI can hire this position
+		value = 100
+		add = court_position_debt_considerations_value
+	}
 	ai_candidate_score = {
 		value = 100
 		add = scope:base_value
@@ -2767,6 +2799,6 @@ keeper_of_the_horses_court_position = { ### MPO
 			add = 1000
 		}
 		
-		add = court_position_debt_considerations_value
+		#add = court_position_debt_considerations_value #Unop Moved above
     }
 }
