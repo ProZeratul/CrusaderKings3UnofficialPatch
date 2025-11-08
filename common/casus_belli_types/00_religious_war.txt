@@ -1240,10 +1240,18 @@ major_religious_war = {
 			}
 			custom_description = {
 				text = declared_major_religious_war_flag_tt
-				OR = {
-					has_character_flag = bonus_major_holy_war
-					NOT = { has_character_flag = declared_major_religious_war_flag }
-					NOT = { has_character_flag = unop_pending_major_religious_war_flag } #Unop: New flag for ongoing major religious war
+				trigger_if = {
+					limit = { NOT = { has_character_flag = bonus_major_holy_war } }
+					NOR = {
+						has_character_flag = declared_major_religious_war_flag
+						has_character_flag = unop_pending_major_religious_war_flag #Unop: New flag for ongoing major religious war
+					}
+				}
+				trigger_else = {
+					NAND = {
+						has_character_flag = declared_major_religious_war_flag
+						has_character_flag = unop_pending_major_religious_war_flag #Unop: New flag for ongoing major religious war
+					}
 				}
 			}
 		}
@@ -1463,13 +1471,17 @@ major_religious_war = {
 					OR = {
 						AND = {
 							NOT = { has_character_flag = bonus_major_holy_war }
-							NOT = { has_character_flag = declared_major_religious_war_flag }
-							NOT = { has_character_flag = unop_pending_major_religious_war_flag } #Unop: New flag for ongoing major religious war
+							NOR = {
+								has_character_flag = declared_major_religious_war_flag
+								has_character_flag = unop_pending_major_religious_war_flag #Unop: New flag for ongoing major religious war
+							}
 						}
 						AND = {
 							has_character_flag = bonus_major_holy_war
-							has_character_flag = declared_major_religious_war_flag
-							has_character_flag = unop_pending_major_religious_war_flag #Unop: New flag for ongoing major religious war
+							OR = {
+								has_character_flag = declared_major_religious_war_flag
+								has_character_flag = unop_pending_major_religious_war_flag #Unop: New flag for ongoing major religious war
+							}
 						}
 					}
 				}
