@@ -1294,12 +1294,21 @@ fp1_major_decisions.1011 = {
 			if = {
 				limit = {
 					is_alive = yes
-					can_marry_character_trigger = { CHARACTER = root }
+					#Unop: Original trigger is highly unlikely to ever allow this option, so we replace it.
+					NOR = {
+						is_consort_of = root
+						betrothed ?= { this = root }
+					}
 					has_any_bad_relationship_with_root_trigger = no
 					is_ai = yes
 				}
 				save_scope_as = gyda
 			}
+		}
+		#Unop: Functional of "fp1_major_decisions.1012".
+		set_global_variable = {
+			name = norway_created
+			value = yes
 		}
 	}
 
@@ -1322,8 +1331,36 @@ fp1_major_decisions.1011 = {
 		trigger = {
 			# Gyda must have been valid.
 			exists = scope:gyda
-			# And, for MP, remain valid.
-			can_marry_character_trigger = { CHARACTER = scope:gyda }
+		}
+
+		#Unop: Make space for Gyda.
+		if = {
+			limit = { allowed_more_spouses = no } #Unop: Highly unlikely, but still check it.
+			if = {
+				limit = { is_married = yes }
+				divorce = primary_spouse
+			}
+			else_if = {
+				limit = { is_betrothed = yes }
+				break_betrothal = betrothed
+			}
+		}
+
+		scope:gyda = {
+			if = {
+				limit = { is_married = yes }
+				divorce = primary_spouse
+			}
+			else_if = {
+				limit = { is_concubine = yes }
+				this.concubinist = {
+					remove_concubine = prev
+				}
+			}
+			else_if = {
+				limit = { is_betrothed = yes }
+				break_betrothal = betrothed
+			}
 		}
 
 		# Apply standard haircut effects.

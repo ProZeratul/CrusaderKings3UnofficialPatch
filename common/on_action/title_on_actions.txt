@@ -1701,6 +1701,11 @@ on_title_gain = {
 				limit = {
 					# The title they've acquired is Norway.
 					scope:title = title:k_norway
+					#Unop: Merging some if limiters into the main check.
+					# Norway has been created.
+					scope:transfer_type = flag:created
+					# Norway has not been created previously.
+					NOT = { exists = global_var:norway_created }
 				}
 				# Tanglehair becomes Fairhair.
 				if = {
@@ -1708,10 +1713,6 @@ on_title_gain = {
 						# This character is Harald Fairhair.
 						exists = character:144000
 						this = character:144000
-						# Norway has been created by them.
-						scope:transfer_type = flag:created
-						# Norway has not been created previously.
-						NOT = { exists = global_var:norway_created }
 					}
 					trigger_event = {
 						id = fp1_major_decisions.1011
@@ -1719,11 +1720,7 @@ on_title_gain = {
 					}
 				}
 				# Check Norway's creation status.
-				if = {
-					limit = {
-						scope:transfer_type = flag:created
-						NOT = { exists = global_var:norway_created }
-					}
+				else = { #Unop: Don't fire the rendundant event for Harald.
 					trigger_event = {
 						id = fp1_major_decisions.1012
 						days = 1
