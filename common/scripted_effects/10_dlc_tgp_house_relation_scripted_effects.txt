@@ -23,7 +23,7 @@ increase_house_relation_level_effect = {
 	$HOUSE$ ?= { save_scope_as = other_house }
 	if = {
 		limit = {
-			exists = house
+			exists = scope:house #Unop: Fix missing scope: before house so this was always false !
 			exists = scope:other_house
 			scope:house != scope:other_house
 		}

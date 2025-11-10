@@ -4194,7 +4194,9 @@ tgp_japan_yearly_events.1160 = {
 				location = root.location
 				save_scope_as = new_concubine
 				after_creation = {
-					set_house = scope:feuding_house
+					#set_house = scope:feuding_house #Unop: Disable dynasty generated char
+					set_culture = scope:feuding_house.house_head.culture #Unop: Adjust culture to the giving house instead of the receiving one
+					set_character_faith = scope:feuding_house.house_head.faith #Unop: Adjust faith to the giving house instead of the receiving one
 				}
 			}
 			add_character_flag = {
