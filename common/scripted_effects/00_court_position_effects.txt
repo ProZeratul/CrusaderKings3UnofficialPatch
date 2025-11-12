@@ -2220,6 +2220,15 @@ decide_court_position_to_give_effect = {
 						}
 						$CANDIDATE$ = { add_character_flag = fire_dragon_engineer_flag }
 					}
+					10 = { #Unop: Missing entry
+						trigger = {
+							can_appoint_char_to_court_position = {
+								CHAR = $CANDIDATE$
+								COURT_POS = court_brahmin_court_position
+							}
+						}
+						$CANDIDATE$ = { add_character_flag = court_brahmin_flag }
+					}
 				}
 			}
 			else_if = {
@@ -2752,6 +2761,12 @@ assign_appropriate_court_position_effect = {
 				}
 				$CANDIDATE$ = { add_character_flag = foreign_emissary_flag }
 			}
+			10 = { #Unop: Missing entry
+				trigger = {
+					can_employ_court_position_type = court_brahmin_court_position
+				}
+				$CANDIDATE$ = { add_character_flag = court_brahmin_flag }
+			}
 		}
 	}
 	else_if = {
@@ -3141,6 +3156,20 @@ distribute_determined_court_position_effect = {
 			appoint_court_position = {
 				recipient = $CANDIDATE$
 				court_position = keeper_of_the_horses_court_position
+			}
+		}
+		else_if = {
+			limit = { $CANDIDATE$ = { has_character_flag = khlon_glan_flag } }
+			appoint_court_position = {
+				recipient = $CANDIDATE$
+				court_position = khlon_glan_court_position
+			}
+		}		
+		else_if = { #Unop: Missing entry
+			limit = { $CANDIDATE$ = { has_character_flag = court_brahmin_flag } }
+			appoint_court_position = {
+				recipient = $CANDIDATE$
+				court_position = court_brahmin_court_position
 			}
 		}
 	}
