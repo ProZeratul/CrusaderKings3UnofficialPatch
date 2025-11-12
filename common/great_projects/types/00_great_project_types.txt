@@ -210,14 +210,19 @@ mandala_capital_01 = {
 	invite_interaction = request_great_project_contribution_interaction
 
 	allowed_contributor_filter = {
+		owner = yes
 		tributaries = yes
 		vassals = yes
 	}
 
 	project_contributions = {
 		rite_of_worthiness = {
+
+			allowed_contributor_filter = {
+				owner = yes
+			}
+
 			contributor_is_valid = { 
-				root = scope:owner
 				#Only 2 Capital Temple Complexes per De Jure Kingdom
 				trigger_if = {
 					limit = {
@@ -623,8 +628,10 @@ mandala_capital_01 = {
 				}
 			}
 
+			allowed_contributor_filter = {
+				owner = yes
+			}
 			contributor_is_valid = {
-				this = scope:owner
 				custom_tooltip = {
 					text = tgp_sea_legacy_3_name
 					dynasty = { has_dynasty_perk = tgp_sea_legacy_3 }
@@ -885,15 +892,17 @@ mandala_capital_02 = {
 	}
 
 	allowed_contributor_filter = {
+		owner = yes
 		tributaries = yes
 		vassals = yes
 	}
 
-
 	project_contributions = {
 		rite_of_worthiness = {
+			allowed_contributor_filter = {
+				owner = yes
+			}
 			contributor_is_valid = { 
-				root = scope:owner
 				#Aspect of Creation
 				trigger_if = {
 					limit = {
@@ -1240,8 +1249,10 @@ mandala_capital_02 = {
 				}
 			}
 
+			allowed_contributor_filter = {
+				owner = yes
+			}
 			contributor_is_valid = {
-				this = scope:owner
 				custom_tooltip = {
 					text = tgp_sea_legacy_3_name
 					dynasty = { has_dynasty_perk = tgp_sea_legacy_3 }
@@ -1513,6 +1524,7 @@ mandala_capital_03 = {
 	}
 
 	allowed_contributor_filter = {
+		owner = yes
 		tributaries = yes
 		vassals = yes
 	}
@@ -1521,8 +1533,10 @@ mandala_capital_03 = {
 
 	project_contributions = {
 		rite_of_worthiness = {
+			allowed_contributor_filter = {
+				owner = yes
+			}
 			contributor_is_valid = { 
-				root = scope:owner
 				#Aspect of Creation
 				trigger_if = {
 					limit = {
@@ -1761,8 +1775,10 @@ mandala_capital_03 = {
 				}
 			}
 
+			allowed_contributor_filter = {
+				owner = yes
+			}
 			contributor_is_valid = { 
-				this = scope:owner
 				piety_level >= max_piety_level
 				custom_tooltip = {
 					text = great_project_mandala_capital_has_creation_aspect_tt
@@ -1827,8 +1843,10 @@ mandala_capital_03 = {
 				}
 			}
 
+			allowed_contributor_filter = {
+				owner = yes
+			}
 			contributor_is_valid = {
-				this = scope:owner
 				piety_level >= max_piety_level
 				custom_tooltip = {
 					text = great_project_mandala_capital_has_serenity_aspect_tt
@@ -1893,8 +1911,10 @@ mandala_capital_03 = {
 				}
 			}
 
+			allowed_contributor_filter = {
+				owner = yes
+			}
 			contributor_is_valid = {
-				this = scope:owner
 				piety_level >= max_piety_level
 				custom_tooltip = {
 					text = great_project_mandala_capital_has_destruction_aspect_tt
@@ -1959,8 +1979,10 @@ mandala_capital_03 = {
 				}
 			}
 
+			allowed_contributor_filter = {
+				owner = yes
+			}
 			contributor_is_valid = {
-				this = scope:owner
 				piety_level >= max_piety_level
 				custom_tooltip = {
 					text = great_project_mandala_capital_has_trickery_aspect_tt
@@ -2334,14 +2356,17 @@ mandala_capital_04 = {
 	}
 
 	allowed_contributor_filter = {
+		owner = yes
 		tributaries = yes
 		vassals = yes
 	}
 
 	project_contributions = {
 		rite_of_worthiness = {
+			allowed_contributor_filter = {
+				owner = yes
+			}
 			contributor_is_valid = { 
-				root = scope:owner
 				#Aspect of Creation
 				trigger_if = {
 					limit = {
@@ -2683,8 +2708,10 @@ mandala_capital_04 = {
 				}
 			}
 
+			allowed_contributor_filter = {
+				owner = yes
+			}
 			contributor_is_valid = {
-				this = scope:owner
 				custom_tooltip = {
 					text = tgp_sea_legacy_3_name
 					dynasty = { has_dynasty_perk = tgp_sea_legacy_3 }
@@ -2983,14 +3010,17 @@ mandala_capital_05 = {
 	}
 
 	allowed_contributor_filter = {
+		owner = yes
 		tributaries = yes
 		vassals = yes
 	}
 
 	project_contributions = {
 		rite_of_worthiness = {
+			allowed_contributor_filter = {
+				owner = yes
+			}
 			contributor_is_valid = { 
-				root = scope:owner
 				#Aspect of Creation
 				trigger_if = {
 					limit = {
@@ -3286,8 +3316,10 @@ mandala_capital_05 = {
 				}
 			}
 
+			allowed_contributor_filter = {
+				owner = yes
+			}
 			contributor_is_valid = {
-				this = scope:owner
 				custom_tooltip = {
 					text = tgp_sea_legacy_3_name
 					dynasty = { has_dynasty_perk = tgp_sea_legacy_3 }
@@ -3437,6 +3469,7 @@ construct_great_barracks = {
 	}
 
 	allowed_contributor_filter = {
+		owner = yes
 		vassals = yes
 	}
 
@@ -3748,6 +3781,7 @@ strengthen_capital = {
 	}
 
 	allowed_contributor_filter = {
+		owner = yes
 		vassals = yes
 	}
 
@@ -4146,6 +4180,7 @@ great_wall = { # This is a project to upgrade pre-existing wall sections within 
 	contributor_cooldown = standard_contributor_cooldown_value
 
 	allowed_contributor_filter = {
+		owner = yes
 		vassals = yes
 		tributaries = yes
 	}
@@ -5684,10 +5719,10 @@ great_wall_extend_to_shanhai_pass = {
 		top_liege = {
 			any_realm_county = {
 				OR = {
-					this = title:c_lzj_chengde
-					this = title:c_lzj_chengdexi
-					this = title:c_pinzhou
+					this = title:c_guizhou_2
+					this = title:c_tanzhou_2
 					this = title:c_jizhou_1
+					this = title:c_pinzhou
 				}
 			}
 		}
@@ -5706,7 +5741,7 @@ great_wall_extend_to_shanhai_pass = {
 			}
 		}
 		# All baronies have a holding and the relevant area is completely controlled
-		title:b_huairong.title_province = {
+		title:b_jinshan_2.title_province = {
 			save_temporary_scope_as = great_wall_extend_province
 			custom_tooltip = {
 				text = great_wall_extend_to_top_liege_of_province
@@ -5714,7 +5749,7 @@ great_wall_extend_to_shanhai_pass = {
 				province_owner ?= { top_liege = root.top_liege }
 			}
 		}
-		title:b_changping.title_province = {
+		title:b_yanle.title_province = {
 			save_temporary_scope_as = great_wall_extend_province
 			custom_tooltip = {
 				text = great_wall_extend_to_top_liege_of_province
@@ -5722,7 +5757,7 @@ great_wall_extend_to_shanhai_pass = {
 				province_owner ?= { top_liege = root.top_liege }
 			}
 		}
-		title:b_ji.title_province = {
+		title:b_zunhua.title_province = {
 			save_temporary_scope_as = great_wall_extend_province
 			custom_tooltip = {
 				text = great_wall_extend_to_top_liege_of_province
@@ -5730,7 +5765,23 @@ great_wall_extend_to_shanhai_pass = {
 				province_owner ?= { top_liege = root.top_liege }
 			}
 		}
-		title:b_lu.title_province = {
+		title:b_yuyang.title_province = {
+			save_temporary_scope_as = great_wall_extend_province
+			custom_tooltip = {
+				text = great_wall_extend_to_top_liege_of_province
+				has_holding = yes
+				province_owner ?= { top_liege = root.top_liege }
+			}
+		}
+		title:b_shicheng_2.title_province = {
+			save_temporary_scope_as = great_wall_extend_province
+			custom_tooltip = {
+				text = great_wall_extend_to_top_liege_of_province
+				has_holding = yes
+				province_owner ?= { top_liege = root.top_liege }
+			}
+		}
+		title:b_anxi_2.title_province = {
 			save_temporary_scope_as = great_wall_extend_province
 			custom_tooltip = {
 				text = great_wall_extend_to_top_liege_of_province
@@ -5749,16 +5800,22 @@ great_wall_extend_to_shanhai_pass = {
 	}
 
 	is_valid = {
-		title:b_huairong.title_province = {
+		title:b_jinshan_2.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
-		title:b_changping.title_province = {
+		title:b_yanle.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
-		title:b_ji.title_province = {
+		title:b_zunhua.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
-		title:b_lu.title_province = {
+		title:b_yuyang.title_province = {
+			province_owner ?= { top_liege = scope:owner.top_liege }
+		}
+		title:b_shicheng_2.title_province = {
+			province_owner ?= { top_liege = scope:owner.top_liege }
+		}
+		title:b_anxi_2.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
 		title:b_lulong.title_province = {
@@ -5778,6 +5835,7 @@ great_wall_extend_to_shanhai_pass = {
 	contributor_cooldown = 0
 
 	allowed_contributor_filter = {
+		owner = yes
 		vassals = yes
 		tributaries = yes
 	}
@@ -5787,10 +5845,19 @@ great_wall_extend_to_shanhai_pass = {
 		custom_tooltip = {
 			text = add_great_wall_in_shanhai_desc
 			
-			title:b_huairong.title_province = { add_great_building = the_great_wall_04 }
-			title:b_changping.title_province = { add_great_building = the_great_wall_04 }
-			title:b_ji.title_province = { add_great_building = the_great_wall_04 }
-			title:b_lu.title_province = { add_great_building = the_great_wall_04 }
+			title:b_jinshan_2.title_province = { add_great_building = the_great_wall_04 }
+			title:b_yanle.title_province = { add_great_building = the_great_wall_04 }
+			title:b_zunhua.title_province = { add_great_building = the_great_wall_04 }
+			title:b_yuyang.title_province = { add_great_building = the_great_wall_04 }
+			title:b_shicheng_2.title_province = { add_great_building = the_great_wall_04 }
+			if = {
+				limit = {
+					title:b_anxi_2.title_province = {
+						has_great_building = no
+					}
+				}
+				title:b_anxi_2.title_province = { add_great_building = the_great_wall_04 }
+			}
 			title:b_lulong.title_province = { add_great_building = the_great_wall_shanhai_pass }
 		}
 		# Mark this section as complete
@@ -6169,16 +6236,17 @@ great_wall_extend_to_liaodong = {
 		top_liege = {
 			any_realm_county = {
 				OR = {
-					this = title:c_jizhou_1
-					this = title:c_lzj_chengde
-					this = title:c_LIAO_dading
-					this = title:c_woye
+					this = title:c_pinzhou
+					this = title:c_lnj_liaoxi
+					this = title:c_lnj_liaoxibei
 					this = title:c_LIAO_chaoyang
+					this = title:c_woye
 					this = title:c_LIAO_liaozhou
+					this = title:c_LIAO_wuzhou
 					this = title:c_LIAO_yinzhou
-					this = title:c_LIAO_shenyang
 					this = title:c_LIAO_guidezhou
 					this = title:c_LIAO_diezhou
+					this = title:c_uiju
 				}
 			}
 		}
@@ -6197,7 +6265,7 @@ great_wall_extend_to_liaodong = {
 			}
 		}
 		# All baronies have a holding and the relevant area is completely controlled
-		title:b_yuyang.title_province = {
+		title:b_anxi_2.title_province = {
 			save_temporary_scope_as = great_wall_extend_province
 			custom_tooltip = {
 				text = great_wall_extend_to_top_liege_of_province
@@ -6205,7 +6273,7 @@ great_wall_extend_to_liaodong = {
 				province_owner ?= { top_liege = root.top_liege }
 			}
 		}
-		title:b_zunhua.title_province = {
+		title:b_cirlzj_longtan.title_province = {
 			save_temporary_scope_as = great_wall_extend_province
 			custom_tooltip = {
 				text = great_wall_extend_to_top_liege_of_province
@@ -6213,7 +6281,7 @@ great_wall_extend_to_liaodong = {
 				province_owner ?= { top_liege = root.top_liege }
 			}
 		}
-		title:b_cirlzj_qinglonghe.title_province = {
+		title:b_cirlzj_yuhejing.title_province = {
 			save_temporary_scope_as = great_wall_extend_province
 			custom_tooltip = {
 				text = great_wall_extend_to_top_liege_of_province
@@ -6221,7 +6289,7 @@ great_wall_extend_to_liaodong = {
 				province_owner ?= { top_liege = root.top_liege }
 			}
 		}
-		title:b_cirlzj_luexiating.title_province = {
+		title:b_Liao_Liping.title_province = {
 			save_temporary_scope_as = great_wall_extend_province
 			custom_tooltip = {
 				text = great_wall_extend_to_top_liege_of_province
@@ -6229,23 +6297,7 @@ great_wall_extend_to_liaodong = {
 				province_owner ?= { top_liege = root.top_liege }
 			}
 		}
-		title:b_Liao_Dading.title_province = {
-			save_temporary_scope_as = great_wall_extend_province
-			custom_tooltip = {
-				text = great_wall_extend_to_top_liege_of_province
-				has_holding = yes
-				province_owner ?= { top_liege = root.top_liege }
-			}
-		}
-		title:b_Liao_Enzhou.title_province = {
-			save_temporary_scope_as = great_wall_extend_province
-			custom_tooltip = {
-				text = great_wall_extend_to_top_liege_of_province
-				has_holding = yes
-				province_owner ?= { top_liege = root.top_liege }
-			}
-		}
-		title:b_Liao_Jianzhou.title_province = {
+		title:b_Liao_Chaoyang.title_province = {
 			save_temporary_scope_as = great_wall_extend_province
 			custom_tooltip = {
 				text = great_wall_extend_to_top_liege_of_province
@@ -6261,7 +6313,7 @@ great_wall_extend_to_liaodong = {
 				province_owner ?= { top_liege = root.top_liege }
 			}
 		}
-		title:b_Liao_Chuanzhou.title_province = {
+		title:b_Liao_Chengzhou.title_province = {
 			save_temporary_scope_as = great_wall_extend_province
 			custom_tooltip = {
 				text = great_wall_extend_to_top_liege_of_province
@@ -6277,7 +6329,7 @@ great_wall_extend_to_liaodong = {
 				province_owner ?= { top_liege = root.top_liege }
 			}
 		}
-		title:b_Liao_Liaozhou.title_province = {
+		title:b_Liao_Weizhou2.title_province = {
 			save_temporary_scope_as = great_wall_extend_province
 			custom_tooltip = {
 				text = great_wall_extend_to_top_liege_of_province
@@ -6285,7 +6337,7 @@ great_wall_extend_to_liaodong = {
 				province_owner ?= { top_liege = root.top_liege }
 			}
 		}
-		title:b_Liao_Guangzhou.title_province = {
+		title:b_Liao_Yuanzhou.title_province = {
 			save_temporary_scope_as = great_wall_extend_province
 			custom_tooltip = {
 				text = great_wall_extend_to_top_liege_of_province
@@ -6293,7 +6345,7 @@ great_wall_extend_to_liaodong = {
 				province_owner ?= { top_liege = root.top_liege }
 			}
 		}
-		title:b_Liao_Tangzhou.title_province = {
+		title:b_Liao_Qizhou.title_province = {
 			save_temporary_scope_as = great_wall_extend_province
 			custom_tooltip = {
 				text = great_wall_extend_to_top_liege_of_province
@@ -6301,7 +6353,7 @@ great_wall_extend_to_liaodong = {
 				province_owner ?= { top_liege = root.top_liege }
 			}
 		}
-		title:b_Liao_Haizhou.title_province = {
+		title:b_FIC_Liao_Huangcaocun.title_province = {
 			save_temporary_scope_as = great_wall_extend_province
 			custom_tooltip = {
 				text = great_wall_extend_to_top_liege_of_province
@@ -6309,7 +6361,7 @@ great_wall_extend_to_liaodong = {
 				province_owner ?= { top_liege = root.top_liege }
 			}
 		}
-		title:b_Liao_Tongzhou.title_province = {
+		title:b_Liao_Fengcheng.title_province = {
 			save_temporary_scope_as = great_wall_extend_province
 			custom_tooltip = {
 				text = great_wall_extend_to_top_liege_of_province
@@ -6317,7 +6369,23 @@ great_wall_extend_to_liaodong = {
 				province_owner ?= { top_liege = root.top_liege }
 			}
 		}
-		title:b_Liao_Diezhou.title_province = {
+		title:b_Liao_Dandong.title_province = {
+			save_temporary_scope_as = great_wall_extend_province
+			custom_tooltip = {
+				text = great_wall_extend_to_top_liege_of_province
+				has_holding = yes
+				province_owner ?= { top_liege = root.top_liege }
+			}
+		}
+		title:b_Goryeo_Bukgye_Uiju.title_province = {
+			save_temporary_scope_as = great_wall_extend_province
+			custom_tooltip = {
+				text = great_wall_extend_to_top_liege_of_province
+				has_holding = yes
+				province_owner ?= { top_liege = root.top_liege }
+			}
+		}
+		title:b_Goryeo_Bukgye_Cheolju.title_province = {
 			save_temporary_scope_as = great_wall_extend_province
 			custom_tooltip = {
 				text = great_wall_extend_to_top_liege_of_province
@@ -6328,52 +6396,52 @@ great_wall_extend_to_liaodong = {
 	}
 
 	is_valid = {
-		title:b_yuyang.title_province = {
+		title:b_anxi_2.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
-		title:b_zunhua.title_province = {
+		title:b_cirlzj_longtan.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
-		title:b_cirlzj_qinglonghe.title_province = {
+		title:b_cirlzj_yuhejing.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
-		title:b_cirlzj_luexiating.title_province = {
+		title:b_Liao_Liping.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
-		title:b_Liao_Dading.title_province = {
-			province_owner ?= { top_liege = scope:owner.top_liege }
-		}
-		title:b_Liao_Enzhou.title_province = {
-			province_owner ?= { top_liege = scope:owner.top_liege }
-		}
-		title:b_Liao_Jianzhou.title_province = {
+		title:b_Liao_Chaoyang.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
 		title:b_Liao_Wuanzhou.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
-		title:b_Liao_Chuanzhou.title_province = {
+		title:b_Liao_Chengzhou.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
 		title:b_Liao_Suizhou.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
-		title:b_Liao_Liaozhou.title_province = {
+		title:b_Liao_Weizhou2.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
-		title:b_Liao_Guangzhou.title_province = {
+		title:b_Liao_Yuanzhou.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
-		title:b_Liao_Tangzhou.title_province = {
+		title:b_Liao_Qizhou.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
-		title:b_Liao_Haizhou.title_province = {
+		title:b_FIC_Liao_Huangcaocun.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
-		title:b_Liao_Tongzhou.title_province = {
+		title:b_Liao_Fengcheng.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
-		title:b_Liao_Diezhou.title_province = {
+		title:b_Liao_Dandong.title_province = {
+			province_owner ?= { top_liege = scope:owner.top_liege }
+		}
+		title:b_Goryeo_Bukgye_Uiju.title_province = {
+			province_owner ?= { top_liege = scope:owner.top_liege }
+		}
+		title:b_Goryeo_Bukgye_Cheolju.title_province = {
 			province_owner ?= { top_liege = scope:owner.top_liege }
 		}
 	}
@@ -6390,6 +6458,7 @@ great_wall_extend_to_liaodong = {
 	contributor_cooldown = 0
 
 	allowed_contributor_filter = {
+		owner = yes
 		vassals = yes
 		tributaries = yes
 	}
@@ -6399,22 +6468,29 @@ great_wall_extend_to_liaodong = {
 		custom_tooltip = {
 			text = add_great_wall_in_liaodong_desc
 			
-			title:b_yuyang.title_province = { add_great_building = the_great_wall_04 }
-			title:b_zunhua.title_province = { add_great_building = the_great_wall_04 }
-			title:b_cirlzj_qinglonghe.title_province = { add_great_building = the_great_wall_04 }
-			title:b_cirlzj_luexiating.title_province = { add_great_building = the_great_wall_04 }
-			title:b_Liao_Dading.title_province = { add_great_building = the_great_wall_04 }
-			title:b_Liao_Enzhou.title_province = { add_great_building = the_great_wall_04 }
-			title:b_Liao_Jianzhou.title_province = { add_great_building = the_great_wall_04 }
+			if = {
+				limit = {
+					title:b_anxi_2.title_province = {
+						has_great_building = no
+					}
+				}
+				title:b_anxi_2.title_province = { add_great_building = the_great_wall_04 }
+			}
+			title:b_cirlzj_longtan.title_province = { add_great_building = the_great_wall_04 }
+			title:b_cirlzj_yuhejing.title_province = { add_great_building = the_great_wall_04 }
+			title:b_Liao_Liping.title_province = { add_great_building = the_great_wall_04 }
+			title:b_Liao_Chaoyang.title_province = { add_great_building = the_great_wall_04 }
 			title:b_Liao_Wuanzhou.title_province = { add_great_building = the_great_wall_04 }
-			title:b_Liao_Chuanzhou.title_province = { add_great_building = the_great_wall_04 }
+			title:b_Liao_Chengzhou.title_province = { add_great_building = the_great_wall_04 }
 			title:b_Liao_Suizhou.title_province = { add_great_building = the_great_wall_04 }
-			title:b_Liao_Liaozhou.title_province = { add_great_building = the_great_wall_04 }
-			title:b_Liao_Guangzhou.title_province = { add_great_building = the_great_wall_04 }
-			title:b_Liao_Tangzhou.title_province = { add_great_building = the_great_wall_04 }
-			title:b_Liao_Haizhou.title_province = { add_great_building = the_great_wall_04 }
-			title:b_Liao_Tongzhou.title_province = { add_great_building = the_great_wall_04 }
-			title:b_Liao_Diezhou.title_province = { add_great_building = the_great_wall_liaodong }
+			title:b_Liao_Weizhou2.title_province = { add_great_building = the_great_wall_04 }
+			title:b_Liao_Yuanzhou.title_province = { add_great_building = the_great_wall_04 }
+			title:b_Liao_Qizhou.title_province = { add_great_building = the_great_wall_04 }
+			title:b_FIC_Liao_Huangcaocun.title_province = { add_great_building = the_great_wall_04 }
+			title:b_Liao_Fengcheng.title_province = { add_great_building = the_great_wall_04 }
+			title:b_Liao_Dandong.title_province = { add_great_building = the_great_wall_04 }
+			title:b_Goryeo_Bukgye_Uiju.title_province = { add_great_building = the_great_wall_liaodong }
+			title:b_Goryeo_Bukgye_Cheolju.title_province = { add_great_building = the_great_wall_04 }
 		}
 		# Mark this section as complete
 		set_global_variable = {
@@ -6709,6 +6785,7 @@ grand_canals = {
 	contributor_cooldown = standard_contributor_cooldown_value
 
 	allowed_contributor_filter = {
+		owner = yes
 		vassals = yes
 		tributaries = yes
 	}
