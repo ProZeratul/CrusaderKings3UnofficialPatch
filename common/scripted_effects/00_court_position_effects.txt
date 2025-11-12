@@ -2456,6 +2456,15 @@ decide_court_position_to_give_effect = {
 						}
 						$CANDIDATE$ = { add_character_flag = seneschal_flag }
 					}
+					10 = {
+						trigger = {
+							can_appoint_char_to_court_position = {
+								CHAR = $CANDIDATE$
+								COURT_POS = khlon_glan_court_position
+							}
+						}
+						$CANDIDATE$ = { add_character_flag = khlon_glan_flag }
+					}
 				}
 			}
 			else_if = {
@@ -2790,6 +2799,12 @@ assign_appropriate_court_position_effect = {
 					can_employ_court_position_type = yurtchi_court_position
 				}
 				$CANDIDATE$ = { add_character_flag = yurtchi_flag }
+			}
+			10 = {
+				trigger = {
+					can_employ_court_position_type = khlon_glan_court_position
+				}
+				$CANDIDATE$ = { add_character_flag = khlon_glan_flag }
 			}
 		}
 	}
