@@ -2753,7 +2753,10 @@ ep3_emperor_yearly.2110 = {
 	cooldown = { years = 15 }
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		OR = {
+			has_ep3_dlc_trigger = yes
+			has_tgp_dlc_trigger = yes
+		}
 		government_allows = administrative
 		top_liege = this
 		any_realm_county = {
@@ -4280,7 +4283,11 @@ ep3_emperor_yearly.2170 = {
 	cooldown = { years = 25 }
 
 	trigger = {
-		valid_for_byz_governor_content_trigger = yes
+		OR ={
+			valid_for_byz_governor_content_trigger = yes
+			has_tgp_dlc_trigger = yes
+		}
+		
 		any_sub_realm_county = {
 			OR = {
 				any_county_province = { has_building = fairy_chimneys }
@@ -4980,14 +4987,28 @@ ep3_emperor_yearly.2190 = {
 ep3_emperor_yearly.2200 = {
 	type = character_event
 	title = ep3_emperor_yearly.2200.t
-	desc = ep3_emperor_yearly.2200.desc
+	
+	desc = {
+		first_valid = {
+			#You have a ceremonial monarch
+			triggered_desc = {
+				trigger = {
+					tgp_realm_has_ceremonial_liege_trigger = yes
+				}
+				desc = ep3_emperor_yearly.2200.desc.c_monarch
+			}
+			#Not ceremonial monarch 
+			desc = ep3_emperor_yearly.2200.desc
+		}
+	}
 	theme = stewardship
-	override_background = { reference = ep3_relaxing_room }
+	override_background = relaxing_room
 	left_portrait = {
 		character = root
 		animation = personality_greedy
 	}
 	lower_right_portrait = scope:liege
+	lower_left_portrait = scope:ceremonial_monarch
 	cooldown = { years = 10 }
 
 	trigger = {
@@ -5018,6 +5039,14 @@ ep3_emperor_yearly.2200 = {
 		liege = { save_scope_as = liege }
 		primary_title = { save_scope_as = governorship }
 		liege.capital_county = { save_scope_as = capital }
+		if = {
+			limit = {
+				tgp_realm_has_ceremonial_liege_trigger = yes
+			}
+			top_liege.primary_title.var:administrative_ui_special_title.holder = {
+				save_scope_as = ceremonial_monarch
+			}	 
+		}
 	}
 
 	# Option A: why not?
@@ -5898,14 +5927,21 @@ scripted_trigger ep3_valid_greek_culture_trigger = {
 }
 
 scripted_trigger ep3_2240_valid_courtier_trigger = {
-	culture = { ep3_valid_greek_culture_trigger = yes }
-	learning >= 10
+	culture = { 
+		OR = {
+			has_graphical_east_asia_culture_group_trigger = yes
+			ep3_valid_greek_culture_trigger = yes 
+		}
+	}
+
 	OR = {
+		knows_language = language_greek
+		learning >= 10
 		has_trait = education_learning_1
 		has_trait = education_learning_2
 		has_trait = education_learning_3
 	}
-	knows_language = language_greek
+	
 	OR = {
 		has_trait = arrogant
 		has_trait = eccentric
@@ -5918,15 +5954,25 @@ ep3_emperor_yearly.2240 = {
 	type = character_event
 	title = ep3_emperor_yearly.2240.t
 	desc = {
-		random_valid = {
-			desc = ep3_emperor_yearly.2240.desc_quote_a
-			desc = ep3_emperor_yearly.2240.desc_quote_b
-			desc = ep3_emperor_yearly.2240.desc_quote_c
+		first_valid = {
 			triggered_desc = {
 				trigger = {
-					scope:the_scholar = { knows_language = language_latin }
+					scope:the_scholar = { 
+						culture = { has_graphical_east_asia_culture_group_trigger = yes }  
+					}
 				}
-				desc = ep3_emperor_yearly.2240.desc_quote_latin
+				desc = ep3_emperor_yearly.2240.desc_quote_confucius
+			}
+			random_valid = {
+				desc = ep3_emperor_yearly.2240.desc_quote_a
+				desc = ep3_emperor_yearly.2240.desc_quote_b
+				desc = ep3_emperor_yearly.2240.desc_quote_c
+				triggered_desc = {
+					trigger = {
+						scope:the_scholar = { knows_language = language_latin }
+					}
+					desc = ep3_emperor_yearly.2240.desc_quote_latin
+				}
 			}
 		}
 		desc = ep3_emperor_yearly.2240.desc_outro
@@ -5944,11 +5990,17 @@ ep3_emperor_yearly.2240 = {
 	cooldown = { years = 25 }
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		OR = {
+			has_ep3_dlc_trigger = yes
+			has_tgp_dlc_trigger = yes
+		}
 		is_landed_or_landless_administrative = yes
 		government_allows = administrative
 		culture = {
-			ep3_valid_greek_culture_trigger = yes
+			OR = {
+				has_graphical_east_asia_culture_group_trigger = yes
+				ep3_valid_greek_culture_trigger = yes
+			}	
 		}	
 		any_courtier_or_guest = {
 			ep3_2240_valid_courtier_trigger = yes

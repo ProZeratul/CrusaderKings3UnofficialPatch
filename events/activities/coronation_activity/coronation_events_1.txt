@@ -128,7 +128,7 @@ coronation_events.1000 = {
 		}
 		if = {
         	limit = {
-        		government_has_flag = government_is_administrative
+        		government_allows = administrative
         		top_liege = scope:activity.activity_host
         	}
         	change_influence = medium_influence_gain
@@ -1751,7 +1751,7 @@ coronation_events.1012 = {
 		}
 		if = {
         	limit = {
-        		government_has_flag = government_is_administrative
+        		government_allows = administrative
         		top_liege = scope:activity.activity_host
         	}
         	change_influence = minor_influence_gain
@@ -1773,7 +1773,7 @@ coronation_events.1012 = {
 
 		if = {
         	limit = {
-        		government_has_flag = government_is_administrative
+        		government_allows = administrative
         		top_liege = scope:activity.activity_host
         	}
         	change_influence = minor_influence_gain
@@ -1879,11 +1879,11 @@ coronation_events.1013 = {
 	trigger = {
 		trigger_if = {
 			limit = {
-				scope:activity = {
+				involved_activity = {
 					has_activity_type = activity_coronation
 				}
 			}
-			scope:activity = {
+			involved_activity = {
 				has_activity_option = {
 					category = ceremony_feast_type
 					option = ceremony_feast_type_austere
@@ -1892,11 +1892,11 @@ coronation_events.1013 = {
 		}
 		trigger_if = {
 			limit = {
-				scope:activity = {
+				involved_activity = {
 					has_activity_type = activity_feast
 				}
 			}
-			scope:activity = {
+			involved_activity = {
 					has_activity_option = {
 					category = feast_option_food
 					option = feast_food_bad
@@ -1906,6 +1906,17 @@ coronation_events.1013 = {
 		# to avoid getting similar accident-adjacent events in succession
 		NOT = {
 			has_character_flag = poor_activity_option_accident
+		}
+		involved_activity = {
+			any_attending_character = {
+				is_ai = yes
+				is_adult = yes
+				NOR = {
+					this = root
+					this = scope:host
+					involved_activity.var:officiator ?= this
+				}
+			}
 		}
 	}
 
@@ -2480,11 +2491,11 @@ coronation_events.1014 = {
 			scope:activity = {
 				activity_special_type_progression_tiny = yes
 				every_attending_character = {
-					limit = { 
-						NOR = { 
-							this = scope:host 
+					limit = {
+						NOR = {
+							this = scope:host
 							this = root
-						} 
+						}
 					}
 					custom = custom.every_attending_character
 					add_opinion = {
@@ -2498,11 +2509,11 @@ coronation_events.1014 = {
 		else = {
 			scope:activity = {
 				every_attending_character = {
-					limit = { 
-						NOR = { 
-							this = scope:host 
+					limit = {
+						NOR = {
+							this = scope:host
 							this = root
-						} 
+						}
 					}
 					custom = custom.every_attending_character
 					add_opinion = {
@@ -2889,7 +2900,7 @@ coronation_events.1016 = {
 					left_icon = root
 					if = {
         				limit = {
-        					government_has_flag = government_is_administrative
+        					government_allows = administrative
         					top_liege = scope:activity.activity_host
         				}
         				change_influence = minor_influence_loss
@@ -3201,7 +3212,7 @@ coronation_events.1017 = {
 			}
 			if = {
         		limit = {
-        			government_has_flag = government_is_administrative
+        			government_allows = administrative
         			top_liege = scope:activity.activity_host
         		}
         		change_influence = medium_influence_loss
@@ -4712,6 +4723,18 @@ coronation_events.1022 = {
 			any_guest_subset = {
 				name = supporter
 				is_ai = yes
+				#Needs enough money to afford silken robes
+				OR = {
+					is_ruler = yes
+					gold >= 100
+				}
+				#Needs appropriate personality
+				NOR = {
+					has_trait = greedy
+					has_trait = temperate
+					has_trait = humble
+					has_trait = peasant_leader
+				}
 				any_memory = {
 					has_memory_category = positive
 					has_memory_participant = root
@@ -4728,6 +4751,18 @@ coronation_events.1022 = {
 			random_guest_subset = {
 				name = supporter
 				limit = {
+					#Needs enough money to afford silken robes
+					OR = {
+						is_ruler = yes
+						gold >= 100
+					}
+					#Needs appropriate personality
+					NOR = {
+						has_trait = greedy
+						has_trait = temperate
+						has_trait = humble
+						has_trait = peasant_leader
+					}
 					any_memory = {
 						has_memory_category = positive
 						has_memory_participant = root
@@ -4774,7 +4809,7 @@ coronation_events.1022 = {
 		else = {
 			if = {
         		limit = {
-        			government_has_flag = government_is_administrative
+        			government_allows = administrative
         			top_liege = scope:activity.activity_host
         		}
         		change_influence = medium_influence_gain
@@ -5104,7 +5139,7 @@ coronation_events.1023 = {
 		scope:detractor = {
 			if = {
 				limit = {
-					government_has_flag = government_is_administrative
+					government_allows = administrative
 					top_liege = scope:activity.activity_host
 				}
 				change_influence = medium_influence_loss
@@ -5228,7 +5263,7 @@ coronation_events.1023 = {
 
 		if = {
 			limit = {
-				government_has_flag = government_is_administrative
+				government_allows = administrative
 				top_liege = scope:activity.activity_host
 			}
 			change_influence = minor_influence_gain
@@ -5516,7 +5551,7 @@ coronation_events.1024 = {
 				}
 				if = {
 					limit = {
-						government_has_flag = government_is_administrative
+						government_allows = administrative
 						top_liege = scope:activity.activity_host
 					}
 					change_influence = medium_influence_gain
@@ -5914,7 +5949,7 @@ coronation_events.1025 = {
         }
         if = {
 			limit = {
-				government_has_flag = government_is_administrative
+				government_allows = administrative
 				top_liege = scope:activity.activity_host
 			}
 			change_influence = minor_influence_gain
@@ -6354,7 +6389,7 @@ coronation_events.1026 = {
 
         if = {
 			limit = {
-				government_has_flag = government_is_administrative
+				government_allows = administrative
 				top_liege = scope:activity.activity_host
 			}
 			change_influence = minor_influence_gain
@@ -6477,7 +6512,7 @@ coronation_events.1026 = {
         }
         if = {
 			limit = {
-				government_has_flag = government_is_administrative
+				government_allows = administrative
 				top_liege = scope:activity.activity_host
 			}
 			change_influence = minor_influence_gain
@@ -6799,7 +6834,7 @@ coronation_events.1027 = {
        	scope:highlighted_guest = {
        		if = {
 				limit = {
-					government_has_flag = government_is_administrative
+					government_allows = administrative
 					top_liege = scope:activity.activity_host
 				}
 				change_influence = minor_influence_gain
@@ -6846,7 +6881,7 @@ coronation_events.1027 = {
 
         if = {
 			limit = {
-				government_has_flag = government_is_administrative
+				government_allows = administrative
 				top_liege = scope:activity.activity_host
 			}
 			change_influence = minor_influence_gain
@@ -7637,7 +7672,7 @@ coronation_events.1028 = {
         name = coronation_events.1028.d # Evade the question entirely
         if = {
         	limit = {
-        		government_has_flag = government_is_administrative
+        		government_allows = administrative
         		top_liege = scope:activity.activity_host
         	}
         	change_influence = minor_influence_gain
@@ -8816,13 +8851,12 @@ coronation_events.1032 = {
 			every_attending_character = {
 	            limit = {
 	                is_ai = yes
-	                OR = {
-	                    has_trait = compassionate
-	                    has_trait = calm
-	                    is_in_guest_subset = { name = supporter }
+	                is_in_guest_subset = { name = supporter }
+	                NOT = {
+	                	this = root
 	                }
 	            }
-	            custom = every_compassionate_calm_supporter
+	            custom = every_supporter_activity
 	            add_opinion = {
 	                target = root
 	                modifier = amused_opinion
@@ -8830,7 +8864,7 @@ coronation_events.1032 = {
 	            }
 	        }
 		}
-		remove_short_term_gold = minor_gold_value
+		remove_short_term_gold = medium_gold_value
 
         stress_impact = { compassionate = minor_stress_impact_loss }
 
@@ -9128,7 +9162,7 @@ coronation_events.1033 = {
         add_legitimacy = minor_legitimacy_gain
         if = {
         	limit = {
-        		government_has_flag = government_is_administrative
+        		government_allows = administrative
         		top_liege = scope:activity.activity_host
         	}
         	change_influence = minor_influence_gain
@@ -9375,7 +9409,7 @@ coronation_events.1034 = {
         add_diplomacy_lifestyle_xp = minor_lifestyle_xp
 
         add_opinion = {
-            target = scope:root
+            target = scope:host
             modifier = respect_opinion
             opinion = 10
         }

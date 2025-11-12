@@ -2356,7 +2356,7 @@ gunpowder_attribute = {
 					add = @disinterested_culture_for_maa_type_value
 				}
 				## Era.
-				add = accolade_weighted_up_in_earlier_eras_value
+				add = accolade_weighted_up_in_later_eras_value
 				# AI values.
 				add = {
 					value = ai_rationality
@@ -2368,6 +2368,14 @@ gunpowder_attribute = {
 				}
 				# Finally, weight for opinion.
 				multiply = accolade_opinion_multiplier_value
+			}
+			if = {
+				limit = {
+					NOT = {
+						culture = { has_cultural_parameter = unlock_powder_magazines }
+					}
+				}
+				multiply = 0
 			}
 		}
 	}
@@ -2401,7 +2409,7 @@ gunpowder_attribute = {
 				gunpowder_toughness_mult = @accolade_maa_toughness_2 
 
 			}
-			men_at_arms = { accolade_maa_archers }
+			men_at_arms = { accolade_maa_handgunners }
 		}
 		1000 = {
 			liege_modifier = { 
@@ -2422,7 +2430,7 @@ gunpowder_attribute = {
 				gunpowder_damage_mult = @accolade_maa_damage_6
 				gunpowder_toughness_mult = @accolade_maa_toughness_3
 			}
-			men_at_arms = { accolade_maa_archers }
+			men_at_arms = { accolade_maa_handgunners }
 		}
 		2100 = {
 			liege_modifier = { 

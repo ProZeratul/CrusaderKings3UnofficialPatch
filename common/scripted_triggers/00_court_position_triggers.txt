@@ -127,6 +127,7 @@ has_any_court_position_flag_trigger = {
 		has_character_flag = khlon_glan_flag #Unop: Missing entry
 		has_character_flag = guru_flag #Unop: Missing entry
 		has_character_flag = court_brahmin_flag #Unop: Missing entry
+		#has_character_flag = minister_bureaucrat_flag #Unop: Missing entry but since it's a special one that we do not want to see in events, commented it out as reminder
 	}
 }
 
@@ -1988,7 +1989,7 @@ court_position_employee_shown_trigger = {
 }
 
 can_employ_court_eunuchs_trigger = {
-	$CHAR$ = { 
+	$CHAR$ ?= { 
 		custom_tooltip = {
 			text = can_appoint_chief_eunuch_name_tt
 			culture = { # Culture that has eunuchs
