@@ -2124,6 +2124,41 @@ template Event_Window_Debug_EventTools
 						tooltip = "[Concatenate( Concatenate( 'override_effect_2d = { reference = ', GetString_CUTF8String( ToolPropertySearchList.GetSelectedText ) ), ' }' )]"
 					}
 				}
+
+				text_single = {
+					layoutpolicy_horizontal = expanding
+					raw_text = "widget - vfx"
+					min_width = 100
+				}
+				hbox = {
+					layoutpolicy_horizontal = expanding
+
+					datacontext = "[EventWindowData.AccessVfxWidgetSearchList]"
+
+					editor_toolbar_button = {
+						raw_text = "<"
+						onclick = "[ToolPropertySearchList.SelectPrevEntry]"
+						tooltipwidget = { widget = {} }
+					}
+					editor_toolbar_button = {
+						layoutpolicy_horizontal = expanding
+						text = "[ToolPropertySearchList.GetSelectedText]"
+
+						onclick = "[ToolPropertySearchList.OpenSearchList]"
+						elide = middle
+
+						tooltip = "[ToolPropertySearchList.GetSelectedText]"
+					}
+					editor_toolbar_button = {
+						raw_text = ">"
+						onclick = "[ToolPropertySearchList.SelectNextEntry]"
+						tooltipwidget = { widget = {} }
+					}
+					button_copy = {
+						onclick = "[EventWindowData.CopyStringToClipboard( Concatenate( Concatenate( 'widget = { gui = event_window_widget_vfx_', GetString_CUTF8String( ToolPropertySearchList.GetSelectedText ) ), ' container = foreground_shader_vfx_container }' ) )]"
+						tooltip = "[Concatenate( Concatenate( 'widget = { gui = event_window_widget_vfx_', GetString_CUTF8String( ToolPropertySearchList.GetSelectedText ) ), ' container = foreground_shader_vfx_container }' )]"
+					}
+				}
 			}
 
 			expand = {}

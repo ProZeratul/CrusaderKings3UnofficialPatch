@@ -264,7 +264,7 @@ court_physician_court_position = {
 			}
 		}
 		if = {
-			limit = { exists = employer.domicile } #Unop: Do not check on a specific parameter as it will vanish after the upgrade
+			limit = { employer.domicile ?= { has_domicile_building_or_higher = japanese_medicine_house_01 } }
 			add = {
 				value = 0
 				if = {
@@ -2475,7 +2475,16 @@ court_tutor_court_position = {
 			}
 		}
 		if = {
-			limit = { exists = employer.domicile } #Unop: Do not check on a specific parameter as it will vanish after the upgrade
+			limit = {
+				employer.domicile ?= {
+					OR = {
+						has_domicile_building_or_higher = japanese_schoolhouse_01
+						has_domicile_building_or_higher = east_asian_estate_library_01
+						has_domicile_building_or_higher = east_asian_estate_history_school_01 #Unop: Add this building too
+						has_domicile_building_or_higher = library_education_04 #Unop: Add this building too
+					}
+				}
+			}
 			add = {
 				value = 0
 				if = {

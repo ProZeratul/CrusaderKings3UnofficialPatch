@@ -158,10 +158,14 @@ marshal_task.0301 = {
 
 	option = {
 		name = marshal_task.0301.b
-		scope:commander = {
-			hidden_effect = { select_and_move_to_pool_effect = yes }
+		show_as_tooltip = {
+			remove_courtier_or_guest = scope:commander
 		}
-		show_as_tooltip = { remove_courtier_or_guest = scope:commander } #Unop: So the tooltip is clean & you are not flooded with errors
+		hidden_effect = {
+			scope:commander = {
+				select_and_move_to_pool_effect = yes
+			}
+		}
 		ai_chance = {
 			base = 10
 		}
