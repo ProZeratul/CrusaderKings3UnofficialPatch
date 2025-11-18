@@ -256,6 +256,8 @@ migration_events.0001 = {
 		name = migration_events.0001.aaa
 		trigger = {
 			has_variable = migrating_into_tributary_var
+			scope:overlord ?= { is_alive = yes } #Unop: Ensure the overlord is still alive (or is actually defined)
+			can_be_tributary_of = var:migrating_into_tributary_var #Unop: Ensure we can still be tributary of the overlord
 		}
 		start_tributary_interaction_effect = {
 			TRIBUTARY = root
@@ -279,6 +281,7 @@ migration_events.0001 = {
 		name = migration_events.0001.aa
 		trigger = {
 			has_variable = migrating_into_tributary_var
+			scope:overlord ?= { is_alive = yes } #Unop: Ensure the overlord is still alive (or is actually defined)
 		}
 		scope:overlord = {
 			custom_tooltip = {
@@ -354,6 +357,21 @@ migration_events.0001 = {
 			NOR = {
 				var:astrologer_desired_area ?= root.primary_title
 				has_variable = migrating_into_tributary_var
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+
+	option = { #Unop: In case the overlord is dead we still need an option
+		name = migration_events.0001.b
+		trigger = {
+			NOT = { var:astrologer_desired_area ?= root.primary_title }
+			has_variable = migrating_into_tributary_var
+			OR = {
+				NOT = { can_be_tributary_of = var:migrating_into_tributary_var } #Unop: Ensure we can still be tributary of the overlord
+				scope:overlord ?= { is_alive = no }
 			}
 		}
 		ai_chance = {

@@ -80,6 +80,25 @@ feast_events_flavor.0001 = {
 		involved_activity = {
 			any_attending_character = { 
 				feast_events_flavor_0001_appropriate_guest = yes
+				#Unop: Sync with immediate
+				save_temporary_scope_as == temp_guest
+				dynasty ?= {
+					any_dynasty_member = {
+						is_ai = yes
+						NOT = { this = scope:temp_guest }
+						NOT = { is_spouse_of = scope:temp_guest } # We exclude their spouses to avoid weirdness
+						OR = {
+							AND = {
+								has_any_good_relationship_with_character_trigger = { CHARACTER = root }
+								NOT = { has_any_bad_relationship_with_character_trigger = { CHARACTER = root } }
+							}
+							AND = {
+								has_any_bad_relationship_with_character_trigger = { CHARACTER = root }
+								NOT = { has_any_good_relationship_with_character_trigger = { CHARACTER = root } }
+							}
+						}
+					}
+				}
 			}
 		}
 	}

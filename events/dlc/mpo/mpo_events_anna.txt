@@ -765,9 +765,19 @@ mpo_events_anna.0020 = {
 					title = mpo_events_anna.0020.b.toast.good
 					left_icon = root
 
-					add_hook = {
-						target = liege
-						type = favor_hook
+					if = { #Unop: Ensure we do not already have this kind of hook
+						limit = {
+							NOT = {
+								has_hook_of_type = {
+									type = favor_hook
+									target = liege
+								}
+							}
+						}
+						add_hook = {
+							target = liege
+							type = favor_hook
+						}
 					}
 				}
 

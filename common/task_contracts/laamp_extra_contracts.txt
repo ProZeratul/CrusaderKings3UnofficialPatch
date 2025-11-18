@@ -3781,8 +3781,12 @@ laamp_join_faction_contract = {
 				}
 			}
 		}
-		task_contract_taker = {
-			remove_variable = task_contract_faction
+		if = { #Unop: Prevent error in logs if the taker died in between
+			limit = { task_contract_taker = { is_alive = yes } }
+
+			task_contract_taker = {
+				remove_variable = task_contract_faction
+			}
 		}
 	}
 

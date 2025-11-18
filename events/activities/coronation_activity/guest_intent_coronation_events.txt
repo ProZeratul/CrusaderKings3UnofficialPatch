@@ -3085,6 +3085,7 @@ guest_intent_coronation_events.0100 = {
 					add_unpressed_claim = scope:title_to_give
 					every_in_list = {
 						list = petitioner_list
+						limit = { highest_held_title_tier > tier_barony } #Unop: To avoid the log error: "*_neighboring_realm_same_rank_owner used on character 'XYZ', who is not county-level or above"
 						if = {
 							limit = {
 								any_neighboring_realm_same_rank_owner = {
