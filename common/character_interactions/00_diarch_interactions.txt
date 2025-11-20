@@ -9633,7 +9633,7 @@ appoint_junior_emperor_interaction = {
 		if = {
 			limit = {
 				scope:secondary_recipient = { is_ruler = no }
-				scope:secondary_recipient = { NOT = { is_in_the_same_court_as_or_guest = scope:actor } } #Unop: Prevent "Trying to put character in the court they're already in"
+				scope:secondary_recipient = { NOT = { is_in_the_same_court = scope:actor } }
 			}
 			scope:actor = { add_courtier = scope:secondary_recipient }
 		}
@@ -9881,7 +9881,7 @@ appoint_co_emperor_interaction = {
 		if = {
 			limit = {
 				scope:secondary_recipient = { is_ruler = no }
-				scope:secondary_recipient = { NOT = { is_in_the_same_court_as_or_guest = scope:actor } } #Unop: Prevent "Trying to put character in the court they're already in"
+				scope:secondary_recipient = { NOT = { is_in_the_same_court = scope:actor } } #Unop: Prevent "Trying to put character in the court they're already in"
 			}
 			scope:actor = { add_courtier = scope:secondary_recipient }
 		}
@@ -10089,7 +10089,7 @@ appoint_co_monarch_interaction = {
 		if = {
 			limit = {
 				scope:secondary_recipient = { is_ruler = no }
-				scope:secondary_recipient = { NOT = { is_in_the_same_court_as_or_guest = scope:actor } } #Unop: Prevent "Trying to put character in the court they're already in" (Note: As of 1.17.1 is_in_the_same_court is returning false !?)
+				scope:secondary_recipient = { NOT = { is_in_the_same_court = scope:actor } }
 			}
 			scope:actor = { add_courtier = scope:secondary_recipient }
 		}
