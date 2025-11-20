@@ -707,20 +707,21 @@ on_birth_child = {
 			}
 		}
 
+		#Unop: simplifing and fixing child of concubine distribution
 		if = {
 			limit = {
 				exists = scope:father
 				exists = scope:mother
-				scope:mother = { is_concubine_of = scope:father }
+				any_parent = {
+					is_concubine = yes
+					OR = {
+						is_concubine_of = scope:father
+						is_concubine_of = scope:mother
+					}
+				}
 			}
+			#Unop: only 1 (correct) trait will apply, as long as the trait itself has "valid_sex" attribute
 			add_trait = child_of_concubine_female
-		}
-		if = {
-			limit = {
-				exists = scope:father
-				exists = scope:mother
-				scope:father = { is_concubine_of = scope:mother }
-			}
 			add_trait = child_of_concubine_male
 		}
 		#create wet_nurse and nursed_child relation between the newborn and wet nurse court position character
