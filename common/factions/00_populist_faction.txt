@@ -1422,8 +1422,9 @@ escalated_peasant_faction = {
 		modifier = {
 			desc = "FACTION_REASON_AT_WAR_WITH_TARGET"
 			add = 1000
-			exists = joined_faction
-			joined_faction = {
+			#Unop ck3-tiger Use scope:faction since joined_faction requires character scope
+			#exists = joined_faction
+			scope:faction = {
 				faction_is_at_war = yes
 			}
 		}

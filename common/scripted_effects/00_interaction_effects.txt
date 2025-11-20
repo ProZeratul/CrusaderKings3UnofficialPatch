@@ -3016,7 +3016,7 @@ offer_fealty_interaction_effect = {
 				government_has_flag = government_is_feudal
 			}
 			if = {
-				limit = { scope:high_obligations = yes }
+				limit = { scope:high_obligations ?= yes } #Unop ck3-tiger
 				hidden_effect = {
 					if = {
 						limit = { top_liege != this } # To avoid errors during tooltip generation (prior to the contract being generated)
@@ -3028,7 +3028,7 @@ offer_fealty_interaction_effect = {
 				custom_tooltip = high_obligations_levies
 			}
 			else_if = {
-				limit = { scope:low_obligations = yes }
+				limit = { scope:low_obligations ?= yes } #Unop ck3-tiger
 				hidden_effect = {
 					if = {
 						limit = { top_liege != this } # To avoid errors during tooltip generation (prior to the contract being generated)
@@ -3040,7 +3040,7 @@ offer_fealty_interaction_effect = {
 				custom_tooltip = low_obligations_levies
 			}
 			else_if = {
-				limit = { scope:religious_taxation = yes }
+				limit = { scope:religious_taxation ?= yes } #Unop ck3-tiger
 				hidden_effect = {
 					if = {
 						limit = { top_liege != this } # To avoid errors during tooltip generation (prior to the contract being generated)
@@ -3072,7 +3072,7 @@ offer_fealty_interaction_effect = {
 		else_if = {
 			limit = {
 				government_has_flag = government_is_clan
-				scope:religious_exemption_clan = yes
+				scope:religious_exemption_clan ?= yes #Unop ck3-tiger
 			}
 			hidden_effect = {
 				if = {
