@@ -4129,63 +4129,51 @@ appointment_investment_cap = {
 		##### ESTATE BUILDINGS
 		if = {
 			limit = { exists = house.house_head.domicile }
-			house.house_head.domicile = {
+			house.house_head.domicile = { #Unop: Rewrote all this to check for parameters instead of building
 				add = {
 					value = 0
 					if = {
-						limit = { has_domicile_building = estate_main_02 }
+						limit = { has_domicile_parameter = estate_increase_house_member_investment_cap_1 }
 						add = 10
 					}
 					else_if = {
-						limit = { has_domicile_building = estate_main_03 }
+						limit = { has_domicile_parameter = estate_increase_house_member_investment_cap_2 }
 						add = 20
 					}
 					else_if = {
-						limit = { has_domicile_building = estate_main_04 }
+						limit = { has_domicile_parameter = estate_increase_house_member_investment_cap_3 }
 						add = 30
 					}
 					else_if = {
-						limit = { has_domicile_building = estate_main_05 }
+						limit = { has_domicile_parameter = estate_increase_house_member_investment_cap_4 }
 						add = 40
 					}
-					if = {
-						limit = { has_domicile_building = reception_hall_02 }
-						add = 10
-					}
-					else_if = {
-						limit = { has_domicile_building = reception_hall_03 }
-						add = 20
-					}
-					else_if = {
-						limit = { has_domicile_building = reception_hall_04 }
-						add = 30
-					}
-					else_if = {
-						limit = { has_domicile_building = reception_hall_05 }
-						add = 40
+					else_if = { #Unop: No building have this ATM, but it exists in the YML, adding it here just in case to be future proof
+						limit = { has_domicile_parameter = estate_increase_house_member_investment_cap_5 }
+						add = 50
 					}
 					if = {
-						limit = { has_domicile_building = japanese_manor_office_01 }
+						limit = { has_domicile_parameter = japanese_manor_increase_house_member_investment_cap_1 }
 						add = 5
 					}
 					else_if = {
-						limit = { has_domicile_building = japanese_manor_office_02 }
+						limit = { has_domicile_parameter = japanese_manor_increase_house_member_investment_cap_2 }
 						add = 10
 					}
 					else_if = {
-						limit = { has_domicile_building = japanese_manor_office_03 }
+						limit = { has_domicile_parameter = japanese_manor_increase_house_member_investment_cap_3 }
 						add = 15
 					}
 					else_if = {
-						limit = { has_domicile_building = japanese_manor_office_04 }
+						limit = { has_domicile_parameter = japanese_manor_increase_house_member_investment_cap_4 }
 						add = 20
 					}
 					else_if = {
-						limit = { has_domicile_building = japanese_manor_office_05 }
+						limit = { has_domicile_parameter = japanese_manor_increase_house_member_investment_cap_5 }
 						add = 25
 					}
 					else_if = {
-						limit = { has_domicile_building = japanese_manor_office_06 }
+						limit = { has_domicile_parameter = japanese_manor_increase_house_member_investment_cap_6 }
 						add = 30
 					}
 					desc = appointment_investment_cap_estate_buildings
