@@ -436,6 +436,7 @@
 	#interfaith wedding costs piety
 	if = {
 		limit = {
+			scope:actor = scope:secondary_actor #Unop Actor should only gain piety if marrying themselves
 			scope:secondary_actor = {
 				faith != scope:secondary_recipient.faith
 			}
@@ -452,6 +453,7 @@
 	#interfaith wedding provides piety
 	if = {
 		limit = {
+			scope:actor = scope:secondary_actor #Unop Actor should only gain piety if marrying themselves
 			scope:secondary_actor = {
 				faith != scope:secondary_recipient.faith
 			}
@@ -470,6 +472,7 @@
 	#Khurramites and Mazdakists gain piety from marrying lowborn
 	if = {
 		limit = {
+			scope:actor = scope:secondary_actor #Unop Actor should only gain piety if marrying themselves
 			scope:secondary_recipient = {
 				is_lowborn = yes 
 			}
