@@ -3095,6 +3095,12 @@ perk_alliance_interaction = {
 					count >= 2
 				}
 			}
+			NOT = { #Unop Missing compared to negotiate_alliance_interaction for no good reason
+				scope:recipient = {
+					government_has_flag = government_is_clan
+					is_vassal_or_below_of = scope:actor
+				}
+			}
 			desc = EXISTING_ALLIANCES_REASON
 		}
 
@@ -3110,6 +3116,12 @@ perk_alliance_interaction = {
 			scope:recipient = {
 				any_ally = {
 					count >= 2
+				}
+			}
+			NOT = { #Unop Missing compared to negotiate_alliance_interaction for no good reason
+				scope:recipient = {
+					government_has_flag = government_is_clan
+					is_vassal_or_below_of = scope:actor
 				}
 			}
 			desc = THEIR_EXISTING_ALLIANCES_REASON
@@ -3166,6 +3178,65 @@ perk_alliance_interaction = {
 			VALUE = 10
 		}
 
+		#Unop Missing compared to negotiate_alliance_interaction for no good reason
+		fp3_struggle_resist_allied_wars_modifier = yes
+
+		#Unop Missing compared to negotiate_alliance_interaction for no good reason
+		# LOW LEGITIMACY
+		modifier = {
+			desc = "LOW_LEGITIMACY_REASON"
+			scope:actor = {
+				OR = {
+					has_legitimacy_flag = reduced_alliance_acceptance
+					has_legitimacy_flag = very_reduced_alliance_acceptance
+					has_legitimacy_flag = massively_reduced_alliance_acceptance
+				}
+			}
+			add = {
+				value = 0
+				if = {
+					limit = { scope:actor = { has_legitimacy_flag = reduced_alliance_acceptance } }
+					add = -25
+				}
+				if = {
+					limit = { scope:actor = { has_legitimacy_flag = very_reduced_alliance_acceptance } }
+					add = -50
+				}
+				if = {
+					limit = { scope:actor = { has_legitimacy_flag = massively_reduced_alliance_acceptance } }
+					add = -100
+				}
+			}
+		}
+
+		#Unop Missing compared to negotiate_alliance_interaction for no good reason
+		# HIGH LEGITIMACY
+		modifier = {
+			desc = "HIGH_LEGITIMACY_REASON"
+			scope:actor = {
+				OR = {
+					has_legitimacy_flag = increased_alliance_acceptance
+					has_legitimacy_flag = very_increased_alliance_acceptance
+					has_legitimacy_flag = extra_increased_alliance_acceptance
+				}
+			}
+			add = {
+				value = 0
+				if = {
+					limit = { scope:actor = { has_legitimacy_flag = increased_alliance_acceptance } }
+					add = 10
+				}
+				if = {
+					limit = { scope:actor = { has_legitimacy_flag = very_increased_alliance_acceptance } }
+					add = 25
+				}
+				if = {
+					limit = { scope:actor = { has_legitimacy_flag = extra_increased_alliance_acceptance } }
+					add = 50
+				}
+			}
+		}
+
 		# INFLUENCE
 		modifier = {
 			desc = INFLUENCE_REASON
@@ -3175,6 +3246,18 @@ perk_alliance_interaction = {
 				multiply = scope:actor.influence_level
 				min = 5
 			}
+		}
+
+		#Unop Missing compared to negotiate_alliance_interaction for no good reason
+		# TGP ALLIANCE WITH NF HOUSE HEAD
+		modifier = {
+			add = 750
+			scope:actor = {
+				is_house_head = yes
+				scope:recipient.house ?= this.house
+				any_held_title = { is_noble_family_title = yes }
+			}
+			desc = JAPANESE_HOUSE_HEAD_ALLIANCE_REASON
 		}
 	}
 
