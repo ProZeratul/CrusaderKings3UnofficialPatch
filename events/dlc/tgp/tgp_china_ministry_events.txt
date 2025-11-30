@@ -456,10 +456,16 @@ tgp_china_ministry.0005 = {
 	}
 
 	option = {
-		name = tgp_china_ministry.0005.a_lost
-		name = {
-			trigger = { list_size:titles_won >= list_size:titles_lost }
-			text = tgp_china_ministry.0005.a_win
+		name = { #Unop: Fix the lost yml showing even when you win
+			text = {
+				first_valid = {
+					triggered_desc = { 
+						trigger = { list_size:titles_won >= list_size:titles_lost }
+						desc = tgp_china_ministry.0005.a_win
+					}
+					desc = tgp_china_ministry.0005.a_lost
+				}
+			}
 		}
 		if = {
 			limit = {
@@ -632,10 +638,16 @@ tgp_china_ministry.0008 = {
 	}
 
 	option = {
-		name = tgp_china_ministry.0005.a_lost
-		name = {
-			trigger = { list_size:titles_won >= list_size:titles_lost }
-			text = tgp_china_ministry.0005.a_win
+		name = { #Unop: Fix the lost yml showing even when you win
+			text = {
+				first_valid = {
+					triggered_desc = { 
+						trigger = { list_size:titles_won >= list_size:titles_lost }
+						desc = tgp_china_ministry.0005.a_win
+					}
+					desc = tgp_china_ministry.0005.a_lost
+				}
+			}
 		}
 		show_as_tooltip = {
 			scope:owner = {
