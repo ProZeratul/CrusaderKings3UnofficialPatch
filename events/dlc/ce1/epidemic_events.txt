@@ -4551,6 +4551,7 @@ epidemic_events.1121 = {
 					}
 					if = {
 						limit = {
+							exists = scope:epidemic_scope #Unop This seems to be null sometimes, causing crashes
 							unop_can_contract_disease_trigger = { DISEASE = scope:epidemic_scope.epidemic_type.epidemic_trait }
 							NOT = { scope:epidemic_scope.epidemic_type.epidemic_trait = trait:ergotism } #Unop: Ergotism is from food
 						}
@@ -4624,6 +4625,7 @@ epidemic_events.1121 = {
 					}
 					if = {
 						limit = {
+							exists = scope:epidemic_scope #Unop This seems to be null sometimes, causing crashes
 							unop_can_contract_disease_trigger = { DISEASE = scope:epidemic_scope.epidemic_type.epidemic_trait }
 							NOT = { scope:epidemic_scope.epidemic_type.epidemic_trait = trait:ergotism } #Unop: Ergotism is from food
 						}
@@ -4701,6 +4703,7 @@ epidemic_events.1122 = {
 		name = epidemic_events.1122.a
 		if = {
 			limit = {
+				exists = scope:epidemic_scope #Unop This seems to be null sometimes, causing crashes
 				unop_can_contract_disease_trigger = { DISEASE = scope:epidemic_scope.epidemic_type.epidemic_trait }
 				NOT = { scope:epidemic_scope.epidemic_type.epidemic_trait = trait:ergotism } #Unop: Ergotism is from food
 			}
@@ -4746,6 +4749,7 @@ epidemic_events.1122 = {
 					}
 					if = {
 						limit = {
+							exists = scope:epidemic_scope #Unop This seems to be null sometimes, causing crashes
 							unop_can_contract_disease_trigger = { DISEASE = scope:epidemic_scope.epidemic_type.epidemic_trait }
 							NOT = { scope:epidemic_scope.epidemic_type.epidemic_trait = trait:ergotism } #Unop: Ergotism is from food
 						}
@@ -5015,6 +5019,7 @@ epidemic_events.3000 = {
 						scope:companion = {
 							if = {
 								limit = {
+									exists = scope:epidemic_scope #Unop This seems to be null sometimes, causing crashes
 									unop_can_contract_disease_trigger = { DISEASE = scope:epidemic_scope.epidemic_type.epidemic_trait }
 									NOT = { scope:epidemic_scope.epidemic_type.epidemic_trait = trait:ergotism } #Unop: Ergotism is from food
 								}
@@ -5185,6 +5190,7 @@ epidemic_events.3010 = {
 				left_icon = root
 				if = {
 					limit = {
+						exists = scope:epidemic_scope
 						unop_can_contract_disease_trigger = { DISEASE = scope:epidemic_scope.epidemic_type.epidemic_trait }
 						NOT = { scope:epidemic_scope.epidemic_type.epidemic_trait = trait:ergotism } #Unop: Ergotism is from food
 					}
