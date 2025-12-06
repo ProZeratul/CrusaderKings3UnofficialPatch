@@ -468,7 +468,14 @@ on_siege_looting = {
 				multiply = 5
 			}
 		}
-		tgp_treasury_raided_effect = yes
+
+		#Unop Use correct scope: tgp_treasury_raided_effect expects army scope
+		scope:barony.title_province ?= {
+			random_army_in_location = {
+				limit = { army_owner = root }
+				tgp_treasury_raided_effect = yes
+			}
+		}
 
 	}
 }
