@@ -4511,11 +4511,11 @@
 				activity_location = { NOT = { has_holding_type = church_holding } }
 				scope:host = {
 					OR = {
-						location = province:b_constantinople
+						location = title:b_constantinople.title_province #Unop ck3-tiger
 						AND = {
 							primary_title = title:e_byzantium
 							title:c_byzantion = {
-								any_de_jure_top_liege = { this = root } 
+								any_de_jure_top_liege = { this = scope:host } #Unop ck3-tiger Use correct scope
 							}
 						}
 					}
