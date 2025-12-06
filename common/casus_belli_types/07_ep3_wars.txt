@@ -3771,24 +3771,24 @@ imperial_expedition_cb = {
 	ignore_effect = change_title_holder
 
 	ai_can_target_all_titles = { always = yes }
-	ai_score = {
-		value = byzantium_conquests_ai_score_value
-
-		# As a feudal gov, do not attack tribal
-		add = {
-			every_in_list = {
-				list = target_titles
-				if = {
-					limit = { feudal_clan_tribal_conquest_constraints = yes }
-					add = -1000
-				}
-			}
-		}
-		# HOUSE RELATIONS
-		add = house_relation_ai_score_value
-		# Tell the Romans to stop going adventuring into the steppe for no gods-damned reason.
-		multiply = byzantium_conquests_ai_score_value
-	}
+	#ai_score = { #Unop ck3-tiger Duplicated below
+	#	value = byzantium_conquests_ai_score_value
+	#
+	#	# As a feudal gov, do not attack tribal
+	#	add = {
+	#		every_in_list = {
+	#			list = target_titles
+	#			if = {
+	#				limit = { feudal_clan_tribal_conquest_constraints = yes }
+	#				add = -1000
+	#			}
+	#		}
+	#	}
+	#	# HOUSE RELATIONS
+	#	add = house_relation_ai_score_value
+	#	# Tell the Romans to stop going adventuring into the steppe for no gods-damned reason.
+	#	multiply = byzantium_conquests_ai_score_value
+	#}
 	ai_score_mult = {
 		value = 1
 		
@@ -4598,7 +4598,7 @@ ep3_pillaging_foray = {
 	war_name_base = "EP3_PILLAGING_FORAY_WAR_NAME_BASE"
 	cb_name = "EP3_PILLAGING_FORAY_CB_NAME"
 
-	interface_priority = 79
+	#interface_priority = 79 #Unop ck3-tiger Duplicated, leaving the one above for consistency with ep3_roman_empire_border_war
 
 	use_de_jure_wargoal_only = yes
 
@@ -5001,9 +5001,9 @@ ep3_laamp_apprehend_adventurer_cb = {
 	group = event
 	allow_hostages = no
 	
-	attacker_score_from_occupation_scale = 150
-	attacker_score_from_battles_scale = 150
-	defender_score_from_battles_scale = 150
+	#attacker_score_from_occupation_scale = 150 #Unop ck3-tiger Duplicated below
+	#attacker_score_from_battles_scale = 150
+	#defender_score_from_battles_scale = 150
 
 	target_top_liege_if_outside_realm = no
 
