@@ -3140,7 +3140,7 @@ base_feast_cost_value = {
 		}
 		if = {
 			limit = {
-				scope:host.domicile ?= {
+				root.domicile ?= { #Unop ck3-tiger Use root not scope:host in cost block
 					has_domicile_parameter = nomad_yurt_feast_discount
 				}
 			}
