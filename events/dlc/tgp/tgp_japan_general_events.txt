@@ -365,7 +365,7 @@ tgp_japan_general.8800 = {
 					}
 					create_character = {
 						template = new_warrior_character
-						gender_female_chance = root_faith_dominant_gender_adjusted_female_chance
+						#gender_female_chance = root_faith_dominant_gender_adjusted_female_chance #Unop ck3-tiger Duplicated below
 						employer = root
 						faith = root.faith
 						culture = root.culture
@@ -638,7 +638,7 @@ tgp_japan_general.9100 = {
 		scope:title = {
 			previous_holder ?= { save_scope_as = previous_holder }
 			save_scope_as = ceremonial_title
-			house = { save_scope_as = ceremonial_house }
+			holder.house = { save_scope_as = ceremonial_house } #Unop ck3-tiger Use correct scope
 			holder = {
 				save_scope_as = ceremonial_liege
 				if = {
@@ -883,7 +883,7 @@ tgp_japan_general.9300 = {
 		scope:liege = {
 			if = {
 				limit = { NOT = { exists = scope:background_throne_room_scope } }
-				save_scope_as background_throne_room_scope
+				save_scope_as = background_throne_room_scope #Unop ck3-tiger Fix structure
 			}
 		}
 	}
