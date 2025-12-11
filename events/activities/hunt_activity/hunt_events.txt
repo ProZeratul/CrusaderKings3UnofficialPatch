@@ -10624,6 +10624,9 @@ hunt.2001 = {
 						culture = scope:merchant_culture
 						faith = scope:merchant_faith
 						save_scope_as = falcon_salesman
+						after_creation = { #Unop: To be handled in the after block
+							add_character_flag = created
+						}
 					}
 				}
 				10 = {
@@ -10731,6 +10734,12 @@ hunt.2001 = {
 					has_trait = patient
 				}
 			}
+		}
+	}
+
+	after = { #Unop: Make the falcon_salesman vanish if it was created
+		scope:falcon_salesman = {
+			silent_disappear_ai_if_not_hired_with_flag = yes
 		}
 	}
 }
