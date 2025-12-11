@@ -1047,87 +1047,94 @@ set_random_rivalry_reason = { # Use for adults, primarily
 	show_as_tooltip = {
 		set_relation_$RELATION$ = $TARGET$
 	}
-	hidden_effect = {
-		random_list = {
-			10 = {
-				trigger = {
-					exists = location
-					NOT = { exists = liege }
-				}
-				set_relation_$RELATION$ = { reason = rival_random_1 target = $TARGET$ province = location }
+	if = {
+		limit = {
+			NOT = {
+				has_relation_$RELATION$ = $TARGET$
 			}
-			10 = {
-				trigger = {
-					exists = location
-					NOT = { exists = liege }
-				}
-				set_relation_$RELATION$ = { reason = rival_random_2 target = $TARGET$ province = location }
-			}
-			10 = {
-				trigger = {
-					exists = location
-					NOT = { exists = liege }
-				}
-				set_relation_$RELATION$ = { reason = rival_random_3 target = $TARGET$ province = location }
-			}
-			10 = {
-				trigger = {
-					exists = location
-					NOT = { exists = liege }
-				}
-				set_relation_$RELATION$ = { reason = rival_random_4 target = $TARGET$ province = location }
-			}
-			10 = {
-				trigger = {
-					exists = location
-					NOT = { exists = liege }
-				}
-				set_relation_$RELATION$ = { reason = rival_random_5 target = $TARGET$ province = location }
-			}
-			10 = {
-				trigger = {
-					exists = liege
-				}
-				set_relation_$RELATION$ = { reason = rival_random_6 target = $TARGET$ involved_character = liege }
-			}
-			10 = {
-				trigger = {
-					exists = liege
-				}
-				set_relation_$RELATION$ = { reason = rival_random_7 target = $TARGET$ involved_character = liege }
-			}
-			10 = {
-				trigger = {
-					exists = liege
-				}
-				set_relation_$RELATION$ = { reason = rival_random_8 target = $TARGET$ involved_character = liege }
-			}
-			10 = {
-				trigger = {
-					exists = liege.capital_province
-				}
-				set_relation_$RELATION$ = { reason = rival_random_9 target = $TARGET$ involved_character = liege province = liege.capital_province }
-			}
-			10 = {
-				trigger = {
-					exists = liege.capital_province
-				}
-				set_relation_$RELATION$ = { reason = rival_random_10 target = $TARGET$ involved_character = liege province = liege.capital_province }
-			}
-			10 = {
-				trigger = {
-					exists = liege
-				}
-				set_relation_$RELATION$ = { reason = rivalry_at_court target = $TARGET$ involved_character = liege }
-			}
-			10 = {
-				trigger = {
-					NOR ={
+		}
+		hidden_effect = {
+			random_list = {
+				10 = {
+					trigger = {
 						exists = location
+						NOT = { exists = liege }
+					}
+					set_relation_$RELATION$ = { reason = rival_random_1 target = $TARGET$ province = location }
+				}
+				10 = {
+					trigger = {
+						exists = location
+						NOT = { exists = liege }
+					}
+					set_relation_$RELATION$ = { reason = rival_random_2 target = $TARGET$ province = location }
+				}
+				10 = {
+					trigger = {
+						exists = location
+						NOT = { exists = liege }
+					}
+					set_relation_$RELATION$ = { reason = rival_random_3 target = $TARGET$ province = location }
+				}
+				10 = {
+					trigger = {
+						exists = location
+						NOT = { exists = liege }
+					}
+					set_relation_$RELATION$ = { reason = rival_random_4 target = $TARGET$ province = location }
+				}
+				10 = {
+					trigger = {
+						exists = location
+						NOT = { exists = liege }
+					}
+					set_relation_$RELATION$ = { reason = rival_random_5 target = $TARGET$ province = location }
+				}
+				10 = {
+					trigger = {
 						exists = liege
 					}
+					set_relation_$RELATION$ = { reason = rival_random_6 target = $TARGET$ involved_character = liege }
 				}
-				set_relation_$RELATION$ = { reason = rival_random_fallback target = $TARGET$ }
+				10 = {
+					trigger = {
+						exists = liege
+					}
+					set_relation_$RELATION$ = { reason = rival_random_7 target = $TARGET$ involved_character = liege }
+				}
+				10 = {
+					trigger = {
+						exists = liege
+					}
+					set_relation_$RELATION$ = { reason = rival_random_8 target = $TARGET$ involved_character = liege }
+				}
+				10 = {
+					trigger = {
+						exists = liege.capital_province
+					}
+					set_relation_$RELATION$ = { reason = rival_random_9 target = $TARGET$ involved_character = liege province = liege.capital_province }
+				}
+				10 = {
+					trigger = {
+						exists = liege.capital_province
+					}
+					set_relation_$RELATION$ = { reason = rival_random_10 target = $TARGET$ involved_character = liege province = liege.capital_province }
+				}
+				10 = {
+					trigger = {
+						exists = liege
+					}
+					set_relation_$RELATION$ = { reason = rivalry_at_court target = $TARGET$ involved_character = liege }
+				}
+				10 = {
+					trigger = {
+						NOR ={
+							exists = location
+							exists = liege
+						}
+					}
+					set_relation_$RELATION$ = { reason = rival_random_fallback target = $TARGET$ }
+				}
 			}
 		}
 	}

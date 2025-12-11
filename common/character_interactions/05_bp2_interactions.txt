@@ -41,9 +41,21 @@ offer_hostage_interaction = {
 		scope:recipient.highest_held_title_tier > tier_barony
 		# Laamps can't do anything with hostages but return/recall them.
 		scope:recipient = {
-			NOT = {
+			NOR = {
 				government_has_flag = government_is_landless_adventurer
 				government_has_flag = government_is_herder
+			}
+		}
+		#Inside a merit realm vassals won't offer hostages except to your top liege.
+		trigger_if = {
+			limit = {
+				scope:actor.top_liege = { government_has_flag = government_has_merit }
+				scope:actor.top_liege != scope:actor
+				scope:recipient != scope:actor.top_liege
+			}
+			NAND = {
+				scope:actor = { government_has_flag = government_has_merit }
+				scope:recipient = { government_has_flag = government_has_merit }
 			}
 		}
 	}
@@ -628,8 +640,20 @@ demand_hostage_interaction = {
 		}
 		# Laamps can't do anything with hostages but return/recall them.
 		NOR = {
-			scope:actor = { has_government = landless_adventurer_government }
-			scope:recipient = { has_government = landless_adventurer_government }
+			scope:actor = { government_has_flag = government_is_landless_adventurer }
+			scope:recipient = { government_has_flag = government_is_landless_adventurer }
+		}
+		#Inside a merit realm vassals won't demand hostages.
+		trigger_if = {
+			limit = {
+				scope:actor.top_liege = { government_has_flag = government_has_merit }
+				scope:actor.top_liege != scope:actor
+			}
+			NAND = {
+				scope:actor = { government_has_flag = government_has_merit }
+				scope:recipient = { government_has_flag = government_has_merit }
+			}
+			NOT = { scope:recipient = scope:actor.top_liege }
 		}
 	}
 
@@ -1316,8 +1340,20 @@ exchange_hostage_interaction = {
 		}
 		# Laamps can't do anything with hostages but return/recall them.
 		NOR = {
-			scope:actor = { has_government = landless_adventurer_government }
-			scope:recipient = { has_government = landless_adventurer_government }
+			scope:actor = { government_has_flag = government_is_landless_adventurer }
+			scope:recipient = { government_has_flag = government_is_landless_adventurer }
+		}
+		#Inside a merit realm vassals won't exchange hostages.
+		trigger_if = {
+			limit = {
+				scope:actor.top_liege = { government_has_flag = government_has_merit }
+				scope:actor.top_liege != scope:actor
+			}
+			NAND = {
+				scope:actor = { government_has_flag = government_has_merit }
+				scope:recipient = { government_has_flag = government_has_merit }
+			}
+			NOT = { scope:recipient = scope:actor.top_liege }
 		}
 	}
 

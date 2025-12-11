@@ -550,6 +550,12 @@ east_europe.0034 = {
 			NOT = { religion = religion:magyar_religion }
 		}
 		set_character_faith_with_conversion = faith:magyar_pagan
+		if = {
+			limit = { 
+				faith:magyar_pagan = { has_doctrine = doctrine_monotheist }
+			}
+			custom_description_no_bullet = { text = mandala_monotheist_warning_tt }
+		}
 	}
 
 	#Those who aren't pagans are probably horrified.
@@ -1480,6 +1486,12 @@ east_europe.0116 = {
 
 		#I'll just quietly convert by myself.
 		set_character_faith = scope:hof.faith
+		if = {
+			limit = { 
+				scope:hof.faith = { has_doctrine = doctrine_monotheist }
+			}
+			custom_description_no_bullet = { text = mandala_monotheist_warning_tt }
+		}
 		#Costs you some piety, but easier to flip back from.
 		add_piety = minor_piety_loss
 		#Set up scope:accuser loc.
@@ -1527,6 +1539,12 @@ east_europe.0116 = {
 
 		#The realm must join me!
 		set_character_faith_with_conversion = scope:hof.faith
+		if = {
+			limit = { 
+				scope:hof.faith = { has_doctrine = doctrine_monotheist }
+			}
+			custom_description_no_bullet = { text = mandala_monotheist_warning_tt }
+		}
 		#A pious act, from the POV of your new faith.
 		add_piety = medium_piety_gain
 		#Set up scope:accuser loc.

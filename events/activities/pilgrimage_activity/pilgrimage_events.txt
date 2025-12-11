@@ -286,8 +286,8 @@ scripted_trigger pilgrimage_0500_valid_holy_site_trigger = {
 	NOR = {
 		this = root.location.barony
 		AND = {
-			exists = root.capital_province #Unop: Add missing root scope
-			this = root.capital_province.barony #Unop: Add missing root scope
+			exists = root.capital_province
+			this = root.capital_province.barony
 		}
 	}
 }
@@ -2734,12 +2734,9 @@ pilgrimage.2003 = {
 			}
 		}
 		remove_short_term_gold = minor_gold_value
-		scope:2002_local_warrior = { #Unop: To let them join the activity despite being from another faith
-			add_character_flag = unop_force_join_pilgrimage
-		}
-		recruit_to_entourage_court_and_activity_effect = {
-			CHAR_TO_ADD = scope:2002_local_warrior
-			NEW_COURT_OWNER = root
+		recruit_to_entourage_court_and_activity_effect = { 
+			CHAR_TO_ADD = scope:2002_local_warrior 
+			NEW_COURT_OWNER = root 
 		}
 		stress_impact = {
 			humble = medium_stress_impact_gain
@@ -5434,9 +5431,6 @@ pilgrimage.2101 = {
 			CHARACTER = scope:naked_tempter
 			PREGNANCY_CHANCE = pregnancy_chance
 		}
-		scope:naked_tempter = { #Unop: To let them join the activity despite being from another faith
-			add_character_flag = unop_force_join_pilgrimage
-		}
 		add_to_entourage_court_and_activity_effect = {
 			CHAR_TO_ADD = scope:naked_tempter
 			NEW_COURT_OWNER = root
@@ -6569,6 +6563,12 @@ pilgrimage.3002 = {
 		worldly_type_option_effect = yes
 		add_piety = massive_piety_loss
 		set_character_faith = faith:adamites
+		if = {
+			limit = { 
+				faith:adamites = { has_doctrine = doctrine_monotheist }
+			}
+			custom_description_no_bullet = { text = mandala_monotheist_warning_tt }
+		}
 		add_to_entourage_court_and_activity_effect = {
 			CHAR_TO_ADD = scope:naked_preacher
 			NEW_COURT_OWNER = root
@@ -14064,6 +14064,9 @@ pilgrimage.6850 = {
 	#Improve your spymaster's secret discovery chance
 	option = {
 		name = pilgrimage.6850.b
+		trigger = {
+			exists = cp:councillor_spymaster
+		}
 		add_learning_lifestyle_xp = medium_lifestyle_xp
 		add_character_modifier = {
 			modifier = spymaster_eyes_modifier

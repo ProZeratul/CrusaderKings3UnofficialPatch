@@ -374,11 +374,7 @@ fp3_request_turkic_invasion_interaction = {
 						}
 					}
 				}
-				scope:actor.top_liege = {
-					any_vassal_or_below = {
-						this = scope:recipient
-					}
-				}
+				top_liege = scope:actor.top_liege
 			}
 			trigger_else = {
 				OR = {
@@ -412,7 +408,7 @@ fp3_request_turkic_invasion_interaction = {
 						has_truce = scope:recipient
 						this = scope:actor
 						this = scope:recipient
-						is_tributary_of = scope:recipient
+						is_tributary_of = scope:recipient.top_liege
 					}
 					OR = {
 						trigger_if = {
@@ -477,6 +473,7 @@ fp3_request_turkic_invasion_interaction = {
 					is_allied_to = scope:recipient
 					has_truce = scope:recipient
 				}
+				tgp_is_hegemon_or_below_in_dynastic_cycle_trigger = no				
 			}
 		}
 	}
@@ -524,100 +521,114 @@ fp3_request_turkic_invasion_interaction = {
 			scope:recipient = {
 				if = {
 					limit = {
-						any_realm_county = {
-							this != scope:recipient.capital_county
-							any_neighboring_county = { holder.top_liege = scope:secondary_recipient.top_liege }
-							any_county_province = { geographical_region = world_persian_empire }
-							NOR = {
-								holder = scope:actor
-								holder = { is_vassal_or_below_of = scope:actor }
+						scope:actor = {
+							top_participant_group:dynastic_cycle ?= {
+								participant_group_type = expansion_movement
 							}
 						}
 					}
-					random_realm_county = {
-						limit = {
-							this != scope:recipient.capital_county
-							any_neighboring_county = { holder.top_liege = scope:secondary_recipient.top_liege }
-							any_county_province = { geographical_region = world_persian_empire }
-							NOR = {
-								holder = scope:actor
-								holder = { is_vassal_or_below_of = scope:actor }
-							}
-						}
-						save_scope_as = invasion_target_title
-					}
-				}
-				else_if = {
-					limit = {
-						any_realm_county = {
-							this != scope:recipient.capital_county
-							any_neighboring_county = {
-								any_county_province = { geographical_region = world_persian_empire }
-								holder.top_liege != prev.holder.top_liege
-							}
-							NOR = {
-								holder = scope:actor
-								holder = { is_vassal_or_below_of = scope:actor }
-							}
-						}
-					}
-					random_realm_county = {
-						limit = {
-							this != scope:recipient.capital_county
-							any_neighboring_county = {
-								any_county_province = { geographical_region = world_persian_empire }
-								holder.top_liege != prev.holder.top_liege
-							}
-							NOR = {
-								holder = scope:actor
-								holder = { is_vassal_or_below_of = scope:actor }
-							}
-						}
-						save_scope_as = invasion_target_title
-					}
-				}
-				else_if = {
-					limit = {
-						any_realm_county = {
-							this != scope:recipient.capital_county
-							NOR = {
-								holder = scope:actor
-								holder = { is_vassal_or_below_of = scope:actor }
-							}
-						}
-					}
-					random_realm_county = {
-						limit = {
-							this != scope:recipient.capital_county
-							NOR = {
-								holder = scope:actor
-								holder = { is_vassal_or_below_of = scope:actor }
-							}
-						}
-						save_scope_as = invasion_target_title
-					}
-				}
-				else_if = {
-					limit = {
-						any_realm_county = {
-							NOR = {
-								holder = scope:actor
-								holder = { is_vassal_or_below_of = scope:actor }
-							}
-						}
-					}
-					random_realm_county = {
-						limit = {
-							NOR = {
-								holder = scope:actor
-								holder = { is_vassal_or_below_of = scope:actor }
-							}
-						}
+					capital_county = {
 						save_scope_as = invasion_target_title
 					}
 				}
 				else = {
-					random_realm_county = { save_scope_as = invasion_target_title }
+					if = {
+						limit = {
+							any_realm_county = {
+								this != scope:recipient.capital_county
+								any_neighboring_county = { holder.top_liege = scope:secondary_recipient.top_liege }
+								any_county_province = { geographical_region = world_persian_empire }
+								NOR = {
+									holder = scope:actor
+									holder = { is_vassal_or_below_of = scope:actor }
+								}
+							}
+						}
+						random_realm_county = {
+							limit = {
+								this != scope:recipient.capital_county
+								any_neighboring_county = { holder.top_liege = scope:secondary_recipient.top_liege }
+								any_county_province = { geographical_region = world_persian_empire }
+								NOR = {
+									holder = scope:actor
+									holder = { is_vassal_or_below_of = scope:actor }
+								}
+							}
+							save_scope_as = invasion_target_title
+						}
+					}
+					else_if = {
+						limit = {
+							any_realm_county = {
+								this != scope:recipient.capital_county
+								any_neighboring_county = {
+									any_county_province = { geographical_region = world_persian_empire }
+									holder.top_liege != prev.holder.top_liege
+								}
+								NOR = {
+									holder = scope:actor
+									holder = { is_vassal_or_below_of = scope:actor }
+								}
+							}
+						}
+						random_realm_county = {
+							limit = {
+								this != scope:recipient.capital_county
+								any_neighboring_county = {
+									any_county_province = { geographical_region = world_persian_empire }
+									holder.top_liege != prev.holder.top_liege
+								}
+								NOR = {
+									holder = scope:actor
+									holder = { is_vassal_or_below_of = scope:actor }
+								}
+							}
+							save_scope_as = invasion_target_title
+						}
+					}
+					else_if = {
+						limit = {
+							any_realm_county = {
+								this != scope:recipient.capital_county
+								NOR = {
+									holder = scope:actor
+									holder = { is_vassal_or_below_of = scope:actor }
+								}
+							}
+						}
+						random_realm_county = {
+							limit = {
+								this != scope:recipient.capital_county
+								NOR = {
+									holder = scope:actor
+									holder = { is_vassal_or_below_of = scope:actor }
+								}
+							}
+							save_scope_as = invasion_target_title
+						}
+					}
+					else_if = {
+						limit = {
+							any_realm_county = {
+								NOR = {
+									holder = scope:actor
+									holder = { is_vassal_or_below_of = scope:actor }
+								}
+							}
+						}
+						random_realm_county = {
+							limit = {
+								NOR = {
+									holder = scope:actor
+									holder = { is_vassal_or_below_of = scope:actor }
+								}
+							}
+							save_scope_as = invasion_target_title
+						}
+					}
+					else = {
+						random_realm_county = { save_scope_as = invasion_target_title }
+					}
 				}
 
 				scope:invasion_target_title.duchy = { save_scope_as = text_title }
@@ -732,6 +743,23 @@ fp3_request_turkic_invasion_interaction = {
 
 						show_as_tooltip = {
 							custom_tooltip = fp3_request_turkic_invasion_interaction_accept_notification.desc
+						}
+					}
+				}
+				if = {
+					limit = {
+						top_participant_group:dynastic_cycle ?= {
+							participant_group_type = expansion_movement
+						}
+					}
+					add_secret = {
+						target = scope:recipient
+						type = secret_request_incursion
+					}
+					scope:secondary_recipient = {
+						add_secret = {
+							target = scope:recipient
+							type = secret_request_incursion
 						}
 					}
 				}
@@ -2132,7 +2160,7 @@ fp3_request_honorary_titles_interaction = {
 			value = major_piety_value
 			if = {
 				limit = { # cheaper for the actual liege
-					scope:actor = { #Unop: Root does not exists in interaction
+					scope:actor = {
 						any_vassal = {
 							any_held_title = {
 								this = title:d_sunni
@@ -2442,7 +2470,7 @@ fp3_request_house_unity_change_interaction = {
 							add = medium_unity_loss
 						}
 					}
-					character = scope:actor #Unop: Root does not exists in interaction
+					character = scope:actor
 					desc = clan_unity_caliph_interfered_with_unity.desc
 				}
 			}

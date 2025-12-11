@@ -2261,15 +2261,20 @@ child_personality.7031 = {
 				}
 			}
 		}
-		scope:cook ?= { # Unop: Cook can be undefiend
-			add_opinion = {
-				target = root
-				modifier = thankful_opinion
+		if = {
+			limit = {
+				exists = scope:cook
 			}
-			progress_towards_friend_effect = {
-				CHARACTER = root
-				OPINION = 0
-				REASON = friend_taught_child_compassion
+			scope:cook = {
+				add_opinion = {
+					target = root
+					modifier = thankful_opinion
+				}
+				progress_towards_friend_effect = {
+					CHARACTER = root
+					OPINION = 0
+					REASON = friend_taught_child_compassion
+				}
 			}
 		}
 		ai_chance = {
@@ -2301,9 +2306,14 @@ child_personality.7031 = {
 			remove_character_flag = gluttonous
 			remove_character_flag = compassionate
 		}
-		scope:cook = {
+		if = {
+			limit = {
+				exists = scope:cook
+			}
+			scope:cook = {
 		 	remove_character_flag = peasant_outfit # Unop: Free the poor soul of this outfit for life
-			silent_disappear_ai_if_not_hired_with_flag = yes
+				silent_disappear_ai_if_not_hired_with_flag = yes
+			}
 		}
 	}
 }

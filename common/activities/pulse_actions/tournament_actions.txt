@@ -4,7 +4,7 @@
 			name = contestant
 			activity_is_valid_tournament_contestant = yes
 			location = scope:province
-			has_variable = progress_to_victory #Unop: We want at least someone to have this variable, if not this event will do nothing
+			has_variable = progress_to_victory
 		}
 	}
 
@@ -16,7 +16,7 @@
 			limit = {
 				activity_is_valid_tournament_contestant = yes
 				location = scope:province
-				has_variable = progress_to_victory #Unop: We want at least someone to have this variable, if not this event will do nothing
+				has_variable = progress_to_victory
 			}
 			save_scope_as = first
 		}
@@ -117,6 +117,7 @@ tournament_win_memory = {
 			name = contestant
 			activity_is_valid_tournament_contestant = yes
 			location = scope:province 
+			has_variable = progress_to_victory
 			any_memory = {
 				AND = {
 					has_memory_category = tournament
@@ -124,7 +125,6 @@ tournament_win_memory = {
 					has_memory_category = winner
 				}
 			}
-			has_variable = progress_to_victory #Unop: We want at least someone to have this variable, if not this event will do nothing
 		}
 	}
 
@@ -136,6 +136,7 @@ tournament_win_memory = {
 			limit = { 
 				activity_is_valid_tournament_contestant = yes
 				location = scope:province 
+				has_variable = progress_to_victory
 				any_memory = {
 					AND = {
 						has_memory_category = tournament
@@ -143,7 +144,6 @@ tournament_win_memory = {
 						has_memory_category = winner
 					}
 				}
-				has_variable = progress_to_victory #Unop: We want at least someone to have this variable, if not this event will do nothing
 			}
 			save_scope_as = first
 		}
@@ -467,12 +467,12 @@ tournament_game_of_rhetoric = {
 		any_attending_character = {
 			location = scope:province
 			has_trait = tourney_participant
-			save_temporary_scope_as = unop_first #Unop: Need to make sure the knight won't compete himself
+			save_temporary_scope_as = first_character
 		}
 		any_attending_character = {
 			location = scope:province
 			has_trait = tourney_participant
-			NOT = { scope:unop_first ?= this } #Unop: Need to make sure the knight won't compete himself
+			NOT = { scope:first_character ?= this }
 		}
 	}
 
@@ -490,7 +490,7 @@ tournament_game_of_rhetoric = {
 			limit = { 
 				location = scope:province
 				has_trait = tourney_participant
-				NOT = { scope:first ?= this } #Unop: Need to make sure the knight won't compete himself
+				NOT = { scope:first ?= this }
 			}
 			save_scope_as = second
 		}

@@ -14370,7 +14370,7 @@ ep3_laamp_decision_event.1043 = {
 				scope:laamp_clergy_character = { remove_character_flag = peasant_outfit } #Unop: generic_peasant_character is forcing a peasant outfit on the clergy member and this look terrible
 			}
 			#Remember the clerger
-			1010_remember_vendor_character_effect = { GUILD = clergy CHARACTER = scope:laamp_clergy_character }			
+			1010_remember_vendor_character_effect = { GUILD = clergy CHARACTER = scope:laamp_clergy_character }
 		}
 		#How much gold is in the collect; and how difficult is it?
 		if = {
@@ -15154,6 +15154,12 @@ ep3_laamp_decision_event.1045 = {
 				faith != scope:visiting_location.faith
 			}
 			set_character_faith = scope:visiting_location.faith
+			if = {
+				limit = { 
+					scope:visiting_location.faith = { has_doctrine = doctrine_monotheist }
+				}
+				custom_description_no_bullet = { text = mandala_monotheist_warning_tt }
+			}
 			stress_impact = {
 				base = minor_stress_impact_loss
 				zealous = major_stress_impact_gain
@@ -20908,7 +20914,7 @@ ep3_laamp_decision_event.1120 = {
 ep3_laamp_decision_event.1130 = { #begin city construction
 	type = character_event
 	title = ep3_laamp_decision_event.1130.t
-	window = visit_settlement_window
+	window = big_event_window
 	desc = ep3_laamp_decision_event.1130.desc
 
 	theme = stewardship
@@ -20922,6 +20928,7 @@ ep3_laamp_decision_event.1130 = { #begin city construction
 
 	immediate = {
 		location = {
+			set_variable = laamp_city_construction
 			save_scope_as = city_location
 		}
 	}
@@ -20931,10 +20938,15 @@ ep3_laamp_decision_event.1130 = { #begin city construction
 		custom_tooltip = ep3_laamp_decision_event.1130.a.desc
 		add_character_flag = laamp_city_builder
 		scope:city_location = {
-			begin_create_holding = {
-				type = castle_holding
+			if = {
+				limit = {
+					root = { has_variable = city_construction_is_temple_citadel }
+				}
+				begin_create_holding = { type = temple_citadel_holding }
 			}
-			set_variable = laamp_city_construction
+			else = {
+				begin_create_holding = { type = castle_holding }
+			}
 		}
 
 		trigger_event = {
@@ -20964,10 +20976,19 @@ ep3_laamp_decision_event.1130 = { #begin city construction
 ep3_laamp_decision_event.1131 = { #city is finished, wat do
 	type = character_event
 	title = ep3_laamp_decision_event.1131.t
+	window = big_event_window
 	desc = ep3_laamp_decision_event.1131.desc
 
 	theme = stewardship
 
+	override_background = { 
+		trigger = {
+			location = {
+				culture = { has_building_gfx = southeast_asian_building_gfx }
+			}
+		}
+		reference = mpo_rural_village_asian
+	}
 	override_background = { reference = alley_day }
 
 	left_portrait = {
@@ -20977,7 +20998,10 @@ ep3_laamp_decision_event.1131 = { #city is finished, wat do
 
 	trigger = {
 		scope:city_location = {
-			has_holding_type = castle_holding
+			OR = {
+				has_holding_type = temple_citadel_holding
+				has_holding_type = castle_holding
+			}
 		}
 	}
 
@@ -20987,30 +21011,54 @@ ep3_laamp_decision_event.1131 = { #city is finished, wat do
 			value = current_year
 		}
 
-		laamp_city_builder_construction_effect = {
-			FLAG = mill
-			BUILDING = watermills
+		if = {
+			limit = { 
+				scope:city_location = { has_holding_type = temple_citadel_holding }
+			}
+			laamp_city_builder_construction_effect = {
+				FLAG = mill
+				BUILDING = watermills
+			}
+			laamp_city_builder_construction_effect = {
+				FLAG = temple_citadel
+				BUILDING = temple_citadel
+			}
+			laamp_city_builder_construction_effect = {
+				FLAG = manor
+				BUILDING = farm_estates
+			}
+			laamp_city_builder_construction_effect = {
+				FLAG = spice_plantation
+				BUILDING = spice_plantation
+			}
+			laamp_city_builder_construction_effect = {
+				FLAG = vihara_halls
+				BUILDING = vihara_halls
+			}
 		}
-
-		laamp_city_builder_construction_effect = {
-			FLAG = castle
-			BUILDING = castle
+		else = {
+			laamp_city_builder_construction_effect = {
+				FLAG = mill
+				BUILDING = watermills
+			}
+			laamp_city_builder_construction_effect = {
+				FLAG = castle
+				BUILDING = castle
+			}
+			laamp_city_builder_construction_effect = {
+				FLAG = manor
+				BUILDING = farm_estates
+			}
+			laamp_city_builder_construction_effect = {
+				FLAG = workshops
+				BUILDING = workshops
+			}
+			laamp_city_builder_construction_effect = {
+				FLAG = prayer_hall
+				BUILDING = monastic_schools
+			}
 		}
-
-		laamp_city_builder_construction_effect = {
-			FLAG = manor
-			BUILDING = farm_estates
-		}
-
-		laamp_city_builder_construction_effect = {
-			FLAG = guilds
-			BUILDING = guild_halls
-		}
-
-		laamp_city_builder_construction_effect = {
-			FLAG = prayer_hall
-			BUILDING = monastic_schools
-		}
+		
 	}
 
 	on_trigger_fail = {
@@ -21018,9 +21066,7 @@ ep3_laamp_decision_event.1131 = { #city is finished, wat do
 			limit = {
 				scope:city_location = { #somehow, the city is still being built
 					has_ongoing_construction = yes
-					NOT = {
-						has_holding = yes
-					}
+					has_holding = no
 				}
 			}
 			trigger_event = {
@@ -21033,6 +21079,10 @@ ep3_laamp_decision_event.1131 = { #city is finished, wat do
 	option = { #well, actually imma get the whole county
 		name = ep3_laamp_decision_event.1131.a
 
+		set_variable = {
+			name = holding_barony
+			value = scope:city_location.barony
+		}
 		add_pressed_claim = scope:city_location.county
 		add_pressed_claim = scope:city_location.barony
 		start_war = {
@@ -21058,6 +21108,8 @@ ep3_laamp_decision_event.1131 = { #city is finished, wat do
 			months = { 1 1 }
 		}
 		remove_character_flag = laamp_city_builder
+		remove_variable = city_construction_is_temple_citadel
+		remove_variable = city_construction_is_castle
 
 		ai_chance = {
 			base = 10
@@ -21065,18 +21117,34 @@ ep3_laamp_decision_event.1131 = { #city is finished, wat do
 	}
 
 	after = {
-		remove_character_flag = laamp_city_builder_guilds
-		remove_character_flag = laamp_city_builder_guilds_upgrade
+		remove_character_flag = laamp_city_builder_mill
+		remove_character_flag = laamp_city_builder_mill_upgrade
+		remove_character_flag = laamp_city_builder_temple_citadel
+		remove_character_flag = laamp_city_builder_temple_citadel_upgrade
 		remove_character_flag = laamp_city_builder_castle
 		remove_character_flag = laamp_city_builder_castle_upgrade
 		remove_character_flag = laamp_city_builder_manor
 		remove_character_flag = laamp_city_builder_manor_upgrade
+		remove_character_flag = laamp_city_builder_spice_plantation
+		remove_character_flag = laamp_city_builder_spice_plantation_upgrade
+		remove_character_flag = laamp_city_builder_workshops
+		remove_character_flag = laamp_city_builder_workshops_upgrade
+		remove_character_flag = laamp_city_builder_vihara_halls
+		remove_character_flag = laamp_city_builder_vihara_halls_upgrade
 		remove_character_flag = laamp_city_builder_prayer_hall
 		remove_character_flag = laamp_city_builder_prayer_hall_upgrade
-		remove_character_flag = laamp_city_builder_mill
-		remove_character_flag = laamp_city_builder_mill_upgrade	
 	}
 	
+}
+
+scripted_trigger 1133_holding_still_under_construction_trigger = {
+	scope:city_location = {
+		has_ongoing_construction = yes
+		NOR = {
+			has_holding_type = temple_citadel_holding
+			has_holding_type = castle_holding
+		}
+	}
 }
 
 ep3_laamp_decision_event.1133 = { #get a mill
@@ -21095,12 +21163,7 @@ ep3_laamp_decision_event.1133 = { #get a mill
 	}
 
 	trigger = {
-		scope:city_location = {
-			has_ongoing_construction = yes
-			NOT = {
-				has_holding_type = castle_holding
-			}
-		}
+		1133_holding_still_under_construction_trigger = yes
 		OR = {
 			stewardship >= 18
 			has_trait = architect
@@ -21178,12 +21241,7 @@ ep3_laamp_decision_event.1134 = { #get more settlers, main building upgrade
 	}
 
 	trigger = {
-		scope:city_location = {
-			has_ongoing_construction = yes
-			NOT = {
-				has_holding_type = castle_holding
-			}
-		}
+		1133_holding_still_under_construction_trigger = yes
 		OR = {
 			piety_level >= 3
 			prestige_level >= 3
@@ -21199,11 +21257,25 @@ ep3_laamp_decision_event.1134 = { #get more settlers, main building upgrade
 
 	option = { #cool
 		name = ep3_laamp_decision_event.1134.a
-		add_character_flag = laamp_city_builder_castle
-		scope:city_location = {
-			show_as_tooltip = { add_building = castle_02 }
+		if = {
+			limit = { has_variable = city_construction_is_temple_citadel }
+			add_character_flag = laamp_city_builder_temple_citadel
+			scope:city_location = {
+				show_as_tooltip = { add_building = temple_citadel_02 }
+			}
 		}
-		remove_short_term_gold = 20
+		else = {
+			add_character_flag = laamp_city_builder_castle
+			scope:city_location = {
+				show_as_tooltip = { add_building = castle_02 }
+			}
+		}
+		remove_short_term_gold = {
+			value = {
+				add = medium_gold_value
+				multiply = 2
+			}
+		} 
 		if = {
 			limit = {
 				piety_level >= 3
@@ -21222,11 +21294,25 @@ ep3_laamp_decision_event.1134 = { #get more settlers, main building upgrade
 
 	option = { #go for it!
 		name = ep3_laamp_decision_event.1134.b
-		add_character_flag = laamp_city_builder_castle_upgrade
-		scope:city_location = {
-			show_as_tooltip = { add_building = castle_03 }
+		if = {
+			limit = { has_variable = city_construction_is_temple_citadel }
+			add_character_flag = laamp_city_builder_temple_citadel_upgrade
+			scope:city_location = {
+				show_as_tooltip = { add_building = temple_citadel_03 }
+			}
 		}
-		remove_short_term_gold = 40
+		else = {
+			add_character_flag = laamp_city_builder_castle_upgrade
+			scope:city_location = {
+				show_as_tooltip = { add_building = castle_03 }
+			}
+		}
+		remove_short_term_gold = {
+			value = {
+				add = major_gold_value
+				multiply = 2
+			}
+		}
 		if = {
 			limit = {
 				piety_level >= 3
@@ -21280,17 +21366,12 @@ ep3_laamp_decision_event.1135 = { #argue for more favorable land assigment from 
 	}
 
 	trigger = {
-		scope:city_location = {
-			has_ongoing_construction = yes
-			NOT = {
-				has_holding_type = castle_holding
-			}
-		}
+		1133_holding_still_under_construction_trigger = yes
 		scope:city_location.county.holder = {
 			reverse_opinion = {
-					target = root
-					value >= 40
-				}
+				target = root
+				value >= 40
+			}
 		}
 		NOR = {
 			scope:city_location = {
@@ -21361,7 +21442,7 @@ ep3_laamp_decision_event.1135 = { #argue for more favorable land assigment from 
 	}
 }
 
-ep3_laamp_decision_event.1136 = { #utilize connections, get guildhall
+ep3_laamp_decision_event.1136 = { #utilize connections, get merchant building
 	type = character_event
 	title = ep3_laamp_decision_event.1136.t
 	window = visit_settlement_window
@@ -21379,12 +21460,7 @@ ep3_laamp_decision_event.1136 = { #utilize connections, get guildhall
 	}
 
 	trigger = {
-		scope:city_location = {
-			has_ongoing_construction = yes
-			NOT = {
-				has_holding_type = castle_holding
-			}
-		}
+		1133_holding_still_under_construction_trigger = yes
 		prestige_level >= 3
 	}
 
@@ -21397,10 +21473,17 @@ ep3_laamp_decision_event.1136 = { #utilize connections, get guildhall
 
 	option = { #cool
 		name = ep3_laamp_decision_event.1136.a
-		add_character_flag = laamp_city_builder_guilds
-		show_as_tooltip = {
+		if = {
+			limit = { has_variable = city_construction_is_temple_citadel }
+			add_character_flag = laamp_city_builder_spice_plantation
 			scope:city_location = {
-				add_building = guild_halls_02 #Unop: laamp_city_builder_construction_effect is building the _02 building not _01
+				show_as_tooltip = { add_building = spice_plantation_02 } #Unop: laamp_city_builder_construction_effect is building the _02 building not _01
+			}
+		}
+		else = {
+			add_character_flag = laamp_city_builder_workshops
+			scope:city_location = {
+				show_as_tooltip = { add_building = workshops_02 } #Unop: laamp_city_builder_construction_effect is build
 			}
 		}
 		add_prestige = -400
@@ -21414,10 +21497,17 @@ ep3_laamp_decision_event.1136 = { #utilize connections, get guildhall
 
 	option = { #go for it!
 		name = ep3_laamp_decision_event.1136.b
-		add_character_flag = laamp_city_builder_guilds_upgrade
-		show_as_tooltip = {
+		if = {
+			limit = { has_variable = city_construction_is_temple_citadel }
+			add_character_flag = laamp_city_builder_spice_plantation_upgrade
 			scope:city_location = {
-				add_building = guild_halls_03
+				show_as_tooltip = { add_building = spice_plantation_03 }
+			}
+		}
+		else = {
+			add_character_flag = laamp_city_builder_workshops_upgrade
+			scope:city_location = {
+				show_as_tooltip = { add_building = workshops_03 }
 			}
 		}
 		add_prestige = -600
@@ -21461,21 +21551,23 @@ ep3_laamp_decision_event.1137 = { #utilize connections, get prayer hall
 	}
 
 	trigger = {
-		scope:city_location = {
-			has_ongoing_construction = yes
-			NOT = {
-				has_holding_type = castle_holding
-			}
-		}
+		1133_holding_still_under_construction_trigger = yes
 		piety_level >= 3
 	}
 
 	option = { #cool
 		name = ep3_laamp_decision_event.1137.a
-		add_character_flag = laamp_city_builder_prayer_hall
-		show_as_tooltip = {
+		if = {
+			limit = { has_variable = city_construction_is_temple_citadel }
+			add_character_flag = laamp_city_builder_vihara_halls
 			scope:city_location = {
-				add_building = monastic_schools_02 #Unop: laamp_city_builder_construction_effect is building the _02 building not _01
+				show_as_tooltip = { add_building = vihara_halls_01 }
+			}
+		}
+		else = {
+			add_character_flag = laamp_city_builder_prayer_hall
+			scope:city_location = {
+				show_as_tooltip = { add_building = monastic_schools_02 } #Unop: laamp_city_builder_construction_effect is building the _02 building not _01
 			}
 		}
 		add_piety = -400
@@ -21489,10 +21581,17 @@ ep3_laamp_decision_event.1137 = { #utilize connections, get prayer hall
 
 	option = { #go for it!
 		name = ep3_laamp_decision_event.1137.b
-		add_character_flag = laamp_city_builder_prayer_hall_upgrade
-		show_as_tooltip = {
+		if = {
+			limit = { has_variable = city_construction_is_temple_citadel }
+			add_character_flag = laamp_city_builder_vihara_halls_upgrade
 			scope:city_location = {
-				add_building = monastic_schools_03
+				show_as_tooltip = { add_building = vihara_halls_03 }
+			}
+		}
+		else = {
+			add_character_flag = laamp_city_builder_prayer_hall_upgrade
+			scope:city_location = {
+				show_as_tooltip = { add_building = monastic_schools_03 }
 			}
 		}
 		add_piety = -600

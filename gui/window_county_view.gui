@@ -588,34 +588,38 @@ window = {
 						margin_left = 5
 						margin_bottom = 10
 
+						spacing = 2
+
 						text_single = {
 							layoutpolicy_horizontal = expanding
+							autoresize = no
+							
 							text = "HOLDING_VIEW_COUNTY_HOLDER"
 							default_format = "#low"
 						}
 
-						text_multi = {
+						text_single = {
 							datacontext = "[HoldingView.GetCountyTitle.GetHolder]"
 							visible = "[And(Character.HasRelationTo( GetPlayer ), Not(Character.IsPlayer))]"
+							
 							layoutpolicy_horizontal = expanding
+							autoresize = no
 
 							text = "[Character.GetRelationToString( GetPlayer )]"
-							autoresize = yes
-							max_width = 170
-
+							
 							tooltip = "EXTENDED_RELATIONS_TOOLTIP"
 
 						}
 
 						text_multi = {
 							datacontext = "[HoldingView.GetCountyTitle.GetHolder]"
+							
 							layoutpolicy_horizontal = expanding
+							autoresize = no
+							size = { 230 60 }
 
 							text = "[Character.GetShortUINameNoTooltip|U]"
-							autoresize = yes
 							default_format = "#high"
-							max_width = 170
-
 						}
 
 						expand = {}
@@ -1785,11 +1789,10 @@ window = {
 							datacontext = "[HoldingView.GetGUISpecialBuilding]"
 							visible = "[And(HoldingView.HasSpecialBuildingSlot, HoldingView.GetHolding.GetType.HasParameter('no_buildings'))]"
 
-							button_standard = {
+							highlight_icon = {
 								size = { 100% 100% }
-								texture = "gfx/interface/buttons/button_special_building.dds"
-								alwaystransparent = yes
-								spriteborder = { 20 20 }
+
+								using = Special_Building_Texture
 							}
 						}
 					}
@@ -2042,6 +2045,7 @@ window = {
 												alwaystransparent = yes
 												spriteType = Corneredtiled
 												spriteborder = { 18 18 }
+												framesize = { 252 80 }
 
 												modify_texture = {
 													texture = "gfx/interface/colors/gold.dds"
@@ -2063,10 +2067,9 @@ window = {
 										blockoverride "building_frame" {
 											icon = {
 												size = { 100% 100% }
-												texture = "gfx/interface/buttons/button_special_building.dds"
 												alwaystransparent = yes
-												spriteType = Corneredtiled
-												spriteborder = { 18 18 }
+
+												using = Special_Building_Texture												
 
 												modify_texture = {
 													texture = "gfx/interface/colors/gold.dds"
@@ -2092,6 +2095,7 @@ window = {
 												alwaystransparent = yes
 												spriteType = Corneredtiled
 												spriteborder = { 18 18 }
+												framesize = { 252 80 }
 
 												modify_texture = {
 													texture = "gfx/interface/colors/gold.dds"
@@ -3635,4 +3639,15 @@ types CountyViewTypes
 			}
 		}
 	}
+}
+
+
+template Special_Building_Texture 
+{
+	texture = "gfx/interface/buttons/button_special_building.dds"
+
+	spriteType = Corneredtiled
+	spriteborder = { 18 18 }
+
+	framesize = { 252 80 }
 }

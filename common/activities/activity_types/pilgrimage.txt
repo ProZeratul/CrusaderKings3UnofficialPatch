@@ -78,7 +78,7 @@
 			limit = { 
 				faith = { has_doctrine_parameter = mandatory_hajj }
 				capital_province.barony ?= title:b_makka
-				is_landless_adventurer = no #Unop Enable LAs to pilgrimage to their camp location
+				is_landless_adventurer = no
 			}
 			custom_tooltip = {
 				text = activity_pilgrimage.is_location_valid.capital_is_mecca
@@ -127,7 +127,7 @@
 			#Invalidate flag, until/unless this is fixed in code
 			NOT = { has_variable = pilgrimage_invalidated_illness }
 			#Don't change your capital to be the holy site destination
-			trigger_if = { #Unop Enable LAs to pilgrimage to their camp location
+			trigger_if = {
 				limit = { is_landless_adventurer = no }
 				capital_province.barony != scope:activity.activity_location.barony
 			}
@@ -256,8 +256,8 @@
 				}
 			}
 		}
-		#You can't pilgrimage to your own capital
-		trigger_if = { #Unop Enable LAs to pilgrimage to their camp location
+		#You can't pilgrimage to your own capital - Except for if you are an adventurer because then you travel around all the time anyway
+		trigger_if = {
 			limit = {
 				scope:host = { is_landless_adventurer = no }
 			}
@@ -1018,6 +1018,12 @@
 				}
 				min = minor_gold_value
 			}
+			if = {
+				limit = {
+					has_title = title:e_minister_of_revenue
+				}
+				multiply = 0.85
+			}
 		}
 	}
 
@@ -1223,6 +1229,12 @@
 			divide = 5
 			ceiling = yes 
 			multiply = 5
+			if = {
+				limit = {
+					has_title = title:e_minister_of_revenue
+				}
+				multiply = 0.85
+			}
 		}
 	}
 
@@ -1365,7 +1377,7 @@
 						NAND = {
 							exists = capital_province
 							capital_province.barony = title:b_makka
-							is_landless_adventurer = no #Unop Enable LAs to pilgrimage to their camp location
+							is_landless_adventurer = no
 						}
 					}
 				}
@@ -1910,6 +1922,34 @@
 							add = 1
 						}	
 					}
+					
+					# Bonus wandering XP from travel_events_bp3.95
+					if = {
+						limit = {
+							has_variable_list = holy_site_dreams
+							is_target_in_variable_list = {
+								name = holy_site_dreams
+								target = root.location.barony
+							}
+						}
+						send_interface_message = {
+							type = send_interface_message_good
+							title = travel_events_bp3.95.t
+							left_icon = root
+
+							if = {
+								limit = {
+									has_lifestyle = wanderer_lifestyle
+								}
+								add_wanderer_lifestyle_xp = 500
+							}
+							stress_impact = { 
+								base = major_stress_impact_loss 
+								zealous = medium_stress_impact_loss
+							}
+							add_piety = major_piety_gain
+						}
+					}
 				
 					#Arrival events - where Pilgrims gain their Pilgrim trait
 					#We have the Obligatory option selected - we skip the destination events
@@ -2045,10 +2085,9 @@
 
 	can_be_activity_guest = {
 		age > 5
-		#Unop Pilgrimage guests should share your religion (or have a flag for the events that are adding other faith char)
 		OR = {
 			faith.religion = scope:host.faith.religion
-			has_character_flag = unop_force_join_pilgrimage
+			current_travel_plan ?= { travel_plan_owner = scope:host } #When people join you on the way there.
 		}
 	}
 
@@ -2859,7 +2898,11 @@
 		trigger = {
 			scope:host = {
 				faith.religion = {
-					is_in_family = rf_eastern
+					OR = {
+						is_in_family = rf_eastern
+						is_in_family = rf_sinitic
+						this = religion:shintoism_religion
+					}
 				}
 				culture = {
 					has_graphical_east_asia_culture_group_trigger = yes
@@ -2875,6 +2918,19 @@
 		texture = "gfx/interface/illustrations/event_scenes/ep3_holysite_orthodox.dds"
 		environment = "environment_ep3_holysite_orthodox"
 		ambience = "event:/DLC/EP3/SFX/Events/Event_Images/ep3_evn_eventimage_orthodox_holy_site"
+	}
+	background = {
+		trigger = {
+			activity_location.culture = {
+				OR = {
+					has_graphical_mena_culture_group_trigger = yes
+					has_graphical_iranian_culture_group_trigger = yes
+				}
+			}
+		}
+		texture = "gfx/interface/illustrations/event_scenes/ep2_holysite_mena.dds"
+		environment = "environment_generic_holy_site_mena"
+		ambience = "event:/SFX/Events/Backgrounds/town_market_middleeastern_day"
 	}
 	background = {
 		trigger = {

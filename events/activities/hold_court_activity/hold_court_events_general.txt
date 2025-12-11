@@ -10449,9 +10449,9 @@ hold_court.6160 = {
 				short_term_gold >= major_gold_value
 			}
 		}
-		pay_short_term_gold = {
+		pay_treasury_or_gold = {
 			target = scope:6160_vassal
-			gold = medium_gold_value
+			value = medium_treasury_or_gold_value
 		}
 		add_hook = {
 			type = indebted_hook
@@ -10498,9 +10498,9 @@ hold_court.6160 = {
 		scope:6160_vassal = {
 			remove_hook = { target = root }
 		}
-		pay_short_term_gold = {
+		pay_treasury_or_gold = {
 			target = scope:6160_vassal
-			gold = medium_gold_value
+			value = medium_treasury_or_gold_value
 		}
 		reverse_add_opinion = {
 			target = scope:6160_vassal
@@ -10544,9 +10544,9 @@ hold_court.6160 = {
 				short_term_gold >= major_gold_value
 			}
 		}
-		pay_short_term_gold = {
+		pay_treasury_or_gold = {
 			target = scope:6160_vassal
-			gold = medium_gold_value
+			value = medium_treasury_or_gold_value
 		}
 		add_prestige = major_prestige_gain
 		change_current_court_grandeur = medium_court_grandeur_gain
@@ -10597,9 +10597,9 @@ hold_court.6160 = {
 				short_term_gold >= major_gold_value
 			}
 		}
-		pay_short_term_gold = {
+		pay_treasury_or_gold = {
 			target = scope:6160_vassal
-			gold = major_gold_value
+			value = major_treasury_or_gold_value
 		}
 		add_piety = major_piety_gain
 		change_current_court_grandeur = major_court_grandeur_gain
@@ -17214,13 +17214,13 @@ hold_court.8090 = {
 		}
 		scope:vassal = {
 			set_variable = unop_prevent_bad_court_position #Unop So the option D to give a bad position is always available
-			court_position_generator_effect = { VAR = target EMPLOYER = root }
+			court_position_generator_effect = { VAR = target EMPLOYER = root ONLY_EMPTY = yes }
 			if = { #Unop: There is a "scope pollution" where old_holder is use in the court_position_generator_assignment_effect and so will conflict if it is already defined here
 				limit = { exists = scope:old_holder }
 				scope:old_holder = { save_scope_as = unop_hold_court_8090_target }
 				clear_saved_scope = old_holder
 			}
-			court_position_generator_effect = { VAR = backup EMPLOYER = root }
+			court_position_generator_effect = { VAR = backup EMPLOYER = root ONLY_EMPTY = yes }
 			if = { #Unop: There is a "scope pollution" where old_holder will also be defined in the court_position_generator_assignment_effect and so will conflict if it is already defined here
 				limit = { exists = scope:old_holder }
 				scope:old_holder = { save_scope_as = unop_hold_court_8090_backup }
@@ -24989,6 +24989,7 @@ scripted_trigger hold_court_8210_vassal_trigger = {
 		any_held_title = {
 			title_tier = county
 			any_neighboring_county = {
+				NOT = { this = root.capital_county }
 				holder = {
 					this = root
 					NOR = {
