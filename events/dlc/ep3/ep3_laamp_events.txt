@@ -217,32 +217,32 @@ ep3_laamps.0002 = {
 			save_scope_value_as = {
 				name = ai_laamp_chance
 				value = ep3_laamp_chance_score_value
-				}
-				random = {
-				chance = scope:ai_laamp_chance
-					# Plus for our memory variable.
-					ordered_in_list = {
-						list = target_titles
-						order_by = tier
-						position = 0
-						save_scope_as = lost_primary_title
-					}
-					if = {
-						limit = { exists = var:deposed_primary_title }
-						create_landless_adventurer_title_effect = {
-							REASON = flag:deposition
-							FLAVOR_CHAR = scope:attacker
-						}
-					}
-					else = {
-						create_landless_adventurer_title_effect = {
-							REASON = flag:conquest
-							FLAVOR_CHAR = scope:attacker
-						}
-					}
-					scope:winner = { trigger_event = ep3_laamps.0003 }
-				}
 			}
+			random = {
+				chance = scope:ai_laamp_chance
+				# Plus for our memory variable.
+				ordered_in_list = {
+					list = target_titles
+					order_by = tier
+					position = 0
+					save_scope_as = lost_primary_title
+				}
+				if = {
+					limit = { exists = var:deposed_primary_title }
+					create_landless_adventurer_title_effect = {
+						REASON = flag:deposition
+						FLAVOR_CHAR = scope:attacker
+					}
+				}
+				else = {
+					create_landless_adventurer_title_effect = {
+						REASON = flag:conquest
+						FLAVOR_CHAR = scope:attacker
+					}
+				}
+				scope:winner = { trigger_event = ep3_laamps.0003 }
+			}
+		}
 		# Player event
 		else = {
 			if = {
