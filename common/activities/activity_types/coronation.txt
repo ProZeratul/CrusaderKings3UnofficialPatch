@@ -4558,11 +4558,11 @@
 				activity_location = { NOT = { has_holding_type = church_holding } }
 				scope:host = {
 					OR = {
-						location = province:b_constantinople
+						location = title:b_constantinople.title_province #Unop: keep tiger quiet
 						AND = {
 							primary_title = title:e_byzantium
 							title:c_byzantion = {
-								any_de_jure_top_liege = { this = root } 
+								any_de_jure_top_liege = { this = scope:host } #Unop: root is an activity here, so use host scope
 							}
 						}
 					}
