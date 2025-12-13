@@ -421,30 +421,30 @@ defenders_of_highgod_decision = {
 		show_as_tooltip = { defenders_of_highgod_decision_effects = yes } #Actually applied in east_europe.0010 - prestige, laws, title, innovation effects
 
 		#Events
-		if = {
-			limit = {
-				faith = {
-					any_holy_site = {
-						count > 1
-						county.holder = root
-						title_province = { has_special_building = no  }
-					}
-				}
-			}	
-			trigger_event = east_europe.0015
-		}
-		else = {
-			faith = {
-				random_holy_site = {
-					limit = {
-						county.holder = root
-						title_province = { has_special_building = no  }
-					}
-					save_scope_as = holy_site
-				}
-			}
+		#if = { #Unop: As we are now using the widget in the decision to allow county selection, the events below are obsolete, leaving only the call to east_europe.0016 to actually build the building
+		#	limit = {
+		#		faith = {
+		#			any_holy_site = {
+		#				count > 1
+		#				county.holder = root
+		#				title_province = { has_special_building = no  }
+		#			}
+		#		}
+		#	}	
+		#	trigger_event = east_europe.0015
+		#}
+		#else = {
+		#	faith = {
+		#		random_holy_site = {
+		#			limit = {
+		#				county.holder = root
+		#				title_province = { has_special_building = no  }
+		#			}
+		#			save_scope_as = holy_site
+		#		}
+		#	}
 			trigger_event = east_europe.0016
-		}
+		#}
 		#Event to every player (east_europe.0017) is actually send through east_europe.0016 to make sure the right holy site scope is set
 
 		#Can only happen once per faith
