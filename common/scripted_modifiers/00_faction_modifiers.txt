@@ -3726,13 +3726,13 @@ ceremonial_claimant_faction_modifiers = {
 			exists = $FACTION_TARGET$
 			exists = $FACTION_CLAIMANT$
 			is_powerful_vassal = yes
-			OR = {
+			OR = { #Unop: To fix Error: is_close_family_of trigger [ character (is_close_relative (target character)) was null ]
 				is_close_family_of = $FACTION_CLAIMANT$
-				is_close_family_of = $FACTION_CLAIMANT$.primary_spouse
+				$FACTION_CLAIMANT$.primary_spouse ?= { is_close_family_of = prev }
 			}
-			NOR = {
+			NOR = { #Unop: Same as above
 				is_close_family_of = $FACTION_TARGET$
-				is_close_family_of = $FACTION_TARGET$.primary_spouse
+				$FACTION_TARGET$.primary_spouse ?= { is_close_family_of = prev }
 			}
 		}
 		who = root
