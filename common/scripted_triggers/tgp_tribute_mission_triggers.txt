@@ -147,9 +147,13 @@ tribute_mission_is_available_eunuch_trigger = {
 	NOT = {
 		faith = { has_doctrine = doctrine_theocracy_temporal }
 	}
-	trigger_if = {
-		limit = { exists = root.cp:councillor_court_chaplain }
-		NOT = { this = root.cp:councillor_court_chaplain }
+	trigger_if = { #Unop: Tweak this so it's useable by both event & interaction (since root does not exists in interaction)
+		limit = { exists = root }
+		NOT = { root.cp:councillor_court_chaplain ?= this }
+	}
+	trigger_else_if = {
+		limit = { exists = scope:actor } #Unop: Extra care
+		NOT = { scope:actor.cp:councillor_court_chaplain ?= this }
 	}
 	has_any_disease_trigger = no
 }

@@ -78,7 +78,7 @@ determine_if_contributed_and_save_scope_effect = {
 ### Capital 01 Breakdown Effects ###
 mandala_contributor_minor_rite_reward_effect = {
 	add_legitimacy = mandala_contribution_minor_legitimacy_reward
-	add_piety_experience = mandala_contribution_medium_dynasty_reward
+	add_piety_experience = mandala_contribution_medium_piety_reward #Unop: Use piety reward not dynasty reward
 }
 contributed_rites_of_worthiness_effect = {
 	custom_description_no_bullet = { text = contributed_rite_of_worthiness }
@@ -93,7 +93,7 @@ contributed_slabs_of_sandstone_effect = {
 
 mandala_contributor_laterite_blocks_reward_effect = {
 	add_prestige = mandala_contribution_medium_prestige_reward
-	add_piety_experience = mandala_contribution_minor_dynasty_reward
+	add_piety_experience = mandala_contribution_minor_piety_reward #Unop: Use piety reward not dynasty reward
 }
 contributed_laterite_blocks_effect = {
 	custom_description_no_bullet = { text = contributed_laterite_blocks }
@@ -259,7 +259,7 @@ mandala_contributor_tiles_reward_effect = {
 			multiply = 5
 		}
 	}
-	add_piety_experience = mandala_contribution_medium_dynasty_reward
+	add_piety_experience = mandala_contribution_medium_piety_reward #Unop: Use piety reward not dynasty reward
 }
 contributed_tiles_effect = {
 	custom_description_no_bullet = { text = contributed_tiles }
@@ -397,7 +397,7 @@ check_and_reward_contributions_02_effect = {
 ### Capital 03 Breakdown Effects ###
 mandala_contributor_medium_rite_reward_effect = {
 	add_legitimacy = mandala_contribution_medium_legitimacy_reward
-	add_piety_experience = mandala_contribution_major_dynasty_reward
+	add_piety_experience = mandala_contribution_major_piety_reward #Unop: Use piety reward not dynasty reward
 }
 contributed_rites_of_worthiness_02_effect = {
 	custom_description_no_bullet = { text = contributed_rite_of_worthiness }
@@ -457,7 +457,7 @@ mandala_contributor_divine_statues_reward_effect = {
 				multiply = 1.5
 			}
 		}
-		add_piety_experience = mandala_contribution_medium_dynasty_reward
+		add_piety_experience = mandala_contribution_medium_piety_reward #Unop: Use piety reward not dynasty reward
 	}
 	if = {
 		limit = { exists = scope:province }
@@ -738,7 +738,7 @@ mandala_contributor_gilded_shrines_reward_effect = {
 				multiply = 1.5
 			}
 		}
-		add_piety_experience = mandala_contribution_medium_dynasty_reward
+		add_piety_experience = mandala_contribution_medium_piety_reward #Unop: Use piety reward not dynasty reward
 	}
 	if = {
 		limit = { exists = scope:province }
@@ -3407,6 +3407,8 @@ mandala_no_longer_polytheist_effect = {
 			faith = { 
 				NOT = { has_doctrine = doctrine_polytheist }
 			}
+			is_landed = yes #Unop: Error: change_government effect [ Character needs to be a ruler to change government ]
+			is_ruler = yes #Unop add_realm_law_skip_effects effect [ Trying to add law to character '...' who is not a ruler ]
 		}
 		convert_whole_realm_to_feudalism_effect = yes
 		hidden_effect = {

@@ -365,7 +365,7 @@ tgp_japan_general.8800 = {
 					}
 					create_character = {
 						template = new_warrior_character
-						gender_female_chance = root_faith_dominant_gender_adjusted_female_chance
+						#gender_female_chance = root_faith_dominant_gender_adjusted_female_chance #Unop: Duplicated below with another value keeping the lower defined.
 						employer = root
 						faith = root.faith
 						culture = root.culture
@@ -901,7 +901,7 @@ tgp_japan_general.9300 = {
 		scope:liege = {
 			if = {
 				limit = { NOT = { exists = scope:background_throne_room_scope } }
-				save_scope_as background_throne_room_scope
+				save_scope_as = background_throne_room_scope #Unop: Fix missing '=' sign between
 			}
 		}
 	}

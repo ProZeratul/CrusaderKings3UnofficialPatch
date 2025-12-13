@@ -2270,7 +2270,7 @@ tgp_japan_yearly_events.1210 = {
 				}
 				order_by = {
 					value = 0
-					subtract = capital_province.num_buildings
+					subtract = title_province.num_buildings #Unop: capital_province is for character, but we are in a list of landed_titles
 				}
 				save_scope_as = gift_county
 			}
@@ -2875,7 +2875,16 @@ tgp_japan_yearly_events.1225 = {
 		}
 		every_court_position_holder = {
 			type = court_poet_court_position
+			#type = court_tutor_court_position #Unop ck3-tiger Use separate effects for other types
+			#type = court_scholar_court_position
+			add_to_list = potential_poet_influencer
+		}
+		#Unop ck3-tiger Use separate effects for other types
+		every_court_position_holder = {
 			type = court_tutor_court_position
+			add_to_list = potential_poet_influencer
+		}
+		every_court_position_holder = {
 			type = court_scholar_court_position
 			add_to_list = potential_poet_influencer
 		}

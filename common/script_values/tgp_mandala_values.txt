@@ -133,8 +133,31 @@ mandala_contribution_minor_dynasty_reward = {
 		multiply = 5
 	}
 }
-mandala_contribution_medium_dynasty_reward = { value = medium_piety_value } #medium_piety_value
+mandala_contribution_medium_dynasty_reward = { value = medium_dynasty_prestige_value } #medium_piety_value #Unop: Use the intended value
 mandala_contribution_major_dynasty_reward = { 
+	value = {
+		add = medium_dynasty_prestige_value #Unop: Use the intended value
+		multiply = 2
+		#Rounds up to the closest number divisible by 5
+		divide = 5
+		ceiling = yes
+		multiply = 5
+	}
+}
+
+#Unop: Added dedicated Piety rewards
+mandala_contribution_minor_piety_reward = {
+	value = {
+		add = minor_piety_value
+		divide = 2
+		#Rounds up to the closest number divisible by 5
+		divide = 5
+		ceiling = yes
+		multiply = 5
+	}
+}
+mandala_contribution_medium_piety_reward = { value = medium_piety_value }
+mandala_contribution_major_piety_reward = {
 	value = {
 		add = medium_piety_value
 		multiply = 2
@@ -144,6 +167,7 @@ mandala_contribution_major_dynasty_reward = {
 		multiply = 5
 	}
 }
+
 #Legitimacy
 mandala_contribution_miniscule_legitimacy_reward = {
 	value = minor_legitimacy_gain
