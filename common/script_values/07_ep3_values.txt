@@ -413,7 +413,7 @@ granary_modifier_scaling_value = {
 				}
 				add = {
 					value = 100
-					subtract = domicile.domicile_location.county.county_control
+					subtract = domicile_location.county.county_control #Unop ck3-tiger Use correct scope
 					multiply = 0.1
 					round = yes
 					min = 1
@@ -4162,6 +4162,7 @@ appointment_investment_cap = {
 						add = 40
 					}
 					else_if = { #Unop: No building have this ATM, but it exists in the YML, adding it here just in case to be future proof
+						#tiger-ignore(key=missing-item)
 						limit = { has_domicile_parameter = estate_increase_house_member_investment_cap_5 }
 						add = 50
 					}

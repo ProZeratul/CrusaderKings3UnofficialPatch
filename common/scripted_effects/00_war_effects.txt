@@ -1290,6 +1290,13 @@ on_claimant_faction_war_win_common = {
 		save_scope_as = the_claimant
 	}
 	
+	#Unop ck3-tiger Set faction_targeted_title from faction special_title
+	$ATTACKER$.joined_faction ?= {
+		special_title = {
+			save_scope_as = faction_targeted_title
+		}
+	}
+
 	# If the claimant is the prisoner of the defender, free the claimant (it doesn't make much sense to leave the new king in the old king's dungeon)
 	scope:the_claimant = {
 		if = {
@@ -1356,7 +1363,7 @@ on_claimant_faction_war_win_common = {
 	# Ceremonial Liege
 	if = {
 		limit = {
-			exists = top_liege.primary_title.var:administrative_ui_special_title
+			exists = $DEFENDER$.top_liege.primary_title.var:administrative_ui_special_title #Unop Use correct scope
 			scope:faction_targeted_title = $DEFENDER$.top_liege.primary_title.var:administrative_ui_special_title
 		}
 		$DEFENDER$ = {

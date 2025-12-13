@@ -3152,6 +3152,7 @@ hostile_scheme_base_odds_prediction_guts_value = {
 		}
 		if = {
 			limit = {
+				#tiger-ignore(key=scopes) #Unop ck3-tiger false positive - used for desc selection
 				exists = scope:target.holder
 			}
 			add = {
@@ -5779,8 +5780,8 @@ odds_coup_ceremonial_liege_scheme_misc_value = {
 				scope:owner = {
 					has_character_modifier = tournament_tailor_mixup_scheme_modifier
 					exists = var:tailor_mixup_house
-					exists = scope:target.holder.house
-					var:tailor_mixup_house = scope:target.holder.house
+					exists = scope:target.house #Unop ck3-tiger Use correct scope
+					var:tailor_mixup_house = scope:target.house #Unop ck3-tiger Use correct scope
 				}
 			}
 			add = 8

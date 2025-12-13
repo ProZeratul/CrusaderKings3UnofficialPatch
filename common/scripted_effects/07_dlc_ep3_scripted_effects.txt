@@ -833,7 +833,10 @@ ep3_become_landed_transfer_effect = {
 	}
 	scope:target.holder ?= { save_scope_as = old_holder }
 	if = {
-		limit = { NOT = { exists = scope:old_holder } }
+		limit = {
+			NOT = { exists = scope:old_holder }
+			exists = scope:defender #Unop ck3-tiger Check for this scope before using it
+		}
 		scope:target = {
 			ordered_de_jure_county = {
 				limit = { holder.top_liege = scope:defender.top_liege }
@@ -902,6 +905,7 @@ ep3_become_landed_transfer_effect = {
 	if = {
 		limit = {
 			NOT = { exists = scope:new_capital }
+			exists = scope:defender #Unop ck3-tiger Check for this scope before using it
 		}
 		scope:new_primary_title ?= {
 			ordered_de_jure_county = {
