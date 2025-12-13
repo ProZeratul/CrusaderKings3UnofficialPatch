@@ -220,7 +220,7 @@
 				}
 			}
 		}
-
+		
 		# You cannot call a suzerain against their own tributary
 		trigger_if = {
 			limit = {
@@ -241,7 +241,7 @@
 			}
 		}
 		trigger_else = {}
-
+		
 		# You cannot call a tributary against their suzerain
 		trigger_if = {
 			limit = {
@@ -597,7 +597,7 @@
 			}
 			desc = WONT_FIGHT_SPOUSE_REASON
 		}
-
+		
 		modifier = {  # Refuse call against Suzerain if Obedient
 			add = -1000
 			trigger_if = {
@@ -1342,7 +1342,6 @@ negotiate_alliance_interaction = {
 				limit = {
 					scope:hook = yes
 					has_usable_hook = scope:recipient
-					has_usable_hook = scope:recipient #Unop: Prevent an error in the logs
 				}
 				use_hook = scope:recipient
 			}
@@ -2451,7 +2450,7 @@ perk_alliance_interaction = {
 			is_at_war = no
 			is_imprisoned = no
 		}
-
+		
 		custom_description = {
 			text = "has_already_rejected_renegotiation"
 			subject = scope:recipient
@@ -3465,7 +3464,7 @@ join_war_interaction = {
 			# suzerains can always join their tributaries' defensive wars
 			trigger_else_if = {
 				limit = {
-					scope:recipient = {
+					scope:recipient = { 
 						is_tributary_of_suzerain_or_above = scope:actor
 					}
 				}
@@ -3481,7 +3480,7 @@ join_war_interaction = {
 			# tributaries can always offer to join their direct suzerains' defensive wars
 			trigger_else_if = {
 				limit = {
-					scope:actor = {
+					scope:actor = { 
 						is_tributary_of = scope:recipient
 					}
 				}
@@ -3547,7 +3546,7 @@ join_war_interaction = {
 
 			# recipient is war leader
 			is_war_leader = scope:recipient
-
+			
 			# special exception for tributaries and suzerains to fight for one another
 			trigger_if = {
 				limit = {
