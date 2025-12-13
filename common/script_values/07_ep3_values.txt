@@ -894,8 +894,8 @@ ep3_laamp_chance_score_value = {
 				has_trait_category = fame
 				has_trait_category = lifestyle
 				has_trait_category = commander
-	}
-	}
+			}
+		}
 		add = 3
 	}
 	# Education
@@ -1694,7 +1694,7 @@ governor_efficiency = {
 				divide = 100
 			}
 		}
-
+		
 		# Eparch court position
 		if = {
 			limit = {
@@ -2676,22 +2676,22 @@ task_contract_tier_gold_multiplier_value = {
 	value = 1 # Barons and counts are neutral, so no multiplier needed here.
 	if = {
 		limit = { exists = scope:task_contract.task_contract_employer }
-			# Kings'n'emperors.
-			if = {
+		# Kings'n'emperors.
+		if = {
 			limit = { scope:task_contract.task_contract_employer.highest_held_title_tier >= define:NTaskContract|HIGH_TASK_CONTRACT_TIER }
-				add = 3
-			}
-			# Dukes.
-			else_if = {
+			add = 3
+		}
+		# Dukes.
+		else_if = {
 			limit = { scope:task_contract.task_contract_employer.highest_held_title_tier >= define:NTaskContract|MEDIUM_TASK_CONTRACT_TIER }
-				add = 2
-			}
-			# Courtiers first, as we give them a bit less.
-			else_if = {
+			add = 2
+		}
+		# Courtiers first, as we give them a bit less.
+		else_if = {
 			limit = { scope:task_contract.task_contract_employer.highest_held_title_tier <= 0 }
-				add = 0.5
-				ceiling = yes
-			}
+			add = 0.5
+			ceiling = yes
+		}
 	}
 }
 # How do we multiply the non-cash rewards in a task contract depending on the employer's tier?
@@ -2892,18 +2892,18 @@ task_contract_success_gold_gain_travel_value = {
 	# Lifestyle perks.
 	if = {
 		limit = { exists = scope:task_contract.task_contract_taker }
-	if = {
-		limit = {
-			scope:task_contract.task_contract_taker = { has_perk = at_any_cost_perk }
+		if = {
+			limit = {
+				scope:task_contract.task_contract_taker = { has_perk = at_any_cost_perk }
+			}
+			multiply = 1.25
 		}
-		multiply = 1.25
-	}
-	if = {
-		limit = {
-			scope:task_contract.task_contract_taker = { has_perk = malice_implicit_perk }
+		if = {
+			limit = {
+				scope:task_contract.task_contract_taker = { has_perk = malice_implicit_perk }
+			}
+			multiply = 2
 		}
-		multiply = 2
-	}
 	}
 	# Stuff that NEEDS to stay at the bottom.
 	## Vary our final tally up a bit.
@@ -2975,39 +2975,39 @@ task_contract_success_gold_gain_crime_value = {
 	# Lifestyle perks.
 	if = {
 		limit = { exists = scope:task_contract.task_contract_taker }
-	if = {
-		limit = {
-			scope:task_contract.task_contract_taker = { has_perk = at_any_cost_perk }
+		if = {
+			limit = {
+				scope:task_contract.task_contract_taker = { has_perk = at_any_cost_perk }
+			}
+			multiply = 1.25
 		}
-		multiply = 1.25
-	}
-	if = {
-		limit = {
-			scope:task_contract.task_contract_taker = { has_perk = malice_implicit_perk }
+		if = {
+			limit = {
+				scope:task_contract.task_contract_taker = { has_perk = malice_implicit_perk }
+			}
+			multiply = 2
 		}
-		multiply = 2
-	}
 	}
 	# Stuff that NEEDS to stay at the bottom.
 	## Vary our final tally up a bit.
 	### This time, we add _more_ gold the greedier the employer is — it's a criminal reward, so the greedier they are, the more gold they have available (albeit not to the same degree as the inverse in normal contracts).
 	if = {
 		limit = { exists = scope:task_contract.task_contract_employer }
-	if = {
-		limit = { scope:task_contract.task_contract_employer.ai_greed > 1 }
-		add = {
-			value = scope:task_contract.task_contract_employer.ai_greed
-			multiply = 0.1
+		if = {
+			limit = { scope:task_contract.task_contract_employer.ai_greed > 1 }
+			add = {
+				value = scope:task_contract.task_contract_employer.ai_greed
+				multiply = 0.1
+			}
 		}
-	}
-	### Take it down only a marginal amount for generous chars, as we still want criminal contracts to almost always pay more.
-	else_if = {
-		limit = { scope:task_contract.task_contract_employer.ai_greed < -1 }
-		add = {
-			value = scope:task_contract.task_contract_employer.ai_greed
-			multiply = -0.05
+		### Take it down only a marginal amount for generous chars, as we still want criminal contracts to almost always pay more.
+		else_if = {
+			limit = { scope:task_contract.task_contract_employer.ai_greed < -1 }
+			add = {
+				value = scope:task_contract.task_contract_employer.ai_greed
+				multiply = -0.05
+			}
 		}
-	}
 	}
 	## Plus change the last digit around slightly so the values look a little less robotic.
 	if = {
@@ -3861,8 +3861,8 @@ house_power_score = {
 				add = {
 					value = estate_powerful_family_rating_6_value
 					desc = estate_buildings_desc
-					}
 				}
+			}
 			else_if = {
 				limit = {
 					house_head.domicile ?= { has_domicile_parameter = estate_increase_powerful_family_rating_5 }
@@ -3875,7 +3875,7 @@ house_power_score = {
 			else_if = {
 				limit = {
 					house_head.domicile ?= { has_domicile_parameter = estate_increase_powerful_family_rating_4 }
-					}
+				}
 				add = {
 					value = estate_powerful_family_rating_4_value
 					desc = estate_buildings_desc

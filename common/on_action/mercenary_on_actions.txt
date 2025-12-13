@@ -67,7 +67,7 @@ on_mercenary_company_dismissed = {
 					}	
 				}
 			}
-			mercenary_company_leader ?= {
+			mercenary_company_leader ?= { # Unop: Root is a mercenary company, wee need the leader to have a scope that support variable
 				random = {
 					chance = var:merc_knight_gain_chance
 					scope:old_employer = {
@@ -76,7 +76,7 @@ on_mercenary_company_dismissed = {
 							title = merc_yurt_knights_gained.tt
 							add_courtier = scope:giveaway_knight
 						}
-					}
+					}					
 				}
 				remove_variable = merc_knight_gain_chance 
 			}
