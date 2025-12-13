@@ -766,7 +766,7 @@ temple_scope = {
 		trigger = {
 			scope:background_temple_scope = {
 				OR = {
-					holder ?= { government_has_flag = government_is_nomadic }
+					barony.holder ?= { government_has_flag = government_is_nomadic }
 					religion = religion:tengrism_religion
 					religion = religion:magyar_religion
 					religion = religion:siberian_religion
@@ -885,7 +885,7 @@ temple_scope = {
 						NOT = { faith ?= { has_doctrine_parameter = unreformed } }
 						OR = {
 							culture ?= { has_graphical_india_culture_group_trigger = yes }
-							steppe_building_gfx_use_indian_trigger = yes
+							location ?= {steppe_building_gfx_use_indian_trigger = yes }
 						}
 					}
 				}
@@ -8584,7 +8584,7 @@ throne_room = {
 						AND = {
 							primary_title = title:e_byzantium
 							title:c_byzantion = {
-								any_de_jure_top_liege = { this = scope:bg_override_char } #Unop ck3-tiger Use correct scope
+								any_de_jure_top_liege = { this = root }
 							}
 						}
 					}
@@ -8929,7 +8929,7 @@ throne_room_scope = {
 					AND = {
 						primary_title = title:e_byzantium
 						title:c_byzantion = {
-							any_de_jure_top_liege = { this = scope:background_throne_room_scope } #Unop ck3-tiger Use correct scope
+							any_de_jure_top_liege = { this = root }
 						}
 					}
 				}
@@ -12535,7 +12535,10 @@ ep2_hunt_activity_camp = {
 ep2_wedding_ceremony = {
 	background = {	 #Indian
 		trigger = {
-			scope:activity ?= { has_activity_type = activity_wedding }
+			trigger_if = {
+				limit = { exists = scope:activity }
+				scope:activity ?= { has_activity_type = activity_wedding }
+			}
 			OR = {
 				location.culture ?= { has_graphical_india_culture_group_trigger = yes }
 				location ?= { steppe_building_gfx_use_indian_trigger = yes }
@@ -12547,7 +12550,10 @@ ep2_wedding_ceremony = {
 	}
 	background = {	 #East Asian
 		trigger = {
-			scope:activity ?= { has_activity_type = activity_wedding }
+			trigger_if = {
+				limit = { exists = scope:activity }
+				scope:activity ?= { has_activity_type = activity_wedding }
+			}
 			location ?= {
 				OR = {
 					culture ?= { has_graphical_east_asia_culture_group_trigger = yes }
@@ -12561,7 +12567,10 @@ ep2_wedding_ceremony = {
 	}
 	background = {	 #MENA (also steppes and African )
 		trigger = {
-			scope:activity ?= { has_activity_type = activity_wedding }
+			trigger_if = {
+				limit = { exists = scope:activity }
+				scope:activity ?= { has_activity_type = activity_wedding }
+			}
 			OR = {
 				location.culture ?= { has_graphical_mena_culture_group_trigger = yes }
 				location.culture ?= { has_graphical_steppe_culture_group_trigger = yes }
@@ -16903,7 +16912,7 @@ coronation_activity_background = {
 						AND = {
 							primary_title = title:e_byzantium
 							title:c_byzantion = {
-								any_de_jure_top_liege = { this = scope:activity.activity_host } #Unop ck3-tiger Use correct scope
+								any_de_jure_top_liege = { this = root } 
 							}
 						}
 					}

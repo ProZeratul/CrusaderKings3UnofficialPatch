@@ -133,10 +133,10 @@ mandala_contribution_minor_dynasty_reward = {
 		multiply = 5
 	}
 }
-mandala_contribution_medium_dynasty_reward = { value = medium_dynasty_prestige_value } #medium_piety_value
+mandala_contribution_medium_dynasty_reward = { value = medium_piety_value } #medium_piety_value
 mandala_contribution_major_dynasty_reward = { 
 	value = {
-		add = medium_dynasty_prestige_value
+		add = medium_piety_value
 		multiply = 2
 		#Rounds up to the closest number divisible by 5
 		divide = 5
@@ -144,30 +144,6 @@ mandala_contribution_major_dynasty_reward = {
 		multiply = 5
 	}
 }
-
-#Unop ck3-tiger Piety rewards
-mandala_contribution_minor_piety_reward = {
-	value = {
-		add = 50 # minor_dynasty_prestige_value base (before era scaling)
-		divide = 2
-		#Rounds up to the closest number divisible by 5
-		divide = 5
-		ceiling = yes
-		multiply = 5
-	}
-}
-mandala_contribution_medium_piety_reward = { value = 75 } # medium_dynasty_prestige_value base (before era scaling)
-mandala_contribution_major_piety_reward = {
-	value = {
-		add = 75 # medium_dynasty_prestige_value base (before era scaling)
-		multiply = 2
-		#Rounds up to the closest number divisible by 5
-		divide = 5
-		ceiling = yes
-		multiply = 5
-	}
-}
-
 #Legitimacy
 mandala_contribution_miniscule_legitimacy_reward = {
 	value = minor_legitimacy_gain
@@ -245,6 +221,22 @@ num_subject_friends = {
 	every_tributary = {
 		limit = { has_relation_friend = root }
 		add = 1
+	}
+}
+
+num_years_of_peace_devotion = {
+	value = miniscule_piety_gain
+	add = 5 #Let's not be the same number as the generic boon
+}
+
+num_years_of_peace_devotion_payout = {
+	value = num_years_of_peace_devotion
+	multiply = {
+		if = {
+			limit = { has_variable = serenity_mandala_years_of_non_aggression_war }
+			add = var:serenity_mandala_years_of_non_aggression_war
+		}
+		min = 1
 	}
 }
 
@@ -421,6 +413,11 @@ num_prowess_knights_t4 = 9
 num_prowess_knights_t5 = 12
 
 #Trickster
+num_successful_schemes_devotion_payout = {
+	value = num_years_of_peace_devotion
+	multiply = var:num_successful_schemes
+}
+
 num_trickster_mandala_successful_schemes_t1 = 5
 num_trickster_mandala_successful_schemes_t2 = 10
 num_trickster_mandala_successful_schemes_t3 = 20
@@ -438,6 +435,23 @@ num_trickster_mandala_house_married_to_rulers_t2 = 4
 num_trickster_mandala_house_married_to_rulers_t3 = 6
 num_trickster_mandala_house_married_to_rulers_t4 = 8
 num_trickster_mandala_house_married_to_rulers_t5 = 10
+
+trickster_mandala_house_married_to_rulers = {
+	save_temporary_scope_as = root_scope
+	house = {
+		every_house_member = {
+			every_spouse = {
+				limit = {
+					is_landed = yes
+					top_overlord != scope:root_scope
+					this != scope:root_scope
+					primary_title.tier >= tier_duchy
+				}	
+				add = 1
+			}
+		}
+	}	
+}
 
 num_trickster_mandala_strong_hooks_t2 = 2
 num_trickster_mandala_strong_hooks_t3 = 5

@@ -1283,13 +1283,6 @@ common_faction_modifiers = {
 	}
 	modifier = {
 		add = 500
-		trigger_if = { #Unop ck3-tiger Save scope:faction from scope:actor if not already set
-			limit = {
-				NOT = { exists = scope:faction }
-				exists = scope:actor
-			}
-			scope:actor.joined_faction ?= { save_temporary_scope_as = faction }
-		}
 		confederation.leading_house.house_head.joined_faction ?= scope:faction
 		scope:faction.faction_leader ?= confederation.leading_house.house_head
 		desc = "FACTION_REASON_BLOC_LEADER"
@@ -1297,13 +1290,6 @@ common_faction_modifiers = {
 	modifier = {
 		add = 300
 		desc = FACTION_REASON_DETRACTOR
-		trigger_if = { #Unop ck3-tiger Save scope:faction from scope:actor if not already set
-			limit = {
-				NOT = { exists = scope:faction }
-				exists = scope:actor
-			}
-			scope:actor.joined_faction ?= { save_temporary_scope_as = faction }
-		}
 		has_variable = detractor_faction
 		var:detractor_faction = scope:faction.faction_target
 	}
@@ -3726,13 +3712,13 @@ ceremonial_claimant_faction_modifiers = {
 			exists = $FACTION_TARGET$
 			exists = $FACTION_CLAIMANT$
 			is_powerful_vassal = yes
-			OR = { #Unop: To fix Error: is_close_family_of trigger [ character (is_close_relative (target character)) was null ]
+			OR = {
 				is_close_family_of = $FACTION_CLAIMANT$
-				$FACTION_CLAIMANT$.primary_spouse ?= { is_close_family_of = prev }
+				is_close_family_of = $FACTION_CLAIMANT$.primary_spouse
 			}
-			NOR = { #Unop: Same as above
+			NOR = {
 				is_close_family_of = $FACTION_TARGET$
-				$FACTION_TARGET$.primary_spouse ?= { is_close_family_of = prev }
+				is_close_family_of = $FACTION_TARGET$.primary_spouse
 			}
 		}
 		who = root

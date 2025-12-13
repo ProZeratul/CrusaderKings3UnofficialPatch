@@ -35,7 +35,7 @@ scripted_effect save_genpei_scopes_effect = {
 #Initial Event, explaining the situation
 tgp_genpei_character.1000 = {
 	type = character_event
-	#window = big_event_window #Unop ck3-tiger Duplicated
+	window = big_event_window
 	title = tgp_genpei_character.1000.t
 	desc = tgp_genpei_character.1000.desc
  	window = big_event_window
@@ -106,7 +106,7 @@ tgp_genpei_character.1000 = {
 #After Kiyomori puts his grandson on the throne, a chance to get block leadership
 tgp_genpei_character.1010 = {
 	type = character_event
-	#window = big_event_window #Unop ck3-tiger Duplicated
+	window = big_event_window
 	title = tgp_genpei_character.1010.t
 	desc = {
 		desc = tgp_genpei_character.1010.desc.intro
@@ -157,7 +157,7 @@ tgp_genpei_character.1010 = {
 						dynasty ?= dynasty:japanese_minamoto_seiwa
 						house ?= {
 							exists = house_confederation
-							house_confederation.leading_house ?= house #Unop ck3-tiger Use correct scope
+							confederation.leading_house ?= house
 							NOT = { house_confederation = root.top_liege.house.house_confederation }
 						}
 					}
@@ -257,7 +257,7 @@ tgp_genpei_character.1010 = {
 #Starting event for Yoshinaka that sets the given circumstances/objectives/obstacles/stakes 
 tgp_genpei_character.1090 = {
 	type = character_event
-	#window = big_event_window #Unop ck3-tiger Duplicated
+	window = big_event_window
 	title = tgp_genpei_character.1090.t
 	desc = tgp_genpei_character.1090.desc
  	window = big_event_window
@@ -348,10 +348,6 @@ scripted_effect tgp_yoshinaka_new_house_bloc_effect = {
 			tgp_create_house_bloc_effect = { TYPE = none }
 		}
 	}
-	custom_description = {
-		text = create_house_bloc_effect
-		subject = root
-	}
 	#Then steal members from the Yoritomo's bloc (only if they like him, and order by opinion)
 	scope:yoritomo_minamoto.house.house_confederation = {
 		save_scope_value_as = {
@@ -398,7 +394,7 @@ scripted_effect tgp_yoshinaka_new_house_bloc_effect = {
 }
 tgp_genpei_character.1095 = {
 	type = character_event
-	#window = big_event_window #Unop ck3-tiger Duplicated
+	window = big_event_window
 	title = tgp_genpei_character.1095.t
 	desc = tgp_genpei_character.1095.desc
  	window = big_event_window
@@ -510,7 +506,7 @@ tgp_genpei_character.1095 = {
 #Initial Event, explaining the situation
 tgp_genpei_character.1100 = {
 	type = character_event
-	#window = big_event_window #Unop ck3-tiger Duplicated
+	window = big_event_window
 	title = tgp_genpei_character.1100.t
 	desc = tgp_genpei_character.1100.desc
  	window = big_event_window
@@ -583,11 +579,11 @@ tgp_genpei_character.1100 = {
 		}
 		house = {
 			change_house_relation_effect = {
-				HOUSE = root.dynasty.dynast.house #Unop ck3-tiger Use correct scope
+				HOUSE = root.dynasty.dynast.house
 				VALUE = house_relation_improve_medium_value
 				REASON = friend
 				CHAR = root
-				TARGET_CHAR = root.dynasty.dynast #Unop ck3-tiger Use correct scope
+				TARGET_CHAR = root.dynasty.dynast
 				TITLE = scope:dummy_gender
 			}
 		}
@@ -745,6 +741,14 @@ tgp_genpei_character.2000 = {
 	option = { 
 		name = tgp_genpei_character.2000.c
 		flavor = tgp_genpei_character.2000.c.flavor
+		trigger = {
+			scope:wet_nurse = {
+				would_be_valid_for_court_position = {
+					employer = scope:norihito_tenno
+					court_position = court_physician_court_position
+				}
+			}
+		}
 		remove_short_term_gold = minor_gold_value	 
 		#give wetnurse
 		court_position_grant_effect = { 
@@ -835,7 +839,7 @@ tgp_genpei_character.2010 = {
 						dynasty ?= dynasty:japanese_minamoto_seiwa
 						house ?= {
 							exists = house_confederation
-							house_confederation.leading_house ?= house #Unop ck3-tiger Use correct scope
+							confederation.leading_house ?= house
 							NOT = { house_confederation = root.top_liege.house.house_confederation }
 						}
 					}
@@ -1089,7 +1093,7 @@ tgp_genpei_character.2010 = {
 # Initial EventWar being inevitable in Japan. Slander Kiyomori 2)Ally with Go Shirakawa or 3) Ally with Northern Fujiwara
 tgp_genpei_character.3000 = {
 	type = character_event
-	#window = big_event_window #Unop ck3-tiger Duplicated
+	window = big_event_window
 	title = tgp_genpei_character.3000.t
 	desc = tgp_genpei_character.3000.desc
 	window = big_event_window
@@ -1131,31 +1135,6 @@ tgp_genpei_character.3000 = {
 					target = scope:motofusa_fujiwara
 					opinion = 30
 				}
-			}
-		}
-		if = {
-			limit = {
-				NOT = {
-					any_scheme = { 
-						scheme_type = slander
-						scheme_target_character = scope:kiyomori_taira  
-					}
-				}	
-			}
-			#If we don't have a scheme, let's scheme with a boost
-			start_scheme = {
-				type = slander
-				target_character = scope:kiyomori_taira
-			}		
-		}		
-		custom_tooltip = {
-			text = tgp_japan_yearly_events.1200.b.tt
-			random_scheme = {
-				limit = { 
-					scheme_type = slander
-					scheme_target_character = scope:kiyomori_taira
-				}
-				add_scheme_modifier = { type = bided_my_time }
 			}
 		}
 		stress_impact = {

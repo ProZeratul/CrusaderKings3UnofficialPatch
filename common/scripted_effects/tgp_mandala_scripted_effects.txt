@@ -78,7 +78,7 @@ determine_if_contributed_and_save_scope_effect = {
 ### Capital 01 Breakdown Effects ###
 mandala_contributor_minor_rite_reward_effect = {
 	add_legitimacy = mandala_contribution_minor_legitimacy_reward
-	add_piety_experience = mandala_contribution_medium_piety_reward #Unop ck3-tiger Use piety reward not dynasty reward
+	add_piety_experience = mandala_contribution_medium_dynasty_reward
 }
 contributed_rites_of_worthiness_effect = {
 	custom_description_no_bullet = { text = contributed_rite_of_worthiness }
@@ -93,7 +93,7 @@ contributed_slabs_of_sandstone_effect = {
 
 mandala_contributor_laterite_blocks_reward_effect = {
 	add_prestige = mandala_contribution_medium_prestige_reward
-	add_piety_experience = mandala_contribution_minor_piety_reward #Unop ck3-tiger Use piety reward not dynasty reward
+	add_piety_experience = mandala_contribution_minor_dynasty_reward
 }
 contributed_laterite_blocks_effect = {
 	custom_description_no_bullet = { text = contributed_laterite_blocks }
@@ -188,7 +188,7 @@ contributed_ornate_reliefs_effect = {
 }
 
 mandala_contributor_family_shrine_reward_effect = {
-	dynasty = { add_dynasty_prestige = medium_dynasty_prestige_value }
+	dynasty ?= { add_dynasty_prestige = medium_dynasty_prestige_value }
 	player_heir ?= { add_piety_experience = medium_piety_value }
 }
 contributed_family_shrine_effect = {
@@ -259,7 +259,7 @@ mandala_contributor_tiles_reward_effect = {
 			multiply = 5
 		}
 	}
-	add_piety_experience = mandala_contribution_medium_piety_reward #Unop ck3-tiger Use piety reward not dynasty reward
+	add_piety_experience = mandala_contribution_medium_dynasty_reward
 }
 contributed_tiles_effect = {
 	custom_description_no_bullet = { text = contributed_tiles }
@@ -347,7 +347,7 @@ contributed_decorated_domes_effect = {
 }
 
 mandala_contributor_family_statues_reward_effect = { 
-	dynasty = { add_dynasty_prestige = major_dynasty_prestige_value }
+	dynasty ?= { add_dynasty_prestige = major_dynasty_prestige_value }
 	player_heir ?= {
 		add_piety_experience = major_piety_value
 	}
@@ -397,7 +397,7 @@ check_and_reward_contributions_02_effect = {
 ### Capital 03 Breakdown Effects ###
 mandala_contributor_medium_rite_reward_effect = {
 	add_legitimacy = mandala_contribution_medium_legitimacy_reward
-	add_piety_experience = mandala_contribution_major_piety_reward #Unop ck3-tiger Use piety reward not dynasty reward
+	add_piety_experience = mandala_contribution_major_dynasty_reward
 }
 contributed_rites_of_worthiness_02_effect = {
 	custom_description_no_bullet = { text = contributed_rite_of_worthiness }
@@ -434,7 +434,7 @@ mandala_contributor_corbel_gateways_reward_effect = {
 	}
 	add_piety_experience = {
 		value = {
-			add = mandala_contribution_medium_piety_reward #Unop ck3-tiger Use piety reward not dynasty reward
+			add = mandala_contribution_medium_dynasty_reward
 			multiply = 1.75
 			#Rounds up to the closest number divisible by 5
 			divide = 5
@@ -457,7 +457,7 @@ mandala_contributor_divine_statues_reward_effect = {
 				multiply = 1.5
 			}
 		}
-		add_piety_experience = mandala_contribution_medium_piety_reward #Unop ck3-tiger Use piety reward not dynasty reward
+		add_piety_experience = mandala_contribution_medium_dynasty_reward
 	}
 	if = {
 		limit = { exists = scope:province }
@@ -621,7 +621,7 @@ contributed_gilded_domes_effect = {
 }
 
 mandala_contributor_family_temple_compound_reward_effect = { 
-	dynasty = { add_dynasty_prestige = major_dynasty_prestige_value }
+	dynasty ?= { add_dynasty_prestige = major_dynasty_prestige_value }
 	player_heir ?= {
 		add_piety_experience = massive_piety_value
 	}
@@ -715,7 +715,7 @@ mandala_contributor_zaungdans_reward_effect = {
 	}
 	add_piety_experience = {
 		value = {
-			add = mandala_contribution_medium_piety_reward #Unop ck3-tiger Use piety reward not dynasty reward
+			add = mandala_contribution_medium_dynasty_reward
 			multiply = 1.75
 			#Rounds up to the closest number divisible by 5
 			divide = 5
@@ -738,7 +738,7 @@ mandala_contributor_gilded_shrines_reward_effect = {
 				multiply = 1.5
 			}
 		}
-		add_piety_experience = mandala_contribution_medium_piety_reward #Unop ck3-tiger Use piety reward not dynasty reward
+		add_piety_experience = mandala_contribution_medium_dynasty_reward
 	}
 	if = {
 		limit = { exists = scope:province }
@@ -884,7 +884,7 @@ mandala_contributor_marble_foundation_reward_effect = {
 	}
 	add_piety_experience = {
 		value = {
-			add = mandala_contribution_medium_piety_reward #Unop ck3-tiger Use piety reward not dynasty reward
+			add = mandala_contribution_medium_dynasty_reward
 			multiply = 1.5
 			#Rounds up to the closest number divisible by 5
 			divide = 5
@@ -1320,36 +1320,55 @@ change_capital_holding_to_citadel_effect = {
 change_tribal_holdings_to_citadels_effect = {
 	custom_tooltip = all_tribal_holdings_will_change_to_citadels
 	save_scope_as = current_tribal_holder
-	hidden_effect_new_object = {
-		every_directly_owned_province = {
-			limit = { has_holding_type = tribal_holding }
-			set_variable = {
-				name = tribal_to_mandala_building_level
-				value = combined_building_level
-				days = 1
+	if = {
+		limit = {
+			any_directly_owned_province = {
+				has_holding_type = tribal_holding
+				count >= 1
 			}
-			set_holding_type = temple_citadel_holding
-			#We need to set the holding type BEFORE we can change to the government, lest it invalidates
-			scope:current_tribal_holder = {
-				if = {
-					limit = {
-						NOT = { government_has_flag = government_is_mandala }
-					}
-					change_to_mandala_government_effect = yes
-				}
-			}	
-			#We need to set the government type BEFORE we generate buildings, otherwise basically none are valid
-			while = {
-				limit = { var:tribal_to_mandala_building_level > 0 }
-				generate_building = yes
-				change_variable = {
+		}
+		hidden_effect_new_object = {
+			every_directly_owned_province = {
+				limit = { has_holding_type = tribal_holding }
+				set_variable = {
 					name = tribal_to_mandala_building_level
-					subtract = 1
+					value = combined_building_level
+					days = 1
 				}
+				set_holding_type = temple_citadel_holding
+				#We need to set the holding type BEFORE we can change to the government, lest it invalidates
+				scope:current_tribal_holder = {
+					if = {
+						limit = {
+							NOT = { government_has_flag = government_is_mandala }
+						}
+						change_to_mandala_government_effect = yes
+					}
+				}	
+				#We need to set the government type BEFORE we generate buildings, otherwise basically none are valid
+				while = {
+					limit = { var:tribal_to_mandala_building_level > 0 }
+					generate_building = yes
+					change_variable = {
+						name = tribal_to_mandala_building_level
+						subtract = 1
+					}
+				}
+				remove_variable = tribal_to_mandala_building_level
 			}
-			remove_variable = tribal_to_mandala_building_level
 		}
 	}
+	#You're somehow a tribal with all your holdings being Temple Citadels? Good for you.
+	else = {
+		scope:current_tribal_holder = {
+			if = {
+				limit = {
+					NOT = { government_has_flag = government_is_mandala }
+				}
+				change_to_mandala_government_effect = yes
+			}
+		}
+	}	
 }
 
 mandala_nuke_realm_laws_effect = {
@@ -3388,8 +3407,6 @@ mandala_no_longer_polytheist_effect = {
 			faith = { 
 				NOT = { has_doctrine = doctrine_polytheist }
 			}
-			is_landed = yes #Unop: Error: change_government effect [ Character needs to be a ruler to change government ]
-			is_ruler = yes #Unop add_realm_law_skip_effects effect [ Trying to add law to character '...' who is not a ruler ]
 		}
 		convert_whole_realm_to_feudalism_effect = yes
 		hidden_effect = {

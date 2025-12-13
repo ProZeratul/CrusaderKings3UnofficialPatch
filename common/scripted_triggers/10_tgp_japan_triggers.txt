@@ -11,15 +11,12 @@ tgp_is_japanese_kampaku_trigger = {
 tgp_is_japanese_governor_trigger = {
 	custom_tooltip = {
 		text = tgp_is_japanese_governor_trigger
-		government_allows = administrative
+		government_has_flag = government_is_japan_administrative
 		is_landed = yes
 		is_ruler = yes
 		highest_held_title_tier >= tier_county
-		highest_held_title_tier < tier_kingdom
 		is_independent_ruler = no
-		exists = title:e_japan.holder
-		top_liege ?= title:e_japan.holder
-		NOT = { has_title = title:k_chrysanthemum_throne }
+		tgp_is_ceremonial_liege_trigger = no
 	}
 }
 
@@ -181,11 +178,20 @@ tgp_ceremonial_candidacy_restriction_trigger = {
 			}
 			trigger_if = {
 				limit = {
-					scope:secondary_recipient.top_liege.primary_title.var:administrative_ui_special_title.holder = { tgp_has_ceremonial_liege_title_trigger = yes } #Unop ck3-tiger Use correct scope
+					top_liege.primary_title.var:administrative_ui_special_title.holder = { tgp_has_ceremonial_liege_title_trigger = yes }
 				}
 				custom_tooltip = {
 					text = ceremonial_liege_only_heir_can_be_ruler_trigger
 					scope:secondary_recipient = { tgp_is_ceremonial_liege_or_direct_heir_trigger = yes }
+				}
+			}
+			trigger_else_if = {
+				limit = {
+					scope:actor = { is_independent_ruler = yes }
+				}
+				custom_tooltip = {
+					text = ceremonial_liege_only_heir_can_be_ruler_trigger
+					scope:secondary_recipient = scope:actor.player_heir
 				}
 			}
 			trigger_else = {
@@ -197,8 +203,8 @@ tgp_ceremonial_candidacy_restriction_trigger = {
 		}
 		trigger_else = { # Governor titles only valid for non-ceremonial liege
 			custom_tooltip = {
-				text = ceremonial_liege_line_cannot_be_governor_trigger
-				scope:secondary_recipient = { tgp_is_ceremonial_liege_or_direct_heir_trigger = no }
+				text = ceremonial_liege_cannot_be_governor_trigger
+				scope:secondary_recipient = { tgp_is_ceremonial_liege_trigger = no }
 			}
 		}
 	}
@@ -211,10 +217,8 @@ tgp_japan_grant_titles_restriction_trigger = {
 			exists = $GRANTEE$.house
 		}
 		custom_tooltip = {
-			text = ceremonial_liege_line_cannot_be_governor_trigger
-			NOT = {
-				$GRANTEE$ = { tgp_is_ceremonial_liege_or_direct_heir_trigger = yes }
-			}
+			text = ceremonial_liege_cannot_be_governor_trigger
+			$GRANTEE$ = { tgp_is_ceremonial_liege_trigger = no }
 		}
 	}
 }
@@ -353,8 +357,8 @@ tgp_japan_internal_soryo_war_is_crime_trigger = {
 japan_imperial_expansion_cb_allowed_for_character_trigger = {
 	# DLC check
 	has_tgp_dlc_trigger = yes
-	# Must have a Japanese government form
-	government_is_japanese_trigger = yes
+	# Must have a Japanese government form with policies
+	realm_law_use_imperial_policy_trigger = yes
 	# Must be part of Japan with functional imperial family
 	tgp_realm_has_ceremonial_liege_trigger = yes
 }
@@ -384,8 +388,8 @@ japan_imperial_expansion_cb_allowed_against_character_trigger = {
 japan_imperial_reconquest_cb_allowed_for_character_trigger = {
 	# DLC check
 	has_tgp_dlc_trigger = yes
-	# Must have a Japanese government form
-	government_is_japanese_trigger = yes
+	# Must have a Japanese government form with policies
+	realm_law_use_imperial_policy_trigger = yes
 	# Must be part of Japan with functional imperial family
 	tgp_realm_has_ceremonial_liege_trigger = yes
 }
@@ -426,19 +430,14 @@ tgp_japan_defense_mobilization_valid_trigger = {
 					}
 					primary_attacker = {
 						OR = {
-							capital_county.empire != title:e_japan
-							culture = {
-								NOR = {
-									this = culture:japanese
-									any_parent_culture_or_above = { this = culture:japanese }
-								}
-							}
+							capital_county.empire != scope:liege_temp.capital_county.empire
+							NOT = { government_is_japanese_trigger = yes }
 						}
 					}
 				}
 			}
-			title:e_japan = {
-				any_de_jure_county = { holder.top_liege != title:e_japan.holder.top_liege }
+			capital_county.empire = {
+				any_de_jure_county = { holder.top_liege != root.top_liege }
 			}
 		}
 	}
@@ -756,7 +755,7 @@ japan_government_japan_kingdom_restriction_trigger = {
 		}
 		custom_tooltip = {
 			text = japan_government_japan_kingdom_restriction_tt
-			always = no
+			has_global_variable = tenno_restored
 		}
 	}
 }
@@ -778,7 +777,7 @@ japan_government_japan_duchy_restriction_trigger = {
 		}
 		custom_tooltip = {
 			text = japan_government_japan_duchy_restriction_tt
-			always = no
+			has_global_variable = tenno_restored
 		}
 	}
 }

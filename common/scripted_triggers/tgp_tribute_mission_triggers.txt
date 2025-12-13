@@ -17,6 +17,7 @@
 
 tribute_mission_decision_concubine_trigger = {
 	has_concubine_tribute_trigger = yes
+	$OVERLORD$ = { is_adult = yes }
 	can_have_concubines_trigger = { CHAR = $OVERLORD$ }
 }
 
@@ -146,24 +147,17 @@ tribute_mission_is_available_eunuch_trigger = {
 	NOT = {
 		faith = { has_doctrine = doctrine_theocracy_temporal }
 	}
-	#trigger_if = { #Unop ck3-tiger Avoid root here as it may be undefined
-	#	limit = { exists = root.cp:councillor_court_chaplain }
-	#	NOT = { this = root.cp:councillor_court_chaplain }
-	#}
+	trigger_if = {
+		limit = { exists = root.cp:councillor_court_chaplain }
+		NOT = { this = root.cp:councillor_court_chaplain }
+	}
 	has_any_disease_trigger = no
 }
 
 has_eunuch_tribute_trigger = {
-	save_temporary_scope_as = eunuch_check_character #Unop Save character scope for court chaplain check
 	custom_tooltip = {
 		text = tribute_mission_eunuch_interaction.no_valid_eunuchs
-		any_courtier = { #Unop Add court chaplain check that was in tribute_mission_is_available_eunuch_trigger
-			tribute_mission_is_available_eunuch_trigger = yes
-			trigger_if = {
-				limit = { exists = scope:eunuch_check_character.cp:councillor_court_chaplain }
-				NOT = { this = scope:eunuch_check_character.cp:councillor_court_chaplain }
-			}
-		}
+		any_courtier = { tribute_mission_is_available_eunuch_trigger = yes }	
 	}
 }
 
