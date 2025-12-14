@@ -37,7 +37,7 @@ imperial_examination_predicted_cost = {
 			desc = imperial_examination_base_cost
 		}
 		# Scale by Era
-		value = {
+		add = { #Unop Should be add, as value overwrites the previous calculation
 			value = imperial_examination_base_cost
 			multiply = activity_cost_scale_by_era
 			subtract = imperial_examination_base_cost
@@ -46,7 +46,7 @@ imperial_examination_predicted_cost = {
 		# Kaifeng cost bonus
 		if = {
 			limit = {
-				root.capital_province = { has_building_or_higher = kaifeng_palace_01 }
+				capital_province = { has_building_or_higher = kaifeng_palace_01 } #Unop root is the activity, we are in a character scope
 			}
 			multiply = {
 				value = {
@@ -59,7 +59,7 @@ imperial_examination_predicted_cost = {
 
 		# OPTIONS
 		#Focus Option
-		value = { # Calculate the average of the 3 option costs
+		add = { # Calculate the average of the 3 option costs  #Unop Should be add, as value overwrites the previous calculation
 			value = 0 #Learning Focus
 			add = imperial_examination_alternate_focus_cost # Martial Focus
 			add = imperial_examination_alternate_focus_cost # Stewardship Focus
@@ -69,7 +69,7 @@ imperial_examination_predicted_cost = {
 			multiply = activity_cost_scale_by_era
 		}
 		#Examination Breadth Option
-		value = { # Calculate the average of the 3 option costs
+		add = { # Calculate the average of the 3 option costs  #Unop Should be add, as value overwrites the previous calculation
 			value = 0 
 			add = {
 				add = tiny_gold_value_static_max #Palace Exams
@@ -106,9 +106,9 @@ imperial_examination_alternate_focus_value = {
 			desc = imperial_examination_focus_martial
 		}
 		add = {
-			value = root.imperial_examination_base_cost
+			value = imperial_examination_base_cost #Unop root is the activity, we are in a character scope
 			multiply = activity_cost_scale_by_era
-			subtract = root.imperial_examination_base_cost
+			subtract = imperial_examination_base_cost #Unop root is the activity, we are in a character scope
 			desc = activity_cost_scale_by_era_desc 
 		}
 	}
@@ -125,9 +125,9 @@ imperial_examination_breadth_exclusive_value = {
 			desc = imperial_examination_breadth_exclusive
 		}
 		add = {
-			value = root.imperial_examination_base_cost
+			value = imperial_examination_base_cost #Unop root is the activity, we are in a character scope
 			multiply = activity_cost_scale_by_era
-			subtract = root.imperial_examination_base_cost
+			subtract = imperial_examination_base_cost #Unop root is the activity, we are in a character scope
 			desc = activity_cost_scale_by_era_desc 
 		}
 	}
@@ -143,9 +143,9 @@ imperial_examination_breadth_restricted_value = {
 			desc = imperial_examination_breadth_restricted
 		}
 		add = {
-			value = root.imperial_examination_base_cost
+			value = imperial_examination_base_cost #Unop root is the activity, we are in a character scope
 			multiply = activity_cost_scale_by_era
-			subtract = root.imperial_examination_base_cost
+			subtract = imperial_examination_base_cost #Unop root is the activity, we are in a character scope
 			desc = activity_cost_scale_by_era_desc 
 		}
 	}
@@ -161,9 +161,9 @@ imperial_examination_breadth_open_value = {
 			desc = imperial_examination_breadth_open
 		}
 		add = {
-			value = root.imperial_examination_base_cost
+			value = imperial_examination_base_cost #Unop root is the activity, we are in a character scope
 			multiply = activity_cost_scale_by_era
-			subtract = root.imperial_examination_base_cost
+			subtract = imperial_examination_base_cost #Unop root is the activity, we are in a character scope
 			desc = activity_cost_scale_by_era_desc 
 		}
 	}

@@ -292,11 +292,13 @@ on_house_aspiration_upgraded = {
 			#Completion memory
 			if = {
 				limit = {
-					OR = {
-						has_house_power_parameter = aspect_of_creation_05
-						has_house_power_parameter = aspect_of_serenity_05
-						has_house_power_parameter = aspect_of_destruction_05
-						has_house_power_parameter = aspect_of_trickery_05
+					house = { #Unop Use correct scope for has_house_power_parameter
+						OR = {
+							has_house_power_parameter = aspect_of_creation_05
+							has_house_power_parameter = aspect_of_serenity_05
+							has_house_power_parameter = aspect_of_destruction_05
+							has_house_power_parameter = aspect_of_trickery_05
+						}
 					}
 				}
 				if = {
@@ -327,11 +329,13 @@ on_house_aspiration_upgraded = {
 			#Upgrade memory
 			else_if = {
 				limit = {
-					NOR = {
-						has_house_power_parameter = aspect_of_creation_01
-						has_house_power_parameter = aspect_of_serenity_01
-						has_house_power_parameter = aspect_of_destruction_01
-						has_house_power_parameter = aspect_of_trickery_01
+					house = { #Unop Use correct scope for has_house_power_parameter
+						NOR = {
+							has_house_power_parameter = aspect_of_creation_01
+							has_house_power_parameter = aspect_of_serenity_01
+							has_house_power_parameter = aspect_of_destruction_01
+							has_house_power_parameter = aspect_of_trickery_01
+						}
 					}
 				}
 				if = {
