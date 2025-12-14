@@ -9744,6 +9744,17 @@ laamp_base_contract_schemes.1044 = {
 				}
 			}
 		}
+
+		if = { #Unop: Sanity & debug warning check
+			limit = {
+				#debug_only = yes
+				NOT = { exists = scope:destination_2 }
+			}
+			error_log = "Unop: destination_2 is undefined"
+			debug_log = "Unop: destination_2 is undefined"
+			debug_log_scopes = yes
+		}
+
 		# Work out how many encounters we'll have.
 		scope:employer = {
 			if = {

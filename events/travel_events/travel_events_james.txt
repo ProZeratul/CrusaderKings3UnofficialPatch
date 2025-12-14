@@ -4051,8 +4051,10 @@ travel_events.4021 = {
 					is_alive = yes
 				}
 			}
-			remove_character_flag = is_naked
-			silent_disappearance_ai_if_created_effect = yes
+			scope:sacrificed_person_scope ?= {
+				remove_character_flag = is_naked
+				silent_disappearance_ai_if_created_effect = yes
+			}
 		}
 	}
 }
