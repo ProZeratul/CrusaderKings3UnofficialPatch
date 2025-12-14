@@ -708,6 +708,20 @@ standard_activity_base_cost = {
 			}
 			add = 50
 		}
+		if = {
+			limit = {
+				is_ai = yes
+				has_game_rule = hard_difficulty
+			}
+			multiply = 0.5
+		}
+		else_if = {
+			limit = {
+				is_ai = yes
+				has_game_rule = very_hard_difficulty
+			}
+			multiply = 0.25
+		}
 	}
 	else_if = { # Root is an activity
 		limit = {
@@ -731,6 +745,20 @@ standard_activity_base_cost = {
 				root.activity_host.primary_title.tier > tier_duchy
 			}
 			add = 50
+		}
+		if = {
+			limit = {
+				root.activity_host = { is_ai = yes }
+				has_game_rule = hard_difficulty
+			}
+			multiply = 0.5
+		}
+		else_if = {
+			limit = {
+				root.activity_host = { is_ai = yes }
+				has_game_rule = very_hard_difficulty
+			}
+			multiply = 0.25
 		}
 	}
 	else_if = {
@@ -756,20 +784,20 @@ standard_activity_base_cost = {
 			}
 			add = 50
 		}
-	}
-	if = {
-		limit = {
-			is_ai = yes
-			has_game_rule = hard_difficulty
+		if = {
+			limit = {
+				scope:actor = { is_ai = yes }
+				has_game_rule = hard_difficulty
+			}
+			multiply = 0.5
 		}
-		multiply = 0.5
-	}
-	else_if = {
-		limit = {
-			is_ai = yes
-			has_game_rule = very_hard_difficulty
+		else_if = {
+			limit = {
+				scope:actor = { is_ai = yes }
+				has_game_rule = very_hard_difficulty
+			}
+			multiply = 0.25
 		}
-		multiply = 0.25
 	}
 }
 
