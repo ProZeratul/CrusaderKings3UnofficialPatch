@@ -355,13 +355,6 @@
 			## Seizing control so things *vaguely* work.
 			custom_tooltip = fp1_varangian_adventurer_conquest.summaries.control_rebate
 			scope:attacker = { trigger_event = fp1_varangian_adventures.0001 }
-			## And giving them a gold bounty to keep them afloat.
-			scope:attacker = { 
-				add_gold = {
-					value = varangian_adventures_bounty_amount_value
-					multiply = 0.5 #Half it for counties
-				}
-			}
 			# Finally, general cleanup.
 			ep3_become_landed_cleanup_effect = yes
 			# Prestige Progress for the Attacker
@@ -938,13 +931,6 @@ ep3_laamp_adventurer_duchy_invasion = {
 			## Seizing control so things *vaguely* work.
 			custom_tooltip = fp1_varangian_adventurer_conquest.summaries.control_rebate
 			scope:attacker = { trigger_event = fp1_varangian_adventures.0001 }
-			## And giving them a gold bounty to keep them afloat.
-			scope:attacker = { 
-				add_gold = {
-					value = varangian_adventures_bounty_amount_value
-					multiply = 0.5 #Half it for counties
-				}
-			}
 			# Finally, general cleanup.
 			ep3_become_landed_cleanup_effect = yes
 			# Prestige Progress for the Attacker
@@ -1533,13 +1519,6 @@ ep3_laamp_adventurer_kingdom_invasion = {
 			## Seizing control so things *vaguely* work.
 			custom_tooltip = fp1_varangian_adventurer_conquest.summaries.control_rebate
 			scope:attacker = { trigger_event = fp1_varangian_adventures.0001 }
-			## And giving them a gold bounty to keep them afloat.
-			scope:attacker = { 
-				add_gold = {
-					value = varangian_adventures_bounty_amount_value
-					multiply = 0.5 #Half it for counties
-				}
-			}
 			# Finally, general cleanup.
 			ep3_become_landed_cleanup_effect = yes
 			# Prestige Progress for the Attacker
@@ -3728,7 +3707,7 @@ imperial_expedition_cb = {
 
 	allowed_for_character = {
 		top_liege != this
-		liege ?= { has_diarchy_active_parameter = unlock_diarch_requests_military_expedition_interaction } #Unop: Replace has_diarchy_parameter since the parameter need a certain level of swing
+		liege ?= { has_diarchy_active_parameter = unlock_diarch_requests_military_expedition_interaction }
 		is_diarch_of_target = liege
 		NOT = {
 			government_has_flag = government_is_landless_adventurer
@@ -3771,7 +3750,7 @@ imperial_expedition_cb = {
 	ignore_effect = change_title_holder
 
 	ai_can_target_all_titles = { always = yes }
-	#ai_score = { #Unop ck3-tiger Duplicated below
+	#ai_score = { #Unop: Look below, the ai_score is forced to 9999
 	#	value = byzantium_conquests_ai_score_value
 	#
 	#	# As a feudal gov, do not attack tribal
@@ -4201,7 +4180,7 @@ ep3_pillaging_foray = {
 	should_show_war_goal_subview = yes
 	allow_hostages = no
 	mutually_exclusive_titles = { always = yes }
-	#interface_priority = 110 #Unop ck3-tiger Duplicated below
+	#interface_priority = 110 #Unop: Duplicated below (but with a different value)
 	
 	attacker_score_from_occupation_scale = 150
 	attacker_score_from_battles_scale = 150
@@ -4623,7 +4602,7 @@ ep3_roman_empire_border_war = {
 	should_show_war_goal_subview = yes
 	allow_hostages = no
 	mutually_exclusive_titles = { always = yes }
-	#interface_priority = 110 #Unop ck3-tiger Duplicated below
+	#interface_priority = 110 #Unop: Duplicated below (but with a different value)
 	
 	attacker_score_from_occupation_scale = 150
 	attacker_score_from_battles_scale = 150
@@ -5001,7 +4980,8 @@ ep3_laamp_apprehend_adventurer_cb = {
 	group = event
 	allow_hostages = no
 	
-	#attacker_score_from_occupation_scale = 150 #Unop ck3-tiger Duplicated below
+	#Unop: All 3 are duplicated below with other values
+	#attacker_score_from_occupation_scale = 150
 	#attacker_score_from_battles_scale = 150
 	#defender_score_from_battles_scale = 150
 
@@ -5992,7 +5972,7 @@ ep3_laamp_peasant_war = {
 					involvement = involved
 					activate_struggle_catalyst = {
 						catalyst = catalyst_populist_uprise
-						character = scope:defender #Unop: Was 'this' but 'this' is a struggle in the current context
+						character = scope:defender
 					}
 				}
 			}
