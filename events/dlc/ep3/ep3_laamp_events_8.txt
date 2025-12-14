@@ -1651,10 +1651,11 @@ ep3_laamps.8080 = {
 			}
 			root.location = { save_scope_as = sailor_home }
 		}
-		if = { #Unop: Debug traces just in case
+		if = { #Unop: Debug traces just in case (and still got this trace in 1.18.2 sadly)
 			limit = {
 				NOT = { exists = scope:sailor_home.culture }
 			}
+			root = { location = { save_scope_as = unop_ep3_laamps_8080_root_location } }
 			error_log = "Unop: ep3_laamps.8080 sailor_home culture is undef"
 			debug_log_scopes = yes
 		}

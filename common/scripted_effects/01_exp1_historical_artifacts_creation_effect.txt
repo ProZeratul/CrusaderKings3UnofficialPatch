@@ -1547,6 +1547,10 @@ create_artifact_monomachus_crown_effect = {
 			target = title:e_byzantium
 			date = 1055.1.11
 		}
+		set_variable = {
+			name = artifact_succession_title
+			value = title:e_byzantium
+		}
 	}
 }
 
@@ -4528,6 +4532,7 @@ create_artifact_heirloom_seal_effect = {
 		type = seal_of_investiture_court
 		wealth = scope:wealth
 		quality = scope:quality
+		template = general_unique_template
 		modifier = heirloom_seal_modifier
 		save_scope_as = newly_created_artifact
 	}
@@ -5030,6 +5035,112 @@ create_artifact_kogarasumaru_sword_effect = {
 			date = 945.1.1
 			recipient = character:japanese_taira_kanmu_16 # Sadamori
 		}
+	}
+}
+
+create_artifact_zhanlu_sword_effect = {
+	# Get the character the artifact is being made for.
+	$OWNER$ = { save_scope_as = owner }
+	# Not really used, but if we don't set the scopes we get errors in the feature selection
+	set_artifact_rarity_famed = yes
+	# Create the artifact
+	create_artifact = {
+		name = artifact_zhanlu_armor_name
+		description = artifact_zhanlu_armor_desc
+		type = sword
+		visuals = chinese_sword
+		wealth = scope:wealth
+		quality = scope:quality
+		history = { type = created_before_history }
+		modifier = zhanlu_sword_modifier
+		save_scope_as = newly_created_artifact
+		decaying = no
+	}
+	scope:newly_created_artifact = {
+		set_variable = { name = historical_unique_artifact value = yes }
+	}
+}
+
+create_artifact_chunjun_sword_effect = {
+	# Get the character the artifact is being made for.
+	$OWNER$ = { save_scope_as = owner }
+	# Not really used, but if we don't set the scopes we get errors in the feature selection
+	set_artifact_rarity_famed = yes
+	# Create the artifact
+	create_artifact = {
+		name = artifact_chunjun_armor_name
+		description = artifact_chunjun_armor_desc
+		type = sword
+		visuals = chinese_sword
+		wealth = scope:wealth
+		quality = scope:quality
+		history = { type = created_before_history }
+		modifier = chunjun_sword_modifier
+		save_scope_as = newly_created_artifact
+		decaying = no
+	}
+	scope:newly_created_artifact = {
+		set_variable = { name = historical_unique_artifact value = yes }
+	}
+}
+
+create_artifact_yuchang_sword_effect = {
+	# Get the character the artifact is being made for.
+	$OWNER$ = { save_scope_as = owner }
+	# Not really used, but if we don't set the scopes we get errors in the feature selection
+	set_artifact_rarity_famed = yes
+	# Create the artifact
+	create_artifact = {
+		name = artifact_yuchang_sword_name
+		description = artifact_yuchang_sword_desc
+		type = sword
+		visuals = chinese_sword
+		wealth = scope:wealth
+		quality = scope:quality
+		history = { type = created_before_history }
+		modifier = yuchang_sword_modifier
+		save_scope_as = newly_created_artifact
+		decaying = no
+	}
+	scope:newly_created_artifact = {
+		set_variable = { name = historical_unique_artifact value = yes }
+	}
+}
+
+
+create_artifact_statue_viet_green_amitabha_buddha_effect = {
+	# Get the character the artifact is being made for.
+	$OWNER$ = { save_scope_as = owner }
+	# Not really used, but if we don't set the scopes we get errors in the feature selection
+	set_artifact_rarity_famed = yes
+
+	save_scope_value_as = {
+		name = owner_fm
+		value = flag:male
+	}
+
+	# Create the artifact
+	create_artifact = {	
+		name = artifact_statue_green_amitabha_buddha_name
+		description = artifact_statue_green_amitabha_buddha_descripton
+		type = sculpture
+		visuals = statue
+		wealth = scope:wealth
+		quality = scope:quality
+		history = {
+			type = created
+			date = 1066.5.1
+			recipient = character:viet_ly_10 #Vuong Ly Nhat Ton
+			location = province:10861 #Bac Ninh
+		}
+		modifier = statue_amitabha_buddha_modifier
+		save_scope_as = newly_created_artifact
+		decaying = no
+	}
+
+	scope:newly_created_artifact = {
+		set_variable = statue_amitabha_buddha
+		save_scope_as = epic
 	}
 }
 

@@ -286,8 +286,8 @@ scripted_trigger pilgrimage_0500_valid_holy_site_trigger = {
 	NOR = {
 		this = root.location.barony
 		AND = {
-			exists = root.capital_province #Unop: Add missing root scope
-			this = root.capital_province.barony #Unop: Add missing root scope
+			exists = root.capital_province
+			this = root.capital_province.barony
 		}
 	}
 }
@@ -2734,12 +2734,9 @@ pilgrimage.2003 = {
 			}
 		}
 		remove_short_term_gold = minor_gold_value
-		scope:2002_local_warrior = { #Unop: To let them join the activity despite being from another faith
-			add_character_flag = unop_force_join_pilgrimage
-		}
-		recruit_to_entourage_court_and_activity_effect = {
-			CHAR_TO_ADD = scope:2002_local_warrior
-			NEW_COURT_OWNER = root
+		recruit_to_entourage_court_and_activity_effect = { 
+			CHAR_TO_ADD = scope:2002_local_warrior 
+			NEW_COURT_OWNER = root 
 		}
 		stress_impact = {
 			humble = medium_stress_impact_gain
@@ -5434,9 +5431,6 @@ pilgrimage.2101 = {
 			CHARACTER = scope:naked_tempter
 			PREGNANCY_CHANCE = pregnancy_chance
 		}
-		scope:naked_tempter = { #Unop: To let them join the activity despite being from another faith
-			add_character_flag = unop_force_join_pilgrimage
-		}
 		add_to_entourage_court_and_activity_effect = {
 			CHAR_TO_ADD = scope:naked_tempter
 			NEW_COURT_OWNER = root
@@ -5507,9 +5501,6 @@ pilgrimage.2101 = {
 		had_sex_with_effect = {
 			CHARACTER = scope:naked_tempter
 			PREGNANCY_CHANCE = pregnancy_chance
-		}
-		scope:naked_tempter = { #Unop: To let them join the activity despite being from another faith
-			add_character_flag = unop_force_join_pilgrimage
 		}
 		add_to_entourage_court_and_activity_effect = {
 			CHAR_TO_ADD = scope:naked_tempter
@@ -6569,6 +6560,12 @@ pilgrimage.3002 = {
 		worldly_type_option_effect = yes
 		add_piety = massive_piety_loss
 		set_character_faith = faith:adamites
+		if = {
+			limit = { 
+				faith:adamites = { has_doctrine = doctrine_monotheist }
+			}
+			custom_description_no_bullet = { text = mandala_monotheist_warning_tt }
+		}
 		add_to_entourage_court_and_activity_effect = {
 			CHAR_TO_ADD = scope:naked_preacher
 			NEW_COURT_OWNER = root
@@ -7211,7 +7208,7 @@ pilgrimage.3302 = {
 	type = character_event
 	title = pilgrimage.3302.t
 	desc = pilgrimage.3302.desc
-	theme = pilgrimage_activity
+	#theme = pilgrimage_activity #Unop ck3-tiger Duplicated and wrong
 	theme = travel_pilgrimage
 	override_background = { reference = terrain }
 	left_portrait = {
@@ -7247,7 +7244,7 @@ pilgrimage.3302 = {
 			factor = 2
 			OR = { #you're in a reflection journey
 				has_activity_intent = reflection_intent
-				scope:activity = {
+				involved_activity = { #Unop: To fix   Error: Undefined event target 'activity', Guess since the type is a character, the scopes are not given from code ?
 					has_activity_option = {
 						category = special_type
 						option = pilgrimage_type_pious
@@ -7362,7 +7359,7 @@ pilgrimage.3303 = {
 			factor = 2
 			OR = { #you're in a reflection journey
 				has_activity_intent = reflection_intent
-				scope:activity = {
+				involved_activity = { #Unop: To fix   Error: Undefined event target 'activity', Guess since the type is a character, the scopes are not given from code ?
 					has_activity_option = {
 						category = special_type
 						option = pilgrimage_type_pious
@@ -7429,7 +7426,7 @@ pilgrimage.3401 = {
 	type = character_event
 	title = pilgrimage.3401.t
 	desc = pilgrimage.3401.desc
-	theme = pilgrimage_activity
+	#theme = pilgrimage_activity #Unop ck3-tiger Duplicated and wrong
 	theme = travel_pilgrimage
 	#background for riverside province
 	override_background = { 
@@ -7538,7 +7535,7 @@ pilgrimage.3401 = {
 			factor = 2
 			OR = { #you're in a reflection journey
 				has_activity_intent = reflection_intent
-				scope:activity = {
+				involved_activity = { #Unop: To fix   Error: Undefined event target 'activity', Guess since the type is a character, the scopes are not given from code ?
 					has_activity_option = {
 						category = special_type
 						option = pilgrimage_type_pious
@@ -12382,9 +12379,6 @@ pilgrimage.6780 = {
 					value = scope:duel_value
 					multiplier = 3.5
 				}
-				scope:stolen_courtier = { #Unop: To let them join the activity despite being from another faith
-					add_character_flag = unop_force_join_pilgrimage
-				}
 				send_interface_toast = {
 					title = pilgrimage.6780.b.success.t
 					left_icon = root
@@ -12480,9 +12474,6 @@ pilgrimage.6780 = {
 		add_hook = {
 			type = obligation_hook
 			target = scope:stolen_courtier
-		}
-		scope:stolen_courtier = { #Unop: To let them join the activity despite being from another faith
-			add_character_flag = unop_force_join_pilgrimage
 		}
 		involved_activity ?= {
 			add_activity_log_entry = {
@@ -14064,6 +14055,9 @@ pilgrimage.6850 = {
 	#Improve your spymaster's secret discovery chance
 	option = {
 		name = pilgrimage.6850.b
+		trigger = {
+			exists = cp:councillor_spymaster
+		}
 		add_learning_lifestyle_xp = medium_lifestyle_xp
 		add_character_modifier = {
 			modifier = spymaster_eyes_modifier

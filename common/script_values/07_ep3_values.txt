@@ -413,7 +413,7 @@ granary_modifier_scaling_value = {
 				}
 				add = {
 					value = 100
-					subtract = domicile.domicile_location.county.county_control
+					subtract = domicile_location.county.county_control #Unop ck3-tiger Use correct scope
 					multiply = 0.1
 					round = yes
 					min = 1
@@ -894,8 +894,8 @@ ep3_laamp_chance_score_value = {
 				has_trait_category = fame
 				has_trait_category = lifestyle
 				has_trait_category = commander
-	}
-	}
+			}
+		}
 		add = 3
 	}
 	# Education
@@ -1694,7 +1694,7 @@ governor_efficiency = {
 				divide = 100
 			}
 		}
-
+		
 		# Eparch court position
 		if = {
 			limit = {
@@ -2137,7 +2137,10 @@ governor_efficiency = {
 			limit = {
 				confederation ?= { has_cohesion_level_parameter = any_member_house_governor_efficiency_boost }
 			}
-			multiply = 1.1
+			multiply = {
+				value = 1.1
+				desc = SERVICE_BLOC_COHESION_DESC
+			}
 		}
 
 		min = 0.5 # Can't go lower than -50%
@@ -2673,22 +2676,22 @@ task_contract_tier_gold_multiplier_value = {
 	value = 1 # Barons and counts are neutral, so no multiplier needed here.
 	if = {
 		limit = { exists = scope:task_contract.task_contract_employer }
-			# Kings'n'emperors.
-			if = {
+		# Kings'n'emperors.
+		if = {
 			limit = { scope:task_contract.task_contract_employer.highest_held_title_tier >= define:NTaskContract|HIGH_TASK_CONTRACT_TIER }
-				add = 3
-			}
-			# Dukes.
-			else_if = {
+			add = 3
+		}
+		# Dukes.
+		else_if = {
 			limit = { scope:task_contract.task_contract_employer.highest_held_title_tier >= define:NTaskContract|MEDIUM_TASK_CONTRACT_TIER }
-				add = 2
-			}
-			# Courtiers first, as we give them a bit less.
-			else_if = {
+			add = 2
+		}
+		# Courtiers first, as we give them a bit less.
+		else_if = {
 			limit = { scope:task_contract.task_contract_employer.highest_held_title_tier <= 0 }
-				add = 0.5
-				ceiling = yes
-			}
+			add = 0.5
+			ceiling = yes
+		}
 	}
 }
 # How do we multiply the non-cash rewards in a task contract depending on the employer's tier?
@@ -2889,18 +2892,18 @@ task_contract_success_gold_gain_travel_value = {
 	# Lifestyle perks.
 	if = {
 		limit = { exists = scope:task_contract.task_contract_taker }
-	if = {
-		limit = {
-			scope:task_contract.task_contract_taker = { has_perk = at_any_cost_perk }
+		if = {
+			limit = {
+				scope:task_contract.task_contract_taker = { has_perk = at_any_cost_perk }
+			}
+			multiply = 1.25
 		}
-		multiply = 1.25
-	}
-	if = {
-		limit = {
-			scope:task_contract.task_contract_taker = { has_perk = malice_implicit_perk }
+		if = {
+			limit = {
+				scope:task_contract.task_contract_taker = { has_perk = malice_implicit_perk }
+			}
+			multiply = 2
 		}
-		multiply = 2
-	}
 	}
 	# Stuff that NEEDS to stay at the bottom.
 	## Vary our final tally up a bit.
@@ -2972,39 +2975,39 @@ task_contract_success_gold_gain_crime_value = {
 	# Lifestyle perks.
 	if = {
 		limit = { exists = scope:task_contract.task_contract_taker }
-	if = {
-		limit = {
-			scope:task_contract.task_contract_taker = { has_perk = at_any_cost_perk }
+		if = {
+			limit = {
+				scope:task_contract.task_contract_taker = { has_perk = at_any_cost_perk }
+			}
+			multiply = 1.25
 		}
-		multiply = 1.25
-	}
-	if = {
-		limit = {
-			scope:task_contract.task_contract_taker = { has_perk = malice_implicit_perk }
+		if = {
+			limit = {
+				scope:task_contract.task_contract_taker = { has_perk = malice_implicit_perk }
+			}
+			multiply = 2
 		}
-		multiply = 2
-	}
 	}
 	# Stuff that NEEDS to stay at the bottom.
 	## Vary our final tally up a bit.
 	### This time, we add _more_ gold the greedier the employer is — it's a criminal reward, so the greedier they are, the more gold they have available (albeit not to the same degree as the inverse in normal contracts).
 	if = {
 		limit = { exists = scope:task_contract.task_contract_employer }
-	if = {
-		limit = { scope:task_contract.task_contract_employer.ai_greed > 1 }
-		add = {
-			value = scope:task_contract.task_contract_employer.ai_greed
-			multiply = 0.1
+		if = {
+			limit = { scope:task_contract.task_contract_employer.ai_greed > 1 }
+			add = {
+				value = scope:task_contract.task_contract_employer.ai_greed
+				multiply = 0.1
+			}
 		}
-	}
-	### Take it down only a marginal amount for generous chars, as we still want criminal contracts to almost always pay more.
-	else_if = {
-		limit = { scope:task_contract.task_contract_employer.ai_greed < -1 }
-		add = {
-			value = scope:task_contract.task_contract_employer.ai_greed
-			multiply = -0.05
+		### Take it down only a marginal amount for generous chars, as we still want criminal contracts to almost always pay more.
+		else_if = {
+			limit = { scope:task_contract.task_contract_employer.ai_greed < -1 }
+			add = {
+				value = scope:task_contract.task_contract_employer.ai_greed
+				multiply = -0.05
+			}
 		}
-	}
 	}
 	## Plus change the last digit around slightly so the values look a little less robotic.
 	if = {
@@ -3858,8 +3861,8 @@ house_power_score = {
 				add = {
 					value = estate_powerful_family_rating_6_value
 					desc = estate_buildings_desc
-					}
 				}
+			}
 			else_if = {
 				limit = {
 					house_head.domicile ?= { has_domicile_parameter = estate_increase_powerful_family_rating_5 }
@@ -3872,7 +3875,7 @@ house_power_score = {
 			else_if = {
 				limit = {
 					house_head.domicile ?= { has_domicile_parameter = estate_increase_powerful_family_rating_4 }
-					}
+				}
 				add = {
 					value = estate_powerful_family_rating_4_value
 					desc = estate_buildings_desc
@@ -4027,12 +4030,22 @@ house_power_score = {
 				limit = {
 					any_house_member = {
 						top_liege = this
-						primary_title.tier >= tier_empire
+						#primary_title.tier >= tier_empire (this is commented out because the house in power should always get this big boost)
 						house.house_head.top_liege ?= top_liege
 					}
 				}
 				add = {
 					value = 100
+					if = {
+						limit = {
+							any_house_member = {
+								top_liege = this
+								primary_title.tier < tier_empire
+								house.house_head.top_liege ?= top_liege
+							}
+						}
+						subtract = 50 #For Kings and below the bonus is not quite as high - they are not a far ahead of everyone else as an emperor
+					}
 					desc = imperial_house_desc
 				}
 			}
@@ -4129,7 +4142,7 @@ appointment_investment_cap = {
 		##### ESTATE BUILDINGS
 		if = {
 			limit = { exists = house.house_head.domicile }
-			house.house_head.domicile = { #Unop: Rewrote all this to check for parameters instead of building
+			house.house_head.domicile = { #Unop: Rewrote all this to check for parameters instead of building (since some buildings are missing and is not future proof)
 				add = {
 					value = 0
 					if = {
@@ -4149,6 +4162,7 @@ appointment_investment_cap = {
 						add = 40
 					}
 					else_if = { #Unop: No building have this ATM, but it exists in the YML, adding it here just in case to be future proof
+						#tiger-ignore(key=missing-item)
 						limit = { has_domicile_parameter = estate_increase_house_member_investment_cap_5 }
 						add = 50
 					}
@@ -4180,7 +4194,26 @@ appointment_investment_cap = {
 				}
 			}
 		}
-		### EXPANDED POWER BASE
+		##### FAMILY ATTRIBUTES
+		house ?= {
+			add = {
+				value = 0
+				if = {
+					limit = { has_house_power_parameter = increased_investment_cap_bonus_3 }
+					add = increased_investment_cap_bonus_3_value
+				}
+				else_if = {
+					limit = { has_house_power_parameter = increased_investment_cap_bonus_2 }
+					add = increased_investment_cap_bonus_2_value
+				}
+				else_if = {
+					limit = { has_house_power_parameter = increased_investment_cap_bonus_1 }
+					add = increased_investment_cap_bonus_1_value
+				}
+				desc = political_meddlers_attribute_name_desc
+			}
+		}
+		##### EXPANDED POWER BASE
 		save_temporary_value_as = temp_total
 		if = {
 			limit = { has_character_modifier = ep3_expanded_power_base_minor_modifier }
@@ -6303,3 +6336,99 @@ number_of_held_governorships = {
 		add = 1
 	}
 }
+
+# Family attribute values
+increased_investment_cap_bonus_1_value = 10
+increased_investment_cap_bonus_2_value = 20
+increased_investment_cap_bonus_3_value = 40
+
+improved_siphon_treasury_scheme_1_value = 4
+improved_siphon_treasury_scheme_2_value = 8
+improved_siphon_treasury_scheme_3_value = 12
+
+gain_dynasty_prestige_on_building_construction_1_value = 10
+gain_dynasty_prestige_on_building_construction_2_value = 20
+gain_dynasty_prestige_on_building_construction_3_value = 30
+
+building_construction_dynasty_prestige_gain_value = {
+	value = 0
+	scope:character.house ?= {
+		if = {
+			limit = { has_house_power_parameter = gain_dynasty_prestige_on_building_construction_3 }
+			add = gain_dynasty_prestige_on_building_construction_3_value
+		}
+		else_if = {
+			limit = { has_house_power_parameter = gain_dynasty_prestige_on_building_construction_2 }
+			add = gain_dynasty_prestige_on_building_construction_2_value
+		}
+		else_if = {
+			limit = { has_house_power_parameter = gain_dynasty_prestige_on_building_construction_1 }
+			add = gain_dynasty_prestige_on_building_construction_1_value
+		}
+	}
+}
+
+increased_request_troops_acceptance_1_value = 10
+increased_request_troops_acceptance_2_value = 20
+increased_request_troops_acceptance_3_value = 30
+
+swing_scales_cost_reduction_1_value = -0.1
+swing_scales_cost_reduction_2_value = -0.15
+swing_scales_cost_reduction_3_value = -0.2
+
+swing_scales_cost_multipler_value = {
+	value = 1
+	house ?= {
+		if = {
+			limit = { has_house_power_parameter = respected_despots }
+			if = {
+				limit = { has_house_power_parameter = swing_scales_cost_reduction_3 }
+				add = swing_scales_cost_reduction_3_value
+			}
+			else_if = {
+				limit = { has_house_power_parameter = swing_scales_cost_reduction_2 }
+				add = swing_scales_cost_reduction_2_value
+			}
+			else_if = {
+				limit = { has_house_power_parameter = swing_scales_cost_reduction_1 }
+				add = swing_scales_cost_reduction_1_value
+			}
+		}
+	}
+}
+
+improved_raid_estate_scheme_1_value = 5
+improved_raid_estate_scheme_2_value = 10
+improved_raid_estate_scheme_3_value = 15
+
+increased_request_appointment_acceptance_1_value = 10
+increased_request_appointment_acceptance_2_value = 25
+increased_request_appointment_acceptance_3_value = 50
+
+occupations_give_bonuses_1_value = 20
+occupations_give_bonuses_2_value = 40
+occupations_give_bonuses_3_value = 60
+
+increased_marriage_acceptance_1_value = 10
+increased_marriage_acceptance_2_value = 20
+increased_marriage_acceptance_3_value = 40
+
+increased_clerical_influence_acceptance_1_value = 10
+increased_clerical_influence_acceptance_2_value = 25
+increased_clerical_influence_acceptance_3_value = 40
+
+candidate_score_per_piety_level_1_value = 4
+candidate_score_per_piety_level_2_value = 8
+candidate_score_per_piety_level_3_value = 12
+
+liquidate_camp_main_value_1 = 25
+liquidate_camp_main_value_2 = 50
+liquidate_camp_main_value_3 = 75
+liquidate_camp_main_value_4 = 100
+liquidate_camp_external_value_1 = 10
+liquidate_camp_external_value_2 = 20
+liquidate_camp_external_value_3 = 30
+liquidate_camp_external_value_4 = 40
+liquidate_camp_external_value_5 = 50
+liquidate_camp_external_value_6 = 60
+liquidate_camp_internal_value = 10

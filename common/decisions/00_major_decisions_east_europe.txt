@@ -61,7 +61,7 @@ unite_the_western_slavs_decision = {
 			}
 		}
 	}
-
+	
 	is_valid_showing_failures_only = {
 		is_landed = yes
 	}
@@ -96,7 +96,7 @@ unite_the_western_slavs_decision = {
 			value = scope:western_slav_uniter.primary_title
 		}
 	}
-
+	
 
 	ai_potential = {
 		always = yes
@@ -147,7 +147,7 @@ unite_the_southern_slavs_decision = {
 			has_primary_title = title:k_bosnia
 		}
 	}
-
+	
 	is_valid_showing_failures_only = {
 		is_landed = yes
 	}
@@ -182,7 +182,7 @@ unite_the_southern_slavs_decision = {
 			value = scope:southern_slav_uniter.primary_title
 		}
 	}
-
+	
 
 	ai_potential = {
 		always = yes
@@ -233,7 +233,7 @@ unite_the_slavs_decision = {
 		}
 		completely_controls_region = custom_slavia
 	}
-
+	
 	is_valid_showing_failures_only = {
 		is_landed = yes
 	}
@@ -413,6 +413,7 @@ defenders_of_highgod_decision = {
 		is_landed = yes
 	}
 
+
 	effect = {
 		scope:barony = { save_scope_as = holy_site } #Unop: Save the county as the holy_site
 		save_scope_as = defender_of_highgod
@@ -420,8 +421,30 @@ defenders_of_highgod_decision = {
 		show_as_tooltip = { defenders_of_highgod_decision_effects = yes } #Actually applied in east_europe.0010 - prestige, laws, title, innovation effects
 
 		#Events
-		trigger_event = east_europe.0016
-
+		#if = { #Unop: As we are now using the widget in the decision to allow county selection, the events below are obsolete, leaving only the call to east_europe.0016 to actually build the building
+		#	limit = {
+		#		faith = {
+		#			any_holy_site = {
+		#				count > 1
+		#				county.holder = root
+		#				title_province = { has_special_building = no  }
+		#			}
+		#		}
+		#	}	
+		#	trigger_event = east_europe.0015
+		#}
+		#else = {
+		#	faith = {
+		#		random_holy_site = {
+		#			limit = {
+		#				county.holder = root
+		#				title_province = { has_special_building = no  }
+		#			}
+		#			save_scope_as = holy_site
+		#		}
+		#	}
+			trigger_event = east_europe.0016
+		#}
 		#Event to every player (east_europe.0017) is actually send through east_europe.0016 to make sure the right holy site scope is set
 
 		#Can only happen once per faith
@@ -515,17 +538,17 @@ promote_hungarian_settlement_decision = {
 			count >= 2
 		}
 	}
-
+	
 	is_valid = {
 		# Must be an Ecumenical Christian
 		custom_description = {
   			text = promote_hungarian_settlement_decision_ecumenical_christian
 			faith = { #Denomination of Faith must not be a heresy and must have some degree of control over its core regions.
 				religion = religion:christianity_religion
-				has_doctrine = special_doctrine_ecumenical_christian
+				has_doctrine = special_doctrine_ecumenical_christian	
 			}
 		}
-
+		
 		#Must completely control the Carpathian Basin (Hungary De Jure)
 		completely_controls = title:k_hungary
 
@@ -560,7 +583,7 @@ promote_hungarian_settlement_decision = {
 			}
 		}
 	}
-
+	
 	ai_potential = {
 		always = yes
 	}
@@ -625,7 +648,7 @@ revive_magyar_paganism_decision = {
 			}
 		}
 	}
-
+	
 	is_valid = {
 		#Must be suitably prestigious.
 		prestige_level >= high_prestige_level
@@ -677,7 +700,7 @@ revive_magyar_paganism_decision = {
 			}
 		}
 	}
-
+	
 	ai_potential = {
 		always = no
 	}

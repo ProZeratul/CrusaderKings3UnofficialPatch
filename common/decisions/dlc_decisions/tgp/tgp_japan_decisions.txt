@@ -552,7 +552,7 @@ tgp_japan_establish_soryo_manor_decision = {
 	}
 }
 
-# Become Soryo as Kampaku
+# Become Soryo as independent Ritsuryō
 ### Establish Sōryō Administration ###
 tgp_japan_establish_soryo_administration_decision = {
 	decision_group_type = major
@@ -576,7 +576,6 @@ tgp_japan_establish_soryo_administration_decision = {
 
 	is_shown = {
 		has_tgp_dlc_trigger = yes
-		has_title = title:e_japan
 		is_independent_ruler = yes
 		government_is_japanese_trigger = yes
 		NOR = { 
@@ -587,10 +586,14 @@ tgp_japan_establish_soryo_administration_decision = {
 
 	is_valid = {
 		# Is Regent
-		has_title = title:e_japan
+		trigger_if = {
+			limit = {
+				has_title = title:e_japan
+			}
+			has_realm_law = japanese_regency_succession_law
+		}
 		is_independent_ruler = yes
 		has_government = japan_administrative_government
-		has_realm_law = japanese_regency_succession_law
 		has_realm_law = japanese_bureaucracy_3
 		custom_tooltip = {
 			text = house_head_create_faction_cohesion_hard_tt
@@ -813,8 +816,8 @@ tgp_japan_emperor_restoration_decision = {
 		barony = 0
 		county = 0
 		duchy = 0
-		kingdom = 36
-		empire = 0
+		kingdom = 0
+		empire = 36
 		hegemony = 0
 	}
 	ai_potential = { always = yes }
@@ -1121,11 +1124,11 @@ tgp_japan_become_a_poet_decision = {
 	
 	ai_check_interval_by_tier = {
 		barony = 0
-		county = 12
-		duchy = 12
-		kingdom = 12
-		empire = 12
-		hegemony = 12
+		county = 36
+		duchy = 36
+		kingdom = 36
+		empire = 36
+		hegemony = 36
 	}
 
 	ai_potential = {
@@ -1134,7 +1137,7 @@ tgp_japan_become_a_poet_decision = {
 	}
 
 	ai_will_do = {
-		base = 10
+		base = 100
 	}
 }
 
@@ -1265,25 +1268,10 @@ tgp_japan_become_a_monk_decision = {
 		religion = religion:buddhism_religion
 		is_adult = yes
 		NOT = { government_has_flag = government_is_mandala }
-		NOT = { has_trait = devoted }
 	}
 
 	is_valid = {
 		religion = religion:buddhism_religion
-		OR = {
-			age >= 60
-			custom_tooltip = {
-				text = tgp_japan_become_a_monk_decision_health_tt
-				health <= poor_health
-			}
-			has_contagious_deadly_disease_trigger = yes
-			has_trait = infirm
-			has_trait = depressed_1
-		}
-	}
-
-	is_valid_showing_failures_only = {
-		is_available_adult = yes
 		trigger_if = {
 			limit = { is_ai = no }
 			custom_tooltip = {
@@ -1298,6 +1286,48 @@ tgp_japan_become_a_monk_decision = {
 				}
 			}
 		}
+		OR = {
+			age >= 60
+			custom_tooltip = {
+				text = tgp_japan_become_a_monk_decision_health_tt
+				health <= poor_health
+			}
+			has_contagious_deadly_disease_trigger = yes
+			has_trait = infirm
+			has_trait = depressed_1
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		# Is available sans health checks
+		is_available_quick = {
+			adult = yes
+			alive = yes
+			travel = no
+			in_army = no
+			imprisoned = no
+			incapable = no
+		}
+		custom_description = {
+			text = ALREADY_IN_ACTIVITY
+			NOR = {
+				exists = involved_activity
+				has_variable = {
+					name = homage_liege_scope
+					name = meditation_character_flag
+					name = local_shrine_rite
+					name = petition_liege_character_flag
+					name = holding_court_character_flag
+				}
+				is_being_visited_on_tour_strict = yes
+			}
+		}
+		custom_description = {
+			text = ALREADY_PLANNING_ACTIVITY
+			NOT = { has_character_flag = planning_an_activity }
+		}
+		# Variable set within the adventure inspiration events
+		NOT = { has_variable = gone_adventuring }
 		is_at_war_with_liege = no
 		trigger_if = {
 			limit = {
@@ -1305,11 +1335,13 @@ tgp_japan_become_a_monk_decision = {
 			}
 			tgp_is_above_retirement_age_trigger = { REALM_OWNER = root }
 		}
-		NOT = { has_trait = devoted }
 	}
 
 	effect = {
-		show_as_tooltip =  { tgp_japan_become_a_monk_decision_effect = yes }
+		show_as_tooltip = {
+			add_trait = devoted
+			tgp_renounce_estate_effect = yes
+		}
 		trigger_event = {
 			id = tgp_japan_decision.9500
 		}

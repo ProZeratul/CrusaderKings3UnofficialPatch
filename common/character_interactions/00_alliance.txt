@@ -220,7 +220,7 @@
 				}
 			}
 		}
-
+		
 		# You cannot call a suzerain against their own tributary
 		trigger_if = {
 			limit = {
@@ -241,7 +241,7 @@
 			}
 		}
 		trigger_else = {}
-
+		
 		# You cannot call a tributary against their suzerain
 		trigger_if = {
 			limit = {
@@ -597,7 +597,7 @@
 			}
 			desc = WONT_FIGHT_SPOUSE_REASON
 		}
-
+		
 		modifier = {  # Refuse call against Suzerain if Obedient
 			add = -1000
 			trigger_if = {
@@ -912,7 +912,7 @@
 			trigger_else = {
 				has_relation_friend = scope:target.casus_belli.primary_defender
 			}
-			desc = WONT_FIGHT_FRIEND_REASON #Unop: Added _REASON
+			desc = WONT_FIGHT_FRIEND_REASON
 		}
 
 		modifier = { # Reluctant to join against Best Friends
@@ -926,7 +926,7 @@
 			trigger_else = {
 				has_relation_best_friend = scope:target.casus_belli.primary_defender
 			}
-			desc = WONT_FIGHT_BEST_FRIEND_REASON #Unop: Added _REASON
+			desc = WONT_FIGHT_BEST_FRIEND_REASON
 		}
 		modifier = { # Reluctant to join against Lovers
 			add = -100
@@ -939,7 +939,7 @@
 			trigger_else = {
 				has_relation_lover = scope:target.casus_belli.primary_defender
 			}
-			desc = WONT_FIGHT_LOVER_REASON #Unop: Added _REASON
+			desc = WONT_FIGHT_LOVER_REASON
 		}
 		modifier = { # Reluctant to join against Soulmate
 			add = -200
@@ -952,7 +952,7 @@
 			trigger_else = {
 				has_relation_soulmate = scope:target.casus_belli.primary_defender
 			}
-			desc = WONT_FIGHT_SOULMATE_REASON #Unop: Added _REASON
+			desc = WONT_FIGHT_SOULMATE_REASON
 		}
 		modifier = { # Reluctant to join tributaries
 			add = -200
@@ -1341,8 +1341,7 @@ negotiate_alliance_interaction = {
 			if = {
 				limit = {
 					scope:hook = yes
-					has_hook = scope:recipient
-					has_usable_hook = scope:recipient #Unop: Prevent an error in the logs
+					has_usable_hook = scope:recipient
 				}
 				use_hook = scope:recipient
 			}
@@ -2451,7 +2450,7 @@ perk_alliance_interaction = {
 			is_at_war = no
 			is_imprisoned = no
 		}
-
+		
 		custom_description = {
 			text = "has_already_rejected_renegotiation"
 			subject = scope:recipient
@@ -3465,7 +3464,7 @@ join_war_interaction = {
 			# suzerains can always join their tributaries' defensive wars
 			trigger_else_if = {
 				limit = {
-					scope:recipient = {
+					scope:recipient = { 
 						is_tributary_of_suzerain_or_above = scope:actor
 					}
 				}
@@ -3481,7 +3480,7 @@ join_war_interaction = {
 			# tributaries can always offer to join their direct suzerains' defensive wars
 			trigger_else_if = {
 				limit = {
-					scope:actor = {
+					scope:actor = { 
 						is_tributary_of = scope:recipient
 					}
 				}
@@ -3547,7 +3546,7 @@ join_war_interaction = {
 
 			# recipient is war leader
 			is_war_leader = scope:recipient
-
+			
 			# special exception for tributaries and suzerains to fight for one another
 			trigger_if = {
 				limit = {
@@ -3572,6 +3571,27 @@ join_war_interaction = {
 					}
 				#}
 				#trigger_else = { always = yes }
+			}
+
+			#allow targets of a Grand Campaign to bypass the requirements
+			trigger_else_if = {
+				limit = {
+					var:grand_campaign_project ?= {
+						save_temporary_scope_as = great_project
+	        			any_in_list = {
+	            			variable = grand_campaign_titles
+	            			any_in_de_jure_hierarchy = {
+	            				exists = holder
+								holder.top_overlord = {
+									OR = {
+										this = scope:recipient
+										this = scope:actor
+	            					}
+	            				}
+	            			}
+						}
+					}
+				}
 			}
 
 			#allow laamp_join_war_contract to bypass the requirements
@@ -3965,15 +3985,24 @@ join_vassal_war_interaction = {
 						any_target_title = {
 							OR = {
 								target_is_de_facto_liege_or_above = scope:actor.primary_title
-								target_is_de_jure_liege_or_above = scope:actor.primary_title
+								is_de_facto_liege_or_above_target = scope:actor.primary_title
 							}
 						}
 					}
 				}
 			}
 			#Unless you're a guaranteed tributary
+			trigger_else_if = {
+				limit = {
+					scope:recipient = { is_tributary_of_suzerain_or_above = scope:actor }
+				}
+				custom_tooltip = {
+					text = suzerain_war_participation_guarantee_tt
+					scope:recipient = { subject_contract_has_flag = tributary_contract_suzerain_guarantee_override }
+				}
+			}
 			trigger_else = {
-				scope:recipient = { subject_contract_has_flag = tributary_contract_suzerain_guarantee_override }
+				always = yes
 			}
 			custom_tooltip = {
 				text = war_aid_liege_cooldown_tt

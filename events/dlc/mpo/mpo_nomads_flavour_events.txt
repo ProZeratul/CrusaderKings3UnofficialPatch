@@ -1610,6 +1610,12 @@ nomad_events.0008 = {
 			NOT = { faith = scope:achmach_scope.faith }
 		}
 		set_character_faith_with_conversion = scope:achmach_scope.faith
+		if = {
+		    limit = { 
+		        scope:achmach_scope.faith = { has_doctrine = doctrine_monotheist }
+		    }
+		    custom_description_no_bullet = { text = mandala_monotheist_warning_tt }
+		}
 		add_piety = medium_piety_gain
 		ai_chance = {
 			base = 0 #AI should never choose this

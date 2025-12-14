@@ -44,30 +44,11 @@ tgp_china_ministry.0001 = {
 	lower_left_portrait = scope:owner
 
 	immediate = {
-		scope:target_title.holder.top_liege = {
-			save_scope_as = defender
+		start_war = {
+			cb = grand_campaign_kingdom_invasion_cb
+			target = scope:defender
+			target_title = scope:great_project.var:grand_campaign_target_kingdom
 		}
-	}
-
-	option = {
-		name = tgp_china_ministry.0001.a
-		if = {
-			limit = {
-				NOT = {
-					exists = scope:grand_campaign_war
-				}
-			}
-			start_war = {
-				cb = grand_campaign_kingdom_invasion_cb
-				target = scope:defender
-				target_title = scope:great_project.var:grand_campaign_target
-			}
-		}
-		add_character_modifier = {
-			modifier = tgp_joined_grand_campaign_modifier
-		}
-	}
-	after = {
 		scope:war_leader = {
 			random_character_war = {
 				limit = {
@@ -80,37 +61,45 @@ tgp_china_ministry.0001 = {
 				}
 			}
 		}
-		#bring in all relevant defenders
-		scope:target_title = {
-			every_in_de_jure_hierarchy = {
-				limit = {
-					holder ?= {
-						this = scope:defender
-						top_overlord != scope:owner
-						NOT = {
-							any_character_war = {
-								this != scope:grand_campaign_war
-							}
-						}
-					}
-				}
-				holder = {
-					add_to_list = holders_to_join
-				}
-			}
-		}
 		scope:great_project = {
 			set_variable = {
 				name = grand_campaign_war
 				value = scope:grand_campaign_war
 			}
 		}
+	}
+
+	option = {
+		name = tgp_china_ministry.0001.a
+		add_character_modifier = {
+			modifier = tgp_joined_grand_campaign_modifier
+		}
+	}
+	after = {
+		#bring in all relevant defenders
+		scope:target_title = {
+			every_in_de_jure_hierarchy = {
+				holder ?= {
+					if = {
+						limit = {
+							this = scope:defender
+							top_overlord != scope:owner
+							NOT = {
+								any_character_war = {
+									this = scope:grand_campaign_war
+								}
+							}
+						}
+						add_to_list = holders_to_join
+					}
+				}
+			}
+		}
 		every_in_list = {
 			list = holders_to_join
-				scope:grand_campaign_war ?= {
-					add_defender = prev
-				}
-
+			scope:grand_campaign_war ?= {
+				add_defender = prev
+			}
 		}
 		scope:owner = {
 			if = {
@@ -134,6 +123,7 @@ tgp_china_ministry.0001 = {
 			if = {
 				limit = {
 					this != root
+					this != scope:owner
 				}
 				trigger_event = tgp_china_ministry.0007
 			}
@@ -158,88 +148,7 @@ tgp_china_ministry.0002 = {
 
 	immediate = {
 		save_scope_as = owner
-		show_as_tooltip = {
-			# If in the Advancement phase make the target a tributary to the Hegemon
-			if = {
-				limit = {
-					situation:dynastic_cycle ?= {
-						OR = {
-							situation_current_phase = situation_dynastic_cycle_phase_stability_advancement
-							situation_current_phase = situation_dynastic_cycle_phase_instability
-						}
-					}
-				}
-				custom_tooltip = invasion_title_tributary_tt
-					
-				hidden_effect = {
-					every_in_list = {
-						list = target_titles
-						create_title_and_vassal_change = {
-							type = conquest
-							save_scope_as = change
-							add_claim_on_loss = yes
-						}	
-						every_in_list = {
-							list = target_titles
-							holder = {
-								becomes_independent = {
-									change = scope:change
-								}
-							}
-						}
-						resolve_title_and_vassal_change = scope:change
-						save_scope_as = unop_title
-						if = { # This if/else exists for localization purposes, since it could be parsed before the war starts
-							limit = { exists = scope:war }
-							start_tributary_from_war_effect = {
-								TRIBUTARY = scope:unop_title.holder.top_liege #Unop: this cannot be used as parameter as it is scope dependant !
-								SUZERAIN = scope:hegemon
-								WAR = scope:war
-							}
-						}
-						else = {
-							start_tributary_interaction_effect = {
-								TRIBUTARY = scope:unop_title.holder #Unop: this cannot be used as parameter as it is scope dependant !
-								SUZERAIN = scope:hegemon
-							}
-						}
-					}
-				}
-			}
-			# Any other phase take the titles and hand them to the Hegemon
-			else = {
-				create_title_and_vassal_change = {
-					type = conquest
-					save_scope_as = change
-					add_claim_on_loss = yes
-				}
-
-				show_as_tooltip = {
-					every_in_list = {
-						list = target_titles
-						custom_tooltip = invasion_title_transfer_tt
-						every_in_de_jure_hierarchy = {
-							limit = { holder.top_liege = scope:defender }
-							change_title_holder = {
-								holder = scope:hegemon
-								change = scope:change
-							}
-						}
-					}
-				}
-
-				hidden_effect = {
-					setup_invasion_cb = {
-						titles = target_titles
-						attacker = scope:hegemon
-						defender = scope:defender
-						change = scope:change
-						take_occupied = no
-					}
-					resolve_title_and_vassal_change = scope:change
-				}
-			}
-		}
+		custom_tooltip = grand_campaign_kingdom_invasion_cb_victory_desc_attacker
 	}
 
 	option = {
@@ -249,8 +158,11 @@ tgp_china_ministry.0002 = {
 				scope:great_project = {
 					any_in_list = {
 						variable = grand_campaign_targets
-						count = all
-						holder.top_overlord = scope:owner
+						any_in_de_jure_hierarchy = {
+							count = all
+							tier = tier_county
+							holder.top_overlord = scope:owner
+						}
 					}
 				}
 			}
@@ -258,6 +170,7 @@ tgp_china_ministry.0002 = {
 				complete_great_project = scope:great_project
 			}
 		}
+
 		add_legitimacy = miniscule_legitimacy_gain
 		custom_tooltip = grand_campaign_won_tt
 		custom_tooltip = grand_campaign_lost_tt
@@ -328,19 +241,21 @@ tgp_china_ministry.0004 = {
 		}
 		scope:target_title = {
 			every_in_de_jure_hierarchy = {
-				limit = {
-					holder ?= {
-						this = prev.holder.top_liege
-						top_overlord != scope:owner
-						NOT = {
-							any_character_war = {
-								this = scope:grand_campaign_war
+				holder ?= {
+					if = {
+						limit = {
+							is_independent_ruler = yes
+                            NOR = {
+                            	government_allows = redirects_wars_to_overlord
+								this = scope:owner
+								top_overlord = scope:owner
+								any_character_war = {
+									this = scope:grand_campaign_war
+								}
 							}
 						}
+						add_to_list = holders_to_join
 					}
-				}
-				holder = {
-					add_to_list = holders_to_join
 				}
 			}
 			if = {
@@ -405,7 +320,7 @@ tgp_china_ministry.0005 = {
 	}
 
 	immediate = {
-		scope:great_project.var:grand_campaign_target = {
+		scope:great_project.var:grand_campaign_target_kingdom = {
 			save_scope_as = target_kingdom
 		}
 		every_in_list = {
@@ -541,7 +456,7 @@ tgp_china_ministry.0007 = {
 				start_war = {
 					cb = grand_campaign_kingdom_invasion_cb
 					target = scope:defender
-					target_title = scope:great_project.var:grand_campaign_target
+					target_title = scope:great_project.var:grand_campaign_target_kingdom
 				}
 			}
 		}
@@ -585,7 +500,7 @@ tgp_china_ministry.0008 = {
 	cooldown = { days = 1 }
 
 	immediate = {
-		scope:great_project.var:grand_campaign_target = {
+		scope:great_project.var:grand_campaign_target_kingdom = {
 			save_scope_as = target_kingdom
 		}
 		show_as_tooltip = {
@@ -1409,5 +1324,115 @@ tgp_china_ministry.0200 = {
 				has_trait = trusting
 			}
 		}
+	}
+}
+
+# Honors Bestowed
+tgp_china_ministry.1000 = {
+	type = character_event
+	title = tgp_china_ministry.1000.t
+	desc = tgp_china_ministry.1000.desc
+	window = big_event_window
+	override_background = { reference = tgp_asia_throne_room }
+	theme = merit
+	left_portrait = {
+		character = root
+		animation = prostration
+		camera = shop_camera_baby_angle_90
+	}
+	right_portrait = {
+		character = scope:huangdi
+		animation = emperor
+		camera = shop_camera_baby_angle_300
+	}
+	widget = { gui = event_window_widget_vfx_godray container = foreground_shader_vfx_container }
+
+	immediate = {
+		top_liege = {
+			save_scope_as = huangdi
+		}
+	}
+
+	option = {
+		name = tgp_china_ministry.1000.a
+		reverse_add_opinion = {
+			target = root.top_liege
+			modifier = honorable_opinion
+			opinion = 50
+		}
+		add_character_modifier = tgp_personal_honors_modifier
+		if = {
+			limit = {
+				has_title = title:e_minister_chancellor
+			}
+			house = {
+				add_house_modifier = tgp_e_minister_chancellor_modifier
+			}
+		}
+		else_if = {
+			limit = {
+				has_title = title:e_minister_censor
+			}
+			house = {
+				add_house_modifier = tgp_e_minister_censor_modifier
+			}
+		}
+		else_if = {
+			limit = {
+				has_title = title:e_minister_grand_marshal
+			}
+			house = {
+				add_house_modifier = tgp_e_minister_grand_marshal_modifier
+			}
+		}
+		else_if = {
+			limit = {
+				has_title = title:e_minister_of_personnel
+			}
+			house = {
+				add_house_modifier = tgp_e_minister_of_personnel_modifier
+			}
+		}
+		else_if = {
+			limit = {
+				has_title = title:e_minister_of_revenue
+			}
+			house = {
+				add_house_modifier = tgp_e_minister_of_revenue_modifier
+			}
+		}
+		else_if = {
+			limit = {
+				has_title = title:e_minister_of_rites
+			}
+			house = {
+				add_house_modifier = tgp_e_minister_of_rites_modifier
+			}
+		}
+		else_if = {
+			limit = {
+				has_title = title:e_minister_of_war
+			}
+			house = {
+				add_house_modifier = tgp_e_minister_of_war_modifier
+			}
+		}
+		else_if = {
+			limit = {
+				has_title = title:e_minister_of_justice
+			}
+			house = {
+				add_house_modifier = tgp_e_minister_of_justice_modifier
+			}
+		}
+		else_if = {
+			limit = {
+				has_title = title:e_minister_of_works
+			}
+			house = {
+				add_house_modifier = tgp_e_minister_of_works_modifier
+			}
+		}
+		dynasty = { add_dynasty_prestige = 2000 }
 	}
 }

@@ -343,6 +343,39 @@ hunt.0080 = {
 	after = { remove_variable = animal_type }
 }
 
+# Dead before hunt
+hunt.0087 = {
+	type = character_event
+	title = hunt.0080.t
+	desc = hunt.0080.death
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+	right_portrait = {
+		character = scope:host
+		triggered_animation = {
+			trigger = { is_alive = no }
+			animation = loss_1
+		}
+		animation = stress
+	}
+	theme = hunt_activity
+	cooldown = { weeks = 1 }
+
+	immediate = {
+		if = {
+			limit = { NOT = { this = scope:host } }
+			hunt_invalidation_event_effect = yes
+		}
+	}
+
+	option = {
+		name = hunt.0080.a
+		custom_tooltip = hunt_ends_tt
+	}
+}
+
 # Wound Decision
 hunt.0081 = {
 	type = activity_event
@@ -10591,6 +10624,9 @@ hunt.2001 = {
 						culture = scope:merchant_culture
 						faith = scope:merchant_faith
 						save_scope_as = falcon_salesman
+						after_creation = { #Unop: To be handled in the after block
+							add_character_flag = created
+						}
 					}
 				}
 				10 = {
@@ -10698,6 +10734,12 @@ hunt.2001 = {
 					has_trait = patient
 				}
 			}
+		}
+	}
+
+	after = { #Unop: Make the falcon_salesman vanish if it was created
+		scope:falcon_salesman = {
+			silent_disappear_ai_if_not_hired_with_flag = yes
 		}
 	}
 }

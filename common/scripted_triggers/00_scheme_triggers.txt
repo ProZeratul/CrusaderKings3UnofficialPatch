@@ -65,24 +65,24 @@ can_start_hostile_scheme_against_trigger = {
 agent_valid_to_be_discovered_by_spymaster = {
 	trigger_if = {
 		limit = {
-			exists = scope:target_character.court_owner.cp:councillor_spymaster #Unop Use correct scope
+			exists = scope:target.court_owner.cp:councillor_spymaster
 		}
-		this != scope:target_character.court_owner.cp:councillor_spymaster #Unop Use correct scope
+		this != scope:target.court_owner.cp:councillor_spymaster
 	}
 	NOT = {
 		has_character_flag = free_to_scheme
 	}
 	trigger_if = {
 		limit = {
-			exists = scope:target_character.court_owner #Unop Use correct scope
+			exists = scope:target.court_owner
 		}
 		NOR = {
 			reverse_has_opinion_modifier = {
-				target = scope:target_character.court_owner #Unop Use correct scope
+				target = scope:target.court_owner
 				modifier = scheming_against_me
 			}
 			reverse_has_opinion_modifier = {
-				target = scope:target_character.court_owner #Unop Use correct scope
+				target = scope:target.court_owner
 				modifier = schemed_against_me
 			}
 		}

@@ -247,8 +247,7 @@ activity_system.0090 = {
 
 # Intent Target Invalidated
 activity_system.0091 = {
-	orphan = yes #Unop Replaced by unop.0091
-	type = activity_event
+	type = character_event
 	title = activity_system.0091.t
 	desc = activity_system.0091.desc
 	theme = realm
@@ -276,7 +275,6 @@ activity_system.0091 = {
 }
 
 activity_system.0092 = {
-	orphan = yes #Unop Replaced by unop.0091
 	type = activity_event
 	title = activity_system.0091.t
 	desc = activity_system.0091.desc
@@ -650,14 +648,14 @@ activity_system.0320 = {
 		animation = grief
 	}
 	right_portrait = {
+		trigger = { #Unop: Nothing seems to set this scope :?
+			exists = scope:new_holder
+		}
 		character = scope:new_holder
 		animation = personality_callous 
 	}
 
 	immediate = {
-		scope:activity.activity_location.county.holder = { #Unop: Scope needed for the portrait above
-			save_scope_as = new_holder
-		}
 	}
 
 	option = {

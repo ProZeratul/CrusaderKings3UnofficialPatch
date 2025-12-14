@@ -4446,8 +4446,11 @@ bp2_yearly.7022 = { #Duel outcome
 		scope:duelist_1 = {
 			silent_disappearance_ai_if_created_effect = yes
 		}
-		scope:duelist_2 = {
-			silent_disappearance_ai_if_created_effect = yes
+		scope:duelist_2 ?= { #Unop: Prevent Undefined event target 'duelist_2' (since this scope could also be family_duelist)
+			if = { #Unop: prevent scope is dead during effect execution
+				limit = { is_alive = yes }
+				silent_disappearance_ai_if_created_effect = yes
+			}
 		}
 	}
 }

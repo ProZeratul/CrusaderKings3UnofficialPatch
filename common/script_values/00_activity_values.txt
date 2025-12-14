@@ -684,36 +684,120 @@ pilgrimage_base_cost = {
 
 standard_activity_base_cost = {
 	value = 30
-	multiply = {
-		value = primary_title.tier #Unop ck3-tiger
-		subtract = 1
-		min = 1
-	}
-	if = {
-		limit = {
-			government_has_flag = government_is_tribal #Unop ck3-tiger
+
+	if = { #Unop: There are inconsistency in calls with this, sometimes logs throw errors stating root is an activity where it should be a character, also sometimes called from interaction where root does not exists
+		limit = { # Root is a character
+			exists = root.primary_title
 		}
-		multiply = 0.5
-	}
-	if = {
-		limit = {
-			primary_title.tier > tier_duchy #Unop ck3-tiger
+		multiply = {
+			value = root.primary_title.tier
+			subtract = 1
+			min = 1
 		}
-		add = 50
-	}
-	if = {
-		limit = {
-			is_ai = yes
-			has_game_rule = hard_difficulty
+		if = {
+			limit = {
+				root = {
+					government_has_flag = government_is_tribal
+				}
+			}
+			multiply = 0.5
 		}
-		multiply = 0.5
+		if = {
+			limit = {
+				root.primary_title.tier > tier_duchy
+			}
+			add = 50
+		}
+		if = {
+			limit = {
+				is_ai = yes
+				has_game_rule = hard_difficulty
+			}
+			multiply = 0.5
+		}
+		else_if = {
+			limit = {
+				is_ai = yes
+				has_game_rule = very_hard_difficulty
+			}
+			multiply = 0.25
+		}
+	}
+	else_if = { # Root is an activity
+		limit = {
+			exists = root.activity_host
+		}
+		multiply = {
+			value = root.activity_host.primary_title.tier
+			subtract = 1
+			min = 1
+		}
+		if = {
+			limit = {
+				root.activity_host = {
+					government_has_flag = government_is_tribal
+				}
+			}
+			multiply = 0.5
+		}
+		if = {
+			limit = {
+				root.activity_host.primary_title.tier > tier_duchy
+			}
+			add = 50
+		}
+		if = {
+			limit = {
+				root.activity_host = { is_ai = yes }
+				has_game_rule = hard_difficulty
+			}
+			multiply = 0.5
+		}
+		else_if = {
+			limit = {
+				root.activity_host = { is_ai = yes }
+				has_game_rule = very_hard_difficulty
+			}
+			multiply = 0.25
+		}
 	}
 	else_if = {
 		limit = {
-			is_ai = yes
-			has_game_rule = very_hard_difficulty
+			exists = scope:actor
 		}
-		multiply = 0.25
+		multiply = {
+			value = scope:actor.primary_title.tier
+			subtract = 1
+			min = 1
+		}
+		if = {
+			limit = {
+				scope:actor = {
+					government_has_flag = government_is_tribal
+				}
+			}
+			multiply = 0.5
+		}
+		if = {
+			limit = {
+				scope:actor.primary_title.tier > tier_duchy
+			}
+			add = 50
+		}
+		if = {
+			limit = {
+				scope:actor = { is_ai = yes }
+				has_game_rule = hard_difficulty
+			}
+			multiply = 0.5
+		}
+		else_if = {
+			limit = {
+				scope:actor = { is_ai = yes }
+				has_game_rule = very_hard_difficulty
+			}
+			multiply = 0.25
+		}
 	}
 }
 
@@ -1450,18 +1534,53 @@ activity_cost_scale_by_era = {
 			}
 		}
 	}
+	else_if = { #Unop: To handle cases where 'root' is an activity
+		limit = { exists = activity_host }
+		if = {
+			limit = { exists = activity_host.culture }
+			activity_host.culture = {
+				if = {
+					limit = { has_cultural_era_or_later = culture_era_late_medieval }
+					add = 3
+				}
+				else_if = {
+					limit = { has_cultural_era_or_later = culture_era_high_medieval }
+					add = 1.5
+				}
+				else_if = {
+					limit = { has_cultural_era_or_later = culture_era_early_medieval }
+					add = 1
+				}
+				else = {
+					add = 0.75
+				}
+			}
+		}
+	}
 }
 
 activity_cost_scale_by_tier = {
 	value = 0
 	if = {
-		limit = { exists = primary_title } #Unop ck3-tiger
+		limit = {
+			exists = primary_title
+		}
 		add = {
-			value = primary_title.tier #Unop ck3-tiger
+			value = primary_title.tier
 			subtract = 1
+			min = 1
 		}
 	}
-	min = 1
+	else_if = { #Unop: To handle cases where 'root' is an activity
+		limit = { 
+			exists = activity_host
+		}
+		add = {
+			value = activity_host.primary_title.tier
+			subtract = 1
+			min = 1
+		}
+	}
 }
 
 university_visit_activity_cost_scale_by_tier = {
@@ -3140,7 +3259,7 @@ base_feast_cost_value = {
 		}
 		if = {
 			limit = {
-				scope:host.domicile ?= {
+				root.domicile ?= { #Unop ck3-tiger Use root not scope:host in cost block
 					has_domicile_parameter = nomad_yurt_feast_discount
 				}
 			}

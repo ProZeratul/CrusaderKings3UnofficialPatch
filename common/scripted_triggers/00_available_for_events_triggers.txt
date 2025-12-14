@@ -917,7 +917,10 @@ is_landed_or_landless_administrative = {
 # Checks if a character is either landed, a landless house head within an admin realm, a landless nomad, a landless adventurer, a landless soryo, or a minister
 is_playable_character = {
 	OR = {
-		is_landed = yes
+		trigger_if = { #Unop: Barons are landed but not playable
+		 	limit = { is_landed = yes }
+			highest_held_title_tier > tier_barony
+		}
 		is_landless_administrative = yes
 		is_landless_adventurer = yes
 		is_landless_nomad = yes

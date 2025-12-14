@@ -47,7 +47,7 @@ murder_attendee_intent = {
 
 	# Handle target character invalidation
 	is_target_valid = {
-		NOT = { this = scope:target } #Unop Prevent selecting yourself as intent target
+		this != scope:target #Unop Prevent selecting yourself as intent target
 		scope:target = {
 			is_ai = yes
 		}
@@ -64,7 +64,7 @@ murder_attendee_intent = {
 	}
 
 	on_target_invalidated = {
-		trigger_event = unop.0091 #Unop
+		trigger_event = activity_system.0091
 	}
 
 	ai_will_do = {
@@ -143,7 +143,7 @@ woo_attendee_intent = {
 
 	# Handle target character invalidation
 	is_target_valid = {
-		NOT = { this = scope:target } #Unop Prevent selecting yourself as intent target
+		this != scope:target #Unop Prevent selecting yourself as intent target
 		is_adult = yes
 		scope:target = {
 			is_adult = yes
@@ -167,7 +167,7 @@ woo_attendee_intent = {
 	}
 
 	on_target_invalidated = {
-		trigger_event = unop.0091 #Unop
+		trigger_event = activity_system.0092
 	}
 
 	ai_will_do = {
@@ -289,7 +289,7 @@ befriend_attendee_intent = {
 
 	# Handle target character invalidation
 	is_target_valid = {
-		NOT = { this = scope:target } #Unop Prevent selecting yourself as intent target
+		this != scope:target
 		scope:target = {
 			is_ai = yes
 			is_adult = yes
@@ -302,7 +302,7 @@ befriend_attendee_intent = {
 	}
 
 	on_target_invalidated = {
-		trigger_event = unop.0091 #Unop
+		trigger_event = activity_system.0091
 	}
 
 	ai_will_do = {
@@ -435,7 +435,7 @@ impose_obedience_intent = {
 	}
 
 	on_target_invalidated = {
-		trigger_event = unop.0091 #Unop replace activity_system.0092 with this custom one (since there are somes cases where the activity won't exists anymore, the event won't fire)
+		trigger_event = activity_system.0092
 	}
 
 	ai_will_do = {

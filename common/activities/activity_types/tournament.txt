@@ -2729,7 +2729,7 @@
 			on_end = {
 				if = {
 					limit = { this = scope:activity.activity_host }
-					tournament_contest_team_winner_effect = { CONTEST = melee }					
+					tournament_contest_team_winner_effect = { CONTEST = melee }
 					if = { #Unop Add debug log
 						limit = {
 							NOT = {
@@ -3358,6 +3358,41 @@
 						every_attending_character = {
 							tournament_add_contestant_or_spectator_effect = yes
 						}
+					}
+				}
+				scope:activity = { 
+					every_guest_subset_current_phase = { 
+						name = qualified
+						save_temporary_scope_as = clear_qualified
+						scope:activity = {
+							remove_from_guest_subset = { 
+								name = qualified
+								target = scope:clear_qualified 
+							}
+						}
+					}
+					every_guest_subset_current_phase = { 
+						name = contestant
+						save_temporary_scope_as = clear_contestant
+						scope:activity = {
+							remove_from_guest_subset = { 
+								name = contestant
+								target = scope:clear_contestant
+							}
+						}
+					}
+					every_guest_subset_current_phase = { 
+						name = spectator
+						save_temporary_scope_as = clear_spectator
+						scope:activity = {
+							remove_from_guest_subset = { 
+								name = spectator
+								target = scope:clear_spectator
+							}
+						}
+					}
+					every_attending_character = {
+						tournament_add_contestant_or_spectator_effect = yes
 					}
 				}
 			}
@@ -4581,7 +4616,7 @@
 
 		# BOARD GAME
 		# contest_board_game_aptitude_value
-		tournament_phase_board_game = {
+		tournament_phase_board_game = {			
 			is_shown = {}
 
 			can_pick = {} #Board games in all different forms were seen all over the globe
@@ -4625,6 +4660,41 @@
 						every_attending_character = {
 							tournament_add_contestant_or_spectator_effect = yes
 						}
+					}
+				}
+				scope:activity = {
+					every_guest_subset_current_phase = { 
+						name = qualified
+						save_temporary_scope_as = clear_spectator
+						scope:activity = {
+							remove_from_guest_subset = { 
+								name = qualified
+								target = scope:clear_spectator 
+							}
+						}
+					}
+					every_guest_subset_current_phase = { 
+						name = contestant
+						save_temporary_scope_as = clear_spectator
+						scope:activity = {
+							remove_from_guest_subset = { 
+								name = contestant
+								target = scope:clear_spectator
+							}
+						}
+					}
+					every_guest_subset_current_phase = { 
+						name = spectator
+						save_temporary_scope_as = clear_spectator
+						scope:activity = {
+							remove_from_guest_subset = { 
+								name = spectator
+								target = scope:clear_spectator
+							}
+						}
+					}
+					every_attending_character = {
+						tournament_add_contestant_or_spectator_effect = yes
 					}
 				}
 			}
@@ -4937,6 +5007,41 @@
 						every_attending_character = {
 							tournament_add_contestant_or_spectator_effect = yes
 						}
+					}
+				}
+				scope:activity = { 
+					every_guest_subset_current_phase = { 
+						name = qualified
+						save_temporary_scope_as = clear_qualified
+						scope:activity = {
+							remove_from_guest_subset = { 
+								name = qualified
+								target = scope:clear_qualified 
+							}
+						}
+					}
+					every_guest_subset_current_phase = { 
+						name = contestant
+						save_temporary_scope_as = clear_qualified
+						scope:activity = {
+							remove_from_guest_subset = { 
+								name = contestant
+								target = scope:clear_qualified
+							}
+						}
+					}
+					every_guest_subset_current_phase = { 
+						name = spectator
+						save_temporary_scope_as = clear_qualified
+						scope:activity = {
+							remove_from_guest_subset = { 
+								name = spectator
+								target = scope:clear_qualified
+							}
+						}
+					}
+					every_attending_character = {
+						tournament_add_contestant_or_spectator_effect = yes
 					}
 				}
 			}
@@ -5331,7 +5436,6 @@
 	can_be_activity_guest = {
 		is_adult = yes
 		in_diplomatic_range = scope:host
-		#is_pool_guest = no # Unop: We need to disabled this to not forbid event with char from the guest pool to join the activity. Changed into a modifier with -5000 in guest_join_chance
 	}
 
 	host_intents = {
@@ -5371,7 +5475,8 @@
    		   has_title = title:h_china
    		   add = -5000
    		}
-		modifier = { #Unop To simulate the is_pool_guest = no that was in can_be_activity_guest
+
+		modifier = {
 			is_pool_guest = yes
 			add = -5000
 		}

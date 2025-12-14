@@ -170,6 +170,7 @@ travel_danger_events.6000 = { #Animal attack
 	trigger = {
 		is_available_travelling_adult = yes #Unop Ensure traveling and available character
 		is_location_valid_for_travel_event_on_land = yes
+		exists = current_travel_plan.next_destination_province
 		location = {
 			exists = province_owner
 			OR = {
@@ -829,9 +830,6 @@ travel_danger_events.6010 = { #Siege
 		pay_short_term_gold = {
 			target = scope:soldier
 			gold = medium_gold_value
-		}
-		scope:soldier = { #Unop: To let them join the activity despite being from another faith
-			add_character_flag = unop_force_join_pilgrimage
 		}
 		add_to_entourage_court_and_activity_effect = { 
 			CHAR_TO_ADD = scope:soldier 
@@ -1768,14 +1766,6 @@ travel_danger_events.6012 = { #Army
 			target = scope:soldier
 			gold = medium_gold_value
 		}
-		if = { #Unop: To let them join the activity despite being from another faith
-			limit = {
-				involved_activity ?= { has_activity_type = activity_pilgrimage }
-			}
-			scope:soldier = {
-				add_character_flag = unop_force_join_pilgrimage
-			}
-		}
 		add_to_entourage_court_and_activity_effect = { 
 			CHAR_TO_ADD = scope:soldier 
 			NEW_COURT_OWNER = root 
@@ -2169,14 +2159,6 @@ travel_danger_events.6013 = { #Occupation
 		pay_short_term_gold = {
 			target = scope:soldier
 			gold = medium_gold_value
-		}
-		if = { #Unop: To let them join the activity despite being from another faith
-			limit = {
-				involved_activity ?= { has_activity_type = activity_pilgrimage }
-			}
-			scope:soldier = {
-				add_character_flag = unop_force_join_pilgrimage
-			}
 		}
 		add_to_entourage_court_and_activity_effect = { 
 			CHAR_TO_ADD = scope:soldier 
