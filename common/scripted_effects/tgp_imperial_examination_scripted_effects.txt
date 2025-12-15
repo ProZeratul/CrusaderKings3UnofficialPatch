@@ -863,7 +863,7 @@ imperial_examination_set_up_examiners_effect = {
 							value < examiners_amount
 						}
 						any_attending_character = {
-							location = scope:activity_location
+							location = scope:location #Unop: activity_location is not defined here, use the scope registered at the top of this effect instead
 							this != scope:host
 							is_ai = yes
 							tgp_gender_can_be_exam_entrant_trigger = yes
@@ -882,7 +882,7 @@ imperial_examination_set_up_examiners_effect = {
 					}
 					random_attending_character = {
 						limit = {
-							location = scope:activity_location
+							location = scope:location #Unop: activity_location is not defined here, use the scope registered at the top of this effect instead
 							is_ai = yes
 							this != scope:host
 							tgp_gender_can_be_exam_entrant_trigger = yes
