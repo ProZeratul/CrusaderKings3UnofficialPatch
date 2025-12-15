@@ -64,15 +64,47 @@ feast_default_joe.1010 = { # Get agent to join your scheme
 			}
 			save_scope_as = scheme
 		}
-		random_in_list = { # Pick an agent
-			list = agent_list
-			limit = { feast_default_joe_1010_agent_trigger = { SCHEME = scope:scheme } }
-			weight = {
-				base = 1
-				modifier = { add = intrigue }
-				is_of_major_interest_to_weight_up_modifier = { CHARACTER = scope:scheme.scheme_target_character }
+
+		if = { #Unop: Check if scheme target a character or a title or anything else to weight the potential agent properly
+			limit = {
+				scope:scheme = { exists = scheme_target_character }
 			}
-			save_scope_as = agent
+			random_in_list = { # Pick an agent
+				list = agent_list
+				limit = { feast_default_joe_1010_agent_trigger = { SCHEME = scope:scheme } }
+				weight = {
+					base = 1
+					modifier = { add = intrigue }
+					is_of_major_interest_to_weight_up_modifier = { CHARACTER = scope:scheme.scheme_target_character }
+				}
+				save_scope_as = agent
+			}
+		}
+		else_if = {
+			limit = {
+				scope:scheme = { exists = scheme_target_title }
+			}
+			random_in_list = { # Pick an agent
+				list = agent_list
+				limit = { feast_default_joe_1010_agent_trigger = { SCHEME = scope:scheme } }
+				weight = {
+					base = 1
+					modifier = { add = intrigue }
+					is_of_major_interest_to_weight_up_modifier = { CHARACTER = scope:scheme.scheme_target_title.holder }
+				}
+				save_scope_as = agent
+			}
+		}
+		else = {
+			random_in_list = { # Pick an agent
+				list = agent_list
+				limit = { feast_default_joe_1010_agent_trigger = { SCHEME = scope:scheme } }
+				weight = {
+					base = 1
+					modifier = { add = intrigue }
+				}
+				save_scope_as = agent
+			}
 		}
 	}
 
