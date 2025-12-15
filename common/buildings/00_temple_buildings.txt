@@ -2556,10 +2556,17 @@ monastic_schools_02 = {
 				}
 			}
 		}
-		culture = {
-			OR = {
+		trigger_if = { #Unop: To display that the player lack "city planning" innovation in the tooltip (instead of being empty)
+			limit = {				
+				culture = {
+					has_cultural_parameter = next_level_monasteries
+				}
+			}
+			always = yes
+		}
+		trigger_else = {
+			culture = {
 				has_innovation = innovation_city_planning
-				has_cultural_parameter = next_level_monasteries
 			}
 		}
 	}
