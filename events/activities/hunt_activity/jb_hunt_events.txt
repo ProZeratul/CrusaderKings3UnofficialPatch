@@ -1068,6 +1068,10 @@ hunt.8060 = {
 	option = { # You seem like you know these woods, become my hunt master!
 		name = hunt.8060.b
 		trigger = {
+			can_appoint_char_to_court_position = { #Unop: Make sure we can actually hire the character (without this, it will be recruited then invalidated just after...)
+				CHAR = scope:eccentric_hunter_scope
+				COURT_POS = master_of_hunt_court_position
+			}
 			OR = {
 				employs_court_position = master_of_hunt_court_position
 				can_employ_court_position_type = master_of_hunt_court_position
@@ -1089,13 +1093,13 @@ hunt.8060 = {
 				#Effect
 				root = {
 					hunt_activity_success_change_effect = { CHANGE = increase_medium }
-					court_position:master_of_hunt_court_position ?= {
-						add_opinion = {
-							target = root
-							modifier = revoked_court_position_opinion
-							opinion = -30
-						}
-					}
+					#court_position:master_of_hunt_court_position ?= { #Unop: If there is already someone, the opinion loss will already be handled by court_position_grant_effect
+					#	add_opinion = {
+					#		target = root
+					#		modifier = revoked_court_position_opinion
+					#		opinion = -30
+					#	}
+					#}
 					scope:activity = {
 						every_attending_character = {
 							custom = custom.every_attending_character
