@@ -535,13 +535,14 @@
 					limit = { is_house_head = no }
 					house = {
 						house_head = {
+							save_scope_as = unop_old_house_head #Unop: To be used just after as parameter of found_cadet_house_decision_effect
 							if = {
 								limit = {
 									is_landed = no
 									is_ai = no
 								}
 								found_cadet_house_decision_effect = {
-									CHARACTER = this
+									CHARACTER = scope:unop_old_house_head #Unop: this as parameter is really bad ! it is scope dependent and SHOULD NEVER BE USE AS PARAMETER
 									PRESTIGE = 0
 								}
 							}
