@@ -2608,8 +2608,8 @@ imperial_examination.3007 = {
 
 	option = { # Let's go!
 		name = imperial_examination.3007.a
-		custom_description_no_bullet = {
-			text = imperial_examination.3007.a.success_tooltip
+		custom_tooltip = { #Unop: Changed into a custom_tooltip since no effect_localization exists
+			text = imperial_examination.3007.a.success_tooltip_first #Unop: Fix yml ref
 		}
 		ai_chance = {
 			base = 100
@@ -2817,7 +2817,7 @@ imperial_examination.3010 = {
 				scope:examiner = { is_imprisoned = yes }
 			}
 			imperial_examination_create_appropriate_examiner_effect = yes
-			add_to_activity = scope:new_examiner
+			add_to_activity = scope:activity #Unop: We need to give the activity here (was new_examiner)
 			scope:activity = {
 				add_to_guest_subset = {
 					name = imperial_examiners
@@ -6543,7 +6543,7 @@ imperial_examination.5100 = {
 		name = imperial_examination.5100.a
 		imperial_examination_exam_duel_effect = { EXAM = poetry }
 		ai_chance = {
-			base = 100other_entrant_impressive_success
+			base = 100 #Unop: Why was it 100other_entrant_impressive_success ? IMHO it's a bad c/p that shouldn't be here so leaving 100 as ai chance
 		}
 	}
 	#Next!
@@ -6954,13 +6954,13 @@ imperial_examination.5170 = {
 			limit = {
 				has_trait = tourney_participant
 			}
-			custom_description_no_bullet = {
-				text = horse_exam_tourney_success
+			custom_tooltip = { #Unop: Changed into a custom_tooltip since no effect_localization exists
+				text = horse_exam_tourney_success_first #Unop: Fix yml ref
 			}
 		}
 		else = {
-			custom_description_no_bullet = {
-				text = horse_exam_hunter_success
+			custom_tooltip = { #Unop: Changed into a custom_tooltip since no effect_localization exists
+				text = horse_exam_hunter_success_first #Unop: Fix yml ref
 			}
 		}
 		custom_tooltip = imperial_examination.score.great_success.tt
@@ -9020,8 +9020,8 @@ imperial_examination.7100 = {
 			}
 		}
 		else = {
-			custom_description_no_bullet = {
-				text = imperial_examination.7100.a.tt
+			custom_tooltip = { #Unop: Changed into a custom_tooltip since no effect_localization exists
+				text = imperial_examination.7100.a.tt_first #Unop: Fix yml ref
 			}
 		}
 		trigger_event = imperial_examination.7055
@@ -9058,8 +9058,8 @@ imperial_examination.7100 = {
 			}
 		}
 		else = {
-			custom_description_no_bullet = {
-				text = imperial_examination.7100.b.tt
+			custom_tooltip = { #Unop: Changed into a custom_tooltip since no effect_localization exists
+				text = imperial_examination.7100.b.tt_first #Unop: Fix yml ref
 			}
 		}
 		trigger_event = imperial_examination.7050
@@ -9086,8 +9086,8 @@ imperial_examination.7100 = {
 			}
 		}
 		else = {
-			custom_description_no_bullet = {
-				text = imperial_examination.7100.c.tt
+			custom_tooltip = { #Unop: Changed into a custom_tooltip since no effect_localization exists
+				text = imperial_examination.7100.c.tt_first #Unop: Fix yml ref
 			}
 		}
 		trigger_event = imperial_examination.7060
