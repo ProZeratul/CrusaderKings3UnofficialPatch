@@ -260,7 +260,7 @@ hunt.0080 = {
 			}
 			hunt_animal_from_death_effect = { DEAD = scope:host TARGET = root }
 			hidden_effect = {
-				save_scope_as = revenge_artifact
+				#save_scope_as = revenge_artifact #Unop: This is not yet the correct scope
 				create_artifact_wall_skull_effect = {
 					OWNER = root
 					HUNTER = root
@@ -276,6 +276,7 @@ hunt.0080 = {
 							1 = { set_artifact_name = hunt_revenge_skull_name_3 }
 						}
 						set_artifact_description = hunt_revenge_skull_desc
+						save_scope_as = revenge_artifact #Unop: Register the scope here
 					}
 				}
 			}
@@ -4650,8 +4651,8 @@ hunt.1005 = {
 				limit = {
 					NOR = {
 						this = root
-						this = scope:accomplice
-						this = scope:accomplice_2
+						scope:accomplice ?= this #Unop: To not have the log yell about undef scope
+						scope:accomplice_2 ?= this #Unop: To not have the log yell about undef scope
 					}
 				}
 				custom = hunter_accident_victim_family_tt
@@ -6081,12 +6082,14 @@ hunt.1021 = {
 	option = { #Oh, hello you
 		name = hunt.1021.a
 		trigger = {
-			trigger_if = {
-				limit = {
-					is_ai = yes
-				}
-				might_cheat_on_every_partner_trigger = yes
-			}
+			#trigger_if = {
+			#	limit = {
+			#		is_ai = yes
+			#	}
+			#	might_cheat_on_every_partner_trigger = yes
+			#}
+			#Unop: Commented everything above to use the more reliable in-house trigger
+			unop_is_sexually_compatible_with_character = { CHARACTER = scope:beautiful_peasant DENY_CHASTE = flag:no }
 		}
 		hunt_activity_success_change_effect = { CHANGE = decrease_medium }
 		trigger_event = {
@@ -6402,7 +6405,7 @@ hunt.1023 = {
 			type = story_cycle_pet_dog
 			save_scope_as = story
 		}
-		hunt_activity_dangerous_game_effect = { PROVINCE = scope:activity.activity_location } #Unop ck3-tiger
+		hunt_activity_dangerous_game_effect = { PROVINCE = scope:activity.activity_location } #Unop: Scope dependent as parameter is not good !
 		hunt_activity_success_change_effect = { CHANGE = increase_minor  }
 		if = {
 			limit = {
@@ -6965,10 +6968,18 @@ hunt.1032 = {
 	}
 
 	after = {
-		scope:activity = {
-			every_attending_character = {
-				limit = { is_ai = no }
-				trigger_event = hunt.1200
+		if = { #Unop: Do not fire the bow event if we told everyone to run away !
+			limit = {
+				OR = {
+					exists = scope:bow_group
+					exists = scope:bow_fled
+				}
+			}
+			scope:activity = {
+				every_attending_character = {
+					limit = { is_ai = no }
+					trigger_event = hunt.1200
+				}
 			}
 		}
 	}
@@ -8104,6 +8115,7 @@ hunt.1080 = {
 					save_scope_as = murderer
 					if = {
 						limit = {
+							has_court_position = bodyguard_court_position #Unop: Keep calm the logs
 							is_court_position_employer = {
 								court_position = bodyguard_court_position
 								who = root
@@ -8113,6 +8125,7 @@ hunt.1080 = {
 					}
 					else_if = {
 						limit = {
+							has_court_position = akolouthos_court_position #Unop: Keep calm the logs
 							is_court_position_employer = {
 								court_position = akolouthos_court_position
 								who = root
@@ -9467,6 +9480,7 @@ hunt.1200 = {
 			NOR = {
 				scope:host ?= this
 				scope:hunt_participant ?= this
+				scope:hunt_summary_scope ?= this
 			}
 		}
 	}
@@ -9478,20 +9492,56 @@ hunt.1200 = {
 				scope:hunt_summary_scope ?= this
 				scope:animal_slayer ?= this
 				exists = scope:bow_success
+				exists = scope:bow_critical
+				exists = scope:bow_group
 			}
 		}
 	}
 	cooldown = { weeks = 1 }
 
 	immediate = {
+		#Unop: Rewrite the hunt-success flag that was wrongly set to success
 		if = {
-			limit = {
-				hunt_animal_type_herbivore_trigger = { VAR = scope:activity.var:animal_type }
+			limit = { exists = scope:bow_critical }
+			scope:activity = {
+				set_variable = {
+					name = hunt_success
+					value = flag:no
+				}
 			}
-			play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_beast_struggle"
 		}
-		else = { play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_beast_roar" }
-		play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_arrow_impact_hit"
+		#Unop: Play a sound if we are not the main slayer (because it's played in the effect)
+		if = {
+			limit = { NOT = { root = scope:animal_slayer } }
+			if = { # Kill the animal
+				limit = { exists = scope:bow_success }
+				play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_arrow_impact_hit"
+			}
+			else_if = { # Miss the shot & the animal hurted someone while fleeing
+				limit = { exists = scope:bow_failure }
+				play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_arrow_impact_miss"
+			}
+			else_if = { # Miss the shot
+				limit = { exists = scope:bow_critical }
+				play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_arrow_flyby"
+			}
+			else_if = { # Group shot
+				limit = { exists = scope:bow_group }
+				play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_arrow_impact_hit"
+			}
+		}
+		else_if = {
+			limit = { exists = scope:bow_group } # In group shot "root" is the animal slayer
+			play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_arrow_impact_hit"
+		}
+		#if = {
+		#	limit = {
+		#		hunt_animal_type_herbivore_trigger = { VAR = scope:activity.var:animal_type }
+		#	}
+		#	play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_beast_struggle"
+		#}
+		#else = { play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_beast_roar" }
+		#play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_arrow_impact_hit"
 		hunt_save_outcome_summary_scope_effect = yes
 		show_as_tooltip = {
 			scope:animal_slayer = {
@@ -9525,7 +9575,13 @@ hunt.1200 = {
 					if = {
 						limit = { exists = scope:injury_target }
 						scope:injury_target = {
-							hunt_wound_apply_effect = { SEVERE = no }
+							if = { # Big animal injure big
+								limit = { hunt_animal_type_dangerous_trigger = { VAR = scope:activity.var:animal_type } }
+								hunt_wound_apply_effect = { SEVERE = yes }
+							}
+							else = { # Smol animal injure smol
+								hunt_wound_apply_effect = { SEVERE = no }
+							}
 						}
 					}
 				}
@@ -9809,6 +9865,23 @@ hunt.1201 = {
 	}
 
 	immediate = {
+		if = { #Unop: Add this activity entry to have the correct wound to appear in the journal
+			limit = { exists = scope:melee_failure }
+			scope:activity = {
+				add_activity_log_entry = {
+					key = hunt_melee_wounded_log
+					score = 75
+					tags = { kill }
+					character = scope:injury_target
+
+					# Effect
+					scope:injury_target = {
+						hunt_wound_tooltip_effect = yes
+					}
+				}
+			}
+		}
+
 		if = {
 			limit = {
 				hunt_animal_type_herbivore_trigger = { VAR = scope:activity.var:animal_type }
@@ -10210,7 +10283,8 @@ hunt.1202 = {
 				scope:host ?= this
 				scope:hunt_summary_scope ?= this
 				scope:animal_slayer ?= this
-				exists = scope:group_kill
+				#exists = scope:group_kill #Unop: Commented this to show who died during this event
+				exists = scope:group_success #Unop: Added to hide if nobody got hurt
 			}
 		}
 	}
@@ -10224,6 +10298,23 @@ hunt.1202 = {
 	}
 
 	immediate = {
+		if = { #Unop: Add this activity entry to have the correct wound to appear in the journal
+			limit = { exists = scope:group_failure }
+			scope:activity = {
+				add_activity_log_entry = {
+					key = hunt_melee_group_wounded_log
+					score = 75
+					tags = { kill }
+					character = scope:injury_target
+
+					# Effect
+					scope:injury_target = {
+						hunt_wound_tooltip_effect = yes
+					}
+				}
+			}
+		}
+		
 		if = {
 			limit = {
 				hunt_animal_type_herbivore_trigger = { VAR = scope:activity.var:animal_type }
@@ -10274,8 +10365,8 @@ hunt.1202 = {
 					}
 				}
 				scope:group_critical = {
-					scope:animal_slayer = {
-						hunt_animal_death_effect = { VAR = var:animal_type }
+					scope:injury_target = { #Unop: Why the animal slayer ?
+						hunt_animal_death_effect = { VAR =  scope:activity.var:animal_type }
 					}
 				}
 			}
@@ -13358,6 +13449,11 @@ hunt.4004 = {
 				scope:host ?= this
 			}
 		}
+	}
+	artifact = { # To display the artifact in the event-window
+		target = scope:newly_created_artifact
+		position = lower_right_portrait
+		trigger = { exists = scope:newly_created_artifact }
 	}
 
 	immediate = {
