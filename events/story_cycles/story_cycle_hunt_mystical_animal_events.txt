@@ -90,9 +90,9 @@ namespace = hunt_mystical_animal
  		any_owned_story = {
 			type = story_cycle_hunt_mystical_animal
  			NOT = { exists = var:had_event_hunt_mystical_animal_1002 }
-			save_temporary_scope_as = story
+			save_temporary_scope_as = unop_temp_story #Unop: Rename to avoid: Trying to add the temporary target 'story' which has the same name as a permanent target
  		}
-		location.county = scope:story.var:legendary_county
+		location.county = scope:unop_temp_story.var:legendary_county #Unop: See comment just above
  		NOT = { exists = involved_activity }
  	}
  
