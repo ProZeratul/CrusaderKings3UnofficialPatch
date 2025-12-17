@@ -11084,6 +11084,11 @@ hunt.2510 = {
 		if = {
 			limit = { exists = scope:story.var:legendary_county }
 			scope:story.var:legendary_county = { save_scope_as = sighting_county } #Unop: Added the scope:story in front of the var
+			scope:sighting_county = { #Unop: Add this so the yml are happy (cause in this case it will be undefined and yml are broken)
+				random_county_province = {
+					save_scope_as = sighting_province
+				}
+			}
 		}
 		else = { hunt_sighting_county_province_effect = yes }
 		# Save sighting
@@ -11106,11 +11111,11 @@ hunt.2510 = {
 					}
 				}
 			}
-			hunt_create_sighting_effect = {
-				TYPE = legendary
-				ANIMAL = var:animal_type
-				OWNER = root
-			}
+			#hunt_create_sighting_effect = { #Unop: For an unknown reason, having this here will make the tooltip state the wrong county, so transfert it into each options
+			#	TYPE = legendary
+			#	ANIMAL = var:animal_type
+			#	OWNER = root
+			#}
 		}
 	}
 
@@ -11132,6 +11137,13 @@ hunt.2510 = {
 		ai_chance = {
 			base = 25
 		}
+		scope:sighting_county ?= { #Unop: See comment above
+			hunt_create_sighting_effect = {
+				TYPE = legendary
+				ANIMAL = var:animal_type
+				OWNER = root
+			}
+		}
 	}
 
 	option = { # Hire
@@ -11141,6 +11153,13 @@ hunt.2510 = {
 		add_courtier = scope:new_hunter
 		ai_chance = {
 			base = 0
+		}
+		scope:sighting_county ?= { #Unop: See comment above
+			hunt_create_sighting_effect = {
+				TYPE = legendary
+				ANIMAL = var:animal_type
+				OWNER = root
+			}
 		}
 	}
 
@@ -11156,6 +11175,13 @@ hunt.2510 = {
 		}
 		ai_chance = {
 			base = 0
+		}
+		scope:sighting_county ?= { #Unop: See comment above
+			hunt_create_sighting_effect = {
+				TYPE = legendary
+				ANIMAL = var:animal_type
+				OWNER = root
+			}
 		}
 	}
 
