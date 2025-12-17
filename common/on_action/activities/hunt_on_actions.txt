@@ -11,6 +11,12 @@ hunt_start_events = {
 		hunt.0510 # Legendary
 		hunt.0530 # Falconry
 	}
+	#Unop: So we can have someone doing a standard hunt sighting a legendary beast in the wild just like before (hunt.4012)
+	#Unop: Todo: By fixing this, it will open a brand new branch of things that are not tested yet, so for now I don't enable it
+	#Unop: Once uncommented, remove the effect from hunt_random_pulse
+	#effect = { # Used to ensure a certain progress has been made before some events to fire
+	#	involved_activity = { set_variable = hunt_outcome_random }
+	#}
 }
 
 # 2. Random Flavor
@@ -158,6 +164,9 @@ hunt_outcome_end_events = {
 		exists = scope:activity
 		involved_activity.activity_host ?= this
 		scope:activity ?= { hunt_is_nerge_type = no }
+		scope:activity ?= {
+			NOT = { has_variable = hunt_success } #Unop: This mean that we already have an "end hunt" flag
+		}
 	}
 	random_events = {
 	 	# Corner
@@ -174,10 +183,10 @@ hunt_outcome_end_events = {
 		1 = hunt.1063 #Falconry
 		# Legendary
 		1 = hunt.4013 # Animal is not found
-		1 = hunt.4017 # Animal found and killed 
-		1 = hunt.4019 # Substitute animal found
-		1 = hunt_mystical_animal.9001 # Animal found and killed
-		1 = hunt_mystical_animal.1005 # Animal found but escaped
+		1 = hunt.4017 # Animal found and killed # Possible outcome of event hunt.4018 & hunt_mystical_animal.1007 (because of hunt_mystical_animal.9001 being disabled)
+		1 = hunt.4019 # Substitute animal found # Possible outcome of event hunt.4018 & hunt_mystical_animal.1007 (because of hunt_mystical_animal.1005 being disabled)
+		#1 = hunt_mystical_animal.9001 # Animal found and killed #Unop: This event was for a special case that was fired inside the story
+		#1 = hunt_mystical_animal.1005 # Animal found but escaped #Unop: This event was for a special case that was fired inside the story
 		1 = hunt.1090 # Animal escaped
 		# Captive
 		#1 = hunt.1052 #Dangerous

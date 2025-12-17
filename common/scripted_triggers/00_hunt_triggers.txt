@@ -537,7 +537,8 @@ hunt_new_sighting_event_trigger = {
 		domicile.domicile_location.county ?= {
 			NOR = {
 				has_variable = recent_sighting
-				any_neighboring_county = { has_variable = recent_sighting }
+				unop_all_neighboring_counties_have_recent_sighting = no #Unop: We need at least 1 county without sighting as the game lock counties for 10 years
+				#any_neighboring_county = { has_variable = recent_sighting } #Unop: See just above
 				has_county_modifier = hunt_sighting_$TYPE$_modifier
 				any_neighboring_county = { has_county_modifier = hunt_sighting_$TYPE$_modifier }
 				hunt_activity_recent_hunt_sighting_trigger = yes
@@ -546,7 +547,8 @@ hunt_new_sighting_event_trigger = {
 		}
 	}
 	trigger_else = {
-		any_sub_realm_county = { hunt_activity_recent_hunt_sighting_trigger = no }
+		#any_sub_realm_county = { hunt_activity_recent_hunt_sighting_trigger = no }
+		unop_all_counties_have_recent_sighting = no #Unop: We need at least 1 county without sighting as the game lock counties for 10 years
 	}
 }
 
