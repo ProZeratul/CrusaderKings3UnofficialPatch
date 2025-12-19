@@ -4501,6 +4501,11 @@ revoke_holy_order_duel_victor_apply_effects_effect = {
 }
 
 add_clan_unity_interaction_effect = {
+	if = { #Unop: Sanity check to ensure if it happen we get warned & where it happend directly
+		limit = { $CHARACTER$ = $TARGET$ }
+		error_log_stack_trace = "Unop: add_clan_unity_interaction_effect have same character on both side !" #Check error.log
+	}
+
 	if = {
 		limit = { # Check if unity is relevant
 			$CHARACTER$ = { government_has_flag = government_is_clan }
@@ -4556,6 +4561,11 @@ apply_clan_unity_interaction_effect = {
 	# Save scopes for localisation
 	$CHARACTER$ = { save_scope_as = unity_character }
 	$TARGET$ = { save_scope_as = unity_target }
+
+	if = { #Unop: Sanity check to ensure if it happen we get warned & where it happend directly
+		limit = { scope:unity_character = scope:unity_target }
+		error_log_stack_trace = "Unop: add_clan_unity_interaction_effect have same character on both side !" #Check error.log
+	}
 
 	$CHARACTER$.house = {
 		save_scope_as = character_house
