@@ -575,29 +575,36 @@ house_feud_lover_exposure_effect = {
 # Feud torture score and event effects
 house_feud_torture_event_effect = {
 	hidden_effect = {
-		# Tortured belongs to torturer's Houses's Feud target House
-		scope:actor.house ?= {
-			change_house_relation_feud_score_effect = {
-				TARGET = scope:recipient.house
-				REASON = torture
-				VALUE = house_feud_minor_counter_value
+		if = { #Unop: Ensure houses exists and that they are not the same
+			limit = {
+				exists = scope:actor.house
+				exists = scope:recipient.house
+				house != scope:recipient.house #Unop: Avoid call that will have no effect !
 			}
-			# If originial Feud reason was Torture, fire revenge event for House Head
-			if = {
-				limit = {
-					any_house_relation = {
-						has_house_relation_level = feud
-						OR = {
-							var:house_feud_victim.house ?= scope:actor.house
-							var:house_feud_reason ?= flag:head_tortured
-							var:house_feud_reason ?= flag:family_tortured
-						}
-						var:house_feud_attacker ?= scope:recipient
-						NOT = { exists = var:feud_avenged }
-					}
+			# Tortured belongs to torturer's Houses's Feud target House
+			scope:actor.house ?= {
+				change_house_relation_feud_score_effect = {
+					TARGET = scope:recipient.house
+					REASON = torture
+					VALUE = house_feud_minor_counter_value
 				}
-				house_head = {
-					trigger_event = { id = bp1_house_feud.7002 days = 15 }
+				# If originial Feud reason was Torture, fire revenge event for House Head
+				if = {
+					limit = {
+						any_house_relation = {
+							has_house_relation_level = feud
+							OR = {
+								var:house_feud_victim.house ?= scope:actor.house
+								var:house_feud_reason ?= flag:head_tortured
+								var:house_feud_reason ?= flag:family_tortured
+							}
+							var:house_feud_attacker ?= scope:recipient
+							NOT = { exists = var:feud_avenged }
+						}
+					}
+					house_head = {
+						trigger_event = { id = bp1_house_feud.7002 days = 15 }
+					}
 				}
 			}
 		}

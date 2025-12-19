@@ -221,14 +221,21 @@ on_imprison = {
 			}
 		}
 
-		house ?= {
-			change_house_relation_effect = {
-				HOUSE = scope:imprisoner.house
-				VALUE = house_relation_damage_medium_value
-				REASON = imprisonment
-				CHAR = scope:imprisoner
-				TARGET_CHAR = root
-				TITLE = scope:dummy_gender
+		if = { #Unop: Ensure houses exists and that they are not the same
+			limit = {
+				exists = root.house
+				exists = scope:imprisoner.house
+				root.house != scope:imprisoner.house #Unop: Avoid call that will have no effect !
+			}
+			house ?= {
+				change_house_relation_effect = {
+					HOUSE = scope:imprisoner.house
+					VALUE = house_relation_damage_medium_value
+					REASON = imprisonment
+					CHAR = scope:imprisoner
+					TARGET_CHAR = root
+					TITLE = scope:dummy_gender
+				}
 			}
 		}
 	}

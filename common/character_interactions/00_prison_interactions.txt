@@ -4659,14 +4659,21 @@ release_from_prison_interaction = {
 								}
 							}
 						}
-						house ?= {
-							change_house_relation_effect = {
-								HOUSE = scope:recipient.house
-								VALUE = house_relation_improve_medium_value
-								REASON = prison_released
-								CHAR = scope:actor
-								TARGET_CHAR = scope:recipient
-								TITLE = scope:dummy_gender
+						if = { #Unop: Ensure houses exists and that they are not the same
+							limit = {
+								exists = scope:actor.house
+								exists = scope:recipient.house
+								house != scope:recipient.house #Unop: Avoid call that will have no effect !
+							}
+							house ?= {
+								change_house_relation_effect = {
+									HOUSE = scope:recipient.house
+									VALUE = house_relation_improve_medium_value
+									REASON = prison_released
+									CHAR = scope:actor
+									TARGET_CHAR = scope:recipient
+									TITLE = scope:dummy_gender
+								}
 							}
 						}
 						add_dread = minor_dread_loss

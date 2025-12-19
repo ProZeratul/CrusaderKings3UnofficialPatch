@@ -1282,14 +1282,21 @@ knight_killed = {
 						target = scope:knight
 					}
 				}
-				house ?= {
-					change_house_relation_effect = {
-						HOUSE = scope:enemy_knight.house
-						VALUE = house_relation_damage_medium_value
-						REASON = killed
-						CHAR = scope:enemy_knight
-						TARGET_CHAR = scope:knight
-						TITLE = scope:dummy_gender
+				if = { #Unop: Ensure houses exists and that they are not the same
+					limit = {
+						exists = scope:knight.house
+						exists = scope:enemy_knight.house
+						scope:knight.house != scope:enemy_knight.house #Unop: Avoid call that will have no effect !
+					}
+					house ?= {
+						change_house_relation_effect = {
+							HOUSE = scope:enemy_knight.house
+							VALUE = house_relation_damage_medium_value
+							REASON = killed
+							CHAR = scope:enemy_knight
+							TARGET_CHAR = scope:knight
+							TITLE = scope:dummy_gender
+						}
 					}
 				}
 				if = {
