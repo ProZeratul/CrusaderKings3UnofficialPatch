@@ -739,3 +739,38 @@ unop_distribute_determined_court_position_effect = {
 		}
 	}
 }
+
+unop_hunt_create_legendary_trophy_effect = {
+	hidden_effect = {
+		if = {
+			limit = { can_animal_produce_skull_trigger = { VARIABLE = scope:activity.var:animal_type } }
+			random = {
+				chance = 50
+				create_artifact_wall_skull_effect = {
+					OWNER = root
+					HUNTER = root
+					LEGENDARY = yes
+					ANIMAL = scope:activity.var:animal_type
+				}
+				scope:activity = {
+					add_to_variable_list = {
+						name = artifact_rewards
+						target = scope:newly_created_artifact
+					}
+				}
+			}
+		}
+	}
+	create_artifact_animal_hide_effect = {
+		OWNER = root
+		HUNTER = root
+		LEGENDARY = yes
+		ANIMAL = scope:activity.var:animal_type
+	}
+	scope:activity = {
+		add_to_variable_list = {
+			name = artifact_rewards
+			target = scope:newly_created_artifact
+		}
+	}
+}
