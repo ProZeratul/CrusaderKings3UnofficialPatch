@@ -6909,7 +6909,7 @@ hunt.1032 = {
 		save_scope_as = animal_slayer
 		custom_tooltip = hunt.1032.e.tt
 		hunt_no_pelt_effect = yes # No pelt trophies
-		save_scope_as = bow_group
+		save_scope_as = bow_group #Unop: Was bow_hail that is not checked anywhere
 		stress_impact = {
 			greedy = minor_stress_impact_gain
 			arrogant = minor_stress_impact_gain
@@ -10366,7 +10366,7 @@ hunt.1202 = {
 				}
 				scope:group_critical = {
 					scope:injury_target = { #Unop: Why the animal slayer ?
-						hunt_animal_death_effect = { VAR =  scope:activity.var:animal_type }
+						hunt_animal_death_effect = { VAR = scope:activity.var:animal_type } # The char does not have the beast as variable !
 					}
 				}
 			}
@@ -14771,6 +14771,7 @@ hunt.4007 = {
 				value = root.var:animal_type
 				years = 5
 			}
+			scope:activity = { set_variable = captive_animal } #Unop: So the YML in hunt.9001 can be properly displayed
 			add_character_modifier = {
 				modifier = hunt_captive_beast_modifier
 				years = 5
@@ -15940,8 +15941,8 @@ hunt.4008 = {
 					custom_tooltip = hunt_ends_tt
 					stress_impact = {
 						base = medium_stress_impact_gain
-						vengeful = minor_stress_impact_loss
-						sadistic = minor_stress_impact_loss
+						vengeful = major_stress_impact_loss #Unop: To not make this kind of char gain stress
+						sadistic = major_stress_impact_loss #Unop: To not make this kind of char gain stress
 					}
 				}
 			}
@@ -20340,8 +20341,7 @@ hunt.4019 = {
 					hunt_humble_hunter_stress_effect = yes
 				}
 			}
-		}
-		scope:activity = {
+			#Unop: Misc optim since the activity scope is already open.
 			set_variable = {
 				name = hunt_success
 				value = flag:yes
@@ -21008,8 +21008,8 @@ hunt.5002 = {
 				key = hunt_flowers_focus_log
 				score = 25
 				tags = { random neutral social }
-				character = scope:hunt_participant
-				target = scope:hunt_participant_2
+				character = root #Unop: For the YML to be correct on us berating target (and since hunt_participant_2 can be undef)
+				target = scope:hunt_participant_1 #Unop: For the YML to be correct on us berating target (and since hunt_participant_2 can be undef)
 
 				#Effect
 				root = {
@@ -27801,7 +27801,7 @@ scripted_effect hunt_activity_master_hunt_scope_effect = {
 	}
 }
 
-hunt.9001 = {
+hunt.9001 = { #Unop: Hunting end success
 	type = activity_event
 	title = hunt.9001.t
 	desc = {
@@ -28542,7 +28542,7 @@ hunt.9001 = {
 	}
 }
 
-hunt.9002 = {
+hunt.9002 = { #Unop: Hunting end fail
 	type = activity_event
 	title = hunt.9002.t
 	desc = {
