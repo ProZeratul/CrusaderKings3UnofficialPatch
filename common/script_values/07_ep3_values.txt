@@ -791,16 +791,38 @@ eparch_aptitude_modifier_scaling_value = {
 }
 university_cost_reduction_value = 0.25
 eparch_scheme_secrecy_bonus_value = {
-	if = {
+	if = { #Unop: We need to handle being called from both scheme that target a character or a landed title
 		limit = {
-			scope:owner ?= { has_court_position = eparch_court_position }
-			scope:target = {
-				domicile ?= { domicile_location = owner.top_liege.capital_province }
+			is_scheme_target_type = title
+		}
+		if = {
+			limit = {
+				scope:owner ?= { has_court_position = eparch_court_position }
+				scope:target = {
+					domicile ?= { domicile_location = owner.top_liege.capital_province }
+				}
+			}
+			add = {
+				value = 15
+				desc = eparch_scheme_bonus_desc
 			}
 		}
-		add = {
-			value = 15
-			desc = eparch_scheme_bonus_desc
+	}
+	else_if = {
+		limit = {
+			is_scheme_target_type = character
+		}
+		if = {
+			limit = {
+				scope:owner ?= { has_court_position = eparch_court_position }
+				scope:target.holder = {
+					domicile ?= { domicile_location = owner.top_liege.capital_province }
+				}
+			}
+			add = {
+				value = 15
+				desc = eparch_scheme_bonus_desc
+			}
 		}
 	}
 }
