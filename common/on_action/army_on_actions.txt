@@ -98,6 +98,7 @@ on_county_occupied = {
 					years = 25
 				}
 			}
+			save_scope_as = mongol_emperor #Unop: Move it here from just below since the mongols_devastate_county_effect will need this scope
 			# Send a message (and gold!) to the Mongol Emperor
 			send_interface_message = {
 				type = event_war_good
@@ -144,7 +145,7 @@ on_county_occupied = {
 					}
 				}
 			}
-			save_scope_as = mongol_emperor
+			#save_scope_as = mongol_emperor Unop: Moved just above as the effect mongols_devastate_county_effect rely on it
 			# Send a message to the County's owner
 			scope:county.holder = {
 				send_interface_message = {

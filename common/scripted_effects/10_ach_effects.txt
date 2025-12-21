@@ -2735,6 +2735,7 @@ coronation_disburse_rewards_effect = {
 					limit = {
 						house ?= scope:host.house
 						is_ai = yes
+						NOT = { this = scope:host } #Unop: Prevent self char unity change
 					}
 					switch = {
 						trigger = scope:coronation_reward_mult

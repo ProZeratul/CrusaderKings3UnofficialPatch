@@ -243,6 +243,7 @@ on_divorce = { # Will not fire from historical divorces
 			limit = {
 				exists = house
 				exists = scope:spouse.house
+				house != scope:spouse.house #Unop: Avoid call that will have no effect !
 			}
 			house = {
 				change_house_relation_effect = {
