@@ -1910,7 +1910,7 @@ add_truce_attacker_victory_effect = {
 		limit = {
 			exists = scope:attacker.house
 			exists = scope:defender.house
-			scope:attacker.house != scope:recipient.house #Unop: Avoid call that will have no effect !
+			scope:attacker.house != scope:defender.house #Unop: Avoid call that will have no effect !
 		}
 		scope:attacker.house = {
 			change_house_relation_feud_score_effect = {
@@ -2113,11 +2113,18 @@ add_truce_attacker_defeat_effect = {
 	}
 	scope:defender = {
 		# Feud
-		house = {
-			change_house_relation_feud_score_effect = {
-				TARGET = scope:attacker.house
-				REASON = war
-				VALUE = house_feud_medium_counter_value
+		if = { #Unop: Ensure houses exists and that they are not the same
+			limit = {
+				exists = scope:attacker.house
+				exists = scope:defender.house
+				scope:attacker.house != scope:defender.house #Unop: Avoid call that will have no effect !
+			}
+			house = {
+				change_house_relation_feud_score_effect = {
+					TARGET = scope:attacker.house
+					REASON = war
+					VALUE = house_feud_medium_counter_value
+				}
 			}
 		}
 		if = {
