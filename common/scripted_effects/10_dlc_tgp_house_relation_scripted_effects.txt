@@ -3,6 +3,12 @@
 set_house_relation_level_effect = {
 	save_scope_as = house
 	$HOUSE$ ?= { save_scope_as = other_house }
+
+	if = { #Unop: Sanity check to ensure if it happen we get warned & where it happend directly
+		limit = { scope:house = scope:other_house }
+		error_log_stack_trace = "Unop: set_house_relation_level_effect have same house on both side !" #Check error.log
+	}
+
 	if = {
 		limit = {
 			exists = scope:house
@@ -21,6 +27,12 @@ set_house_relation_level_effect = {
 increase_house_relation_level_effect = {
 	save_scope_as = house
 	$HOUSE$ ?= { save_scope_as = other_house }
+
+	if = { #Unop: Sanity check to ensure if it happen we get warned & where it happend directly
+		limit = { scope:house = scope:other_house }
+		error_log_stack_trace = "Unop: increase_house_relation_level_effect have same house on both side !" #Check error.log
+	}
+
 	if = {
 		limit = {
 			exists = scope:house #Unop: Fix missing scope: before house so this was always false !
@@ -113,6 +125,12 @@ increase_house_relation_level_effect = {
 decrease_house_relation_level_effect = {
 	save_scope_as = house
 	$HOUSE$ ?= { save_scope_as = other_house }
+
+	if = { #Unop: Sanity check to ensure if it happen we get warned & where it happend directly
+		limit = { scope:house = scope:other_house }
+		error_log_stack_trace = "Unop: decrease_house_relation_level_effect have same house on both side !" #Check error.log
+	}
+
 	scope:house ?= {
 		if = {
 			limit = {
@@ -212,6 +230,12 @@ change_house_relation_effect = {
 	$CHAR$ ?= { save_scope_as = char }
 	$TARGET_CHAR$ ?= { save_scope_as = target_char }
 	$TITLE$ ?= { save_scope_as = title }
+
+	if = { #Unop: Sanity check to ensure if it happen we get warned & where it happend directly
+		limit = { scope:house = scope:other_house }
+		error_log_stack_trace = "Unop: change_house_relation_effect have same house on both side !" #Check error.log
+	}
+
 	if = {
 		limit = {
 			exists = scope:house
@@ -339,6 +363,12 @@ change_house_relation_effect = {
 change_house_relation_feud_score_effect = {
 	save_scope_as = house
 	$TARGET$ ?= { save_scope_as = other_house }
+
+	if = { #Unop: Sanity check to ensure if it happen we get warned & where it happend directly
+		limit = { scope:house = scope:other_house }
+		error_log_stack_trace = "Unop: change_house_relation_feud_score_effect have same house on both side !" #Check error.log
+	}
+
 	random_house_relation = {
 		limit = {
 			has_bp1_dlc_trigger = yes

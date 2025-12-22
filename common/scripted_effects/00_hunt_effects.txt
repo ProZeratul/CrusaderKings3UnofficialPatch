@@ -533,6 +533,9 @@ hunt_activity_deer_game_effect = {
 					set_variable = { name = animal_type value = flag:gazelle }
 				}
 				4 = { # Antelope - Standard antelope
+					trigger = { #Unop: Future proof this entry in case another one is added later and the top limit is changed
+						$PROVINCE$ = { hunt_animal_antelope_trigger = yes }
+					}
 					# Increase larger deer chance with management buildings
 					hunt_activity_game_building_modifier = { PROVINCE = $PROVINCE$ }
 					# Master of Hunt aptitude affects chance of managed game
@@ -3809,10 +3812,19 @@ hunt_trophy_recipient_scope_effect = {
 			limit = { hunt_trophy_recipient_trigger = yes }
 			add_to_list = trophy_recipients
 		}
-		every_relation = {
+		every_relation = { #Unop: This iterator only handle 1 type at a time
 			type = friend
+			add_to_list = trophy_recipients
+		}
+		every_relation = { #Unop: This iterator only handle 1 type at a time
 			type = lover
+			add_to_list = trophy_recipients
+		}
+		every_relation = { #Unop: This iterator only handle 1 type at a time
 			type = potential_friend
+			add_to_list = trophy_recipients
+		}
+		every_relation = { #Unop: This iterator only handle 1 type at a time
 			type = potential_lover
 			add_to_list = trophy_recipients
 		}

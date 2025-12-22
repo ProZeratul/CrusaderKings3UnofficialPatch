@@ -4199,14 +4199,18 @@ prelude_events.0150 = {
 		name = prelude_events.0150.aa
 		add_internal_flag = special
 		trigger = {
-			scope:guest = {
-				is_attracted_to_gender_of = root
-				OR = {
-					is_married = no
-					might_cheat_on_every_partner_trigger = yes
-				}
-			}
-			is_attracted_to_gender_of = scope:guest
+			#scope:guest = {
+			#	is_attracted_to_gender_of = root
+			#	OR = {
+			#		is_married = no
+			#		might_cheat_on_every_partner_trigger = yes
+			#	}
+			#}
+			#is_attracted_to_gender_of = scope:guest
+
+			#Unop: Commented everything above to use my in-house trigger (fix root cheated on a partner that they wouldn't have log)
+			unop_is_sexually_compatible_with_character = { CHARACTER = scope:guest DENY_CHASTE = flag:no }
+			scope:guest = { unop_is_sexually_compatible_with_character = { CHARACTER = root DENY_CHASTE = flag:no } }
 		}
 		had_sex_with_effect = {
 			CHARACTER = scope:guest

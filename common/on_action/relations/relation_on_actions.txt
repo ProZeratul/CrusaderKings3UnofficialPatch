@@ -142,6 +142,7 @@ on_set_relation_lover = {
 						exists = house
 						exists = root.house
 						house = root.house
+						root != this #Unop: In case you fall in love with your primary spouse...
 					}
 				}
 			}
@@ -576,6 +577,7 @@ on_set_relation_friend = {
 			limit = {
 				exists = house
 				exists = scope:target.house
+				house != scope:target.house #Unop: Avoid call that will have no effect !
 			}
 			house = {
 				change_house_relation_effect = {
@@ -863,6 +865,7 @@ on_set_relation_best_friend = {
 			limit = {
 				exists = house
 				exists = scope:target.house
+				house != scope:target.house #Unop: Avoid call that will have no effect !
 			}
 			house = {
 				change_house_relation_effect = {
@@ -1138,6 +1141,7 @@ on_set_relation_rival = {
 			limit = {
 				exists = house
 				exists = scope:target.house
+				house != scope:target.house #Unop: Avoid call that will have no effect !
 			}
 			house = {
 				change_house_relation_effect = {
@@ -1234,6 +1238,7 @@ on_set_relation_nemesis = {
 			limit = {
 				exists = house
 				exists = scope:target.house
+				house != scope:target.house #Unop: Avoid call that will have no effect !
 			}
 			house = {
 				change_house_relation_effect = {
