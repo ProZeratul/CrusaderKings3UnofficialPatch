@@ -110,6 +110,12 @@ tribute_mission_decision_effect = {
 		}
 	}
 
+	#Unop This scope exists only for some tribute missions, so save it to avoid errors
+	if = {
+		limit = { NOT = { exists = scope:tribute_mission_bunga_mas } }
+		save_temporary_scope_value_as = { name = tribute_mission_bunga_mas value = no }
+	}
+
 	#Your Suzerain requested this specifically
 	if = {
 		limit = {	
