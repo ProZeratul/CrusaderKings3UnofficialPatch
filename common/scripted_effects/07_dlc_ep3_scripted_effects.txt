@@ -801,6 +801,13 @@ ep3_become_landed_save_liege_effect = {
 }
 
 ep3_become_landed_transfer_effect = {
+	#Unop Get scope:new_primary_title early, and use it instead of scope:target,
+	# since scope:target may not exist, or may be a character
+	ordered_in_list = {
+		list = $TITLE_LIST$
+		order_by = tier
+		save_scope_as = new_primary_title
+	}
 	hidden_effect = {
 		# Liquidate camp
 		$TITLE_RECEIVER$ = { laamp_clear_domicile_buildings_liquidator_effect = yes }
@@ -822,7 +829,7 @@ ep3_become_landed_transfer_effect = {
 		}
 		set_variable = { # Used to prevent invalid NF creation
 			name = laamp_invasion_flag
-			value = scope:target
+			value = scope:new_primary_title #Unop Use new_primary_title instead of target
 			days = 1
 		}
 	}
@@ -831,13 +838,13 @@ ep3_become_landed_transfer_effect = {
 		add_claim_on_loss = yes
 		save_scope_as = title_change
 	}
-	scope:target.holder ?= { save_scope_as = old_holder }
+	scope:new_primary_title.holder ?= { save_scope_as = old_holder } #Unop Use new_primary_title instead of target
 	if = {
 		limit = {
 			NOT = { exists = scope:old_holder }
 			exists = scope:defender #Unop ck3-tiger Check for this scope before using it
 		}
-		scope:target = {
+		scope:new_primary_title = { #Unop Use new_primary_title instead of target
 			ordered_de_jure_county = {
 				limit = { holder.top_liege = scope:defender.top_liege }
 				order_by = development_level
@@ -920,11 +927,11 @@ ep3_become_landed_transfer_effect = {
 			}
 		}
 	}
-	ordered_in_list = {
-		list = $TITLE_LIST$
-		order_by = tier
-		save_scope_as = new_primary_title
-	}
+	#ordered_in_list = { #Unop Moved above
+	#	list = $TITLE_LIST$
+	#	order_by = tier
+	#	save_scope_as = new_primary_title
+	#}
 	$TITLE_RECEIVER$ = {
 		if = {
 			limit = {
@@ -1223,8 +1230,8 @@ ep3_become_landed_transfer_effect = {
 				limit = {
 					OR = {
 						scope:new_liege ?= { government_has_flag = government_is_mandala }
-						#scope:old_government ?= flag:mandala
-						scope:target.holder = { government_has_flag = government_is_mandala }
+						scope:old_government ?= flag:mandala  #Unop scope:target below is problematic, so stick to old_government
+						#scope:target.holder = { government_has_flag = government_is_mandala }
 					}
 					faith = { has_doctrine = doctrine_polytheist }
 				}

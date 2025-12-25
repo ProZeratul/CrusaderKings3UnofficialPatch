@@ -2521,16 +2521,17 @@ debate_event.5010 = {
                             subtract = {
                                 value = var:tgp_debate_success_score
                                 multiply = 0.2
-                            }
-                            subtract = {
-                                value = 0
-                                scope:debate_opponent = {
-                                    every_relation = {
-                                        type = disciple
-                                        add = {
-                                            value = diplomacy
-                                            add = intrigue
-                                            multiply = 0.5
+                            #} #Unop Move 2nd subtract inside the value as otherwise it's incorrect syntax
+                                subtract = {
+                                    value = 0
+                                    scope:debate_opponent = {
+                                        every_relation = {
+                                            type = disciple
+                                            add = {
+                                                value = diplomacy
+                                                add = intrigue
+                                                multiply = 0.5
+                                            }
                                         }
                                     }
                                 }
