@@ -332,6 +332,13 @@ religious_rights = {
 		religious_rights_protected = {
 			is_valid = {
 				scope:subject.faith != scope:liege.faith
+				#Unop: Fixing obscure bug that can spawn hold_court.8040 event for muslim/tax_nonbelievers court owners
+				scope:liege.faith = {
+					NOR = {
+						has_doctrine = tenet_tax_nonbelievers
+						has_doctrine = special_doctrine_jizya
+					}
+				}
 			}
 			parent = religious_rights_none
 			position = { 1 0 }
