@@ -355,6 +355,7 @@ natural_disaster_insurance_effect = {
 				limit = {
 					has_county_modifier = tgp_minister_project_conduct_census_natural_disaster_insurance_modifier
 				}
+				save_temporary_scope_as = insured_county #Unop Save county scope for remove_county_modifier
 				holder = {
 					send_interface_message = {
 						type = event_toast_effect_good
@@ -382,7 +383,9 @@ natural_disaster_insurance_effect = {
 									target = prev
 									treasury = 1000
 								}
-								remove_county_modifier = tgp_minister_project_conduct_census_natural_disaster_insurance_modifier
+								scope:insured_county = { #Unop Use correct scope for remove_county_modifier
+									remove_county_modifier = tgp_minister_project_conduct_census_natural_disaster_insurance_modifier
+								}
 							}
 						}
 					}
@@ -1022,7 +1025,7 @@ natural_disaster_all_counties_investment_modifier_effect = {
 			limit = { holder.top_liege = scope:owner }
 			custom = every_realm_disaster_county_great_project_custom
 			if = { 
-				limit = { exists = $YEARS$ }
+				limit = { $YEARS$ >= 0 } #Unop ck3-tiger Use numeric comparison instead of exists
 				$OPERATION$_county_modifier = {
 					modifier = $MODIFIER$
 					years = $YEARS$
