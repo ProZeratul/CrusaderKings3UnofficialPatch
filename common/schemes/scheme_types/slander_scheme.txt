@@ -47,7 +47,15 @@
 		ai_agent_join_chance_basic_suite_modifier = yes
 		ai_agent_join_chance_hostile_general_suite_modifier = yes
 	}
-	valid_agent = { is_valid_agent_standard_trigger = yes }
+	valid_agent = {
+		trigger_if = {
+			limit = { exists = scope:owner }
+			is_valid_agent_standard_trigger = yes
+		}
+		trigger_else = {
+			always = no
+		}
+	}
 	agent_groups_owner_perspective = { courtiers guests scripted_relations peer_vassals vassals family }
 	agent_groups_target_character_perspective = { courtiers peer_vassals vassals scripted_relations family }
 
