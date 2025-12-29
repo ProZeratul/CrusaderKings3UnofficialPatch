@@ -8694,7 +8694,10 @@ coronation_events.1032 = {
 
         trigger = {
         	exists = scope:barony
-        	NOT = {
+        	NOR = {
+				faith = {	#Unop: Prevent immaterial harmony faiths from access to holy orders.
+					has_doctrine = special_doctrine_immaterial_harmony
+				}
 				faith = {
 					any_faith_holy_order = {
 						holy_order_patron = root

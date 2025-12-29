@@ -418,7 +418,7 @@ armory = {
 			}
 		}
 		reference = "gfx/interface/illustrations/event_scenes/mpo_tent_interior_mongol.dds"
-		environment = "mpo_tent_interior_mongol" 
+		environment = "environment_mpo_tent_interior_mongol" #Unop ck3-tiger
 		ambience = "event:/DLC/CE2/Events/Event_Images/mpo_tent_interior_mongol"
 	}
 	background = { #LAAMPs
@@ -1549,7 +1549,7 @@ council_chamber = {
 	}
 	background = {
 		reference = "gfx/interface/illustrations/event_scenes/councilchamber.dds"
-		environment = "environment_event_councilchamber"
+		environment = "environment_council" #Unop ck3-tiger
 		ambience = "event:/SFX/Events/Backgrounds/meetingchamber_western"
 	}
 }
@@ -4797,8 +4797,8 @@ terrain_travel = {
 		}
 		reference = "gfx/interface/illustrations/event_scenes/desert.dds"
 
-		environment = "environment_travel_desert"
-		ambience = "event:/SFX/Events/Backgrounds/desert_day"
+		#environment = "environment_travel_desert" #Unop ck3-tiger Duplicated
+		#ambience = "event:/SFX/Events/Backgrounds/desert_day"
 
 		environment = "environment_event_bp1_desert"
 		ambience = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ep2_event_grand_hunt_desert"
@@ -8580,7 +8580,7 @@ throne_room = {
 				limit = { exists = scope:bg_override_char }
 				scope:bg_override_char = {
 					OR = {
-						location ?= province:b_constantinople
+						location ?= title:b_constantinople.title_province #Unop ck3-tiger Use correct syntax
 						AND = {
 							primary_title = title:e_byzantium
 							title:c_byzantion = {
@@ -8592,7 +8592,7 @@ throne_room = {
 			}
 			trigger_else = {
 				OR = {
-					location ?= province:b_constantinople
+					location ?= title:b_constantinople.title_province #Unop ck3-tiger Use correct syntax
 					AND = {
 						primary_title = title:e_byzantium
 						title:c_byzantion = {
@@ -8925,7 +8925,7 @@ throne_room_scope = {
 		trigger = {
 			scope:background_throne_room_scope = {
 				OR = {
-					capital_province ?= province:b_constantinople
+					capital_province ?= title:b_constantinople.title_province #Unop ck3-tiger Use correct syntax
 					AND = {
 						primary_title = title:e_byzantium
 						title:c_byzantion = {
@@ -9142,11 +9142,11 @@ estate = {
 			trigger_if = {
 				limit = { exists = scope:bg_override_char.domicile }
 				scope:bg_override_char.domicile ?= { is_domicile_type = east_asian_estate }
-				scope:bg_override_char = { has_graphical_steppe_culture_group_trigger = yes }
+				scope:bg_override_char.culture = { has_graphical_steppe_culture_group_trigger = yes } #Unop ck3-tiger
 			}
 			trigger_else = {
 				domicile ?= { is_domicile_type = east_asian_estate }
-				has_graphical_steppe_culture_group_trigger = yes
+				culture = { has_graphical_steppe_culture_group_trigger = yes } #Unop ck3-tiger
 			}
 		}
 		reference = "gfx/interface/illustrations/event_scenes/mpo_city_steppe.dds"
@@ -10218,7 +10218,7 @@ tour_arrival_turned_away = {
 		}
 		reference = "gfx/interface/illustrations/activity_splash_screens/tour_arrival_asia_suspicious.dds"
 		video_mask = "gfx/interface/video/tour_arrival.bk2"
-		environment = "environment_ep2_tour_arrival_asia_suspicious"
+		environment = "environment_tgp_courtyard_asia" #Unop: environment_ep2_tour_arrival_asia_suspicious does not exists, use the generic asia court environment instead
 		ambience = "event:/SFX/Events/Backgrounds/camp_generic_day"
 	}
 	background = {
@@ -12718,7 +12718,7 @@ ep2_involved_activity = {
 				scope:bg_override_char = {
 					involved_activity ?= { has_activity_type = activity_tour }
 					OR = {
-						steppe_building_gfx_use_indian_trigger = yes
+						location ?= { steppe_building_gfx_use_indian_trigger = yes } #Unop ck3-tiger Use correct scope
 						location.culture ?= { has_graphical_india_culture_group_trigger = yes }
 					}
 				}
@@ -12825,7 +12825,7 @@ ep2_involved_activity = {
 				scope:bg_override_char = {
 					involved_activity ?= { has_activity_type = activity_wedding }
 					OR = {
-						steppe_building_gfx_use_indian_trigger = yes
+						location ?= { steppe_building_gfx_use_indian_trigger = yes } #Unop ck3-tiger Use correct scope
 						location.culture ?= { has_graphical_india_culture_group_trigger = yes }
 					}
 				}
@@ -14560,10 +14560,12 @@ bp2_university_scope = {
 	}
 	background = {	#Indian garden
 		trigger = {
-			scope:background_university_scope.culture = {
-				OR = {
-					has_graphical_india_culture_group_trigger = yes
+			OR = { #Unop ck3-tiger Use correct scope
+				scope:background_university_scope = {
 					steppe_building_gfx_use_indian_trigger = yes
+				}
+				scope:background_university_scope.culture = {
+					has_graphical_india_culture_group_trigger = yes
 				}
 			}
 		}
@@ -16908,7 +16910,7 @@ coronation_activity_background = {
 				activity_location = { NOT = { has_holding_type = church_holding } }
 				activity_host = {
 					OR = {
-						location = province:b_constantinople
+						location = title:b_constantinople.title_province #Unop ck3-tiger Use correct syntax
 						AND = {
 							primary_title = title:e_byzantium
 							title:c_byzantion = {

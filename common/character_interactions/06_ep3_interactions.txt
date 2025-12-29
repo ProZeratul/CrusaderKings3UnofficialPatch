@@ -11602,8 +11602,7 @@ house_head_request_interaction = {
 			}
 		}
 		is_shown = {
-			scope:actor.domicile ?= { has_domicile_building_or_higher = cabinet_of_curiosities_01 }
-
+			scope:actor.domicile ?= { has_domicile_parameter = house_head_can_ask_for_artifacts } #Unop Use domicile parameter to support all domicile buildings
 		}
 		flag = artifact
 		localization = ASK_FOR_ARTIFACT
@@ -11622,10 +11621,7 @@ house_head_request_interaction = {
 			}
 		}
 		is_shown = {
-			OR = {
-				scope:actor.domicile ?= { has_domicile_building_or_higher = guardhouse_01 }
-				scope:actor.domicile ?= { has_domicile_building_or_higher = barracks_01 }
-			}
+			scope:actor.domicile ?= { has_domicile_parameter = house_head_can_ask_for_knight } #Unop Use domicile parameter to support all domicile buildings
 		}
 		flag = knight
 		localization = ASK_FOR_KNIGHT
@@ -11668,21 +11664,14 @@ house_head_request_interaction = {
 			}
 		}
 		is_shown = {
-			OR = {
-				scope:actor.domicile ?= { has_domicile_building_or_higher = guardhouse_03 }
-				scope:actor.domicile ?= { has_domicile_building_or_higher = barracks_01 }
-				scope:actor.domicile ?= { has_domicile_building_or_higher = watchtower_04 }
-			}
+			scope:actor.domicile ?= { has_domicile_parameter = house_head_can_ask_for_maa } #Unop Use domicile parameter to support all domicile buildings
 		}
 		flag = maa
 		localization = ASK_FOR_MAA
 	}
 	send_option = {
 		is_shown = {
-			OR = {
-				scope:actor.domicile ?= { has_domicile_building_or_higher = storage_01 }
-				scope:actor.domicile ?= { has_domicile_building_or_higher = storage_warehouse_03 }
-			}
+			scope:actor.domicile ?= { has_domicile_parameter = house_head_can_ask_building_support } #Unop Use domicile parameter to support all domicile buildings
 		}
 		flag = building
 		localization = ASK_FOR_BUILDING
