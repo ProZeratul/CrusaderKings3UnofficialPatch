@@ -17,21 +17,28 @@ silent_disappearance_effect = {
 		if = {
 			limit = {
 				is_alive = yes
-				is_ruler = no
-				trigger_if = {
+				is_ruler = no			#Unop: Don't touch rulers or any betrothed characters
+				is_betrothed = no
+				trigger_if = {			#Unop: For singles just check they are not player's family
 					limit = {
 						is_married = no
 						is_concubine = no
 					}
 					NOT = { any_player = { is_close_or_extended_family_of = prev } }
 				}
-				trigger_else = {
-					save_temporary_scope_as = stk_prune_char
-					any_player = {
-						NOR = {
-							is_close_or_extended_family_of = scope:stk_prune_char
-							any_consort = { this = scope:stk_prune_char }
-							any_close_family_member = { is_spouse_of = scope:stk_prune_char }
+				trigger_else = {		#Unop: For consorts we should check their partner too
+					NOR = {
+						primary_spouse ?= { is_ruler = yes }
+						save_temporary_scope_as = unop_potential_prune
+						any_player = {
+							OR = {
+								is_close_or_extended_family_of = scope:unop_potential_prune
+								any_consort = { this = scope:unop_potential_prune }
+								any_close_family_member = {
+									limit = { is_married = yes }
+									is_spouse_of = scope:unop_potential_prune
+								}
+							}
 						}
 					}
 				}
@@ -50,21 +57,28 @@ silent_disappearance_ai_effect = {
 			limit = {
 				is_alive = yes
 				root = { is_ai = yes }
-				is_ruler = no
-				trigger_if = {
+				is_ruler = no			#Unop: Don't touch rulers or any betrothed characters
+				is_betrothed = no
+				trigger_if = {			#Unop: For singles just check they are not player's family
 					limit = {
 						is_married = no
 						is_concubine = no
 					}
 					NOT = { any_player = { is_close_or_extended_family_of = prev } }
 				}
-				trigger_else = {
-					save_temporary_scope_as = stk_prune_char
-					any_player = {
-						NOR = {
-							is_close_or_extended_family_of = scope:stk_prune_char
-							any_consort = { this = scope:stk_prune_char }
-							any_close_family_member = { is_spouse_of = scope:stk_prune_char }
+				trigger_else = {		#Unop: For consorts we should check their partner too
+					NOR = {
+						primary_spouse ?= { is_ruler = yes }
+						save_temporary_scope_as = unop_potential_prune
+						any_player = {
+							OR = {
+								is_close_or_extended_family_of = scope:unop_potential_prune
+								any_consort = { this = scope:unop_potential_prune }
+								any_close_family_member = {
+									limit = { is_married = yes }
+									is_spouse_of = scope:unop_potential_prune
+								}
+							}
 						}
 					}
 				}
@@ -98,22 +112,29 @@ silent_disappear_ai_if_not_hired = {
 		if = {
 			limit = {
 				is_alive = yes
-				root = { is_ai = yes }
 				employer != root
-				trigger_if = {
+				root = { is_ai = yes }
+				is_betrothed = no		#Unop: Don't touch any betrothed characters
+				trigger_if = {			#Unop: For singles just check they are not player's family
 					limit = {
 						is_married = no
 						is_concubine = no
 					}
 					NOT = { any_player = { is_close_or_extended_family_of = prev } }
 				}
-				trigger_else = {
-					save_temporary_scope_as = stk_prune_char
-					any_player = {
-						NOR = {
-							is_close_or_extended_family_of = scope:stk_prune_char
-							any_consort = { this = scope:stk_prune_char }
-							any_close_family_member = { is_spouse_of = scope:stk_prune_char }
+				trigger_else = {		#Unop: For consorts we should check their partner too
+					NOR = {
+						primary_spouse ?= { is_ruler = yes }
+						save_temporary_scope_as = unop_potential_prune
+						any_player = {
+							OR = {
+								is_close_or_extended_family_of = scope:unop_potential_prune
+								any_consort = { this = scope:unop_potential_prune }
+								any_close_family_member = {
+									limit = { is_married = yes }
+									is_spouse_of = scope:unop_potential_prune
+								}
+							}
 						}
 					}
 				}
