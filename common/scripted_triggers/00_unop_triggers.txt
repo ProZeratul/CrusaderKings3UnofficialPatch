@@ -927,3 +927,25 @@ unop_employer_can_have_cp_lax = {
 		employs_court_position = $COURT_POS$
 	}
 }
+
+unop_can_disappear_trigger = {
+	NOR = {
+		is_ruler = yes
+		any_close_family_member = {
+			is_ruler = yes
+		}
+		any_spouse = {
+			is_ruler = yes
+			any_close_family_member = {
+				is_ruler = yes
+			}
+		}
+		betrothed ?= {
+			is_ruler = yes
+			any_close_family_member = {
+				is_ruler = yes
+			}
+		}
+		is_concubine = yes
+	}
+}
