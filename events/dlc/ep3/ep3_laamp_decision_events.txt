@@ -14483,9 +14483,15 @@ ep3_laamp_decision_event.1043 = {
 				}
 			}
 		}
-		#Unop Limit this to same religion
+		#Unop Limit this to same religion if accepted or astray
 		trigger = {
 			faith.religion = scope:visiting_location.faith.religion
+			faith = {
+				faith_hostility_level = {
+					target = scope:visiting_location.faith
+					value <= faith_astray_level
+				}
+			}
 		}
 		show_as_unavailable = { always = yes }
 		if = {
@@ -14569,8 +14575,14 @@ ep3_laamp_decision_event.1043 = {
 	option = {
 		name = ep3_laamp_decision_event.1043.b
 		trigger = {
-			#Unop Limit this to same religion
+			#Unop Limit this to same religion if accepted or astray
 			faith.religion = scope:visiting_location.faith.religion
+			faith = {
+				faith_hostility_level = {
+					target = scope:visiting_location.faith
+					value <= faith_astray_level
+				}
+			}
 			NOR = { 
 				has_character_modifier = laamp_decision_church_blessing_stress_loss_modifier
 				has_character_modifier = laamp_decision_church_blessing_stress_gain_modifier
@@ -17500,7 +17512,15 @@ ep3_laamp_decision_event.1055 = {
 	option = {
 		name = ep3_laamp_decision_event.1055.b
 		trigger = { 
-			piety_level >= low_piety_level 
+			piety_level >= low_piety_level
+			#Unop Limit this to same religion if accepted or astray
+			faith.religion = scope:visiting_location.faith.religion
+			faith = {
+				faith_hostility_level = {
+					target = scope:visiting_location.faith
+					value <= faith_astray_level
+				}
+			}
 		}
 		show_as_unavailable = { always = yes }
 		flavor = ep3_laamp_decision_event.1055.b.flavor
