@@ -223,6 +223,9 @@ travel_danger_events.1002 = { # Mountain Terrain - Bandits
 					culture = root.location.culture
 					faith = root.location.faith
 					save_scope_as = bandit
+					after_creation = { #Unop Add created flag so we could only disappear created characters
+						add_character_flag = created
+					}
 				}
 				scope:bandit = {
 					move_to_pool = yes
@@ -469,7 +472,7 @@ travel_danger_events.1002 = { # Mountain Terrain - Bandits
 	after = {
 		mp_resume_travel_plan = yes
 		scope:bandit = {
-			silent_disappearance_ai_effect = yes
+			silent_disappearance_ai_if_created_effect = yes #Unop Only disappear created characters
 		}
 	}
 }
@@ -687,6 +690,9 @@ travel_danger_events.1006 = { # Lost in the forest
 				location = root.location
 				gender_female_chance = 50 
 				save_scope_as = guide
+				after_creation = { #Unop Add created flag so we could only disappear created characters
+					add_character_flag = created
+				}
 			}
 		}
 		traveler_danger_xp_effect = {
@@ -786,7 +792,7 @@ travel_danger_events.1006 = { # Lost in the forest
 	after = {
 		mp_resume_travel_plan = yes
 		scope:guide = {
-			silent_disappearance_ai_effect = yes
+			silent_disappearance_ai_if_created_effect = yes #Unop Only disappear created characters
 		}
 	}
 }

@@ -8862,6 +8862,11 @@ ach_coronation.0027 = {
 				scope:stoner = { silent_disappearance_effect = yes }
 			}
 		}
+		#Unop Remove the created_character_ach_coronation_0027 flag so we don't kill non-created stoners next time the event fires
+		if = {
+			limit = { has_character_flag = created_character_ach_coronation_0027 }
+			remove_character_flag = created_character_ach_coronation_0027
+		}
 	}
 }
 
