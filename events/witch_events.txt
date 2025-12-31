@@ -418,9 +418,24 @@ witch.2002 = { #by Mathilda Bjarnehed
 			trigger_event = witch.2003
 		}
 
-		stress_impact = {
-			zealous = massive_stress_impact_gain
-			craven = medium_stress_impact_gain
+		if = {
+			limit = { faith = { has_doctrine = doctrine_witchcraft_virtuous } }
+			stress_impact = {
+				zealous = massive_stress_impact_loss
+				craven = medium_stress_impact_gain
+			}
+		}
+		else_if = {
+			limit = { faith = { has_doctrine_parameter = witchcraft_accepted } }
+			stress_impact = {
+				craven = medium_stress_impact_gain
+			}
+		}
+		else = {
+			stress_impact = {
+				zealous = massive_stress_impact_gain
+				craven = medium_stress_impact_gain
+			}
 		}
 	}
 
@@ -1622,11 +1637,26 @@ witch.3014 = { #by Mathilda Bjarnehed
 	override_background = {
 		reference = bp1_bonfire
 	}
-	left_portrait = scope:left_portrait
-	right_portrait = scope:right_portrait
-	lower_left_portrait = scope:lower_left_portrait
-	lower_center_portrait = scope:lower_center_portrait
-	lower_right_portrait = scope:lower_right_portrait
+	left_portrait = { #Unop: Ensure scope exists
+		trigger = { exists = scope:left_portrait }
+		character = scope:left_portrait
+	}
+	right_portrait = { #Unop: Ensure scope exists
+		trigger = { exists = scope:right_portrait }
+		character = scope:right_portrait
+	}
+	lower_left_portrait = { #Unop: Ensure scope exists
+		trigger = { exists = scope:lower_left_portrait }
+		character = scope:lower_left_portrait
+	}
+	lower_center_portrait = { #Unop: Ensure scope exists
+		trigger = { exists = scope:lower_center_portrait }
+		character = scope:lower_center_portrait
+	}
+	lower_right_portrait = { #Unop: Ensure scope exists
+		trigger = { exists = scope:lower_right_portrait }
+		character = scope:lower_right_portrait
+	}
 
 
 
@@ -1657,6 +1687,7 @@ witch.3014 = { #by Mathilda Bjarnehed
 
 			if = {
 				limit = {
+					exists = scope:grand_rite_ceremony_outcome #Unop: Add an exists check, the option witch.3010.e does not set the scope
 					OR = {
 						scope:grand_rite_ceremony_outcome = flag:great_translation
 						scope:grand_rite_ceremony_outcome = flag:great_tricks
@@ -1666,8 +1697,19 @@ witch.3014 = { #by Mathilda Bjarnehed
 				}
 				grand_rite_good_outcome = yes
 			}
-			else = {
+			else_if = {
+				limit = {
+					exists = scope:grand_rite_ceremony_outcome
+					OR = {
+						scope:grand_rite_ceremony_outcome = flag:poor_translation
+						scope:grand_rite_ceremony_outcome = flag:poor_tricks
+						scope:grand_rite_ceremony_outcome = flag:poor_improvisation
+					}
+				}
 				grand_rite_poor_outcome = yes
+			}
+			else = {
+				#Unop: The event witch.3010.e state that nothing happen so nothing good/bad...
 			}
 		}
 
