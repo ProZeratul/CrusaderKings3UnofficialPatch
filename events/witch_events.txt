@@ -449,28 +449,30 @@ witch.2002 = { #by Mathilda Bjarnehed
 	}
 	
 	#Reveal them to the world!
-	option = {
-		trigger = { exists = scope:scheme_discovered }
-		name = witch.2002.c
-
-		add_piety = medium_piety_gain
-
-		reverse_add_opinion = {
-			target = scope:owner
-			modifier = hate_opinion
-			opinion = -30
-		}
-
-		scope:owner = {
-			trigger_event = witch.2005
-		}
-
-		stress_impact = {
-			craven = medium_stress_impact_gain
-			compassionate = minor_stress_impact_gain
-			trusting = minor_stress_impact_gain
-		}
-	}
+	#Unop Commented out because witch.2005 won't fire, this is not so easy to fix,
+	# and the player could always manually reveal the secret later if they chose b.
+	#option = {
+	#	trigger = { exists = scope:scheme_discovered }
+	#	name = witch.2002.c
+	#
+	#	add_piety = medium_piety_gain
+	#
+	#	reverse_add_opinion = {
+	#		target = scope:owner
+	#		modifier = hate_opinion
+	#		opinion = -30
+	#	}
+	#
+	#	scope:owner = {
+	#		trigger_event = witch.2005
+	#	}
+	#
+	#	stress_impact = {
+	#		craven = medium_stress_impact_gain
+	#		compassionate = minor_stress_impact_gain
+	#		trusting = minor_stress_impact_gain
+	#	}
+	#}
 }	
 
 #SUCCESS EVENTS
