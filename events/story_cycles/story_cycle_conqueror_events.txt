@@ -1138,6 +1138,9 @@ conqueror.1300 = {
 					faith = scope:peasant_barony.title_province.faith
 					gender_female_chance = root_soldier_female_chance
 					save_scope_as = portrait_peasant
+					after_creation = { #Unop Set created flag
+						add_character_flag = created
+					}
 				}
 			}
 		}
@@ -1255,7 +1258,7 @@ conqueror.1300 = {
 	}
 	after = {
 		scope:portrait_peasant = {
-			silent_disappearance_ai_effect = yes
+			silent_disappearance_ai_if_created_effect = yes #Unop Only kill them if they are created
 		}
 	}
 }
