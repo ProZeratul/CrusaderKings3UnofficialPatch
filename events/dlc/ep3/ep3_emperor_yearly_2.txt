@@ -4285,7 +4285,10 @@ ep3_emperor_yearly.2170 = {
 	trigger = {
 		OR ={
 			valid_for_byz_governor_content_trigger = yes
-			has_tgp_dlc_trigger = yes
+			AND = { #Unop Require a governor, as the event modifiers heavily reference one
+				has_tgp_dlc_trigger = yes
+				is_governor = yes
+			}
 		}
 		
 		any_sub_realm_county = {
