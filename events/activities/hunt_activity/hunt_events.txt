@@ -18946,6 +18946,20 @@ hunt.4911 = { # Host accident
 	trigger = { exists = scope:accident_target }
 
 	immediate = {
+		if = { #Unop: Added this block since hunt_participant could be undefined when root is host & still alive (so the desc is not broken)
+			limit = { 
+				is_alive = yes 
+				NOT = {
+					exists = scope:hunt_participant
+				}
+				this = scope:accident_target
+			}
+			hunt_activity_random_subordinate_participant_effect = {
+				ARCHETYPE = hunter
+				COMBATANT = yes
+				SCOPE = hunt_participant
+			}
+		}
 		hunt_save_physician_effect = yes
 		if = {
 			limit = { exists = scope:wound }
