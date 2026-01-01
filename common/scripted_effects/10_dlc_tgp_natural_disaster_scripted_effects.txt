@@ -965,10 +965,8 @@ natural_disaster_assign_councillor_to_manage_effect = {
 	}
 	else_if = {
 		limit = { government_has_flag = government_is_landless_adventurer }
-		current_travel_plan ?= { #Unop: entourage_character are for travel plan but I don't get why the flag check :?
-			random_entourage_character = {
-				save_scope_as = councillor
-			}
+		random_courtier = { #Unop: replaced entourage_character since it would need a current_travel_plan scope are for travel plan and it didn't really make sense ?
+			save_scope_as = councillor
 		}
 	}
 	else_if = {
