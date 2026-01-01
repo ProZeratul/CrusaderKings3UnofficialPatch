@@ -244,6 +244,8 @@ select_local_animal_effect = {
 	if = {
 		limit = { NOT = { exists = var:animal_type } }
 		set_variable = { name = animal_type value = flag:stag years = 3 }
+		error_log_stack_trace = "Unop: select_local_animal_effect did not set an the variable 'animal_type' fallback on stag" #To be able to track where it went wrong
+		debug_log_scopes = yes
 	}
 }
 
