@@ -1906,18 +1906,11 @@ add_truce_attacker_victory_effect = {
 		}
 	}
 	# Feud
-	if = { #Unop: Ensure houses exists and that they are not the same
-		limit = {
-			exists = scope:attacker.house
-			exists = scope:defender.house
-			scope:attacker.house != scope:defender.house #Unop: Avoid call that will have no effect !
-		}
-		scope:attacker.house = {
-			change_house_relation_feud_score_effect = {
-				TARGET = scope:defender.house
-				REASON = war
-				VALUE = house_feud_medium_counter_value
-			}
+	scope:attacker.house ?= { #Unop: Ensure house exists
+		change_house_relation_feud_score_effect = {
+			TARGET = scope:defender.house
+			REASON = war
+			VALUE = house_feud_medium_counter_value
 		}
 	}
 	# Tooltips for hostage exchange, handled here as it's shared between casus belli

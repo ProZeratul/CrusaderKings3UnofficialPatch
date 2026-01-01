@@ -364,75 +364,76 @@ change_house_relation_feud_score_effect = {
 	save_scope_as = house
 	$TARGET$ ?= { save_scope_as = other_house }
 
-	if = { #Unop: Sanity check to ensure if it happen we get warned & where it happend directly
+	if = { #Unop: Sanity check to ensure if it happen we get warned & where it happend directly, uncomment the stack trace if you want to check everywhere it happen
 		limit = { scope:house = scope:other_house }
-		error_log_stack_trace = "Unop: change_house_relation_feud_score_effect have same house on both side !" #Check error.log
+		#error_log_stack_trace = "Unop: change_house_relation_feud_score_effect have same house on both side !" #Check error.log
 	}
-
-	random_house_relation = {
-		limit = {
-			has_bp1_dlc_trigger = yes
-			has_house_relation_level = feud
-			any_relation_house = { scope:other_house ?= this }
-		}
-		save_scope_as = relation
-		if = {
+	else = {
+		random_house_relation = {
 			limit = {
-				exists = var:house_feud_house_1
-				exists = var:house_feud_house_2
-				exists = var:house_feud_house_1_score
-				exists = var:house_feud_house_2_score
+				has_bp1_dlc_trigger = yes
+				has_house_relation_level = feud
+				any_relation_house = { scope:other_house ?= this }
 			}
+			save_scope_as = relation
 			if = {
-				limit = { var:house_feud_house_1 = scope:house }
-				change_variable = { name = house_feud_house_1_score add = $VALUE$ }
-			}
-			else = {
-				change_variable = { name = house_feud_house_2_score add = $VALUE$ }
-			}
-		}
-		else = {
-			set_variable = { name = house_feud_house_1 value = scope:house }
-			set_variable = { name = house_feud_house_2 value = scope:other_house }
-			set_variable = { name = house_feud_house_1_score value = $VALUE$ }
-			set_variable = { name = house_feud_house_2_score value = 0 }
-		}
-		hidden_effect = {
-			scope:house ?= {
-				every_house_member = {
-					limit = { is_ai = no }
-					send_interface_message = {
-						type = house_feud_$REASON$_good_message
-						left_icon = scope:house.house_head
-						right_icon = scope:other_house.house_head
-						if = {
-							limit = { $VALUE$ >= house_feud_major_counter_value }
-							custom_tooltip = house_feud_tipped_scales_pos_big
-						}
-						else_if = {
-							limit = { $VALUE$ >= house_feud_medium_counter_value }
-							custom_tooltip = house_feud_tipped_scales_pos_medium
-						}
-						else = { custom_tooltip = house_feud_tipped_scales_pos_small }
-					}
+				limit = {
+					exists = var:house_feud_house_1
+					exists = var:house_feud_house_2
+					exists = var:house_feud_house_1_score
+					exists = var:house_feud_house_2_score
+				}
+				if = {
+					limit = { var:house_feud_house_1 = scope:house }
+					change_variable = { name = house_feud_house_1_score add = $VALUE$ }
+				}
+				else = {
+					change_variable = { name = house_feud_house_2_score add = $VALUE$ }
 				}
 			}
-			scope:other_house ?= {
-				every_house_member = {
-					limit = { is_ai = no }
-					send_interface_message = {
-						type = house_feud_$REASON$_bad_message
-						left_icon = scope:house.house_head
-						right_icon = scope:other_house.house_head
-						if = {
-							limit = { $VALUE$ >= house_feud_major_counter_value }
-							custom_tooltip = house_feud_tipped_scales_neg_big
+			else = {
+				set_variable = { name = house_feud_house_1 value = scope:house }
+				set_variable = { name = house_feud_house_2 value = scope:other_house }
+				set_variable = { name = house_feud_house_1_score value = $VALUE$ }
+				set_variable = { name = house_feud_house_2_score value = 0 }
+			}
+			hidden_effect = {
+				scope:house ?= {
+					every_house_member = {
+						limit = { is_ai = no }
+						send_interface_message = {
+							type = house_feud_$REASON$_good_message
+							left_icon = scope:house.house_head
+							right_icon = scope:other_house.house_head
+							if = {
+								limit = { $VALUE$ >= house_feud_major_counter_value }
+								custom_tooltip = house_feud_tipped_scales_pos_big
+							}
+							else_if = {
+								limit = { $VALUE$ >= house_feud_medium_counter_value }
+								custom_tooltip = house_feud_tipped_scales_pos_medium
+							}
+							else = { custom_tooltip = house_feud_tipped_scales_pos_small }
 						}
-						else_if = {
-							limit = { $VALUE$ >= house_feud_medium_counter_value }
-							custom_tooltip = house_feud_tipped_scales_neg_medium
+					}
+				}
+				scope:other_house ?= {
+					every_house_member = {
+						limit = { is_ai = no }
+						send_interface_message = {
+							type = house_feud_$REASON$_bad_message
+							left_icon = scope:house.house_head
+							right_icon = scope:other_house.house_head
+							if = {
+								limit = { $VALUE$ >= house_feud_major_counter_value }
+								custom_tooltip = house_feud_tipped_scales_neg_big
+							}
+							else_if = {
+								limit = { $VALUE$ >= house_feud_medium_counter_value }
+								custom_tooltip = house_feud_tipped_scales_neg_medium
+							}
+							else = { custom_tooltip = house_feud_tipped_scales_neg_small }
 						}
-						else = { custom_tooltip = house_feud_tipped_scales_neg_small }
 					}
 				}
 			}
