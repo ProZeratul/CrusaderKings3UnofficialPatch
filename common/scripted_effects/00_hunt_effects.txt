@@ -2855,7 +2855,13 @@ hunt_wound_apply_effect = {
 		limit = { has_trait = wounded_2 }
 		add_trait_force_tooltip = wounded_2
 	}
-	else = { add_trait_force_tooltip = wounded_3 }
+	else_if = {
+		limit = { has_trait = wounded_3 }
+		add_trait_force_tooltip = wounded_3
+	}
+	else = {
+		#Spared !
+	}
 	add_character_flag = {
 		flag = recent_hunt_wound
 		weeks = 1
