@@ -125,44 +125,47 @@ become_tributary_interaction = {
 	on_send = {
 		if = {
 			limit = { scope:recipient = { highest_held_title_tier >= tier_hegemony } }
-			if = {
-				limit = { scope:recipient.primary_title = title:h_china }
-				open_view_data = {
-					view = decision_detail
-					data = decision:tribute_mission_decision_china
-					player = scope:actor
+			#Unop open_view_data actually needs scope (character in this case)
+			scope:actor = {
+				if = {
+					limit = { scope:recipient.primary_title = title:h_china }
+					open_view_data = {
+						view = decision_detail
+						data = decision:tribute_mission_decision_china
+						player = scope:actor
+					}
 				}
-			}
-			else_if = {
-				limit = { scope:recipient.primary_title = title:h_roman_empire }
-				open_view_data = {
-					view = decision_detail
-					data = decision:tribute_mission_decision_roman_empire
-					player = scope:actor
+				else_if = {
+					limit = { scope:recipient.primary_title = title:h_roman_empire }
+					open_view_data = {
+						view = decision_detail
+						data = decision:tribute_mission_decision_roman_empire
+						player = scope:actor
+					}
 				}
-			}
-			else_if = {
-				limit = { scope:recipient.primary_title = title:h_eastern_roman_empire }
-				open_view_data = {
-					view = decision_detail
-					data = decision:tribute_mission_decision_eastern_roman_empire
-					player = scope:actor
+				else_if = {
+					limit = { scope:recipient.primary_title = title:h_eastern_roman_empire }
+					open_view_data = {
+						view = decision_detail
+						data = decision:tribute_mission_decision_eastern_roman_empire
+						player = scope:actor
+					}
 				}
-			}
-			else_if = {
-				limit = { scope:recipient.primary_title = title:h_dar_al_islam }
-				open_view_data = {
-					view = decision_detail
-					data = decision:tribute_mission_decision_dar_al_islam
-					player = scope:actor
+				else_if = {
+					limit = { scope:recipient.primary_title = title:h_dar_al_islam }
+					open_view_data = {
+						view = decision_detail
+						data = decision:tribute_mission_decision_dar_al_islam
+						player = scope:actor
+					}
 				}
-			}
-			else_if = {
-				limit = { scope:recipient.primary_title = title:h_india }
-				open_view_data = {
-					view = decision_detail
-					data = decision:tribute_mission_decision_india
-					player = scope:actor
+				else_if = {
+					limit = { scope:recipient.primary_title = title:h_india }
+					open_view_data = {
+						view = decision_detail
+						data = decision:tribute_mission_decision_india
+						player = scope:actor
+					}
 				}
 			}
 		}

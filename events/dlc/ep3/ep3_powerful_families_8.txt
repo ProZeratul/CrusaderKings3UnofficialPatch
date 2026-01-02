@@ -1360,10 +1360,11 @@ ep3_powerful_families.8070 = {
 						is_domicile_type = estate
 						domicile_location.county = root.domicile.domicile_location.county
 					}
+					save_temporary_scope_as = house_head_temp #Unop Save to use instead of prev
 					OR = {
 						has_relation_rival = root
 						root = {
-							house_has_feud_relation_with_trigger = { TARGET = prev }
+							house_has_feud_relation_with_trigger = { TARGET = scope:house_head_temp } #Unop Use saved scope since prev changes in the trigger
 						}
 					}
 				}
@@ -1393,10 +1394,11 @@ ep3_powerful_families.8070 = {
 							is_domicile_type = estate
 							domicile_location.county = root.domicile.domicile_location.county
 						}
+						save_temporary_scope_as = house_head_temp #Unop Save to use instead of prev
 						OR = {
 							has_relation_rival = root
 							root = {
-								house_has_feud_relation_with_trigger = { TARGET = prev }
+								house_has_feud_relation_with_trigger = { TARGET = scope:house_head_temp } #Unop Use saved scope since prev changes in the trigger
 							}
 						}
 					}

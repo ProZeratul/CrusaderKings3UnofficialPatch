@@ -474,7 +474,7 @@ house_bloc_desire_to_join_modifiers = {
 	modifier = { # Cohesion
 		scope:joiner_temp.house.house_confederation ?= { cohesion <= 50 }
 		add = {
-			value = -50
+			value = 50 #Unop Low joiner cohesion should increase the chance to join, not vice versa
 			subtract = scope:joiner_temp.house.house_confederation.cohesion
 			if = {
 				limit = { scope:joiner_temp.house.house_confederation.cohesion < 25 }
@@ -507,13 +507,13 @@ house_bloc_desire_to_join_modifiers = {
 			if = {
 				limit = { scope:inviter_temp.house.house_confederation.cohesion < 50 }
 				add = 50
-				subtract = scope:inviter_temp.confederation.cohesion
+				subtract = scope:inviter_temp.house.house_confederation.cohesion #Unop cohesion if for house_confederation
 				multiply = -1
 				min = -50
 				max = -1
 			}
 			else = {
-				add = scope:inviter_temp.confederation.cohesion
+				add =scope:inviter_temp.house.house_confederation.cohesion #Unop cohesion if for house_confederation
 				subtract = 50
 				min = 1
 				max = 50
