@@ -682,9 +682,9 @@ hunt_activity_dangerous_game_effect = {
 	# Fallback
 	if = {
 		limit = { NOT = { exists = var:animal_type } }
-		debug_log = "Unop: hunt_activity_dangerous_game_effect did not set an animal_type ! fallback on wolf"
-		debug_log_scopes = yes
 		set_variable = { name = animal_type value = flag:wolf years = 3 }
+		#error_log_stack_trace = "Unop: hunt_activity_dangerous_game_effect did not set an animal_type ! fallback on wolf"
+		#debug_log_scopes = yes
 	}
 }
 
