@@ -26,7 +26,7 @@ maa_regiments_valid_to_refill_trigger = {
 	maa_current_troops_count < maa_max_troops_count
 	trigger_if = {
 		limit = {
-			scope:actor = { government_has_flag = government_is_landless_adventurer }
+			scope:actor ?= { government_has_flag = government_is_landless_adventurer } #Unop Check scope:author in case this trigger is used in events
 			is_unit_type = elephant_cavalry
 		}
 		scope:actor.domicile ?= { has_domicile_parameter = camp_reinforce_elephant_regiments_anywhere }
