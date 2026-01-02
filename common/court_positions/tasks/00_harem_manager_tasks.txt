@@ -244,12 +244,12 @@ keeper_of_the_harem_court_position_task_select_palace_beauties = {
 		}
 	}
 
-	on_monthly = {
+	on_yearly = {	#Unop: Making it the same to the original loc description and reducing the rates of new concubines.
 		scope:liege = {
 			if = {
 				limit = {
 					number_of_fertile_concubines < max_number_of_concubines
-					any_consort = {
+					any_concubine = {	#Unop: changing to concubine from consorts
 						is_ai = yes
 						is_designated_diarch = no
 						OR = {
@@ -273,8 +273,10 @@ keeper_of_the_harem_court_position_task_select_palace_beauties = {
 						}
 					}
 				}
-				random_consort = {
-					limit = {
+				random_concubine = {	#Unop: changing to concubine from consorts
+					limit = {			#Unop: reworking the block, so it respects previous limits.
+						is_ai = yes
+						is_designated_diarch = no
 						OR = {
 							AND = {
 								is_female = yes
@@ -284,6 +286,15 @@ keeper_of_the_harem_court_position_task_select_palace_beauties = {
 								is_male = yes
 								age > define:NCharacter|MALE_ATTRACTION_CUTOFF_AGE
 							}
+						}
+						NOR = {
+							any_child = {
+								exists = yes
+							}
+							has_relation_best_friend = scope:liege
+							has_relation_friend = scope:liege
+							has_relation_lover = scope:liege
+							has_relation_soulmate = scope:liege
 						}
 					}
 					save_scope_as = aging_concubine
