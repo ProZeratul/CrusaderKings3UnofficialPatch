@@ -315,28 +315,31 @@ end_hunt_mystical_animal_story_cycle_effect = {
 		name = hunted_mystical_animal
 		value = scope:activity.var:animal_type
 	}
-	hidden_effect = {
-		if = {
-			limit = {
-				can_animal_produce_skull_trigger = { VARIABLE = scope:activity.var:animal_type }
-			}
-			random = {
-				chance = 50
-				create_artifact_wall_skull_effect = {
-					OWNER = root
-					HUNTER = root
-					LEGENDARY = yes
-					ANIMAL = scope:activity.var:animal_type
-				}
-			}
-		}
-	}
-	create_artifact_animal_hide_effect = {
-		OWNER = root
-		HUNTER = root
-		LEGENDARY = yes
-		ANIMAL = scope:activity.var:animal_type
-	}
+
+	#Unop: This has been extracted in a dedicated effect (unop_hunt_create_legendary_trophy_effect), and it will be called separately to be in the end-recap-panel of the hunt
+	#hidden_effect = {
+	#	if = {
+	#		limit = {
+	#			can_animal_produce_skull_trigger = { VARIABLE = scope:activity.var:animal_type }
+	#		}
+	#		random = {
+	#			chance = 50
+	#			create_artifact_wall_skull_effect = {
+	#				OWNER = root
+	#				HUNTER = root
+	#				LEGENDARY = yes
+	#				ANIMAL = scope:activity.var:animal_type
+	#			}
+	#		}
+	#	}		
+	#}
+	#create_artifact_animal_hide_effect = {
+	#	OWNER = root
+	#	HUNTER = root
+	#	LEGENDARY = yes
+	#	ANIMAL = scope:activity.var:animal_type
+	#}
+
 	add_stress = medium_stress_loss
 	#Unop ck3-tiger Ensure that scope:story exists
 	if = {
