@@ -507,13 +507,13 @@ house_bloc_desire_to_join_modifiers = {
 			if = {
 				limit = { scope:inviter_temp.house.house_confederation.cohesion < 50 }
 				add = 50
-				subtract = scope:inviter_temp.house.house_confederation.cohesion #Unop cohesion if for house_confederation
+				subtract = scope:inviter_temp.house.house_confederation.cohesion #Unop cohesion is for house_confederation
 				multiply = -1
 				min = -50
 				max = -1
 			}
 			else = {
-				add =scope:inviter_temp.house.house_confederation.cohesion #Unop cohesion if for house_confederation
+				add =scope:inviter_temp.house.house_confederation.cohesion #Unop cohesion is for house_confederation
 				subtract = 50
 				min = 1
 				max = 50
@@ -526,7 +526,7 @@ house_bloc_desire_to_join_modifiers = {
 		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		exists = scope:joiner_temp.confederation
 		exists = scope:inviter_temp.confederation
-		scope:joiner_temp.house.house_confederation.cohesion != 50
+		#scope:joiner_temp.house.house_confederation.cohesion != 50 #Unop This line makes no sense here
 		add = {
 			value = scope:inviter_temp.house.house_confederation.cohesion
 			subtract = scope:joiner_temp.house.house_confederation.cohesion
