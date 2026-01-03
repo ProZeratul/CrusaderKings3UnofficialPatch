@@ -848,7 +848,7 @@ natural_disaster_save_disaster_province_effect = {
 		}
 		random_in_list = {
 			list = disaster_counties
-			limit = { situation_center_province.county ?= this }
+			limit = { scope:situation.situation_center_province.county ?= this } #Unop Use correct scope
 			alternative_limit = { holder ?= scope:disaster_province_ruler }
 			alternative_limit = { holder.liege ?= scope:disaster_province_ruler }
 			alternative_limit = { always = yes }
@@ -956,25 +956,40 @@ natural_disaster_great_project_mandatory_investment_reward_effect = {
 }
 
 natural_disaster_assign_councillor_to_manage_effect = {
+	#Unop Rework the logic to add proper checks and fallback
 	if = {
-		limit = { government_has_flag = government_is_nomadic }
+		limit = {
+			government_has_flag = government_is_nomadic
+			any_councillor = { is_kurultai_trigger = yes }
+		}
 		random_councillor = {
 			limit = { is_kurultai_trigger = yes }
 			save_scope_as = councillor
 		}
 	}
 	else_if = {
-		limit = { government_has_flag = government_is_landless_adventurer }
-		random_entourage_character = {
+		limit = {
+			government_has_flag = government_is_landless_adventurer
+			any_court_position_holder = { type = second_camp_officer }
+		}
+		random_court_position_holder = {
+			type = second_camp_officer
 			save_scope_as = councillor
 		}
 	}
 	else_if = {
-		limit = { tgp_has_access_to_ministry_trigger = yes }
+		limit = {
+			tgp_has_access_to_ministry_trigger = yes
+			exists = cp:minister_works
+		}
 		cp:minister_works = { save_scope_as = councillor }
 	}
-	else = {
+	else_if = {
+		limit = { exists = cp:councillor_steward }
 		cp:councillor_steward = { save_scope_as = councillor }
+	}
+	else = {
+		random_courtier = { save_scope_as = councillor }
 	}
 	$GREAT_PROJECT$ = {
 		set_variable = {
