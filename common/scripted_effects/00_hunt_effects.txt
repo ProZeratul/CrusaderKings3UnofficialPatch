@@ -244,6 +244,8 @@ select_local_animal_effect = {
 	if = {
 		limit = { NOT = { exists = var:animal_type } }
 		set_variable = { name = animal_type value = flag:stag years = 3 }
+		error_log_stack_trace = "Unop: select_local_animal_effect did not set an the variable 'animal_type' fallback on stag" #To be able to track where it went wrong
+		debug_log_scopes = yes
 	}
 }
 
@@ -313,28 +315,31 @@ end_hunt_mystical_animal_story_cycle_effect = {
 		name = hunted_mystical_animal
 		value = scope:activity.var:animal_type
 	}
-	hidden_effect = {
-		if = {
-			limit = {
-				can_animal_produce_skull_trigger = { VARIABLE = scope:activity.var:animal_type }
-			}
-			random = {
-				chance = 50
-				create_artifact_wall_skull_effect = {
-					OWNER = root
-					HUNTER = root
-					LEGENDARY = yes
-					ANIMAL = scope:activity.var:animal_type
-				}
-			}
-		}
-	}
-	create_artifact_animal_hide_effect = {
-		OWNER = root
-		HUNTER = root
-		LEGENDARY = yes
-		ANIMAL = scope:activity.var:animal_type
-	}
+
+	#Unop: This has been extracted in a dedicated effect (unop_hunt_create_legendary_trophy_effect), and it will be called separately to be in the end-recap-panel of the hunt
+	#hidden_effect = {
+	#	if = {
+	#		limit = {
+	#			can_animal_produce_skull_trigger = { VARIABLE = scope:activity.var:animal_type }
+	#		}
+	#		random = {
+	#			chance = 50
+	#			create_artifact_wall_skull_effect = {
+	#				OWNER = root
+	#				HUNTER = root
+	#				LEGENDARY = yes
+	#				ANIMAL = scope:activity.var:animal_type
+	#			}
+	#		}
+	#	}		
+	#}
+	#create_artifact_animal_hide_effect = {
+	#	OWNER = root
+	#	HUNTER = root
+	#	LEGENDARY = yes
+	#	ANIMAL = scope:activity.var:animal_type
+	#}
+
 	add_stress = medium_stress_loss
 	#Unop ck3-tiger Ensure that scope:story exists
 	if = {
@@ -533,6 +538,9 @@ hunt_activity_deer_game_effect = {
 					set_variable = { name = animal_type value = flag:gazelle }
 				}
 				4 = { # Antelope - Standard antelope
+					trigger = { #Unop: Future proof this entry in case another one is added later and the top limit is changed
+						$PROVINCE$ = { hunt_animal_antelope_trigger = yes }
+					}
 					# Increase larger deer chance with management buildings
 					hunt_activity_game_building_modifier = { PROVINCE = $PROVINCE$ }
 					# Master of Hunt aptitude affects chance of managed game
@@ -675,6 +683,8 @@ hunt_activity_dangerous_game_effect = {
 	if = {
 		limit = { NOT = { exists = var:animal_type } }
 		set_variable = { name = animal_type value = flag:wolf years = 3 }
+		#error_log_stack_trace = "Unop: hunt_activity_dangerous_game_effect did not set an animal_type ! fallback on wolf"
+		#debug_log_scopes = yes
 	}
 }
 
@@ -1122,7 +1132,7 @@ hunt_individual_guest_awards_effect = {
 			add_trait_xp = {
 				trait = tourney_participant
 				track = horse
-				value = { 1 3 }
+				value = tournament_hastiludes_xp_gain_miniscule_value
 			}
 		}
 		if = {
@@ -1135,7 +1145,7 @@ hunt_individual_guest_awards_effect = {
 			add_trait_xp = {
 				trait = tourney_participant
 				track = bow
-				value = { 1 3 }
+				value = tournament_hastiludes_xp_gain_miniscule_value
 			}
 		}
 	}
@@ -1877,7 +1887,7 @@ hunt_animal_bow_kill_effect = {
 		add_trait_xp = {
 			trait = tourney_participant
 			track = bow
-			value = { 1 3 }
+			value = tournament_hastiludes_xp_gain_miniscule_value
 		}
 		hunter_progress_point_gain_effect = { CHANGE = 1 RANDOM_CHANGE = 1 } #Gives Hunter Lifestyle XP
 	}
@@ -2847,7 +2857,13 @@ hunt_wound_apply_effect = {
 		limit = { has_trait = wounded_2 }
 		add_trait_force_tooltip = wounded_2
 	}
-	else = { add_trait_force_tooltip = wounded_3 }
+	else_if = {
+		limit = { has_trait = wounded_3 }
+		add_trait_force_tooltip = wounded_3
+	}
+	else = {
+		#Spared !
+	}
 	add_character_flag = {
 		flag = recent_hunt_wound
 		weeks = 1
@@ -3809,10 +3825,19 @@ hunt_trophy_recipient_scope_effect = {
 			limit = { hunt_trophy_recipient_trigger = yes }
 			add_to_list = trophy_recipients
 		}
-		every_relation = {
+		every_relation = { #Unop: This iterator only handle 1 type at a time
 			type = friend
+			add_to_list = trophy_recipients
+		}
+		every_relation = { #Unop: This iterator only handle 1 type at a time
 			type = lover
+			add_to_list = trophy_recipients
+		}
+		every_relation = { #Unop: This iterator only handle 1 type at a time
 			type = potential_friend
+			add_to_list = trophy_recipients
+		}
+		every_relation = { #Unop: This iterator only handle 1 type at a time
 			type = potential_lover
 			add_to_list = trophy_recipients
 		}
@@ -3956,9 +3981,9 @@ hunt_create_trophy_effect = {
 							hunt_activity_deer_game_trigger = { VAR = var:animal_type }
 							exists = scope:activity.var:female_quarry
 						}
-						NOT = {
-							has_activity_option = { category = special_type option = hunt_type_falconry }
-						}
+						#NOT = { #Unop: This is already check above, seems like leftover code ?
+						#	has_activity_option = { category = special_type option = hunt_type_falconry }
+						#}
 					}
 				}
 				create_artifact_animal_trinket_effect = {
@@ -3990,6 +4015,10 @@ hunt_create_trophy_effect = {
 					target = scope:newly_created_artifact
 				}
 			}
+		}
+		else = {
+			#error_log_stack_trace = "UNOP: hunt_create_trophy_effect no trophy created"
+			#unop_log_hunt_activity_effect = yes
 		}
 	}
 }

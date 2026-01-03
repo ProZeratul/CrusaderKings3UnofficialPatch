@@ -1221,7 +1221,7 @@ support_candidacy_interaction = {
 				holder = {
 					has_realm_law_flag = appointment_type_succession
 				}
-				any_title_heir = {
+				any_title_heir ?= { #Unop: Prevent: exists trigger [ Scoped object of type 'character' is not valid ((no character) weak (Character - 69144)!) ]
 					exists = house
 					exists = scope:actor.house
 					house = scope:actor.house
@@ -6540,7 +6540,7 @@ governor_removal_interaction = {
 					save_scope_as = landed_title
 					current_heir = { save_scope_as = next_candidate }
 					if = {
-						limit = { tier >= main_administrative_tier }
+						limit = { tier >= scope:next_candidate.main_administrative_tier } #Unop: main_administrative_tier is for character, should it really be next_candidate tho ?
 						scope:next_candidate = { custom_tooltip = force_governor_removal_interaction_pass_effect_tt }
 					}
 				}
@@ -11114,7 +11114,7 @@ frontier_influence_war_interaction = {
 	}
 
 	has_valid_target = {
-		scope:target = {
+		scope:target ?= { #Unop: to fix scope:target trigger [ Failed context switch ]
 			is_title_created = yes
 			tier = tier_duchy
 			holder.top_liege != scope:actor

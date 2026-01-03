@@ -3637,7 +3637,12 @@ tgp_japan_yearly_events.1262 = {
 		}
 	}
 	#b) Exchange more than poetry (I'll compose a verse while we tumble)
-	option = { 
+	option = {
+
+		trigger = { #Unop: Prevent AI from cheating if they shouldn't (don't recheck the other way since it should already be good)
+			unop_is_sexually_compatible_with_character = { CHARACTER = scope:local_poet DENY_CHASTE = flag:false }
+		}
+
 		name = tgp_japan_yearly_events.1262.b
 		flavor = tgp_japan_yearly_events.1262.b.flavor
 		had_sex_with_effect = {

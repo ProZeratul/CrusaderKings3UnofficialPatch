@@ -4883,7 +4883,9 @@ epidemic_events.3000 = {
 	trigger = {
 		is_travelling = yes
 		location = {
-			any_province_epidemic = { }
+			any_province_epidemic = { 
+				exists = this #Unop: For an odd reason, the scope seems to be undefined in the immediate with random_province_epidemic so I guess we need to ensure it exists here ?
+			}
 		}
 		current_travel_plan ?= {
 			any_entourage_character = {

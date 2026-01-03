@@ -86,13 +86,13 @@ hunt_mystical_animal.1002 = {
 		animation = stress
 	}
 
-	trigger = {		
+	trigger = {
 		any_owned_story = {
 			type = story_cycle_hunt_mystical_animal
 			NOT = { exists = var:had_event_hunt_mystical_animal_1002 }
-			save_temporary_scope_as = story
+			save_temporary_scope_as = unop_temp_story #Unop: Rename to avoid: Trying to add the temporary target 'story' which has the same name as a permanent target
 		}
-		location.county = scope:story.var:legendary_county
+		location.county = scope:unop_temp_story.var:legendary_county #Unop: See comment just above
 		NOT = { exists = involved_activity }
 	}
 
@@ -101,7 +101,7 @@ hunt_mystical_animal.1002 = {
 			type = story_cycle_hunt_mystical_animal
 			limit = {
 				NOT = { exists = var:had_event_hunt_mystical_animal_1002 }
-			}			
+			}
 			save_scope_as = story
 		}
 		hunt_mystical_animal_immediate_effect = {
@@ -136,7 +136,7 @@ hunt_mystical_animal.1003 = {
 	trigger = {
 		scope:story = {
 			NOT = { exists = var:had_event_hunt_mystical_animal_1003 }
-		}
+		}		
 		is_landed = yes
 	}
 
@@ -192,7 +192,7 @@ hunt_mystical_animal.1003 = {
 		show_as_unavailable = {
 			short_term_gold < minor_gold_value
 		}
-		remove_short_term_gold = minor_gold_value	
+		remove_short_term_gold = minor_gold_value
 		scope:m_hunt = {
 			add_opinion = {
 				target = root
@@ -254,7 +254,7 @@ hunt_mystical_animal.1004 = {
 			NOT = { exists = var:had_event_hunt_mystical_animal_1007 }
 			var:encounters >= 2
 			exists = var:animal_type
-			var:legendary_county = {
+			var:legendary_county = {				
 				this != root.location.county
 				any_neighboring_county = { this = root.location.county }
 			}
@@ -286,7 +286,7 @@ hunt_mystical_animal.1004 = {
 		else = {
 			random_courtier = {
 				limit = {
-					can_be_combatant_based_on_gender_trigger = { ARMY_OWNER = root } 
+					can_be_combatant_based_on_gender_trigger = { ARMY_OWNER = root }
 				}
 				weight = {
 					base = 10
@@ -333,6 +333,22 @@ hunt_mystical_animal.1004 = {
 	option = { #We ride!
 		name = hunt_mystical_animal.1004.a
 		flavor = hunt_mystical_animal.1004.a.tt
+
+		#Unop: Clear the CD of the activity if any
+		#if = {
+		#	limit = {
+		#		is_activity_type_on_cooldown = activity_hunt
+		#	}
+		#	#Unop: How to remove the CD on an activity ?
+		#}
+
+		if = {
+			limit = {
+				is_ai = yes
+				is_at_war = no
+			}
+			ai_attempt_to_host_activity = activity_hunt
+		}
 
 		scope:story = {
 			set_variable = { #To safeguard against other events triggering at the same time as this goes down
@@ -464,7 +480,7 @@ hunt_mystical_animal.1006 = {
 #Down the rabbit hole
 #by Linnéa Thimrén
 hunt_mystical_animal.1007 = {
-	type = character_event
+	type = activity_event #Unop: This is launched from the hunt activity now, so it need to be part of it
 	title = hunt_mystical_animal.1001.t
 	desc = hunt_mystical_animal.1007.desc
 	theme = hunting
@@ -575,6 +591,11 @@ hunt_mystical_animal.1007 = {
 		custom_tooltip = hunt_mystical_animal.1003.b.tt
 		scope:story = {
 			hidden_effect = { end_story = yes }
+		}
+		scope:activity = { #Unop: Since the story is ended, clear the sighting
+			activity_location.county = {
+				hunt_remove_sighting_effect = yes
+			}
 		}
 		random_list = {
 			80 = {
@@ -800,8 +821,9 @@ hunt_mystical_animal.9001 = {
 				has_activity_type = activity_hunt
 				has_activity_option = { category = special_type option = hunt_type_legendary }
 				NOR = {
-					exists = var:hunt_4013
-					exists = var:hunt_4019
+					exists = var:hunt_4013 # Since 4018 was setting it but it conflict with the same variable that meant that it was your first legendary hunt
+					exists = var:hunt_4019 # Found another animal in 4018
+					exists = var:hunt_1005 # Animal not found in 4018
 				}
 			}
 		}
@@ -815,6 +837,14 @@ hunt_mystical_animal.9001 = {
 				value = flag:yes
 			}
 		}
+
+		#Unop: To fix the below end_hunt_mystical_animal_story_cycle_effect we need to have the story stored before, but since the below effect is useless, not needed anymore
+		random_owned_story = {
+			limit = { story_type = story_cycle_hunt_mystical_animal }
+			save_scope_as = story
+		}
+		
+		#Unop: this is handled in the hunt conclusion event !
 		end_hunt_mystical_animal_story_cycle_effect = yes
 	}
 
