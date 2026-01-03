@@ -1283,7 +1283,6 @@ common_faction_modifiers = {
 	}
 	modifier = {
 		add = 500
-		confederation.leading_house.house_head.joined_faction ?= scope:faction
 		trigger_if = { #Unop ck3-tiger Save scope:faction from scope:actor if not already set
 			limit = {
 				NOT = { exists = scope:faction }
@@ -1291,6 +1290,7 @@ common_faction_modifiers = {
 			}
 			scope:actor.joined_faction ?= { save_temporary_scope_as = faction }
 		}
+		confederation.leading_house.house_head.joined_faction ?= scope:faction
 		desc = "FACTION_REASON_BLOC_LEADER"
 	}
 	modifier = {

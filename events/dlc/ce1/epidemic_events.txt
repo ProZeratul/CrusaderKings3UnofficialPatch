@@ -4962,6 +4962,9 @@ epidemic_events.3000 = {
 				faith = root.location.faith
 				gender_female_chance = 50
 				save_scope_as = sick_peasant
+				after_creation = { #Unop Add created flag so we could only disappear created characters
+					add_character_flag = created
+				}
 			}
 			scope:sick_peasant = {
 				add_trait = scope:epidemic_scope.epidemic_type.epidemic_trait
@@ -5096,7 +5099,7 @@ epidemic_events.3000 = {
 		hidden_effect = {
 			if = {
 				limit = { is_ai = yes }
-				scope:sick_peasant = { silent_disappearance_effect = yes }
+				scope:sick_peasant = { silent_disappearance_ai_if_created_effect = yes } #Unop Only disappear created characters
 			}
 			else = {
 				scope:sick_peasant = { move_to_pool = yes }
@@ -7397,7 +7400,7 @@ epidemic_events.5009 = {
 	}
 	after = {
 		scope:merchant = {
-			silent_disappearance_ai_effect = yes
+			silent_disappearance_ai_if_created_effect = yes #Unop Only disappear created characters
 		}
 	}
 }
