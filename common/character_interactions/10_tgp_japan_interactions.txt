@@ -602,11 +602,11 @@ invite_to_house_bloc_interaction = {
 			}
 			add = 150
 		}
-		house_bloc_desire_to_join_modifiers = { # General modifiers
-			INVITER = scope:actor
-			JOINER = scope:recipient
-			MULTIPLIER = -1
-		}
+		#house_bloc_desire_to_join_modifiers = { # General modifiers #Unop Commented out as it doesn't make sense
+		#	INVITER = scope:actor
+		#	JOINER = scope:recipient
+		#	MULTIPLIER = -1
+		#}
  		modifier = {
  			add = {
  				value = 0
@@ -635,7 +635,7 @@ invite_to_house_bloc_interaction = {
  			}
  		}
 		modifier = { # Try to have a good number of blocs at all times
-			NOT = { exists = house_head.house.house_confederation }
+			NOT = { exists = house.house_confederation } #Unop Use house, as we are in a character scope
 			# From someone that makes sense
 			is_landed = yes
 			is_house_head = yes
@@ -1632,7 +1632,7 @@ assume_house_bloc_leadership_interaction = {
 									target = scope:actor
 									level >= 2
 								}
-								dynast ?= scope:actor
+								dynasty.dynast ?= scope:actor #Unop Use dynasty.dynast as we are in a character scope
 							}
 						}
 					}
@@ -1901,7 +1901,7 @@ assume_house_bloc_leadership_interaction = {
 								target = scope:actor
 								level >= 2
 							}
-							dynast ?= scope:actor
+							dynasty.dynast ?= scope:actor #Unop Use dynasty.dynast as we are in a character scope
 						}
 					}
 				}
@@ -2241,9 +2241,11 @@ improve_house_relation_in_bloc_interaction = {
 		}
 		else_if = {
 			limit = {
-				any_house_relation = {
-					any_relation_house = { this = scope:recipient.house }
-					has_house_relation_level = rivalry
+				scope:actor.house = { #Unop Use correct scope
+					any_house_relation = {
+						any_relation_house = { this = scope:recipient.house }
+						has_house_relation_level = rivalry
+					}
 				}
 			}
 			custom_tooltip = house_relation_perk_interaction_rivalry_effect

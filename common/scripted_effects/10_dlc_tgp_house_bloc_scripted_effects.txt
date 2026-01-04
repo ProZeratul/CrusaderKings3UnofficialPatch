@@ -775,7 +775,7 @@ tgp_on_member_left_shared_effect = {
 						NOT = { house = scope:character.house }
 					}
 				}
-				scope:vassal_house_temp = { leave_faction = scope:faction_temp }
+				scope:leaver = { leave_faction = scope:faction_temp } #Unop Use scope:leaver instead of scope:vassal_house_temp
 			}
 		}
 	}
@@ -1275,7 +1275,7 @@ tgp_save_bloc_leaving_reason_effect = {
 	if = {
 		limit = { NOT = { has_variable = bloc_leaving_reason } }
 		if = {
-			limit = { scope:joiner.house_head ?= { is_ai = no } }
+			limit = { scope:leaver.house.house_head ?= { is_ai = no } } #Use scope:leaver, not scope:joiner
 			set_variable = {
 				name = bloc_leaving_reason
 				value = flag:reason_player
@@ -1288,8 +1288,8 @@ tgp_save_bloc_leaving_reason_effect = {
 				scope:leaver = { save_scope_as = inviter } #If there is no bloc join, we compare to the inviter
 			}
 			if = {
-				limit = { exists = scope:joiner_temp.confederation.leading_house.house_head }
-				scope:joiner_temp.confederation.leading_house.house_head = { save_scope_as = prev_bloc_leader }
+				limit = { exists = scope:leaver.confederation.leading_house.house_head } #Use scope:leaver, not scope:joiner_temp
+				scope:leaver.confederation.leading_house.house_head = { save_scope_as = prev_bloc_leader } #Use scope:leaver, not scope:joiner_temp
 				if = { # PRESTIGE LEVEL
 					limit = { 
 						OR = {
@@ -1384,7 +1384,7 @@ tgp_save_bloc_leaving_reason_effect = {
 					}
 				}
 				else_if = { # COHESION
-					limit = { scope:joiner_temp.house.house_confederation ?= { cohesion <= 25 } }
+					limit = { scope:leaver.house.house_confederation ?= { cohesion <= 25 } } #Use scope:leaver, not scope:joiner_temp
 					set_variable = {
 						name = bloc_leaving_reason
 						value = flag:reason_cohesion
