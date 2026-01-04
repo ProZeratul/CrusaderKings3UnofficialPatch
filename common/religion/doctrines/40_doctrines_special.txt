@@ -69,6 +69,24 @@ is_eastern_faith = {
 	}
 }
 
+#Unop Add special_doctrine_is_sinitic_faith with correct parameters
+is_sinitic_faith = {
+	group = "special"
+	
+	is_available_on_create = {
+		has_doctrine = special_doctrine_is_sinitic_faith
+	}
+
+	special_doctrine_is_sinitic_faith = {
+		parameters = {
+			# Since doctrines cannot modify other faith's views of us, only our view of others, all Sinitic faiths are given this special doctrine which makes them friendlier to Faiths with the Sinitic Syncretism tenet.
+			hostility_override_tenet_sinitic_syncretism = 1
+			sinitic_syncretic_recipient_opinion_active = yes
+			opinion_of_sinitic_syncretic_actor_opinion_active = 30
+		}
+	}
+}
+
 is_hostile_to_maitreya = {
 	group = "not_creatable"
 	special_doctrine_maitreya_hostility = {

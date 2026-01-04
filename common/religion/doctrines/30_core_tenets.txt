@@ -1710,7 +1710,10 @@
 	tenet_dharmic_pacifism = { #Mix of reincarnation and pacifism rites
 		icon = core_tenet_dharmic_pacifism
 		is_shown = {
-			has_doctrine = eastern_hostility_doctrine
+			OR = { #Unop Add sinitic_hostility_doctrine
+				has_doctrine = eastern_hostility_doctrine
+				has_doctrine = sinitic_hostility_doctrine
+			}
 			NOT = { religion_tag = zoroastrianism_religion }
 		}
 
@@ -1776,7 +1779,10 @@
 		icon = core_tenet_inner_journey
 
 		is_shown = {
-			has_doctrine = eastern_hostility_doctrine
+			OR = { #Unop Add sinitic_hostility_doctrine
+				has_doctrine = eastern_hostility_doctrine
+				has_doctrine = sinitic_hostility_doctrine
+			}
 			NOT = { religion_tag = zoroastrianism_religion }
 		}
 
@@ -2344,7 +2350,7 @@
 			desert_mountains_attrition_mult = -0.25
 		}
 
-		piety_cost = faith_tenet_cost_mid
+		#piety_cost = faith_tenet_cost_mid #Unop Redefined, keeping the one above as it looks better
 	}
 
 	tenet_warmonger = {
@@ -2569,7 +2575,7 @@
 			desert_mountains_advantage = 5
 		}
 
-		piety_cost = faith_tenet_cost_mid
+		#piety_cost = faith_tenet_cost_mid #Unop Redefined, keeping the one above as it looks better
 
 		traits = {
 			virtues = {
@@ -2629,6 +2635,7 @@
 					OR = {
 						religion_tag = buddhism_religion
 						has_doctrine = pagan_hostility_doctrine
+						has_doctrine = eastern_hostility_doctrine #Unop Add eastern_hostility_doctrine
 					}
 				}
 				value = faith_tenet_cost_low
@@ -2678,9 +2685,9 @@
 		parameters = {
 			hostility_override_sinitic_hostility_doctrine = 1
 			#For loc:
-			is_eastern_faith_bilateral_loc_override = 1
-			eastern_syncretic_actor_opinion_active = yes
-			opinion_of_eastern_syncretic_recipient_opinion_active = 30 #Sync this to syncretic_mutual_opinion_bonus_value
+			is_sinitic_faith_bilateral_loc_override = 1 #Unop Use proper loc for Sinitic Syncretism
+			sinitic_syncretic_actor_opinion_active = yes #Unop Use proper loc for Sinitic Syncretism
+			opinion_of_sinitic_syncretic_recipient_opinion_active = 30 #Sync this to syncretic_mutual_opinion_bonus_value #Unop Use proper loc for Sinitic Syncretism
 		}
 		traits = {
 			virtues = { honest }
@@ -2696,6 +2703,7 @@
 					OR = {
 						religion_tag = dualism_religion
 						has_doctrine = pagan_hostility_doctrine
+						has_doctrine = sinitic_hostility_doctrine #Unop Add sinitic_hostility_doctrine
 					}
 				}
 				value = faith_tenet_cost_low
@@ -2721,6 +2729,7 @@
 			OR = {
 				has_doctrine = abrahamic_hostility_doctrine
 				has_doctrine = pagan_hostility_doctrine
+				has_doctrine = sinitic_hostility_doctrine #Unop Add sinitic_hostility_doctrine
 			}
 		}
 		can_pick = {
@@ -2733,6 +2742,7 @@
 			custom_description = {
 				text = incompatible_tenet_other_syncretism_trigger
 				NOR = {
+					doctrine:tenet_sinitic_syncretism = { is_in_list = selected_doctrines } #Unop Add tenet_sinitic_syncretism
 					doctrine:tenet_unreformed_syncretism = { is_in_list = selected_doctrines }
 					doctrine:tenet_christian_syncretism = { is_in_list = selected_doctrines }
 					doctrine:tenet_islamic_syncretism = { is_in_list = selected_doctrines }
@@ -2784,6 +2794,7 @@
 				text = incompatible_tenet_other_syncretism_trigger
 				NOR = {
 					doctrine:tenet_eastern_syncretism = { is_in_list = selected_doctrines }
+					doctrine:tenet_sinitic_syncretism = { is_in_list = selected_doctrines } #Unop Add tenet_sinitic_syncretism
 					doctrine:tenet_christian_syncretism = { is_in_list = selected_doctrines }
 					doctrine:tenet_islamic_syncretism = { is_in_list = selected_doctrines }
 					doctrine:tenet_jewish_syncretism = { is_in_list = selected_doctrines }
@@ -2835,6 +2846,7 @@
 				text = incompatible_tenet_other_syncretism_trigger
 				NOR = {
 					doctrine:tenet_eastern_syncretism = { is_in_list = selected_doctrines }
+					doctrine:tenet_sinitic_syncretism = { is_in_list = selected_doctrines } #Unop Add tenet_sinitic_syncretism
 					doctrine:tenet_unreformed_syncretism = { is_in_list = selected_doctrines }
 					doctrine:tenet_islamic_syncretism = { is_in_list = selected_doctrines }
 					doctrine:tenet_jewish_syncretism = { is_in_list = selected_doctrines }
@@ -2890,6 +2902,7 @@
 				text = incompatible_tenet_other_syncretism_trigger
 				NOR = {
 					doctrine:tenet_eastern_syncretism = { is_in_list = selected_doctrines }
+					doctrine:tenet_sinitic_syncretism = { is_in_list = selected_doctrines } #Unop Add tenet_sinitic_syncretism
 					doctrine:tenet_unreformed_syncretism = { is_in_list = selected_doctrines }
 					doctrine:tenet_christian_syncretism = { is_in_list = selected_doctrines }
 					doctrine:tenet_jewish_syncretism = { is_in_list = selected_doctrines }
@@ -2918,7 +2931,7 @@
 			if = {
 				limit = {
 					OR = {
-						religion_tag = judaism_religion
+						religion_tag = islam_religion #Unop Judaism makes no sense here, Islam does
 						religion_tag = christianity_religion
 						religion_tag = dualism_religion
 					}
@@ -2944,6 +2957,7 @@
 				text = incompatible_tenet_other_syncretism_trigger
 				NOR = {
 					doctrine:tenet_eastern_syncretism = { is_in_list = selected_doctrines }
+					doctrine:tenet_sinitic_syncretism = { is_in_list = selected_doctrines } #Unop Add tenet_sinitic_syncretism
 					doctrine:tenet_unreformed_syncretism = { is_in_list = selected_doctrines }
 					doctrine:tenet_christian_syncretism = { is_in_list = selected_doctrines }
 					doctrine:tenet_islamic_syncretism = { is_in_list = selected_doctrines }
