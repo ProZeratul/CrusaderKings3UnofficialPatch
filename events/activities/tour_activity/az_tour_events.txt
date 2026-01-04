@@ -833,9 +833,7 @@ az_tour.1003 = {
     option = {
         name = az_tour.1003.d # "I will relinquish my claim."
         trigger = {
-            scope:vassal_claim = {
-            	exists = yes
-            }
+            exists = scope:vassal_claim #Unop Use correct syntax to check existence
         }
 
         remove_claim = scope:vassal_claim
@@ -2029,6 +2027,9 @@ az_tour.0007 = {
     }
 
     trigger = {
+    	location = { #Unop Make sure the province is valid for Confucian Education as it's added below
+			is_province_valid_confucian_education_trigger = yes
+		}
     	current_season_trigger = {
 			SEASON = spring
 		}
