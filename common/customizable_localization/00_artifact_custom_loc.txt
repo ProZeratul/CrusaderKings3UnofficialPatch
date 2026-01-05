@@ -525,20 +525,21 @@ ArtifactAdverbWealth = {
 			OR = {
 				AND = {
 					exists = scope:wealth
-					scope:wealth >= 25
-					scope:wealth < 15
+					scope:wealth >= 15 #Unop: Fix condition that was impossible
+					scope:wealth < 25
 
 				}
 				AND = {
 					exists = var:wealth
-					var:wealth >= 25
-					var:wealth < 15
+					var:wealth >= 15 #Unop: Fix condition that was impossible
+					var:wealth < 25
 				}
 			}
 		}
 		localization_key = adverb_wealth_fancy
 	}
 	text = {
+		trigger = { always = no } #Unop: Make sure this will only serve as fallback
 		localization_key = adverb_wealth_plain
 		fallback = yes
 	}
