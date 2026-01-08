@@ -533,23 +533,8 @@ migration_title_and_vassal_change_effect = {
 
 			every_in_de_jure_hierarchy = { #Unop: Take the existing duchy title that are within this title
 				limit = {
-					tier = tier_duchy					
-					holder = {
-						OR = {
-							any_in_list = {
-								list = old_holder
-								this = prev
-							}
-							this = scope:recipient
-							AND = {
-								scope:recipient = this.liege
-								any_held_county = {
-									exists = duchy
-									NOT = { target_is_de_jure_liege_or_above = scope:target_title }
-								}
-							}
-						}
-					}
+					tier = tier_duchy
+					holder = scope:recipient
 				}
 				change_title_holder = {
 					holder = scope:actor
@@ -823,7 +808,7 @@ migration_title_and_vassal_change_effect = {
 		debug_log_scopes = yes
 	}
 
-	# Unop: Step 7: Make sure everyone follow you instead of staying at the previous location
+	# Unop: Step 9: Make sure everyone follow you instead of staying at the previous location
 	hidden_effect = {
 		every_courtier = { set_location_to_default = yes }
 		every_prisoner = { set_location_to_default = yes }
