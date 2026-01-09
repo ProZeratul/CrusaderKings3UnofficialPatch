@@ -810,8 +810,56 @@ migration_title_and_vassal_change_effect = {
 
 	# Unop: Step 9: Make sure everyone follow you instead of staying at the previous location
 	hidden_effect = {
-		every_courtier = { set_location_to_default = yes }
-		every_prisoner = { set_location_to_default = yes }
+		scope:actor = {
+			every_courtier_or_guest = {
+				limit = { unop_can_location_be_reset = yes }
+				set_location_to_default = yes 
+			}
+			every_prisoner = {
+				set_location_to_default = yes 
+			}
+			random_held_title = { #Unop: Now reset the de-jure capital to the new title that we migrate to
+				limit = {
+					is_nomad_title = yes
+					exists = title_domicile
+				}
+				set_capital_county = scope:actor.capital_province.county
+			}
+		}
+		scope:recipient = {
+			every_courtier_or_guest = {
+				limit = { unop_can_location_be_reset = yes }
+				set_location_to_default = yes 
+			}
+			every_prisoner = {
+				set_location_to_default = yes 
+			}
+			random_held_title = {
+				limit = {
+					is_nomad_title = yes
+					exists = title_domicile
+				}
+				set_capital_county = scope:recipient.capital_province.county
+			}
+		}
+		every_in_list = {
+			list = settled_vassal
+			save_scope_as = unop_obedient_vassal
+			every_courtier_or_guest = {
+				limit = { unop_can_location_be_reset = yes }
+				set_location_to_default = yes 
+			}
+			every_prisoner = {
+				set_location_to_default = yes 
+			}
+			random_held_title = {
+				limit = {
+					is_nomad_title = yes
+					exists = title_domicile
+				}
+				set_capital_county = scope:unop_obedient_vassal.capital_province.county
+			}
+		}
 	}
 }
 
