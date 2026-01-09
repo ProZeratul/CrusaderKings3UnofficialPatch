@@ -2729,16 +2729,16 @@ migration_interaction = {
 				}
 			}
 			# Player and non obedient vassals get turned into Tributaries instead
-			every_vassal = {
-				limit = {
-					exists = scope:target_title
-					OR = {
-						NOT = { is_obedient_to = scope:actor }
-						is_ai = no
-					}
-				}
-				break_subject_contract_and_establish_tributary_effect = { SUZERAIN = scope:actor TRIBUTARY = prev }
-			}
+			#every_vassal = { #Unop: This is actually handled in the 2nd block above with nice custom tooltip, and without issue ! 
+			#	limit = {
+			#		exists = scope:target_title
+			#		OR = {
+			#			NOT = { is_obedient_to = scope:actor }
+			#			is_ai = no
+			#		}
+			#	}
+			#	break_subject_contract_and_establish_tributary_effect = { SUZERAIN = scope:actor TRIBUTARY = prev }
+			#}
 			# Migration travel is handled by code
 		}
 	}
