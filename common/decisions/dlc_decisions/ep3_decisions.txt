@@ -2578,7 +2578,10 @@ embrace_heresy_decision = {
 		top_liege ?= { is_ai = yes }
 		top_liege.primary_title.state_faith ?= {
 			OR = {
-				NOT = { has_doctrine = eastern_hostility_doctrine }
+				NOR = { #Unop Add sinitic_hostility_doctrine
+					has_doctrine = eastern_hostility_doctrine
+					has_doctrine = sinitic_hostility_doctrine
+				}
 				has_doctrine = heresy_hostility_doctrine #Zoroastrians also get heresies, despite being Eastern.
 			}
 		}
@@ -2657,7 +2660,10 @@ push_heresy_as_state_faith = {
 		top_liege ?= { is_ai = yes }
 		top_liege.primary_title.state_faith ?= {
 			OR = {
-				NOT = { has_doctrine = eastern_hostility_doctrine }
+				NOR = { #Unop Add sinitic_hostility_doctrine
+					has_doctrine = eastern_hostility_doctrine
+					has_doctrine = sinitic_hostility_doctrine
+				}
 				has_doctrine = heresy_hostility_doctrine #Zoroastrians also get heresies, despite being Eastern.
 			}
 		}

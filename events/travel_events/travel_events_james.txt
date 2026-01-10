@@ -6929,6 +6929,10 @@ travel_events.4037 = {
 				religion = { is_in_family = rf_eastern }
 				location.faith = { has_doctrine_parameter = eastern_syncretic_actor_opinion_active }
 			}
+			AND = { #Unop Add rf_sinitic
+				religion = { is_in_family = rf_sinitic }
+				location.faith = { has_doctrine_parameter = sinitic_syncretic_actor_opinion_active }
+			}
 			AND = {
 				faith = { has_doctrine_parameter = unreformed }
 				location.faith = { has_doctrine_parameter = unreformed_syncretic_actor_opinion_active }
@@ -7130,6 +7134,10 @@ travel_events.4038 = {
 				faith = { has_doctrine_parameter = eastern_syncretic_actor_opinion_active }
 				location.religion = { is_in_family = rf_eastern }
 			}
+			AND = { #Unop Add rf_sinitic
+				faith = { has_doctrine_parameter = sinitic_syncretic_actor_opinion_active }
+				location.religion = { is_in_family = rf_sinitic }
+			}
 			AND = {
 				faith = { has_doctrine_parameter = unreformed_syncretic_actor_opinion_active }
 				location.faith = { has_doctrine_parameter = unreformed }
@@ -7231,6 +7239,15 @@ travel_events.4038 = {
 						}
 						add_character_modifier = {
 							modifier = offended_eastern_modifier
+							years = 5
+						}
+					}
+					else_if = { #Unop Add sinitic_syncretic_actor_opinion_active
+						limit = {
+							faith = { has_doctrine_parameter = sinitic_syncretic_actor_opinion_active }
+						}
+						add_character_modifier = {
+							modifier = offended_sinitic_modifier
 							years = 5
 						}
 					}
