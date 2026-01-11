@@ -425,7 +425,10 @@ court_maintenance.0011 = {
 			custom_tooltip = court_maintenance.0011.banner_house_tooltip
 		}
 		#Dynasty
-		else = { custom_tooltip = court_maintenance.0011.banner_dynasty_tooltip }
+		else_if = { #Unop Only show tooltip if a dynasty banner was actually created
+			limit = { exists = scope:dynasty_banner }
+			custom_tooltip = court_maintenance.0011.banner_dynasty_tooltip
+		}
 
 		# Add extra legitimacy, for the first time they gain the Kingdom title
 		add_legitimacy_effect = { LEGITIMACY = major_legitimacy_gain }
