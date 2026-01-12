@@ -3538,6 +3538,12 @@ faith_conversion_cost_mult = {
 						scope:character.faith.religion = { is_in_family = rf_eastern }
 					}
 				}
+				AND = { #Unop Add rf_sinitic
+					scope:new_faith.religion = { is_in_family = rf_sinitic }
+					NOT = {
+						scope:character.faith.religion = { is_in_family = rf_sinitic }
+					}
+				}
 				AND = {
 					scope:new_faith.religion = { is_in_family = rf_pagan }
 					NOT = {
@@ -3616,6 +3622,23 @@ faith_conversion_cost_mult = {
 			scope:new_faith.religion = { is_in_family = rf_eastern }
 			scope:character.faith.religion = {
 				is_in_family = rf_eastern
+				this != scope:new_faith.religion
+			}
+		}
+		multiply = {
+			value = 1
+			add = {
+				desc = faith_conversion_cost_inside_religion_family
+				format = "BREAKDOWN_FORMAT_PIETY_PERCENTAGE_POSITIVE_IS_BAD"
+				value = 1
+			}
+		}
+	}
+	else_if = { #Unop Add rf_sinitic
+		limit = {
+			scope:new_faith.religion = { is_in_family = rf_sinitic }
+			scope:character.faith.religion = {
+				is_in_family = rf_sinitic
 				this != scope:new_faith.religion
 			}
 		}
@@ -3888,6 +3911,48 @@ faith_conversion_cost_mult = {
 			}
 		}
 	}
+	else_if = { #Unop Add rf_sinitic
+		limit = {
+			scope:new_faith = {
+				religion = { is_in_family = rf_sinitic }
+			}
+			scope:character = {
+				faith = {
+					religion = {
+						NOT = { is_in_family = rf_sinitic }
+					}
+				}
+				OR = {
+					any_neighboring_top_liege_realm_owner = {
+						faith = scope:new_faith
+					}
+					any_vassal = {
+						faith = scope:new_faith
+					}
+					any_realm_province = {
+						faith = scope:new_faith
+					}
+					liege ?= {
+						faith = scope:new_faith
+					}
+
+					liege ?= {	
+						any_vassal = {
+							faith = scope:new_faith
+						}
+					}
+				}
+			}
+		}
+		multiply = {
+			value = 1 
+			subtract = {
+				desc = faith_conversion_cost_present
+				format = "BREAKDOWN_FORMAT_PIETY_PERCENTAGE_POSITIVE_IS_BAD"
+				value = 0.9
+			}
+		}
+	}
 	# Cheaper if the religion is present near/in your borders
 	else_if = {
 		limit = {
@@ -3985,6 +4050,49 @@ faith_conversion_cost_mult = {
 				faith = {
 					religion = {
 						is_in_family = rf_eastern
+						this != scope:new_faith.religion
+					}
+				}
+				OR = {
+					any_neighboring_top_liege_realm_owner = {
+						faith = scope:new_faith
+					}
+					any_vassal = {
+						faith = scope:new_faith
+					}
+					any_realm_province = {
+						faith = scope:new_faith
+					}
+					liege ?= {
+						faith = scope:new_faith
+					}
+
+					liege ?= {	
+						any_vassal = {
+							faith = scope:new_faith
+						}
+					}
+				}
+			}
+		}
+		multiply = {
+			value = 1 
+			subtract = {
+				desc = faith_conversion_cost_present
+				format = "BREAKDOWN_FORMAT_PIETY_PERCENTAGE_POSITIVE_IS_BAD"
+				value = 0.8
+			}
+		}
+	}
+	else_if = { #Unop Add rf_sinitic
+		limit = {
+			scope:new_faith = {
+				religion = { is_in_family = rf_sinitic }
+			}
+			scope:character = {
+				faith = {
+					religion = {
+						is_in_family = rf_sinitic
 						this != scope:new_faith.religion
 					}
 				}
