@@ -530,28 +530,40 @@ migration_title_and_vassal_change_effect = {
 			scope:target_title.tier >= tier_kingdom
 		}
 		scope:target_title ?= {
-			every_de_jure_county_holder = {
+
+			every_in_de_jure_hierarchy = { #Unop: Take the existing duchy title that are within this title
 				limit = {
-					OR = {
-						any_in_list = {
-							list = old_holder
-							this = prev
-						}
-						this = scope:recipient
-						AND = {
-							scope:recipient = this.liege
-							any_held_county = {
-								exists = duchy
-								NOT = { target_is_de_jure_liege_or_above = scope:target_title }
+					tier = tier_duchy
+					holder = scope:recipient
+				}
+				change_title_holder = {
+					holder = scope:actor
+					change = scope:change1
+				}
+			}
+
+			every_de_jure_county = { #Unop: We want to transfert the counties within the target title, so iterate on them, it will also fix the change_title_holder below
+				limit = {
+					holder = {
+						OR = {
+							any_in_list = {
+								list = old_holder
+								this = prev
+							}
+							this = scope:recipient
+							AND = {
+								scope:recipient = this.liege
+								any_held_county = {
+									exists = duchy
+									NOT = { target_is_de_jure_liege_or_above = scope:target_title }
+								}
 							}
 						}
 					}
 				}
-				prev = { #Unop: change_title_holder need a landed title, but this is a character scope
-					change_title_holder = {
-						holder = scope:actor
-						change = scope:change1
-					}
+				change_title_holder = { #Unop: change_title_holder need a landed title, previously it was a character scope but with the iterator fix, it's good now
+					holder = scope:actor
+					change = scope:change1
 				}
 			}
 		}
@@ -794,6 +806,60 @@ migration_title_and_vassal_change_effect = {
 		limit = { debug_only = yes }
 		debug_log = "Migration completed"
 		debug_log_scopes = yes
+	}
+
+	# Unop: Step 9: Make sure everyone follow you instead of staying at the previous location
+	hidden_effect = {
+		scope:actor = {
+			every_courtier_or_guest = {
+				limit = { unop_can_location_be_reset = { LIEGE = root } }
+				set_location_to_default = yes 
+			}
+			every_prisoner = {
+				set_location_to_default = yes 
+			}
+			random_held_title = { #Unop: Now reset the de-jure capital to the new title that we migrate to
+				limit = {
+					is_nomad_title = yes
+					exists = title_domicile
+				}
+				set_capital_county = scope:actor.capital_province.county
+			}
+		}
+		scope:recipient = {
+			every_courtier_or_guest = {
+				limit = { unop_can_location_be_reset = { LIEGE = root } }
+				set_location_to_default = yes 
+			}
+			every_prisoner = {
+				set_location_to_default = yes 
+			}
+			random_held_title = {
+				limit = {
+					is_nomad_title = yes
+					exists = title_domicile
+				}
+				set_capital_county = scope:recipient.capital_province.county
+			}
+		}
+		every_in_list = {
+			list = settled_vassal
+			save_scope_as = unop_settled_vassal
+			every_courtier_or_guest = {
+				limit = { unop_can_location_be_reset = { LIEGE = root } }
+				set_location_to_default = yes 
+			}
+			every_prisoner = {
+				set_location_to_default = yes 
+			}
+			random_held_title = {
+				limit = {
+					is_nomad_title = yes
+					exists = title_domicile
+				}
+				set_capital_county = scope:unop_settled_vassal.capital_province.county
+			}
+		}
 	}
 }
 
