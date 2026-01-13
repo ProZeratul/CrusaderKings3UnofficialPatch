@@ -949,3 +949,13 @@ unop_employer_can_have_cp_lax = {
 #		is_concubine = yes
 #	}
 #}
+
+unop_can_location_be_reset = {
+	location != $LIEGE$.capital_province
+	is_alive = yes
+	is_imprisoned = no
+	is_travelling = no
+	is_in_army = no
+	NOT = { exists = involved_activity }
+	num_taken_task_contracts <= 0
+}
