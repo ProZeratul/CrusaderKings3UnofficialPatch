@@ -892,7 +892,12 @@ raiding.0013 = {
 				}
 
 				modifier = {
-					root = { raid_intent = capture_intent_nomadic }
+					root = {
+						OR = {
+							raid_intent = capture_intent_nomadic
+							raid_intent = capture_intent_norse #Unop: Added the missing norse entry (called norsed but it is for tribal)
+						}
+					}
 					has_raid_intent_immunity = no
 					add = {
 						value = 15
