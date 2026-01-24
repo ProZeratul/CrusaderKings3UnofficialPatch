@@ -27209,6 +27209,7 @@ scripted_trigger hunt_7800_murder_attempt_trigger = {
 		}
 		has_relation_rival = root
 		house ?= {
+			NOT = { this = root.house } #Unop Prevent root or any of their house members from being selected if their house feuds 
 			any_house_relation = {
 				any_relation_house = { this = root.house }
 				has_house_relation_level = feud
