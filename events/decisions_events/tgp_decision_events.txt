@@ -995,15 +995,15 @@ tgp_decision_events.0200 = {
             ###Decide who they're a reincarnation of!###
 
             #Build list of grandparents...
-            every_close_or_extended_family_member = {
+            every_close_family_member = { #Unop: No need to use every_close_or_extended_family_member as we want the GP
                 even_if_dead = yes
                 limit = {
-                    is_alive = no
+                    #is_alive = no #Unop: We also want to iterate on the parents of the GP just after, so we need those still alive
                     is_grandparent_of = scope:target_child
                     sex_same_as = scope:target_child
                 }
                 add_to_list = grandparents_and_great_grandparents
-                debug_log = "Adding grandparents"
+                #debug_log = "Adding grandparents" #Unop: Disable logging
             }
             #... and great grandparents
             every_in_list = {
@@ -1016,12 +1016,15 @@ tgp_decision_events.0200 = {
                     }
                     add_to_list = grandparents_and_great_grandparents
                 }
-                debug_log = "Adding great grandparents"
+                #debug_log = "Adding great grandparents" #Unop: Disable logging
             }
 
             #Pick a random appropriate one
             random_in_list = {
                 list = grandparents_and_great_grandparents
+                limit = { #Unop: Since we now can have alive GP in this list, we need to filter them out
+                    is_alive = no
+                }
                 weight = {
                     base = 1
                     modifier = {
@@ -1033,7 +1036,7 @@ tgp_decision_events.0200 = {
                         add = 4
                     }
                 }
-                debug_log = "Finding ancestor"
+                #debug_log = "Finding ancestor" #Unop: Disable logging
                 save_scope_as = ancestor
             }
         }  
