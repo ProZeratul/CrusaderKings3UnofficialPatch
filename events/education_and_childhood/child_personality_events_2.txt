@@ -57,6 +57,21 @@ child_personality.7000 = {
 			}
 		}
 		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = diligent
+					has_trait = gregarious
+					has_trait = temperate
+				}
+			}
+		}
+		modifier = {
 			add = 5
 			culture = {
 				has_cultural_parameter = temperate_trait_more_common
@@ -153,10 +168,7 @@ child_personality.7000 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = diligent
-				}
+				guardian_or_court_tutor_trait = { TRAIT = diligent } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -166,10 +178,7 @@ child_personality.7000 = {
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = lazy
-				}
+				guardian_or_court_tutor_trait = { TRAIT = lazy } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -206,17 +215,11 @@ child_personality.7000 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = gregarious
-				}
+				guardian_or_court_tutor_trait = { TRAIT = gregarious } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = shy
-				}
+				guardian_or_court_tutor_trait = { TRAIT = shy } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -244,17 +247,11 @@ child_personality.7000 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = temperate
-				}
+				guardian_or_court_tutor_trait = { TRAIT = temperate } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = gluttonous
-				}
+				guardian_or_court_tutor_trait = { TRAIT = gluttonous } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -675,6 +672,21 @@ child_personality.7010 = {
 			}
 		}
 		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = zealous
+					has_trait = ambitious
+					has_trait = sadistic
+				}
+			}
+		}
+		modifier = {
 			add = 5
 			culture = {
 				has_cultural_parameter = zealous_trait_more_common
@@ -788,17 +800,11 @@ child_personality.7010 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = zealous
-				}
+				guardian_or_court_tutor_trait = { TRAIT = zealous } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = cynical
-				}
+				guardian_or_court_tutor_trait = { TRAIT = cynical } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -870,17 +876,11 @@ child_personality.7010 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = ambitious
-				}
+				guardian_or_court_tutor_trait = { TRAIT = ambitious } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = content
-				}
+				guardian_or_court_tutor_trait = { TRAIT = content } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -949,17 +949,11 @@ child_personality.7010 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = sadistic
-				}
+				guardian_or_court_tutor_trait = { TRAIT = sadistic } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = compassionate
-				}
+				guardian_or_court_tutor_trait = { TRAIT = compassionate } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -1290,6 +1284,21 @@ child_personality.7020 = {
 				}
 			}
 		}
+		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = shy
+					has_trait = paranoid
+					has_trait = craven
+				}
+			}
+		}
 	}
 
 	immediate = {
@@ -1384,17 +1393,11 @@ child_personality.7020 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = shy
-				}
+				guardian_or_court_tutor_trait = { TRAIT = shy } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = gregarious
-				}
+				guardian_or_court_tutor_trait = { TRAIT = gregarious } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -1426,17 +1429,11 @@ child_personality.7020 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = paranoid
-				}
+				guardian_or_court_tutor_trait = { TRAIT = paranoid } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = trusting
-				}
+				guardian_or_court_tutor_trait = { TRAIT = trusting } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -1478,17 +1475,11 @@ child_personality.7020 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = craven
-				}
+				guardian_or_court_tutor_trait = { TRAIT = craven } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = brave
-				}
+				guardian_or_court_tutor_trait = { TRAIT = brave } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -1799,6 +1790,21 @@ child_personality.7030 = {
 			}
 		}
 		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = lazy
+					has_trait = gluttonous
+					has_trait = compassionate
+				}
+			}
+		}
+		modifier = {
 			add = 5
 			culture = {
 				has_cultural_parameter = compassionate_trait_more_common
@@ -1912,17 +1918,11 @@ child_personality.7030 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = lazy
-				}
+				guardian_or_court_tutor_trait = { TRAIT = lazy } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = diligent
-				}
+				guardian_or_court_tutor_trait = { TRAIT = diligent } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -1964,17 +1964,11 @@ child_personality.7030 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = gluttonous
-				}
+				guardian_or_court_tutor_trait = { TRAIT = gluttonous } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = temperate
-				}
+				guardian_or_court_tutor_trait = { TRAIT = temperate } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -2020,10 +2014,7 @@ child_personality.7030 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = compassionate
-				}
+				guardian_or_court_tutor_trait = { TRAIT = compassionate } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
@@ -2460,6 +2451,20 @@ child_personality.7040 = {
 			}
 		}
 		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = lustful
+					has_trait = chaste
+				}
+			}
+		}
+		modifier = {
 			factor = 0.5
 			culture = {
 				has_cultural_parameter = lustful_trait_less_common
@@ -2675,17 +2680,11 @@ child_personality.7040 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = lustful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = lustful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = chaste
-				}
+				guardian_or_court_tutor_trait = { TRAIT = chaste } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -2713,17 +2712,11 @@ child_personality.7040 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = lustful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = lustful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = chaste
-				}
+				guardian_or_court_tutor_trait = { TRAIT = chaste } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -2745,17 +2738,11 @@ child_personality.7040 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = chaste
-				}
+				guardian_or_court_tutor_trait = { TRAIT = chaste } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = lustful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = lustful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -2978,6 +2965,21 @@ child_personality.7050 = {
 			}
 		}
 		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = just
+					has_trait = greedy
+					has_trait = callous
+				}
+			}
+		}
+		modifier = {
 			add = 5
 			culture = {
 				has_cultural_parameter = just_trait_more_common
@@ -3061,17 +3063,11 @@ child_personality.7050 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = just
-				}
+				guardian_or_court_tutor_trait = { TRAIT = just } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = arbitrary
-				}
+				guardian_or_court_tutor_trait = { TRAIT = arbitrary } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -3130,17 +3126,11 @@ child_personality.7050 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = greedy
-				}
+				guardian_or_court_tutor_trait = { TRAIT = greedy } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = generous
-				}
+				guardian_or_court_tutor_trait = { TRAIT = generous } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -3195,10 +3185,7 @@ child_personality.7050 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = callous
-				}
+				guardian_or_court_tutor_trait = { TRAIT = callous } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
@@ -3521,6 +3508,21 @@ child_personality.7060 = {
 			}
 		}
 		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = humble
+					has_trait = cynical
+					has_trait = content
+				}
+			}
+		}
+		modifier = {
 			add = 5
 			culture = {
 				has_cultural_parameter = humble_trait_more_common
@@ -3622,17 +3624,11 @@ child_personality.7060 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = humble
-				}
+				guardian_or_court_tutor_trait = { TRAIT = humble } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = arrogant
-				}
+				guardian_or_court_tutor_trait = { TRAIT = arrogant } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -3673,17 +3669,11 @@ child_personality.7060 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = cynical
-				}
+				guardian_or_court_tutor_trait = { TRAIT = cynical } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = zealous
-				}
+				guardian_or_court_tutor_trait = { TRAIT = zealous } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -3713,17 +3703,11 @@ child_personality.7060 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = content
-				}
+				guardian_or_court_tutor_trait = { TRAIT = content } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = ambitious
-				}
+				guardian_or_court_tutor_trait = { TRAIT = ambitious } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -4029,6 +4013,21 @@ child_personality.7070 = {
 			}
 		}
 		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = vengeful
+					has_trait = deceitful
+					has_trait = calm
+				}
+			}
+		}
+		modifier = {
 			add = 5
 			culture = {
 				has_cultural_parameter = vengeful_trait_more_common
@@ -4172,17 +4171,11 @@ child_personality.7070 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = vengeful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = vengeful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = forgiving
-				}
+				guardian_or_court_tutor_trait = { TRAIT = forgiving } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -4221,17 +4214,11 @@ child_personality.7070 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = deceitful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = deceitful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = honest
-				}
+				guardian_or_court_tutor_trait = { TRAIT = honest } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -4266,17 +4253,11 @@ child_personality.7070 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = calm
-				}
+				guardian_or_court_tutor_trait = { TRAIT = calm } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = wrathful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = wrathful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -4624,6 +4605,21 @@ child_personality.7080 = {
 			}
 		}
 		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = generous
+					has_trait = fickle
+					has_trait = arrogant
+				}
+			}
+		}
+		modifier = {
 			add = 5
 			culture = {
 				has_cultural_parameter = generous_trait_more_common
@@ -4704,17 +4700,11 @@ child_personality.7080 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = generous
-				}
+				guardian_or_court_tutor_trait = { TRAIT = generous } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = greedy
-				}
+				guardian_or_court_tutor_trait = { TRAIT = greedy } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -4749,17 +4739,11 @@ child_personality.7080 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = fickle
-				}
+				guardian_or_court_tutor_trait = { TRAIT = fickle } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = stubborn
-				}
+				guardian_or_court_tutor_trait = { TRAIT = stubborn } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -4800,17 +4784,11 @@ child_personality.7080 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = arrogant
-				}
+				guardian_or_court_tutor_trait = { TRAIT = arrogant } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = humble
-				}
+				guardian_or_court_tutor_trait = { TRAIT = humble } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -5115,6 +5093,21 @@ child_personality.7090 = {
 			}
 		}
 		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = forgiving
+					has_trait = trusting
+					has_trait = patient
+				}
+			}
+		}
+		modifier = {
 			add = 5
 			culture = {
 				has_cultural_parameter = patient_trait_more_common
@@ -5193,17 +5186,11 @@ child_personality.7090 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = forgiving
-				}
+				guardian_or_court_tutor_trait = { TRAIT = forgiving } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = vengeful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = vengeful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -5255,17 +5242,11 @@ child_personality.7090 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = trusting
-				}
+				guardian_or_court_tutor_trait = { TRAIT = trusting } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = paranoid
-				}
+				guardian_or_court_tutor_trait = { TRAIT = paranoid } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -5317,17 +5298,11 @@ child_personality.7090 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = patient
-				}
+				guardian_or_court_tutor_trait = { TRAIT = patient } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = impatient
-				}
+				guardian_or_court_tutor_trait = { TRAIT = impatient } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -5603,6 +5578,21 @@ child_personality.7100 = {
 			}
 		}
 		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = honest
+					has_trait = arbitrary
+					has_trait = impatient
+				}
+			}
+		}
+		modifier = {
 			add = 5
 			culture = {
 				has_cultural_parameter = honest_trait_more_common
@@ -5684,17 +5674,11 @@ child_personality.7100 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = honest
-				}
+				guardian_or_court_tutor_trait = { TRAIT = honest } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = deceitful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = deceitful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -5744,17 +5728,11 @@ child_personality.7100 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = arbitrary
-				}
+				guardian_or_court_tutor_trait = { TRAIT = arbitrary } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = just
-				}
+				guardian_or_court_tutor_trait = { TRAIT = just } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -5789,17 +5767,11 @@ child_personality.7100 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = impatient
-				}
+				guardian_or_court_tutor_trait = { TRAIT = impatient } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = patient
-				}
+				guardian_or_court_tutor_trait = { TRAIT = patient } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -6084,6 +6056,21 @@ child_personality.7200 = {
 			}
 		}
 		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = brave
+					has_trait = stubborn
+					has_trait = wrathful
+				}
+			}
+		}
+		modifier = {
 			add = 5
 			culture = {
 				has_cultural_parameter = stubborn_trait_more_common
@@ -6184,17 +6171,11 @@ child_personality.7200 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = brave
-				}
+				guardian_or_court_tutor_trait = { TRAIT = brave } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = craven
-				}
+				guardian_or_court_tutor_trait = { TRAIT = craven } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -6232,17 +6213,11 @@ child_personality.7200 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = stubborn
-				}
+				guardian_or_court_tutor_trait = { TRAIT = stubborn } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = fickle
-				}
+				guardian_or_court_tutor_trait = { TRAIT = fickle } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -6289,17 +6264,11 @@ child_personality.7200 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = wrathful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = wrathful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = calm
-				}
+				guardian_or_court_tutor_trait = { TRAIT = calm } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -6602,6 +6571,21 @@ child_personality.7300 = {
 				}
 			}
 		}
+		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = eccentric
+					has_trait = gregarious
+					has_trait = compassionate
+				}
+			}
+		}
 	}
 
 	immediate = {
@@ -6636,10 +6620,7 @@ child_personality.7300 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = eccentric
-				}
+				guardian_or_court_tutor_trait = { TRAIT = eccentric } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
@@ -6679,10 +6660,7 @@ child_personality.7300 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = compassionate
-				}
+				guardian_or_court_tutor_trait = { TRAIT = compassionate } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
@@ -6722,17 +6700,11 @@ child_personality.7300 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = callous
-				}
+				guardian_or_court_tutor_trait = { TRAIT = callous } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = compassionate
-				}
+				guardian_or_court_tutor_trait = { TRAIT = compassionate } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -7047,6 +7019,21 @@ child_personality.7400 = {
 				}
 			}
 		}
+		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = eccentric
+					has_trait = stubborn
+					has_trait = fickle
+				}
+			}
+		}
 	}
 
 	immediate = {
@@ -7113,10 +7100,7 @@ child_personality.7400 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = eccentric
-				}
+				guardian_or_court_tutor_trait = { TRAIT = eccentric } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
@@ -7149,10 +7133,7 @@ child_personality.7400 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = stubborn
-				}
+				guardian_or_court_tutor_trait = { TRAIT = stubborn } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
@@ -7185,10 +7166,7 @@ child_personality.7400 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = fickle
-				}
+				guardian_or_court_tutor_trait = { TRAIT = fickle } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
