@@ -2018,14 +2018,12 @@ child_personality.7030 = {
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					OR = {
-						has_trait = callous
-						has_trait = sadistic
-					}
-				}
+				guardian_or_court_tutor_trait = { TRAIT = callous } #Unop: To match what is done in the child_personality_events.txt file
 			}
+			modifier = {
+				add = -0.5
+				guardian_or_court_tutor_trait = { TRAIT = sadistic } #Unop: To match what is done in the child_personality_events.txt file
+			}		
 			modifier = {
 				add = 100
 				culture = {
@@ -3183,19 +3181,17 @@ child_personality.7050 = {
 		}
 		ai_chance = {
 			base = 1
-			modifier = {
+			modifier = { #Unop: Originally was giving both +4 & -0.5 if callous, now only +4 if callous
 				add = 4
 				guardian_or_court_tutor_trait = { TRAIT = callous } #Unop: To match what is done in the child_personality_events.txt file
 			}
-			modifier = {
+			modifier = { #Unop: Originally was giving -0.5 if sadistic, IMHO it should increase the chances here from the option context
+				add = 4
+				guardian_or_court_tutor_trait = { TRAIT = sadistic } #Unop: To match what is done in the child_personality_events.txt file
+			}
+			modifier = { #Unop: Originally compassionate was not taken into account, so added it as the only option that decrease the odds
 				add = -0.5
-				any_relation = {
-					type = guardian
-					OR = {
-						has_trait = callous
-						has_trait = sadistic
-					}
-				}
+				guardian_or_court_tutor_trait = { TRAIT = compassionate } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -6624,13 +6620,11 @@ child_personality.7300 = {
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					OR = {
-						has_trait = fickle
-						has_trait = stubborn
-					}
-				}
+				guardian_or_court_tutor_trait = { TRAIT = fickle } #Unop: To match what is done in the child_personality_events.txt file
+			}
+			modifier = {
+				add = -0.5
+				guardian_or_court_tutor_trait = { TRAIT = stubborn } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -6664,13 +6658,11 @@ child_personality.7300 = {
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					OR = {
-						has_trait = sadistic
-						has_trait = callous
-					}
-				}
+				guardian_or_court_tutor_trait = { TRAIT = sadistic } #Unop: To match what is done in the child_personality_events.txt file
+			}
+			modifier = {
+				add = -0.5
+				guardian_or_court_tutor_trait = { TRAIT = callous } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -7104,13 +7096,11 @@ child_personality.7400 = {
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					OR = {
-						has_trait = fickle
-						has_trait = stubborn
-					}
-				}
+				guardian_or_court_tutor_trait = { TRAIT = fickle } #Unop: To match what is done in the child_personality_events.txt file
+			}
+			modifier = {
+				add = -0.5
+				guardian_or_court_tutor_trait = { TRAIT = stubborn } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -7137,13 +7127,11 @@ child_personality.7400 = {
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					OR = {
-						has_trait = fickle
-						has_trait = eccentric
-					}
-				}
+				guardian_or_court_tutor_trait = { TRAIT = fickle } #Unop: To match what is done in the child_personality_events.txt file
+			}
+			modifier = {
+				add = -0.5
+				guardian_or_court_tutor_trait = { TRAIT = eccentric } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -7170,13 +7158,11 @@ child_personality.7400 = {
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					OR = {
-						has_trait = eccentric
-						has_trait = stubborn
-					}
-				}
+				guardian_or_court_tutor_trait = { TRAIT = eccentric } #Unop: To match what is done in the child_personality_events.txt file
+			}
+			modifier = {
+				add = -0.5
+				guardian_or_court_tutor_trait = { TRAIT = stubborn } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
