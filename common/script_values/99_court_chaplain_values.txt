@@ -756,6 +756,28 @@ court_chaplain_conversion_contextual_bonuses = {
 			desc = COURT_CHAPLAIN_CONVERSION_SYNCRETIC_WITH_RELIGION_MODIFIER
 		}
 	}
+	if = { #Unop: Added eastern syncretism entry
+		limit = {
+			exists = scope:county
+			scope:councillor.faith = { has_doctrine_parameter = eastern_syncretic_actor_opinion_active }
+			scope:county.religion = { is_in_family = rf_eastern }
+		}
+		add = {
+			value = scope:councillor.conversion_syncretic_with_religion_malus
+			desc = COURT_CHAPLAIN_CONVERSION_SYNCRETIC_WITH_RELIGION_MODIFIER
+		}
+	}
+	if = { #Unop: Added sinitic syncretism entry
+		limit = {
+			exists = scope:county
+			scope:councillor.faith = { has_doctrine_parameter = sinitic_syncretic_actor_opinion_active }
+			scope:county.religion = { is_in_family = rf_sinitic }
+		}
+		add = {
+			value = scope:councillor.conversion_syncretic_with_religion_malus
+			desc = COURT_CHAPLAIN_CONVERSION_SYNCRETIC_WITH_RELIGION_MODIFIER
+		}
+	}
 
 	#Various Modifier Penalties
 	if = {
