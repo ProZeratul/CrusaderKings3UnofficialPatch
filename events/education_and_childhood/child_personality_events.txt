@@ -139,6 +139,21 @@ child_personality.0001 = {
 				}
 			}
 		}
+		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
+				OR = {
+					has_trait = craven
+					has_trait = lazy
+					has_trait = arbitrary
+				}
+			}
+		}
 	}
 
 	immediate = {
@@ -502,6 +517,21 @@ child_personality.0002 = {
 			}
 		}
 		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
+				OR = {
+					has_trait = arrogant
+					has_trait = compassionate
+					has_trait = callous
+				}
+			}
+		}
+		modifier = {
 			add = 5
 			culture = {
 				has_cultural_parameter = compassionate_trait_more_common
@@ -528,8 +558,16 @@ child_personality.0002 = {
 				save_scope_as = guardian
 			}
 		}
-		else = {
+		else_if = {
+			limit = {
+				exists = court_owner.court_position:court_tutor_court_position
+			}
 			court_owner.court_position:court_tutor_court_position ?= {
+				save_scope_as = guardian
+			}
+		}
+		else = {
+			court_owner.court_position:court_guru_court_position ?= {
 				save_scope_as = guardian
 			}
 		}
@@ -723,6 +761,21 @@ child_personality.0003 = {
 			}
 		}
 		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
+				OR = {
+					has_trait = deceitful
+					has_trait = honest
+					has_trait = humble
+				}
+			}
+		}
+		modifier = {
 			add = 5
 			culture = {
 				has_cultural_parameter = humble_trait_more_common
@@ -758,8 +811,16 @@ child_personality.0003 = {
 				save_scope_as = guardian
 			}
 		}
-		else = {
+		else_if = {
+			limit = {
+				exists = court_owner.court_position:court_tutor_court_position
+			}
 			court_owner.court_position:court_tutor_court_position ?= {
+				save_scope_as = guardian
+			}
+		}
+		else = {
+			court_owner.court_position:court_guru_court_position ?= {
 				save_scope_as = guardian
 			}
 		}
@@ -949,6 +1010,21 @@ child_personality.0004 = {
 				}
 			}
 			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = generous
+					has_trait = diligent
+					has_trait = patient
+				}
+			}
+		}
+		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
 				OR = {
 					has_trait = generous
 					has_trait = diligent
@@ -1264,6 +1340,21 @@ child_personality.0005 = {
 				}
 			}
 			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = wrathful
+					has_trait = forgiving
+					has_trait = fickle
+				}
+			}
+		}
+		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
 				OR = {
 					has_trait = wrathful
 					has_trait = forgiving
@@ -1696,6 +1787,21 @@ child_personality.0006 = {
 			}
 		}
 		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
+				OR = {
+					has_trait = vengeful
+					has_trait = chaste
+					has_trait = stubborn
+				}
+			}
+		}
+		modifier = {
 			add = 5
 			culture = {
 				has_cultural_parameter = vengeful_trait_more_common
@@ -2080,6 +2186,7 @@ child_personality.0007 = {
 				is_available = yes
 			}
 			exists = court_owner.court_position:court_tutor_court_position
+			exists = court_owner.court_position:court_guru_court_position #Unop: Guru is also the tutor
 			any_courtier_or_guest = {
 				is_adult = yes
 				is_available = yes
@@ -2131,6 +2238,21 @@ child_personality.0007 = {
 				}
 			}
 			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = just
+					has_trait = cynical
+					has_trait = temperate
+				}
+			}
+		}
+		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
 				OR = {
 					has_trait = just
 					has_trait = cynical
@@ -2358,6 +2480,21 @@ child_personality.0008 = {
 				}
 			}
 			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = greedy
+					has_trait = gregarious
+					has_trait = lustful
+				}
+			}
+		}
+		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
 				OR = {
 					has_trait = greedy
 					has_trait = gregarious
@@ -2721,6 +2858,21 @@ child_personality.0009 = {
 				}
 			}
 			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = brave
+					has_trait = calm
+					has_trait = zealous
+				}
+			}
+		}
+		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
 				OR = {
 					has_trait = brave
 					has_trait = calm
@@ -3095,6 +3247,7 @@ child_personality.0010 = {
 				is_available = yes
 			}
 			exists = court_owner.court_position:court_tutor_court_position
+			exists = court_owner.court_position:court_guru_court_position #Unop: Guru is also the tutor
 			any_courtier_or_guest = {
 				is_adult = yes
 				is_available = yes
@@ -3147,6 +3300,21 @@ child_personality.0010 = {
 				}
 			}
 			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = ambitious
+					has_trait = sadistic
+					has_trait = paranoid
+				}
+			}
+		}
+		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
 				OR = {
 					has_trait = ambitious
 					has_trait = sadistic
@@ -3288,6 +3456,7 @@ child_personality.0011 = {
 				is_available = yes
 			}
 			exists = court_owner.court_position:court_tutor_court_position
+			exists = court_owner.court_position:court_guru_court_position #Unop: Guru is also the tutor
 			any_courtier_or_guest = {
 				is_adult = yes
 				is_available = yes
@@ -3338,6 +3507,21 @@ child_personality.0011 = {
 				}
 			}
 			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = content
+					has_trait = fickle
+					has_trait = trusting
+				}
+			}
+		}
+		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
 				OR = {
 					has_trait = content
 					has_trait = fickle
@@ -3482,6 +3666,7 @@ child_personality.0012 = {
 				is_available = yes
 			}
 			exists = court_owner.court_position:court_tutor_court_position
+			exists = court_owner.court_position:court_guru_court_position #Unop: Guru is also the tutor
 			any_courtier_or_guest = {
 				is_adult = yes
 				is_available = yes
@@ -3532,6 +3717,21 @@ child_personality.0012 = {
 				}
 			}
 			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = impatient
+					has_trait = shy
+					has_trait = gluttonous
+				}
+			}
+		}
+		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
 				OR = {
 					has_trait = impatient
 					has_trait = shy
