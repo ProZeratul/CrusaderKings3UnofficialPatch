@@ -74,6 +74,21 @@ tgp_child_personality.0002 = {
 			}
 		}
 		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
+				OR = {
+					has_trait = arrogant
+					has_trait = compassionate
+					has_trait = callous
+				}
+			}
+		}
+		modifier = {
 			add = 5
 			culture = {
 				has_cultural_parameter = compassionate_trait_more_common
@@ -100,8 +115,16 @@ tgp_child_personality.0002 = {
 				save_scope_as = guardian
 			}
 		}
-		else = {
+		else_if = {
+			limit = {
+				exists = court_owner.court_position:court_tutor_court_position
+			}
 			court_owner.court_position:court_tutor_court_position ?= {
+				save_scope_as = guardian
+			}
+		}
+		else = {
+			court_owner.court_position:court_guru_court_position ?= {
 				save_scope_as = guardian
 			}
 		}
@@ -289,6 +312,21 @@ tgp_child_personality.0003 = {
 				}
 			}
 			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = deceitful
+					has_trait = honest
+					has_trait = humble
+				}
+			}
+		}
+		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
 				OR = {
 					has_trait = deceitful
 					has_trait = honest
@@ -492,6 +530,21 @@ tgp_child_personality.0004 = {
 				}
 			}
 			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = generous
+					has_trait = diligent
+					has_trait = patient
+				}
+			}
+		}
+		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
 				OR = {
 					has_trait = generous
 					has_trait = diligent
@@ -706,6 +759,21 @@ tgp_child_personality.0007 = {
 			}
 		}
 		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
+				OR = {
+					has_trait = just
+					has_trait = cynical
+					has_trait = temperate
+				}
+			}
+		}
+		modifier = {
 			add = 5
 			culture = {
 				has_cultural_parameter = just_trait_more_common
@@ -896,6 +964,21 @@ tgp_child_personality.0009 = {
 				}
 			}
 			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = brave
+					has_trait = calm
+					has_trait = zealous
+				}
+			}
+		}
+		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
 				OR = {
 					has_trait = brave
 					has_trait = calm
@@ -1106,6 +1189,21 @@ tgp_child_personality.0010 = {
 				}
 			}
 			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = ambitious
+					has_trait = sadistic
+					has_trait = paranoid
+				}
+			}
+		}
+		modifier = {
+			add = 2
+			NOT = {
+				any_relation = {
+					type = guardian
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
 				OR = {
 					has_trait = ambitious
 					has_trait = sadistic
