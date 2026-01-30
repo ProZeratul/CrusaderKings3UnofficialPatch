@@ -114,44 +114,11 @@ child_personality.0001 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = craven
-					has_trait = lazy
-					has_trait = arbitrary
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_tutor_court_position ?= {
-				OR = {
-					has_trait = craven
-					has_trait = lazy
-					has_trait = arbitrary
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
-				OR = {
-					has_trait = craven
-					has_trait = lazy
-					has_trait = arbitrary
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = craven
+				TRAIT_2 = lazy
+				TRAIT_3 = arbitrary
 			}
 		}
 	}
@@ -491,44 +458,11 @@ child_personality.0002 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = arrogant
-					has_trait = compassionate
-					has_trait = callous
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_tutor_court_position ?= {
-				OR = {
-					has_trait = arrogant
-					has_trait = compassionate
-					has_trait = callous
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
-				OR = {
-					has_trait = arrogant
-					has_trait = compassionate
-					has_trait = callous
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = arrogant
+				TRAIT_2 = compassionate
+				TRAIT_3 = callous
 			}
 		}
 		modifier = {
@@ -735,44 +669,11 @@ child_personality.0003 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = deceitful
-					has_trait = honest
-					has_trait = humble
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_tutor_court_position ?= {
-				OR = {
-					has_trait = deceitful
-					has_trait = honest
-					has_trait = humble
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
-				OR = {
-					has_trait = deceitful
-					has_trait = honest
-					has_trait = humble
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = deceitful
+				TRAIT_2 = honest
+				TRAIT_3 = humble
 			}
 		}
 		modifier = {
@@ -992,44 +893,11 @@ child_personality.0004 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = generous
-					has_trait = diligent
-					has_trait = patient
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_tutor_court_position ?= {
-				OR = {
-					has_trait = generous
-					has_trait = diligent
-					has_trait = patient
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
-				OR = {
-					has_trait = generous
-					has_trait = diligent
-					has_trait = patient
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = generous
+				TRAIT_2 = diligent
+				TRAIT_3 = patient
 			}
 		}
 		modifier = {
@@ -1315,6 +1183,7 @@ child_personality.0005 = {
 			OR = {
 				has_trait = fickle
 				has_trait = stubborn
+				has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 			}
 		}
 	}
@@ -1322,44 +1191,11 @@ child_personality.0005 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = wrathful
-					has_trait = forgiving
-					has_trait = fickle
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_tutor_court_position ?= {
-				OR = {
-					has_trait = wrathful
-					has_trait = forgiving
-					has_trait = fickle
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
-				OR = {
-					has_trait = wrathful
-					has_trait = forgiving
-					has_trait = fickle
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = wrathful
+				TRAIT_2 = forgiving
+				TRAIT_3 = fickle
 			}
 		}
 	}
@@ -1677,6 +1513,7 @@ child_personality.0005 = {
 			NOR = {
 				has_trait = fickle
 				has_trait = stubborn
+				has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 			}
 		}
 		ai_chance = {
@@ -1687,7 +1524,10 @@ child_personality.0005 = {
 			}
 			modifier = {
 				add = -0.5
-				guardian_or_court_tutor_trait = { TRAIT = stubborn }
+				guardian_or_court_tutor_2_trait = { #Unop: To also check eccentric
+					TRAIT = stubborn
+					TRAIT_2 = eccentric 
+				}
 			}
 		}
 		add_trait = fickle
@@ -1753,6 +1593,7 @@ child_personality.0006 = {
 			OR = {
 				has_trait = stubborn
 				has_trait = fickle
+				has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 			}
 		}
 	}
@@ -1761,44 +1602,11 @@ child_personality.0006 = {
 		base = 1
 
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = vengeful
-					has_trait = chaste
-					has_trait = stubborn
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_tutor_court_position ?= {
-				OR = {
-					has_trait = vengeful
-					has_trait = chaste
-					has_trait = stubborn
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
-				OR = {
-					has_trait = vengeful
-					has_trait = chaste
-					has_trait = stubborn
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = vengeful
+				TRAIT_2 = chaste
+				TRAIT_3 = stubborn
 			}
 		}
 		modifier = {
@@ -1819,6 +1627,7 @@ child_personality.0006 = {
 			NOR = {
 				has_trait = stubborn
 				has_trait = fickle
+				has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 			}
 		}
 	}
@@ -2120,6 +1929,7 @@ child_personality.0006 = {
 			NOR = {
 				has_trait = stubborn
 				has_trait = fickle
+				has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 			}
 		}
 		ai_chance = {
@@ -2130,7 +1940,10 @@ child_personality.0006 = {
 			}
 			modifier = {
 				add = -0.5
-				guardian_or_court_tutor_trait = { TRAIT = fickle }
+				guardian_or_court_tutor_2_trait = { #Unop: To also check eccentric
+					TRAIT = fickle
+					TRAIT_2 = eccentric
+				}
 			}
 			modifier = {
 				add = 100
@@ -2220,44 +2033,11 @@ child_personality.0007 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = just
-					has_trait = cynical
-					has_trait = temperate
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_tutor_court_position ?= {
-				OR = {
-					has_trait = just
-					has_trait = cynical
-					has_trait = temperate
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
-				OR = {
-					has_trait = just
-					has_trait = cynical
-					has_trait = temperate
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = just
+				TRAIT_2 = cynical
+				TRAIT_3 = temperate
 			}
 		}
 		modifier = {
@@ -2462,44 +2242,11 @@ child_personality.0008 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = greedy
-					has_trait = gregarious
-					has_trait = lustful
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_tutor_court_position ?= {
-				OR = {
-					has_trait = greedy
-					has_trait = gregarious
-					has_trait = lustful
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
-				OR = {
-					has_trait = greedy
-					has_trait = gregarious
-					has_trait = lustful
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = greedy
+				TRAIT_2 = gregarious
+				TRAIT_3 = lustful
 			}
 		}
 		modifier = {
@@ -2840,44 +2587,11 @@ child_personality.0009 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = brave
-					has_trait = calm
-					has_trait = zealous
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_tutor_court_position ?= {
-				OR = {
-					has_trait = brave
-					has_trait = calm
-					has_trait = zealous
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
-				OR = {
-					has_trait = brave
-					has_trait = calm
-					has_trait = zealous
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = brave
+				TRAIT_2 = calm
+				TRAIT_3 = zealous
 			}
 		}
 		modifier = {
@@ -3282,44 +2996,11 @@ child_personality.0010 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = ambitious
-					has_trait = sadistic
-					has_trait = paranoid
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_tutor_court_position ?= {
-				OR = {
-					has_trait = ambitious
-					has_trait = sadistic
-					has_trait = paranoid
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
-				OR = {
-					has_trait = ambitious
-					has_trait = sadistic
-					has_trait = paranoid
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = ambitious
+				TRAIT_2 = sadistic
+				TRAIT_3 = paranoid
 			}
 		}
 		modifier = {
@@ -3478,6 +3159,7 @@ child_personality.0011 = {
 			OR = {
 				has_trait = fickle
 				has_trait = stubborn
+				has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 			}
 			OR = {
 				has_trait = trusting
@@ -3489,44 +3171,11 @@ child_personality.0011 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = content
-					has_trait = fickle
-					has_trait = trusting
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_tutor_court_position ?= {
-				OR = {
-					has_trait = content
-					has_trait = fickle
-					has_trait = trusting
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
-				OR = {
-					has_trait = content
-					has_trait = fickle
-					has_trait = trusting
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = content
+				TRAIT_2 = fickle
+				TRAIT_3 = trusting
 			}
 		}
 		modifier = {
@@ -3587,6 +3236,7 @@ child_personality.0011 = {
 			NOR = {
 				has_trait = fickle
 				has_trait = stubborn
+				has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 			}
 		}
 		ai_chance = {
@@ -3597,7 +3247,10 @@ child_personality.0011 = {
 			}
 			modifier = {
 				add = -0.5
-				guardian_or_court_tutor_trait = { TRAIT = stubborn }
+				guardian_or_court_tutor_2_trait = { #Unop: To also check eccentric
+					TRAIT = stubborn
+					TRAIT_2 = eccentric
+				}
 			}
 		}
 		add_trait = fickle
@@ -3699,44 +3352,11 @@ child_personality.0012 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = impatient
-					has_trait = shy
-					has_trait = gluttonous
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_tutor_court_position ?= {
-				OR = {
-					has_trait = impatient
-					has_trait = shy
-					has_trait = gluttonous
-				}
-			}
-		}
-		modifier = {
-			add = 2
-			NOT = {
-				any_relation = {
-					type = guardian
-				}
-			}
-			court_owner.court_position:court_guru_court_position ?= { #Unop: Guru is also the tutor
-				OR = {
-					has_trait = impatient
-					has_trait = shy
-					has_trait = gluttonous
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = impatient
+				TRAIT_2 = shy
+				TRAIT_3 = gluttonous
 			}
 		}
 	}
@@ -5108,6 +4728,7 @@ child_personality.0052 = {
 		NOR = {
 			has_trait = stubborn
 			has_trait = fickle
+			has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 		}
 		NOT = { has_trait = incapable }
 	}
@@ -5142,6 +4763,7 @@ child_personality.0053 = {
 		NOR = {
 			has_trait = stubborn
 			has_trait = fickle
+			has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 		}
 		NOT = { has_trait = incapable }
 	}
@@ -6520,6 +6142,7 @@ child_personality.1051 = {
 				OR = {
 					has_trait = fickle
 					has_trait = stubborn
+					has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 				}
 			}
 		}
@@ -6559,6 +6182,7 @@ child_personality.1051 = {
 				NOR = {
 					has_trait = fickle
 					has_trait = stubborn
+					has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 				}
 			}
 		}
@@ -6606,6 +6230,7 @@ child_personality.1052 = {
 				OR = {
 					has_trait = fickle
 					has_trait = stubborn
+					has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 				}
 			}
 		}
@@ -6645,6 +6270,7 @@ child_personality.1052 = {
 				NOR = {
 					has_trait = fickle
 					has_trait = stubborn
+					has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 				}
 			}
 		}
@@ -6783,6 +6409,7 @@ child_personality.1061 = {
 				OR = {
 					has_trait = stubborn
 					has_trait = fickle
+					has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 				}
 			}
 		}
@@ -6822,6 +6449,7 @@ child_personality.1061 = {
 				NOR = {
 					has_trait = stubborn
 					has_trait = fickle
+					has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 				}
 			}
 		}
@@ -6867,6 +6495,7 @@ child_personality.1062 = {
 				OR = {
 					has_trait = stubborn
 					has_trait = fickle
+					has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 				}
 			}
 		}
@@ -6906,6 +6535,7 @@ child_personality.1062 = {
 				NOR = {
 					has_trait = stubborn
 					has_trait = fickle
+					has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 				}
 			}
 		}
@@ -8122,6 +7752,7 @@ child_personality.1111 = {
 				OR = {
 					has_trait = fickle
 					has_trait = stubborn
+					has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 				}
 				OR = {
 					has_trait = trusting
@@ -8143,6 +7774,7 @@ child_personality.1111 = {
 				NOR = {
 					has_trait = fickle
 					has_trait = stubborn
+					has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 				}
 			}
 		}
@@ -8294,6 +7926,7 @@ child_personality.1113 = {
 				OR = {
 					has_trait = fickle
 					has_trait = stubborn
+					has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 				}
 			}
 		}
@@ -8333,6 +7966,7 @@ child_personality.1113 = {
 				NOR = {
 					has_trait = fickle
 					has_trait = stubborn
+					has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 				}
 			}
 		}
