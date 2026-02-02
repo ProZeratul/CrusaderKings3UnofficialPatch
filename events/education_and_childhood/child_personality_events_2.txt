@@ -47,13 +47,10 @@ child_personality.7000 = {
 		base = 1
 		modifier = {
 			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = diligent
-					has_trait = gregarious
-					has_trait = temperate
-				}
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = diligent
+				TRAIT_2 = gregarious
+				TRAIT_3 = temperate
 			}
 		}
 		modifier = {
@@ -144,19 +141,13 @@ child_personality.7000 = {
 				is_ai = yes
 			}
 			add_character_flag = diligent
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7001
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7001 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = diligent
-				}
+				guardian_or_court_tutor_trait = { TRAIT = diligent } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -166,10 +157,7 @@ child_personality.7000 = {
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = lazy
-				}
+				guardian_or_court_tutor_trait = { TRAIT = lazy } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -197,26 +185,17 @@ child_personality.7000 = {
 				is_ai = yes
 			}
 			add_character_flag = gregarious
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7001
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7001 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = gregarious
-				}
+				guardian_or_court_tutor_trait = { TRAIT = gregarious } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = shy
-				}
+				guardian_or_court_tutor_trait = { TRAIT = shy } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -235,26 +214,17 @@ child_personality.7000 = {
 				is_ai = yes
 			}
 			add_character_flag = temperate
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7001
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7001 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = temperate
-				}
+				guardian_or_court_tutor_trait = { TRAIT = temperate } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = gluttonous
-				}
+				guardian_or_court_tutor_trait = { TRAIT = gluttonous } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -664,14 +634,11 @@ child_personality.7010 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = zealous
-					has_trait = ambitious
-					has_trait = sadistic
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = zealous
+				TRAIT_2 = ambitious
+				TRAIT_3 = sadistic
 			}
 		}
 		modifier = {
@@ -779,26 +746,17 @@ child_personality.7010 = {
 				is_ai = yes
 			}
 			add_character_flag = zealous
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7011
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7011 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = zealous
-				}
+				guardian_or_court_tutor_trait = { TRAIT = zealous } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = cynical
-				}
+				guardian_or_court_tutor_trait = { TRAIT = cynical } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -861,26 +819,17 @@ child_personality.7010 = {
 				is_ai = yes
 			}
 			add_character_flag = ambitious
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7011
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7011 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = ambitious
-				}
+				guardian_or_court_tutor_trait = { TRAIT = ambitious } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = content
-				}
+				guardian_or_court_tutor_trait = { TRAIT = content } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -940,26 +889,17 @@ child_personality.7010 = {
 				is_ai = yes
 			}
 			add_character_flag = sadistic
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7011
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7011 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = sadistic
-				}
+				guardian_or_court_tutor_trait = { TRAIT = sadistic } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = compassionate
-				}
+				guardian_or_court_tutor_trait = { TRAIT = compassionate } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -1280,14 +1220,11 @@ child_personality.7020 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = shy
-					has_trait = paranoid
-					has_trait = craven
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = shy
+				TRAIT_2 = paranoid
+				TRAIT_3 = craven
 			}
 		}
 	}
@@ -1375,26 +1312,17 @@ child_personality.7020 = {
 				is_ai = yes
 			}
 			add_character_flag = shy
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7021
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7021 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = shy
-				}
+				guardian_or_court_tutor_trait = { TRAIT = shy } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = gregarious
-				}
+				guardian_or_court_tutor_trait = { TRAIT = gregarious } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -1417,26 +1345,17 @@ child_personality.7020 = {
 				is_ai = yes
 			}
 			add_character_flag = paranoid
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7021
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7021 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = paranoid
-				}
+				guardian_or_court_tutor_trait = { TRAIT = paranoid } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = trusting
-				}
+				guardian_or_court_tutor_trait = { TRAIT = trusting } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -1469,26 +1388,17 @@ child_personality.7020 = {
 				is_ai = yes
 			}
 			add_character_flag = craven
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7021
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7021 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = craven
-				}
+				guardian_or_court_tutor_trait = { TRAIT = craven } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = brave
-				}
+				guardian_or_court_tutor_trait = { TRAIT = brave } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -1788,14 +1698,11 @@ child_personality.7030 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = lazy
-					has_trait = gluttonous
-					has_trait = compassionate
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = lazy
+				TRAIT_2 = gluttonous
+				TRAIT_3 = compassionate
 			}
 		}
 		modifier = {
@@ -1903,26 +1810,17 @@ child_personality.7030 = {
 				is_ai = yes
 			}
 			add_character_flag = lazy
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7031
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7031 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = lazy
-				}
+				guardian_or_court_tutor_trait = { TRAIT = lazy } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = diligent
-				}
+				guardian_or_court_tutor_trait = { TRAIT = diligent } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -1955,26 +1853,17 @@ child_personality.7030 = {
 				is_ai = yes
 			}
 			add_character_flag = gluttonous
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7031
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7031 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = gluttonous
-				}
+				guardian_or_court_tutor_trait = { TRAIT = gluttonous } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = temperate
-				}
+				guardian_or_court_tutor_trait = { TRAIT = temperate } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -2011,28 +1900,19 @@ child_personality.7030 = {
 				is_ai = yes
 			}
 			add_character_flag = compassionate
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7031
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7031 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = compassionate
-				}
+				guardian_or_court_tutor_trait = { TRAIT = compassionate } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					OR = {
-						has_trait = callous
-						has_trait = sadistic
-					}
+				guardian_or_court_tutor_2_trait = { #Unop: To match what is done in the child_personality_events.txt file
+					TRAIT = callous 
+					TRAIT_2 = sadistic
 				}
 			}
 			modifier = {
@@ -2450,13 +2330,10 @@ child_personality.7040 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = lustful
-					has_trait = chaste
-				}
+			add = 2	
+			guardian_or_court_tutor_2_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = lustful
+				TRAIT_2 = chaste
 			}
 		}
 		modifier = {
@@ -2666,26 +2543,17 @@ child_personality.7040 = {
 				is_ai = yes
 			}
 			add_character_flag = lustful
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7041
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7041 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = lustful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = lustful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = chaste
-				}
+				guardian_or_court_tutor_trait = { TRAIT = chaste } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -2704,26 +2572,17 @@ child_personality.7040 = {
 				is_ai = yes
 			}
 			add_character_flag = lustful
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7041
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7041 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = lustful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = lustful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = chaste
-				}
+				guardian_or_court_tutor_trait = { TRAIT = chaste } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -2736,26 +2595,17 @@ child_personality.7040 = {
 				is_ai = yes
 			}
 			add_character_flag = chaste
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7041
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7041 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = chaste
-				}
+				guardian_or_court_tutor_trait = { TRAIT = chaste } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = lustful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = lustful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -2944,6 +2794,7 @@ child_personality.7050 = {
 			OR = {
 				exists = cp:councillor_steward
 				employs_court_position = court_tutor_court_position
+				employs_court_position = court_guru_court_position
 			}
 		}
 		NAND = {
@@ -2967,14 +2818,11 @@ child_personality.7050 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = just
-					has_trait = greedy
-					has_trait = callous
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = just
+				TRAIT_2 = greedy
+				TRAIT_3 = callous
 			}
 		}
 		modifier = {
@@ -2998,6 +2846,15 @@ child_personality.7050 = {
 				}
 				random_court_position_holder = {
 					type = court_tutor_court_position
+					save_scope_as = teacher
+				}
+			}
+			else_if = {
+				limit = {
+					employs_court_position = court_guru_court_position
+				}
+				random_court_position_holder = {
+					type = court_guru_court_position
 					save_scope_as = teacher
 				}
 			}
@@ -3052,26 +2909,17 @@ child_personality.7050 = {
 				is_ai = yes
 			}
 			add_character_flag = just
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7051
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7051 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = just
-				}
+				guardian_or_court_tutor_trait = { TRAIT = just } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = arbitrary
-				}
+				guardian_or_court_tutor_trait = { TRAIT = arbitrary } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -3121,26 +2969,17 @@ child_personality.7050 = {
 				is_ai = yes
 			}
 			add_character_flag = greedy
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7051
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7051 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = greedy
-				}
+				guardian_or_court_tutor_trait = { TRAIT = greedy } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = generous
-				}
+				guardian_or_court_tutor_trait = { TRAIT = generous } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -3186,29 +3025,20 @@ child_personality.7050 = {
 				is_ai = yes
 			}
 			add_character_flag = callous
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7051
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7051 }
 		}
 		ai_chance = {
 			base = 1
-			modifier = {
+			modifier = { 
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = callous
+				guardian_or_court_tutor_2_trait = { #Unop: To match what is done in the child_personality_events.txt file
+					TRAIT = callous #Unop: Originally was giving both +4 & -0.5 if callous, now only +4 if callous
+					TRAIT_2 = sadistic #Unop: Originally was giving -0.5 if sadistic, IMHO it should increase the chances here from the option context
 				}
 			}
-			modifier = {
+			modifier = { #Unop: Originally compassionate was not taken into account, so added it as the only option that decrease the odds
 				add = -0.5
-				any_relation = {
-					type = guardian
-					OR = {
-						has_trait = callous
-						has_trait = sadistic
-					}
-				}
+				guardian_or_court_tutor_trait = { TRAIT = compassionate } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -3510,14 +3340,11 @@ child_personality.7060 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = humble
-					has_trait = cynical
-					has_trait = content
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = humble
+				TRAIT_2 = cynical
+				TRAIT_3 = content
 			}
 		}
 		modifier = {
@@ -3613,26 +3440,17 @@ child_personality.7060 = {
 				is_ai = yes
 			}
 			add_character_flag = humble
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7061
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7061 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = humble
-				}
+				guardian_or_court_tutor_trait = { TRAIT = humble } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = arrogant
-				}
+				guardian_or_court_tutor_trait = { TRAIT = arrogant } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -3664,26 +3482,17 @@ child_personality.7060 = {
 				is_ai = yes
 			}
 			add_character_flag = cynical
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7061
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7061 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = cynical
-				}
+				guardian_or_court_tutor_trait = { TRAIT = cynical } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = zealous
-				}
+				guardian_or_court_tutor_trait = { TRAIT = zealous } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -3704,26 +3513,17 @@ child_personality.7060 = {
 				is_ai = yes
 			}
 			add_character_flag = content
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7061
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7061 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = content
-				}
+				guardian_or_court_tutor_trait = { TRAIT = content } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = ambitious
-				}
+				guardian_or_court_tutor_trait = { TRAIT = ambitious } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -4018,14 +3818,11 @@ child_personality.7070 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = vengeful
-					has_trait = deceitful
-					has_trait = calm
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = vengeful
+				TRAIT_2 = deceitful
+				TRAIT_3 = calm
 			}
 		}
 		modifier = {
@@ -4163,26 +3960,17 @@ child_personality.7070 = {
 				is_ai = yes
 			}
 			add_character_flag = vengeful
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7071
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7071 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = vengeful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = vengeful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = forgiving
-				}
+				guardian_or_court_tutor_trait = { TRAIT = forgiving } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -4212,26 +4000,17 @@ child_personality.7070 = {
 				is_ai = yes
 			}
 			add_character_flag = deceitful
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7071
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7071 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = deceitful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = deceitful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = honest
-				}
+				guardian_or_court_tutor_trait = { TRAIT = honest } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -4257,26 +4036,17 @@ child_personality.7070 = {
 				is_ai = yes
 			}
 			add_character_flag = calm
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7071
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7071 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = calm
-				}
+				guardian_or_court_tutor_trait = { TRAIT = calm } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = wrathful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = wrathful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -4613,14 +4383,11 @@ child_personality.7080 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = generous
-					has_trait = fickle
-					has_trait = arrogant
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = generous
+				TRAIT_2 = fickle
+				TRAIT_3 = arrogant
 			}
 		}
 		modifier = {
@@ -4695,26 +4462,17 @@ child_personality.7080 = {
 				is_ai = yes
 			}
 			add_character_flag = generous
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7081
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7081 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = generous
-				}
+				guardian_or_court_tutor_trait = { TRAIT = generous } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = greedy
-				}
+				guardian_or_court_tutor_trait = { TRAIT = greedy } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -4731,6 +4489,7 @@ child_personality.7080 = {
 			NOR = {
 				has_trait = stubborn
 				has_trait = fickle
+				has_trait = eccentric #Unop: eccentric is opposed to fickle
 			}
 		}
 		add_trait = fickle
@@ -4740,26 +4499,20 @@ child_personality.7080 = {
 				is_ai = yes
 			}
 			add_character_flag = fickle
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7081
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7081 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = fickle
-				}
+				guardian_or_court_tutor_trait = { TRAIT = fickle } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = stubborn
-				}
+				guardian_or_court_tutor_2_trait = { #Unop: To match what is done in the child_personality_events.txt file
+					TRAIT = stubborn
+					TRAIT_2 = eccentric
+				} 
 			}
 		}
 	}
@@ -4791,26 +4544,17 @@ child_personality.7080 = {
 				is_ai = yes
 			}
 			add_character_flag = arrogant
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7081
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7081 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = arrogant
-				}
+				guardian_or_court_tutor_trait = { TRAIT = arrogant } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = humble
-				}
+				guardian_or_court_tutor_trait = { TRAIT = humble } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -4992,6 +4736,7 @@ child_personality.7081 = {
 				NOR = {
 					has_trait = fickle
 					has_trait = stubborn
+					has_trait = eccentric #Unop: eccentric is opposed to fickle
 				}
 			}
 		}
@@ -5082,6 +4827,7 @@ child_personality.7090 = {
 			OR = {
 				exists = cp:councillor_chancellor
 				employs_court_position = court_tutor_court_position
+				employs_court_position = court_guru_court_position
 			}
 		}
 		NAND = {
@@ -5104,14 +4850,11 @@ child_personality.7090 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = forgiving
-					has_trait = trusting
-					has_trait = patient
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = forgiving
+				TRAIT_2 = trusting
+				TRAIT_3 = patient
 			}
 		}
 		modifier = {
@@ -5135,6 +4878,15 @@ child_personality.7090 = {
 				}
 				random_court_position_holder = {
 					type = court_tutor_court_position
+					save_scope_as = teacher
+				}
+			}
+			else_if = {
+				limit = {
+					employs_court_position = court_guru_court_position
+				}
+				random_court_position_holder = {
+					type = court_guru_court_position
 					save_scope_as = teacher
 				}
 			}
@@ -5184,26 +4936,17 @@ child_personality.7090 = {
 				is_ai = yes
 			}
 			add_character_flag = forgiving
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7091
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7091 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = forgiving
-				}
+				guardian_or_court_tutor_trait = { TRAIT = forgiving } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = vengeful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = vengeful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -5246,26 +4989,17 @@ child_personality.7090 = {
 				is_ai = yes
 			}
 			add_character_flag = trusting
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7091
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7091 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = trusting
-				}
+				guardian_or_court_tutor_trait = { TRAIT = trusting } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = paranoid
-				}
+				guardian_or_court_tutor_trait = { TRAIT = paranoid } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -5308,26 +5042,17 @@ child_personality.7090 = {
 				is_ai = yes
 			}
 			add_character_flag = patient
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7091
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7091 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = patient
-				}
+				guardian_or_court_tutor_trait = { TRAIT = patient } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = impatient
-				}
+				guardian_or_court_tutor_trait = { TRAIT = impatient } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -5592,14 +5317,11 @@ child_personality.7100 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = honest
-					has_trait = arbitrary
-					has_trait = impatient
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = honest
+				TRAIT_2 = arbitrary
+				TRAIT_3 = impatient
 			}
 		}
 		modifier = {
@@ -5675,26 +5397,17 @@ child_personality.7100 = {
 				is_ai = yes
 			}
 			add_character_flag = honest
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7101
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7101 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = honest
-				}
+				guardian_or_court_tutor_trait = { TRAIT = honest } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = deceitful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = deceitful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = 100
@@ -5735,26 +5448,17 @@ child_personality.7100 = {
 				is_ai = yes
 			}
 			add_character_flag = arbitrary
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7101
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7101 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = arbitrary
-				}
+				guardian_or_court_tutor_trait = { TRAIT = arbitrary } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = just
-				}
+				guardian_or_court_tutor_trait = { TRAIT = just } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -5780,26 +5484,17 @@ child_personality.7100 = {
 				is_ai = yes
 			}
 			add_character_flag = impatient
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7101
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7101 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = impatient
-				}
+				guardian_or_court_tutor_trait = { TRAIT = impatient } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = patient
-				}
+				guardian_or_court_tutor_trait = { TRAIT = patient } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -6061,6 +5756,7 @@ child_personality.7200 = {
 			OR = {
 				has_trait = stubborn
 				has_trait = fickle
+				has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 			}
 			OR = {
 				has_trait = wrathful
@@ -6073,14 +5769,11 @@ child_personality.7200 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = brave
-					has_trait = stubborn
-					has_trait = wrathful
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = brave
+				TRAIT_2 = stubborn
+				TRAIT_3 = wrathful
 			}
 		}
 		modifier = {
@@ -6091,6 +5784,7 @@ child_personality.7200 = {
 			NOR = {
 				has_trait = stubborn
 				has_trait = fickle
+				has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 			}
 		}
 	}
@@ -6175,26 +5869,17 @@ child_personality.7200 = {
 				is_ai = yes
 			}
 			add_character_flag = brave
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7201
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7201 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = brave
-				}
+				guardian_or_court_tutor_trait = { TRAIT = brave } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = craven
-				}
+				guardian_or_court_tutor_trait = { TRAIT = craven } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -6205,6 +5890,7 @@ child_personality.7200 = {
 			NOR = {
 				has_trait = fickle
 				has_trait = stubborn
+				has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 			}
 		}
 		add_trait = stubborn
@@ -6223,26 +5909,20 @@ child_personality.7200 = {
 				is_ai = yes
 			}
 			add_character_flag = stubborn
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7201
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7201 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = stubborn
-				}
+				guardian_or_court_tutor_trait = { TRAIT = stubborn } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = fickle
-				}
+				guardian_or_court_tutor_2_trait = { #Unop: To match what is done in the child_personality_events.txt file
+					TRAIT = fickle
+					TRAIT_2 = eccentric
+				} 
 			}
 			modifier = {
 				add = 100
@@ -6280,26 +5960,17 @@ child_personality.7200 = {
 				is_ai = yes
 			}
 			add_character_flag = wrathful
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7201
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7201 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = wrathful
-				}
+				guardian_or_court_tutor_trait = { TRAIT = wrathful } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = calm
-				}
+				guardian_or_court_tutor_trait = { TRAIT = calm } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -6481,6 +6152,7 @@ child_personality.7201 = {
 				NOR = {
 					has_trait = stubborn
 					has_trait = fickle
+					has_trait = eccentric #Unop: eccentric is opposed to fickle & stubborn
 				}
 			}
 		}
@@ -6592,14 +6264,22 @@ child_personality.7300 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = eccentric
-					has_trait = gregarious
-					has_trait = compassionate
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = eccentric
+				TRAIT_2 = gregarious
+				TRAIT_3 = compassionate
+			}
+		}
+		modifier = { #Unop: Add missing culure modifier
+			add = 5
+			culture = {
+				has_cultural_parameter = compassionate_trait_more_common
+			}
+			NOR = {
+				has_trait = compassionate
+				has_trait = callous
+				has_trait = sadistic
 			}
 		}
 	}
@@ -6627,28 +6307,19 @@ child_personality.7300 = {
 				is_ai = yes
 			}
 			add_character_flag = eccentric
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7301
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7301 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = eccentric
-				}
+				guardian_or_court_tutor_trait = { TRAIT = eccentric } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					OR = {
-						has_trait = fickle
-						has_trait = stubborn
-					}
+				guardian_or_court_tutor_2_trait = { #Unop: To match what is done in the child_personality_events.txt file
+					TRAIT = fickle
+					TRAIT_2 = stubborn
 				}
 			}
 		}
@@ -6670,28 +6341,25 @@ child_personality.7300 = {
 				is_ai = yes
 			}
 			add_character_flag = compassionate
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7301
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7301 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = compassionate
-				}
+				guardian_or_court_tutor_trait = { TRAIT = compassionate } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					OR = {
-						has_trait = sadistic
-						has_trait = callous
-					}
+				guardian_or_court_tutor_2_trait = { #Unop: To match what is done in the child_personality_events.txt file
+					TRAIT = sadistic
+					TRAIT_2 = callous
+				}
+			}
+			modifier = { #Unop: Add missing culure modifier
+				add = 100
+				culture = {
+					has_cultural_parameter = compassionate_trait_more_common
 				}
 			}
 		}
@@ -6713,26 +6381,17 @@ child_personality.7300 = {
 				is_ai = yes
 			}
 			add_character_flag = callous
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7301
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7301 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = callous
-				}
+				guardian_or_court_tutor_trait = { TRAIT = callous } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					has_trait = compassionate
-				}
+				guardian_or_court_tutor_trait = { TRAIT = compassionate } #Unop: To match what is done in the child_personality_events.txt file
 			}
 		}
 	}
@@ -7037,14 +6696,22 @@ child_personality.7400 = {
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			add = 2
-			any_relation = {
-				type = guardian
-				OR = {
-					has_trait = eccentric
-					has_trait = stubborn
-					has_trait = fickle
-				}
+			add = 2	
+			unop_guardian_or_court_tutor_3_trait = { #Unop: Custom trigger to check the 3 traits with the guardian > tutor or guru
+				TRAIT = eccentric
+				TRAIT_2 = stubborn
+				TRAIT_3 = fickle
+			}
+		}
+		modifier = { #Unop: Add missing culure modifier
+			add = 5
+			culture = {
+				has_cultural_parameter = stubborn_trait_more_common
+			}
+			NOR = {
+				has_trait = stubborn
+				has_trait = fickle
+				has_trait = eccentric
 			}
 		}
 	}
@@ -7093,10 +6760,7 @@ child_personality.7400 = {
 				is_ai = yes
 			}
 			add_character_flag = eccentric
-			random_relation = {
-				type = guardian
-				trigger_event = { id = child_personality.7401 days = 1 }
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7401 }
 		}
 		progress_towards_friend_effect = {
 			REASON = friend_boardgames_on_horseback
@@ -7113,20 +6777,14 @@ child_personality.7400 = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = eccentric
-				}
+				guardian_or_court_tutor_trait = { TRAIT = eccentric } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					OR = {
-						has_trait = fickle
-						has_trait = stubborn
-					}
-				}
+				guardian_or_court_tutor_2_trait = { #Unop: To match what is done in the child_personality_events.txt file
+					TRAIT = fickle 
+					TRAIT_2 = stubborn
+				} 
 			}
 		}
 	}
@@ -7140,28 +6798,25 @@ child_personality.7400 = {
 				is_ai = yes
 			}
 			add_character_flag = stubborn
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7401
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7401 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = stubborn
-				}
+				guardian_or_court_tutor_trait = { TRAIT = stubborn } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					OR = {
-						has_trait = fickle
-						has_trait = eccentric
-					}
+				guardian_or_court_tutor_2_trait = { #Unop: To match what is done in the child_personality_events.txt file
+					TRAIT = fickle 
+					TRAIT_2 = eccentric
+				} 
+			}
+			modifier = { #Unop: Add missing culure modifier
+				add = 100
+				culture = {
+					has_cultural_parameter = stubborn_trait_more_common
 				}
 			}
 		}
@@ -7176,29 +6831,20 @@ child_personality.7400 = {
 				is_ai = yes
 			}
 			add_character_flag = fickle
-			random_relation = {
-				type = guardian
-				trigger_event = child_personality.7401
-			}
+			guardian_or_court_tutor_trigger_event = { EVENT = child_personality.7401 }
 		}
 		ai_chance = {
 			base = 1
 			modifier = {
 				add = 4
-				any_relation = {
-					type = guardian
-					has_trait = fickle
-				}
+				guardian_or_court_tutor_trait = { TRAIT = fickle } #Unop: To match what is done in the child_personality_events.txt file
 			}
 			modifier = {
 				add = -0.5
-				any_relation = {
-					type = guardian
-					OR = {
-						has_trait = eccentric
-						has_trait = stubborn
-					}
-				}
+				guardian_or_court_tutor_2_trait = { #Unop: To match what is done in the child_personality_events.txt file
+					TRAIT = eccentric 
+					TRAIT_2 = stubborn
+				} 
 			}
 		}
 	}

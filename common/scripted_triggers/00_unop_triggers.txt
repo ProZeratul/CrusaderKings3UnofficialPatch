@@ -959,3 +959,39 @@ unop_can_location_be_reset = {
 	NOT = { exists = involved_activity }
 	num_taken_task_contracts <= 0
 }
+
+unop_guardian_or_court_tutor_3_trait = {
+	trigger_if = {
+		limit = {
+			any_relation = {
+				type = guardian
+			}
+		}
+		any_relation = {
+			type = guardian
+			OR = {
+				has_trait = $TRAIT$
+				has_trait = $TRAIT_2$
+				has_trait = $TRAIT_3$
+			}
+		}
+	}
+	trigger_else = {
+		OR = {
+			court_owner.court_position:court_tutor_court_position ?= {
+				OR = {
+					has_trait = $TRAIT$
+					has_trait = $TRAIT_2$
+					has_trait = $TRAIT_3$
+				}
+			}
+			court_owner.court_position:court_guru_court_position ?= {
+				OR = {
+					has_trait = $TRAIT$
+					has_trait = $TRAIT_2$
+					has_trait = $TRAIT_3$
+				}
+			}
+		}
+	}
+}
