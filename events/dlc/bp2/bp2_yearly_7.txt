@@ -1614,7 +1614,8 @@ bp2_yearly.7005 = { #Wet Nurse informs you about first fallen teeth of your chil
 		}
 		random_courtier = {
 			limit = {
-				child_not_teen_trigger = yes
+				child_not_infant_trigger = yes #Unop Ensure this limit matches the trigger
+				age <= 8
 				this = root.player_heir
 				is_available_ai = yes
 				location = root.location
@@ -1625,7 +1626,8 @@ bp2_yearly.7005 = { #Wet Nurse informs you about first fallen teeth of your chil
 				}
 			}
 			alternative_limit = {
-				child_not_teen_trigger = yes
+				child_not_infant_trigger = yes #Unop Ensure this limit matches the trigger
+				age <= 8
 				NOT = {
 					any_sibling = {
 						age > prev.age
@@ -1636,13 +1638,15 @@ bp2_yearly.7005 = { #Wet Nurse informs you about first fallen teeth of your chil
 				is_child_of = root
 			}
 			alternative_limit = {
-				child_not_teen_trigger = yes
+				child_not_infant_trigger = yes #Unop Ensure this limit matches the trigger
+				age <= 8
 				is_available_ai = yes
 				location = root.location
 				is_child_of = root
 			}
 			alternative_limit = {
-				child_not_teen_trigger = yes
+				child_not_infant_trigger = yes #Unop Ensure this limit matches the trigger
+				age <= 8
 				is_available_ai = yes
 				location = root.location
 				OR = {
