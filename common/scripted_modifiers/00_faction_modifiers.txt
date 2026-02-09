@@ -1290,7 +1290,9 @@ common_faction_modifiers = {
 			}
 			scope:actor.joined_faction ?= { save_temporary_scope_as = faction }
 		}
-		confederation.leading_house.house_head.joined_faction ?= scope:faction
+		exists = scope:faction #Unop: Really make sure it exists (still needed for reasons)
+		exists = confederation.leading_house.house_head.joined_faction
+		scope:faction.faction_leader ?= confederation.leading_house.house_head
 		desc = "FACTION_REASON_BLOC_LEADER"
 	}
 	modifier = {
@@ -1303,6 +1305,7 @@ common_faction_modifiers = {
 			}
 			scope:actor.joined_faction ?= { save_temporary_scope_as = faction }
 		}
+		exists = scope:faction #Unop: Really make sure it exists (still needed for reasons)
 		has_variable = detractor_faction
 		var:detractor_faction = scope:faction.faction_target
 	}
