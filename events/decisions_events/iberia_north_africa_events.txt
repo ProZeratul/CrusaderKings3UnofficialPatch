@@ -1174,7 +1174,7 @@ iberia_north_africa.0121 = {
 		# Flag our choice.
 		save_scope_value_as = {
 			name = basque_choice
-			value = flag:righteous
+			value = flag:fundamentalist #Unop: Was flag:righteous but this is the fundamentalist option
 		}
 
 		stress_impact = {
@@ -1218,7 +1218,7 @@ iberia_north_africa.0121 = {
 		# Flag our choice.
 		save_scope_value_as = {
 			name = basque_choice
-			value = flag:fundamentalist
+			value = flag:righteous #Unop: Was flag:fundamentalist but this is the righteous option
 		}
 
 		stress_impact = {
@@ -1317,10 +1317,10 @@ iberia_north_africa.0121 = {
 	}
 
 	after = {
-		legend_seed_great_deed_faith_effect = {
-			OLD_FAITH = scope:old_faith
-			ANTAGONIST = scope:scandalised_cleric
-		}
+		#legend_seed_great_deed_faith_effect = { #Unop: Move this at the end so the legend is not the same religion on both side (since we are not yet converted)
+		#	OLD_FAITH = scope:old_faith
+		#	ANTAGONIST = scope:scandalised_cleric
+		#}
 		# Now take care of notification events for players.
 		every_player = {
 			limit = {
@@ -1341,14 +1341,14 @@ iberia_north_africa.0121 = {
 				exists = scope:basque_choice
 				scope:basque_choice = flag:fundamentalist
 			}
-			favour_the_countryside_basques_decision_righteous_path_scripted_effect = yes
+			favour_the_countryside_basques_decision_fundamentalist_path_scripted_effect = yes #Unop: Was favour_the_countryside_basques_decision_righteous_path_scripted_effect
 		}
 		else_if = {
 			limit = {
 				exists = scope:basque_choice
 				scope:basque_choice = flag:righteous
 			}
-			favour_the_countryside_basques_decision_fundamentalist_path_scripted_effect = yes
+			favour_the_countryside_basques_decision_righteous_path_scripted_effect = yes #Unop: Was favour_the_countryside_basques_decision_fundamentalist_path_scripted_effect
 		}
 		else_if = {
 			limit = {
@@ -1363,6 +1363,10 @@ iberia_north_africa.0121 = {
 				scope:basque_choice = flag:unchanged
 			}
 			favour_the_countryside_basques_decision_default_path_scripted_effect = yes
+		}
+		legend_seed_great_deed_faith_effect = { #Unop: See comment just after the after = {
+			OLD_FAITH = scope:old_faith
+			ANTAGONIST = scope:scandalised_cleric
 		}
 	}
 }
@@ -1508,7 +1512,7 @@ iberia_north_africa.0122 = {
 		show_as_tooltip = {
 			scope:religious_leader = {
 				favour_the_countryside_basques_decision_generic_effects_scripted_effect = yes
-				favour_the_countryside_basques_decision_righteous_path_scripted_effect = yes
+				favour_the_countryside_basques_decision_fundamentalist_path_scripted_effect = yes #Unop: Was righteous effect
 			}
 		}
 
@@ -1548,7 +1552,7 @@ iberia_north_africa.0122 = {
 		show_as_tooltip = {
 			scope:religious_leader = {
 				favour_the_countryside_basques_decision_generic_effects_scripted_effect = yes
-				favour_the_countryside_basques_decision_fundamentalist_path_scripted_effect = yes
+				favour_the_countryside_basques_decision_righteous_path_scripted_effect = yes #Unop: Was fundamentalist effect
 			}
 		}
 
