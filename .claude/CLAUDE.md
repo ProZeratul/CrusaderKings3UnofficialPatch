@@ -1,9 +1,12 @@
 # Crusader Kings 3 Unofficial Patch (Unop)
 
-The Crusader Kings 3 Unofficial Patch (Unop) mod fixes issues in the vanilla CK3 game.
+Crusader Kings 3 Unofficial Patch (Unop) is a CK3 mod that fixes issues in the vanilla CK3 game.
 
 GitHub: [ProZeratul/CrusaderKings3UnofficialPatch](https://github.com/ProZeratul/CrusaderKings3UnofficialPatch)
-@../README.md
+
+[@../README.md](../README.md)
+[@../.env](../.env)
+[@../ck3-tiger.conf](../ck3-tiger.conf)
 
 ## Concepts
 
@@ -11,22 +14,61 @@ GitHub: [ProZeratul/CrusaderKings3UnofficialPatch](https://github.com/ProZeratul
 
 ## Context
 
+### Basics
+
 - The mod overrides vanilla files by placing modified copies in the same relative path. Only modified vanilla files are copied to the mod.
-- Localization keys are added or changed by adding them to Unop-specific files in `localization/replace/english`. Only English localization keys are fixed by the mod.
+- Localization keys are added or changed by adding them to Unop-specific files in `localization/replace/english`. The mod contains only English localization keys.
+
+### Directories
+
+All relevant directories are in [@../.env](../.env):
+
+- `CK3_BASE_DIR`: base game root directory
+- `CK3_USER_DIR`: game user data directory (logs, settings, etc.)
+
+### Game Docs
+
+- `.info` files in the corresponding base game directory contain information on script syntax and scopes for files in that directory
+- `${CK3_USER_DIR}/logs/*.log` files contain information on builtin effects, triggers, etc.:
+  - `custom_localization.log`
+  - `effects.log`
+  - `event_scopes.log`
+  - `event_targets.log`
+  - `modifiers.log`
+  - `on_actions.log`
+  - `triggers.log`
+
+### Tiger
+
+- The `ck3-tiger` configuration is `ck3-tiger.conf`, and its output is saved to `ck3-tiger.out`.
+- The Unop file that overrides a base game file is **always** a file with the same name (for script files).
+- Unop localization `.yml` files are in `localization/replace/english`:
+  - `unop_fixed_keys_l_english.yml`: fixed vanilla keys
+  - `unop_new_keys_*_l_english.yml`: new Unop keys
 
 ## Guidelines
 
 ### General
 
+- **Never** assume that vanilla code is correct.
 - Avoid changes that can't be regarded as fixing issues but rather as additions or balance changes.
 - Always do the minimal change required to fix an issue.
 - Always adhere to the formatting of the original code in the place where the fix is introduced.
 - Avoid accidental unrelated changes, e.g. to whitespace.
+- When enclosing existing code in a scope, indent it properly.
 
 ### Style
 
 - All changes introduced by Unop should include a comment in the format `#Unop <description>` (preferred) or `#Unop: <description>` (acceptable).
 - Unneeded vanilla code should be commented out rather than deleted, with an `#Unop` comment on the first deleted line.
+
+### Ignoring Tiger Errors
+
+- Unop `ck3-tiger.conf` contains 2 different sections, use the correct one when adding rules:
+  - `# False positives`: false positives
+  - `# Ignored`: ignored
+- When adding a new rule to `ck3-tiger.conf`, group it with similar rules of the same type in that section.
+  - If there are no such rules, add it at the end.
 
 ### Validation and Testing
 
