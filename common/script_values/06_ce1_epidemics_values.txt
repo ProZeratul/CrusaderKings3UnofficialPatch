@@ -1855,24 +1855,24 @@ character_infection_chance_default_value = {
 	}
 	#How infected is your location?
 	#Follows the infection rate thresholds set for the barony/county modifiers
-	if = {
-		limit = {
-			scope:province = { epidemic_resistance > 80 }
-		}
-		multiply = 0.25
-	}
-	else_if = {
-		limit = {
-			scope:province = { epidemic_resistance > 50 }
-		}
-		multiply = 0.5
-	}
-	else_if = {
-		limit = {
-			scope:province = { epidemic_resistance > 10 }
-		}
-		multiply = 0.75
-	}
+	#if = { #Unop: Disabled since duplicated from above
+	#	limit = {
+	#		scope:province = { epidemic_resistance > 80 }
+	#	}
+	#	multiply = 0.25
+	#}
+	#else_if = {
+	#	limit = {
+	#		scope:province = { epidemic_resistance > 50 }
+	#	}
+	#	multiply = 0.5
+	#}
+	#else_if = {
+	#	limit = {
+	#		scope:province = { epidemic_resistance > 10 }
+	#	}
+	#	multiply = 0.75
+	#}
 	min = 1 # Never totally immune
 }
 
