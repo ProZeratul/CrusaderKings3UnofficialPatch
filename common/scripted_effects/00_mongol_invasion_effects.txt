@@ -1414,6 +1414,7 @@ spawn_temujins_court_effect = {
 	if = {
 		limit = {
 			is_married = no
+			NOT = { exists = character:172004 } #Unop Don't spawn a second Borte if the historical Borte exists
 		}
 		if = {
 			limit = {
@@ -10588,7 +10589,7 @@ grant_suitable_title_to_candidate_effect = {
 			trigger = {
 				exists = global_var:creatable_great_yuan
 				NOT = { exists = global_var:great_yuan_handed_out }
-				NOT = { exists = scope:great_yuan_title.holder }
+				NOT = { exists = title:e_great_yuan.holder } #Unop scope:great_yuan_title is not set here, use title directly like other entries
 			}
 			# Weight the chance by how much territory you hold there
 			modifier = {
