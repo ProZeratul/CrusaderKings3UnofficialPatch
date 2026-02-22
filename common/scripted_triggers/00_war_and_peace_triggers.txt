@@ -318,7 +318,7 @@ can_be_knight_trigger = {
 	trigger_if = { # Admin governors cannot be knights
 		limit = {
 			$ARMY_OWNER$ = { government_allows = administrative }
-			is_courtier = no
+			exists = primary_title #Unop Check rulers rather than non-courtiers so guests and pool characters can serve as knights
 		}
 		primary_title ?= {
 			tier < tier_duchy
