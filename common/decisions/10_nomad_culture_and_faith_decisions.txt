@@ -301,6 +301,7 @@ adopt_domicile_culture_decision = {
 	}
 
 	effect = {
+		culture = { save_temporary_scope_as = old_culture } #Unop Save old culture to be used later
 		set_culture = root.domicile.domicile_culture
 		stress_impact = {
 			arrogant = medium_stress_impact_gain
@@ -309,7 +310,7 @@ adopt_domicile_culture_decision = {
 		every_close_or_extended_family_member = {
 			limit = {
 				is_courtier_of = root
-				culture = root.culture
+				culture = scope:old_culture #Unop Check for the old culture instead of the new one 
 			}
 			add_to_list = spouses_and_family_to_convert
 		}
