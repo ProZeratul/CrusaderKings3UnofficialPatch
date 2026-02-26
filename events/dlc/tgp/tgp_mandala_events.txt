@@ -5,7 +5,8 @@ tgp_east_asia_mandala_events.0010 = {
 	hidden = yes
 
 	trigger = {
-		house = { has_house_head_parameter = aspect_of_creation }
+		house = { has_house_power_parameter = aspect_of_creation } #Unop aspect_of_creation is a house power parameter 
+		is_house_head = yes #Unop: And we also need to ensure current char is the house head for this
 		NOT = {
 			has_variable = mandala_house_power_accumulated_creator
 		}
@@ -120,6 +121,10 @@ scripted_trigger religious_death_reasons_trigger = {
 		death_reason = death_crucified
 		death_reason = death_crucified_by_mob
 		death_reason = death_by_buddhists
+		AND = { #Unop: Handle the ritual-suicide
+			faith = { has_doctrine_parameter = consolamentum_active }
+			death_reason = death_suicide
+		}
 	}
 }
 
