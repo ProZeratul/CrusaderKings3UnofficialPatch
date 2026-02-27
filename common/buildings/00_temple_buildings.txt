@@ -4024,7 +4024,10 @@ monastic_schools_02 = {
 	construction_time = standard_construction_time
 
 	can_construct_potential = {
-		has_building_or_higher = temple_01
+		OR = { #Unop: Check for TGP preservation tenet
+			has_building_or_higher = temple_01
+			scope:holder.faith = { has_doctrine_parameter = monastic_schools_allowed_in_every_holding_type }
+		}
 		trigger_if = { #Unop: To display that the player lack "city planning" innovation in the tooltip (instead of being empty)
 			limit = {				
 				culture = {
@@ -4108,7 +4111,13 @@ monastic_schools_03 = {
 			culture = {
 				has_innovation = innovation_manorialism
 			}
-			has_building_or_higher = temple_02
+			OR = { #Unop: Check for TGP preservation tenet(and holding level)
+				has_building_or_higher = temple_02
+				AND = {
+					scope:holder.faith = { has_doctrine_parameter = monastic_schools_allowed_in_every_holding_type }
+					building_requirement_castle_city_church = { LEVEL = 02 }
+				}
+			}
 		}
 		trigger_else = {
 			culture = {
@@ -4117,7 +4126,10 @@ monastic_schools_03 = {
 			culture = {
 				has_cultural_parameter = next_level_monasteries
 			}
-			has_building_or_higher = temple_01
+			OR = { #Unop: Check for TGP preservation tenet
+				has_building_or_higher = temple_01
+				scope:holder.faith = { has_doctrine_parameter = monastic_schools_allowed_in_every_holding_type }
+			}
 		}
 	}
 
@@ -4189,7 +4201,13 @@ monastic_schools_04 = {
 			culture = {
 				has_innovation = innovation_manorialism
 			}
-			has_building_or_higher = temple_02
+			OR = { #Unop: Check for TGP preservation tenet(and holding level)
+				has_building_or_higher = temple_02
+				AND = {
+					scope:holder.faith = { has_doctrine_parameter = monastic_schools_allowed_in_every_holding_type }
+					building_requirement_castle_city_church = { LEVEL = 02 }
+				}
+			}
 		}
 		trigger_else = {
 			culture = {
@@ -4198,7 +4216,10 @@ monastic_schools_04 = {
 			culture = {
 				has_cultural_parameter = next_level_monasteries
 			}
-			has_building_or_higher = temple_01
+			OR = { #Unop: Check for TGP preservation tenet
+				has_building_or_higher = temple_01
+				scope:holder.faith = { has_doctrine_parameter = monastic_schools_allowed_in_every_holding_type }
+			}
 		}
 	}
 
@@ -4270,7 +4291,13 @@ monastic_schools_05 = {
 			culture = {
 				has_innovation = innovation_windmills
 			}
-			has_building_or_higher = temple_03
+			OR = { #Unop: Check for TGP preservation tenet(and holding level)
+				has_building_or_higher = temple_03
+				AND = {
+					scope:holder.faith = { has_doctrine_parameter = monastic_schools_allowed_in_every_holding_type }
+					building_requirement_castle_city_church = { LEVEL = 03 }
+				}
+			}
 		}
 		trigger_else = {
 			culture = {
@@ -4279,7 +4306,13 @@ monastic_schools_05 = {
 			culture = {
 				has_cultural_parameter = next_level_monasteries
 			}
-			has_building_or_higher = temple_02
+			OR = { #Unop: Check for TGP preservation tenet(and holding level)
+				has_building_or_higher = temple_02
+				AND = {
+					scope:holder.faith = { has_doctrine_parameter = monastic_schools_allowed_in_every_holding_type }
+					building_requirement_castle_city_church = { LEVEL = 02 }
+				}
+			}
 		}
 	}
 
@@ -4351,7 +4384,13 @@ monastic_schools_06 = {
 			culture = {
 				has_innovation = innovation_windmills
 			}
-			has_building_or_higher = temple_03
+			OR = { #Unop: Check for TGP preservation tenet(and holding level)
+				has_building_or_higher = temple_03
+				AND = {
+					scope:holder.faith = { has_doctrine_parameter = monastic_schools_allowed_in_every_holding_type }
+					building_requirement_castle_city_church = { LEVEL = 03 }
+				}
+			}
 		}
 		trigger_else = {
 			culture = {
@@ -4360,7 +4399,13 @@ monastic_schools_06 = {
 			culture = {
 				has_cultural_parameter = next_level_monasteries
 			}
-			has_building_or_higher = temple_02
+			OR = { #Unop: Check for TGP preservation tenet(and holding level)
+				has_building_or_higher = temple_02
+				AND = {
+					scope:holder.faith = { has_doctrine_parameter = monastic_schools_allowed_in_every_holding_type }
+					building_requirement_castle_city_church = { LEVEL = 02 }
+				}
+			}
 		}
 	}
 
@@ -4432,7 +4477,13 @@ monastic_schools_07 = {
 			culture = {
 				has_innovation = innovation_cranes
 			}
-			has_building_or_higher = temple_04
+			OR = { #Unop: Check for TGP preservation tenet(and holding level)
+				has_building_or_higher = temple_04
+				AND = {
+					scope:holder.faith = { has_doctrine_parameter = monastic_schools_allowed_in_every_holding_type }
+					building_requirement_castle_city_church = { LEVEL = 04 }
+				}
+			}
 		}
 		trigger_else = {
 			culture = {
@@ -4441,7 +4492,13 @@ monastic_schools_07 = {
 			culture = {
 				has_cultural_parameter = next_level_monasteries
 			}
-			has_building_or_higher = temple_03
+			OR = { #Unop: Check for TGP preservation tenet(and holding level)
+				has_building_or_higher = temple_03
+				AND = {
+					scope:holder.faith = { has_doctrine_parameter = monastic_schools_allowed_in_every_holding_type }
+					building_requirement_castle_city_church = { LEVEL = 03 }
+				}
+			}
 		}
 	}
 
@@ -4513,7 +4570,13 @@ monastic_schools_08 = {
 			culture = {
 				has_innovation = innovation_cranes
 			}
-			has_building_or_higher = temple_04
+			OR = { #Unop: Check for TGP preservation tenet(and holding level)
+				has_building_or_higher = temple_04
+				AND = {
+					scope:holder.faith = { has_doctrine_parameter = monastic_schools_allowed_in_every_holding_type }
+					building_requirement_castle_city_church = { LEVEL = 04 }
+				}
+			}
 		}
 		trigger_else = {
 			culture = {
@@ -4522,7 +4585,13 @@ monastic_schools_08 = {
 			culture = {
 				has_cultural_parameter = next_level_monasteries
 			}
-			has_building_or_higher = temple_03
+			OR = { #Unop: Check for TGP preservation tenet(and holding level)
+				has_building_or_higher = temple_03
+				AND = {
+					scope:holder.faith = { has_doctrine_parameter = monastic_schools_allowed_in_every_holding_type }
+					building_requirement_castle_city_church = { LEVEL = 03 }
+				}
+			}
 		}
 	}
 
