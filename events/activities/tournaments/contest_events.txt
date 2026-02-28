@@ -16,7 +16,10 @@ scripted_effect contest_winner_dedicate_victory_effect = {
 				opinion = 10
 			}
 			if = {
-				limit = { exists = intent_target.primary_spouse }
+				limit = { #Unop Prevent self-opinion
+					exists = intent_target.primary_spouse
+					intent_target.primary_spouse != scope:contest_winner
+				}
 				reverse_add_opinion = {
 					target = intent_target.primary_spouse
 					modifier = woo_attendee_spouse_contest_opinion
