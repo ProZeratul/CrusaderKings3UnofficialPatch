@@ -4984,20 +4984,27 @@ diarch_coup_liege_interaction = {
 	# First, grab every other powerful vassal of your liege & plonk them in a list.
 	populate_recipient_list = {
 		scope:actor.liege = {
-			every_powerful_vassal = {
+			if = { #Unop Populate either powerful vassals or powerful family heads, consistent with other triggers
 				limit = {
-					this != scope:actor
+					scope:recipient = { NOT = { government_has_flag = government_has_powerful_families } }
 				}
-				add_to_list = characters
-			}
-			every_powerful_family = {
-				limit = {
-					NOR = {
-						house_head = scope:actor
-						house_head = scope:recipient
+				every_powerful_vassal = {
+					limit = {
+						this != scope:actor
 					}
+					add_to_list = characters
 				}
-				house_head = { add_to_list = characters }
+			}
+			else = {
+				every_powerful_family = {
+					limit = {
+						NOR = {
+							house_head = scope:actor
+							house_head = scope:recipient
+						}
+					}
+					house_head = { add_to_list = characters }
+				}
 			}
 		}
 	}
@@ -5032,9 +5039,12 @@ diarch_coup_liege_interaction = {
 		## More complex triggers don't generally work because redirect brings the interaction back to targeting the liege as scope:recipient, so we're left with this.
 		### Don't try to improve it, it's not worth it, but if you _do_, then test your changes thoroughly.
 		#### When this breaks (which it does easily), it tends to mean the interaction shows up as valid against _every_ other character in diplomatic range.
-		OR = {
+		AND = { #Unop Ensure the interaction is only shown for peer vassals, yourself, and your liege
 			scope:recipient = scope:actor.liege
-			scope:secondary_recipient.liege ?= scope:actor.liege
+			trigger_if = {
+				limit = { exists = scope:secondary_recipient }
+				scope:secondary_recipient.liege ?= scope:actor.liege
+			}
 		}
 	}
 
@@ -5117,6 +5127,7 @@ diarch_coup_liege_interaction = {
 				scope:recipient = { government_has_flag = government_has_powerful_families }
 			}
 			scope:secondary_recipient.house = { is_powerful_family = yes }
+			scope:secondary_recipient = { is_house_head = yes } #Unop Only invite powerful family heads, consistent with other triggers
 		}
 		trigger_else = {
 			scope:secondary_recipient = { is_powerful_vassal = yes }

@@ -3728,7 +3728,10 @@ pv_overthrow_threshold_value = {
 	value = 0
 	# Grab our sum total of powerful vassals.
 	liege = {
-		every_powerful_vassal = { add = 1 }
+		every_vassal = { #Unop Check powerful family heads in addition to powerful vassals
+			limit = { unop_is_coup_powerful_vassal_trigger = yes }
+			add = 1
+		}
 	}
 	# Halve it.
 	multiply = 0.5
@@ -3738,7 +3741,7 @@ pv_overthrow_threshold_value = {
 	add = 1
 	# ... but then subtract one if we're a powerful vassal, since we _won't_ be in the list but, naturally, support the coup.
 	if = {
-		limit = { is_powerful_vassal = yes }
+		limit = { unop_is_coup_powerful_vassal_trigger = yes } #Unop Check powerful family heads in addition to powerful vassals
 		add = -1
 	}
 }
@@ -3748,7 +3751,8 @@ pv_overthrow_tally_value = {
 	every_in_list = {
 		variable = coup_pv_supporters_list
 		limit = {
-			is_powerful_vassal_of = root.liege
+			is_vassal_of = root.liege #Unop Check powerful family heads in addition to powerful vassals
+			unop_is_coup_powerful_vassal_trigger = yes
 			is_alive = yes
 		}
 		add = 1
@@ -3760,7 +3764,7 @@ pv_overthrow_threshold_display_value = {
 	value = pv_overthrow_threshold_value
 	# ... but then add back the one if we're a powerful vassal, since we _won't_ be in the list but, naturally, support the coup.
 	if = {
-		limit = { is_powerful_vassal = yes }
+		limit = { unop_is_coup_powerful_vassal_trigger = yes } #Unop Check powerful family heads in addition to powerful vassals
 		add = 1
 	}
 }
@@ -3770,7 +3774,7 @@ pv_overthrow_tally_display_value = {
 	# ... and remember to add one if we're a powerful vassal, since we _won't_ be in the list but, naturally, support the coup.
 	## We have to separate out the values like this, since the actual list checks powerful vassals and we're not actually in it.
 	if = {
-		limit = { is_powerful_vassal = yes }
+		limit = { unop_is_coup_powerful_vassal_trigger = yes } #Unop Check powerful family heads in addition to powerful vassals
 		add = 1
 	}
 }
