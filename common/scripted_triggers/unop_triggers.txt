@@ -1,0 +1,13 @@
+﻿# Used in pv_overthrow_threshold_value and pv_overthrow_tally_value instead of is_powerful_vassal for consistency with interaction conditions
+unop_is_coup_powerful_vassal_trigger = {
+	trigger_if = {
+		limit = {
+			liege = { government_has_flag = government_has_powerful_families }
+		}
+		house ?= { is_powerful_family = yes }
+		is_house_head = yes
+	}
+	trigger_else = {
+		is_powerful_vassal = yes
+	}
+}
