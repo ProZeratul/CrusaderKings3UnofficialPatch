@@ -1904,21 +1904,18 @@ select_thriving_predator_animal_effect = {
 		}
 		# Wolf, Hyena, Lynx
 		10 = {
+			trigger = { #Unop: Missing trigger, potentially setting nothing if all 3 where impossible to spawn
+				OR = {
+					$LOCATION$ = { hunt_animal_wolf_trigger = yes }
+					$LOCATION$ = { hunt_animal_hyena_trigger = yes }
+					$LOCATION$ = { hunt_animal_lynx_trigger = yes }
+				}
+			}
 			random_list = {
 				# Wolf
 				10 = {
 					trigger = {
-						$LOCATION$ = {
-							NAND = {
-								geographical_region = world_africa_west
-								OR = {
-									terrain = hills
-									terrain = forest
-									terrain = jungle
-									terrain = mountains
-								}
-							}
-						}
+						$LOCATION$ = { hunt_animal_wolf_trigger = yes } #Unop: Replace trigger with the existing one
 					}
 					set_variable = {
 						name = animal_type_event
