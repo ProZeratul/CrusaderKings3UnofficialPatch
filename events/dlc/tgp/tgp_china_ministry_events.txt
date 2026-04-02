@@ -76,55 +76,10 @@ tgp_china_ministry.0001 = {
 		}
 	}
 	after = {
-		#bring in all relevant defenders
-		scope:target_title = {
-			every_in_de_jure_hierarchy = {
-				holder ?= {
-					if = {
-						limit = {
-							this = scope:defender
-							top_overlord != scope:owner
-							NOT = {
-								any_character_war = {
-									this = scope:grand_campaign_war
-								}
-							}
-						}
-						add_to_list = holders_to_join
-					}
-				}
-			}
-		}
-		every_in_list = {
-			list = holders_to_join
-			scope:grand_campaign_war ?= {
-				add_defender = prev
-			}
-		}
+		grand_campaign_update_war_participants_effect = yes
 		scope:owner = {
 			if = {
-				limit = {
-					this != root
-				}
-				trigger_event = tgp_china_ministry.0007
-			}
-		}
-		scope:contributor = {
-			scope:grand_campaign_war ?= {
-				if = {
-					limit = {
-						any_war_attacker = {
-							this != scope:contributor
-						}
-					}
-					add_attacker = prev
-				}
-			}
-			if = {
-				limit = {
-					this != root
-					this != scope:owner
-				}
+				limit = { this != root }
 				trigger_event = tgp_china_ministry.0007
 			}
 		}
@@ -235,50 +190,13 @@ tgp_china_ministry.0004 = {
 			save_scope_as = grand_campaign_war
 			if = {
 				limit = {
-					any_war_attacker = {
-						this != scope:contributor
+					scope:contributor = {
+						NOT = {
+							any_character_war = { this = prev }
+						}
 					}
 				}
 				add_attacker = scope:contributor
-			}
-		}
-		scope:target_title = {
-			every_in_de_jure_hierarchy = {
-				holder ?= {
-					if = {
-						limit = {
-							is_independent_ruler = yes
-                            NOR = {
-                            	government_allows = redirects_wars_to_overlord
-								this = scope:owner
-								top_overlord = scope:owner
-								any_character_war = {
-									this = scope:grand_campaign_war
-								}
-							}
-						}
-						add_to_list = holders_to_join
-					}
-				}
-			}
-			if = {
-				limit = {
-					exists = holder
-				}
-				holder = {
-					save_scope_as = title_holder
-				}
-			}
-			else = {
-				de_jure_liege.holder = {
-					save_scope_as = title_holder
-				}
-			}
-		}
-		every_in_list = {
-			list = holders_to_join
-			scope:grand_campaign_war = {
-				add_defender = prev
 			}
 		}
 		add_character_modifier = {
@@ -374,17 +292,11 @@ tgp_china_ministry.0005 = {
 	}
 
 	option = {
-		name = { #Unop: Fix the lost yml showing even when you win
-			text = {
-				first_valid = {
-					triggered_desc = { 
-						trigger = { list_size:titles_won >= list_size:titles_lost }
-						desc = tgp_china_ministry.0005.a_win
-					}
-					desc = tgp_china_ministry.0005.a_lost
-				}
-			}
+		name = {
+			trigger = { list_size:titles_won >= list_size:titles_lost }
+			text = tgp_china_ministry.0005.a_win
 		}
+		name = tgp_china_ministry.0005.a_lost
 		if = {
 			limit = {
 				list_size:titles_won >= list_size:titles_lost
@@ -556,17 +468,11 @@ tgp_china_ministry.0008 = {
 	}
 
 	option = {
-		name = { #Unop: Fix the lost yml showing even when you win
-			text = {
-				first_valid = {
-					triggered_desc = { 
-						trigger = { list_size:titles_won >= list_size:titles_lost }
-						desc = tgp_china_ministry.0005.a_win
-					}
-					desc = tgp_china_ministry.0005.a_lost
-				}
-			}
+		name = {
+			trigger = { list_size:titles_won >= list_size:titles_lost }
+			text = tgp_china_ministry.0005.a_win
 		}
+		name = tgp_china_ministry.0005.a_lost
 		show_as_tooltip = {
 			scope:owner = {
 				if = {
@@ -664,7 +570,6 @@ tgp_china_ministry.0100 = {
 			animation = fanning
 		}
 		animation = steward
-		camera = camera_event_center_pointing_right
 	}
 	right_portrait = {
 		character = scope:steward

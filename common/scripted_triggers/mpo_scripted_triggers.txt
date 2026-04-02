@@ -2,6 +2,18 @@
 # TRIGGER LIST 									#
 #################################################
 
+eligible_for_mpo_nomad_legacy_trigger = {
+	has_mpo_dlc_trigger = yes
+	dynasty = {
+		OR = {
+			dynast = {
+				government_has_flag = government_is_nomadic
+			}
+			has_dynasty_perk = mpo_nomad_legacy_1
+		}
+	}
+}
+
 valid_confederation_member_trigger = {
 	is_playable_character = yes
 	is_tributary = no
@@ -43,7 +55,7 @@ valid_confederation_member_trigger = {
 	is_confederation_member = no
 }
 
-confedration_foe_sub_trigger = {
+confederation_foe_sub_trigger = {
 	NOT = { is_allied_to = $CHARACTER$ }
 	OR = {
 		has_trait = conqueror
@@ -88,27 +100,27 @@ confederation_foe_trigger = {
 				kingdom = {
 					any_de_jure_county = {
 						holder.top_liege = {
-							confedration_foe_sub_trigger = { CHARACTER = $CHARACTER$ }
+							confederation_foe_sub_trigger = { CHARACTER = $CHARACTER$ }
 						}
 					}
 				}
 			}
 			#Threat borders you or your tributaries
 			any_land_neighboring_realm_with_tributaries_owner = {
-				confedration_foe_sub_trigger = { CHARACTER = $CHARACTER$ }
+				confederation_foe_sub_trigger = { CHARACTER = $CHARACTER$ }
 			}
 			#You border threat's direct tributaries
 			any_land_neighboring_realm_with_tributaries_owner = {
 				exists = suzerain
 				suzerain = {
-					confedration_foe_sub_trigger = { CHARACTER = $CHARACTER$ }
+					confederation_foe_sub_trigger = { CHARACTER = $CHARACTER$ }
 				}
 			}
 			#You border threat's lower level tributaries
 			any_land_neighboring_realm_with_tributaries_owner = {
 				is_tributary = yes
 				top_suzerain = {
-					confedration_foe_sub_trigger = { CHARACTER = $CHARACTER$ }
+					confederation_foe_sub_trigger = { CHARACTER = $CHARACTER$ }
 				}
 			}
 		}
@@ -121,20 +133,20 @@ confederation_neighboring_foe_trigger = {
 	OR = {
 		#Threat borders you or your tributaries
 		any_land_neighboring_realm_with_tributaries_owner = {
-			confedration_foe_sub_trigger = { CHARACTER = $CHARACTER$ }
+			confederation_foe_sub_trigger = { CHARACTER = $CHARACTER$ }
 		}
 		#You border threat's direct tributaries
 		any_land_neighboring_realm_with_tributaries_owner = {
 			exists = suzerain
 			suzerain = {
-				confedration_foe_sub_trigger = { CHARACTER = $CHARACTER$ }
+				confederation_foe_sub_trigger = { CHARACTER = $CHARACTER$ }
 			}
 		}
 		#You border threat's lower level tributaries
 		any_land_neighboring_realm_with_tributaries_owner = {
 			is_tributary = yes
 			top_suzerain = {
-				confedration_foe_sub_trigger = { CHARACTER = $CHARACTER$ }
+				confederation_foe_sub_trigger = { CHARACTER = $CHARACTER$ }
 			}
 		}
 	}
@@ -616,7 +628,7 @@ mpo_overrunning_willing_vassal_trigger = {
 	}
 	highest_held_title_tier >= tier_county
 	government_has_flag = government_is_nomadic
-	highest_held_title_tier < tier_kingdom
+	highest_held_title_tier < tier_duchy
 	NOT = { government_has_flag = government_is_herder }
 }
 
@@ -629,13 +641,8 @@ is_tsagaan_sar = {
 	}
 }
 has_eligible_artifact_trigger = {
-    any_artifact = {
-        artifact_owner = root
-        NOR = {
-            has_variable = banner_house
-            has_variable = banner_dynasty
-            has_variable = 1025_treasure_map
-        }
+    any_character_artifact = {
+       	artifact_can_be_gift_advance_trigger = yes
         count >= 2
     }
 }
@@ -649,15 +656,7 @@ can_gift_anything_trigger = {
                 domicile ?= { herd < max_herd }
             }
         }
-       any_artifact = {
-			artifact_owner = root
-			NOR = {
-				has_variable = banner_house
-				has_variable = banner_dynasty
-				has_variable = 1025_treasure_map
-			}
-			count >= 2
-		}
+		has_eligible_artifact_trigger = yes
     }
 }
 
@@ -1396,26 +1395,12 @@ mpo_blood_brother_loving_trigger = {
 }
 
 has_bad_season_nomadic_capital_root_trigger = {
-	root ?= { #Unop ck3-tiger Make this a proper root capital county trigger
-		any_character_situation = {
-			OR = {
-				any_situation_sub_region = {
-					sub_region_current_phase = situation_steppe_white_zud_season
-					situation_sub_region_has_county = root.capital_county
-				}
-				any_situation_sub_region = {
-					sub_region_current_phase = situation_steppe_cold_zud_season
-					situation_sub_region_has_county = root.capital_county
-				}
-				any_situation_sub_region = {
-					sub_region_current_phase = situation_steppe_severe_drought_season
-					situation_sub_region_has_county = root.capital_county
-				}
-				any_situation_sub_region = {
-					sub_region_current_phase = situation_steppe_havsarsan_zud_season
-					situation_sub_region_has_county = root.capital_county
-				}
-			}
+	any_county_situation_sub_region = {
+		OR = {
+			sub_region_current_phase = situation_steppe_white_zud_season
+			sub_region_current_phase = situation_steppe_cold_zud_season
+			sub_region_current_phase = situation_steppe_severe_drought_season
+			sub_region_current_phase = situation_steppe_havsarsan_zud_season
 		}
 	}
 }
@@ -1488,26 +1473,12 @@ has_bad_season_nomadic_capital_character_trigger = {
 }
 
 has_bad_season_in_county_trigger = {
-	$COUNTY$ = { #Unop ck3-tiger Make this a proper county trigger
-		any_county_situation = {
-			OR = {
-				any_situation_sub_region = {
-					sub_region_current_phase = situation_steppe_white_zud_season
-					situation_sub_region_has_county = $COUNTY$
-				}
-				any_situation_sub_region = {
-					sub_region_current_phase = situation_steppe_cold_zud_season
-					situation_sub_region_has_county = $COUNTY$
-				}
-				any_situation_sub_region = {
-					sub_region_current_phase = situation_steppe_severe_drought_season
-					situation_sub_region_has_county = $COUNTY$
-				}
-				any_situation_sub_region = {
-					sub_region_current_phase = situation_steppe_havsarsan_zud_season
-					situation_sub_region_has_county = $COUNTY$
-				}
-			}
+	any_county_situation_sub_region = {
+		OR = {
+			sub_region_current_phase = situation_steppe_white_zud_season
+			sub_region_current_phase = situation_steppe_cold_zud_season
+			sub_region_current_phase = situation_steppe_severe_drought_season
+			sub_region_current_phase = situation_steppe_havsarsan_zud_season
 		}
 	}
 }
@@ -1556,23 +1527,11 @@ has_good_season_nomadic_capital_character_trigger = {
 }
 
 has_good_season_in_county_trigger = {
-	$COUNTY$ = { #Unop ck3-tiger Make this a proper county trigger
-		any_county_situation = {
-			OR = {
-				any_situation_sub_region = {
-					sub_region_current_phase = situation_steppe_abundant_grazing_season
-					situation_sub_region_has_county = $COUNTY$
-				}
-				any_situation_sub_region = {
-					sub_region_current_phase = situation_steppe_warm_nights_season
-					situation_sub_region_has_county = $COUNTY$
-				}
-				any_situation_sub_region = {
-					sub_region_current_phase = situation_steppe_sky_blessing_season
-					situation_sub_region_has_county = $COUNTY$
-				
-				}
-			}
+	any_county_situation_sub_region = {
+		OR = {
+			sub_region_current_phase = situation_steppe_abundant_grazing_season
+			sub_region_current_phase = situation_steppe_warm_nights_season
+			sub_region_current_phase = situation_steppe_sky_blessing_season
 		}
 	}
 }
@@ -1899,3 +1858,197 @@ county_ready_for_abuse_trigger = {
 	}
 }
 
+mpo_nomad_invasion_war_ai_trigger = {
+	OR = {
+		has_realm_law = nomadic_authority_3
+		has_realm_law = nomadic_authority_4
+		has_realm_law = nomadic_authority_5
+	}
+	is_independent_ruler = yes
+	is_at_war = no
+	gold > 0
+	NOT = {
+		has_realm_law = uncrowned
+	}
+	OR = {
+		#China is in division
+		AND = {
+			situation:dynastic_cycle ?= { situation_current_phase = situation_dynastic_cycle_phase_chaos }
+			NOT = {
+				exists = title:h_china.holder
+			}
+			capital_province = {
+				geographical_region = world_steppe_east
+			}
+		}
+		#Byzantium or China are actually somehow a viable target
+		title:e_byzantium.holder ?= {
+			in_diplomatic_range = $NOMAD$
+			NOR = {
+				has_any_good_relationship_with_character_trigger = { CHARACTER = $NOMAD$ }
+				is_allied_to = $NOMAD$
+				is_tributary_of = $NOMAD$
+				$NOMAD$ = {
+					is_tributary_of_suzerain_or_above = prev
+				}
+				$NOMAD$ = {
+					has_truce = prev
+				}
+			}
+			#Fulfills strength comparison
+			current_military_strength < $NOMAD$.seventy_percent_of_current_military_strength
+			OR = {
+				gold <= $NOMAD$.fifty_percent_of_current_gold
+				current_military_strength <= $NOMAD$.forty_percent_of_current_military_strength
+			}
+		}
+		title:h_china.holder ?= {
+			in_diplomatic_range = $NOMAD$
+			NOR = {
+				has_any_good_relationship_with_character_trigger = { CHARACTER = $NOMAD$ }
+				is_allied_to = $NOMAD$
+				is_tributary_of = $NOMAD$
+				$NOMAD$ = {
+					is_tributary_of_suzerain_or_above = prev
+				}
+				$NOMAD$ = {
+					has_truce = prev
+				}
+			}
+			#Fulfills strength comparison
+			current_military_strength < $NOMAD$.seventy_percent_of_current_military_strength
+			OR = {
+				gold <= $NOMAD$.fifty_percent_of_current_gold
+				current_military_strength <= $NOMAD$.forty_percent_of_current_military_strength
+			}
+		}
+		# Havsaran zud? Leave the steppe!
+		capital_county ?= {
+			any_county_situation_sub_region = {
+				sub_region_current_phase = situation_steppe_havsarsan_zud_season
+			}
+		}
+		#Landless and heavily herded
+		AND = {
+			is_landed = no
+			domicile.herd >= 8000
+		}
+		#Family has held title without ascendance for a while
+		AND = {
+			ai_energy > low_negative_ai_value
+			is_gurkhan = no
+			sub_realm_size <= 30
+			domicile ?= { herd <= two_thirds_max_herd_value }
+			
+			exists = $NOMAD$.house
+			primary_title = {
+				previous_holder ?= {
+					house ?= $NOMAD$.house
+				}
+				any_past_holder = {
+					count >= 2
+					NOT = {
+						this = $NOMAD$
+					}
+					house ?= $NOMAD$.house
+					trigger_if = {
+						limit = {
+							is_alive = no
+						}
+						time_since_death = {
+							years <= 120
+						}
+					}
+				}
+			}
+		}
+		#Is "pushed out" by stronger neighbor
+		AND = {
+			ai_vengefulness < low_positive_ai_value
+			is_gurkhan = no
+			any_neighboring_realm_with_tributaries_owner = {
+				NOT = { is_tributary_of_suzerain_or_above = $NOMAD$ }
+				OR = {
+					#Is personally scary
+					AND = {
+						government_has_flag = government_is_nomadic
+						seventy_percent_of_current_military_strength >= $NOMAD$.current_military_strength
+						NOR = {
+							is_allied_to = $NOMAD$
+							has_truce = $NOMAD$
+						}
+					}
+					#Suzerain is scary
+					AND = {
+						is_tributary = yes
+						top_suzerain = {
+							NOT = { this = $NOMAD$ }
+							government_has_flag = government_is_nomadic
+							seventy_percent_of_current_military_strength > $NOMAD$.current_military_strength
+							NOR = {
+								is_tributary_of = $NOMAD$
+								is_allied_to = $NOMAD$
+								has_truce = $NOMAD$
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+mpo_nomad_duchy_invasion_war_ai_trigger = {
+	is_independent_ruler = yes
+	is_at_war = no
+	gold > 0
+	NOT = {
+		has_realm_law = uncrowned
+	}
+	has_realm_law = nomadic_authority_2
+	OR = {
+		#China is in division
+		AND = {
+			situation:dynastic_cycle ?= { situation_current_phase = situation_dynastic_cycle_phase_chaos }
+			NOT = {
+				exists = title:h_china.holder
+			}
+		}
+		# Havsaran zud? Leave the steppe!
+		capital_county ?= {
+			any_county_situation_sub_region = {
+				sub_region_current_phase = situation_steppe_havsarsan_zud_season
+			}
+		}
+		#Landless and heavily herded
+		AND = {
+			is_landed = no
+			domicile.herd >= 4000
+		}
+		#Family has held title without ascendance for a while
+		AND = {
+			ai_energy >= 0
+			is_gurkhan = no
+			sub_realm_size <= 3
+			domicile ?= { herd <= two_thirds_max_herd_value }
+			
+			exists = $NOMAD$.house
+			primary_title = {
+				previous_holder ?= {
+					house ?= $NOMAD$.house
+				}
+				any_past_holder = {
+					count >= 2
+					this != $NOMAD$
+					house ?= $NOMAD$.house
+					OR = {
+						is_alive = yes
+						time_since_death = {
+							years <= 120
+						}
+					}
+				}
+			}
+		}
+	}
+}

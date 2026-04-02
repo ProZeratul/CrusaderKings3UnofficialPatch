@@ -1969,6 +1969,10 @@ obedience_value = {
 			if = { # Larger Herd
 				limit = {
 					government_has_flag = government_has_herd
+					obedience_target = {
+						government_has_flag = government_has_herd
+						exists = domicile
+					}
 					exists = domicile
 					domicile.herd >= 100
 					domicile.herd > obedience_target.domicile.herd
@@ -3014,4 +3018,22 @@ confederation_military_power_half = {
 confederation_military_power_three_quarters = {
 	value = confederation_military_power
 	multiply = 0.75
+}
+
+two_thirds_max_herd_value = {
+	value = max_herd
+	multiply = 0.66
+}
+nomad_invasion_cb_prestige_cost = {
+	add = {
+		value = 2000
+		desc = CB_BASE_COST
+	}
+	multiply = common_cb_prestige_cost_multiplier
+	if = {
+		limit = {
+			scope:attacker = { is_ai = yes }
+		}
+		multiply = 0.5
+	}
 }

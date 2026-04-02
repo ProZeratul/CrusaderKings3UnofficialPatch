@@ -1697,6 +1697,7 @@ agent_events.0031 = {
 				custom = custom.every_scheme_agent_character
 				limit = {
 					this != scope:char_1
+					is_alive = yes
 				}
 				add_opinion = {
 					target = root
@@ -2969,7 +2970,20 @@ agent_events.2021 = {
 			random_scheme_agent_character = {
 				limit = { agent_events_2021_valid_competing_agents_trigger = yes }
 				scope:char_temp = { save_scope_as = agent_1 }
-				scope:char_temp_2 = { save_scope_as = agent_2 }
+			}
+			random_scheme_agent_character = {
+				limit = {
+					number_of_opposing_traits = {
+						target = scope:agent_1
+						value >= 2
+					}
+					# Don't grab anyone above a potential, since we might gradiate the relationship here.
+					NOR = {
+						has_any_moderate_good_relationship_with_character_trigger = { CHARACTER = scope:agent_1 }
+						has_any_moderate_bad_relationship_with_character_trigger = { CHARACTER = scope:agent_1 }
+					}
+				}
+				save_scope_as = agent_2
 			}
 		}
 		# Add a little mutual respect.

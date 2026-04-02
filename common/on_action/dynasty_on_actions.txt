@@ -1,4 +1,4 @@
-﻿on_dynasty_created = {
+on_dynasty_created = {
 	effect = {
 		if = {
 			limit = { dynast = { has_trait = bastard } }
@@ -53,7 +53,7 @@ on_became_house_head = {
 			#Set up the Serenity modifier
 			house = {
 				if = {
-					limit = { has_house_power_parameter = aspect_of_serenity }
+					limit = { has_house_aspiration_parameter = aspect_of_serenity }
 					if = {
 						limit = { has_house_head_parameter = peaceful_rule_yearly_modifier }
 						house_head = {
@@ -120,7 +120,7 @@ on_became_house_head = {
 			#Set up the Creation modifier
 			house = {
 				if = {
-					limit = { has_house_power_parameter = aspect_of_creation }
+					limit = { has_house_aspiration_parameter = aspect_of_creation }
 					if = {
 						limit = { has_house_head_parameter = creator_30_year_modifier }
 						house_head = {
@@ -292,36 +292,36 @@ on_house_aspiration_upgraded = {
 			#Completion memory
 			if = {
 				limit = {
-					house = { #Unop Use correct scope for has_house_power_parameter
+					house ?= {
 						OR = {
-							has_house_power_parameter = aspect_of_creation_05
-							has_house_power_parameter = aspect_of_serenity_05
-							has_house_power_parameter = aspect_of_destruction_05
-							has_house_power_parameter = aspect_of_trickery_05
+							has_house_aspiration_parameter = aspect_of_creation_05
+							has_house_aspiration_parameter = aspect_of_serenity_05
+							has_house_aspiration_parameter = aspect_of_destruction_05
+							has_house_aspiration_parameter = aspect_of_trickery_05
 						}
 					}
 				}
 				if = {
 					limit = {
-						house = { has_house_power_parameter = aspect_of_creation_05 }
+						house = { has_house_aspiration_parameter = aspect_of_creation_05 }
 					}
 					create_character_memory = { type = completed_creation_aspect_memory }
 				}
 				if = {
 					limit = {
-						house = { has_house_power_parameter = aspect_of_serenity_05 }
+						house = { has_house_aspiration_parameter = aspect_of_serenity_05 }
 					}
 					create_character_memory = { type = completed_serenity_aspect_memory }
 				}
 				if = {
 					limit = {
-						house = { has_house_power_parameter = aspect_of_destruction_05 }
+						house = { has_house_aspiration_parameter = aspect_of_destruction_05 }
 					}		
 					create_character_memory = { type = completed_destruction_aspect_memory }
 				}
 				if = {
 					limit = {
-						house = { has_house_power_parameter = aspect_of_trickery_05 }
+						house = { has_house_aspiration_parameter = aspect_of_trickery_05 }
 					}	
 					create_character_memory = { type = completed_trickery_aspect_memory }
 				}
@@ -329,36 +329,36 @@ on_house_aspiration_upgraded = {
 			#Upgrade memory
 			else_if = {
 				limit = {
-					house = { #Unop Use correct scope for has_house_power_parameter
+					house ?= {
 						NOR = {
-							has_house_power_parameter = aspect_of_creation_01
-							has_house_power_parameter = aspect_of_serenity_01
-							has_house_power_parameter = aspect_of_destruction_01
-							has_house_power_parameter = aspect_of_trickery_01
+							has_house_aspiration_parameter = aspect_of_creation_01
+							has_house_aspiration_parameter = aspect_of_serenity_01
+							has_house_aspiration_parameter = aspect_of_destruction_01
+							has_house_aspiration_parameter = aspect_of_trickery_01
 						}
 					}
 				}
 				if = {
 					limit = {
-						house = { has_house_power_parameter = aspect_of_creation }
+						house = { has_house_aspiration_parameter = aspect_of_creation }
 					}
 					create_character_memory = { type = upgraded_creation_aspect_memory }
 				}
 				if = {
 					limit = {
-						house = { has_house_power_parameter = aspect_of_serenity }
+						house = { has_house_aspiration_parameter = aspect_of_serenity }
 					}
 					create_character_memory = { type = upgraded_serenity_aspect_memory }
 				}
 				if = {
 					limit = {
-						house = { has_house_power_parameter = aspect_of_destruction }
+						house = { has_house_aspiration_parameter = aspect_of_destruction }
 					}		
 					create_character_memory = { type = upgraded_destruction_aspect_memory }
 				}
 				if = {
 					limit = {
-						house = { has_house_power_parameter = aspect_of_trickery }
+						house = { has_house_aspiration_parameter = aspect_of_trickery }
 					}	
 					create_character_memory = { type = upgraded_trickery_aspect_memory }
 				}
@@ -487,25 +487,25 @@ on_house_aspiration_changed = {
 	    	#Just started on this track
 	    	if = {
 	    		limit = {
-	    			house = { has_house_power_parameter = aspect_of_creation_01 }
+	    			house = { has_house_aspiration_parameter = aspect_of_creation_01 }
 	    		}
 	    		create_character_memory = { type = picked_creation_aspect_memory }
 	    	}
 	    	if = {
 	    		limit = {
-	    			house = { has_house_power_parameter = aspect_of_serenity_01 }
+	    			house = { has_house_aspiration_parameter = aspect_of_serenity_01 }
 	    		}	
 	    		create_character_memory = { type = picked_serenity_aspect_memory }
 	    	}
 	    	if = {
 	    		limit = {
-	    			house = { has_house_power_parameter = aspect_of_destruction_01 }
+	    			house = { has_house_aspiration_parameter = aspect_of_destruction_01 }
 	    		}
 	    		create_character_memory = { type = picked_destruction_aspect_memory }
 	    	}
 	    	if = {
 	    		limit = {
-	    			house = { has_house_power_parameter = aspect_of_trickery_01 }
+	    			house = { has_house_aspiration_parameter = aspect_of_trickery_01 }
 	    		}
 	    		create_character_memory = { type = picked_trickery_aspect_memory }
 	    	}

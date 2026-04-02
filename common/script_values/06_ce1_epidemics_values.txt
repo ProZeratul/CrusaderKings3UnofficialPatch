@@ -878,18 +878,19 @@ outbreak_chance_black_plague_default_value = {
 		add = outbreak_increase_add_medium
 	}
 	
+	# Random Black Death game rule, set in the 5y playable pulse
+	if = {
+		limit = {
+			has_global_variable = random_black_plague_var
+		}
+		add = 1000
+	}
+	
 	if = {
 		limit = {
 			has_game_rule = epidemic_frequency_disabled
 		}
 		multiply = 0
-	}
-
-	if = {
-		limit = {
-			has_game_rule = bd_occurrence_random
-		}
-		add = outbreak_increase_add_high
 	}
 
 	if = {
@@ -1767,53 +1768,48 @@ character_infection_chance_default_value = {
 		add = 20
 	}
 	# Camp resistance.
-	if = {
-		limit = { #Unop: Change this as building parameter are NOT inherited !
-			exists = host
-		}
-		# Max buff.
-		if = {
-			limit = {
-				host.domicile ?= { has_domicile_parameter = camp_infection_chance_buff_6 }
-			}
-			add = -40
-		}
-		# Very high buff.
-		else_if = {
-			limit = {
-				host.domicile ?= { has_domicile_parameter = camp_infection_chance_buff_5 }
-			}
-			add = -30
-		}
-		# High buff.
-		else_if = {
-			limit = {
-				host.domicile ?= { has_domicile_parameter = camp_infection_chance_buff_4 }
-			}
-			add = -25
-		}
-		# Medium buff.
-		else_if = {
-			limit = {
-				host.domicile ?= { has_domicile_parameter = camp_infection_chance_buff_3 }
-			}
-			add = -20
-		}
-		# Small buff.
-		else_if = {
-			limit = {
-				host.domicile ?= { has_domicile_parameter = camp_infection_chance_buff_2 }
-			}
-			add = -15
-		}
-		# Slight buff.
-		else_if = {
-			limit = {
-				host.domicile ?= { has_domicile_parameter = camp_infection_chance_buff_1 }
-			}
-			add = -10
-		}
-	}
+    # Slight buff.
+    if = {
+        limit = {
+            host.domicile ?= { has_domicile_parameter = camp_infection_chance_buff_1 }
+        }
+        add = -10
+    }
+    # Max buff.
+    else_if = {
+        limit = {
+            host.domicile ?= { has_domicile_parameter = camp_infection_chance_buff_6 }
+        }
+        add = -40
+    }
+    # Very high buff.
+    else_if = {
+        limit = {
+            host.domicile ?= { has_domicile_parameter = camp_infection_chance_buff_5 }
+        }
+        add = -30
+    }
+    # High buff.
+    else_if = {
+        limit = {
+            host.domicile ?= { has_domicile_parameter = camp_infection_chance_buff_4 }
+        }
+        add = -25
+    }
+    # Medium buff.
+    else_if = {
+        limit = {
+            host.domicile ?= { has_domicile_parameter = camp_infection_chance_buff_3 }
+        }
+        add = -20
+    }
+    # Small buff.
+    else_if = {
+        limit = {
+            host.domicile ?= { has_domicile_parameter = camp_infection_chance_buff_2 }
+        }
+        add = -15
+    }
 	#Would you follow social distancing?
 	#your numerical social distance value gets transformed here into a bonus/malus
 	add = {
@@ -1852,26 +1848,6 @@ character_infection_chance_default_value = {
 			has_character_modifier = hiding_from_epidemic
 		}
 		multiply = 0.25 #75% less likely
-	}
-	#How infected is your location?
-	#Follows the infection rate thresholds set for the barony/county modifiers
-	if = {
-		limit = {
-			scope:province = { epidemic_resistance > 80 }
-		}
-		multiply = 0.25
-	}
-	else_if = {
-		limit = {
-			scope:province = { epidemic_resistance > 50 }
-		}
-		multiply = 0.5
-	}
-	else_if = {
-		limit = {
-			scope:province = { epidemic_resistance > 10 }
-		}
-		multiply = 0.75
 	}
 	min = 1 # Never totally immune
 }

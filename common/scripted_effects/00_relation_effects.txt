@@ -217,8 +217,14 @@ progress_towards_rival_effect = {
 			NOT = {
 				$CHARACTER$ = { highest_held_title_tier <= tier_barony }
 			}
-			# Are they low-tier themselves?
-			highest_held_title_tier <= tier_barony
+			# Are they low-tier themselves or more than two tiers below the target?
+			OR = {
+				highest_held_title_tier <= tier_barony
+				highest_held_title_tier <= {
+					value = $CHARACTER$.highest_held_title_tier
+					subtract = 3
+				}
+			}
 			# If they are then they must...
 			NOR = {
 				# ... be related to the target...

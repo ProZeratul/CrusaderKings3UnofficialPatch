@@ -42,8 +42,8 @@ tgp_japan_establish_house_fief_decision = {
 				text = tgp_japan_establish_house_fief_aspiration_trigger
 				house = {
 					NOR = {
-						has_house_power_parameter = ceremony_cheaper_feasts
-						has_house_power_parameter = unlocks_japanese_manor_archive
+						has_house_aspiration_parameter = ceremony_cheaper_feasts
+						has_house_aspiration_parameter = unlocks_japanese_manor_archive
 					}
 				}
 			}
@@ -178,8 +178,8 @@ tgp_japan_establish_house_fief_decision = {
 					if = {
 						limit = {
 							OR = {
-								has_house_power_parameter = ceremony_cheaper_feasts
-								has_house_power_parameter = unlocks_japanese_manor_archive
+								has_house_aspiration_parameter = ceremony_cheaper_feasts
+								has_house_aspiration_parameter = unlocks_japanese_manor_archive
 							}
 						}
 						random_list = {
@@ -279,15 +279,15 @@ tgp_japan_establish_house_fief_decision = {
 			add = -10
 		}
 		modifier = { # Prosperity
-			house ?= { has_house_power_parameter = unlocks_japanese_manor_brewery }
+			house ?= { has_house_aspiration_parameter = unlocks_japanese_manor_brewery }
 			add = 25
 		}
 		modifier = { # Determination
-			house ?= { has_house_power_parameter = determination_spymaster_task_find_secrets_efficiency }
+			house ?= { has_house_aspiration_parameter = determination_spymaster_task_find_secrets_efficiency }
 			add = 50
 		}
 		modifier = { # Strength
-			house ?= { has_house_power_parameter = unlocks_japanese_manor_armory }
+			house ?= { has_house_aspiration_parameter = unlocks_japanese_manor_armory }
 			add = 100
 		}
 		modifier = { # Reluctance to turn against successful bloc
@@ -534,19 +534,19 @@ tgp_japan_establish_soryo_manor_decision = {
 			ai_honor = -0.5
 		}
 		modifier = {
-			house ?= { has_house_power_parameter = ceremony_cheaper_feasts }
+			house ?= { has_house_aspiration_parameter = ceremony_cheaper_feasts }
 			add = -50
 		}
 		modifier = {
-			house ?= { has_house_power_parameter = service_house_improved_educator_outcome_chance }
+			house ?= { has_house_aspiration_parameter = service_house_improved_educator_outcome_chance }
 			add = -100
 		}
 		modifier = {
-			house ?= { has_house_power_parameter = determination_spymaster_task_find_secrets_efficiency }
+			house ?= { has_house_aspiration_parameter = determination_spymaster_task_find_secrets_efficiency }
 			add = 50
 		}
 		modifier = {
-			house ?= { has_house_power_parameter = unlocks_japanese_manor_armory }
+			house ?= { has_house_aspiration_parameter = unlocks_japanese_manor_armory }
 			add = 100
 		}
 	}
@@ -1094,7 +1094,7 @@ tgp_japan_become_a_poet_decision = {
 		OR = {
 			AND = {
 				government_is_japanese_trigger = yes
-				house = { has_house_power_parameter = ceremony_become_a_poet_decision }
+				house = { has_house_aspiration_parameter = ceremony_become_a_poet_decision }
 			}
 			top_participant_group:dynastic_cycle ?= {
 				participant_group_type = advancement_movement
@@ -1162,7 +1162,7 @@ tgp_japan_train_with_troops_decision = {
 	is_shown = {
 		has_tgp_dlc_trigger = yes
 		government_is_japanese_trigger = yes
-		house = { has_house_power_parameter = strength_train_with_troops_decision }
+		house = { has_house_aspiration_parameter = strength_train_with_troops_decision }
 	}
 
 	is_valid_showing_failures_only = {
@@ -1282,7 +1282,7 @@ tgp_japan_become_a_monk_decision = {
 				text = renounce_noble_family_title_decision_tt.heir
 				any_held_title = {
 					is_noble_family_title = yes
-					current_heir ?= { is_available_ai_adult = yes } #Unop: current_heir can be undefined
+					current_heir ?= { is_available_ai_adult = yes }
 				}
 			}
 		}
@@ -1294,6 +1294,9 @@ tgp_japan_become_a_monk_decision = {
 			}
 			has_contagious_deadly_disease_trigger = yes
 			has_trait = infirm
+			has_trait = withering_mind
+			has_trait = faltering_heart
+			has_trait = fragile_bones
 			has_trait = depressed_1
 		}
 	}
@@ -1585,10 +1588,10 @@ tgp_japan_assert_regional_dominion_government_decision = {
 				house = {
 					AND = {
 						OR = {
-							has_house_power_parameter = unlocks_japanese_manor_armory
-							has_house_power_parameter = unlocks_japanese_manor_watch_house
+							has_house_aspiration_parameter = unlocks_japanese_manor_armory
+							has_house_aspiration_parameter = unlocks_japanese_manor_watch_house
 						}
-						has_house_power_parameter = aspiration_level_3
+						has_house_aspiration_parameter = aspiration_level_3
 					}
 				}
 			}
@@ -1602,8 +1605,8 @@ tgp_japan_assert_regional_dominion_government_decision = {
 				}
 				house = {
 					OR = {
-						has_house_power_parameter = unlocks_japanese_manor_armory
-						has_house_power_parameter = unlocks_japanese_manor_watch_house
+						has_house_aspiration_parameter = unlocks_japanese_manor_armory
+						has_house_aspiration_parameter = unlocks_japanese_manor_watch_house
 					}
 				}
 			}
@@ -1616,8 +1619,8 @@ tgp_japan_assert_regional_dominion_government_decision = {
 				limit = {
 					house ?= {
 						OR = {
-							has_house_power_parameter = ceremony_cheaper_feasts
-							has_house_power_parameter = unlocks_japanese_manor_archive
+							has_house_aspiration_parameter = ceremony_cheaper_feasts
+							has_house_aspiration_parameter = unlocks_japanese_manor_archive
 						}
 					}
 				}
@@ -1625,8 +1628,8 @@ tgp_japan_assert_regional_dominion_government_decision = {
 					text = tgp_japan_establish_house_fief_aspiration_trigger
 					house = {
 						NOR = {
-							has_house_power_parameter = ceremony_cheaper_feasts
-							has_house_power_parameter = unlocks_japanese_manor_archive
+							has_house_aspiration_parameter = ceremony_cheaper_feasts
+							has_house_aspiration_parameter = unlocks_japanese_manor_archive
 						}
 					}
 				}

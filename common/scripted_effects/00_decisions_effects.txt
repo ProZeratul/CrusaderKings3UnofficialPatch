@@ -860,6 +860,23 @@ unite_the_western_slavs_decision_effects = {
 		}
 	}
 	#hidden_effect = {
+		every_duchy = {
+			limit = {
+				title_capital_county.title_province ?= {
+					geographical_region = custom_west_slavia
+				}
+				kingdom ?= {
+					NOR = {
+						this = title:k_poland
+						this = title:k_pomerania
+						this = title:k_bohemia
+						this = title:k_moravia
+						this = title:k_sorbia
+					}
+				}
+			}
+			set_de_jure_liege_title = title:k_sorbia
+		}
 		scope:western_slav_uniter = {
 			#If king-tier, give them the West-Slavia title
 			if = {
@@ -876,7 +893,7 @@ unite_the_western_slavs_decision_effects = {
 					}
 				}
 				resolve_title_and_vassal_change = scope:title_change
-				set_primary_title_to = title:e_west_slavia				
+				set_primary_title_to = title:e_west_slavia
 				title:e_west_slavia = { save_scope_as = unop_west_slavia } #For localisation
 				
 				# Inform players of the de jure drift
@@ -1034,8 +1051,8 @@ unite_the_slavs_decision_effects = {
 	title:k_novgorod = { add_to_list = slavic_kingdoms }
 	title:k_opolye = { add_to_list = slavic_kingdoms }
 	title:k_hungary = { add_to_list = slavic_kingdoms }
+	title:k_bosnia = { add_to_list = slavic_kingdoms }
 	title:k_sorbia = { add_to_list = slavic_kingdoms } #Unop: Add the Kingdom of Sorbia
-	title:k_bosnia = { add_to_list = slavic_kingdoms } #Unop: Add the Kingdom of Bosnia
 
 	# Inform players of the de jure drift
 	title:e_slavia = { custom_tooltip = unite_the_slavs_decision_titles_tt } #Scope change for tooltip formatting.
@@ -1328,6 +1345,16 @@ convert_whole_realm_to_feudalism_effect = {
 				}
 				set_holding_type = church_holding
 			}
+			hidden_effect = {
+				if = {
+					limit = { has_county_modifier = mpo_siberian_permafrost_modifier }
+					remove_county_modifier = mpo_siberian_permafrost_modifier
+				}
+				else_if = {
+					limit = { has_county_modifier = mpo_siberian_permafrost_modifier_bad }
+					remove_county_modifier = mpo_siberian_permafrost_modifier_bad
+				}
+			}
 		}
 
 		every_sub_realm_county = { # Spawn a City
@@ -1401,6 +1428,16 @@ convert_whole_realm_to_feudalism_effect = {
 						}
 					}
 					set_holding_type = city_holding
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = { has_county_modifier = mpo_siberian_permafrost_modifier }
+					remove_county_modifier = mpo_siberian_permafrost_modifier
+				}
+				else_if = {
+					limit = { has_county_modifier = mpo_siberian_permafrost_modifier_bad }
+					remove_county_modifier = mpo_siberian_permafrost_modifier_bad
 				}
 			}
 		}
@@ -1478,6 +1515,16 @@ convert_whole_realm_to_feudalism_effect = {
 					set_holding_type = church_holding
 				}
 			}
+			hidden_effect = {
+				if = {
+					limit = { has_county_modifier = mpo_siberian_permafrost_modifier }
+					remove_county_modifier = mpo_siberian_permafrost_modifier
+				}
+				else_if = {
+					limit = { has_county_modifier = mpo_siberian_permafrost_modifier_bad }
+					remove_county_modifier = mpo_siberian_permafrost_modifier_bad
+				}
+			}
 		}
 
 		##Sort out new buildings for liege and all vassals
@@ -1495,7 +1542,6 @@ convert_whole_realm_to_feudalism_effect = {
 					NOT = { is_in_list = feudal_conversion }
 				}
 				add_to_list = feudal_conversion
-
 			}
 		}
 		every_in_list = {
@@ -1518,6 +1564,18 @@ convert_whole_realm_to_feudalism_effect = {
 			}
 			remove_variable = tribal_to_feudal_building_level
 			remove_from_list = feudal_conversion
+			hidden_effect = {
+				county = {
+					if = {
+						limit = { has_county_modifier = mpo_siberian_permafrost_modifier }
+						remove_county_modifier = mpo_siberian_permafrost_modifier
+					}
+					else_if = {
+						limit = { has_county_modifier = mpo_siberian_permafrost_modifier_bad }
+						remove_county_modifier = mpo_siberian_permafrost_modifier_bad
+					}
+				}
+			}
 		}
 	}
 	
@@ -1614,6 +1672,17 @@ convert_whole_realm_to_feudalism_effect = {
 		}
 		##General
 		custom_tooltip = all_holding_will_change
+		if = {
+			limit = {
+				any_sub_realm_county = {
+					OR = {
+						has_county_modifier = mpo_siberian_permafrost_modifier
+						has_county_modifier = mpo_siberian_permafrost_modifier_bad
+					}
+				}
+			}
+			custom_tooltip = all_permafrost_will_clear
+		}
 		##Liege has clan? Convert to clan!
 		if = {
 			limit = {
@@ -2180,10 +2249,8 @@ launch_hungarian_migration_scripted_effect = {
 						tier = tier_county
 						tier = tier_duchy
 					}
-					trigger_if = { #Unop: To not have a flood wave in the logs
-						limit = { exists = scope:reserved_title }
-						this != scope:reserved_title
-					}
+					exists = scope:reserved_title
+					this != scope:reserved_title
 				}
 				add_to_list = spare_pannonian_titles_list
 			}
@@ -3198,11 +3265,11 @@ learn_language_linguist_effect = {
 			limit = {
 				NOT = { knows_language_of_culture = $LINGUIST$.culture }
 			}
-	    	start_scheme = {
+			start_scheme = {
 				type = learn_language
 				target_character = $LINGUIST$
 			}
-	    }
+		}
 	}
 }
 
@@ -3325,6 +3392,27 @@ linguist_random_realm_effect = {
 	}
 }
 
+isolate_single_character_effect = {
+	add_character_flag = {
+		flag = blocked_from_leaving
+		years = 5
+	}
+	add_character_modifier = {
+		modifier = isolating_modifier
+		years = 5
+	}
+	if = {
+		limit = { exists = involved_activity }
+		if = {
+			limit = { involved_activity.activity_host = root }
+			invalidate_activity = involved_activity
+		}
+		else = {
+			remove_from_activity = involved_activity
+		}
+	}
+}
+
 isolate_family_decision_effect = {
 	show_as_tooltip = {
 		every_close_family_member = {
@@ -3341,8 +3429,21 @@ isolate_family_decision_effect = {
 			modifier = isolating_modifier
 			years = 5
 		}
+		if = {
+			limit = { exists = involved_activity }
+			if = {
+				limit = { involved_activity.activity_host = root }
+				invalidate_activity = involved_activity
+			}
+			else = {
+				remove_from_activity = involved_activity
+			}
+		}
 	}
-	custom_tooltip = travelling_will_break_isolation_tt
+	if = {
+		limit = { NOT = { exists = current_travel_plan } }
+		custom_tooltip = travelling_will_break_isolation_tt
+	}
 	hidden_effect = {
 		every_close_family_member = {
 			custom = every_close_family_member_at_court
@@ -3355,14 +3456,7 @@ isolate_family_decision_effect = {
 					target = prev
 				}
 			}
-			add_character_flag = {
-				flag = blocked_from_leaving
-				years = 5
-			}
-			add_character_modifier = {
-				modifier = isolating_modifier
-				years = 5
-			}
+			isolate_single_character_effect = yes
 		}
 		every_consort = {
 			limit = {
@@ -3374,19 +3468,9 @@ isolate_family_decision_effect = {
 					target = prev
 				}
 			}
-			add_character_flag = {
-				flag = blocked_from_leaving
-				years = 5
-			}
-			add_character_modifier = {
-				modifier = isolating_modifier
-				years = 5
-			}
+			isolate_single_character_effect = yes
 		}
-		add_character_modifier = {
-			modifier = isolating_modifier
-			years = 5
-		}
+		isolate_single_character_effect = yes
 		set_variable = {
 			name = isolating_cooldown_var
 			years = 1
@@ -3478,4 +3562,248 @@ flagellation_decision_effect = {
 		}
 	}
 
+}
+restore_carthage_scripted_effect = {
+
+	dynasty = { add_dynasty_prestige = monumental_dynasty_prestige_gain }
+	house = {
+		add_house_modifier = {
+			modifier = restore_carthage_house_modifier
+			years = 100
+		}
+	}
+	create_title_and_vassal_change = {
+			type = created
+			save_scope_as = title_change
+			add_claim_on_loss = no
+	}
+
+	#Create Kingdoms
+	hidden_effect = {
+		# Carthage
+		title:k_carthage = {
+			change_title_holder = {
+				holder = root
+				change = scope:title_change
+			}
+			set_de_jure_liege_title = title:e_carthage
+		}
+		 # Carthage Duchies
+		title:d_gabes = {
+			set_de_jure_liege_title = title:k_carthage
+		}
+		title:d_kairouan = {
+			set_de_jure_liege_title = title:k_carthage
+		}
+		title:d_kroumerie = {
+			set_de_jure_liege_title = title:k_carthage
+		}
+		title:d_tunis = {
+			set_de_jure_liege_title = title:k_carthage
+		}
+		title:d_jerid = {
+			set_de_jure_liege_title = title:k_carthage
+		}
+		title:d_sicily = {
+			set_de_jure_liege_title = title:k_carthage
+		}
+		title:d_sardinia = {
+			set_de_jure_liege_title = title:k_carthage
+		}
+		# And "Tunis" Carthage as capital
+		title:c_tunis = {
+			change_title_holder = {
+				holder = root
+				change = scope:title_change
+			}
+		}
+		# Tripolitania
+		title:k_tripolitania = {
+			change_title_holder = {
+				holder = root
+				change = scope:title_change
+			}
+			set_de_jure_liege_title = title:e_carthage
+		}
+		 # Tripolitania Duchies
+		title:d_tripolitania = {
+			set_de_jure_liege_title = title:k_tripolitania
+		}
+		title:d_syrte = {
+			set_de_jure_liege_title = title:k_tripolitania
+		}
+		 # Mauretania
+		title:k_mauretania = {
+			change_title_holder = {
+				holder = root
+				change = scope:title_change
+			}
+			set_de_jure_liege_title = title:e_carthage
+		}
+		 # Mauretania Duchies
+		title:d_bejaia = {
+			set_de_jure_liege_title = title:k_mauretania
+		}
+		title:d_zab = {
+			set_de_jure_liege_title = title:k_mauretania
+		}
+		title:d_tlemcen = {
+			set_de_jure_liege_title = title:k_mauretania
+		}
+		title:d_rif = {
+			set_de_jure_liege_title = title:k_mauretania
+		}
+		title:d_alger = {
+			set_de_jure_liege_title = title:k_mauretania
+		}
+		 # Carthago Nova
+		title:k_carthago_nova = {
+			change_title_holder = {
+				holder = root
+				change = scope:title_change
+			}
+			set_de_jure_liege_title = title:e_carthage
+		}
+		 # Carthago Nova Duchies
+		title:d_sevilla = {
+			set_de_jure_liege_title = title:k_carthago_nova
+		}
+		title:d_granada = {
+			set_de_jure_liege_title = title:k_carthago_nova
+		}
+		title:d_murcia = {
+			set_de_jure_liege_title = title:k_carthago_nova
+		}
+		title:d_valencia = {
+			set_de_jure_liege_title = title:k_carthago_nova
+		}
+
+		every_held_title = { #Should destroy Kingdoms without dejure land
+		title_tier = kingdom
+			if = {
+				 limit = {
+					any_direct_de_jure_vassal_title = { count < 1 }
+				 }
+				root = { destroy_title = prev }
+			}
+		}
+	}
+
+	#Create Empire
+	title:e_carthage = {
+		change_title_holder = {
+			holder = root
+			change = scope:title_change
+		}
+	}
+	resolve_title_and_vassal_change = scope:title_change
+
+	if = {
+		limit = {
+			NOT = { capital_county = title:c_tunis }
+		}
+		set_realm_capital = title:c_tunis
+	}
+
+	hidden_effect = {
+		set_primary_title_to = title:e_carthage
+	}
+}
+
+#################################################
+	##Create Cossack Kingdom Decision Effect##
+	## By: Björn S
+#################################################
+
+create_cossack_scripted_effect = {
+	# Pseudo character to derive culture from without converting the founder by default
+	create_character = {
+		location = root.location
+		culture = root.culture
+		faith = root.faith
+		gender = root
+		dynasty = none
+		random_traits = no
+		save_scope_as = cossack
+	}
+	## We make all nomad holdings tribal, or the government change won't work
+	custom_tooltip = {
+		every_sub_realm_county = {
+			limit = {
+				title_province = {
+					OR = {
+						has_holding_type = nomad_holding
+						has_holding_type = herder_holding
+					}
+				}
+			}
+			## Add_to_list = holding_conversion
+			title_province = {
+				set_holding_type = tribal_holding
+			}
+		}
+		text = create_cossack_tribal_tooltip
+	}
+	change_government = tribal_government
+
+	## Create the Cossack Culture ##
+	culture = { save_scope_as = founder_culture }
+	every_player = {
+		add_character_flag = {
+			flag = hide_hybridization_event
+			days = 1
+		}
+	}
+	custom_tooltip = {
+		text = cossack_custom_culture_hybrid
+		scope:cossack = { create_hybrid_culture = culture:kazak }
+	}
+	scope:new_culture ?= {
+		set_culture_name = {
+			noun = cossack
+			collective_noun = cossack_prefix
+			prefix = cossack_collective_noun
+		}
+	}
+	create_title_and_vassal_change = {
+		type = created
+		save_scope_as = title_change
+		add_claim_on_loss = no
+	}
+	title:k_cossack = {
+		change_title_holder = {
+			holder = root
+			change = scope:title_change
+		}
+	}
+	resolve_title_and_vassal_change = scope:title_change
+
+	## Set up the Cossack Kingdom title with de jure duchies
+	custom_tooltip = {
+		text = cossack_custom_de_jure
+		title:k_cossack = { set_de_jure_liege_title = title:e_caspian-pontic_steppe }
+		title:d_tana = { set_de_jure_liege_title = title:k_cossack }
+		title:d_red_levedia = { set_de_jure_liege_title = title:k_cossack }
+		title:d_levedia = { set_de_jure_liege_title = title:k_cossack }
+		title:d_don_valley = { set_de_jure_liege_title = title:k_cossack }
+		title:d_itil = { set_de_jure_liege_title = title:k_cossack }
+	}
+
+	##Add Cossack Culture to all de jure duchies in the Cossack Kingdom
+	if = {
+		limit = { exists = scope:new_culture }
+		custom_tooltip = {
+			text = cossack_custom_county_culture
+			every_held_county = {
+				limit = { kingdom = title:k_cossack }
+				## Convert all the counties to Cossack Culture ##
+				set_county_culture = scope:new_culture
+			}
+		}
+	}
+	else = { custom_tooltip = cossack_custom_county_culture_fallback }
+
+	hidden_effect = {
+		scope:cossack ?= { silent_disappearance_effect = yes }
+	}
 }

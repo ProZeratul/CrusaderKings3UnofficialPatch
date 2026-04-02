@@ -2,8 +2,8 @@
 
 ##############################
 # EP3 Admin (Emperor) Events #
-# by Claudia Baldassi        #
-# 2000 - 2999	             #
+# by Claudia Baldassi		 #
+# 2000 - 2999				 #
 ##############################
 
 # Byzantine-only: you have reconquered an important city of the long-lost Empire
@@ -161,13 +161,13 @@ ep3_emperor_yearly.2000 = {
 			limit = {
 				scope:county = title:c_tourraine
 			}
-			NOT = { exists = var:ep3_reconquered_tourraine }
+			NOT = { exists = global_var:ep3_reconquered_tourraine }
 		}
 		trigger_else_if = {
 			limit = {
 				scope:county = title:c_chandax
 			}
-			NOT = { exists = var:ep3_reconquered_chandax }
+			NOT = { exists = global_var:ep3_reconquered_chandax }
 		}
 		trigger_else_if = {
 			limit = {
@@ -176,91 +176,91 @@ ep3_emperor_yearly.2000 = {
 					scope:county = title:c_northumberland
 				}
 			}
-			NOT = { exists = var:ep3_reconquered_hadrian }
+			NOT = { exists = global_var:ep3_reconquered_hadrian }
 		}
 		trigger_else_if = {
 			limit = {
 				scope:county = title:c_trier
 			}
-			NOT = { exists = var:ep3_reconquered_trier }
+			NOT = { exists = global_var:ep3_reconquered_trier }
 		}
 		trigger_else_if = {
 			limit = {
 				scope:county = title:c_lombardia
 			}
-			NOT = { exists = var:ep3_reconquered_lombardia }
+			NOT = { exists = global_var:ep3_reconquered_lombardia }
 		}
 		trigger_else_if = {
 			limit = {
 				scope:county = title:c_murcia
 			}
-			NOT = { exists = var:ep3_reconquered_murcia }
+			NOT = { exists = global_var:ep3_reconquered_murcia }
 		}
 		trigger_else_if = {
 			limit = {
 				scope:county = title:c_tangiers
 			}
-			NOT = { exists = var:ep3_reconquered_tangiers }
+			NOT = { exists = global_var:ep3_reconquered_tangiers }
 		}
 		trigger_else_if = {
 			limit = {
 				scope:county = title:c_tunis
 			}
-			NOT = { exists = var:ep3_reconquered_tunis }
+			NOT = { exists = global_var:ep3_reconquered_tunis }
 		}
 		trigger_else_if = {
 			limit = {
 				scope:county = title:c_ravenna
 			}
-			NOT = { exists = var:ep3_reconquered_ravenna }
+			NOT = { exists = global_var:ep3_reconquered_ravenna }
 		}
 		trigger_else_if = {
 			limit = {
 				scope:county = title:c_roma
 			}
-			NOT = { exists = var:ep3_reconquered_roma }
+			NOT = { exists = global_var:ep3_reconquered_roma }
 		}
 		trigger_else_if = {
 			limit = {
 				scope:county = title:c_siracusa
 			}
-			NOT = { exists = var:ep3_reconquered_siracusa }
+			NOT = { exists = global_var:ep3_reconquered_siracusa }
 		}
 		trigger_else_if = {
 			limit = {
 				scope:county = title:c_bari
 			}
-			NOT = { exists = var:ep3_reconquered_bari }
+			NOT = { exists = global_var:ep3_reconquered_bari }
 		}
 		trigger_else_if = {
 			limit = {
 				scope:county = title:c_edessa
 			}
-			NOT = { exists = var:ep3_reconquered_edessa }
+			NOT = { exists = global_var:ep3_reconquered_edessa }
 		}
 		trigger_else_if = {
 			limit = {
 				scope:county = title:c_abbadan
 			}
-			NOT = { exists = var:ep3_reconquered_abbadan }
+			NOT = { exists = global_var:ep3_reconquered_abbadan }
 		}
 		trigger_else_if = {
 			limit = {
 				scope:county = title:c_alexandria
 			}
-			NOT = { exists = var:ep3_reconquered_alexandria }
+			NOT = { exists = global_var:ep3_reconquered_alexandria }
 		}
 		trigger_else_if = {
 			limit = {
 				scope:county = title:c_jerusalem
 			}
-			NOT = { exists = var:ep3_reconquered_jerusalem }
+			NOT = { exists = global_var:ep3_reconquered_jerusalem }
 		}
 		trigger_else_if = {
 			limit = {
 				scope:county = title:c_antiocheia
 			}
-			NOT = { exists = var:ep3_reconquered_antiocheia }
+			NOT = { exists = global_var:ep3_reconquered_antiocheia }
 		}
 		trigger_else = {
 			always = no
@@ -268,6 +268,60 @@ ep3_emperor_yearly.2000 = {
 	}
 
 	immediate = {
+		switch = {
+			trigger = scope:county
+			title:c_antiocheia = {
+				set_global_variable = ep3_reconquered_antiocheia
+			}
+			title:c_jerusalem = {
+				set_global_variable = ep3_reconquered_jerusalem
+			}
+			title:c_alexandria = {
+				set_global_variable = ep3_reconquered_alexandria
+			}
+			title:c_abbadan = {
+				set_global_variable = ep3_reconquered_abbadan
+			}
+			title:c_edessa = {
+				set_global_variable = ep3_reconquered_edessa
+			}
+			title:c_bari = {
+				set_global_variable = ep3_reconquered_bari
+			}
+			title:c_siracusa = {
+				set_global_variable = ep3_reconquered_siracusa
+			}
+			title:c_roma = {
+				set_global_variable = ep3_reconquered_roma
+			}
+			title:c_ravenna = {
+				set_global_variable = ep3_reconquered_ravenna
+			}
+			title:c_tunis = {
+				set_global_variable = ep3_reconquered_tunis
+			}
+			title:c_tangiers = {
+				set_global_variable = ep3_reconquered_tangiers
+			}
+			title:c_murcia = {
+				set_global_variable = ep3_reconquered_murcia
+			}
+			title:c_lombardia = {
+				set_global_variable = ep3_reconquered_lombardia
+			}
+			title:c_trier = {
+				set_global_variable = ep3_reconquered_trier
+			}
+			title:c_northumberland = {
+				set_global_variable = ep3_reconquered_hadrian
+			}
+			title:c_chandax = {
+				set_global_variable = ep3_reconquered_chandax
+			}
+			title:c_tourraine = {
+				set_global_variable = ep3_reconquered_tourraine
+			}
+		}
 		change_influence = massive_influence_gain
 		add_prestige = major_prestige_gain
 	}
@@ -408,112 +462,6 @@ ep3_emperor_yearly.2000 = {
 	}
 
 	after = {
-		if = {
-			limit = {
-				scope:county = title:c_antiocheia
-			}
-			set_global_variable = ep3_reconquered_antiocheia
-		}
-		else_if = {
-			limit = {
-				scope:county = title:c_jerusalem
-			}
-			set_global_variable = ep3_reconquered_jerusalem
-		}
-		else_if = {
-			limit = {
-				scope:county = title:c_alexandria
-			}
-			set_global_variable = ep3_reconquered_alexandria
-		}
-		else_if = {
-			limit = {
-				scope:county = title:c_abbadan
-			}
-			set_global_variable = ep3_reconquered_abbadan
-		}
-		else_if = {
-			limit = {
-				scope:county = title:c_edessa
-			}
-			set_global_variable = ep3_reconquered_edessa
-		}
-		else_if = {
-			limit = {
-				scope:county = title:c_bari
-			}
-			set_global_variable = ep3_reconquered_bari
-		}
-		else_if = {
-			limit = {
-				scope:county = title:c_siracusa
-			}
-			set_global_variable = ep3_reconquered_siracusa
-		}
-		else_if = {
-			limit = {
-				scope:county = title:c_roma
-			}
-			set_global_variable = ep3_reconquered_roma
-		}
-		else_if = {
-			limit = {
-				scope:county = title:c_ravenna
-			}
-			set_global_variable = ep3_reconquered_ravenna
-		}
-		else_if = {
-			limit = {
-				scope:county = title:c_tunis
-			}
-			set_global_variable = ep3_reconquered_tunis
-		}
-		else_if = {
-			limit = {
-				scope:county = title:c_tangiers
-			}
-			set_global_variable = ep3_reconquered_tangiers
-		}
-		else_if = {
-			limit = {
-				scope:county = title:c_murcia
-			}
-			set_global_variable = ep3_reconquered_murcia
-		}
-		else_if = {
-			limit = {
-				scope:county = title:c_lombardia
-			}
-			set_global_variable = ep3_reconquered_lombardia
-		}
-		else_if = {
-			limit = {
-				scope:county = title:c_trier
-			}
-			set_global_variable = ep3_reconquered_trier
-		}
-		else_if = {
-			limit = {
-				OR = {
-					scope:county = title:c_cumberland
-					scope:county = title:c_northumberland
-				}
-			}
-			set_global_variable = ep3_reconquered_hadrian
-		}
-		else_if = {
-			limit = {
-				scope:county = title:c_chandax
-			}
-			set_global_variable = ep3_reconquered_chandax
-		}
-		else_if = {
-			limit = {
-				scope:county = title:c_tourraine
-			}
-			set_global_variable = ep3_reconquered_tourraine
-		}
-
 		if = {
 			limit = {
 				NOT = {
@@ -738,7 +686,7 @@ ep3_emperor_yearly.2020 = {
 		character = scope:patriarch
 		animation = anger
 	}
-	
+
 	trigger = {
 		has_ep3_dlc_trigger = yes
 		valid_for_byz_emperor_content_trigger = yes
@@ -764,7 +712,7 @@ ep3_emperor_yearly.2020 = {
 		random_character_trait = {
 			limit = {
 				save_temporary_scope_as = temp_trait
-				scoped_trait_is_criminal_in_faith_trigger = { TRAIT = scope:temp_trait FAITH = root.faith GENDER_CHARACTER = root }
+				trait_is_criminal_in_faith_trigger = { TRAIT = scope:temp_trait FAITH = root.faith GENDER_CHARACTER = root }
 			}
 			save_scope_as = target_criminal_trait
 		}
@@ -878,20 +826,20 @@ ep3_emperor_yearly.2021 = {
 		animation = wedding_priest
 	}
 	lower_right_portrait = {
- 		trigger = {
- 			scope:patriarch = { is_alive = no }
- 		}
- 		character = scope:patriarch
- 	}
+		trigger = {
+			scope:patriarch = { is_alive = no }
+		}
+		character = scope:patriarch
+	}
 
- 	trigger = {
- 		exists = faith.religious_head
- 		this != faith.religious_head
- 		has_any_criminal_trait_in_faith_trigger = {
+	trigger = {
+		exists = faith.religious_head
+		this != faith.religious_head
+		has_any_criminal_trait_in_faith_trigger = {
 			CHARACTER = root
 			FAITH = root.faith
 		}
- 	}
+	}
 
 	immediate = {
 		if = {
@@ -1076,7 +1024,7 @@ ep3_emperor_yearly.2030 = {
 			target = scope:new_patriarch
 			type = favor_hook
 		}
-		every_vassal = { 
+		every_vassal = {
 			vassal_stance = zealot
 			limit = {
 				this != scope:new_patriarch
@@ -1088,7 +1036,7 @@ ep3_emperor_yearly.2030 = {
 				opinion = -25
 			}
 		}
-		every_vassal = { 
+		every_vassal = {
 			vassal_stance = glory_hound
 			custom = every_glory_hound_vassal
 			add_opinion = {
@@ -1274,7 +1222,7 @@ ep3_emperor_yearly.2040 = {
 			target = scope:new_patriarch
 			type = favor_hook
 		}
-		every_vassal = { 
+		every_vassal = {
 			vassal_stance = zealot
 			limit = {
 				this != scope:new_patriarch
@@ -1286,7 +1234,7 @@ ep3_emperor_yearly.2040 = {
 				opinion = -35
 			}
 		}
-		every_vassal = { 
+		every_vassal = {
 			vassal_stance = glory_hound
 			custom = every_glory_hound_vassal
 			add_opinion = {
@@ -1884,7 +1832,7 @@ ep3_emperor_yearly.2070 = {
 			location = root.location
 			faith = scope:giraffe_county.faith
 			culture = scope:giraffe_county.culture
-			gender_female_chance = 50 
+			gender_female_chance = 50
 			save_scope_as = ambassador
 		}
 		court_event_character_flag_effect = yes
@@ -2159,7 +2107,7 @@ ep3_emperor_yearly.2080 = {
 			employs_court_position = high_almoner_court_position
 		}
 		# Court weightings.
- 		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_scholarly }
+		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_scholarly }
 	}
 
 	immediate = {
@@ -2321,7 +2269,7 @@ ep3_emperor_yearly.2090 = {
 	weight_multiplier = {
 		base = 1
 		# Court weightings.
- 		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_diplomatic }
+		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_diplomatic }
 	}
 
 	immediate = {
@@ -2553,8 +2501,8 @@ ep3_emperor_yearly.2100 = {
 			}
 		}
 		# Court weightings.
- 		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_diplomatic }
- 		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_intrigue }
+		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_diplomatic }
+		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_intrigue }
 	}
 
 	immediate = {
@@ -2577,7 +2525,7 @@ ep3_emperor_yearly.2100 = {
 				}
 				save_scope_as = contested_county
 			}
-			save_scope_as = neighbor	
+			save_scope_as = neighbor
 		}
 		random_top_realm_border_county = {
 			limit = {
@@ -2771,7 +2719,7 @@ ep3_emperor_yearly.2110 = {
 			valid_for_byz_emperor_content_trigger = yes
 		}
 		# Court weightings.
- 		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_diplomatic }
+		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_diplomatic }
 	}
 
 	immediate = {
@@ -3027,7 +2975,7 @@ ep3_emperor_yearly.2120 = {
 	weight_multiplier = {
 		base = 1
 		# Court weightings.
- 		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_warlike }
+		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_warlike }
 	}
 
 	immediate = {
@@ -3212,7 +3160,7 @@ ep3_emperor_yearly.2130 = {
 	weight_multiplier = {
 		base = 1
 		# Court weightings.
- 		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_administrative }
+		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_administrative }
 	}
 
 	immediate = {
@@ -3272,7 +3220,7 @@ ep3_emperor_yearly.2130 = {
 	option = {
 		name = ep3_emperor_yearly.2130.b
 		trigger = {
-			scope:prisoner = { 
+			scope:prisoner = {
 				government_allows = administrative
 				is_vassal_or_below_of = root
 				is_landed_or_landless_administrative = yes
@@ -3302,7 +3250,7 @@ ep3_emperor_yearly.2130 = {
 	option = {
 		name = ep3_emperor_yearly.2130.c
 		trigger = {
-			scope:prisoner = { 
+			scope:prisoner = {
 				NOR = {
 					is_vassal_or_below_of = root
 					is_landed_or_landless_administrative = yes
@@ -3501,7 +3449,7 @@ ep3_emperor_yearly.2150 = {
 					scope:saint = { has_nickname = nick_the_iron_wearer }
 				}
 				desc = ep3_emperor_yearly.2150.desc.iron
-			}	
+			}
 		}
 		desc = ep3_emperor_yearly.2150.desc.end
 	}
@@ -3771,7 +3719,7 @@ ep3_emperor_yearly.2150 = {
 		if = {
 			limit = {
 				can_employ_court_position_type = cave_hermit_court_position
-				scope:saint = { can_be_employed_as = cave_hermit_court_position } 
+				scope:saint = { can_be_employed_as = cave_hermit_court_position }
 			}
 			court_position_grant_effect = {
 				EMPLOYER = root
@@ -4290,7 +4238,7 @@ ep3_emperor_yearly.2170 = {
 				is_governor = yes
 			}
 		}
-		
+
 		any_sub_realm_county = {
 			OR = {
 				any_county_province = { has_building = fairy_chimneys }
@@ -4990,7 +4938,7 @@ ep3_emperor_yearly.2190 = {
 ep3_emperor_yearly.2200 = {
 	type = character_event
 	title = ep3_emperor_yearly.2200.t
-	
+
 	desc = {
 		first_valid = {
 			#You have a ceremonial monarch
@@ -5000,7 +4948,7 @@ ep3_emperor_yearly.2200 = {
 				}
 				desc = ep3_emperor_yearly.2200.desc.c_monarch
 			}
-			#Not ceremonial monarch 
+			#Not ceremonial monarch
 			desc = ep3_emperor_yearly.2200.desc
 		}
 	}
@@ -5048,7 +4996,7 @@ ep3_emperor_yearly.2200 = {
 			}
 			top_liege.primary_title.var:administrative_ui_special_title.holder = {
 				save_scope_as = ceremonial_monarch
-			}	 
+			}
 		}
 	}
 
@@ -5083,7 +5031,7 @@ ep3_emperor_yearly.2200 = {
 				}
 			}
 			random_scheme = {
-				type = depose 
+				type = depose
 				limit = {
 					scheme_target_character = scope:liege
 				}
@@ -5529,7 +5477,7 @@ scripted_trigger ep3_2220_valid_county_trigger = {
 		}
 	}
 	any_county_province = {
-		NOR = { 
+		NOR = {
 			has_holding_type = church_holding
 			ep3_2220_famous_monastery_trigger = yes
 		}
@@ -5620,7 +5568,7 @@ ep3_emperor_yearly.2220 = {
 			}
 			random_county_province = {
 				limit = {
-					NOR = { 
+					NOR = {
 						has_holding_type = church_holding
 						ep3_2220_famous_monastery_trigger = yes
 					}
@@ -5813,7 +5761,7 @@ ep3_emperor_yearly.2230 = {
 			generous = major_stress_impact_gain
 			just = major_stress_impact_gain
 			honest = medium_stress_impact_gain
-			compassionate = medium_stress_impact_gain	
+			compassionate = medium_stress_impact_gain
 		}
 		ai_chance = {
 			base = 100
@@ -5930,10 +5878,10 @@ scripted_trigger ep3_valid_greek_culture_trigger = {
 }
 
 scripted_trigger ep3_2240_valid_courtier_trigger = {
-	culture = { 
+	culture = {
 		OR = {
 			has_graphical_east_asia_culture_group_trigger = yes
-			ep3_valid_greek_culture_trigger = yes 
+			ep3_valid_greek_culture_trigger = yes
 		}
 	}
 
@@ -5944,13 +5892,13 @@ scripted_trigger ep3_2240_valid_courtier_trigger = {
 		has_trait = education_learning_2
 		has_trait = education_learning_3
 	}
-	
+
 	OR = {
 		has_trait = arrogant
 		has_trait = eccentric
 		has_trait = gregarious
 	}
-	is_of_major_or_minor_interest_trigger = { CHARACTER = root } 
+	is_of_major_or_minor_interest_trigger = { CHARACTER = root }
 }
 
 ep3_emperor_yearly.2240 = {
@@ -5960,8 +5908,8 @@ ep3_emperor_yearly.2240 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					scope:the_scholar = { 
-						culture = { has_graphical_east_asia_culture_group_trigger = yes }  
+					scope:the_scholar = {
+						culture = { has_graphical_east_asia_culture_group_trigger = yes }
 					}
 				}
 				desc = ep3_emperor_yearly.2240.desc_quote_confucius
@@ -6003,11 +5951,11 @@ ep3_emperor_yearly.2240 = {
 			OR = {
 				has_graphical_east_asia_culture_group_trigger = yes
 				ep3_valid_greek_culture_trigger = yes
-			}	
-		}	
+			}
+		}
 		any_courtier_or_guest = {
 			ep3_2240_valid_courtier_trigger = yes
-		}		
+		}
 	}
 
 	weight_multiplier = {
@@ -6039,11 +5987,11 @@ ep3_emperor_yearly.2240 = {
 			}
 			weight = {
 				base = 1
-				modifier = { 
+				modifier = {
 					add = 3
 					knows_language = language_latin
 				}
-				modifier = { 
+				modifier = {
 					add = 2
 					is_of_major_interest_trigger = { CHARACTER = root }
 				}
@@ -6219,7 +6167,7 @@ ep3_emperor_yearly.2300 = {
 		}
 		set_character_faith = liege.primary_title.state_faith
 		if = {
-			limit = { 
+			limit = {
 				liege.primary_title.state_faith = { has_doctrine = doctrine_monotheist }
 			}
 			custom_description_no_bullet = { text = mandala_monotheist_warning_tt }
@@ -6375,7 +6323,7 @@ ep3_emperor_yearly.2310 = {
 		}
 		set_character_faith = top_liege.primary_title.state_faith
 		if = {
-			limit = { 
+			limit = {
 				top_liege.primary_title.state_faith = { has_doctrine = doctrine_monotheist }
 			}
 			custom_description_no_bullet = { text = mandala_monotheist_warning_tt }
@@ -6774,7 +6722,7 @@ ep3_emperor_yearly.2340 = {
 		name = ep3_emperor_yearly.2340.a
 		set_character_faith = top_liege.primary_title.state_faith
 		if = {
-			limit = { 
+			limit = {
 				top_liege.primary_title.state_faith = { has_doctrine = doctrine_monotheist }
 			}
 			custom_description_no_bullet = { text = mandala_monotheist_warning_tt }
@@ -6923,7 +6871,7 @@ ep3_emperor_yearly.2401 = {
 		animation = ecstasy
 	}
 
-	trigger = {	
+	trigger = {
 		government_allows = administrative
 		house ?= {
 			is_powerful_family = yes

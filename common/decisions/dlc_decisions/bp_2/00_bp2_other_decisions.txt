@@ -140,94 +140,10 @@ rites_of_passage_decision = {
 	}
 	
 	cost = {
-		gold = {
-			value = minor_gold_value
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_duchy
-				}
-				add = minor_gold_value
-			}
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_kingdom
-				}
-				add = minor_gold_value
-			}
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_empire
-				}
-				add = minor_gold_value
-			}
-		}
-		prestige = {
-			value = minor_prestige_value
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_duchy
-				}
-				add = minor_prestige_value
-			}
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_kingdom
-				}
-				add = minor_prestige_value
-			}
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_empire
-				}
-				add = minor_prestige_value
-			}
-		}
+		prestige = minor_prestige_value
 	}
 
 	ai_potential = {
-		short_term_gold >= {
-			value = minor_gold_value
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_duchy
-				}
-				add = minor_gold_value
-			}
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_kingdom
-				}
-				add = minor_gold_value
-			}
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_empire
-				}
-				add = minor_gold_value
-			}
-		}
-		prestige >= {
-			value = minor_prestige_value
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_duchy
-				}
-				add = minor_prestige_value
-			}
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_kingdom
-				}
-				add = minor_prestige_value
-			}
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_empire
-				}
-				add = minor_prestige_value
-			}			
-		}
-		highest_held_title_tier > tier_barony
 		OR = {
 			any_child = {
 				character_can_rites_of_passage_trigger = yes

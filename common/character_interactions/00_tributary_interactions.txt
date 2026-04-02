@@ -12,13 +12,6 @@ become_tributary_interaction = {
 	desc = become_tributary_interaction_desc
 
 	is_shown = {
-		scope:actor = {
-			trigger_if = {
-				limit = { is_ai = yes }
-				current_military_strength < scope:recipient.one_and_a_half_times_current_military_strength
-				primary_title.tier < scope:recipient.primary_title.tier
-			}
-		}
 		scope:recipient = {
 			is_independent_ruler = yes # while it's possible for tributaries to have their own tributaries, it should not be possible to create a tributary relationship with a non-independent ruler
 			NOR = {
@@ -27,6 +20,13 @@ become_tributary_interaction = {
 				top_suzerain = scope:actor
 			}
 			can_have_tributaries_trigger = yes
+		}
+		scope:actor = {
+			trigger_if = {
+				limit = { is_ai = yes }
+				current_military_strength < scope:recipient.one_and_a_half_times_current_military_strength
+				primary_title.tier < scope:recipient.primary_title.tier
+			}
 		}
 	}
 
@@ -75,22 +75,6 @@ become_tributary_interaction = {
 			NOT = { exists = involved_activity }
 			is_confederation_member = no
 			is_at_war = no
-		}
-		trigger_if = {
-			limit = { scope:recipient = title:h_china.holder }
-			scope:actor = {
-				custom_tooltip = {
-					text = neighbor_is_china
-					is_tributary = no
-					is_independent_ruler = yes
-					OR = {
-						has_variable = wants_to_become_tributary_of_china
-						any_neighboring_and_across_water_top_liege_realm_owner = {
-							primary_title = title:h_china
-						}
-					}
-				}
-			}
 		}
 	}
 
@@ -1292,8 +1276,7 @@ demand_tributary_interaction = {
 				scope:recipient = {
 					NOT = {
 						any_neighboring_top_suzerain_realm_owner = {
-							exists = this
-							NOT = { this = scope:actor }
+							this != scope:actor
 						}
 					}
 					NOT = {
@@ -2173,7 +2156,7 @@ exact_tribute_interaction = {
 	ai_max_reply_days = 9
 	can_send_despite_rejection = yes
 	popup_on_receive = yes
-	common_interaction = yes
+	common_interaction = no
 
 	interface_priority = 4
 
@@ -2231,9 +2214,7 @@ exact_tribute_interaction = {
 						is_tributary = no
 						custom_tooltip = {
 							text = exact_tribute_interaction_hegemony_not_neighbor_tt
-							any_neighboring_and_across_water_top_liege_realm_owner = {
-								this = scope:actor
-							}
+							any_neighboring_realm_with_tributaries_owner = { this = scope:actor }
 						}
 					}
 				}

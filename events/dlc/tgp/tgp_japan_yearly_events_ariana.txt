@@ -2929,6 +2929,7 @@ tgp_japan_yearly_events.1121 = {
 		if = {
 			limit = {
 				scope:sc_victor = scope:strong_leader
+				scope:warrior_monk = { is_alive = yes }
 			}
 			scope:strong_leader = {
 				send_interface_toast = {
@@ -3192,6 +3193,7 @@ tgp_japan_yearly_events.1140 = {
 	lower_center_portrait = scope:local_ruler
 
 	trigger = {
+		is_ai = no
 		has_tgp_dlc_trigger = yes
 		is_available_travelling_adult = yes
 		is_location_valid_for_travel_event_on_land = yes
@@ -3208,7 +3210,8 @@ tgp_japan_yearly_events.1140 = {
 			house.house_head = root
 			prestige_level >= 2
 		}
-		title:e_japan.holder != root
+		is_independent_ruler = no
+		tgp_is_ceremonial_liege_trigger = no
 	}
 
 	immediate = {
@@ -4099,12 +4102,11 @@ tgp_japan_yearly_events.1151 = {
 }
 
 scripted_trigger is_suitable_spouse_or_concubine_tgp_japan_1160 = {
-	top_liege = house.house_head
+	liege ?= house.house_head
 	liege = {
 		is_ai = yes # sanity check so as to not yeet a player's courtier
 	}
 	is_available_ai_adult = yes
-	is_house_head = no # this would be weird otherwise
 	is_ruler = no # this would be weirder otherwise
 	OR = {
 		can_marry_character_trigger = { CHARACTER = root }
@@ -4151,9 +4153,9 @@ tgp_japan_yearly_events.1160 = {
 	lower_center_portrait = scope:feuding_house.house_head
 
 	trigger = {
+		is_at_war = no
 		has_tgp_dlc_trigger = yes
 		is_available_adult = yes
-		is_at_war = no
 		exists = house
 		house.house_head = root
 		house = {
@@ -4456,18 +4458,23 @@ tgp_japan_yearly_events.1170 = {
 	#Find a country lead by a Chinese or Korean speaker and confirm you don't speak the language in question
 		random_neighboring_and_across_water_top_liege_realm_owner = {
 			limit = {
-				trigger_if = {
-					limit = {
+				OR = {
+					AND = {
+						knows_language = language_chinese
 						root = {
 							NOT = {
 								knows_language = language_chinese
 							}
 						}
 					}
-					knows_language = language_chinese
-				}
-				trigger_else = {
-					knows_language = language_korean
+					AND = {
+						knows_language = language_korean
+						root = {
+							NOT = {
+								knows_language = language_korean
+							}
+						}
+					}
 				}
 			}
 			save_scope_as = foreign_ruler

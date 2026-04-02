@@ -801,28 +801,6 @@ standard_activity_base_cost = {
 	}
 }
 
-# Deprecated
-standard_activity_cost = {
-	value = 50
-	multiply = {
-		value = primary_title.tier #Unop ck3-tiger
-		subtract = 1
-		min = 1
-	}
-	if = {
-		limit = {
-			primary_title.tier > tier_duchy #Unop ck3-tiger
-		}
-		add = 50
-	}
-	if = {
-		limit = {
-			government_has_flag = government_is_tribal #Unop ck3-tiger
-		}
-		multiply = 0.5
-	}
-}
-
 law_legacy_cost_reduction_mult = 0.3
 
 feast_events_ewan_0001_murder_scheme_bonus_time_to_use_value = 20
@@ -3646,7 +3624,7 @@ base_feast_cost_value = {
 		}
 		if = {
 			limit = {
-				house ?= { has_house_power_parameter = ceremony_cheaper_feasts }
+				house ?= { has_house_aspiration_parameter = ceremony_cheaper_feasts }
 			}
 			multiply = {
 				value = 0.75
@@ -3747,7 +3725,7 @@ base_feast_ui_cost_value = {
 
 	if = {
 		limit = {
-			house ?= { has_house_power_parameter = ceremony_cheaper_feasts }
+			house ?= { has_house_aspiration_parameter = ceremony_cheaper_feasts }
 		}
 		multiply = {
 			value = 0.75

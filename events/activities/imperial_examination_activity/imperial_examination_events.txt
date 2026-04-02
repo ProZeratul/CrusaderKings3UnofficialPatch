@@ -401,6 +401,7 @@ imperial_examination.1020 = {
 		animation = worry
 	}
 	trigger = {
+		is_ruler = yes # for performance reasons, if success is not a factor here, we only care about rulers
 		#Are we in the correct subset
 		is_in_guest_subset = { name = entrants }
 		trigger_if = {
@@ -522,6 +523,7 @@ imperial_examination.1040 = {
 	}
 
 	trigger = {
+		is_ruler = yes # for performance reasons, if success is not a factor here, we only care about rulers
 		#Are we in the correct subset
 		is_in_guest_subset = { name = entrants }
 		trigger_if = {
@@ -3153,7 +3155,7 @@ imperial_examination.4000 = {
 			has_activity_intent = imperial_exam_taker_intent
 		}
 		trigger_else = { has_activity_intent = local_exam_taker_intent }
-		NOT = { has_variable = has_exam_taker }
+		NOT = { var:has_exam_taker.involved_activity ?= scope:activity }
 		has_character_flag = exam_cheat_intent
 	}
 	immediate = {
@@ -3309,7 +3311,7 @@ imperial_examination.4010 = {
 			has_activity_intent = imperial_exam_taker_intent
 		}
 		trigger_else = { has_activity_intent = local_exam_taker_intent }
-		NOT = { has_variable = has_bribed_examiner }
+		NOT = { var:has_bribed_examiner.involved_activity ?= scope:activity }
 		scope:activity = {
 			any_guest_subset = {
 				name = imperial_examiners
@@ -3517,7 +3519,9 @@ imperial_examination.4030 = {
 	cooldown = { months = 6 }
 	trigger = {
 		#Are we in the correct subset
+		has_character_flag = exam_perform_intent
 		is_in_guest_subset = { name = entrants }
+		NOT = { has_variable = has_studied_with_friend }
 		trigger_if = {
 			limit = {
 				scope:activity = { has_activity_type = activity_imperial_examination }
@@ -3533,7 +3537,6 @@ imperial_examination.4030 = {
 			has_activity_intent = imperial_exam_taker_intent
 		}
 		trigger_else = { has_activity_intent = local_exam_taker_intent }
-		NOT = { has_variable = has_studied_with_friend }
 		scope:activity = {
 			any_guest_subset = {
 				name = entrants
@@ -3545,7 +3548,6 @@ imperial_examination.4030 = {
 				}
 			}
 		}
-		has_character_flag = exam_perform_intent
 	}
 	immediate = {
 		scope:activity = {
@@ -3704,6 +3706,7 @@ imperial_examination.4050 = {
 	}
 	cooldown = { months = 6 }
 	trigger = {
+		is_ruler = yes # for performance reasons, if success is not a factor here, we only care about rulers
 		exists = involved_activity
 		#Are we in the correct subset
 		is_in_guest_subset = { name = entrants }
@@ -4698,6 +4701,7 @@ imperial_examination.4100 = {
 
 	trigger = {
 		#Are we in the correct subset
+		has_character_flag = exam_cheat_intent
 		is_in_guest_subset = { name = entrants }
 		trigger_if = {
 			limit = {
@@ -4712,13 +4716,12 @@ imperial_examination.4100 = {
 				count >= 1
 				NOT = {
 					this = root
-					has_friendly_relationship_with_character_trigger = { CHARACTER = root }
+					has_any_moderate_good_relationship_with_character_trigger = { CHARACTER = root }
 					is_close_or_extended_family_of = root
 				}
 				is_ai = yes
 			}
 		}
-		has_character_flag = exam_cheat_intent
 	}
 
 	immediate = {
@@ -4729,7 +4732,7 @@ imperial_examination.4100 = {
 				limit = {
 					NOT = {
 						this = root
-						has_friendly_relationship_with_character_trigger = { CHARACTER = root }
+						has_any_moderate_good_relationship_with_character_trigger = { CHARACTER = root }
 						is_close_or_extended_family_of = root
 					}
 					is_ai = yes
@@ -6049,8 +6052,7 @@ imperial_examination.5000 = {
 		#Got 'em in our pocket...
 		triggered_animation = {
 			trigger = {
-				root = { has_variable = has_bribed_examiner }
-				scope:examiner = root.var:has_bribed_examiner
+				root.var:has_bribed_examiner ?= scope:examiner
 			}
 			animation = happy_teacher
 		}
@@ -6113,7 +6115,7 @@ imperial_examination.5000 = {
 	option = {
 		name = imperial_examination.5000.b
 		custom_tooltip = has_exam_taker_tt
-		trigger = { has_variable = has_exam_taker }
+		trigger = { var:has_exam_taker.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_exam_taker
@@ -6125,7 +6127,7 @@ imperial_examination.5000 = {
 	option = {
 		name = imperial_examination.5000.c
 		custom_tooltip = has_bribed_examiner_tt
-		trigger = { has_variable = has_bribed_examiner }
+		trigger = { var:has_bribed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_bribed_examiner
@@ -6137,7 +6139,7 @@ imperial_examination.5000 = {
 	option = {
 		name = imperial_examination.5000.d
 		custom_tooltip = has_blackmailed_examiner_tt
-		trigger = { has_variable = has_blackmailed_examiner }
+		trigger = { var:has_blackmailed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_blackmailed_examiner
@@ -6149,7 +6151,7 @@ imperial_examination.5000 = {
 	option = {
 		name = imperial_examination.5000.e
 		custom_tooltip = has_planted_answers_tt
-		trigger = { has_variable = has_planted_answers }
+		trigger = { var:has_planted_answers.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_planted_answers
@@ -6160,7 +6162,7 @@ imperial_examination.5000 = {
 	#Cheat: Your parent has bribed the examiner
 	option = {
 		name = imperial_examination.5000.f
-		trigger = { has_variable = parent_has_bribed_examiner }
+		trigger = { var:parent_has_bribed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = parent_has_bribed_examiner
@@ -6207,8 +6209,7 @@ imperial_examination.5050 = {
 		#Got 'em in our pocket...
 		triggered_animation = {
 			trigger = {
-				root = { has_variable = has_bribed_examiner }
-				scope:examiner = root.var:has_bribed_examiner
+				root.var:has_bribed_examiner ?= scope:examiner
 			}
 			animation = happy_teacher
 		}
@@ -6271,7 +6272,7 @@ imperial_examination.5050 = {
 	option = {
 		name = imperial_examination.5050.b
 		custom_tooltip = has_exam_taker_tt
-		trigger = { has_variable = has_exam_taker }
+		trigger = { var:has_exam_taker.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_exam_taker
@@ -6283,7 +6284,7 @@ imperial_examination.5050 = {
 	option = {
 		name = imperial_examination.5050.c
 		custom_tooltip = has_bribed_examiner_tt
-		trigger = { has_variable = has_bribed_examiner }
+		trigger = { var:has_bribed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_bribed_examiner
@@ -6295,7 +6296,7 @@ imperial_examination.5050 = {
 	option = {
 		name = imperial_examination.5050.d
 		custom_tooltip = has_blackmailed_examiner_tt
-		trigger = { has_variable = has_blackmailed_examiner }
+		trigger = { var:has_blackmailed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_blackmailed_examiner
@@ -6307,7 +6308,7 @@ imperial_examination.5050 = {
 	option = {
 		name = imperial_examination.5050.e
 		custom_tooltip = has_planted_answers_tt
-		trigger = { has_variable = has_planted_answers }
+		trigger = { var:has_planted_answers.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_planted_answers
@@ -6319,7 +6320,7 @@ imperial_examination.5050 = {
 	option = {
 		name = imperial_examination.5050.f
 		custom_tooltip = has_blackmailed_examiner_tt
-		trigger = { has_variable = parent_has_bribed_examiner }
+		trigger = { var:parent_has_bribed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = parent_has_bribed_examiner
@@ -6405,8 +6406,7 @@ imperial_examination.5100 = {
 		#Got 'em in our pocket...
 		triggered_animation = {
 			trigger = {
-				root = { has_variable = has_bribed_examiner }
-				scope:examiner = root.var:has_bribed_examiner
+				root.var:has_bribed_examiner ?= scope:examiner
 			}
 			animation = happy_teacher
 		}
@@ -6469,7 +6469,7 @@ imperial_examination.5100 = {
 	option = {
 		name = imperial_examination.5100.b
 		custom_tooltip = has_exam_taker_tt
-		trigger = { has_variable = has_exam_taker }
+		trigger = { var:has_exam_taker.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_exam_taker
@@ -6481,7 +6481,7 @@ imperial_examination.5100 = {
 	option = {
 		name = imperial_examination.5100.c
 		custom_tooltip = has_bribed_examiner_tt
-		trigger = { has_variable = has_bribed_examiner }
+		trigger = { var:has_bribed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_bribed_examiner
@@ -6493,7 +6493,7 @@ imperial_examination.5100 = {
 	option = {
 		name = imperial_examination.5100.d
 		custom_tooltip = has_blackmailed_examiner_tt
-		trigger = { has_variable = has_blackmailed_examiner }
+		trigger = { var:has_blackmailed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_blackmailed_examiner
@@ -6505,7 +6505,7 @@ imperial_examination.5100 = {
 	option = {
 		name = imperial_examination.5100.e
 		custom_tooltip = has_planted_answers_tt
-		trigger = { has_variable = has_planted_answers }
+		trigger = { var:has_planted_answers.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_planted_answers
@@ -6530,7 +6530,7 @@ imperial_examination.5100 = {
 	#Cheat: Your parent has bribed the examiner
 	option = {
 		name = imperial_examination.5100.g
-		trigger = { has_variable = parent_has_bribed_examiner }
+		trigger = { var:parent_has_bribed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_bribed_examiner
@@ -6635,7 +6635,7 @@ imperial_examination.5150 = {
 	option = {
 		name = imperial_examination.5150.b
 		custom_tooltip = has_exam_taker_tt
-		trigger = { has_variable = has_exam_taker }
+		trigger = { var:has_exam_taker.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_exam_taker
@@ -6648,7 +6648,7 @@ imperial_examination.5150 = {
 	option = {
 		name = imperial_examination.5150.c
 		custom_tooltip = has_bribed_examiner_tt
-		trigger = { has_variable = has_bribed_examiner }
+		trigger = { var:has_bribed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_bribed_examiner
@@ -6661,7 +6661,7 @@ imperial_examination.5150 = {
 	option = {
 		name = imperial_examination.5150.d
 		custom_tooltip = has_blackmailed_examiner_tt
-		trigger = { has_variable = has_blackmailed_examiner }
+		trigger = { var:has_blackmailed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_blackmailed_examiner
@@ -6674,7 +6674,7 @@ imperial_examination.5150 = {
 	option = {
 		name = imperial_examination.5150.e
 		custom_tooltip = has_blackmailed_examiner_tt
-		trigger = { has_variable = parent_has_bribed_examiner }
+		trigger = { var:parent_has_bribed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = parent_has_bribed_examiner
@@ -6779,7 +6779,7 @@ imperial_examination.5160 = {
 	option = {
 		name = imperial_examination.5160.b
 		custom_tooltip = has_exam_taker_tt
-		trigger = { has_variable = has_exam_taker }
+		trigger = { var:has_exam_taker.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_exam_taker
@@ -6789,7 +6789,7 @@ imperial_examination.5160 = {
 	option = {
 		name = imperial_examination.5160.c
 		custom_tooltip = has_bribed_examiner_tt
-		trigger = { has_variable = has_bribed_examiner }
+		trigger = { var:has_bribed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_bribed_examiner
@@ -6802,7 +6802,7 @@ imperial_examination.5160 = {
 	option = {
 		name = imperial_examination.5160.d
 		custom_tooltip = has_blackmailed_examiner_tt
-		trigger = { has_variable = has_blackmailed_examiner }
+		trigger = { var:has_blackmailed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_blackmailed_examiner
@@ -6815,7 +6815,7 @@ imperial_examination.5160 = {
 	option = {
 		name = imperial_examination.5160.e
 		custom_tooltip = has_blackmailed_examiner_tt
-		trigger = { has_variable = parent_has_bribed_examiner }
+		trigger = { var:parent_has_bribed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = parent_has_bribed_examiner
@@ -6902,7 +6902,7 @@ imperial_examination.5170 = {
 	option = {
 		name = imperial_examination.5170.b
 		custom_tooltip = has_exam_taker_tt
-		trigger = { has_variable = has_exam_taker }
+		trigger = { var:has_exam_taker.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_exam_taker
@@ -6912,7 +6912,7 @@ imperial_examination.5170 = {
 	option = {
 		name = imperial_examination.5170.c
 		custom_tooltip = has_bribed_examiner_tt
-		trigger = { has_variable = has_bribed_examiner }
+		trigger = { var:has_bribed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_bribed_examiner
@@ -6925,7 +6925,7 @@ imperial_examination.5170 = {
 	option = {
 		name = imperial_examination.5170.d
 		custom_tooltip = has_blackmailed_examiner_tt
-		trigger = { has_variable = has_blackmailed_examiner }
+		trigger = { var:has_blackmailed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = has_blackmailed_examiner
@@ -6938,7 +6938,7 @@ imperial_examination.5170 = {
 	option = {
 		name = imperial_examination.5170.e
 		custom_tooltip = has_blackmailed_examiner_tt
-		trigger = { has_variable = parent_has_bribed_examiner }
+		trigger = { var:parent_has_bribed_examiner.involved_activity ?= scope:activity }
 		add_internal_flag = special
 		imperial_examination_exam_cheat_effect = yes
 		remove_variable = parent_has_bribed_examiner

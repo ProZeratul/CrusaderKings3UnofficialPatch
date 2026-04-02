@@ -944,31 +944,24 @@ ep3_story_cycle_harrying.1011 = {
 		if = { #Ugly if/else block starts here!
 			limit = {
 				scope:captured = {
-					is_married = no
+					can_marry_common_trigger = yes
 					is_betrothed = no
 				}
 			}
 			if = { #Grab a courtier
 				limit = {
-					AND = {
-						scope:captured = { is_female = yes }
-						any_courtier = {
-							is_female = no
-							is_married = no
-							is_betrothed = no
-							is_adult = yes
-							culture = culture:norman
-							age > scope:captured.age_plus_10
-							age < scope:captured.age_minus_10
-						}
+					any_courtier = {
+						can_marry_character_trigger = { CHARACTER = scope:captured }
+						sex_opposite_of = scope:captured
+						culture = culture:norman
+						age > scope:captured.age_plus_10
+						age < scope:captured.age_minus_10
 					}
 				}
 				random_courtier = {
 					limit = {
-						is_female = no
-						is_married = no
-						is_betrothed = no
-						is_adult = yes
+						sex_opposite_of = scope:captured
+						can_marry_character_trigger = { CHARACTER = scope:captured }
 						culture = culture:norman
 						age > scope:captured.age_plus_10
 						age < scope:captured.age_minus_10
@@ -982,45 +975,6 @@ ep3_story_cycle_harrying.1011 = {
 						modifier = {
 							factor = 5
 							is_close_or_extended_family_of = root #And what nobler than the king?
-						}
-					}
-					save_scope_as = spouse_courtier
-				}
-			}
-			else_if = { #Gender reverse
-				limit = {
-					AND = {
-						scope:captured = { is_female = no }
-						any_courtier = {
-							is_female = yes
-							is_married = no
-							is_betrothed = no
-							is_adult = yes
-							culture = culture:norman
-							age > scope:captured.age_plus_10
-							age < scope:captured.age_minus_10
-						}
-					}
-				}
-				random_courtier = {
-					limit = {
-						is_female = yes
-						is_married = no
-						is_betrothed = no
-						is_adult = yes
-						culture = culture:norman
-						age > scope:captured.age_plus_10
-						age < scope:captured.age_minus_10
-					}
-					weight = {
-						base = 1
-						modifier = {
-							factor = 10
-							is_lowborn = no
-						}
-						modifier = {
-							factor = 5
-							is_close_or_extended_family_of = root
 						}
 					}
 					save_scope_as = spouse_courtier
@@ -1187,6 +1141,19 @@ ep3_story_cycle_harrying.1011 = {
 	}
 }
 
+scripted_trigger harrying_1015_trigger = {
+	culture = culture:anglo_saxon
+	highest_held_title_tier > tier_county	
+	any_held_title = {
+		tier = tier_county
+		is_landless_type_title = no
+		any_county_province = {
+			has_holding = yes
+			num_buildings > 0
+		}
+	}
+}
+
 # Punish a village
 ep3_story_cycle_harrying.1015 = {
 	type = character_event
@@ -1207,29 +1174,34 @@ ep3_story_cycle_harrying.1015 = {
 
 	trigger = {
 		any_vassal = {
-			culture = culture:anglo_saxon
-			highest_held_title_tier > tier_county	
-			any_county = {
-				any_province = {
-					has_holding = yes
-					num_buildings > 0
-				}
-			}		
+			harrying_1015_trigger = yes	
 		}
 	}
 
 	immediate = {
 		random_vassal = {
-			limit = { culture = culture:anglo_saxon }
+			limit = { 
+				harrying_1015_trigger = yes
+			}
 			save_scope_as = vassal
-			random_realm_province = {
+			random_held_title = {
 				limit = {
-					has_holding = yes
-					num_buildings >= 1
+					tier = tier_county
+					is_landless_type_title = no
+					any_county_province = {
+						has_holding = yes
+						num_buildings > 0
+					}
 				}
-				save_scope_as = offending_village	
-				every_neighboring_province = { add_to_list = resettlement_villages }
-				hidden_effect = { destroy_random_building_variable_effect = yes }
+				random_county_province = {
+					limit = {
+						has_holding = yes
+						num_buildings > 0
+					}
+					save_scope_as = offending_village	
+					every_neighboring_province = { add_to_list = resettlement_villages }
+					hidden_effect = { destroy_random_building_variable_effect = yes }
+				}
 			}
 		}
 		save_scope_as = root_scope #for tooltip
@@ -1268,6 +1240,12 @@ ep3_story_cycle_harrying.1015 = {
 
 	option = { #Resettle the residents
 		name = ep3_story_cycle_harrying.1015.b
+		trigger = {
+			any_in_list = {
+				list = resettlement_villages
+				count >= 1
+			}
+		}
 
 		scope:offending_village = {
 			add_province_modifier = {

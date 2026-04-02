@@ -31,7 +31,7 @@ wet_nurse_instill_virtue = {
 		save_scope_as = wetnurse_trait_giver
 		liege_or_court_owner = { save_scope_as = notification_character }
 		scope:notification_character = {
-			every_courtier_or_guest = {
+			random_courtier_or_guest = {
 				limit = {
 					is_adult = no
 					age >= 6
@@ -51,7 +51,7 @@ wet_nurse_instill_virtue = {
 						value = 1
 						add = {
 							value = "scope:wetnurse_trait_giver.aptitude(wet_nurse_court_position)"
-							multiply = 0.2
+							multiply = 0.4
 						}
 					}
 					instill_virtue_trait_effect = yes
@@ -66,10 +66,7 @@ wet_nurse_instill_virtue = {
 				random = {
 					chance = {
 						value = 1
-						add = {
-							value = "scope:wetnurse_trait_giver.aptitude(court_tutor_court_position)"
-							multiply = 0.5 # Unop: Was 1.5 wich seems high, you'll still get your virtues, just not as quickly
-						}
+						add = "scope:wetnurse_trait_giver.aptitude(court_tutor_court_position)"
 					}
 					instill_virtue_trait_effect = yes
 				}

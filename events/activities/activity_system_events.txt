@@ -586,6 +586,8 @@ activity_system.0310 = {
 
 	trigger = {
 		exists = involved_activity
+		#No point in this event if you can't cancel the travel anyway
+		current_travel_plan = { can_cancel = yes }
 	}
 
 	immediate = {
@@ -602,8 +604,6 @@ activity_system.0310 = {
 	option = { # Stay and participate 
 		# Reuses name from 0300
 		name = activity_system.0300.a
-		custom_tooltip = activity_system.0310.a.tt
-
 		trigger = {
 			NOR = {
 				scope:war.primary_attacker = { this = root }
@@ -611,7 +611,7 @@ activity_system.0310 = {
 				is_a_faction_member = yes
 			}
 		}
-
+		custom_tooltip = activity_system.0310.a.tt
 		ai_chance = {
 			base = 0
 		}

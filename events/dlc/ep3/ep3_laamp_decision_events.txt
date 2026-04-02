@@ -5537,12 +5537,33 @@ scripted_effect 1025_set_contract_location_effect = {
 			}
 			1025_save_random_county_province_effect = { REGION = world_africa_east }
 		}
+		#Sahara
+		10 = {
+			trigger = {
+				scope:visiting_location = { geographical_region = world_africa_sahara }
+			}
+			1025_save_random_county_province_effect = { REGION = world_africa_sahara }
+		}
+		#Siberia
+		10 = {
+			trigger = {
+				scope:visiting_location = { geographical_region = world_siberia }
+			}
+			1025_save_random_county_province_effect = { REGION = world_siberia }
+		}
 		#West Steppe
 		10 = {
 			trigger = {
 				scope:visiting_location = { geographical_region = world_steppe_west }
 			}
 			1025_save_random_county_province_effect = { REGION = world_steppe_west }
+		}
+		#Central Steppe
+		10 = {
+			trigger = {
+				scope:visiting_location = { geographical_region = world_steppe_central }
+			}
+			1025_save_random_county_province_effect = { REGION = world_steppe_central }
 		}
 		#East Steppe
 		10 = {
@@ -5551,23 +5572,75 @@ scripted_effect 1025_set_contract_location_effect = {
 			}
 			1025_save_random_county_province_effect = { REGION = world_steppe_east }
 		}
-		10 = { #Unop: This was region was missing
+		#Tarim
+		10 = {
 			trigger = {
-				scope:visiting_location = { geographical_region = world_asia_east }
+				scope:visiting_location = { geographical_region = world_steppe_tarim }
 			}
-			1025_save_random_county_province_effect = { REGION = world_asia_east }
+			1025_save_random_county_province_effect = { REGION = world_steppe_tarim }
 		}
-		10 = { #Unop: This was region was missing
+		#Tibet
+		10 = {
+			trigger = {
+				scope:visiting_location = { geographical_region = world_tibet }
+			}
+			1025_save_random_county_province_effect = { REGION = world_tibet }
+		}
+		# Burma
+		10 = {
+			trigger = {
+				scope:visiting_location = { geographical_region = world_burma }
+			}
+			1025_save_random_county_province_effect = { REGION = world_burma }
+		}
+		# Mainland SE Asia
+		10 = {
+			trigger = {
+				scope:visiting_location = { geographical_region = world_asia_southeast_mainland }
+			}
+			1025_save_random_county_province_effect = { REGION = world_asia_southeast_mainland }
+		}
+		# Maritime SE Asia
+		10 = {
+			trigger = {
+				scope:visiting_location = { geographical_region = world_asia_southeast_islands }
+			}
+			1025_save_random_county_province_effect = { REGION = world_asia_southeast_islands }
+		}
+		#China
+		10 = {
+			trigger = {
+				scope:visiting_location = { geographical_region = world_asia_china }
+			}
+			1025_save_random_county_province_effect = { REGION = world_asia_china }
+		}
+		#Japan
+		10 = {
+			trigger = {
+				scope:visiting_location = { geographical_region = world_asia_japan }
+			}
+			1025_save_random_county_province_effect = { REGION = world_asia_japan }
+		}
+		#Korea
+		10 = {
+			trigger = {
+				scope:visiting_location = { geographical_region = world_asia_korea }
+			}
+			1025_save_random_county_province_effect = { REGION = world_asia_korea }
+		}
+		#Sakhalin-Hokkaido
+		10 = {
+			trigger = {
+				scope:visiting_location = { geographical_region = world_asia_sakhalin_hokkaido }
+			}
+			1025_save_random_county_province_effect = { REGION = world_asia_sakhalin_hokkaido }
+		}
+		#North East Asia
+		10 = {
 			trigger = {
 				scope:visiting_location = { geographical_region = world_asia_north_east }
 			}
 			1025_save_random_county_province_effect = { REGION = world_asia_north_east }
-		}
-		10 = { #Unop: This was region was missing
-			trigger = {
-				scope:visiting_location = { geographical_region = world_asia_southeast }
-			}
-			1025_save_random_county_province_effect = { REGION = world_asia_southeast }
 		}
 	}	
 }
@@ -6401,24 +6474,6 @@ scripted_effect 1025_option_picked_spawn_contract_effect = {
 						scope:visiting_location = { geographical_region = world_steppe_east }
 					}
 					1025_find_ruler_and_spawn_legendary_contract_effect = { REGION = world_steppe_east }
-				}
-				else_if = { #Unop: Missing new region from AuH
-					limit = {
-						scope:visiting_location = { geographical_region = world_asia_east }
-					}
-					1025_find_ruler_and_spawn_legendary_contract_effect = { REGION = world_asia_east }
-				}
-				else_if = { #Unop: Missing new region from AuH
-					limit = {
-						scope:visiting_location = { geographical_region = world_asia_north_east }
-					}
-					1025_find_ruler_and_spawn_legendary_contract_effect = { REGION = world_asia_north_east }
-				}
-				else_if = { #Unop: Missing new region from AuH
-					limit = {
-						scope:visiting_location = { geographical_region = world_asia_southeast }
-					}
-					1025_find_ruler_and_spawn_legendary_contract_effect = { REGION = world_asia_southeast }
 				}
 				#YOLO
 				else = {
@@ -21342,6 +21397,7 @@ ep3_laamp_decision_event.1131 = { #city is finished, wat do
 		}
 		add_pressed_claim = scope:city_location.county
 		add_pressed_claim = scope:city_location.barony
+		add_character_flag = temp_no_claim_war_cost
 		start_war = {
 			cb = claim_cb
 			target = scope:city_location.county.holder
@@ -21349,6 +21405,7 @@ ep3_laamp_decision_event.1131 = { #city is finished, wat do
 			target_title = scope:city_location.county
 			target_title = scope:city_location.barony
 		}
+		remove_character_flag = temp_no_claim_war_cost
 
 		ai_chance = {
 			base = 0

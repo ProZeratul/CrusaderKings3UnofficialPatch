@@ -19,7 +19,7 @@
 # EFFECTS
 #####################################################################
 
-on_declared_war = {
+on_declared_war_play_music = {
 	###############################
 	##### Attacker music
 	###############################
@@ -138,6 +138,10 @@ on_declared_war = {
 			play_music_cue = mx_cue_war_declared
 		}
 	}
+}
+
+on_declared_war = {
+	on_declared_war_play_music = yes
 
 	###############################
 	##### Effects
@@ -192,7 +196,7 @@ on_declared_war = {
 				}
 				remove_list_variable = {
 					name = bought_truce_list
-					target = scope:defender #Unop replace scope:recipient with scope:defender as recipient does not exists
+					target = scope:defender
 				}
 			}
 
@@ -314,7 +318,7 @@ on_declared_war = {
 						has_dlc_feature = friends_and_foes
 						exists = scope:attacker.house.house_head
 						exists = scope:defender.house.house_head
-						NOT = { scope:attacker.house = scope:defender.house}
+						scope:attacker.house != scope:defender.house
 					}
 					house_feud_start_effect = {
 						#Feuding House Head
@@ -330,7 +334,7 @@ on_declared_war = {
 					}
 				}
 				#Then remove promise
-				remove_variable = promised_grand_wedding_marriage_countdown
+				clean_grand_wedding_betrothal_variables = yes
 			}
 			every_close_family_member = {
 				limit = {
@@ -2328,7 +2332,12 @@ add_prestige_war_defender_effect = {
 
 pay_short_term_gold_reparations_effect = {
 	if = {
-		limit = { has_government = landless_adventurer_government }
+		limit = { 
+			OR = {
+				has_government = landless_adventurer_government
+				monthly_character_income <= 0 # accommodate for reparations by characters without income, like viking conquerors
+			}
+		}
 		pay_short_term_gold = {
 			gold = {
 				value = medium_gold_value
@@ -2525,30 +2534,25 @@ allies_progress_towards_friendship_effect = {
 					name = joined_as_ally
 					target = scope:war
 				}
+				save_temporary_scope_as = ally_temp
+				scope:war = {
+					war_contribution = {
+						target = scope:ally_temp
+						value > 0
+					}	
+				}
 			}
 			if = {
-				limit = {
-					is_defender_in_war = scope:war						
-				}
-				scope:defender = {
-					save_scope_as = actor
-				}
+				limit = { is_defender_in_war = scope:war }
+				scope:defender = { save_scope_as = actor }
 			}
 			else = {
-				scope:attacker = {
-					save_scope_as = actor
-				}
+				scope:attacker = { save_scope_as = actor }
 			}
 			save_scope_as = ally
-			if = {
+			if = { # if war leader is AI, directly increase friendship
 				limit = {
-					is_ai = yes
-					scope:war = {
-						war_contribution = {
-							target = scope:ally
-							value > 0
-						}	
-					}
+					scope:actor = { is_ai = yes } 
 				}
 				scope:actor = {
 					progress_towards_friend_effect = {
@@ -2558,7 +2562,7 @@ allies_progress_towards_friendship_effect = {
 					}
 				}
 			}
-			else = {
+			else = { # otherwise create potential  friendship
 				hidden_effect = { #To nudge friendship
 					scope:actor = {
 						if = {
@@ -2867,7 +2871,7 @@ commander_trait_leveling_leveling_effect = {
 	if = { # Peasant Leader fighting non peasants
 		limit = {
 			has_trait = peasant_leader
-			root.enemy_side.side_commander = {
+			root.enemy_side.side_commander ?= {
 				is_lowborn = no
 			}
 		}

@@ -898,6 +898,7 @@ coronation_oath_cleanup_effect = {
 		}
 		remove_variable = learning_oath_1_timer
 		remove_variable = learning_oath_cost
+		remove_variable = learning_oath_1_university_exists
 	}
 	# De Jure rights
 	if = {
@@ -2834,6 +2835,19 @@ coronation_disburse_rewards_effect = {
 	if = {
 		limit = { has_activity_intent = coronation_exalt_crown }
 		dynasty = { add_dynasty_prestige = minor_dynasty_prestige_gain }
+	}
+
+	if = {
+		limit = {
+			primary_title ?= {
+				has_title_law = confederation_elective_succession_law
+			}
+			NOR = {
+				has_character_modifier = coronated_confed_modifier
+				has_character_modifier = confederate_king_modifier
+			}
+		}
+		add_character_modifier = coronated_confed_modifier
 	}
 }
 
@@ -6962,6 +6976,7 @@ ach_remove_oaths_on_king_minus_effect = {
 		remove_variable = learning_oath_1
 		remove_variable = learning_oath_1_timer
 		remove_variable = learning_oath_cost
+		remove_variable = learning_oath_1_university_exists
 	}
 	# De Jure rights
 	if = {

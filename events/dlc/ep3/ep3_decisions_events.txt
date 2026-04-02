@@ -2650,7 +2650,7 @@ ep3_decisions_event.2090 = {
 					remove_variable = confirmation_grace
 				}
 				# Refund any costs
-				add_prestige = standard_activity_cost
+				add_prestige = standard_activity_base_cost
 			}
 			trigger_event = ep3_decisions_event.2080
 		}
@@ -7434,9 +7434,22 @@ ep3_decisions_event.6001 = {
 			}
 		}
 		scope:liege = { save_scope_as = new_liege }
+		location.duchy.holder ?= {
+			if = {
+				limit = {
+					this != scope:new_liege
+					can_set_relation_rival_trigger = { CHARACTER = root }
+				}
+				set_relation_rival = {
+					target = root
+					reason = seized_my_realm_crime
+				}
+			}
+		}
 		set_variable = separatist_uprising_decision_var
 		set_variable = became_landed_through_separatist_uprising_var
 		location.duchy = {
+			save_scope_as = target
 			add_to_list = transfer_titles
 			# All De Jure Counties held by the liege will be moved over
 			every_de_jure_county = {
@@ -7598,7 +7611,14 @@ ep3_decisions_event.6001 = {
 	
 	option = { # Let me think about it
 		name = ep3_decisions_event.6001.d
-		
+		hidden_effect = {
+			send_interface_toast = {
+				title = champion_culture_costs_refunded
+				left_icon = root
+				add_prestige_no_experience = 2000
+				add_short_term_gold = 500
+			}
+		}
 		ai_chance = {
 			base = 0
 		}

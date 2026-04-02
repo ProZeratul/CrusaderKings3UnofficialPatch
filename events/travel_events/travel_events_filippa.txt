@@ -4094,7 +4094,7 @@ travel_events.2012 = {
 				}
 			}
 			#To avoid bloating the tooltip if we have a bunch of entourage members
-			custom_tooltip = travel_events.2012.c_tt
+			custom_tooltip = travel_events.2012.b_tt #Unop: Fix wrong text used, entourage will be happy about this
 			hidden_effect = {
 				current_travel_plan = {
 					every_entourage_character = {
@@ -7564,13 +7564,11 @@ travel_events.2021 = {
 		play_music_cue = "mx_cue_low_key_positive"
 		#Generate a random trinket
 		hidden_effect = {
-			scope:estate_character = {
-				generate_trinket_effect = {
-					TRINKET_RECEIVER = root
-					TRINKET_GIVER = root
-					GRAB_ALL_TRINKETS = yes
-					HISTORY_TYPE = stolen_unknown
-				}
+			generate_trinket_effect = {
+				TRINKET_RECEIVER = root
+				TRINKET_GIVER = root
+				GRAB_ALL_TRINKETS = yes
+				HISTORY_TYPE = stolen_unknown
 			}
 		}
 	}
@@ -12904,8 +12902,7 @@ travel_events.2038 = {
 					#Don't need a bunch of rabbit paws
 					if = {
 						limit = {
-							any_artifact = {
-								artifact_owner = root
+							any_character_artifact = {
 								has_variable = rabbits_paw
 							}
 							NOT = { has_trait = lifestyle_hunter }
@@ -12914,8 +12911,7 @@ travel_events.2038 = {
 					}
 					else_if = {
 						limit = {
-							any_artifact = {
-								artifact_owner = root
+							any_character_artifact = {
 								has_variable = rabbits_paw
 							}
 							has_trait = lifestyle_hunter
@@ -13037,8 +13033,7 @@ travel_events.2038 = {
 			scope:entourage_character = {
 				is_adult = no
 				NOT = {
-					any_artifact = {
-						artifact_owner = scope:entourage_character
+					any_character_artifact = {
 						has_variable = rabbits_paw
 					}
 				}
@@ -13250,8 +13245,7 @@ travel_events.2039 = {
 			#Don't need a bunch of rabbit paws
 			if = {
 				limit = {
-					any_artifact = {
-						artifact_owner = root
+					any_character_artifact = {
 						has_variable = rabbits_paw
 					}
 					NOT = { has_trait = lifestyle_hunter }
@@ -13260,8 +13254,7 @@ travel_events.2039 = {
 			}
 			else_if = {
 				limit = {
-					any_artifact = {
-						artifact_owner = root
+					any_character_artifact = {
 						has_variable = rabbits_paw
 					}
 					has_trait = lifestyle_hunter
