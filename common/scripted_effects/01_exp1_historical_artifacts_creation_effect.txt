@@ -1069,10 +1069,10 @@ create_artifact_pedestal_branch_relic_general_effect = {
 		#This is needed to determine what religion the branch will work for.
 		if = {
 			limit = { NOT = { exists = $RELIGION$ } } #Unop: Since the adventurer can be at sea when the end event fire, the religion won't be set !
-			#Got location: Gulf of Aden(Province - 8674) so no wonder why faith was undefined 
+			#Got location: Gulf of Aden(Province - 8674) so no wonder why religion was undefined
 			set_variable = {
 				name = relic_religion
-				value = root.faith # Root or inspiration_sponsor faith ? going with root for now
+				value = root.faith.religion # Root or inspiration_sponsor religion ? going with root for now
 			}
 		}
 		else = {

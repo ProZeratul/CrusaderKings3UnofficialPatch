@@ -28,18 +28,21 @@ tribute_mission_decision_eunuch_trigger = {
 
 # If faith hostility levels or cultural acceptance are bad enough, or cultural heritage is not the same, we want to apply additional limits to AI going on tribute missions in some cases
 tribute_mission_decision_ai_religion_culture_limit_trigger = {
+	$TARGET$ = {
+		save_temporary_scope_as = unop_target
+	}
 	faith ?= {
-		exists = $TARGET$.faith
+		exists = scope:unop_target.faith
 		faith_hostility_level = {
-			target = $TARGET$.faith
+			target = scope:unop_target.faith
 			value <= faith_astray_level
 		}
 	}
 	culture ?= {
-		exists = $TARGET$.culture
-		has_same_culture_heritage = $TARGET$.culture
+		exists = scope:unop_target.culture
+		has_same_culture_heritage = scope:unop_target.culture
 		cultural_acceptance = {
-			target = $TARGET$.culture
+			target = scope:unop_target.culture
 			value >= 50
 		}
 	}
