@@ -18,6 +18,7 @@ struggle_iberia_ending_hostility_decision = {
 	confirm_click_sound = "event:/DLC/FP2/SFX/UI/fp2_struggle_ending_decision_confirm"
 	is_invisible = yes
 	sort_order = 80
+	cooldown = { days = 1 }
 
 	is_shown = {
 		is_landless_adventurer = no
@@ -30,9 +31,7 @@ struggle_iberia_ending_hostility_decision = {
 		OR = {
 			custom_tooltip = {
 				text = struggle_iberia_ending_hostility_decision_correct_phase_tt
-				any_character_struggle = {
-					involvement = involved
-					is_struggle_type = iberian_struggle
+				struggle:iberian_struggle = {
 					is_struggle_phase = struggle_iberia_phase_hostility
 				}
 			}
@@ -43,15 +42,6 @@ struggle_iberia_ending_hostility_decision = {
 					tier >= tier_kingdom
 					title_held_years >= 5
 				}
-			}
-		}
-
-
-		custom_tooltip = {
-			text = struggle_ending_decision_correct_involvement_spain_tt
-			any_character_struggle = {
-				involvement = involved
-				is_struggle_type = iberian_struggle
 			}
 		}
 
@@ -159,7 +149,7 @@ struggle_iberia_ending_hostility_decision = {
 			limit = { has_ach_dlc_trigger = yes }
 			add_character_flag = ach_ended_struggle
 		}
-		
+
 		##### Major Effects #####
 		show_as_tooltip = {
 			dynasty = { add_dynasty_prestige = 10000 }
@@ -234,6 +224,7 @@ struggle_iberia_ending_compromise_decision = {
 	selection_tooltip = struggle_iberia_ending_compromise_decision_tooltip
 	confirm_click_sound = "event:/DLC/FP2/SFX/UI/fp2_struggle_ending_decision_confirm"
 	is_invisible = yes
+	cooldown = { days = 1 }
 
 	sort_order = 80
 
@@ -247,17 +238,8 @@ struggle_iberia_ending_compromise_decision = {
 
 		custom_tooltip = {
 			text = struggle_iberia_ending_compromise_decision_correct_phase_tt
-			any_character_struggle = {
-				is_struggle_type = iberian_struggle
+			struggle:iberian_struggle = {
 				is_struggle_phase = struggle_iberia_phase_compromise
-			}
-		}
-
-		custom_tooltip = {
-			text = struggle_ending_decision_correct_involvement_spain_tt
-			any_character_struggle = {
-				involvement = involved
-				is_struggle_type = iberian_struggle
 			}
 		}
 
@@ -453,6 +435,7 @@ struggle_iberia_ending_conciliation_decision = {
 	selection_tooltip = struggle_iberia_ending_conciliation_decision_tooltip
 	confirm_click_sound = "event:/DLC/FP2/SFX/UI/fp2_struggle_ending_decision_confirm"
 	is_invisible = yes
+	cooldown = { days = 1 }
 
 	sort_order = 80
 
@@ -466,17 +449,8 @@ struggle_iberia_ending_conciliation_decision = {
 
 		custom_tooltip = {
 			text = struggle_iberia_ending_conciliation_decision_correct_phase_tt
-			any_character_struggle = {
-				is_struggle_type = iberian_struggle
+			struggle:iberian_struggle = {
 				is_struggle_phase = struggle_iberia_phase_conciliation
-			}
-		}
-
-		custom_tooltip = {
-			text = struggle_ending_decision_correct_involvement_spain_tt
-			any_character_struggle = {
-				involvement = involved
-				is_struggle_type = iberian_struggle
 			}
 		}
 
@@ -614,7 +588,7 @@ secure_mediterranean_decision = {
 		completely_controls = title:d_corsica
 		completely_controls = title:d_sicily
 	}
-	
+
 	is_valid_showing_failures_only = {
 		is_landed = yes
 	}
@@ -1546,7 +1520,7 @@ found_kingdom_toledo_decision = {
 			}
 		}
 	}
-	
+
 	is_valid_showing_failures_only = {
 		is_landed = yes
 	}

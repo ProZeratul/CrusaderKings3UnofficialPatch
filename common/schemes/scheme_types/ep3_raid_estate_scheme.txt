@@ -402,7 +402,7 @@
 			desc = family_attribute_desc_with_value
 			scope:owner ?= {
 				house ?= {
-					has_house_power_parameter = improved_raid_estate_scheme_3
+					has_house_aspiration_parameter = improved_raid_estate_scheme_3
 				}
 			}
 		}
@@ -411,7 +411,7 @@
 			desc = family_attribute_desc_with_value
 			scope:owner ?= {
 				house ?= {
-					has_house_power_parameter = improved_raid_estate_scheme_2
+					has_house_aspiration_parameter = improved_raid_estate_scheme_2
 				}
 			}
 		}
@@ -420,7 +420,7 @@
 			desc = family_attribute_desc_with_value
 			scope:owner ?= {
 				house ?= {
-					has_house_power_parameter = improved_raid_estate_scheme_1
+					has_house_aspiration_parameter = improved_raid_estate_scheme_1
 				}
 			}
 		}
@@ -431,30 +431,43 @@
 		add = countermeasure_apply_secrecy_maluses_value
 		add = eparch_scheme_secrecy_bonus_value
 		# Family attributes
-		scope:owner ?= {
-			house ?= {
-				add = {
-					value = 0
-					if = {
-						limit = {
-							has_house_power_parameter = improved_raid_estate_scheme_3
-						}
-						add = improved_raid_estate_scheme_3_value
+		if = {
+			limit = {
+				scope:owner ?= {
+					house ?= {
+						has_house_aspiration_parameter = improved_raid_estate_scheme_3
 					}
-					else_if = {
-						limit = {
-							has_house_power_parameter = improved_raid_estate_scheme_2
-						}
-						add = improved_raid_estate_scheme_2_value
-					}
-					else_if = {
-						limit = {
-							has_house_power_parameter = improved_raid_estate_scheme_1
-						}
-						add = improved_raid_estate_scheme_1_value
-					}
-					desc = family_attribute_desc
 				}
+			}
+			add = {
+				value = improved_raid_estate_scheme_3_value
+				desc = family_attribute_desc
+			}
+		}
+		else_if = {
+			limit = {
+				scope:owner ?= {
+					house ?= {
+						has_house_aspiration_parameter = improved_raid_estate_scheme_2
+					}
+				}
+			}
+			add = {
+				value = improved_raid_estate_scheme_2_value
+				desc = family_attribute_desc
+			}
+		}
+		else_if = {
+			limit = {
+				scope:owner ?= {
+					house ?= {
+						has_house_aspiration_parameter = improved_raid_estate_scheme_1
+					}
+				}
+			}
+			add = {
+				value = improved_raid_estate_scheme_1_value
+				desc = family_attribute_desc
 			}
 		}
 	}

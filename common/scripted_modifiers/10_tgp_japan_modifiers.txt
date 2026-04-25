@@ -382,7 +382,7 @@ house_bloc_desire_to_join_modifiers = {
 	modifier = { # Same Aspiration
 		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		exists = scope:inviter_temp.confederation.leading_house
-		scope:joiner_temp.house ?= { has_same_house_power_as = scope:inviter_temp.confederation.leading_house }
+		scope:joiner_temp.house ?= { has_same_house_aspiration_as = scope:inviter_temp.confederation.leading_house }
 		add = 25
 		desc = AI_SAME_LEADING_ASPIRATION_REASON
 	}
@@ -390,19 +390,19 @@ house_bloc_desire_to_join_modifiers = {
 		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		exists = scope:inviter_temp.confederation.leading_house
 		scope:joiner_temp.house ?= {
-			has_same_house_power_as = scope:inviter_temp.house.house_confederation.leading_house
+			has_same_house_aspiration_as = scope:inviter_temp.house.house_confederation.leading_house
 			trigger_if = {
-				limit = { has_house_power_parameter = aspiration_level_1 }
+				limit = { has_house_aspiration_parameter = aspiration_level_1 }
 				scope:inviter_temp.house.house_confederation.leading_house = {
 					OR = {
-						has_house_power_parameter = aspiration_level_2
-						has_house_power_parameter = aspiration_level_3
+						has_house_aspiration_parameter = aspiration_level_2
+						has_house_aspiration_parameter = aspiration_level_3
 					}
 				}
 			}
 			trigger_else_if = {
-				limit = { has_house_power_parameter = aspiration_level_2 }
-				scope:inviter_temp.house.house_confederation.leading_house = { has_house_power_parameter = aspiration_level_3 }
+				limit = { has_house_aspiration_parameter = aspiration_level_2 }
+				scope:inviter_temp.house.house_confederation.leading_house = { has_house_aspiration_parameter = aspiration_level_3 }
 			}
 			trigger_else = { always = no }
 		}
@@ -411,8 +411,8 @@ house_bloc_desire_to_join_modifiers = {
 			if = {
 				limit = {
 					exists = scope:joiner_temp.house.house_confederation.leading_house
-					scope:joiner_temp.house.house_confederation.leading_house = { has_house_power_parameter = aspiration_level_1 }
-					scope:inviter_temp.house.house_confederation.leading_house = { has_house_power_parameter = aspiration_level_3 }
+					scope:joiner_temp.house.house_confederation.leading_house = { has_house_aspiration_parameter = aspiration_level_1 }
+					scope:inviter_temp.house.house_confederation.leading_house = { has_house_aspiration_parameter = aspiration_level_3 }
 				}
 				add = 25
 			}
@@ -424,7 +424,7 @@ house_bloc_desire_to_join_modifiers = {
 		exists = scope:joiner_temp.house
 		exists = scope:inviter_temp.confederation.leading_house
 		NOT = {
-			scope:joiner_temp.house = { has_same_house_power_as = scope:inviter_temp.confederation.leading_house }
+			scope:joiner_temp.house = { has_same_house_aspiration_as = scope:inviter_temp.confederation.leading_house }
 		}
 		add = -40
 		desc = AI_DIFFERENT_LEADING_ASPIRATION_REASON

@@ -586,7 +586,7 @@ feast_tsagaan_sar_events.0002 = {
             }
             modifier = {
                 factor = 1.5
-                any_artifact = { artifact_owner = root is_equipped = no }
+                any_character_artifact = { is_equipped = no }
             }
             modifier = {
                 add = 10
@@ -1207,11 +1207,7 @@ feast_tsagaan_sar_events.0004 = {
     immediate = {
         every_character_artifact = {
             limit = {
-                NOR = {
-                    has_variable = banner_house
-                    has_variable = banner_dynasty
-                    has_variable = 1025_treasure_map
-                }
+                artifact_can_be_gift_to_trigger = { RECIPIENT = root.involved_activity.activity_host }
             }
             add_to_list = list_of_potential_artifacts_to_gift
         }

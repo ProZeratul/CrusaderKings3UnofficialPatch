@@ -1,6 +1,5 @@
 ﻿activity_adult_education = {
 	is_shown = {
-		has_bp2_dlc_trigger = yes
 		highest_held_title_tier > tier_barony
 		is_playable_character = yes
 		trigger_if = {
@@ -33,6 +32,9 @@
 	can_start_showing_failures_only = {
 		NOT = { is_activity_type_on_cooldown = activity_adult_education }
 		is_available_adult = yes
+		NOT = {
+			has_character_modifier = partially_mute_modifier
+		}
 
 		# Can you improve?
 		trigger_if = {

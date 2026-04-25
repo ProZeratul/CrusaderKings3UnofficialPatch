@@ -441,6 +441,7 @@ imperial_examination_disburse_activity_entrant_rewards = {
         			has_variable = been_caught_cheating
         			has_variable = been_caught_cheating_longterm
         		}
+				government_allows = merit
         	}
 			add_secret = {
 				target = scope:host
@@ -595,6 +596,7 @@ local_examination_disburse_activity_entrant_rewards = {
         			has_variable = been_caught_cheating
         			has_variable = been_caught_cheating_longterm
         		}
+				government_allows = merit
         	}
 			add_secret = {
 				target = scope:host
@@ -1596,30 +1598,24 @@ metropolitan_examination_scoreboard_setup_effect = {
 		}
 	}
 	#Add the fresh entrants to the scoreboard
-	while = {
-		count = 1
-		ordered_attending_character = {
-			limit = {
-				or = {
-					is_in_guest_subset = { name = entrants }
-				}
-				NOR = {
-					is_in_guest_subset = { name = scoreboard }
-					scope:activity = {
-						any_guest_subset = {
-							name = scoreboard
-							count = scope:activity.var:scoreboard_size
-						}
+	every_attending_character = {
+		limit = {
+			is_in_guest_subset = { name = entrants }
+			NOR = {
+				is_in_guest_subset = { name = scoreboard }
+				scope:activity = {
+					any_guest_subset = {
+						name = scoreboard
+						count = scope:activity.var:scoreboard_size
 					}
 				}
 			}
-			order_by = imperial_examination_score_value
-			save_temporary_scope_as = temp_character
-			scope:activity = {
-				add_to_guest_subset = {
-					name = scoreboard
-					target = scope:temp_character
-				}
+		}
+		save_temporary_scope_as = temp_character
+		scope:activity = {
+			add_to_guest_subset = {
+				name = scoreboard
+				target = scope:temp_character
 			}
 		}
 	}
@@ -1656,28 +1652,24 @@ palace_examination_scoreboard_setup_effect = {
 		}
 	}
 	#Add the fresh entrants to the scoreboard
-	while = {
-		count = 1
-		ordered_attending_character = {
-			limit = {
-				is_in_guest_subset = { name = palace_entrants }
-				NOR = {
-					is_in_guest_subset = { name = scoreboard }
-					scope:activity = {
-						any_guest_subset = {
-							name = scoreboard
-							count = scope:activity.var:scoreboard_size
-						}
+	every_attending_character = {
+		limit = {
+			is_in_guest_subset = { name = palace_entrants }
+			NOR = {
+				is_in_guest_subset = { name = scoreboard }
+				scope:activity = {
+					any_guest_subset = {
+						name = scoreboard
+						count = scope:activity.var:scoreboard_size
 					}
 				}
 			}
-			order_by = imperial_examination_score_value
-			save_temporary_scope_as = temp_character
-			scope:activity = {
-				add_to_guest_subset = {
-					name = scoreboard
-					target = scope:temp_character
-				}
+		}
+		save_temporary_scope_as = temp_character
+		scope:activity = {
+			add_to_guest_subset = {
+				name = scoreboard
+				target = scope:temp_character
 			}
 		}
 	}
@@ -1734,6 +1726,7 @@ imperial_examination_determine_exam_outcome_effect = {
 			# If we don't have enough, let some of the failees pass.
 			ordered_guest_subset = {
 				name = entrants
+				check_range_bounds = no
 				limit = {
 					has_trait = education_martial
 					has_variable = failee_to_be_removed

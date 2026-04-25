@@ -90,45 +90,13 @@ spawn_earthquake_in_county_effect = {
 			value = 0
 		}
 
-		# Potentially overridden below based on region
 		save_scope_value_as = {
 			name = min_severity
-			value = 1
+			value = scope:epicenter_county.title_province.natural_disaster_earthquake_min_severity
 		}
 		save_scope_value_as = {
 			name = max_severity
-			value = 3
-		}
-
-		scope:epicenter_county.title_province ?= {
-			switch = {
-				trigger = geographical_region
-				geographical_region:world_europe_west_britannia = { save_scope_value_as = { name = max_severity value = 1 } }
-				geographical_region:world_europe_north = { save_scope_value_as = { name = max_severity value = 1 } }
-				geographical_region:world_middle_east_arabia = { save_scope_value_as = { name = max_severity value = 1 } }
-				geographical_region:world_india_deccan = { save_scope_value_as = { name = max_severity value = 1 } }
-				geographical_region:world_india_rajastan = { save_scope_value_as = { name = max_severity value = 1 } }
-				geographical_region:custom_lanka = { save_scope_value_as = { name = max_severity value = 1 } }
-				geographical_region:world_africa_west = { save_scope_value_as = { name = max_severity value = 1 } }
-				geographical_region:world_steppe_west = { save_scope_value_as = { name = max_severity value = 1 } }
-				geographical_region:world_siberia = { save_scope_value_as = { name = max_severity value = 1 } }
-				geographical_region:world_asia_korea = { save_scope_value_as = { name = max_severity value = 1 } }
-				geographical_region:world_asia_borneo = { save_scope_value_as = { name = max_severity value = 1 } }
-			}
-		}
-		scope:epicenter_county.title_province ?= {
-			switch = {
-				trigger = geographical_region
-				geographical_region:world_europe_south = { save_scope_value_as = { name = min_severity value = 2 } }
-				geographical_region:world_asia_minor = { save_scope_value_as = { name = min_severity value = 2 } }
-				geographical_region:world_middle_east = { save_scope_value_as = { name = min_severity value = 2 } }
-				geographical_region:world_tibet = { save_scope_value_as = { name = min_severity value = 2 } }
-				geographical_region:world_burma = { save_scope_value_as = { name = min_severity value = 2 } }
-				geographical_region:custom_arakan_mountains = { save_scope_value_as = { name = min_severity value = 2 } }
-				geographical_region:world_asia = { save_scope_value_as = { name = min_severity value = 2 } }
-				geographical_region:custom_bactria = { save_scope_value_as = { name = min_severity value = 2 } }
-				geographical_region:world_himalaya = { save_scope_value_as = { name = min_severity value = 2 } }
-			}
+			value = scope:epicenter_county.title_province.natural_disaster_earthquake_max_severity
 		}
 
 		set_variable = {
@@ -258,22 +226,13 @@ spawn_flood_in_county_effect = {
 			value = 0
 		}
 
-		# Potentially overridden below based on region
 		save_scope_value_as = {
 			name = min_severity
-			value = 1
+			value = scope:epicenter_county.title_province.natural_disaster_flood_min_severity
 		}
 		save_scope_value_as = {
 			name = max_severity
-			value = 3
-		}
-
-		scope:flood_county.title_province ?= {
-			switch = {
-				trigger = geographical_region
-				geographical_region:yellow_river_region = { save_scope_value_as = { name = min_severity value = 2 } }
-				geographical_region:nile_river_region = { save_scope_value_as = { name = min_severity value = 2 } }
-			}
+			value = scope:epicenter_county.title_province.natural_disaster_flood_max_severity
 		}
 
 		set_variable = {

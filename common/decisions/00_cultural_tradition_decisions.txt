@@ -539,6 +539,17 @@ embrace_hebrew_language_decision = {
 	is_valid = { #Unop: All this was in the is_valid_showing_failures_only but it does not show in the requirements of the decision !
 		top_liege = this
 		highest_held_title_tier > 3 #Only Kings and Emperors
+	}
+
+	is_valid = {
+		OR = {
+			has_title = title:k_israel
+			has_title = title:k_bene_israel
+			custom_tooltip = {
+				text = hof_exists_tt
+				faith = { exists = religious_head }
+			}
+		}
 		# There must be enough Jewish counties in your realm to declare the exile "over"
 		custom_description = {
 			text = at_least_10_jewish_counties_tt
@@ -546,14 +557,6 @@ embrace_hebrew_language_decision = {
 				count >= 10
 				faith.religion = root.faith.religion
 				culture = root.culture
-			}
-		}
-		OR = {
-			has_title = title:k_israel
-			has_title = title:k_bene_israel
-			custom_tooltip = {
-				text = hof_exists_tt
-				faith = { exists = religious_head }
 			}
 		}
 	}
