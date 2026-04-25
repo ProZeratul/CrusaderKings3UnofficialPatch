@@ -594,7 +594,7 @@ blind_castrated_disfigured_recipient_support_effect = { #To be used in other eff
 	release_from_prison = yes
 	if = {
 		limit = {
-			scope:recruit = yes
+			scope:recruit ?= yes #Unop Avoid errors due to non-existing scope:recruit
 		}
 		scope:actor = {
 			add_courtier = scope:recipient

@@ -478,14 +478,17 @@ unop_log_hunt_activity_effect = {
 
 unop_log_hunt_invalidation_flavor_effect = {
 	if = {
-		limit = { scope:activity = { has_variable = hunt_invalidated_flavor } }
+		limit = { scope:activity = { has_variable = hunt_invalidated } }
 		switch = {
-			trigger = scope:activity.var:hunt_invalidated_flavor
+			trigger = scope:activity.var:hunt_invalidated
 			flag:wounded = 					{ debug_log = "Flavor: wounded" }
+			flag:wound = 					{ debug_log = "Flavor: wound" }
 			flag:death = 					{ debug_log = "Flavor: death" }
 			flag:assassination_attempt = 	{ debug_log = "Flavor: assassination_attempt" }
 			flag:abduction_attempt = 		{ debug_log = "Flavor: abduction_attempt" }
 			flag:abduction = 				{ debug_log = "Flavor: abduction" }
+			flag:landless = 				{ debug_log = "Flavor: landless" }
+			flag:fallback = 				{ debug_log = "Flavor: fallback" }
 			fallback = 		{ debug_log = "Animal: You have forgot one in the switch!?" }
 		}
 	}

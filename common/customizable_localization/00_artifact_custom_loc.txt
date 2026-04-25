@@ -564,7 +564,7 @@ ArtifactPrefixGeneric = {
 				AND = {
 					exists = scope:owner.var:adventure_artifact_location
 					scope:owner = {
-						any_sub_realm_barony = { this = scope:owner.var:adventure_artifact_location }
+						any_sub_realm_barony = { title_province = scope:owner.var:adventure_artifact_location } #Unop var stores province; compare provinces
 					}
 				}
 			}
@@ -577,7 +577,7 @@ ArtifactPrefixGeneric = {
 			exists = scope:owner.var:adventure_artifact_location
 			scope:owner = {
 				NOT = {
-					any_sub_realm_barony = { this = scope:owner.var:adventure_artifact_location }
+					any_sub_realm_barony = { title_province = scope:owner.var:adventure_artifact_location } #Unop var stores province; compare provinces
 				}
 			}
 		}

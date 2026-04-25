@@ -1464,6 +1464,14 @@ fp2_lyonese_monk_return_territories_effect = {
 }
 
 fp2_lyonese_monk_cancel_chain_effect = {
+	#Unop Called from on_trigger_fail before scope:acolyte is saved in immediate; recover from scope:story
+	if = {
+		limit = {
+			NOT = { exists = scope:acolyte }
+			exists = scope:story.var:acolyte
+		}
+		scope:story.var:acolyte = { save_scope_as = acolyte }
+	}
 	# Tidy up the story.
 	scope:story = { end_story = yes }
 	# Tidy up scope:acolyte.

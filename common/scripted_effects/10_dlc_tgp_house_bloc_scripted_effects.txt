@@ -1389,7 +1389,7 @@ tgp_save_bloc_leaving_reason_effect = {
 				}
 				else_if = { # COHESION
 					limit = {
-						house.house_confederation ?= { cohesion <= 25 }
+						house_confederation ?= { cohesion <= 25 } #Unop Removed redundant house. prefix (scope is already dynasty house)
 					}
 					set_variable = {
 						name = bloc_leaving_reason

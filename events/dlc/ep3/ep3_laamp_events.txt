@@ -6335,32 +6335,7 @@ ep3_laamps.5035 = {
 		location = {
 			save_scope_as = location
 		}
-		if = { #Grab a random, inexpensive artifact if you have it
-			limit = {
-				any_character_artifact = {
-					NOT = {
-						has_artifact_modifier = artifact_guide_map_modifier
-					}
-					artifact_can_be_gift_to_trigger = { RECIPIENT = scope:guide }
-				}
-			}
-			random_character_artifact = {
-				limit = {
-					NOT = {
-						has_artifact_modifier = artifact_guide_map_modifier
-					}
-					artifact_can_be_gift_to_trigger = { RECIPIENT = scope:guide }
-				}
-				weight = {
-					base = 1
-					modifier = {
-						rarity = common
-						add = 2
-					}
-				}
-				save_scope_as = random_artifact
-			}
-		}
+		#Unop ck3-tiger save scope:guide before referencing it in artifact_can_be_gift_to_trigger below
 		if = {
 			limit = {
 				any_pool_character = {
@@ -6398,6 +6373,33 @@ ep3_laamps.5035 = {
 			# Plus give 'em a nickname.
 			hidden_effect = {
 				scope:guide = { assign_random_nickname_effect = yes }
+			}
+		}
+		#Unop Moved from above
+		if = { #Grab a random, inexpensive artifact if you have it
+			limit = {
+				any_character_artifact = {
+					NOT = {
+						has_artifact_modifier = artifact_guide_map_modifier
+					}
+					artifact_can_be_gift_to_trigger = { RECIPIENT = scope:guide }
+				}
+			}
+			random_character_artifact = {
+				limit = {
+					NOT = {
+						has_artifact_modifier = artifact_guide_map_modifier
+					}
+					artifact_can_be_gift_to_trigger = { RECIPIENT = scope:guide }
+				}
+				weight = {
+					base = 1
+					modifier = {
+						rarity = common
+						add = 2
+					}
+				}
+				save_scope_as = random_artifact
 			}
 		}
 		hidden_effect = {
