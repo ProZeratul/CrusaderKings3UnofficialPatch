@@ -8395,40 +8395,113 @@ mpo_add_golden_lineage_effect = {
 	add_trait = golden_lineage
 	if = {
 		limit = {
-			exists = dynasty
+			OR = {
+				has_realm_law = female_only_law
+				has_realm_law = female_preference_law
+			}
 		}
-		custom_tooltip = descendants_gain_golden_lineage
-		hidden_effect = {
-			dynasty = {
-				every_dynasty_member = {
-					custom = custom
+		every_child = {
+			custom = descendants_gain_golden_lineage_female
+			limit = {
+				NOT = { has_trait = golden_lineage }
+			}
+			add_trait = golden_lineage
+			if = {
+				limit = {
+					is_female = yes
+				}
+				every_child = {
 					limit = {
-						any_ancestor = {
-							this = $CHARACTER$
-						}
+						NOT = { has_trait = golden_lineage }
 					}
 					add_trait = golden_lineage
+					if = {
+						limit = {
+							is_female = yes
+						}
+						every_child = {
+							limit = {
+								NOT = { has_trait = golden_lineage }
+							}
+							add_trait = golden_lineage
+							if = {
+								limit = {
+									is_female = yes
+								}
+								every_child = {
+									limit = {
+										NOT = { has_trait = golden_lineage }
+									}
+									add_trait = golden_lineage
+									if = {
+										limit = {
+											is_female = yes
+										}
+										every_child = {
+											limit = {
+												NOT = { has_trait = golden_lineage }
+											}
+											add_trait = golden_lineage
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 		}
 	}
-	every_child = {
-		limit = {
-			NOR = {
-				has_trait = bastard
-				has_trait = legitimized_bastard
-			}
-			NOT = {
-				has_trait = golden_lineage
-			}
-		}
-		add_trait = golden_lineage
-		if = {
+	else = {
+		every_child = {
+			custom = descendants_gain_golden_lineage_male
 			limit = {
-				is_male = yes
+				NOT = { has_trait = golden_lineage }
 			}
-			every_child = {
-				add_trait = golden_lineage
+			add_trait = golden_lineage
+			if = {
+				limit = {
+					is_male = yes
+				}
+				every_child = {
+					limit = {
+						NOT = { has_trait = golden_lineage }
+					}
+					add_trait = golden_lineage
+					if = {
+						limit = {
+							is_male = yes
+						}
+						every_child = {
+							limit = {
+								NOT = { has_trait = golden_lineage }
+							}
+							add_trait = golden_lineage
+							if = {
+								limit = {
+									is_male = yes
+								}
+								every_child = {
+									limit = {
+										NOT = { has_trait = golden_lineage }
+									}
+									add_trait = golden_lineage
+									if = {
+										limit = {
+											is_male = yes
+										}
+										every_child = {
+											limit = {
+												NOT = { has_trait = golden_lineage }
+											}
+											add_trait = golden_lineage
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}

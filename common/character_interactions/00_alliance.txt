@@ -3844,7 +3844,7 @@ join_war_interaction = {
 		}
 		scope:recipient = {
 			show_as_tooltip = {
-				if = {
+				if = { # if war leader is AI, will directly increase friendship for contributing
 					limit = {
 						is_ai = yes
 					}
@@ -3854,7 +3854,7 @@ join_war_interaction = {
 						REASON = friend_alliance
 					}
 				}
-				else = {
+				else = { # otherwise will create potential  friendship
 					hidden_effect = { #To nudge friendship
 						if = {
 							limit = {
@@ -4142,6 +4142,7 @@ join_vassal_war_interaction = {
 				}
 				any_in_list = {
 					list = target_titles
+					tier <= tier_duchy
 					count = 1
 				}
 

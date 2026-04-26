@@ -396,7 +396,7 @@ diarch_imprison_interaction_intermediary_fail_opinions_effect = {
 			# ... but upset with scope:actor.
 			add_opinion = {
 				target = scope:actor
-				modifier = imprisoned_me_past
+				modifier = attempted_imprisonment_opinion
 			}
 		}
 	}
@@ -1227,21 +1227,12 @@ invalidate_diarch_grand_wedding_effect = {
 					var:promised_grand_wedding_to ?= { add_to_list = informee }
 				}
 			}
+			var:promised_grand_wedding_by = {
+				clean_grand_wedding_betrothal_variables = yes
+			}
 			# Clean up variables and inform relevant characters of invalidation
 			every_in_list = {
 				list = informee
-				if = {
-					limit = { exists = var:promised_grand_wedding_marriage_countdown }
-					remove_variable = promised_grand_wedding_marriage_countdown
-				}
-				if = {
-					limit = { exists = var:promised_grand_wedding_by }
-					remove_variable = promised_grand_wedding_by
-				}
-				if = {
-					limit = { exists = var:promised_grand_wedding_to }
-					remove_variable = promised_grand_wedding_to
-				}
 				send_interface_message = {
 					type = msg_betrothal_invalidated
 					title = grand_wedding_cancelled_by_regency_title

@@ -30,10 +30,10 @@ namespace = scheme_critical_moments
 # 1201 - 1210	Siphon Treasury Results
 # 1211 - 1220	Disbelieve Mandala Results
 # 1221 - 1230	Coerce Tributary Results
-# 
-# 
-# 
-# 
+#
+#
+#
+#
 #
 # #Contract Schemes (Diplo)
 # 2001 - 2010	Regale court with stories
@@ -100,7 +100,7 @@ scripted_effect roll_scheme_success_or_failure_effect = {
 			value = yes
 		}
 	}
-	scope:owner = {	
+	scope:owner = {
 		if = {
 			limit = { exists = scope:scheme_successful }
 			mandala_trickster_increment_successful_schemes_effect = yes
@@ -1638,7 +1638,7 @@ scheme_critical_moments.1111 = {
 				save_scope_value_as = {
 					name = scheme_successful
 					value = yes
-				}	
+				}
 			}
 			scope:owner = {
 				if = {
@@ -2357,7 +2357,7 @@ scheme_critical_moments.1153 = {
 # Ariana Tranumn
 # 1161 - 1170
 ##################################################
- 
+
 #	Results event for the Steal Herd scheme.
 scheme_critical_moments.1161 = {
 	hidden = yes
@@ -2370,10 +2370,10 @@ scheme_critical_moments.1161 = {
 				save_scope_value_as = {
 					name = scheme_successful
 					value = yes
-				}		
+				}
 			}
 			scope:owner = {
-				mandala_trickster_increment_successful_schemes_effect = yes	
+				mandala_trickster_increment_successful_schemes_effect = yes
 				if = {
 					limit = {
 						exists = scope:scheme_successful
@@ -2385,7 +2385,7 @@ scheme_critical_moments.1161 = {
 				else = {
 					trigger_event = {
 						on_action = steal_herd_failure
-					}	
+					}
 				}
 			}
 		}
@@ -2792,6 +2792,7 @@ scheme_critical_moments.1202 = {
 		if = {
 			limit = {
 				scope:scheme.var:siphon_destination ?= flag:treasury
+				has_treasury = yes
 			}
 			add_treasury = scope:scheme.var:embezzlement_stake_initial
 		}
@@ -2879,7 +2880,7 @@ scheme_critical_moments.1203 = {
 		}
 		else_if = {
 			limit = {
-				has_title = title:h_china			
+				has_title = title:h_china
 			}
 			add_legitimacy_effect = { LEGITIMACY = medium_legitimacy_loss }
 		}
@@ -2974,7 +2975,7 @@ scheme_critical_moments.1211 = {
 					trigger_event = {
 						id = scheme_critical_moments.1213
 						days = 1
-					}	
+					}
 				}
 			}
 		}
@@ -3070,7 +3071,7 @@ scheme_critical_moments.1212 = {
 				}
 				#The standard outcome
 				result_success_disbelieve_mandala_effect = yes
-			}	
+			}
 		}
 	}
 
@@ -3160,7 +3161,7 @@ scheme_critical_moments.1213 = {
 # Target reaction to Success
 scheme_critical_moments.1214 = {
 	type = character_event
-	window = scheme_target_event
+	window = scheme_conclusion_event_no_header
 	title = scheme_critical_moments.1214.t
 	desc = {
 		desc = scheme_critical_moments.1214.desc
@@ -3199,7 +3200,7 @@ scheme_critical_moments.1214 = {
 			create_character_memory = { type = became_disbelieved_memory }
 		}
 		#The standard outcome
-		result_success_disbelieve_mandala_effect = yes	
+		result_success_disbelieve_mandala_effect = yes
 	}
 
 	option = {
@@ -3210,7 +3211,7 @@ scheme_critical_moments.1214 = {
 # Target reaction to Failure
 scheme_critical_moments.1215 = {
 	type = character_event
-	window = scheme_target_event
+	window = scheme_conclusion_event_no_header
 	title = scheme_critical_moments.1215.t
 	desc = {
 		desc = scheme_critical_moments.1215.desc
@@ -3298,7 +3299,7 @@ scheme_critical_moments.1221 = {
 					trigger_event = {
 						id = scheme_critical_moments.1223
 						days = 1
-					}	
+					}
 				}
 			}
 		}
@@ -3355,7 +3356,7 @@ scheme_critical_moments.1223 = {
 		desc = scheme_critical_moments.1223.intro
 		first_valid = {
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					scope:target = { is_tributary = yes }
 				}
 				desc = scheme_critical_moments.1223.desc_suzerain
@@ -3399,7 +3400,7 @@ scripted_effect coerced_tributary_opinion_loss_effect = {
 #Inform Schemer that Target needs to consider their Suzerain
 scheme_critical_moments.1224 = {
 	type = character_event
-	window = scheme_target_event
+	window = scheme_conclusion_event_no_header
 	title = scheme_critical_moments.1224.t
 	desc = scheme_critical_moments.1224.desc
 	theme = mandala
@@ -3435,7 +3436,7 @@ scripted_effect coerced_tributary_spent_resources_effect = {
 #Suzerain gets notified of impending Tributary departure
 scheme_critical_moments.1225 = {
 	type = character_event
-	window = scheme_target_event
+	window = scheme_conclusion_event_no_header
 	title = scheme_critical_moments.1225.t
 	desc = scheme_critical_moments.1225.desc
 	theme = mandala
@@ -3501,7 +3502,7 @@ scheme_critical_moments.1225 = {
 			casus_belli = make_tributary_cb
 			target = scope:target
 		}
-		custom_description_no_bullet = { 
+		custom_description_no_bullet = {
 			text = scheme_potential_suzerain_might_join_war_tt
 			subject = scope:target
 			object = scope:owner
@@ -3509,7 +3510,7 @@ scheme_critical_moments.1225 = {
 		ai_chance = {
 			base = 100
 			modifier = {
-				house = { has_house_power_parameter = aspect_of_serenity }
+				house = { has_house_aspiration_parameter = aspect_of_serenity }
 				factor = 0.5
 			}
 			modifier = {
@@ -3559,7 +3560,7 @@ scheme_critical_moments.1225 = {
 #Scheme owner gets notified of outcome
 scheme_critical_moments.1226 = {
 	type = character_event
-	window = scheme_target_event
+	window = scheme_conclusion_event_no_header
 	title = {
 		first_valid = {
 			triggered_desc = {
@@ -3796,7 +3797,7 @@ scheme_critical_moments.1232 = {
 		character = scope:target
 		animation = happiness
 	}
-	
+
 	immediate = {
 		top_participant_group:dynastic_cycle ?= { save_scope_as = actors_movement }
 	}
@@ -4013,7 +4014,7 @@ scheme_critical_moments.1241 = {
 					trigger_event = {
 						id = scheme_critical_moments.1243
 						days = 1
-					}	
+					}
 				}
 			}
 		}
@@ -4083,7 +4084,7 @@ scheme_critical_moments.1242 = {
 		}
 		#The holder of the title 'officially' contributes
 		if = {
-			limit = { 
+			limit = {
 				exists = scope:title_holder
 				scope:title_holder.primary_title.tier > tier_barony
 			}
@@ -4183,7 +4184,7 @@ scheme_critical_moments.1251 = {
 					trigger_event = {
 						id = scheme_critical_moments.1253
 						days = 1
-					}	
+					}
 				}
 			}
 		}
@@ -4898,7 +4899,7 @@ scripted_effect save_target_government_as_variable_effect = {
 		trigger = has_government
 		feudal_government = {
 			scope:scheme.scheme_owner = {
-				save_scope_value_as = { 
+				save_scope_value_as = {
 					name = old_government_type
 					value = flag:feudal
 				}
@@ -4906,7 +4907,7 @@ scripted_effect save_target_government_as_variable_effect = {
 		}
 		republic_government = {
 			scope:scheme.scheme_owner = {
-				save_scope_value_as = { 
+				save_scope_value_as = {
 					name = old_government_type
 					value = flag:republic
 				}
@@ -4914,7 +4915,7 @@ scripted_effect save_target_government_as_variable_effect = {
 		}
 		theocracy_government = {
 			scope:scheme.scheme_owner = {
-				save_scope_value_as = { 
+				save_scope_value_as = {
 					name = old_government_type
 					value = flag:theocracy
 				}
@@ -4922,7 +4923,7 @@ scripted_effect save_target_government_as_variable_effect = {
 		}
 		clan_government = {
 			scope:scheme.scheme_owner = {
-				save_scope_value_as = { 
+				save_scope_value_as = {
 					name = old_government_type
 					value = flag:clan
 				}
@@ -4930,7 +4931,7 @@ scripted_effect save_target_government_as_variable_effect = {
 		}
 		tribal_government = {
 			scope:scheme.scheme_owner = {
-				save_scope_value_as = { 
+				save_scope_value_as = {
 					name = old_government_type
 					value = flag:tribal
 				}
@@ -4938,7 +4939,7 @@ scripted_effect save_target_government_as_variable_effect = {
 		}
 		wanua_government = {
 			scope:scheme.scheme_owner = {
-				save_scope_value_as = { 
+				save_scope_value_as = {
 					name = old_government_type
 					value = flag:wanua
 				}
@@ -4946,7 +4947,7 @@ scripted_effect save_target_government_as_variable_effect = {
 		}
 		holy_order_government = {
 			scope:scheme.scheme_owner = {
-				save_scope_value_as = { 
+				save_scope_value_as = {
 					name = old_government_type
 					value = flag:holy_order
 				}
@@ -4954,7 +4955,7 @@ scripted_effect save_target_government_as_variable_effect = {
 		}
 		administrative_government = {
 			scope:scheme.scheme_owner = {
-				save_scope_value_as = { 
+				save_scope_value_as = {
 					name = old_government_type
 					value = flag:administrative
 				}
@@ -4962,7 +4963,7 @@ scripted_effect save_target_government_as_variable_effect = {
 		}
 		nomad_government = {
 			scope:scheme.scheme_owner = {
-				save_scope_value_as = { 
+				save_scope_value_as = {
 					name = old_government_type
 					value = flag:nomad
 				}
@@ -4970,7 +4971,7 @@ scripted_effect save_target_government_as_variable_effect = {
 		}
 		herder_government = {
 			scope:scheme.scheme_owner = {
-				save_scope_value_as = { 
+				save_scope_value_as = {
 					name = old_government_type
 					value = flag:herder
 				}
@@ -4978,7 +4979,7 @@ scripted_effect save_target_government_as_variable_effect = {
 		}
 		celestial_government = {
 			scope:scheme.scheme_owner = {
-				save_scope_value_as = { 
+				save_scope_value_as = {
 					name = old_government_type
 					value = flag:celestial
 				}
@@ -4986,7 +4987,7 @@ scripted_effect save_target_government_as_variable_effect = {
 		}
 		mandala_government = {
 			scope:scheme.scheme_owner = {
-				save_scope_value_as = { 
+				save_scope_value_as = {
 					name = old_government_type
 					value = flag:mandala
 				}
@@ -4994,7 +4995,7 @@ scripted_effect save_target_government_as_variable_effect = {
 		}
 		steppe_admin_government = {
 			scope:scheme.scheme_owner = {
-				save_scope_value_as = { 
+				save_scope_value_as = {
 					name = old_government_type
 					value = flag:steppe_admin
 				}
@@ -5002,7 +5003,7 @@ scripted_effect save_target_government_as_variable_effect = {
 		}
 		meritocratic_government = {
 			scope:scheme.scheme_owner = {
-				save_scope_value_as = { 
+				save_scope_value_as = {
 					name = old_government_type
 					value = flag:meritocratic
 				}
@@ -5010,7 +5011,7 @@ scripted_effect save_target_government_as_variable_effect = {
 		}
 		japan_feudal_government = {
 			scope:scheme.scheme_owner = {
-				save_scope_value_as = { 
+				save_scope_value_as = {
 					name = old_government_type
 					value = flag:japan_feudal
 				}
@@ -5018,7 +5019,7 @@ scripted_effect save_target_government_as_variable_effect = {
 		}
 		japan_administrative_government = {
 			scope:scheme.scheme_owner = {
-				save_scope_value_as = { 
+				save_scope_value_as = {
 					name = old_government_type
 					value = flag:japan_administrative
 				}
@@ -5187,12 +5188,12 @@ scheme_critical_moments.2922 = {
 		coup_ceremonial_liege_scheme_success_effect = yes
 	}
 
-	option = { 
+	option = {
 		name = scheme_critical_moments.2922.a
 	}
 
 	after = {
-		
+
 	}
 }
 
@@ -6786,7 +6787,10 @@ scheme_critical_moments.8031 = {
 							}
 							scope:target = {
 								random_character_artifact = {
-									limit = { is_equipped = no }
+									limit = {
+										is_equipped = no
+										NOT = { has_variable = artifact_prevent_transfer }
+									}
 									weight = {
 										base = 1
 										# Prefer worse artifacts
@@ -8755,7 +8759,7 @@ scheme_critical_moments.8067 = {
 	option = {
 		name = scheme_critical_moments.8067.a
 		scope:scheme = { end_scheme = yes }
-		change_influence = major_influence_loss	
+		change_influence = major_influence_loss
 	}
 }
 
@@ -8765,7 +8769,7 @@ scheme_critical_moments.8068 = {
 
 	trigger = {
 		scope:target_character = {
-			spymaster_task_find_secrets_court_has_minor_secrets_trigger = yes		
+			spymaster_task_find_secrets_court_has_minor_secrets_trigger = yes
 		}
 	}
 
@@ -8790,7 +8794,7 @@ scheme_critical_moments.8068 = {
 				}
 				every_secret = {
 					limit = {
-						spymaster_task_find_secrets_suitable_minor_secret_trigger = yes	
+						spymaster_task_find_secrets_suitable_minor_secret_trigger = yes
 					}
 					add_to_temporary_list = suitable_secrets
 				}
@@ -8800,7 +8804,7 @@ scheme_critical_moments.8068 = {
 				limit = {
 					any_secret = {
 						spymaster_task_find_secrets_suitable_minor_secret_trigger = yes
-					}	
+					}
 				}
 				every_secret = {
 					limit = {
@@ -8915,10 +8919,10 @@ scheme_critical_moments.8068 = {
 							desc = task_intrigue_good_skilled_notification_tooltip
 						}
 					}
-					
+
 					left_icon = scope:secret_holder
 					right_icon = scope:councillor
-					
+
 					scope:secret_to_reveal = {
 						reveal_to = scope:councillor_liege
 					}
@@ -8942,11 +8946,11 @@ scheme_critical_moments.8068 = {
 					send_interface_message = {
 						type = msg_spymaster_task_good
 						title = spymaster_task.0311.notification
-						
+
 						left_icon = scope:secret_holder
-						
+
 						desc = blank_line
-						
+
 						scope:secret_to_reveal = {
 							reveal_to = scope:councillor
 						}
@@ -8984,7 +8988,7 @@ scheme_critical_moments.8069 = {
 				}
 				every_secret = {
 					limit = {
-						spymaster_task_find_secrets_suitable_major_secret_trigger = yes	
+						spymaster_task_find_secrets_suitable_major_secret_trigger = yes
 					}
 					add_to_temporary_list = suitable_secrets
 				}
@@ -8994,7 +8998,7 @@ scheme_critical_moments.8069 = {
 				limit = {
 					any_secret = {
 						spymaster_task_find_secrets_suitable_major_secret_trigger = yes
-					}	
+					}
 				}
 				every_secret = {
 					limit = {
@@ -9117,7 +9121,7 @@ scheme_critical_moments.8069 = {
 							title = spymaster_task.0311.notification
 
 							left_icon = scope:secret_holder
-							
+
 							desc = blank_line
 
 							scope:secret_to_reveal = {
@@ -9148,7 +9152,7 @@ scheme_critical_moments.8070 = {
 		character = scope:character_to_hook
 		animation = boredom
 	}
-	
+
 	trigger = {
 		scope:target_character = {
 			OR = {
@@ -9246,6 +9250,10 @@ scheme_critical_moments.8070 = {
 				}
 				add = -50
 			}
+			ai_value_modifier = {
+				ai_greed = -1
+				ai_honor = -1
+			}
 			modifier = {
 				factor = 0
 				OR = {
@@ -9273,7 +9281,16 @@ scheme_critical_moments.8070 = {
 				type = fabrication_hook
 			}
 		}
-		remove_short_term_treasury = minor_treasury_value
+		if = {
+			limit = {
+				has_treasury = yes
+				has_title = title:e_minister_censor
+			}
+			remove_treasury = minor_gold_value	
+		}
+		else = {
+			remove_short_term_gold = minor_gold_value
+		}
 		add_merit_if_relevant_effect = {
 			MERIT = minor_merit_value
 		}
@@ -9310,6 +9327,9 @@ scheme_critical_moments.8070 = {
 				is_in_same_movement_as = { TARGET = scope:councillor_liege }
 				add = 20
 			}
+			ai_value_modifier = {
+				ai_honor = 1
+			}
 		}
 	}
 
@@ -9337,8 +9357,13 @@ scheme_critical_moments.8070 = {
 		ai_chance = {
 			base = 5
 			modifier = {
+				is_in_pro_hegemon_or_hegemon_movement = no
 				is_in_same_movement_as = { TARGET = scope:character_to_hook }
 				add = 200
+			}
+			ai_value_modifier = {
+				ai_sociability = 0.5
+				ai_honor = -1
 			}
 			modifier = {
 				is_close_or_extended_family_of = scope:character_to_hook
@@ -9366,7 +9391,7 @@ scheme_critical_moments.8071 = {
 		character = scope:criminal
 		animation = eyeroll
 	}
-	
+
 	trigger = {
 	}
 

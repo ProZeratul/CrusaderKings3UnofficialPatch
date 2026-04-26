@@ -554,7 +554,7 @@ fp2_struggle.0900 = { # Hostility
 	immediate = {
 		# Add all involved rulers to a list, for ping event
 		play_music_cue = "mx_Struggle_ending_hostility"
-		fp2_stuggle_ending_involved_list_effect = yes
+		fp2_struggle_ending_involved_list_effect = yes
 		give_nickname = nick_the_conquistador
 		#Unop Change renown correctly
 		unop_add_renown_effect = { PRESTIGE_MODIFIER = raw_struggle_ending_dynasty_prestige_value } #Unop: Use our custom effect to better handle renown
@@ -641,7 +641,7 @@ fp2_struggle.0900 = { # Hostility
 		custom_tooltip = fp2_struggle_hostility_conversion_culture_tt
 		# All Involved cultures lose acceptance of each other
 		custom_tooltip = {
-			text = fp2_struggle_hostility_culture_large_tt
+			text = fp2_struggle_hostility_culture_large_tt 
 			fp2_struggle_hostility_cultural_acceptance_large_effect = yes
 		}
 		stress_impact = {
@@ -717,7 +717,7 @@ fp2_struggle.0910 = {
 			}
 		}
 		# Hispania is available!
-		custom_tooltip = fp2_struggle_can_create_empire_of_hispania_tt
+		custom_tooltip = fp2_struggle_can_create_empire_of_hispania_tt 
 		# Choose Holy War boost, Culture War boost, or both
 		scope:struggle_ender.house = {
 			switch = {
@@ -831,7 +831,7 @@ fp2_struggle.0901 = { # Compromise
 
 		##### Major Effects #####
 		fp2_struggle_compromise_ender_effect = yes
-
+		
 		# Tooltips!
 		fp2_struggle_compromise_tooltip_effect = yes
 
@@ -843,7 +843,7 @@ fp2_struggle.0901 = { # Compromise
 			value = yes
 		}
 		# Add all involved rulers to a list, for ping event
-		fp2_stuggle_ending_involved_list_effect = yes
+		fp2_struggle_ending_involved_list_effect = yes
 	}
 
 	# Ok
@@ -998,7 +998,7 @@ fp2_struggle.0902 = { # Conciliation
 			value = yes
 		}
 		# Add all involved rulers to a list, for ping event
-		fp2_stuggle_ending_involved_list_effect = yes
+		fp2_struggle_ending_involved_list_effect = yes
 
 		# Add all involved cultures with counties to a list, for marriage and holy war checks
 		fp2_struggle_ending_culture_list_effect = yes
@@ -1012,7 +1012,7 @@ fp2_struggle.0902 = { # Conciliation
 		fp2_struggle_conciliation_modifier_rewards_effect = yes
 	}
 
-	#
+	# 
 	option = {
 		name = fp2_struggle.0902.a
 	}
@@ -1107,7 +1107,7 @@ scripted_trigger fp2_struggle_1000_tension_councillor_trigger = {
 	OR = {
 		has_trait = zealous
 		has_trait = wrathful
-		has_trait = deceitful
+		has_trait = deceitful 
 		has_trait = sadistic
 		has_trait = holy_warrior
 		has_trait = callous
@@ -1115,7 +1115,7 @@ scripted_trigger fp2_struggle_1000_tension_councillor_trigger = {
 	NOR = {
 		has_trait = compassionate
 		has_trait = just
-	}
+	}				
 }
 
 fp2_struggle.1000 = {
@@ -1133,17 +1133,17 @@ fp2_struggle.1000 = {
 		animation = scheme
 	}
 
-
+	
 	trigger = {
 		has_fp2_dlc_trigger = yes
 		fp2_character_involved_in_struggle_trigger = yes
 		custom_description = {
-			text = empty_spooky_trigger #This is entirely pointless, but code likes it, so ghost away!
+			text = empty_spooky_trigger #This is entirely pointless, but code likes it, so ghost away! 
 			any_held_county = { fp2_struggle_1000_tension_county_trigger = yes }
 			OR = {
 				any_councillor = { fp2_struggle_1000_tension_councillor_trigger = yes }
 				any_vassal = { fp2_struggle_1000_tension_councillor_trigger = yes }
-				exists = cp:councillor_marshal
+				exists = cp:councillor_marshal 
 			}
 		}
 		OR = {
@@ -1156,7 +1156,7 @@ fp2_struggle.1000 = {
 		years = 50
 	}
 
-	immediate = { #We need a province and a suitable councillor; this fixes that.
+	immediate = { #We need a province and a suitable councillor; this fixes that. 
 		random_held_county = {
 			limit = { fp2_struggle_1000_tension_county_trigger = yes }
 			save_scope_as = tension_county
@@ -1173,7 +1173,7 @@ fp2_struggle.1000 = {
 				}
 				save_scope_as = tension_councillor
 			}
-		}
+		}	
 		else_if = {
 			limit = {
 				any_vassal = {
@@ -1182,7 +1182,7 @@ fp2_struggle.1000 = {
 			}
 			random_vassal = {
 				limit = {
-					fp2_struggle_1000_tension_councillor_trigger = yes
+					fp2_struggle_1000_tension_councillor_trigger = yes 
 				}
 				save_scope_as = tension_councillor
 			}
@@ -1195,8 +1195,8 @@ fp2_struggle.1000 = {
 				save_scope_as = tension_councillor
 			}
 		}
-
-		if = { #this code checks if there is an eligible person for the 4th option
+		
+		if = { #this code checks if there is an eligible person for the 4th option 
 			limit = {
 				any_vassal = {
 					is_available_healthy_ai_adult = yes
@@ -1204,10 +1204,10 @@ fp2_struggle.1000 = {
 				}
 			}
 			random_vassal = {
-				limit = {
+				limit = { 
 					is_available_healthy_ai_adult = yes
 					faith = scope:tension_county.faith
-				}
+				}	
 				save_scope_as = minority_courtier
 			}
 		}
@@ -1219,36 +1219,36 @@ fp2_struggle.1000 = {
 	 	 		}
  	 		}
 			random_courtier = {
-				limit = {
+				limit = { 
 					is_available_healthy_ai_adult = yes
 					faith = scope:tension_county.faith
-				}
+				}	
 				save_scope_as = minority_courtier
 			}
 		}
 	}
-
-	option = { #Let us spread some hatred...discreetly.
+					
+	option = { #Let us spread some hatred...discreetly.  
 		name = fp2_struggle.1000.a
 
 		ai_chance = { #Cruel and fanatical characters pick this option
         	base = 10
         	ai_value_modifier = {
            		ai_zeal = 1
-           		ai_vengefulness = 0.5
+           		ai_vengefulness = 0.5  
             	ai_compassion = -1
             	ai_honor = -1
         	}
    		}
 
    		stress_impact = {
-			# Righteous characters find this a very unappealing option.
+			# Righteous characters find this a very unappealing option. 
 			compassionate = medium_stress_impact_gain
 			gallant = medium_stress_impact_gain
 			honest = medium_stress_impact_gain
 			just = medium_stress_impact_gain
 			paragon = medium_stress_impact_gain
-			# As do lazy ones.
+			# As do lazy ones. 
 			lazy = minor_stress_impact_gain
 		}
 
@@ -1260,13 +1260,13 @@ fp2_struggle.1000 = {
 			}
 		}
 
-
+		 
 		add_character_modifier = {
-			modifier = fanatical_recruits_modifier
-			years = 10
+			modifier = fanatical_recruits_modifier 
+			years = 10 
 		}
-
-		duel = { #You try to create a hate campaign - and get away with it.
+		
+		duel = { #You try to create a hate campaign - and get away with it. 
 			skill = intrigue
 			value = average_skill_rating
 
@@ -1280,7 +1280,7 @@ fp2_struggle.1000 = {
 					left_icon = root
 
 					add_dread = minor_dread_gain
-
+					
 					scope:tension_county = {
 						add_county_modifier = {
 							modifier = riots_and_murders_province_modifier
@@ -1314,11 +1314,11 @@ fp2_struggle.1000 = {
 		}
 	}
 
-	option = { #I trust you to handle it
+	option = { #I trust you to handle it 
 		name = fp2_struggle.1000.b
 
 		trigger = {
-			intrigue <= medium_skill_rating
+			intrigue <= medium_skill_rating 
 		}
 
 		show_unlock_reason = no
@@ -1334,14 +1334,14 @@ fp2_struggle.1000 = {
    		}
 
    		stress_impact = {
-			# Righteous characters find this a very unappealing option.
+			# Righteous characters find this a very unappealing option. 
 			compassionate = medium_stress_impact_gain
 			gallant = medium_stress_impact_gain
 			honest = medium_stress_impact_gain
 			just = medium_stress_impact_gain
-			paragon = medium_stress_impact_gain
-			# As do lazy ones.
-			lazy = miniscule_stress_impact_gain
+			paragon = medium_stress_impact_gain	
+			# As do lazy ones. 
+			lazy = miniscule_stress_impact_gain	
 		}
 
 		if = {
@@ -1362,7 +1362,7 @@ fp2_struggle.1000 = {
 					modifier = trusted_me_opinion
 				}
 			}
-			else = {
+			else = { 
 				add_opinion = {
 					target = root
 					opinion = -10
@@ -1372,10 +1372,10 @@ fp2_struggle.1000 = {
 		}
 
 		add_character_modifier = {
-			modifier = fanatical_recruits_modifier
-			years = 10
+			modifier = fanatical_recruits_modifier 
+			years = 10 
 		}
-
+	
 
 
 		scope:tension_councillor = {
@@ -1392,7 +1392,7 @@ fp2_struggle.1000 = {
 						send_interface_toast = {
 							title = delegated_stoke_tension_toast.success
 							left_icon = scope:tension_councillor
-
+				
 							scope:tension_county = {
 								add_county_modifier = {
 									modifier = riots_and_murders_province_modifier
@@ -1400,7 +1400,7 @@ fp2_struggle.1000 = {
 								}
 							}
 						}
-					}
+					}	
 				}
 				20 = {
 					compare_modifier = {
@@ -1445,7 +1445,7 @@ fp2_struggle.1000 = {
         	ai_value_modifier = {
            		ai_honor = 0.8
            		ai_compassion = 0.7
-           		ai_rationality = 0.2
+           		ai_rationality = 0.2  
             	ai_zeal = -0.8
             	ai_vengefulness = -0.7
         	}
@@ -1455,10 +1455,10 @@ fp2_struggle.1000 = {
 			# Aggressive characters find this an unappealing option.
 			wrathful = minor_stress_impact_gain
 			zealous = minor_stress_impact_gain
-			sadistic = minor_stress_impact_gain
+			sadistic = minor_stress_impact_gain 
 			vengeful = minor_stress_impact_gain
 			}
-
+			
 		scope:tension_councillor = {
 			add_opinion = {
 				target = root
@@ -1481,10 +1481,10 @@ fp2_struggle.1000 = {
 					left_icon = root
 
 					add_character_modifier = {
-						modifier = tolerance_gospel_modifier
-						years = 10
-					}
-
+						modifier = tolerance_gospel_modifier 
+						years = 10 
+					} 
+					
 					scope:tension_county = {
 						add_county_modifier = {
 							modifier = tensions_eased_province_modifier
@@ -1502,7 +1502,7 @@ fp2_struggle.1000 = {
 					title = ease_tension_toast.failure
 					left_icon = root
 					scope:tension_county = {
-						add_county_modifier = {
+						add_county_modifier = {	
 							modifier = riots_and_murders_province_modifier
 							years = 5
 						}
@@ -1510,14 +1510,14 @@ fp2_struggle.1000 = {
 				}
 			}
 		}
-	}
-
-	option = { #"If I cannot stop this madness...
+	}   
+	
+	option = { #"If I cannot stop this madness...  
 		name = fp2_struggle.1000.d
-
-		trigger = {
-			exists = scope:minority_courtier
-
+		
+		trigger = { 
+			exists = scope:minority_courtier 
+				
 			scope:tension_county = {
 				this != root.capital_county
 			}
@@ -1528,7 +1528,7 @@ fp2_struggle.1000 = {
         	ai_value_modifier = {
            		ai_honor = 0.3
            		ai_compassion = 0.3
-           		ai_rationality = 0.8
+           		ai_rationality = 0.8 
             	ai_zeal = -0.8
             	ai_vengefulness = -0.7
             	ai_greed = -1
@@ -1539,10 +1539,10 @@ fp2_struggle.1000 = {
 			# Aggressive characters find this unappealing
 			wrathful = minor_stress_impact_gain
 			zealous = major_stress_impact_gain
-			sadistic = minor_stress_impact_gain
+			sadistic = minor_stress_impact_gain 
 			vengeful = minor_stress_impact_gain
 
-			#As do power-mongers, you're giving away a whole province!
+			#As do power-mongers, you're giving away a whole province! 
 			ambitious = minor_stress_impact_gain
 			stubborn = minor_stress_impact_gain
 			greedy = minor_stress_impact_gain
@@ -1590,7 +1590,7 @@ fp2_struggle.1000 = {
 				years = 10
 			}
 		}
-	}
+	} 		
 }
 
 ###################################
@@ -1600,23 +1600,23 @@ fp2_struggle.1000 = {
 # Idea by Isabella welch
 ###################################
 
-scripted_trigger fp2_struggle.1001_weird_option_traits = { # These, presumably, makes you even more sympathethic to widows and orphans, or likely to take an ill-thought out decision.
+scripted_trigger fp2_struggle.1001_weird_option_traits = { # These, presumably, makes you even more sympathethic to widows and orphans, or likely to take an ill-thought out decision. 
 	OR = {
-		has_character_modifier = associates_with_strange_peasants_modifier
+		has_character_modifier = associates_with_strange_peasants_modifier	
 		has_trait = bastard
 		has_trait = legitimized_bastard
 		has_trait = intellect_bad_3
 		has_trait = intellect_bad_2
 		has_trait = improvident
-		has_trait = lifestyle_reveler
+		has_trait = lifestyle_reveler 
 		has_trait = pregnant
 		has_trait = lunatic
 		has_trait = eccentric
 	}
 }
 
-scripted_trigger fp2_struggle.1001_expectant_vassal_or_courtier_traits = { # This is about the personality the pregnant courtier should have to get this idea to begin with
-	has_trait = pregnant
+scripted_trigger fp2_struggle.1001_expectant_vassal_or_courtier_traits = { # This is about the personality the pregnant courtier should have to get this idea to begin with 
+	has_trait = pregnant 
 	is_available_ai = yes
 	NOR = {
 		has_trait = callous
@@ -1641,36 +1641,36 @@ fp2_struggle.1001 = {
 		character = scope:expectant_courtier
 		animation = happiness
 	}
-
+	
 	trigger = {
 		has_fp2_dlc_trigger = yes
 		OR = {
 			any_vassal = {
 				fp2_struggle.1001_expectant_vassal_or_courtier_traits = yes
-			}
+			}	
 			any_courtier = {
 				fp2_struggle.1001_expectant_vassal_or_courtier_traits = yes
 			}
-		}
-		gold >= medium_gold_value_check
+		}	
+		gold >= medium_gold_value_check 
 
 		any_truce_target = { }
 	}
 
 	immediate = {
-		random_vassal = {
+		random_vassal = { 
 			limit = {
 				fp2_struggle.1001_expectant_vassal_or_courtier_traits = yes
-				is_spouse_of = root
+				is_spouse_of = root	
 			}
 		
 			alternative_limit = {
 				fp2_struggle.1001_expectant_vassal_or_courtier_traits = yes
-				any_player_heir = { is_spouse_of = prev }
+				any_player_heir = { is_spouse_of = prev }	
 			}
 			alternative_limit = {
 				fp2_struggle.1001_expectant_vassal_or_courtier_traits = yes
-				is_councillor = yes
+				is_councillor = yes 	
 			}
 			alternative_limit = {
 				fp2_struggle.1001_expectant_vassal_or_courtier_traits = yes
@@ -1680,57 +1680,57 @@ fp2_struggle.1001 = {
 				fp2_struggle.1001_expectant_vassal_or_courtier_traits = yes
 			}
 			save_scope_as = expectant_courtier
-		}
-
-		if = {
+		} 
+		
+		if = { 
 			limit = {
 				NOT = {
 					exists = scope:expectant_courtier
 				}
 			}
-			random_courtier = {
+			random_courtier = { 
 				limit = {
 					fp2_struggle.1001_expectant_vassal_or_courtier_traits = yes
-					is_spouse_of = root
+					is_spouse_of = root	
 				}
 				alternative_limit = {
 					fp2_struggle.1001_expectant_vassal_or_courtier_traits = yes
-					any_player_heir = { is_spouse_of = prev }
+					any_player_heir = { is_spouse_of = prev }	
 				}
 				alternative_limit = {
 					fp2_struggle.1001_expectant_vassal_or_courtier_traits = yes
-					is_councillor = yes
+					is_councillor = yes 	
 				}
 				alternative_limit = {
 					fp2_struggle.1001_expectant_vassal_or_courtier_traits = yes
 				}
 				save_scope_as = expectant_courtier
-			}
+			} 
 		}
 	}
 
+	
 
-
-	option = { #A good idea! I shall create such a fund.
+	option = { #A good idea! I shall create such a fund. 
 		name = fp2_struggle.1001.a
 
 		stress_impact = {
 			# Arrogant or cruel characters find this an unappealing option.
 			arbitrary = medium_stress_impact_gain
 			arrogant = medium_stress_impact_gain
-			sadistic = medium_stress_impact_gain
+			sadistic = medium_stress_impact_gain 
 
-			# As do, of course, greedy ones.
+			# As do, of course, greedy ones. 
 			greedy = medium_stress_impact_gain
 
-			# As do callous and content ones, to an extent.
+			# As do callous and content ones, to an extent. 
 			callous = minor_stress_impact_gain
-			content = minor_stress_impact_gain
+			content = minor_stress_impact_gain 
 
 			# But generous and compassionate characters like it.
 			compassionate = minor_stress_impact_loss
 			generous = medium_stress_impact_loss
-		}
+		}	
 
 		ai_chance = { #Just and compassionate characters pick this option
         	base = 10
@@ -1738,7 +1738,7 @@ fp2_struggle.1001 = {
            		ai_honor = 0.5
            		ai_compassion = 1
             	ai_vengefulness = -0.2
-            	ai_greed = -0.5
+            	ai_greed = -0.5 
         	}
    		}
 
@@ -1752,32 +1752,32 @@ fp2_struggle.1001 = {
 			}
 		}
 
-
+		
 		add_character_modifier = {
-			modifier = nursing_salaries_for_single_mothers_modifier
-			years = 20
-		}
+			modifier = nursing_salaries_for_single_mothers_modifier 
+			years = 20 
+		} 		
 	}
 
-	option = { #Widows I will support, but not whores!
+	option = { #Widows I will support, but not whores! 
 		name = fp2_struggle.1001.b
 		flavor = fp2_struggle.1001.b.tt
 		trigger = {
 			fp2_struggle.1001_weird_option_traits = no
 			trait_is_shunned_or_criminal_in_faith_trigger = {
 				FAITH = faith
-				TRAIT = adulterer
+				TRAIT = trait:adulterer
 				GENDER_CHARACTER = dummy_female
 			}
 		}
 
 		stress_impact = {
-			# Truly righteous characters wouldn't say this.
+			# Truly righteous characters wouldn't say this. 
 			compassionate = minor_stress_impact_gain
-			gallant = minor_stress_impact_gain
-			generous = minor_stress_impact_gain
+			gallant = minor_stress_impact_gain 
+			generous = minor_stress_impact_gain 
 			humble = minor_stress_impact_gain
-			just = minor_stress_impact_gain
+			just = minor_stress_impact_gain 
 
 			# And greedy ones still don't wanna pay up
 			greedy = minor_stress_impact_gain
@@ -1795,13 +1795,13 @@ fp2_struggle.1001 = {
 		add_piety = minor_piety_gain
 		add_character_modifier = {
 			modifier = widows_and_widowers_amazing_funds_modifier
-			years = 20
+			years = 20 
 		}
 
 		scope:expectant_courtier = {
 			if = {
 				limit = {
-					has_trait = zealous
+					has_trait = zealous 
 				}
 				add_opinion = {
 					target = root
@@ -1809,7 +1809,7 @@ fp2_struggle.1001 = {
 					modifier = pleased_opinion
 				}
 			}
-			else = {
+			else = { 
 				add_opinion = {
 					target = root
 					opinion = -10
@@ -1820,11 +1820,11 @@ fp2_struggle.1001 = {
 	}
 
 
-	option = { #But they can come stay at my court! We have food in abundance!
+	option = { #But they can come stay at my court! We have food in abundance! 
 		name = fp2_struggle.1001.c
 		flavor = fp2_struggle.1001.c.tt
 		trigger = {
-	 		fp2_struggle.1001_weird_option_traits = yes
+	 		fp2_struggle.1001_weird_option_traits = yes 
 		}
 
 		stress_impact = {
@@ -1838,13 +1838,13 @@ fp2_struggle.1001 = {
 			arrogant = medium_stress_impact_gain
 			temperate = medium_stress_impact_gain
 			august = medium_stress_impact_gain
-			born_in_the_purple = minor_stress_impact_gain
+			born_in_the_purple = minor_stress_impact_gain 
 
 			# But hypersocial hippies love it
 
-			humble = minor_stress_impact_loss
-			gregarious = minor_stress_impact_loss
-			eccentric = minor_stress_impact_loss
+			humble = minor_stress_impact_loss 
+			gregarious = minor_stress_impact_loss 
+			eccentric = minor_stress_impact_loss 
 		}
 
 		ai_chance = { #Deranged or hypersocial but irrational AI characters pick this option
@@ -1860,14 +1860,14 @@ fp2_struggle.1001 = {
 			if = {
 				limit = {
 					OR = {
-						has_character_modifier = associates_with_strange_peasants_modifier
+						has_character_modifier = associates_with_strange_peasants_modifier	
 						has_trait = bastard
 						has_trait = legitimized_bastard
 						has_trait = intellect_bad_3
 						has_trait = intellect_bad_2
 						has_trait = improvident
 						has_trait = gregarious
-					}	has_trait = lunatic
+					}	has_trait = lunatic 
 				}
 				add_opinion = {
 					target = root
@@ -1875,7 +1875,7 @@ fp2_struggle.1001 = {
 					modifier = pleased_opinion
 				}
 			}
-			else = {
+			else = { 
 				add_opinion = {
 					target = root
 					opinion = -10
@@ -1884,14 +1884,14 @@ fp2_struggle.1001 = {
 			}
 		}
 		if = {
-			limit = {
+			limit = { 
 				root = {
 					faith = {
 						OR = {
 							trait_is_virtue = gregarious
 							trait_is_virtue = humble
-							trait_is_virtue = generous
-						}
+							trait_is_virtue = generous  	
+						}	
 					}
 				}
 			}
@@ -1902,11 +1902,11 @@ fp2_struggle.1001 = {
 		}
 		add_character_modifier = {
 			modifier = destitute_single_mothers_modifier
-			years = 15
+			years = 15  
 		}
 	}
 
-	option = { #Surely, my benevolent vassals can help funding this.
+	option = { #Surely, my benevolent vassals can help funding this.   
 		name = fp2_struggle.1001.d
 
 		trigger = {
@@ -1915,15 +1915,15 @@ fp2_struggle.1001 = {
 					is_ai = yes
 			}
 		}
-
+		
 		stress_impact = {
 			# Careful or dilpomatically minded characters won't do this.
 			content = medium_stress_impact_gain
-			diplomat = medium_stress_impact_gain
-			paranoid = medium_stress_impact_gain
+			diplomat = medium_stress_impact_gain 
+			paranoid = medium_stress_impact_gain						
 		}
 
-		ai_chance = { #Economic AI characters pick this option, while the careful don't.
+		ai_chance = { #Economic AI characters pick this option, while the careful don't. 
         	base = 10
         	ai_value_modifier = {
            		ai_compassion = 0.5
@@ -1935,10 +1935,10 @@ fp2_struggle.1001 = {
 		remove_treasury_or_gold = minor_treasury_or_gold_value
 
 		custom_tooltip = fp2_struggle.1001.specialdescpositive
-		custom_tooltip = fp2_struggle.1001.specialdescnegative
+		custom_tooltip = fp2_struggle.1001.specialdescnegative 
 		hidden_effect = {
 			every_vassal = {
-				IF = {
+				IF = { 
 					limit = {
 						NOT = {
 							has_trait = pregnant
@@ -1950,7 +1950,7 @@ fp2_struggle.1001 = {
 								has_trait = compassionate
 								has_trait = generous
 								has_trait = just
-							}
+							}	
 						}
 						add_opinion = {
 							target = root
@@ -1958,21 +1958,21 @@ fp2_struggle.1001 = {
 							modifier = funded_righteous_cause_opinion
 						}
 					}
-					ELSE = {
+					ELSE = { 
 						add_opinion = {
 							target = root
 							opinion = -10
 							modifier = extorted_me_opinion
 						}
 					}
-				}
+				}	
 			}
 		}
-
-		scope:expectant_courtier = {
+		
+		scope:expectant_courtier = {  
 			IF = {
 				limit = {
-					is_vassal_of = root #if she is, she gets angry because now SHE is expected to pay for this...
+					is_vassal_of = root #if she is, she gets angry because now SHE is expected to pay for this... 
 				}
 				add_opinion = {
 					target = root
@@ -1980,7 +1980,7 @@ fp2_struggle.1001 = {
 					modifier = extorted_me_opinion
 				}
 			}
-			ELSE = {
+			ELSE = { 
 				add_opinion = {
 					target = root
 					opinion = 10
@@ -1990,23 +1990,23 @@ fp2_struggle.1001 = {
 		}
 
 		add_character_modifier = {
-			modifier = nursing_salaries_for_single_mothers_modifier
-			years = 20
-		}
+			modifier = nursing_salaries_for_single_mothers_modifier 
+			years = 20 
+		} 			
 	}
 
-	option = { #I am your king, not a wet nurse!
+	option = { #I am your king, not a wet nurse!  
 		name = fp2_struggle.1001.e
-
+	
 		stress_impact = {
 			# Benevolent characters wouldn't ignore this.
 			compassionate = medium_stress_impact_gain
-			gallant = medium_stress_impact_gain
+			gallant = medium_stress_impact_gain 
 			generous = medium_stress_impact_gain
 
 			# nor would those who are truly competent or just.
 			administrator = minor_stress_impact_gain
-			ambitious = minor_stress_impact_gain
+			ambitious = minor_stress_impact_gain 
 			diligent = minor_stress_impact_gain
 			just = minor_stress_impact_gain
 			eccentric = minor_stress_impact_gain
@@ -2029,14 +2029,14 @@ fp2_struggle.1001 = {
 				modifier = hurt_opinion
 			}
 		}
-
+		
 		random = {
 			chance = 50
 			send_interface_toast = {
 				left_icon = root
 				title = not_my_problem_toast
 				add_character_modifier = {
-					modifier = starving_single_mothers_and_children_modifier
+					modifier = starving_single_mothers_and_children_modifier 
 					years = 15
 				}
 			}
@@ -2054,10 +2054,10 @@ scripted_trigger neighboring_ruler_proper_culture_trigger = {
 	OR = {
 		culture = culture:andalusian
 		culture = culture:bedouin
-		culture = culture:baranis
+		culture = culture:baranis 
 		culture = culture:butr
-		culture = culture:levantine
-		culture = culture:sephardi
+		culture = culture:levantine 
+		culture = culture:sephardi 	
 	}
 }
 
@@ -2067,12 +2067,12 @@ fp2_struggle.1002 = {
  	desc = { #Different flavor depending on time period
 	 	first_valid = {
 		 	triggered_desc = {
-			 	trigger = { current_date <= 1030.1.1 }
-			 	desc = fp2_struggle.1002.desc_early_golden_age
+			 	trigger = { current_date <= 1030.1.1 } 
+			 	desc = fp2_struggle.1002.desc_early_golden_age 
 		 	}
 		 	triggered_desc = {
-			 	trigger = {
-				 	current_year >= 1250
+			 	trigger = { 
+				 	current_year >= 1250 
 				 	has_religion = religion:christianity_religion
 			 	}
 			 	desc = fp2_struggle.1002.desc_post_golden_age_christian #this triggers the latinized names of the polymaths
@@ -2083,11 +2083,11 @@ fp2_struggle.1002 = {
 		 	}
 		 	triggered_desc = {
 			 	trigger = { current_year >= 1030 }
-			 	desc = fp2_struggle.1002.desc_late_golden_age
+			 	desc = fp2_struggle.1002.desc_late_golden_age			
 		 	}
 	 	}
 	 	first_valid = {
-		 	triggered_desc = { #tests if the event would fire one of the historical physicians
+		 	triggered_desc = { #tests if the event would fire one of the historical physicians 
 			 	trigger = {
 				 	AND = {
 					 	current_year > 976
@@ -2099,40 +2099,40 @@ fp2_struggle.1002 = {
 			 	}
 			 	desc = fp2_struggle.1002.desc_albucasis #this is the dialogue text if Albucasis spawns
 		 	}
-		 	triggered_desc = { #tests if the event would fire one of the historical physicians
+		 	triggered_desc = { #tests if the event would fire one of the historical physicians 
 			 	trigger = {
 				 	AND = {
 					 	current_year > 1125
 					 	current_year < 1165
 				 	}
-				 	exists = global_var:avenzoar_created
+				 	exists = global_var:avenzoar_created 
 				 	exists = scope:avenzoar_physician
 				 	scope:great_physician = scope:avenzoar_physician
 			 	}
 			 	desc = fp2_struggle.1002.desc_avenzoar #this is the dialogue if Avenzoar spawns
 		 	}
-		 	triggered_desc = { #tests if the event would fire one of the historical physicians
+		 	triggered_desc = { #tests if the event would fire one of the historical physicians 
 			 	trigger = {
 				 	AND = {
 					 	current_year > 1140
 					 	current_year < 1180
 				 	}
-				 	exists = global_var:tufail_created
+				 	exists = global_var:tufail_created 
 				 	exists = scope:tufail_physician
 				 	scope:great_physician = scope:tufail_physician
 			 	}
 			 	desc = fp2_struggle.1002.desc_tufail #this is the dialogue if Ibn Tufail spawns
 		 	}
-		 	triggered_desc = { #this defaults to a random Andalusian physician
+		 	triggered_desc = { #this defaults to a random Andalusian physician 
 			 	trigger = { current_year >= 1050 } ##
 			 	desc = fp2_struggle.1002.desc_no_historical_physician_late
 		 	}
-		 	desc = fp2_struggle.1002.desc_no_historical_physician_early
+		 	desc = fp2_struggle.1002.desc_no_historical_physician_early 
 	 	}
 		first_valid = { #if root has a court physician, it changes the narrative a bit.
 		 	triggered_desc = {
-			 	trigger = {
-				 	court_physician_available_trigger = yes
+			 	trigger = { 
+				 	court_physician_available_trigger = yes 
 				 	has_religion = religion:christianity_religion
 			 	}
 			 	desc = fp2_struggle.1002.desc_has_physician_and_is_christian #in this case, the slur "heathen" is used
@@ -2146,10 +2146,10 @@ fp2_struggle.1002 = {
 			 	desc = fp2_struggle.1002.desc_has_no_physician_but_is_christian #in this case, the slur "heathen" is used
 		 	}
 		 	desc = fp2_struggle.1002.desc_has_no_physician #default option should all else fail
-	 	}
+	 	}			
  	}
 
- 	theme = medicine
+ 	theme = medicine 
  	override_background = { reference = throne_room }
 
  	left_portrait = {
@@ -2158,7 +2158,7 @@ fp2_struggle.1002 = {
  	}
 	right_portrait = {
 		character = scope:great_physician
-		animation = personality_rational #polymaths should always have this pose :D
+		animation = personality_rational #polymaths should always have this pose :D 
 	}
 
 	lower_left_portrait = scope:neighboring_ruler #this is the ruler that's angry with the polymath
@@ -2166,41 +2166,41 @@ fp2_struggle.1002 = {
 	lower_right_portrait = scope:scoped_physician #this is your court physician if you have one
 
  	cooldown = { years = 100 }
-
- 	trigger = {
+ 
+ 	trigger = { 
 	 	has_fp2_dlc_trigger = yes
-		#any_character_to_title_neighboring_county = { #this searches for a neighboring province that has the xenophilic tradition, which is this event's dynamic way of checking for Andalusian culture or cultures derived from it.
+		#any_character_to_title_neighboring_county = { #this searches for a neighboring province that has the xenophilic tradition, which is this event's dynamic way of checking for Andalusian culture or cultures derived from it. 
 	 	any_neighboring_and_across_water_top_liege_realm_owner = {
 		 	culture = {
 			 	OR = {
-			 		has_cultural_tradition = tradition_xenophilic
+			 		has_cultural_tradition = tradition_xenophilic 
 			 		has_cultural_tradition = tradition_medicinal_plants
-			 		has_cultural_tradition = tradition_fp2_malleable_subjects
+			 		has_cultural_tradition = tradition_fp2_malleable_subjects 
 			 	}
 		 	}
 	 	}
 
-	 	root.capital_province = { #so that it only triggers for people close to Andalusia
+	 	root.capital_province = { #so that it only triggers for people close to Andalusia 
 			OR = {
-				geographical_region = world_europe_west_iberia
+				geographical_region = world_europe_west_iberia 
 				geographical_region = world_europe_west_francia
 				geographical_region = world_europe_south_italy
 			}
 		}
 
-	 	NOT = { #So that it doesn't fire for the Andalusians themselves, because that'd make the narrative weird
-		 	culture = culture:andalusian
+	 	NOT = { #So that it doesn't fire for the Andalusians themselves, because that'd make the narrative weird 
+		 	culture = culture:andalusian  
 	 	}
 
 	 	NOT = { #So that it doesn't fire for the Umayyads when they control Iberia
 		 	AND = {
-			 	culture = culture:levantine
+			 	culture = culture:levantine  
 			 	root.capital_province = { geographical_region = world_europe_west_iberia }
 		 	}
 	 	}
 
-		any_neighboring_and_across_water_top_liege_realm_owner = {
-			is_ai = yes
+		any_neighboring_and_across_water_top_liege_realm_owner = { 
+			is_ai = yes 	
 		}
  	}
 
@@ -2227,21 +2227,21 @@ fp2_struggle.1002 = {
 
 
  	immediate = {
-
-	 	random_neighboring_and_across_water_top_liege_realm_owner = { #this searches for a neighboring ruler with the proper cultural tradition, which is this event's dynamic way of checking for Andalusian culture or cultures derived from it.
+	 
+	 	random_neighboring_and_across_water_top_liege_realm_owner = { #this searches for a neighboring ruler with the proper cultural tradition, which is this event's dynamic way of checking for Andalusian culture or cultures derived from it. 
 		 	limit = {
-			 	culture = {
+			 	culture = { 
 			 		OR = {
-			 			has_cultural_tradition = tradition_xenophilic
+			 			has_cultural_tradition = tradition_xenophilic 
 			 			has_cultural_tradition = tradition_medicinal_plants
-			 			has_cultural_tradition = tradition_fp2_malleable_subjects
+			 			has_cultural_tradition = tradition_fp2_malleable_subjects 
 			 		}
 			 	}
 		 	}
-			culture = { save_scope_as = xenophilic_culture } #this is mostly used for error-checking because the debug log is unclear.
+			culture = { save_scope_as = xenophilic_culture } #this is mostly used for error-checking because the debug log is unclear. 
 	 	}
 
-	 	if = { #This looks to see if one of three historical physicians will be used in the event
+	 	if = { #This looks to see if one of three historical physicians will be used in the event 
 		 	limit = { #their rough period of activity
 			 	AND = {
 				 	current_year > 976
@@ -2249,16 +2249,16 @@ fp2_struggle.1002 = {
 			 	}
 			 	NOT = { exists = global_var:albucasis_created } #makes sure that he wasn't already spawned by the event elsewhere
 			 	is_ai = no
-			 	scope:xenophilic_culture = culture:andalusian
+			 	scope:xenophilic_culture = culture:andalusian 
 		 	}
-		 	create_character = {
-			 	age = { 40 70 } #their rough age during the period of their flourishing
+		 	create_character = { 
+			 	age = { 40 70 } #their rough age during the period of their flourishing 
 			 	location = root.capital_province
 			 	name = "Abu al-Qasim Al-Zahrawi" #Albucasis
 			 	gender = male
 			 	template = scholar_character
 			 	trait = intellect_good_3 #He was one of the Middle Ages' greatest geniuses
-			 	trait = lifestyle_herbalist
+			 	trait = lifestyle_herbalist 
 			 	trait = lifestyle_physician
 			 	trait = education_learning_4
 			 	random_traits_list = { #his personality, extrapolated from my research
@@ -2270,18 +2270,18 @@ fp2_struggle.1002 = {
 				 	humble = {}
 				 	patient = {}
 			 	}
-			 	random_traits_list = { #this is to hint to the player why he was exiled from the previous court
+			 	random_traits_list = { #this is to hint to the player why he was exiled from the previous court 
 				 	count = 1
 				 	fornicator = {}
 				 	deviant = {}
-				 	sodomite = {}
+				 	sodomite = {}		
 			 	}
 			 	culture = culture:andalusian
-			 	dynasty = none
+			 	dynasty = none 
 			 	faith = faith:muwalladi
-			 	save_scope_as = albucasis_physician #this is needed to get the loc right
+			 	save_scope_as = albucasis_physician #this is needed to get the loc right 	
 		 	}
-		 	set_global_variable = albucasis_created
+		 	set_global_variable = albucasis_created 
 		 	scope:albucasis_physician = {
 				save_scope_as = great_physician #this is to create one easy, generic scope for use in the rest of the event
 		 	}
@@ -2295,42 +2295,42 @@ fp2_struggle.1002 = {
 			 	}
 			 	NOT = { exists = global_var:avenzoar_created } #makes sure that he wasn't already spawned by the event elsewhere
 			 	is_ai = no
-			 	scope:xenophilic_culture = culture:andalusian
+			 	scope:xenophilic_culture = culture:andalusian 
 		 	}
 			create_character = {
-			 	age = { 31 71 } #their rough age during the period of their flourishing
+			 	age = { 31 71 } #their rough age during the period of their flourishing 
 			 	location = root.capital_province
 			 	name = "Abū Marwān ibn Zuhr" #Avenzoar
 			 	gender = male
 			 	template = scholar_character
 			 	trait = intellect_good_2
-			 	trait = scholar
-			 	trait = lifestyle_physician
+			 	trait = scholar 
+			 	trait = lifestyle_physician 
 			 	trait = education_learning_4
-			 	random_traits_list = { #his personality, extrapolated from my research
+			 	random_traits_list = { #his personality, extrapolated from my research 
 				 	count = 3
 				 	diligent = {}
 				 	cynical = {}
 				 	humble = {}
-				 	vengeful = {} #He was bitter over having been exiled from Morocco
+				 	vengeful = {} #He was bitter over having been exiled from Morocco 
 			 	}
 			 	random_traits_list = { #this is to hint to the player why he was exiled from the previous court
 				 	count = 1
 				 	fornicator = {}
 				 	deviant = {}
 				 	sodomite = {}
-				 	murderer = {}
+				 	murderer = {}		
 				}
 			 	culture = culture:andalusian
 			 	dynasty = none
 			 	faith = faith:muwalladi
-			 	save_scope_as = avenzoar_physician
+			 	save_scope_as = avenzoar_physician 	
 		 	}
-
+		 	
 		 	set_global_variable = avenzoar_created
 		 	scope:avenzoar_physician = {
 			 	save_scope_as = great_physician
-		 	}
+		 	} 
 	 	}
 
 	 	else_if = {
@@ -2338,23 +2338,23 @@ fp2_struggle.1002 = {
 			 	AND = {
 				 	current_year > 1140
 				 	current_year < 1180
-			 	}
+			 	}	
 			 	NOT = { exists = global_var:tufail_created } #makes sure that he wasn't already spawned by the event elsewhere
 			 	is_ai = no
-			 	scope:xenophilic_culture = culture:andalusian
+			 	scope:xenophilic_culture = culture:andalusian 
 		 	}
 		 	create_character = {
-			 	age = { 35 75 } #their rough age during the period of their flourishing
+			 	age = { 35 75 } #their rough age during the period of their flourishing 
 			 	location = root.capital_province
 			 	name = "Abū Bakr ibn Tufail" #Ibn Tufail
 			 	gender = male
 			 	template = scholar_character
 			 	trait = intellect_good_2
-			 	trait = theologian
-			 	trait = lifestyle_physician
+			 	trait = theologian 
+			 	trait = lifestyle_physician 
 			 	trait = education_learning_3
-			 	trait = journaller #He was an avid writer
-			 	random_traits_list = { #his personality, extrapolated from my research
+			 	trait = journaller #He was an avid writer 
+			 	random_traits_list = { #his personality, extrapolated from my research 
 				 	count = 3
 				 	diligent = {}
 				 	calm = {}
@@ -2366,21 +2366,21 @@ fp2_struggle.1002 = {
 				 	fornicator = {}
 				 	deviant = {}
 				 	sodomite = {}
-				 	witch = {}
+				 	witch = {}	
 			 	}
 			 	culture = culture:andalusian
-			 	dynasty = none
+			 	dynasty = none 
 			 	faith = faith:muwalladi
-			 	save_scope_as = tufail_physician
+			 	save_scope_as = tufail_physician 	
 		 	}
 		 	set_global_variable = tufail_created
 		 	scope:tufail_physician = {
 			 	save_scope_as = great_physician
-		 	}
+		 	}	
 	 	}
+	 
 
-
-	 	else = { #or it defaults to a random one
+	 	else = { #or it defaults to a random one 
 		 	create_character = {
 			 	age = { 32 50 }
 			 	location = root.capital_province
@@ -2405,9 +2405,9 @@ fp2_struggle.1002 = {
 				 	incestuous = {}
 				 	witch = {}
 			 	}
-			 	culture = scope:xenophilic_culture
+			 	culture = scope:xenophilic_culture 
 			 	faith = faith:muwalladi
-			 	save_scope_as = great_physician
+			 	save_scope_as = great_physician 
 		 	}
 	 	}
 
@@ -2416,53 +2416,53 @@ fp2_struggle.1002 = {
 		 		add_trait_xp = {
 	                trait = lifestyle_physician
 	                value = 100
-	            }
+	            }				
 		 	}
 		}
 
 	 	random_neighboring_and_across_water_top_liege_realm_owner = {
-		 	limit = {
+		 	limit = { 
 			 	AND = {
-				 	neighboring_ruler_proper_culture_trigger = yes #the event prefers the neighboring ruler to be of these cultures, since it makes the most sense histrically for the scholar to have been at that court.
+				 	neighboring_ruler_proper_culture_trigger = yes #the event prefers the neighboring ruler to be of these cultures, since it makes the most sense histrically for the scholar to have been at that court. 
 				 	is_ai = yes
 			 	}
 		 	}
-		 	alternative_limit = { is_ai = yes}
-			save_scope_as = neighboring_ruler
-		}
+		 	alternative_limit = { is_ai = yes}		
+			save_scope_as = neighboring_ruler 	
+		}	
 
-	 	if = { #if you have a court physician already, he has a stake in this!
+	 	if = { #if you have a court physician already, he has a stake in this! 
 		 	limit = {
 			 	court_physician_available_trigger = yes
 		 	}
 		 	save_court_physician_as_effect = { SCOPE_NAME = scoped_physician }
-	 	}
+	 	}	
  	}
 
- 	option = { #I could use a new physician...
+ 	option = { #I could use a new physician...  
 	 	name = fp2_struggle.1002.a
 
 	 	ai_chance = { #rational AIs pick this option
 		 	base = 10
 		 	ai_value_modifier = {
 				ai_rationality = 0.7
-			 	ai_zeal = -0.7
+			 	ai_zeal = -0.7 
 		 	}
 		}
 
 	 	stress_impact = {
-			# Conservative characters don't want to do this.
+			# Conservative characters don't want to do this. 
 			content = minor_stress_impact_gain
-
-			# Nor do self-absorbed ones
+			 
+			# Nor do self-absorbed ones 
 			arrogant = minor_stress_impact_gain
-			callous = minor_stress_impact_gain
+			callous = minor_stress_impact_gain 
 			greedy = minor_stress_impact_gain
-	 	}
+	 	}	
 
 	 	remove_treasury_or_gold = major_treasury_or_gold_value #this guy is expensive!
 
-	 	add_courtier = scope:great_physician #he's added to root's court
+	 	add_courtier = scope:great_physician #he's added to root's court 
 
 	 	court_position_grant_effect = {
 	 		EMPLOYER = root
@@ -2486,32 +2486,32 @@ fp2_struggle.1002 = {
 		 	}
 	 	}
 
-	 	add_character_modifier = { #while you get inspired!
+	 	add_character_modifier = { #while you get inspired! 
 		 	modifier = inspired_medicine_modifier
-		 	years = 20
-	 	}
+		 	years = 20  
+	 	} 
  	}
 
- 	option = { #I do not need you, I can read myself.
+ 	option = { #I do not need you, I can read myself. 
 	 	name = fp2_struggle.1002.b
 	 	flavor = fp2_struggle.1002.b.tt
-
-	 	trigger = { #This only fires after Avicenna's life, as his books are referenced.
-		 	current_year >= 1030
-		 	learning >= medium_skill_rating #and you have to be at least somewhat learned to have this option appear, otherwise it'd be superflous
+	 
+	 	trigger = { #This only fires after Avicenna's life, as his books are referenced. 
+		 	current_year >= 1030 
+		 	learning >= medium_skill_rating #and you have to be at least somewhat learned to have this option appear, otherwise it'd be superflous 
 		 	NOT = {
 			 	exists = scope:scoped_physician
 		 	}
 	 	}
 
-	 	ai_chance = { #energetic, overconfident AI chooses this
+	 	ai_chance = { #energetic, overconfident AI chooses this 
 		 	base = 10
 		 	ai_value_modifier = {
 				ai_energy = 0.7
 				ai_boldness = 0.6
 				ai_rationality = 0.4
 			 	ai_zeal = -0.6
-			 	ai_greed = -0.6
+			 	ai_greed = -0.6 
 		 	}
 		}
 
@@ -2521,30 +2521,30 @@ fp2_struggle.1002 = {
 			greedy = minor_stress_impact_gain
 			lazy = minor_stress_impact_gain
 			zealous = minor_stress_impact_gain
-			dull = medium_stress_impact_gain
+			dull = medium_stress_impact_gain 
 	 	}
 
 	 	custom_tooltip = fp2_struggle.1002.physicianleaves
 
-	 	remove_short_term_gold = minor_gold_value #books are expensive!
+	 	remove_short_term_gold = minor_gold_value #books are expensive! 
 
 	 	if = {
 		 	limit = { has_lifestyle = learning_lifestyle }
 		 	add_learning_lifestyle_xp = medium_lifestyle_experience
 	 	}
 
-	 	if = { #your physician gets disappointed for your lack of trust in them
+	 	if = { #your physician gets disappointed for your lack of trust in them 
 		 	limit = { exists = scope:scoped_physician }
 		 	scope:scoped_physician = {
 			 	add_opinion = {
 				 	target = root
 				 	opinion = -10
-				 	modifier = disappointed_opinion
+				 	modifier = disappointed_opinion	
 			 	}
 		 	}
 	 	}
 
-	 	duel = { #you try to read Arabic books
+	 	duel = { #you try to read Arabic books 
 		 	skill = learning
 		 	value = medium_skill_rating
 
@@ -2553,15 +2553,15 @@ fp2_struggle.1002 = {
 				 	value = scope:duel_value
 				 	multiplier = 2
 			 	}
-			 	send_interface_toast = { #you succeed!
+			 	send_interface_toast = { #you succeed! 
 				 	title = reading_avicenna_toast.success
 				 	left_icon = root
 				 	root = {
 					 	add_character_modifier = {
-						 	modifier = inspired_medicine_modifier
-						 	years = 20
-					 	}
-				 	}
+						 	modifier = inspired_medicine_modifier 
+						 	years = 20 
+					 	} 
+				 	} 
 			 	}
 		 	}
 		 	20 = {
@@ -2574,33 +2574,33 @@ fp2_struggle.1002 = {
 				 	left_icon = root
 				 	root = {
 					 	add_character_modifier = {
-							modifier = misread_medicine_incompetence_modifier
-							years = 20
+							modifier = misread_medicine_incompetence_modifier 
+							years = 20 
 					 	}
 				 	}
 			 	}
 		 	}
-	 	}
+	 	}		
 	}
 
 
- 	option = { #What do I need you for? I can read Greek myself
+ 	option = { #What do I need you for? I can read Greek myself    
 	 	name = fp2_struggle.1002.c
 	 	flavor = fp2_struggle.1002.c.tt
 
-	 	trigger = { #This triggers for the early period, before the Canon of Medicine was published.
-		 	current_date <= 1030.1.1
-		 	learning >= medium_skill_rating
+	 	trigger = { #This triggers for the early period, before the Canon of Medicine was published. 
+		 	current_date <= 1030.1.1 
+		 	learning >= medium_skill_rating 
 		 	NOT = {
 			 	exists = scope:scoped_physician
 		 	}
 	 	}
 
-	 	ai_chance = { #energetic AI are the most likely to attempt this in this early time period
+	 	ai_chance = { #energetic AI are the most likely to attempt this in this early time period 
 		 	base = 10
 		 	ai_value_modifier = {
 				ai_energy = 0.8
-			 	ai_rationality = 0.2
+			 	ai_rationality = 0.2 
 			 	ai_zeal = -0.2
 		 	}
 		}
@@ -2611,7 +2611,7 @@ fp2_struggle.1002 = {
 		 	greedy = minor_stress_impact_gain
 		 	lazy = minor_stress_impact_gain
 		 	zealous = minor_stress_impact_gain
-		 	dull = medium_stress_impact_gain
+		 	dull = medium_stress_impact_gain 
 	 	}
 
 	 	custom_tooltip = fp2_struggle.1002.physicianleaves
@@ -2629,12 +2629,12 @@ fp2_struggle.1002 = {
 			 	add_opinion = {
 				 	target = root
 				 	opinion = -10
-				 	modifier = disappointed_opinion
+				 	modifier = disappointed_opinion	
 				 }
 		 	}
 	 	}
 
-	 	duel = { #this duel is difficult - it's mostly an option for extremely learned or overconfident rulers.
+	 	duel = { #this duel is difficult - it's mostly an option for extremely learned or overconfident rulers. 
 		 	skill = learning
 		 	value = high_skill_rating
 
@@ -2644,14 +2644,14 @@ fp2_struggle.1002 = {
 					multiplier = 2
 				}
 			 	send_interface_toast = {
-				 	title = reading_hippocrates_toast.success #You can read greek!
+				 	title = reading_hippocrates_toast.success #You can read greek! 
 				 	left_icon = root
 				 	root = {
 					 	add_character_modifier = {
-						 	modifier = medical_insights_modifier
-						 	years = 20
-						 }
-					 }
+						 	modifier = medical_insights_modifier 
+						 	years = 20 
+						 } 
+					 } 
 			 	}
 		 	}
 		 	20 = {
@@ -2660,23 +2660,23 @@ fp2_struggle.1002 = {
 				 	multiplier = -1
 			 	}
 			 	send_interface_toast = {
-				 	title = reading_hippocrates_toast.failure #apparently, your Greek skills aren't all you cranked them up to be.
+				 	title = reading_hippocrates_toast.failure #apparently, your Greek skills aren't all you cranked them up to be. 
 				 	left_icon = root
 				 	root = {
 					 	add_character_modifier = {
-							modifier = cannot_read_greek_modifier
-							years = 20
+							modifier = cannot_read_greek_modifier 
+							years = 20 
 					 	}
 				 	}
 			 	}
-		 	}
-	 	}
+		 	}	
+	 	}				
  	}
 
- 	option = { #I will send you back from whence you came...in chains.
+ 	option = { #I will send you back from whence you came...in chains.    
 	 	name = fp2_struggle.1002.d
 
-	 	ai_chance = { #but vengeful ones sure love it!
+	 	ai_chance = { #but vengeful ones sure love it! 
 		 	base = 10
 		 	ai_value_modifier = {
 				ai_vengefulness = 0.8
@@ -2691,61 +2691,61 @@ fp2_struggle.1002 = {
 		 	just = minor_stress_impact_gain
 		 	trusting = minor_stress_impact_gain
 		 	compassionate = major_stress_impact_gain
-		 	forgiving = major_stress_impact_gain
+		 	forgiving = major_stress_impact_gain 
 
 		 	#But arbitrary bastards love it
-		 	arbitrary = minor_stress_impact_loss
+		 	arbitrary = minor_stress_impact_loss 
 	 	}
 
-	 	scope:great_physician = { #the polymath, naturally, gets sad that you send him back to his disgruntled former employer.
+	 	scope:great_physician = { #the polymath, naturally, gets sad that you send him back to his disgruntled former employer. 
 		 	add_opinion = {
 			 	target = root
 			 	opinion = -40
 			 	modifier = left_me_to_wolves_opinion
 		 	}
 	 	}
-
-	 	if = { #but your current physician is very happy!
+		 
+	 	if = { #but your current physician is very happy! 
 		 	limit = { exists = scope:scoped_physician }
 		 	scope:scoped_physician = {
 			 	add_opinion = {
 				 	target = root
 				 	opinion = 20
-				 	modifier = let_me_keep_my_job_opinion
+				 	modifier = let_me_keep_my_job_opinion 
 			 	}
 		 	}
 	 	}
 
 	 	scope:neighboring_ruler = { #as is the neighboring ruler, especially if he is your friend
 		 	if = {
-			 	limit = {
+			 	limit = { 
 			 	has_relation_friend = root
 			 	}
 				add_opinion = {
 					target = root
 					modifier = strengthened_friendship_opinion
 			 	}
-			}
+			}	
 		 	else = {
 			 	progress_towards_friend_effect = {
 					REASON = friend_returned_refugee
 					CHARACTER = root
 					OPINION = 0
 			 	}
-		 	}
+		 	}	
 	 	}
 
 	 	add_dread = minor_dread_gain	#you gain some dread for doing this, naturally
 
-	 	custom_tooltip = fp2_struggle.1001.physician_imprisoned
+	 	custom_tooltip = fp2_struggle.1001.physician_imprisoned 
 	 	hidden_effect = {
 		 	if = {
 			 	limit = {
 				 	scope:neighboring_ruler = {
-					 	is_ruler = yes
+					 	is_ruler = yes 
 				 	}
 			 	}
-			 	scope:great_physician = { #while the polymath gets to languish in a dungeon
+			 	scope:great_physician = { #while the polymath gets to languish in a dungeon 
 				   	hard_imprison_character_effect = {
 					   TARGET = this
 					   IMPRISONER = scope:neighboring_ruler
@@ -2760,21 +2760,21 @@ fp2_struggle.1002 = {
 		}
  	}
 
- 	option = { #Wash my hands? Are you insane?"
+ 	option = { #Wash my hands? Are you insane?"   
 	 	name = fp2_struggle.1002.e
-
-	 	trigger = {	#This only triggers for Christianity and similar faiths
+	 
+	 	trigger = {	#This only triggers for Christianity and similar faiths 
 		 	faith = {
-			   	has_doctrine_parameter = theocracy_temple_lease
+			   	has_doctrine_parameter = theocracy_temple_lease	
 			   	NOR = {
 				 	has_doctrine_parameter = legalism_modified_law_costs
-				   	has_doctrine_parameter = literalist_debate_enabled
+				   	has_doctrine_parameter = literalist_debate_enabled 
 			 	}
-		 	}
+		 	} 
 		 	NOT = { has_lifestyle = learning_lifestyle } #So that this doesn't fire if you have the "Wash your hands" perk
 	 	}
 
-		 ai_chance = { #and fanatics don't care about hygiene...apparently
+		 ai_chance = { #and fanatics don't care about hygiene...apparently 
 		 	base = 10
 		 	ai_value_modifier = {
 				ai_zeal = 0.8
@@ -2783,17 +2783,17 @@ fp2_struggle.1002 = {
 		}
 
 	 	stress_impact = {
-		 	# Innovative or nervous chracters wouldn't pick this option.
+		 	# Innovative or nervous chracters wouldn't pick this option. 
 		 	ambitious = minor_stress_impact_gain
 		 	craven = minor_stress_impact_gain
-
+			  
 		 	#But stubborn or content ones would
 		 	content = minor_stress_impact_loss
 		 	lazy = minor_stress_impact_loss
 		 	stubborn = minor_stress_impact_loss
 		 	eccentric = minor_stress_impact_loss
 	 	}
-
+ 
 	 	custom_tooltip = fp2_struggle.1002.physicianleaves
 
 	 	if = { #your physician, again, loves that they get to keep their job
@@ -2806,32 +2806,32 @@ fp2_struggle.1002 = {
 			 	}
 		 	}
 	 	}
-
-	 	add_piety = medium_piety_gain #and your faith rewards you for turning away the heathen
+ 
+	 	add_piety = medium_piety_gain #and your faith rewards you for turning away the heathen 
 
 	 	add_character_modifier = { #but you're rolling in filth
 		 	modifier = rolling_in_filth_modifier
-		 	years = 5
-	 	}
+		 	years = 5  
+	 	} 
  	}
 
 
 
- 	option = { #Begone, innovation should only come from God.
+ 	option = { #Begone, innovation should only come from God.  
 	 	name = fp2_struggle.1002.f
-
-	 	trigger = {
-		 	current_year >= 1065 #because this option refers to developments in islam that happened within the Seljuk empire
-		 	faith = { #it checks for doctrines, rather than islam itself, to make the event more dynamic
+	 
+	 	trigger = {	
+		 	current_year >= 1065 #because this option refers to developments in islam that happened within the Seljuk empire 
+		 	faith = { #it checks for doctrines, rather than islam itself, to make the event more dynamic 
 			 	OR = {
 				   	has_doctrine_parameter = legalism_modified_law_costs
-				   	has_doctrine_parameter = literalist_debate_enabled
-				   	has_doctrine_parameter = religious_legal_pronouncements_law_cost_reduction
+				   	has_doctrine_parameter = literalist_debate_enabled 
+				   	has_doctrine_parameter = religious_legal_pronouncements_law_cost_reduction 
 			 	}
-		 	}
+		 	} 
 	 	}
 
-	 	ai_chance = { #zealous AIs pick this, but it's not entirely unrational - just hostile to new ideas.
+	 	ai_chance = { #zealous AIs pick this, but it's not entirely unrational - just hostile to new ideas. 
 		 	base = 10
 		 	ai_value_modifier = {
 				ai_zeal = 0.8
@@ -2843,12 +2843,12 @@ fp2_struggle.1002 = {
 		 	#True rationalists abhor this option
 		  	ambitious = medium_stress_impact_gain
 		 	diligent = medium_stress_impact_gain
-
+			  
 		 	#But stubborn and fanatical ones like it
 		 	content = minor_stress_impact_loss
 		 	stubborn = minor_stress_impact_loss
-		 	zealous = minor_stress_impact_loss
-		 	eccentric = minor_stress_impact_loss
+		 	zealous = minor_stress_impact_loss 
+		 	eccentric = minor_stress_impact_loss 
 	 	}
 
 	 	custom_tooltip = fp2_struggle.1002.physicianleaves
@@ -2859,7 +2859,7 @@ fp2_struggle.1002 = {
 			 	add_opinion = {
 				 	target = root
 				 	opinion = 20
-				 	modifier = let_me_keep_my_job_opinion
+				 	modifier = let_me_keep_my_job_opinion	
 			 	}
 		 	}
 	 	}
@@ -2871,12 +2871,12 @@ fp2_struggle.1002 = {
 			 	modifier = rejected_my_enemy_opinion
 		 	}
 	 	}
-
-	 	add_character_modifier = { #but you draw closer to the Nizamiyah movement, rejecting innovation.
-		 	modifier = anti_innovation_muslim_modifier
-		 	years = 15
-	 	}
- 	}
+	 
+	 	add_character_modifier = { #but you draw closer to the Nizamiyah movement, rejecting innovation. 
+		 	modifier = anti_innovation_muslim_modifier  
+		 	years = 15  
+	 	} 		
+ 	} 
 }
 
 ###################################
@@ -2891,15 +2891,15 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
 
 	left_portrait = {
 		character = root
-		animation = happiness #root smells an opportunity!
+		animation = happiness #root smells an opportunity! 
 	}
 	right_portrait = {
 		character = scope:great_swordsmith
-		animation = scheme #he's a scheming bastard, kinda
+		animation = scheme #he's a scheming bastard, kinda 
 	}
 
-
-	trigger = { #The province must also be involved in the Iberian struggle
+	
+	trigger = { #The province must also be involved in the Iberian struggle 
 		is_ai = no
 		has_fp2_dlc_trigger = yes
 		any_held_county = {
@@ -2911,7 +2911,7 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
 				has_building_or_higher = blacksmiths_01
 			}
 		}
-		fp2_character_involved_in_struggle_trigger = yes
+		fp2_character_involved_in_struggle_trigger = yes 
 	}
 
 	cooldown = { years = 100 }
@@ -2919,7 +2919,7 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
 	immediate = {
 
 		random_held_county = { #this is to find the county that has the blacksmith
-			limit = {
+			limit = { 
 				#Unop Only fire for iberian struggle counties
 				any_county_struggle = {
 					is_struggle_type = iberian_struggle
@@ -2928,7 +2928,7 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
 					has_building_or_higher = blacksmiths_01
 				}
 			}
-			save_scope_as = blacksmith_county #this scopes it - note that it might be the same county as toledo_county; that is intentional.
+			save_scope_as = blacksmith_county #this scopes it - note that it might be the same county as toledo_county; that is intentional. 
 		}
 
 		title:b_toledo = { save_scope_as = toledo_holding } #this is used in the localization
@@ -2938,11 +2938,11 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
 		create_character = { #this is the mighty blacksmith that the event needs
 			age = { 45 55 } #he's experienced and aging, but not old
 			location = root.capital_province
-			gender_female_chance = root_faith_dominant_gender_female_chance #could be female, if given the right context.
+			gender_female_chance = root_faith_dominant_gender_female_chance #could be female, if given the right context. 
 			trait = intellect_good_3 #he's a genius craftsman
 			trait = strong #and a blacksmith...
-			trait = arrogant #he's supremely gifted, but also extremely arrogant, Fëanor basically
-			random_traits_list = { #the rest of his questionable personality
+			trait = arrogant #he's supremely gifted, but also extremely arrogant, Fëanor basically 
+			random_traits_list = { #the rest of his questionable personality 
 				count = 2
 				ambitious = {}
 				diligent = {}
@@ -2959,14 +2959,14 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
 			}
 			culture = scope:toledo_county.culture
 			faith = faith:catholic
-			dynasty = none
-			save_scope_as = great_swordsmith 	#this saves him as a scope so we can get nice effects to bounce off him!
+			dynasty = none 
+			save_scope_as = great_swordsmith 	#this saves him as a scope so we can get nice effects to bounce off him! 
 		}
 
 		hidden_effect = {
 			scope:great_swordsmith = {
 				add_character_modifier = {
-					modifier = master_smith_npc_modifier #this is a neat modifier he gets as a master smith. it's pretty powerful, giving a boost to Stewardship and gold income, but since he's an NPC, it doesn't matter much. It's mostly to create flavor if the player actually examines his stats.
+					modifier = master_smith_npc_modifier #this is a neat modifier he gets as a master smith. it's pretty powerful, giving a boost to Stewardship and gold income, but since he's an NPC, it doesn't matter much. It's mostly to create flavor if the player actually examines his stats. 
 				}
 			}
 		}
@@ -2977,19 +2977,19 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
 	name = fp2_struggle.1010.a
 	flavor = toledo_compromise_flavor
 
-		trigger = { #root needs to control Toledo, and it needs to have a blacksmith building.
+		trigger = { #root needs to control Toledo, and it needs to have a blacksmith building. 
 			any_held_county = {
-				any_county_province = {
+				any_county_province = { 
 					barony = title:b_toledo
 					has_building_or_higher = blacksmiths_01
 				}
 			}
-			scope:toledo_county = { #so that this option doesn't fire twice
-				NOT = { has_county_modifier = toledo_steel_county_modifier }
+			scope:toledo_county = { #so that this option doesn't fire twice 
+				NOT = { has_county_modifier = toledo_steel_county_modifier }	
 			}
 		}
 
-		ai_chance = { #Smart, patient AIs pick this option, others are more likely to go for a bolder approach.
+		ai_chance = { #Smart, patient AIs pick this option, others are more likely to go for a bolder approach. 
         	base = 10
         	ai_value_modifier = {
            		ai_rationality = 1
@@ -2999,71 +2999,71 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
         	}
    		}
 
-   		stress_impact = { #arrogant or visionless rulers dislike this option
+   		stress_impact = { #arrogant or visionless rulers dislike this option 
    			arrogant = minor_stress_impact_gain
    			callous = minor_stress_impact_gain
    			content = minor_stress_impact_gain
    			wrathful = minor_stress_impact_gain
    		}
 
-   		remove_short_term_gold = major_gold_value #someone still has to be bribed here
+   		remove_short_term_gold = major_gold_value #someone still has to be bribed here 
 
    		scope:toledo_county = {
 			add_county_modifier = {
-				modifier = toledo_steel_county_modifier
+				modifier = toledo_steel_county_modifier		
 			}
 		}
 
 		scope:toledo_county = {
-			add_county_modifier = {
+			add_county_modifier = {	
 				modifier = governance_1041_quarreling_guilds_modifier
 				years = 20
-			}
-		}
+			}	
+		}		
    	}
 
-   	option = { #Whatever knowledge you possess, I shall draw it out.
+   	option = { #Whatever knowledge you possess, I shall draw it out. 
 	name = fp2_struggle.1010.b
-	flavor = fp2_struggle.1010.swordsmith_imprisoned
+	flavor = fp2_struggle.1010.swordsmith_imprisoned 
 
 		trigger = {
 			OR = {
 				has_trait = schemer
 				has_trait = torturer
-				has_trait = paranoid
-				dread >= high_dread
+				has_trait = paranoid 
+				dread >= high_dread 
 			}
 			NAND = {
 				any_held_county = {
-					any_county_province = {
+					any_county_province = { 
 						barony = title:b_toledo
 						has_building_or_higher = blacksmiths_01
 					}
 				}
-				scope:toledo_county = { #so that this option doesn't fire twice
+				scope:toledo_county = { #so that this option doesn't fire twice 
 					NOT = { has_county_modifier = toledo_steel_county_modifier }
 				}
 			}
 		}
-
-
-		scope:great_swordsmith = { #while the great swordsmiths gets to languish in a dungeon
+		
+		
+		scope:great_swordsmith = { #while the great swordsmiths gets to languish in a dungeon 
   			hard_imprison_character_effect = {
   				TARGET = this
   				IMPRISONER = root
    			}
    		}
+   	
 
-
-		ai_chance = { #Compassionate or just AI wouldn't do this, but hateful paranoid psychopats, sure!  Perhaps the smith even deserved it...
+		ai_chance = { #Compassionate or just AI wouldn't do this, but hateful paranoid psychopats, sure!  Perhaps the smith even deserved it... 
         	base = 10
         	ai_value_modifier = {
            		ai_vengefulness = 1
-           		ai_honor = -1
+           		ai_honor = -1 		
         	}
    		}
 
-   		stress_impact = { #this is not what a Buddha would do
+   		stress_impact = { #this is not what a Buddha would do 
    			compassionate = major_stress_impact_gain
    			generous = medium_stress_impact_gain
    			gregarious = medium_stress_impact_gain
@@ -3082,11 +3082,11 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
 
   		add_character_modifier = {
   			modifier =  tortured_smith_spilling_secrets_modifier
-  			years = 25
+  			years = 25 
   		}
 
    		custom_tooltip = fp2_struggle.1010.compassionate_courtiers
-		hidden_effect = { #Compassionate or righteous courtiers will secretly dislike this
+		hidden_effect = { #Compassionate or righteous courtiers will secretly dislike this 
    			every_courtier = {
    				IF = {
    					limit = {
@@ -3105,7 +3105,7 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
    		}
    	}
 
-	option = { #You shall have it, if you make swords for my armies
+	option = { #You shall have it, if you make swords for my armies 
 		name = fp2_struggle.1010.c
 		flavor = fp2_struggle.1010.smithgoesaway
 
@@ -3113,11 +3113,11 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
         	base = 10
         	ai_value_modifier = {
            		ai_energy = 0.7
-            	ai_vengefulness = 0.7
+            	ai_vengefulness = 0.7 
         	}
    		}
 
-   		stress_impact = {
+   		stress_impact = { 
    			content = minor_stress_impact_gain
    			craven = minor_stress_impact_gain
    			greedy = minor_stress_impact_gain
@@ -3126,8 +3126,8 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
 
    		remove_treasury_or_gold = major_treasury_or_gold_value #this guy is expensive!
 
-   		add_character_modifier = { #as promised, your armies gets equipped with Toledo steel!
-   			modifier = toledo_steel_armaments_modifier
+   		add_character_modifier = { #as promised, your armies gets equipped with Toledo steel! 
+   			modifier = toledo_steel_armaments_modifier 
    			years = 50
    		}
 
@@ -3137,14 +3137,14 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
 				years = 10
 			}
 		}
-
+		
 		custom_tooltip = fp2_struggle.1010.paranoid_rivals  #your neighbors gets really paranoid when they learn about this
 		hidden_effect = {
 			struggle:iberian_struggle = {
 				every_involved_ruler = {
 					limit = {
-						NOT = { is_allied_to = root }
-						character_is_realm_neighbor = root
+						NOT = { is_allied_to = root }	
+						character_is_realm_neighbor = root 	
 					}
 					add_opinion = {
 						target = root
@@ -3159,13 +3159,13 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
    	option = { #Make me Iberia's finest blade, and all the smithies shall be yours
 		name = fp2_struggle.1010.d
 
-		flavor = fp2_struggle.1010.smithmakesweapon #the master swordsmiths stays in your court for the time being, to make the great sword he promised you.
+		flavor = fp2_struggle.1010.smithmakesweapon #the master swordsmiths stays in your court for the time being, to make the great sword he promised you. 
 
-   		add_courtier = scope:great_swordsmith
-
+   		add_courtier = scope:great_swordsmith 
+   	
    		hidden_effect = {
    			scope:great_swordsmith = {
-   				set_knight_status = forbid #this is to prevent him being auto-turned into a knight during his stay, as he tends to get quite high prowess. The player can still make him a knight manually if they insist on it.
+   				set_knight_status = forbid #this is to prevent him being auto-turned into a knight during his stay, as he tends to get quite high prowess. The player can still make him a knight manually if they insist on it. 
    			}
    		}
 
@@ -3173,11 +3173,11 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
         	base = 10
         	ai_value_modifier = {
            		ai_greed = 0.7
-           		ai_boldness = 0.7
+           		ai_boldness = 0.7 
         	}
    		}
 
-   		stress_impact = { #this is an extravagant option, not for the humble or temperate - but just people don't like it either, since it still lets the blacksmith usurp the guilds.
+   		stress_impact = { #this is an extravagant option, not for the humble or temperate - but just people don't like it either, since it still lets the blacksmith usurp the guilds. 
    			humble = minor_stress_impact_gain
    			just = minor_stress_impact_gain
    			temperate = minor_stress_impact_gain
@@ -3185,7 +3185,7 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
 
    		remove_short_term_gold = major_gold_value #this guy knows what he's worth!
 
-   		scope:blacksmith_county = { #the guild gets usurped by the arrogant master smith!
+   		scope:blacksmith_county = { #the guild gets usurped by the arrogant master smith! 
 			add_county_modifier = {
 				modifier = county_corruption_uncooperative_guilds_modifier
 				years = 10
@@ -3193,15 +3193,15 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
 		}
 
 		hidden_effect = { #this looks weird in the tooltip otherwise!
-			random_list = { #I recommend increasing the odds for the special cool sword when testing this event!
-				25 = { #You have a 25% chance of getting a really cool sword here!
-					trigger = { is_ai = no } #this option is just for players, to create less inflation on awesume swords.
+			random_list = { #I recommend increasing the odds for the special cool sword when testing this event! 
+				25 = { #You have a 25% chance of getting a really cool sword here! 
+					trigger = { is_ai = no } #this option is just for players, to create less inflation on awesume swords. 
 					trigger_event = {
-						id = fp2_struggle.1011
+						id = fp2_struggle.1011 
 						days = { 30 60 }
 					}
 				}
-				75 = { #but you can still get a nice toledo blade!
+				75 = { #but you can still get a nice toledo blade! 
 					trigger_event = {
 						id = fp2_struggle.1012
   						days = { 30 60 }
@@ -3211,16 +3211,16 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
 		}
    	}
 
-   	option = { #I will not anger the guilds for your vanity.
+   	option = { #I will not anger the guilds for your vanity.  
 	name = fp2_struggle.1010.e
 
 	flavor = fp2_struggle.1010.swordsmith_leaves
-
+		
 		ai_chance = { #Lazy or worried AI pick this option
         	base = 10
         	ai_value_modifier = {
            		ai_energy = -0.7
-           		ai_greed = 0.3
+           		ai_greed = 0.3	
            		ai_boldness = -0.5
         	}
    		}
@@ -3230,11 +3230,11 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
    			diligent = medium_stress_impact_gain
    			content = minor_stress_impact_loss
    			humble = minor_stress_impact_loss
-   			temperate = minor_stress_impact_loss
-   			paranoid = minor_stress_impact_loss
+   			temperate = minor_stress_impact_loss 
+   			paranoid = minor_stress_impact_loss 		 
    		}
 
-   		scope:blacksmith_county = { #You curry favor with the blacksmith's guild
+   		scope:blacksmith_county = { #You curry favor with the blacksmith's guild 
 			add_county_modifier = {
 				modifier = guild_rights_protected_modifier
 				years = 20
@@ -3246,31 +3246,31 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
    				target = root
    				modifier = insulted_opinion
   			}
-  		}
+  		}	
    	}
 }
 
 fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
-	type = character_event
+	type = character_event 
 	title = fp2_struggle.1011.t
 	desc = fp2_struggle.1011.desc
 	theme = realm
 
 	left_portrait = {
 		character = root
-		animation = admiration
+		animation = admiration 
 	}
 	right_portrait = {
 		character = scope:great_swordsmith
-		animation = marshal
+		animation = marshal 
 	}
 
 	artifact = { # To display the artifact in the event-window
-	    target = scope:amazing_toledo_sword
+	    target = scope:amazing_toledo_sword 
 	    position = lower_right_portrait
 	}
-
-	trigger = {
+	
+	trigger = { 
 		has_fp2_dlc_trigger = yes
 		scope:great_swordsmith = {
 			is_available_healthy_ai_adult = yes
@@ -3279,43 +3279,43 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 	immediate = {
 
-		save_scope_as = owner
-		set_artifact_rarity_illustrious = yes
+		save_scope_as = owner 
+		set_artifact_rarity_illustrious = yes 
 
-		create_artifact = {
-			name = awesome_toledo_sword_name
+		create_artifact = {	
+			name = awesome_toledo_sword_name 
 			creator = scope:great_swordsmith
-			description = awesome_toledo_sword_desc
+			description = awesome_toledo_sword_desc 
 			visuals = sword
-			type = sword
+			type = sword 
 			modifier = artifact_amazing_toledo_sword_modifier
 			wealth = scope:wealth  # This comes from the scripted effect above
 			quality = scope:quality # This comes from the scripted effect above
 			save_scope_as = amazing_toledo_sword # Allows the sword to be accessed via scope after its creation
-		}
+		}		
 	}
 
 	option = { #Martiello, the hammer
 	name = fp2_struggle.1011.a
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_iberian }
 			}
 		}
-
+		
 		scope:amazing_toledo_sword = { set_artifact_name = martiello_name }
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
 	}
 
-	option = { #Tiniebra, the darkness
+	option = { #Tiniebra, the darkness 
 	name = fp2_struggle.1011.b
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_iberian }
 			}
@@ -3325,14 +3325,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
 	}
 
 	option = { #Vermejo, the red
 	name = fp2_struggle.1011.c
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_iberian }
 			}
@@ -3342,14 +3342,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
 	}
 
-	option = { #Jargonça, like the blue gemstone.
+	option = { #Jargonça, like the blue gemstone.  
 	name = fp2_struggle.1011.d
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_iberian }
 			}
@@ -3359,14 +3359,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
-	}
+	}	
 
-	option = { #Suhayl, the glorious.
+	option = { #Suhayl, the glorious.  
 	name = fp2_struggle.1011.e
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_arabic }
 			}
@@ -3376,14 +3376,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
-		}
-	}
+			remove_courtier_or_guest = scope:great_swordsmith 
+		} 
+	}	
 
-	option = { #al-Battar, the cutter
+	option = { #al-Battar, the cutter  
 	name = fp2_struggle.1011.f
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_arabic }
 			}
@@ -3393,14 +3393,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
-	}
+	}	
 
-	option = { #Qazeeb, of the strong handle
+	option = { #Qazeeb, of the strong handle 
 	name = fp2_struggle.1011.g
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_arabic }
 			}
@@ -3410,14 +3410,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
-	}
+	}	
 
-	option = { #Zumurrud, like the blinding emerald
+	option = { #Zumurrud, like the blinding emerald 
 	name = fp2_struggle.1011.h
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_arabic }
 			}
@@ -3427,14 +3427,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
-	}
+	}	
 
-	option = { #Ortzi, like the thunder
+	option = { #Ortzi, like the thunder 
 	name = fp2_struggle.1011.i
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_basque }
 			}
@@ -3444,14 +3444,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
-	}
+	}	
 
-	option = { #Gaueko, the night spirit
+	option = { #Gaueko, the night spirit 
 	name = fp2_struggle.1011.j
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_basque }
 			}
@@ -3461,14 +3461,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
-	}
+	}	
 
 	option = { #Gorri, the red one
 	name = fp2_struggle.1011.k
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_basque }
 			}
@@ -3478,14 +3478,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
-	}
+	}	
 
 	option = { #Aiztoto, the little knife
 	name = fp2_struggle.1011.l
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_basque }
 			}
@@ -3495,14 +3495,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
-	}
+	}	
 
 	option = { #Escremire, the fencer
 	name = fp2_struggle.1011.m
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_occitano_romance }
 			}
@@ -3512,14 +3512,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
 	}
 
 	option = { #Folha, the leaf
 	name = fp2_struggle.1011.n
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_occitano_romance }
 			}
@@ -3529,14 +3529,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
-	}
+	}	
 
-	option = { #Proeza, valour
+	option = { #Proeza, valour 
 	name = fp2_struggle.1011.o
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_occitano_romance }
 			}
@@ -3546,14 +3546,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
-	}
+	}	
 
-	option = { #Trebalhar, the tormenter
+	option = { #Trebalhar, the tormenter 
 	name = fp2_struggle.1011.p
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_occitano_romance }
 			}
@@ -3563,14 +3563,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
-	}
+	}	
 
 	option = { #Sufax, like the great hero in days of old
 	name = fp2_struggle.1011.q
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_berber }
 			}
@@ -3580,14 +3580,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
 	}
 
 	option = { #Toumellalt, the white one.
 	name = fp2_struggle.1011.r
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_berber }
 			}
@@ -3597,14 +3597,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
-	}
+	}	
 
-	option = { #Ayugu, the yoke.
+	option = { #Ayugu, the yoke.  
 	name = fp2_struggle.1011.s
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = { has_cultural_pillar = language_berber }
 			}
@@ -3614,14 +3614,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
-	}
+	}	
 
 	option = { #Well, "Ironsoul" of course
 	name = fp2_struggle.1011.u
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = {
 					NOT = {
@@ -3629,7 +3629,7 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 						has_cultural_pillar = language_arabic
 						has_cultural_pillar = language_basque
 						has_cultural_pillar = language_occitano_romance
-						has_cultural_pillar = language_berber
+						has_cultural_pillar = language_berber  
 					}
 				}
 			}
@@ -3639,14 +3639,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
-	}
+	}	
 
 	option = { #I quite like "Mistletoe"...
 	name = fp2_struggle.1011.v
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = {
 					NOT = {
@@ -3654,7 +3654,7 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 						has_cultural_pillar = language_arabic
 						has_cultural_pillar = language_basque
 						has_cultural_pillar = language_occitano_romance
-						has_cultural_pillar = language_berber
+						has_cultural_pillar = language_berber  
 					}
 				}
 			}
@@ -3664,15 +3664,15 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
-	}
+	}	
 
-	option = { #Moor-cleaver, what else?
+	option = { #Moor-cleaver, what else? 
 	name = fp2_struggle.1011.w
 
-		trigger = {
-			has_religion = religion:christianity_religion
+		trigger = { 
+			has_religion = religion:christianity_religion 
 			root = {
 				culture = {
 					NOT = {
@@ -3680,7 +3680,7 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 						has_cultural_pillar = language_arabic
 						has_cultural_pillar = language_basque
 						has_cultural_pillar = language_occitano_romance
-						has_cultural_pillar = language_berber
+						has_cultural_pillar = language_berber  
 					}
 				}
 			}
@@ -3694,14 +3694,14 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
-	}
+	}	
 
-	option = { #Usurper's blade seem fitting, giving what we did to the guilds...
+	option = { #Usurper's blade seem fitting, giving what we did to the guilds... 
 	name = fp2_struggle.1011.x
 
-		trigger = {
+		trigger = { 
 			root = {
 				culture = {
 					NOT = {
@@ -3709,7 +3709,7 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 						has_cultural_pillar = language_arabic
 						has_cultural_pillar = language_basque
 						has_cultural_pillar = language_occitano_romance
-						has_cultural_pillar = language_berber
+						has_cultural_pillar = language_berber  
 					}
 				}
 			}
@@ -3719,9 +3719,9 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 
 		custom_tooltip = fp2_struggle.1011.swordsmith_leaves
 		hidden_effect = {
-			remove_courtier_or_guest = scope:great_swordsmith
+			remove_courtier_or_guest = scope:great_swordsmith 
 		}
-	}
+	}	
 }
 
 fp2_struggle.1012 = { # Soul of Iron (3), by Ola Jentzsch
@@ -3732,19 +3732,19 @@ fp2_struggle.1012 = { # Soul of Iron (3), by Ola Jentzsch
 
 	left_portrait = {
 		character = root
-		animation = admiration
+		animation = admiration 
 	}
 	right_portrait = {
 		character = scope:great_swordsmith
-		animation = marshal
+		animation = marshal 
 	}
 
 	artifact = { # To display the artifact in the event-window
-	    target = scope:toledo_sword
+	    target = scope:toledo_sword 
 	    position = lower_right_portrait
 	}
-
-	trigger = {
+	
+	trigger = { 
 		has_fp2_dlc_trigger = yes
 		scope:great_swordsmith = {
 			is_available_healthy_ai_adult = yes
@@ -3754,14 +3754,14 @@ fp2_struggle.1012 = { # Soul of Iron (3), by Ola Jentzsch
 	immediate = {
 
 		save_scope_as = owner
-		set_artifact_rarity_masterwork = yes
+		set_artifact_rarity_masterwork = yes 
 
-		create_artifact = {
-			name = toledo_sword_name
+		create_artifact = {	
+			name = toledo_sword_name 
 			creator = scope:great_swordsmith
-			description = toledo_sword_desc
+			description = toledo_sword_desc 
 			visuals = sword
-			type = sword
+			type = sword 
 			modifier = artifact_masterwork_toledo_sword_modifier
 			wealth = scope:wealth  # This comes from the scripted effect above
 			quality = scope:quality # This comes from the scripted effect above
@@ -3769,32 +3769,32 @@ fp2_struggle.1012 = { # Soul of Iron (3), by Ola Jentzsch
 		}
 	}
 
-	option = { #It is...exquisite. You may go in peace.
+	option = { #It is...exquisite. You may go in peace. 
 	name = fp2_struggle.1012.a
 	flavor = fp2_struggle.1012.swordsmith_leaves
 
-		ai_chance = { #Only greedy AI wouldn't pick this option.
+		ai_chance = { #Only greedy AI wouldn't pick this option.  
         	base = 10
         	ai_value_modifier = {
-           		ai_greed = -1
+           		ai_greed = -1	
         	}
-   		}
-
-		remove_courtier_or_guest = scope:great_swordsmith
+   		}	
+		
+		remove_courtier_or_guest = scope:great_swordsmith 	
 	}
 
-	option = { #It is as promised. May I not convince you to stay and serve me?
+	option = { #It is as promised. May I not convince you to stay and serve me? 
 	name = fp2_struggle.1012.b
 
-		ai_chance = { #Only greedy would pick this option.
+		ai_chance = { #Only greedy would pick this option.  
         	base = 10
         	ai_value_modifier = {
-           		ai_greed = 1
+           		ai_greed = 1	
         	}
    		}
-
-		custom_tooltip = fp2_struggle.1012_swordsmith_stays
-
+   		
+		custom_tooltip = fp2_struggle.1012_swordsmith_stays 
+		
 		remove_treasury_or_gold = major_treasury_or_gold_value #this guy is expensive!	
 	}
 }
@@ -3808,9 +3808,9 @@ scripted_trigger fp2_struggle.1020_minority_councillor_faith_trigger = {
 	is_ai = yes
 	NOT = { is_spouse_of = root }
 	root.capital_county.faith = {
-		faith_hostility_level = {
-			target = scope:fp2_struggle_1020_temp_councillor.faith
-			value >= faith_hostile_level
+		faith_hostility_level = { 
+			target = scope:fp2_struggle_1020_temp_councillor.faith 
+			value >= faith_hostile_level 
 		}
 	}
 }
@@ -3819,12 +3819,12 @@ fp2_struggle.1020 = {
 	type = character_event
 	title = fp2_struggle.1020.t
 	desc = {
-		desc = fp2_struggle.1020_desc_opening
+		desc = fp2_struggle.1020_desc_opening 
 		first_valid = {
 			triggered_desc = {
 				trigger = {
 					scope:minority_councillor = {
-						death_reason = death_beaten_by_mob
+						death_reason = death_beaten_by_mob 
 					}
 				}
 				desc = fp2_struggle.1020_desc_beaten_by_mob
@@ -3832,7 +3832,7 @@ fp2_struggle.1020 = {
 			triggered_desc = {
 				trigger = {
 					scope:minority_councillor = {
-						death_reason = death_burned_by_mob
+						death_reason = death_burned_by_mob 
 					}
 				}
 				desc = fp2_struggle.1020_desc_burned_by_mob
@@ -3840,7 +3840,7 @@ fp2_struggle.1020 = {
 			triggered_desc = {
 				trigger = {
 					scope:minority_councillor = {
-						death_reason = death_hanged_and_disemboweled_by_mob
+						death_reason = death_hanged_and_disemboweled_by_mob 
 					}
 				}
 				desc = fp2_struggle.1020_desc_hanged_and_disemboweled_by_mob
@@ -3848,7 +3848,7 @@ fp2_struggle.1020 = {
 			triggered_desc = {
 				trigger = {
 					scope:minority_councillor = {
-						death_reason = death_crucified_by_mob
+						death_reason = death_crucified_by_mob 
 					}
 				}
 				desc = fp2_struggle.1020_desc_crucified_by_mob
@@ -3856,7 +3856,7 @@ fp2_struggle.1020 = {
 			triggered_desc = {
 				trigger = {
 					scope:minority_councillor = {
-						death_reason = death_defenestrated_by_mob
+						death_reason = death_defenestrated_by_mob 
 					}
 				}
 				desc = fp2_struggle.1020_desc_defenestrated_by_mob
@@ -3864,7 +3864,7 @@ fp2_struggle.1020 = {
 			triggered_desc = {
 				trigger = {
 					scope:minority_councillor = {
-						death_reason = death_molten_silver_by_mob
+						death_reason = death_molten_silver_by_mob 
 					}
 				}
 				desc = fp2_struggle.1020_desc_molten_silver_by_mob
@@ -3872,7 +3872,7 @@ fp2_struggle.1020 = {
 			triggered_desc = {
 				trigger = {
 					scope:minority_councillor = {
-						death_reason = death_torn_to_pieces_by_mob
+						death_reason = death_torn_to_pieces_by_mob 
 					}
 				}
 				desc = fp2_struggle.1020_desc_torn_to_pieces_by_mob
@@ -3880,9 +3880,9 @@ fp2_struggle.1020 = {
 		}
 		first_valid = {
 			triggered_desc = {
-				trigger = {
+				trigger = { 
 					scope:councillor_executor = {
-						exists = var:relative_created
+						exists = var:relative_created 
 					}
 				}
 				desc = fp2_struggle.1020_desc_councillor_had_family
@@ -3890,48 +3890,48 @@ fp2_struggle.1020 = {
 			triggered_desc = {
 				trigger = {
 					scope:minority_councillor =	{
-						fp2_struggle.1020_minority_councillor_faith_trigger = yes
+						fp2_struggle.1020_minority_councillor_faith_trigger = yes 
 					}
 				}
-				desc = fp2_struggle.1020_desc_councillor_had_no_family_faith
-			}
+				desc = fp2_struggle.1020_desc_councillor_had_no_family_faith 
+			}		
 		}
 	}
-
+				
 	theme = dread
 	cooldown = { years = 15 }
 	override_background = { reference = council_chamber }
 
 	left_portrait = {
 		character = root
-		animation = disbelief
+		animation = disbelief 
 	}
 	right_portrait = {
-		character = scope:councillor_executor
-		animation = anger
+		character = scope:councillor_executor  
+		animation = anger 
 	}
 
-	lower_left_portrait = scope:minority_councillor
+	lower_left_portrait = scope:minority_councillor 
 
-
+	
 	trigger = {
 		has_fp2_dlc_trigger = yes
 
 		any_councillor = {	fp2_struggle.1020_minority_councillor_faith_trigger = yes }
 
 		capital_county = { county_control < low_county_control_limit } #root's capital having low control isn't strictly necessary, but adds to the emergent feeling here
-	}
+	}	
 
 	immediate = {
-
+ 
  		random_councillor = { #this is the dead councillor
  			limit = { fp2_struggle.1020_minority_councillor_faith_trigger = yes }
-			save_scope_as = minority_councillor
+			save_scope_as = minority_councillor 
 		}
 
-		capital_county = { save_scope_as = unrest_capital } #so we can use the capital for loc
+		capital_county = { save_scope_as = unrest_capital } #so we can use the capital for loc 
 
-		scope:minority_councillor = { #and this is how they met their untimely end
+		scope:minority_councillor = { #and this is how they met their untimely end 
 			random_list = {
 				10 = {
 					death = {
@@ -3965,70 +3965,70 @@ fp2_struggle.1020 = {
 				}
 				10 = {
 					death = {
-						death_reason = death_torn_to_pieces_by_mob
+						death_reason = death_torn_to_pieces_by_mob 
 					}
-				}
+				}	
 			}
 		}
 
-		if = { #now let's see if there's any relative of the late councillor that could be considered relevant!
+		if = { #now let's see if there's any relative of the late councillor that could be considered relevant! 
 			limit = {
 				any_powerful_vassal = {
-					is_ai = yes
-					is_close_or_extended_family_of = scope:minority_councillor
+					is_ai = yes 
+					is_close_or_extended_family_of = scope:minority_councillor 
 					is_powerful_vassal = yes
-				}
+				} 
 			}
 			random_powerful_vassal = {
 				limit = {
-					is_ai = yes
-					is_close_or_extended_family_of = scope:minority_councillor
-					is_powerful_vassal = yes
+					is_ai = yes 
+					is_close_or_extended_family_of = scope:minority_councillor 
+					is_powerful_vassal = yes 
 				}
 				save_scope_as = councillor_executor
 				set_variable = relative_created #this variable is for use in triggers later
+			}	 
+		}
+
+		else_if = {
+			limit = {
+				any_powerful_vassal = {
+					is_ai = yes 
+					is_close_family_of = scope:minority_councillor 
+				} 
+			}
+			random_powerful_vassal = {
+				limit = {
+					is_ai = yes 
+					is_close_family_of = scope:minority_councillor 
+				}
+				save_scope_as = councillor_executor
+				set_variable = relative_created 
 			}
 		}
 
 		else_if = {
 			limit = {
 				any_powerful_vassal = {
-					is_ai = yes
-					is_close_family_of = scope:minority_councillor
-				}
+					is_ai = yes 
+					is_close_or_extended_family_of = scope:minority_councillor 
+				} 
 			}
 			random_powerful_vassal = {
 				limit = {
-					is_ai = yes
-					is_close_family_of = scope:minority_councillor
+					is_ai = yes 
+					is_close_or_extended_family_of = scope:minority_councillor 
 				}
 				save_scope_as = councillor_executor
-				set_variable = relative_created
+				set_variable = relative_created 
 			}
 		}
-
-		else_if = {
-			limit = {
-				any_powerful_vassal = {
-					is_ai = yes
-					is_close_or_extended_family_of = scope:minority_councillor
-				}
-			}
-			random_powerful_vassal = {
-				limit = {
-					is_ai = yes
-					is_close_or_extended_family_of = scope:minority_councillor
-				}
-				save_scope_as = councillor_executor
-				set_variable = relative_created
-			}
-		}
-
-		else_if = {
+			
+		else_if = { 
 			limit = {
 				any_neighboring_and_across_water_top_liege_realm_owner = {
 					is_ai = yes
-					is_close_or_extended_family_of = scope:minority_councillor
+					is_close_or_extended_family_of = scope:minority_councillor 
 					OR = {
 						fp2_character_involved_in_struggle_trigger = yes
    						fp2_character_interloper_in_struggle_trigger = yes
@@ -4037,86 +4037,89 @@ fp2_struggle.1020 = {
 			}
 			random_neighboring_and_across_water_top_liege_realm_owner = {
 				limit = {
-					is_ai = yes
-					is_close_or_extended_family_of = scope:minority_councillor
+					is_ai = yes 
+					is_close_or_extended_family_of = scope:minority_councillor 
 					OR = {
 						fp2_character_involved_in_struggle_trigger = yes
    						fp2_character_interloper_in_struggle_trigger = yes
 					}
 				}
-				save_scope_as = councillor_executor
+				save_scope_as = councillor_executor 
 				set_variable = relative_created
 			}
 		}
 
-		else_if = {
+		else_if = { 
 			limit = {
 				any_ruler = {
 					is_ai = yes
-					is_close_or_extended_family_of = scope:minority_councillor
+					is_close_or_extended_family_of = scope:minority_councillor 
 					NOT = { this = root } #Unop
 				}
 			}
 			random_ruler = {
 				limit = {
-					is_ai = yes
-					is_close_or_extended_family_of = scope:minority_councillor
+					is_ai = yes 
+					is_close_or_extended_family_of = scope:minority_councillor 
 					NOT = { this = root } #Unop
 				}
-				save_scope_as = councillor_executor
+				save_scope_as = councillor_executor 
 				set_variable = relative_created
 			}
 		}
 
-		else_if = {
+		else_if = { 
 			limit = {
 				any_courtier = {
 					is_ai = yes
-					is_close_or_extended_family_of = scope:minority_councillor
+					is_close_or_extended_family_of = scope:minority_councillor 
 				}
 			}
 			random_courtier = {
 				limit = {
-					is_ai = yes
-					is_close_or_extended_family_of = scope:minority_councillor
+					is_ai = yes 
+					is_close_or_extended_family_of = scope:minority_councillor 
 				}
-				save_scope_as = councillor_executor
+				save_scope_as = councillor_executor 
 				set_variable = relative_created
 			}
 		}
 
-		else = { #if no relevant relative was found, we instead create a community leader to fire option b with!
+		else = { #if no relevant relative was found, we instead create a community leader to fire option b with! 
 			create_character = {
 				age = { 20 80 }
 				location = root.capital_province
 				template = merchant_template
-				culture = scope:minority_councillor.culture
-				faith = scope:minority_councillor.faith
-				save_scope_as = councillor_executor
+				culture = scope:minority_councillor.culture 
+				faith = scope:minority_councillor.faith 
+				save_scope_as = councillor_executor  
 			}
 			hidden_effect = {
-				scope:councillor_executor = { #just because, I want more rotund people
+				scope:councillor_executor = { #just because, I want more rotund people 
 					add_character_modifier = {
-						modifier = obese_modifier
+						modifier = obese_modifier 
 					}
 				}
 			}
-		}
+		}	
 
 		scope:minority_councillor = {
 			every_close_or_extended_family_member = {
 				limit = { NOT = { this = root } } #Unop
 				custom = all_family_members
 				if = {
-					limit = { is_ai = yes }
+					limit = { 
+						is_ai = yes 
+						this != root
+					}
 					add_opinion = {
 						target = root
 						opinion = -20
-						modifier = blames_for_death_of_relative_opinion
+						modifier = blames_for_death_of_relative_opinion 
 					}
-				}
-			}
-		}
+				}					
+			}		
+		}	
 	}
 
 
@@ -4125,7 +4128,7 @@ fp2_struggle.1020 = {
 
 		trigger = {
 			scope:councillor_executor = {
-				exists = var:relative_created
+				exists = var:relative_created 
 			}
 		}
 
@@ -4133,7 +4136,7 @@ fp2_struggle.1020 = {
         	base = 10
         	ai_value_modifier = {
            		ai_rationality = 0.5
-            	ai_honor = 0.3
+            	ai_honor = 0.3 
             	#but bold and vengeful ones do not
             	ai_boldness = -0.5
             	ai_vengefulness = -0.5
@@ -4143,7 +4146,7 @@ fp2_struggle.1020 = {
    		stress_impact = {
 			#arrogant characters don't care for this
 			arrogant = minor_stress_impact_gain
-			callous = minor_stress_impact_gain
+			callous = minor_stress_impact_gain 
 			stubborn = minor_stress_impact_gain
 
 			#socially awkward ones aren't fond of it either
@@ -4152,8 +4155,8 @@ fp2_struggle.1020 = {
 		}
 
 		add_character_modifier = {
-			modifier = compelling_apology_modifier
-			years = 10
+			modifier = compelling_apology_modifier 
+			years = 10 
 		}
 
 		scope:minority_councillor = {
@@ -4167,14 +4170,14 @@ fp2_struggle.1020 = {
 					add_opinion = {
 						target = root
 						opinion = 10
-						modifier = made_amends_opinion
+						modifier = made_amends_opinion 
 					}
-				}
-			}
-		}
+				}					
+			}		
+		}		
 	}
 
-	option = { #Pay restitution to councillor's people
+	option = { #Pay restitution to councillor's people 
 		name = fp2_struggle.1020.b
 
 		trigger = {
@@ -4187,7 +4190,7 @@ fp2_struggle.1020 = {
         	base = 10
         	ai_value_modifier = {
            		ai_compassion = 0.7
-            	ai_honor = 0.3
+            	ai_honor = 0.3 
             	#but zealous and vengeful ones do not
             	ai_zeal = -0.5
             	ai_vengefulness = -0.5
@@ -4195,9 +4198,9 @@ fp2_struggle.1020 = {
    		}
 
    		stress_impact = {
-			#arrogant characters don't wanna do this
+			#arrogant characters don't wanna do this 
 			arrogant = minor_stress_impact_gain
-			callous = minor_stress_impact_gain
+			callous = minor_stress_impact_gain 
 			stubborn = minor_stress_impact_gain
 
 			#nor those who hate the people
@@ -4208,15 +4211,15 @@ fp2_struggle.1020 = {
 		remove_treasury_or_gold = medium_treasury_or_gold_value #restitution isn't free! 
 
 		add_character_modifier = {
-			modifier = restitution_to_minorities_modifier
+			modifier = restitution_to_minorities_modifier 
 			years = 15
-		}
+		} 			
 	}
 
-	option = { #Hunt down the perpetrators
+	option = { #Hunt down the perpetrators 
 		name = fp2_struggle.1020.c
 
-		ai_chance = { #energetic and vengeful AI picks this option.
+		ai_chance = { #energetic and vengeful AI picks this option. 
         	base = 10
         	ai_value_modifier = {
            		ai_energy = 0.5
@@ -4226,42 +4229,42 @@ fp2_struggle.1020 = {
         	}
    		}
 
-   		stress_impact = { #this is cruel and a lot of effort...
+   		stress_impact = { #this is cruel and a lot of effort... 
 			compassionate = minor_stress_impact_gain
 			forgiving = minor_stress_impact_gain
-			lazy = minor_stress_impact_gain
+			lazy = minor_stress_impact_gain 
 		}
 
-
+		
 		add_character_modifier = {
-			modifier = memorable_public_execution_modifier
-			years = 10
-		}
+			modifier = memorable_public_execution_modifier 
+			years = 10 
+		} 
+					
 
+		add_prestige = minor_prestige_gain	
 
-		add_prestige = minor_prestige_gain
-
-		if = {
+		if = { 
 			limit = { exists = var:relative_created }
 			scope:councillor_executor = {
 				add_opinion = {
 					target = root
 					opinion = 20
-					modifier = avenged_relative_opinion
-
+					modifier = avenged_relative_opinion	
+					
 				}
 			}
-		}
+		}		
 	}
 
-	option = { #Restore order in the capital
+	option = { #Restore order in the capital 
 		name = fp2_struggle.1020.d
 
 		ai_chance = { #rational and compassionate AIs pick this option
         	base = 10
         	ai_value_modifier = {
            		ai_rationality = 0.9
-            	ai_compassion = 0.3
+            	ai_compassion = 0.3 
             	#but bold and zealous ones do not
             	ai_boldness = -0.5
             	ai_zeal = -0.5
@@ -4271,28 +4274,28 @@ fp2_struggle.1020 = {
    		stress_impact = {
 			#cruel or lazy characters don't bother with this
 			callous = minor_stress_impact_gain
-			lazy = minor_stress_impact_gain
+			lazy = minor_stress_impact_gain 
 			sadistic = minor_stress_impact_gain
 
-			#and vengeful ones would rather pursue revenge.
+			#and vengeful ones would rather pursue revenge. 
 			vengeful = minor_stress_impact_gain
-		}
+		}	
 
-		if = {
+		if = { 
 			limit = { exists = var:relative_created }
 			scope:councillor_executor = {
 				add_opinion = {
 					target = root
 					opinion = -10
-					modifier = ignored_demands_opinion
+					modifier = ignored_demands_opinion	
 				}
 			}
 		}
+		
+		add_prestige = minor_prestige_gain 
 
-		add_prestige = minor_prestige_gain
-
-		root.capital_county = { change_county_control = medium_county_control_gain }
-	}
+		root.capital_county = { change_county_control = medium_county_control_gain }										
+	}							
 }
 
 ###################################
@@ -4300,7 +4303,7 @@ fp2_struggle.1020 = {
 # By Ola Jentzsch
 ###################################
 fp2_struggle.1050 = {
-	type = character_event
+	type = character_event 
 	title = fp2_struggle.1050.t
 	desc = {
 		first_valid = {
@@ -4311,7 +4314,7 @@ fp2_struggle.1050 = {
 				trigger = {
 					has_religion = religion:christianity_religion
 					scope:visionary_spouse= {
-						has_religion = religion:christianity_religion
+						has_religion = religion:christianity_religion 
 					}
 				}
 				desc = fp2_struggle.1050.desc_christian
@@ -4323,7 +4326,7 @@ fp2_struggle.1050 = {
 						has_religion = religion:islam_religion
 					}
 				}
-				desc = fp2_struggle.1050.desc_islamic
+				desc = fp2_struggle.1050.desc_islamic 
 			}
 			triggered_desc = {
 				trigger = {
@@ -4332,9 +4335,9 @@ fp2_struggle.1050 = {
 						has_religion = religion:germanic_religion
 					}
 				}
-				desc = fp2_struggle.1050.desc_rampaging_barbarian_heathen
+				desc = fp2_struggle.1050.desc_rampaging_barbarian_heathen 
 			}
-			desc = fp2_struggle.1050.desc_non_barbarian_heathen
+			desc = fp2_struggle.1050.desc_non_barbarian_heathen	
 		}
 		first_valid = {
 			triggered_desc = {
@@ -4356,7 +4359,7 @@ fp2_struggle.1050 = {
 			}
 			triggered_desc = {
 				trigger = {
-					has_faith = faith:catholic
+					has_faith = faith:catholic 
 					scope:visionary_spouse= {
 						has_faith = faith:catholic
 					}
@@ -4369,15 +4372,15 @@ fp2_struggle.1050 = {
 			triggered_desc = {
 				trigger = {
 					scope:visionary_spouse = {
-						OR = {
+						OR = { 
 							has_relation_lover = root
-							has_relation_soulmate = root
+							has_relation_soulmate = root 
 						}
 					}
 				}
-				desc = fp2_struggle.1050.desc_love_and_warmth_ending
+				desc = fp2_struggle.1050.desc_love_and_warmth_ending 
 			}
-			desc = fp2_struggle.1050.desc_no_love_and_warmth_ending
+			desc = fp2_struggle.1050.desc_no_love_and_warmth_ending 
 		}
 	}
 
@@ -4386,48 +4389,48 @@ fp2_struggle.1050 = {
 
 	left_portrait = {
 		character = root
-		animation = disapproval
+		animation = disapproval 
 	}
 	right_portrait = {
-		character = scope:visionary_spouse
-		animation = paranoia
+		character = scope:visionary_spouse 
+		animation = paranoia 
 	}
 
-
-	trigger = {
+	
+	trigger = { 
 		has_fp2_dlc_trigger = yes
 
 		is_landed_or_landless_administrative = yes
-
+		
 		any_spouse = { is_courtier = yes }
 
-		fp2_character_involved_in_struggle_trigger = yes
+		fp2_character_involved_in_struggle_trigger = yes 
 
-		struggle:iberian_struggle = { is_struggle_phase = struggle_iberia_phase_hostility }
+		struggle:iberian_struggle = { is_struggle_phase = struggle_iberia_phase_hostility }	
 	}
-
-	cooldown = { #this event shouldn't fire too often, since the context with the spouse's dream is pretty specific.
+		
+	cooldown = { #this event shouldn't fire too often, since the context with the spouse's dream is pretty specific. 
 		years = 100
 	}
 
 
 	immediate = {
 
-		random_spouse = {
+		random_spouse = { 
 			weight = {
 				base = 1
 				modifier = {
 					factor = 5
-					this = primary_spouse
+					this = primary_spouse 
 				}
 			}
-			save_scope_as = visionary_spouse
+			save_scope_as = visionary_spouse 
 		}
 
 		scope:visionary_spouse = {
 			add_character_modifier = {
-				modifier = foreboding_visions_modifier
-				years = 10
+				modifier = foreboding_visions_modifier 
+				years = 10 
 			}
 		}
 
@@ -4445,16 +4448,16 @@ fp2_struggle.1050 = {
 			faith = {
 				OR = {
 					has_doctrine_parameter = witchcraft_illegal
-					has_doctrine_parameter = witchcraft_shunned
+					has_doctrine_parameter = witchcraft_shunned 
 				}
 			}
 		}
-
+	
 		ai_chance = { #bold, vengeful and zealous AI goes for this option
         	base = 10
         	ai_value_modifier = {
            		ai_boldness = 0.5
-            	ai_vengefulness = 0.7
+            	ai_vengefulness = 0.7 
             	ai_zeal = 0.7
             	ai_compassion = -1 #whereas compassionate, rational and honorable ones really, really doesn't
             	ai_rationality = -1
@@ -4462,7 +4465,7 @@ fp2_struggle.1050 = {
         	}
    		}
 
-   		stress_impact = {
+   		stress_impact = { 
    			compassionate = major_stress_impact_gain #compassionate people don't accuse their spouse of being a witch
    			craven = minor_stress_impact_gain #cravens don't dare throw her in jail
    			trusting = medium_stress_impact_gain #and trusting people don't accuse her either
@@ -4471,7 +4474,7 @@ fp2_struggle.1050 = {
 
    		custom_tooltip = fp2_struggle.1050.spouse_imprisoned #you throw your spouse into the dungeon for being a suspected witch
 		hidden_effect = {
-			scope:visionary_spouse = {
+			scope:visionary_spouse = { 
   				hard_imprison_character_effect = {
   					TARGET = this
   					IMPRISONER = root
@@ -4483,20 +4486,20 @@ fp2_struggle.1050 = {
 	option = {
 	name = fp2_struggle.1050.b
 
-		ai_chance = { #lazy zealous AI pick this option
+		ai_chance = { #lazy zealous AI pick this option 
         	base = 10
         	ai_value_modifier = {
            		ai_zeal = 0.8
            		ai_energy = -0.7
-            	ai_vengefulness = -0.7
+            	ai_vengefulness = -0.7 
         	}
    		}
 
-   		stress_impact = {
+   		stress_impact = { 
    			cynical = minor_stress_impact_gain #cynics don't really put their faith in God
    		}
 
-   		duel = { #this duel is root trying to make their spouse feel better.
+   		duel = { #this duel is root trying to make their spouse feel better. 
 			skill = diplomacy
 			value = medium_skill_rating
 
@@ -4511,23 +4514,23 @@ fp2_struggle.1050 = {
 				}
 				modifier = {
 					add = 20
-					has_trait = zealous
+					has_trait = zealous 
 				}
 				send_interface_toast = {
 					title = comforting_spouse_visionary_toast.success
 					left_icon = root
-					right_icon = scope:visionary_spouse
+					right_icon = scope:visionary_spouse 
 
 					scope:visionary_spouse = {
 						add_opinion = {
-							target = root
+							target = root 
 							modifier = comforted_opinion
 						}
 					}
 					custom_tooltip = fp2_struggle.1050.condition_might_improve
 					hidden_effect = {
-						scope:visionary_spouse = {
-							recover_from_disease_effect = { DISEASE = ill }
+						scope:visionary_spouse = { 
+							recover_from_disease_effect = { DISEASE = ill }		
 						}
 					}
 				}
@@ -4549,29 +4552,29 @@ fp2_struggle.1050 = {
 					title = comforting_spouse_visionary.failure
 					left_icon = root
 					right_icon = scope:visionary_spouse
-
+					
 					scope:visionary_spouse = {
-						add_opinion = {
-							target = root
+						add_opinion = {	
+							target = root 
 							modifier = failed_comfort_opinion
-						}
+						}	
 					}
 
 					custom_tooltip = fp2_struggle.1050.condition_might_get_worse
 					hidden_effect = {
 						scope:visionary_spouse = {
 							add_character_modifier = {
-								modifier = mysterious_prophetess_illness_modifier
+								modifier = mysterious_prophetess_illness_modifier 
 								years = 5
 							}
 						}
 					}
 				}
 			}
-		}
+		} 
 	}
 
-	option = { #Come, tell me more of your visions
+	option = { #Come, tell me more of your visions 
 	name = fp2_struggle.1050.c
 
 		ai_chance = { #compassionate AIs pick this option
@@ -4583,80 +4586,80 @@ fp2_struggle.1050 = {
         	}
    		}
 
-   		stress_impact = { #unpleasant types don't pick this option...
-   			arrogant = minor_stress_impact_gain
+   		stress_impact = { #unpleasant types don't pick this option... 
+   			arrogant = minor_stress_impact_gain 
    			callous = medium_stress_impact_gain
    			sadistic = medium_stress_impact_gain
 			eccentric = minor_stress_impact_loss
    		}
 
-   		scope:visionary_spouse = {
+   		scope:visionary_spouse = { 
 			if = {
-				limit = {
-					OR = {
+				limit = { 
+					OR = { 
 						has_relation_lover = root
-						has_relation_soulmate = root
+						has_relation_soulmate = root 
 					}
 				}
 				add_opinion = {
 					target = root
 					modifier = listened_opinion
 				}
-			}
+			}	
 			else = {
 				progress_towards_lover_effect = {
 					CHARACTER = root
 					REASON = lover_comforted_nightmare
 					OPINION = 0
 				}
-			}
+			}	
 		}
 
 		custom_tooltip = fp2_struggle.1050.condition_might_improve
 					hidden_effect = {
-						scope:visionary_spouse = {
-							recover_from_disease_effect = { DISEASE = ill }
+						scope:visionary_spouse = { 
+							recover_from_disease_effect = { DISEASE = ill }		
 						}
 					}
 
 		add_character_modifier = {
 			modifier = frightened_by_portent_modifier
-			years = 10
+			years = 10 
 		}
 	}
 
-	option = { #Leave me be, I am planning my next conquest
+	option = { #Leave me be, I am planning my next conquest 
 	name = fp2_struggle.1050.d
 
 		ai_chance = { #Ambitious AIs pick this option
         	base = 10
         	ai_value_modifier = {
            		ai_boldness = 0.5
-            	ai_energy = 0.7
+            	ai_energy = 0.7 
             	ai_greed = 0.5
             	ai_compassion = -0.7
         	}
    		}
 
-   		stress_impact = {
+   		stress_impact = { 
    			compassionate = minor_stress_impact_gain
 			eccentric = minor_stress_impact_gain
    		}
 
    		scope:visionary_spouse = {
-			add_opinion = {
-				target = root
+			add_opinion = {	
+				target = root 
 				modifier = failed_comfort_opinion
-			}
+			}	
 		}
 
-   		custom_tooltip = fp2_struggle.1050.condition_might_get_very_worse
+   		custom_tooltip = fp2_struggle.1050.condition_might_get_very_worse 
 		hidden_effect = {
 			random = {
 				chance = 90
 				scope:visionary_spouse = {
 					add_character_modifier = {
-						modifier = mysterious_prophetess_illness_modifier
+						modifier = mysterious_prophetess_illness_modifier 
 						years = 5
 					}
 					add_trait = depressed_1
@@ -4705,8 +4708,8 @@ fp2_struggle.2000 = {
 		cp:councillor_steward 	= { is_available_ai_adult = yes }
 		exists = cp:councillor_court_chaplain
 		cp:councillor_court_chaplain = { is_available_ai_adult = yes }
-
-		any_sub_realm_barony = {
+		
+		any_sub_realm_barony = { 
 			fp2_struggle_2000_check_holds_city_scripted_trigger = yes
 		}
 
@@ -4718,7 +4721,7 @@ fp2_struggle.2000 = {
 	}
 
 	immediate = {
-		random_sub_realm_barony = {
+		random_sub_realm_barony = { 
 			limit = { fp2_struggle_2000_check_holds_city_scripted_trigger = yes }
 			county = { save_scope_as = se_2000_county }
 		}
@@ -4738,7 +4741,7 @@ fp2_struggle.2000 = {
 			faith = root.faith
 
 			dynasty = none
-			after_creation = {
+			after_creation = { 
 				add_gold = { minor_gold_value medium_gold_value }
 				add_prestige = { minor_prestige_gain medium_prestige_gain }
 				add_piety = { medium_piety_gain major_piety_gain }
@@ -4768,7 +4771,7 @@ fp2_struggle.2000 = {
 	option = { # Mandatory lunatic option (now rakish)
 		name = fp2_struggle.2000.f
 		trigger = { has_trait = rakish }
-		stress_impact = {
+		stress_impact = { 
 			chaste = major_stress_impact_gain
 			zealous = major_stress_impact_gain
 		}
@@ -4791,7 +4794,7 @@ fp2_struggle.2000 = {
 
 			add_piety = major_piety_loss
 
-			scope:se_2000_county = {
+			scope:se_2000_county = { 
 				add_county_modifier = {
 					modifier = fp2_free_market_boom_modifier
 					years = 5
@@ -4815,10 +4818,10 @@ fp2_struggle.2000 = {
 			OR = {
 				has_trait = reaver
 				has_trait = order_member
-				has_trait = aggressive_attacker
+				has_trait = aggressive_attacker 
 			}
 		}
-		stress_impact = {
+		stress_impact = { 
 			just = major_stress_impact_gain
 			forgiving = major_stress_impact_gain
 			calm = minor_stress_impact_gain
@@ -4831,7 +4834,7 @@ fp2_struggle.2000 = {
 				type = event_toast_effect_good
 				title = fp2_ruthless_market_oversight_modifier
 				left_icon = root
-
+	
 				add_dread = medium_dread_gain
 				scope:se_2000_county = {
 					add_county_modifier = {
@@ -4846,7 +4849,7 @@ fp2_struggle.2000 = {
 				type = event_toast_effect_bad
 				title = fp2_ruthless_market_oversight_modifier
 				left_icon = root
-
+	
 				add_dread = medium_dread_gain
 				scope:se_2000_county = {
 					add_county_modifier = {
@@ -4920,8 +4923,8 @@ fp2_struggle.2000 = {
 							opinion = 15
 						}
 					}
-
-					scope:se_2000_county = {
+	
+					scope:se_2000_county = { 
 						add_county_modifier = {
 							modifier = fp2_inefficient_market_oversight_modifier
 							years = 5
@@ -4936,7 +4939,7 @@ fp2_struggle.2000 = {
 					value = scope:duel_value
 					multiplier = 2.5
 				}
-
+				
 				modifier = {
 					add = 5
 					has_trait = humble
@@ -4959,7 +4962,7 @@ fp2_struggle.2000 = {
 					title = fp2_struggle.2000.a.b.notif
 					left_icon = scope:2000_scoped_steward
 
-					scope:se_2000_county = {
+					scope:se_2000_county = { 
 						add_county_modifier = {
 							modifier = fp2_smooth_market_oversight_modifier
 							years = 5
@@ -4994,7 +4997,7 @@ fp2_struggle.2000 = {
 		name = fp2_struggle.2000.d
 		flavor = fp2_struggle.2000.d.desc
 
-		stress_impact = {
+		stress_impact = { 
 			zealous = major_stress_impact_gain
 			humble = medium_stress_impact_gain
 			content = medium_stress_impact_gain
@@ -5020,7 +5023,7 @@ fp2_struggle.2000 = {
 
 			add_piety = medium_piety_loss
 
-			scope:se_2000_county = {
+			scope:se_2000_county = { 
 				add_county_modifier = {
 					modifier = fp2_free_market_boom_modifier
 					years = 6
@@ -5053,7 +5056,7 @@ fp2_struggle.2000 = {
 			title = fp2_struggle.2000.b.notif
 			desc = fp2_struggle.2000.b.notif.desc
 
-			scope:se_2000_county = {
+			scope:se_2000_county = { 
 				add_county_modifier = {
 					modifier = fp2_smooth_market_oversight_modifier
 					years = 5
@@ -5115,7 +5118,7 @@ fp2_struggle.2000 = {
 scripted_trigger fp2_struggle_2001_desperate_county_scripted_trigger = {
 	NOT = { root = { has_claim_on = prev } }
 	trigger_if = {	# Checking that we are not offering up the capital of a duke or higher
-		limit = {
+		limit = { 
 			holder = {
 				highest_held_title_tier >= tier_duchy
 			}
@@ -5135,7 +5138,7 @@ scripted_trigger fp2_struggle_2001_desperate_county_scripted_trigger = {
 
 	squared_distance = {
 		target = root.capital_province
-		value < squared_distance_medium
+		value < squared_distance_medium 
 	}
 }
 
@@ -5156,7 +5159,7 @@ fp2_struggle.2001 = {
 			}
 			desc = fp2_struggle.2001.desc.extra.b
 		}
-	}
+	} 
 
 	theme = vassal
 	cooldown = { years = 20 }
@@ -5176,7 +5179,7 @@ fp2_struggle.2001 = {
 			is_struggle_phase = struggle_iberia_phase_hostility
 
 		}
-
+		
 		any_neighboring_and_across_water_top_liege_realm_owner = {
 			fp2_character_involved_in_struggle_trigger = yes
 			any_sub_realm_county = {
@@ -5209,7 +5212,7 @@ fp2_struggle.2001 = {
 			trait = peasant_leader
 			random_traits = yes
 			culture = scope:fp2_2001_desperate_county.culture
-			random_faith = {
+			random_faith = { 
 				root.faith = { trigger = { always = yes } }
 				scope:fp2_2001_desperate_county.faith  = { trigger = { always = yes } }
 			}
@@ -5226,13 +5229,13 @@ fp2_struggle.2001 = {
 			value = 1.25
 		}
 		if = { # Calculate if AI can win war, decision of war requires traits AND for it to be favourable. This calcs if it is favourable
-			limit = {
+			limit = { 
 				is_ai = yes # Are you AI?
-				scope:fp2_2001_desperate_county.holder.top_liege = {
-					NOT = {
-						is_at_war_with = root
+				scope:fp2_2001_desperate_county.holder.top_liege = { 
+					NOT = { 
+						is_at_war_with = root 
 						is_ai = no # Enemy must be AI (prevents AI from attacking player characters, otherwise it would feel as if the attack was random)
-					}
+					} 
 				}
 
 				# Actual strength is calc below, thanks to joe
@@ -5253,9 +5256,9 @@ fp2_struggle.2001 = {
 					has_trait = crusader_king
 					has_trait = faith_warrior
 				}
-				NOT = {
+				NOT = { 
 					faith = scope:fp2_2001_desperate_elder.faith
-					has_trait = excommunicated
+					has_trait = excommunicated 
 				}
 			}
 			save_scope_as = fp2_2001_exclusive_option_faith
@@ -5265,7 +5268,7 @@ fp2_struggle.2001 = {
 				OR = {
 					has_trait = greedy
 					has_trait = avaricious
-					has_trait = logistician
+					has_trait = logistician	
 				}
 			}
 			save_scope_as = fp2_2001_exclusive_option_greed
@@ -5283,14 +5286,14 @@ fp2_struggle.2001 = {
 			OR = { # Tricks autoformatter into showing trait icons (wasteful)
 				has_trait = greedy
 				has_trait = avaricious
-				has_trait = logistician
+				has_trait = logistician	
 			}
 		}
 
-		stress_impact = {
-			compassionate = minor_stress_impact_gain
-			humble = minor_stress_impact_gain
-			content = minor_stress_impact_gain
+		stress_impact = { 
+			compassionate = minor_stress_impact_gain 
+			humble = minor_stress_impact_gain 
+			content = minor_stress_impact_gain 
 		}
 
 		save_scope_value_as = {
@@ -5323,12 +5326,12 @@ fp2_struggle.2001 = {
 
 		if = {
 			limit = { exists = cp:councillor_steward }
-			cp:councillor_steward = {
+			cp:councillor_steward = { 
 				add_opinion = {
 					target = root
 					modifier = pleased_opinion
 					opinion = 15
-				}
+				} 
 			}
 		}
 
@@ -5364,7 +5367,7 @@ fp2_struggle.2001 = {
 	}
 
 	option = {	# Are you willing to give up your god for it?
-		trigger = {
+		trigger = { 
 			exists = scope:fp2_2001_exclusive_option_faith
 
 			OR = {
@@ -5379,7 +5382,7 @@ fp2_struggle.2001 = {
 		name = fp2_struggle.2001.b
 
 		custom_tooltip = fp2_struggle.2001.a.desc
-		if = {
+		if = { 
 			limit = { exists = scope:2001_scoped_chaplain }
 			custom_tooltip = fp2_struggle.2001.a.a.desc
 		}
@@ -5397,8 +5400,8 @@ fp2_struggle.2001 = {
 			type = event_stewardship_good_with_text
 			title = fp2_struggle.2001.b.notif
 			desc = fp2_struggle.2001.b.notif.desc
-			left_icon = scope:fp2_2001_desperate_elder
-
+			left_icon = scope:fp2_2001_desperate_elder 
+		  
 			if = {
 				limit = { exists = scope:2001_scoped_chaplain }
 				scope:2001_scoped_chaplain = {
@@ -5474,10 +5477,10 @@ fp2_struggle.2001 = {
 		name = fp2_struggle.2001.a
 		custom_tooltip = fp2_struggle.2001.b.desc # Three extra years for not attaching any strings
 
-		stress_impact = {
-			craven = minor_stress_impact_gain
-			shy = minor_stress_impact_gain
-			lazy = minor_stress_impact_gain
+		stress_impact = { 
+			craven = minor_stress_impact_gain 
+			shy = minor_stress_impact_gain 
+			lazy = minor_stress_impact_gain 
 			arrogant = major_stress_impact_gain
 		}
 		if = {
@@ -5567,8 +5570,8 @@ fp2_struggle.2001 = {
 				exists = scope:fp2_2001_exclusive_option_faith
 			}
 		}
-
-		stress_impact = {
+		
+		stress_impact = { 
 			craven = medium_stress_impact_gain
 			content = minor_stress_impact_gain
 		}
@@ -5657,9 +5660,9 @@ fp2_struggle.2001 = {
 	option = { # Betray and inform ruler of treachery
 		name = fp2_struggle.2001.f
 
-		stress_impact = {
-			compassionate = major_stress_impact_gain
-			forgiving = major_stress_impact_gain
+		stress_impact = { 
+			compassionate = major_stress_impact_gain 
+			forgiving = major_stress_impact_gain 
 		}
 
 		scope:fp2_2001_desperate_elder = {
@@ -5668,7 +5671,7 @@ fp2_struggle.2001 = {
 				killer = root
 			}
 		}
-
+		
 		if = {
 			limit = { is_allied_to = scope:fp2_2001_desperate_county.holder } # You stood by your allies
 			every_powerful_vassal = {
@@ -5700,7 +5703,7 @@ fp2_struggle.2001 = {
 		else = {
 			every_powerful_vassal = { # Your vassals question your integrity
 				custom = fp2_every_major_vassal_notifier
-				limit = {
+				limit = { 
 					NOR = {
 						has_trait = arbitrary
 						has_trait = sadistic
@@ -5735,7 +5738,7 @@ fp2_struggle.2001 = {
 				has_trait = deceitful
 				is_allied_to = scope:fp2_2001_desperate_county.holder
 			}
-
+			
 			modifier = {
 				add = -25
 				NOT = { is_allied_to = scope:fp2_2001_desperate_county.holder }
@@ -5827,8 +5830,8 @@ fp2_struggle.2001 = {
 		}
 
 		if = {
-			limit = {
-				exists = scope:did_not_call_next_event
+			limit = { 
+				exists = scope:did_not_call_next_event 
 				scope:fp2_2001_desperate_elder = { is_alive = yes }
 			}
 			scope:fp2_2001_desperate_elder = {
@@ -5872,7 +5875,7 @@ fp2_struggle.2002 = {
 						debug_log_scopes = yes
 					}
 				}
-
+	
 				scope:fp2_2001_desperate_county = {
 					add_county_modifier = {
 						modifier = county_listened_to_locals_modifier
@@ -6004,7 +6007,7 @@ fp2_struggle.2003 = {
 	}
 
 	immediate = {
-		random_sub_realm_barony = {
+		random_sub_realm_barony = { 
 			limit = { fp2_struggle_2003_check_has_city_scripted_trigger = yes }
 			county = { save_scope_as = fp2_2003_county_town }
 		}
@@ -6022,7 +6025,7 @@ fp2_struggle.2003 = {
 			faith = root.faith
 
 			dynasty = none
-			after_creation = {
+			after_creation = { 
 				add_gold = { 0 minor_gold_value }
 				add_prestige = { minor_prestige_loss minor_prestige_gain }
 				add_piety = { medium_piety_loss minor_piety_gain }
@@ -6037,7 +6040,7 @@ fp2_struggle.2003 = {
 		name = fp2_struggle.2003.d
 		flavor = fp2_struggle.2003.d.desc
 
-		trigger = {
+		trigger = { 
 			OR= {
 				has_trait = lunatic_genetic
 				has_trait = logistician
@@ -6196,11 +6199,11 @@ fp2_struggle.2003 = {
 					type = event_toast_effect_bad
 					title = fp2_struggle.2003.a.a.notif
 					left_icon = root
-
+	
 					add_prestige = medium_prestige_loss
 
-					scope:fp2_2003_county_town = {
-						add_county_modifier = {
+					scope:fp2_2003_county_town.title_province = {
+						add_province_modifier = {
 							modifier = recently_looted_modifier
 							years = 5
 						}
@@ -6212,7 +6215,7 @@ fp2_struggle.2003 = {
 					value = scope:duel_value
 					multiplier = 1.5
 				}
-
+				
 				modifier = {
 					add = 5
 					has_trait = calm
@@ -6242,7 +6245,7 @@ fp2_struggle.2003 = {
 					type = event_toast_effect_good
 					title = fp2_struggle.2003.a.b.notif
 					left_icon = root
-
+				  
 					add_prestige = medium_prestige_gain
 					scope:fp2_2003_county_town = {
 						add_county_modifier = {
@@ -6333,9 +6336,11 @@ fp2_struggle.2003 = {
 							modifier = fp2_local_garrison_slaughtered_modifier
 							years = 5
 						}
-						add_county_modifier = {
-							modifier = recently_looted_modifier
-							years = 5
+						title_province = {
+							add_province_modifier = {
+								modifier = recently_looted_modifier
+								years = 5
+							}
 						}
 					}
 				}
@@ -6345,16 +6350,18 @@ fp2_struggle.2003 = {
 						type = event_toast_effect_bad
 						title = fp2_local_garrison_slaughtered_modifier
 						left_icon = root
-
+			
 						scope:fp2_2003_county_town = { # Failure outcome
 							add_county_modifier = {
 								modifier = fp2_local_garrison_slaughtered_modifier
 								years = 5
 							}
 							hidden_effect = {
-								add_county_modifier = {
-									modifier = recently_looted_modifier
-									years = 5
+								title_province = {
+									add_province_modifier = {
+										modifier = recently_looted_modifier
+										years = 5
+									}
 								}
 							}
 						}
@@ -6436,7 +6443,7 @@ fp2_struggle.2003 = {
 					type = event_toast_effect_good
 					title = fp2_struggle.2003.c.b.notif
 					left_icon = root
-
+		
 					scope:fp2_2003_county_town = { # Success
 						add_county_modifier = {
 							modifier = fp2_elite_tactics_for_civil_guards_modifier
@@ -6476,7 +6483,7 @@ fp2_struggle.2003 = {
 		name = fp2_struggle.2003.e
 		flavor = fp2_struggle.2003.e.desc
 
-		stress_impact = {
+		stress_impact = { 
 			compassionate = major_stress_impact_gain
 			just = medium_stress_impact_gain
 			paranoid = minor_stress_impact_gain
@@ -6487,13 +6494,15 @@ fp2_struggle.2003 = {
 				send_interface_toast = {
 					type = event_toast_effect_bad
 					title = fp2_struggle.2003.e.notif.a
-
+					
 					scope:fp2_2003_county_town = {
-						add_county_modifier = {
-							modifier = recently_looted_modifier
-							years = 5
+						title_province = {
+							add_province_modifier = {
+								modifier = recently_looted_modifier
+								years = 5
+							}
 						}
-					}
+					} 
 				}
 			}
 			25 = { # Massacre
@@ -6564,8 +6573,8 @@ fp2_struggle.2004 = {
 		exists = cp:councillor_marshal
 		cp:councillor_marshal	= { is_available_ai_adult = yes }
 		exists = cp:councillor_steward
-		cp:councillor_steward	= {
-			is_available_ai_adult = yes
+		cp:councillor_steward	= { 
+			is_available_ai_adult = yes 
 			NOT = { has_character_flag = fp2_2004_critical_success_achieved }
 		}
 
@@ -6592,14 +6601,14 @@ fp2_struggle.2004 = {
 	immediate = {
 		cp:councillor_marshal = { save_scope_as = 2004_scoped_marshal }
 		cp:councillor_steward = {
-			save_scope_as = 2004_scoped_steward
+			save_scope_as = 2004_scoped_steward 
 			if = {
 				limit = { has_character_flag = fp2_2004_critical_success_achieved }
 				remove_character_flag = fp2_2004_critical_success_achieved # For debug
 			}
 		}
 
-		random_sub_realm_county = {
+		random_sub_realm_county = { 
 			limit = { is_coastal_county = yes }
 			save_scope_as = fp2_2004_dockyards
 		}
@@ -6614,14 +6623,14 @@ fp2_struggle.2004 = {
 				target = root
 				modifier = dismissive_opinion
 				opinion = -15
-			}
+			} 
 		}
-		scope:2004_scoped_marshal = {
+		scope:2004_scoped_marshal = { 
 			add_opinion = {
 				target = root
 				modifier = dismissive_opinion
 				opinion = -20
-			}
+			} 
 		}
 
 		scope:2004_scoped_steward = {
@@ -6630,7 +6639,7 @@ fp2_struggle.2004 = {
 				value = high_skill_rating
 
 				25 = { # Failure Outcome
-					compare_modifier = {
+					compare_modifier = { 
 						value = scope:duel_value
 						multiplier = -1.5
       					min = -24
@@ -6641,7 +6650,7 @@ fp2_struggle.2004 = {
 					}
 
 					custom_tooltip = fp2_struggle.2005.desc.alt.a
-					scope:fp2_2004_dockyards = {
+					scope:fp2_2004_dockyards = { 
 						add_county_modifier = {
 							modifier 	= fp2_successful_shipyards_modifier
 							years 		= 20
@@ -6726,7 +6735,7 @@ fp2_struggle.2004 = {
 					root = { save_scope_as = fp2_2004_silver_boat_floats }
 					show_as_tooltip = {
 						root = { add_prestige = major_prestige_gain }
-						scope:fp2_2004_dockyards = {
+						scope:fp2_2004_dockyards = { 
 							add_county_modifier = {
 								modifier 	= fp2_successful_shipyards_modifier
 								years 		= 45
@@ -6763,14 +6772,14 @@ fp2_struggle.2004 = {
 				target = root
 				modifier = grateful_opinion
 				opinion = 35
-			}
+			} 
 		}
-		scope:2004_scoped_marshal = {
+		scope:2004_scoped_marshal = { 
 			add_opinion = {
 				target = root
 				modifier = disappointed_opinion
 				opinion = -15
-			}
+			} 
 		}
 
 		scope:2004_scoped_steward = {
@@ -6778,7 +6787,7 @@ fp2_struggle.2004 = {
 				desc = outcome_in_a_few_years
 				skill = learning
 				value = high_skill_rating
-
+	
 				50 = {
 					compare_modifier = {
 						value = scope:duel_value
@@ -6838,7 +6847,7 @@ fp2_struggle.2004 = {
 						multiplier = 2.5
 					}
 					desc = fp2_struggle.2004.a.b.desc
-
+					
 					modifier = {
 						add = 5
 						has_trait = calm
@@ -6896,7 +6905,7 @@ fp2_struggle.2004 = {
 								years 			= 60
 							}
 						}
-						scope:fp2_2004_dockyards = {
+						scope:fp2_2004_dockyards = { 
 							add_county_modifier = {
 								modifier 	= fp2_successful_shipyards_modifier
 								years 		= 60
@@ -6941,20 +6950,20 @@ fp2_struggle.2004 = {
 		name = fp2_struggle.2004.b
 		flavor = fp2_struggle.2004.b.desc
 
-		scope:2004_scoped_marshal = {
+		scope:2004_scoped_marshal = { 
 			add_opinion = {
 				target = root
 				modifier = pleased_opinion
 				opinion = 15
-			}
+			} 
 		}
 
-		scope:2004_scoped_steward = {
+		scope:2004_scoped_steward = { 
 			add_opinion = {
 				target = root
 				modifier = disappointed_opinion
 				opinion = -15
-			}
+			} 
 			add_opinion = {
 				target = scope:2004_scoped_marshal
 				modifier = angry_opinion
@@ -7157,14 +7166,14 @@ fp2_struggle.2005 = {
 	}
 
 	option = { # ALT Accept
-		trigger = {
+		trigger = { 
 			exists = scope:fp2_2004_alt_option
 			exists = scope:fp2_2004_silver_boat_floats
 		}
 		name = fp2_struggle.2005.a
 
 		add_prestige = major_prestige_gain
-		scope:fp2_2004_dockyards = {
+		scope:fp2_2004_dockyards = { 
 			add_county_modifier = {
 				modifier 	= fp2_successful_shipyards_modifier
 				years 		= 45
@@ -7173,13 +7182,13 @@ fp2_struggle.2005 = {
 	}
 
 	option = { # ALT Accept (Failure Version)
-		trigger = {
+		trigger = { 
 			exists = scope:fp2_2004_alt_option
 			NOT = { exists = scope:fp2_2004_silver_boat_floats }
 		}
 		name = artifact.4050.a # Reusage of loc key
 
-		scope:fp2_2004_dockyards = {
+		scope:fp2_2004_dockyards = { 
 			add_county_modifier = {
 				modifier 	= fp2_successful_shipyards_modifier
 				years 		= 20
@@ -7203,7 +7212,7 @@ fp2_struggle.2005 = {
 	}
 
 	option = { # Crit Accept
-		trigger = {
+		trigger = { 
 			NOT = { exists = scope:fp2_2004_alt_option }
 			scope:2005_scoped_steward = { has_character_flag = fp2_2004_critical_success_achieved }
 		}
@@ -7223,7 +7232,7 @@ fp2_struggle.2005 = {
 			modifier 		= fp2_advanced_maritime_technology_modifier
 			years 			= 60
 		}
-		scope:fp2_2004_dockyards = {
+		scope:fp2_2004_dockyards = { 
 			add_county_modifier = {
 				modifier 	= fp2_successful_shipyards_modifier
 				years 		= 60
@@ -7318,7 +7327,7 @@ fp2_struggle.2006 = {
 				save_scope_as = fp2_2006_vassal_in_crisis
 				random_neighboring_top_liege_realm_owner = {
 					limit = { faith != root.faith }
-					faith = { save_scope_as = fp2_2006_foreign_faith }
+					faith = { save_scope_as = fp2_2006_foreign_faith } 
 				}
 			}
 		}
@@ -7358,7 +7367,7 @@ fp2_struggle.2006 = {
 			type = event_witchcraft_good
 			title = fp2_struggle.2006.e.notif.t
 			left_icon = scope:fp2_2006_vassal_in_crisis
-
+			
 			scope:fp2_2006_vassal_in_crisis = {
 				if = {
 					limit = {
@@ -7388,13 +7397,13 @@ fp2_struggle.2006 = {
 				if = {
 					limit = {
 						trait_is_criminal_in_faith_trigger = {
-							TRAIT = witch
+							TRAIT = trait:witch
 							GENDER_CHARACTER = scope:fp2_2006_vassal_in_crisis
 							FAITH = scope:fp2_2006_vassal_in_crisis.faith
 						}
 						NOT = {
 							trait_is_criminal_in_faith_trigger = {
-								TRAIT = witch
+								TRAIT = trait:witch
 								GENDER_CHARACTER = scope:fp2_2006_vassal_in_crisis
 								FAITH = scope:fp2_2006_foreign_faith
 							}
@@ -7425,7 +7434,7 @@ fp2_struggle.2006 = {
 				}
 			}
 		}
-
+		
 		ai_chance = {
 			base = 80
 			ai_value_modifier = {
@@ -7445,9 +7454,9 @@ fp2_struggle.2006 = {
 			}
 		}
 		name = fp2_struggle.2006.d
-		stress_impact = {
-			compassionate = medium_stress_impact_gain
-			gallant = medium_stress_impact_gain
+		stress_impact = { 
+			compassionate = medium_stress_impact_gain 
+			gallant = medium_stress_impact_gain 
 		}
 
 		add_dread = miniscule_dread_gain
@@ -7665,7 +7674,7 @@ fp2_struggle.2006 = {
 		name = fp2_struggle.2006.c
 		flavor = fp2_struggle.2006.c.desc
 
-		trigger = {
+		trigger = { 
 			NAND = {
 				has_trait = witch
 				OR = {
@@ -7701,7 +7710,7 @@ fp2_struggle.2006 = {
 				ai_rationality = 0.6
 				ai_zeal = -0.7
 			}
-	  	}
+	  	}	
 	}
 
 	option = { # Someone call a priest!
@@ -7725,7 +7734,7 @@ fp2_struggle.2006 = {
 			duel = {
 				skill = learning
 				value = medium_skill_rating
-
+	
 				10 = {
 					desc = fp2_struggle.2006.a.a
 					compare_modifier = {
@@ -7784,7 +7793,7 @@ fp2_struggle.2006 = {
 						factor = 2
 						scope:fp2_2006_vassal_in_crisis = { has_trait = paranoid }
 					}
-
+	
 					root = {
 						hidden_effect = {
 							scope:fp2_2006_vassal_in_crisis = {
@@ -7806,7 +7815,7 @@ fp2_struggle.2006 = {
 							type = event_toast_effect_bad
 							title = fp2_struggle.2006.generic.notif.a.t
 							left_icon = scope:fp2_2006_vassal_in_crisis
-
+							
 							scope:fp2_2006_vassal_in_crisis = {
 								show_as_tooltip = { set_character_faith = scope:fp2_2006_foreign_faith }
 								hidden_effect = { set_character_faith_with_conversion = scope:fp2_2006_foreign_faith }
@@ -7821,7 +7830,7 @@ fp2_struggle.2006 = {
 					}
 				}
 				5 = {
-					trigger = {
+					trigger = { 
 						scope:fp2_2006_vassal_in_crisis = {
 							NOT = { has_trait = paranoid }
 						}
@@ -7875,7 +7884,7 @@ fp2_struggle.2006 = {
 						add = 5
 						has_trait = craven
 					}
-
+	
 					root = {
 						hidden_effect = {
 							scope:fp2_2006_vassal_in_crisis = {
@@ -7897,7 +7906,7 @@ fp2_struggle.2006 = {
 							type = event_toast_effect_bad
 							title = fp2_struggle.2006.generic.notif.a.t
 							left_icon = scope:fp2_2006_vassal_in_crisis
-
+							
 							scope:fp2_2006_vassal_in_crisis = {
 								remove_trait = trusting
 								if = {
@@ -7978,7 +7987,7 @@ fp2_struggle.2006 = {
 							type = event_toast_effect_good
 							title = fp2_struggle.2006.generic.notif.b.t
 							left_icon = scope:fp2_2006_vassal_in_crisis
-
+	
 							scope:fp2_2006_vassal_in_crisis = {
 								progress_towards_friend_effect = {
 									REASON = friend_guided_right_path
@@ -8063,9 +8072,10 @@ fp2_struggle.2007 = {
 		root.top_liege = root
 		exists = cp:councillor_steward
 		cp:councillor_steward = { is_available_ai_adult = yes }
-
+		cp:councillor_steward = { save_temporary_scope_as = fp2_2007_scoped_steward }
+		
 		any_vassal = { # Last minute pre RC fixes
-			NOT = {
+			NOT = { 
 				religion = root.religion
 				this = cp:councillor_steward
 			}
@@ -8111,8 +8121,8 @@ fp2_struggle.2007 = {
 			}
 		}
 		random_vassal = {
-			limit = {
-				NOT = {
+			limit = { 
+				NOT = { 
 					religion = root.religion
 					this = scope:fp2_2007_scoped_steward
 				}
@@ -8247,7 +8257,7 @@ fp2_struggle.2007 = {
 				title = fp2_struggle.2007.t
 				left_icon = root
 				right_icon = scope:fp2_2007_castle_holder
-
+	
 				remove_treasury_or_gold = scope:fp2_2007_same_faith_construction_cost
 				custom_tooltip = fp2_struggle.2007.a.notif
 				hidden_effect = {
@@ -8332,7 +8342,7 @@ fp2_struggle.2007 = {
 				title = fp2_struggle.2007.t
 				left_icon = scope:2007_vassal_sponsor
 				right_icon = scope:fp2_2007_castle_holder
-
+	
 				remove_treasury_or_gold = scope:fp2_2007_different_faith_construction_cost
 				custom_tooltip = fp2_struggle.2007.a.notif
 				hidden_effect = {
@@ -8402,7 +8412,7 @@ fp2_struggle.2007 = {
 						limit = { exists = scope:fp2_2007_allegedprotocastilean }
 						add_prestige = minor_prestige_gain
 					}
-
+					
 					scope:fp2_2007_free_real_estate = {
 						begin_create_holding = {
 							type = castle_holding
@@ -8423,13 +8433,13 @@ fp2_struggle.2007 = {
 						title = fp2_struggle.2007.t
 						left_icon = root
 						right_icon = scope:fp2_2007_castle_holder
-
+	
 						remove_treasury_or_gold = scope:fp2_2007_diy_construction_cost
 						if = {
 							limit = { exists = scope:fp2_2007_allegedprotocastilean }
 							add_prestige = minor_prestige_gain
 						}
-						custom_tooltip = fp2_struggle.2007.a.notif
+						custom_tooltip = fp2_struggle.2007.a.notif	
 					}
 					hidden_effect = {
 						scope:fp2_2007_free_real_estate = {
@@ -8454,7 +8464,7 @@ fp2_struggle.2007 = {
 	option = { # RoCo
 		name = fp2_struggle.2007.c.roco
 
-		trigger = {
+		trigger = { 
 			NOT = { has_trait = architect }
 			exists = scope:fp2_2007_roco_architect
 		}
@@ -8462,22 +8472,22 @@ fp2_struggle.2007 = {
 			duel = {
 				skill = learning
 				value = very_high_skill_rating
-
+	
 				55 = {
 					desc = fp2_struggle.2007.c.notif.a.desc
-
+	
 					compare_modifier = {
 						value = scope:duel_value
 						multiplier = 1
 					}
-
+	
 					root = {
 						send_interface_toast = {
 							type = event_toast_effect_bad
 							title = fp2_struggle.2007.c.notif.a.t
 							left_icon = scope:fp2_2007_roco_architect
 							right_icon = scope:fp2_2007_castle_holder
-
+		
 							add_prestige = medium_prestige_loss
 						}
 					}
@@ -8492,7 +8502,7 @@ fp2_struggle.2007 = {
 						add = fp2_2007_calculate_architect_competence
 						always = yes
 					}
-
+					
 					root = {
 						show_as_tooltip = {
 							remove_treasury_or_gold = scope:fp2_2007_diy_construction_cost
@@ -8516,7 +8526,7 @@ fp2_struggle.2007 = {
 								title = fp2_struggle.2007.t
 								left_icon = scope:fp2_2007_roco_architect
 								right_icon = scope:fp2_2007_castle_holder
-
+			
 								remove_treasury_or_gold = scope:fp2_2007_diy_construction_cost
 								custom_tooltip = fp2_struggle.2007.a.notif
 							}
@@ -8584,7 +8594,7 @@ fp2_struggle.2007 = {
 # By Hugo Cortell
 ###################################
 scripted_trigger fp2_struggle_2008_check_actor_eligibility_scripted_trigger = {
-	is_available_ai_adult = yes
+	is_available_ai_adult = yes 
 	intrigue > low_skill_rating
 
 	NOT = {
@@ -8597,7 +8607,7 @@ scripted_trigger fp2_struggle_2008_check_actor_eligibility_scripted_trigger = {
 	}
 
 	trigger_if = { # Instead of an event weight, we just increase the reqs for friends to dicrease overhead
-		limit = {
+		limit = { 
 			has_relation_friend = root
 			has_relation_lover = root
 		}
@@ -8656,7 +8666,7 @@ fp2_struggle.2008 = {
 
 	immediate = {
 		random_councillor = {
-			limit = {
+			limit = { 
 				OR = {
 					this = root.cp:councillor_court_chaplain
 					this = root.cp:councillor_steward
@@ -8677,7 +8687,7 @@ fp2_struggle.2008 = {
 			}
 			save_scope_as = fps_2008_misdeed_actor
 		}
-
+		
 		scope:fps_2008_misdeed_actor = {
 			if = {
 				limit = { has_council_position = councillor_steward }
@@ -8717,8 +8727,8 @@ fp2_struggle.2008 = {
 				has_trait = diplomat
 			}
 		}
-		stress_impact = {
-			just = medium_stress_impact_gain
+		stress_impact = { 
+			just = medium_stress_impact_gain 
 			trusting = minor_stress_impact_gain
 			temperate = minor_stress_impact_gain
 			patient = minor_stress_impact_gain
@@ -8744,7 +8754,7 @@ fp2_struggle.2008 = {
 						type = event_toast_effect_good
 						title = char_interaction.0050.a
 						left_icon = scope:fps_2008_misdeed_actor
-
+					  
 						capital_county = {
 							add_county_modifier = {
 								modifier = governance_1054_satisfied_peasants_modifier
@@ -8794,7 +8804,7 @@ fp2_struggle.2008 = {
 						type = event_toast_effect_good
 						title = char_interaction.0050.a
 						left_icon = scope:fps_2008_misdeed_actor
-
+					  
 						scope:fps_2008_misdeed_actor = { death = { death_reason = death_beaten_by_mob } }
 						capital_county = {
 							add_county_modifier = {
@@ -8809,7 +8819,7 @@ fp2_struggle.2008 = {
 						type = event_toast_effect_bad
 						title = char_interaction.0050.a
 						left_icon = scope:fps_2008_misdeed_actor
-
+					  
 						scope:fps_2008_misdeed_actor = { death = { death_reason = death_beaten_by_mob } }
 						capital_county = {
 							add_county_modifier = {
@@ -8834,7 +8844,7 @@ fp2_struggle.2008 = {
 		if = {
 			limit = {
 				scope:fps_2008_misdeed_actor = cp:councillor_court_chaplain
-				exists = scope:fp2_2008_relevant_head_of_faith
+				exists = scope:fp2_2008_relevant_head_of_faith 
 			}
 			scope:fps_2008_misdeed_actor.faith = {
 				religious_head = {
@@ -8847,7 +8857,7 @@ fp2_struggle.2008 = {
 			}
 		}
 
-		scope:fp2_2008_capital = {
+		scope:fp2_2008_capital = { 
 			add_county_modifier = {
 				modifier = fp2_improved_administrative_checks_modifier
 				years = 15
@@ -8868,7 +8878,7 @@ fp2_struggle.2008 = {
 	option = { # Combined general output (threaten into teaching you how to forge like they do)
 		name = fp2_struggle.2008.b.a
 		flavor = fp2_struggle.2008.b.flavor
-		stress_impact = {
+		stress_impact = { 
 			just = minor_stress_impact_gain
 			honest = medium_stress_impact_gain
 		}
@@ -8878,7 +8888,7 @@ fp2_struggle.2008 = {
 			title = yearly_0001_improved_intrigue
 			left_icon = ROOT
 			right_icon = scope:fps_2008_misdeed_actor
-
+		  
 			add_intrigue_lifestyle_xp = major_lifestyle_experience # Originally it gave you the accomplished forger perk. Was removed because it let you bypass the learning tree.
 		}
 		reverse_add_opinion = {
@@ -8923,7 +8933,7 @@ fp2_struggle.2008 = {
 			zealous = minor_stress_impact_gain
 		}
 
-		scope:fp2_2008_capital = {
+		scope:fp2_2008_capital = { 
 			add_county_modifier = {
 				modifier = county_corruption_inefficient_tax_collection_modifier
 				years = 15
@@ -9029,7 +9039,7 @@ fp2_struggle.2009 = {
 				exists = location
 				location = { NOT = { is_sea_province = yes } }
 			}
-
+			
 			OR = {
 				is_struggle_phase = struggle_iberia_phase_opportunity
 				is_struggle_phase = struggle_iberia_phase_conciliation
@@ -9049,7 +9059,7 @@ fp2_struggle.2009 = {
 
 	immediate = {
 		struggle:iberian_struggle = { # Struggle existance is already verified by event trigger
-			random_involved_ruler = {
+			random_involved_ruler = { 
 				limit = {
 					this != root # Otherwise you might be the other involved ruler
 					exists = primary_title
@@ -9060,8 +9070,8 @@ fp2_struggle.2009 = {
 					exists = location
 					location = { NOT = { is_sea_province = yes } }
 				}
-				save_scope_as = fp2_2009_involved_ruler
-			}
+				save_scope_as = fp2_2009_involved_ruler 
+			} 
 		}
 		cp:councillor_marshal = { save_scope_as = fp2_2009_marshal }
 		create_character = {
@@ -9086,7 +9096,7 @@ fp2_struggle.2009 = {
 		}
 
 		if = {
-			limit = {
+			limit = { 
 				exists = global_var:fp2_struggle_2009_thief_king_char
 				global_var:fp2_struggle_2009_thief_king_char = { is_available_ai_adult = yes }
 			}
@@ -9120,7 +9130,7 @@ fp2_struggle.2009 = {
 				culture = culture:basque
 				faith = faith:catholic
 				dynasty = none
-				after_creation = {
+				after_creation = { 
 					add_gold = major_gold_value
 					add_prestige = major_prestige_gain
 					add_piety = minor_piety_gain
@@ -9176,11 +9186,11 @@ fp2_struggle.2009 = {
 			save_scope_as = fp2_2009_random_flavor_county_ichi
 		}
 		random_sub_realm_county = {
-			limit = {
+			limit = { 
 				NOT = {
 					this = scope:fp2_2009_capital_county
 					this = scope:fp2_2009_random_flavor_county_ichi
-				}
+				} 
 			}
 			save_scope_as = fp2_2009_random_flavor_county_ni
 		}
@@ -9202,8 +9212,8 @@ fp2_struggle.2009 = {
 		else_if = { # Ensure AI on Player agression is justified
 			limit = {
 				is_ai = yes
-				scope:fp2_2009_involved_ruler = {
-					is_ai = no
+				scope:fp2_2009_involved_ruler = { 
+					is_ai = no 
 					save_temporary_opinion_value_as = {
 						name = opinion_of_root_temp_value
 						target = root
@@ -9221,7 +9231,7 @@ fp2_struggle.2009 = {
 					has_trait = callous
 					is_at_war_with = scope:fp2_2009_involved_ruler
 					has_relation_nemesis = scope:fp2_2009_involved_ruler
-				}
+				}	
 			}
 			save_scope_as = fp2_2009_hire_guild_unlocked
 		}
@@ -9326,7 +9336,7 @@ fp2_struggle.2009 = {
 				name = fp2_2009_event_outcome
 				value = flag:cleared_out
 			}
-			trigger_event = {
+			trigger_event = { 
 				id = fp2_struggle.2021
 				days = { 450 3000 }
 			}
@@ -9393,7 +9403,7 @@ fp2_struggle.2009 = {
 				name = fp2_2009_event_outcome
 				value = flag:paid_off
 			}
-			trigger_event = {
+			trigger_event = { 
 				id = fp2_struggle.2021
 				days = { 450 3000 }
 			}
@@ -9408,15 +9418,15 @@ fp2_struggle.2009 = {
 		pay_short_term_gold = {
 			target = scope:fp2_2009_garduna_young_thief
 			gold = minor_gold_value
-
+			
 		}
 
 		# Notifies the player on the recieving end of an event outcome that involves them.
 		scope:fp2_2009_involved_ruler = {  # Hopefuly this will encoureage interaction in MP games.
-			trigger_event = {
+			trigger_event = { 
 				id = fp2_struggle.2012
 				days = { 1 2 }
-			}
+			} 
 		}
 
 		stress_impact = {
@@ -9449,7 +9459,7 @@ fp2_struggle.2009 = {
 				name = fp2_2009_event_outcome
 				value = flag:worked_together
 			}
-			trigger_event = {
+			trigger_event = { 
 				id = fp2_struggle.2021
 				days = { 450 3000 }
 			}
@@ -9520,11 +9530,11 @@ fp2_struggle.2009 = {
 
 		# Notifies the player on the recieving end that they have recieved a delightful gift
 		root = { save_scope_as = fp2_2009_has_gifted_head }
-		scope:fp2_2009_involved_ruler = {
-			trigger_event = {
+		scope:fp2_2009_involved_ruler = { 
+			trigger_event = { 
 				id = fp2_struggle.2012
 				days = { 1 2 }
-			}
+			} 
 		}
 
 		stress_impact = {
@@ -9547,7 +9557,7 @@ fp2_struggle.2009 = {
 				name = fp2_2009_event_outcome
 				value = flag:lobbed_head
 			}
-			trigger_event = {
+			trigger_event = { 
 				id = fp2_struggle.2021
 				days = { 450 3000 }
 			}
@@ -9653,7 +9663,7 @@ fp2_struggle.2010 = { # 2009 duel follow-up
 				name = fp2_2009_event_outcome
 				value = flag:paid_off
 			}
-			trigger_event = {
+			trigger_event = { 
 				id = fp2_struggle.2021
 				days = { 450 3000 }
 			}
@@ -9665,16 +9675,16 @@ fp2_struggle.2011 = { # You become the KING OF THIEVES
 	hidden = yes
 	immediate = {
 		if = {
-			limit = {
+			limit = { 
 				exists = scope:fp2_2011_reuse_gate
-				root = scope:fp2_2010_root_in_duel
+				root = scope:fp2_2010_root_in_duel 
 			}
 			send_interface_toast = {
 				type = event_toast_effect_good
 				desc = fp2_struggle.2011.desc
 				title = fp2_struggle.2011.a
 				right_icon = ROOT
-
+			  
 				if = { # Standard practice from EP1 onwards dictates that we ought not to overwrite positive nicknames (?)
 					limit = {
 						OR = {
@@ -9690,10 +9700,10 @@ fp2_struggle.2011 = { # You become the KING OF THIEVES
 		}
 		else = {
 			save_scope_as = fp2_2011_reuse_gate
-			trigger_event = {
+			trigger_event = { 
 				id = fp2_struggle.2011
 				days = 1
-			}
+			} 
 		}
 	}
 }
@@ -9768,11 +9778,11 @@ fp2_struggle.2013 = {
 	desc = fp2_struggle.2013.desc
 	theme = secret
 	cooldown = { years = 2 }
-	override_background = {
+	override_background = { 
 		trigger = { scope:fp2_2013_prisoner_with_a_secret = { is_in_prison_type = house_arrest } }
 		reference = sitting_room
 	}
-	override_background = {
+	override_background = { 
 		trigger = { always = yes }
 		reference = dungeon
 	}
@@ -9799,7 +9809,7 @@ fp2_struggle.2013 = {
 					this != scope:temp_prisoner_with_secret
 					top_liege = this 
 					fp2_character_any_involvement_iberian_struggle_trigger = yes
-				}
+				} 
 				NOT = { is_known_by = root }
 			}
 		}
@@ -9814,17 +9824,17 @@ fp2_struggle.2013 = {
 						this != scope:temp_prisoner_with_secret
 						top_liege = this 
 						fp2_character_any_involvement_iberian_struggle_trigger = yes
-					}
+					} 
 					NOT = { is_known_by = root }
-				}
+				} 
 			}
 			save_scope_as = fp2_2013_prisoner_with_a_secret
 			every_known_secret = {
-				limit = {
-					secret_owner = {
+				limit = { 
+					secret_owner = { 
 						this != scope:fp2_2013_prisoner_with_a_secret
 						top_liege = this
-					}
+					} 
 					NOT = { is_known_by = root }
 				}
 				secret_owner = { save_scope_as = fp2_2013_secret_owner }
@@ -9852,7 +9862,7 @@ fp2_struggle.2013 = {
 				title = witch.2010.message
 				left_icon = ROOT
 				right_icon = scope:fp2_2013_secret_owner
-
+			  
 				scope:fp2_2013_secret_to_tell = { reveal_to = root }
 				scope:fp2_2013_prisoner_with_a_secret = { release_from_prison = yes }
 			}
@@ -9912,7 +9922,7 @@ fp2_struggle.2013 = {
 						title = witch.2010.message
 						left_icon = ROOT
 						right_icon = scope:fp2_2013_secret_owner
-
+					  
 						scope:fp2_2013_secret_to_tell = { reveal_to = root }
 					}
 				}
@@ -9955,7 +9965,7 @@ fp2_struggle.2013 = {
 					add = 10 # They are used to not revealing info under preassure, though torture is a bit more than they are used to...
 					scope:fp2_2013_prisoner_with_a_secret = { has_trait = confider }
 				}
-
+				
 				send_interface_toast = {
 					type = event_toast_effect_bad
 					title = ease_tension_toast.failure
@@ -10051,7 +10061,7 @@ fp2_struggle.2013 = {
 						title = witch.2010.message
 						left_icon = ROOT
 						right_icon = scope:fp2_2013_secret_owner
-
+					  
 						scope:fp2_2013_secret_to_tell = { reveal_to = root }
 					}
 				}
@@ -10099,13 +10109,13 @@ fp2_struggle.2014 = {
 	on_trigger_fail = {
 		if = {
 			limit = { # Fallback - foreign ruler has died!
-				NOT = {
-					scope:fp2_2013_secret_owner = {
+				NOT = { 
+					scope:fp2_2013_secret_owner = { 
 						is_alive = yes
-						is_available_ai_adult = yes
-					}
-				}
-			}
+						is_available_ai_adult = yes 
+					} 
+				} 
+			} 
 			send_interface_toast = {
 				type = event_death_neutral
 				desc = death_management.1007.t
@@ -10114,7 +10124,7 @@ fp2_struggle.2014 = {
 		}
 		if = {
 			limit = { # Fallback - prisoner has died!
-				NOT = { scope:fp2_2013_prisoner_with_a_secret = { is_alive = yes } }
+				NOT = { scope:fp2_2013_prisoner_with_a_secret = { is_alive = yes } } 
 			}
 			send_interface_toast = {
 				scope:fp2_2013_prisoner_with_a_secret = { save_temporary_scope_as = dead_character }
@@ -10165,17 +10175,19 @@ fp2_struggle.2014 = {
 					OPINION = 0
 				}
 				if = {
-					limit = {
+					limit = { 
 						has_dlc_feature = court_artifacts
 						any_character_artifact = {
 							NOT = { has_variable = historical_unique_artifact }
 							artifact_high_rarity_trigger = yes
+							artifact_can_be_gift_to_trigger = { RECIPIENT = root }
 						}
 					}
 					random_character_artifact = {
 						limit = {
 							NOT = { has_variable = historical_unique_artifact }
 							artifact_high_rarity_trigger = yes
+							artifact_can_be_gift_to_trigger = { RECIPIENT = root }
 						}
 						set_owner = root # If it breaks, use set_artifact_owner
 					}
@@ -10191,8 +10203,8 @@ fp2_struggle.2014 = {
 					scope:fp2_2013_secret_owner = {
 						NAND = {
 							has_trait = paranoid
-							ai_compassion < 30
-						}
+							ai_compassion < 30	
+						}	
 					}
 				}
 				save_scope_value_as = {
@@ -10235,17 +10247,19 @@ fp2_struggle.2014 = {
 					opinion = 25
 				}
 				if = {
-					limit = {
+					limit = { 
 						has_dlc_feature = court_artifacts
 						any_character_artifact = {
 							NOT = { has_variable = historical_unique_artifact }
 							artifact_low_rarity_trigger = yes
+							artifact_can_be_gift_to_trigger = { RECIPIENT = root }
 						}
 					}
 					random_character_artifact = {
 						limit = {
 							NOT = { has_variable = historical_unique_artifact }
 							artifact_low_rarity_trigger = yes
+							artifact_can_be_gift_to_trigger = { RECIPIENT = root }
 						}
 						set_owner = root
 					}
@@ -10315,8 +10329,8 @@ fp2_struggle.2015 = {
 		has_fp2_dlc_trigger = yes
 		is_independent_ruler = yes #Unop
 
-		any_powerful_vassal = {
-			fp2_struggle_2015_vassal_check_trigger = yes
+		any_powerful_vassal = { 
+			fp2_struggle_2015_vassal_check_trigger = yes 
 			opinion = { # Redundant second time around
 				target = root
 				value < 30
@@ -10327,7 +10341,7 @@ fp2_struggle.2015 = {
 	immediate = {
 		#Unop Rework fp2_struggle_2015_murder_requester_vassal
 		ordered_vassal = {
-			limit = {
+			limit = { 
 				fp2_struggle_2015_vassal_check_trigger = yes
 				is_powerful_vassal = yes
 			}
@@ -10415,7 +10429,7 @@ fp2_struggle.2015 = {
 					custom_tooltip = fp2_struggle.2015.a.murder_scheme
 					hidden_effect = {
 						scope:fp2_struggle_2015_murder_requester_vassal = {
-							start_scheme = {
+							start_scheme = { 
 								type = murder
 								target_character = scope:fp2_struggle_2015_peasant_to_murder
 							}
@@ -10465,8 +10479,8 @@ fp2_struggle.2015 = {
 					title = fp2_struggle.2015.a.b
 					left_icon = scope:fp2_struggle_2015_murder_requester_vassal
 
-					scope:fp2_struggle_2015_peasant_to_murder = {
-						death = {
+					scope:fp2_struggle_2015_peasant_to_murder = { 
+						death = { 
 							killer = ROOT
 							death_reason = death_poison
 						}
@@ -10498,14 +10512,14 @@ fp2_struggle.2015 = {
 								has_relation_nemesis = ROOT
 
 								AND = {
-									has_dread_level_towards = {
+									has_dread_level_towards = { 
 										target = ROOT
 										level <= 1
 									}
 									OR = {
 										AND = {
 											has_trait = deceitful
-											opinion = {
+											opinion = { 
 												target = root
 												value < -25
 											}
@@ -10545,7 +10559,7 @@ fp2_struggle.2015 = {
 			title = murder_outcome.4302.t
 			left_icon = scope:fp2_struggle_2015_murder_requester_vassal
 			right_icon = scope:fp2_struggle_2015_peasant_to_murder
-
+		
 			show_as_tooltip = { add_courtier = scope:fp2_struggle_2015_peasant_to_murder }
 			reverse_add_opinion = {
 				target = scope:fp2_struggle_2015_murder_requester_vassal
@@ -10556,7 +10570,7 @@ fp2_struggle.2015 = {
 		custom_tooltip = fp2_struggle.2015.a.murder_scheme
 		hidden_effect = {
 			scope:fp2_struggle_2015_murder_requester_vassal = {
-				start_scheme = {
+				start_scheme = { 
 					type = murder
 					target_character = scope:fp2_struggle_2015_peasant_to_murder
 				}
@@ -10568,15 +10582,15 @@ fp2_struggle.2015 = {
 		name = fp2_struggle.2015.c
 
 		random_list = {
-			75 = {
+			75 = { 
 				desc = fp2_struggle.2015.c.b
-
+				
 				send_interface_toast = {
 					type = event_intrigue_good
 					title = fp2_struggle.2015.c.b
 					left_icon = scope:fp2_struggle_2015_peasant_to_murder
 					right_icon = scope:fp2_struggle_2015_murder_requester_vassal
-
+				
 					scope:fp2_struggle_2015_peasant_to_murder = { silent_disappearance_effect = yes }
 					reverse_add_opinion = {
 						target = scope:fp2_struggle_2015_murder_requester_vassal
@@ -10592,7 +10606,7 @@ fp2_struggle.2015 = {
 					title = fp2_struggle.2015.c.a
 					left_icon = scope:fp2_struggle_2015_peasant_to_murder
 					right_icon = scope:fp2_struggle_2015_murder_requester_vassal
-
+				  
 					scope:fp2_struggle_2015_peasant_to_murder = { death = { death_reason = death_mysterious } }
 					reverse_add_opinion = {
 						target = scope:fp2_struggle_2015_murder_requester_vassal
@@ -10607,7 +10621,7 @@ fp2_struggle.2015 = {
 						trusting = minor_stress_impact_gain
 						gallant = minor_stress_impact_gain
 					}
-				}
+				}			  
 			}
 		}
 	}
@@ -10674,19 +10688,19 @@ fp2_struggle.2021 = { # Main event
 		desc = { desc = fp2_struggle.2021.desc.outro }
 	}
 	theme = secret
-	override_background = {
+	override_background = { 
 		trigger = { scope:fp2_2009_event_outcome = flag:cleared_out }
 		reference = alley_day
 	}
-	override_background = {
+	override_background = { 
 		trigger = { scope:fp2_2009_event_outcome = flag:paid_off }
 		reference = tavern
 	}
-	override_background = {
+	override_background = { 
 		trigger = { scope:fp2_2009_event_outcome = flag:worked_together }
 		reference = throne_room
 	}
-	override_background = {
+	override_background = { 
 		trigger = { scope:fp2_2009_event_outcome = flag:lobbed_head }
 		reference = alley_night
 	}
@@ -10707,7 +10721,7 @@ fp2_struggle.2021 = { # Main event
 	trigger = {
 		fp2_character_involved_in_struggle_trigger = yes # To check that the struggle is still going on
 		exists = primary_title
-		scope:fp2_2009_garduna_guild_master = {
+		scope:fp2_2009_garduna_guild_master = { 
 			is_available_ai_adult = yes
 			OR = { # Is this char still looking for adventure or have they settled down?
 				is_pool_character = yes
@@ -10752,17 +10766,17 @@ fp2_struggle.2021 = { # Main event
 							any_involved_ruler = {
 								exists = primary_title
 								has_any_secrets = yes
-								NOT = {
+								NOT = { 
 									this = root
 									any_secret = { this = scope:fp2_2021_secreto_numero_ichi }
 								}
 							}
 						}
 						random_involved_ruler = {
-							limit = {
+							limit = { 
 								exists = primary_title
 								has_any_secrets = yes
-								NOT = {
+								NOT = { 
 									this = root
 									any_secret = { this = scope:fp2_2021_secreto_numero_ichi }
 								}
@@ -10780,7 +10794,7 @@ fp2_struggle.2021 = { # Main event
 		}
 
 		hidden_effect = { # Hides exceptions from players, fix is not necessary
-			scope:fp2_2009_garduna_guild_master = {
+			scope:fp2_2009_garduna_guild_master = { 
 				save_scope_as = dueltarget # For Loc
 				#Unop Send to root capital is current location is a sea province
 				if = {
@@ -10931,15 +10945,15 @@ fp2_struggle.2021 = { # Main event
 		custom_tooltip = fp2_struggle.2021.c.a # Perhaps it can mention the spymaster?
 		hidden_effect = { # Note: You might end up learning secrets you already know, this is WAD
 			if = {
-				limit = {
+				limit = { 
 					exists = scope:fp2_2021_secreto_numero_ichi
 					exists = scope:fp2_2021_secreto_numero_ni
 				}
-
+	
 				send_interface_toast = {
 					type = event_intrigue_good
 					title = fp2_struggle.2021.c.spynet.a
-
+					
 					scope:fp2_2021_secreto_numero_ichi = { reveal_to = root }
 					scope:fp2_2021_secreto_numero_ni = { reveal_to = root }
 				}
@@ -10950,7 +10964,7 @@ fp2_struggle.2021 = { # Main event
 					send_interface_toast = {
 						type = event_intrigue_good
 						title = fp2_struggle.2021.c.spynet.a
-
+						
 						scope:fp2_2021_secreto_numero_ichi = { reveal_to = root }
 					}
 				}
@@ -10959,7 +10973,7 @@ fp2_struggle.2021 = { # Main event
 					send_interface_toast = {
 						type = event_intrigue_good
 						title = fp2_struggle.2021.c.spynet.a
-
+						
 						scope:fp2_2021_secreto_numero_ni = { reveal_to = root }
 					}
 				}
@@ -11066,7 +11080,7 @@ fp2_struggle.2022 = { # You become the KING OF THIEVES again, well, late is bett
 		if = {
 			limit = {
 				exists = scope:fp2_2022_reuse_gate
-				root = scope:fp2_2021_root_in_duel
+				root = scope:fp2_2021_root_in_duel 
 			}
 			send_interface_toast = {
 				type = event_toast_effect_good
@@ -11087,10 +11101,10 @@ fp2_struggle.2022 = { # You become the KING OF THIEVES again, well, late is bett
 		}
 		else = {
 			save_scope_as = fp2_2022_reuse_gate
-			trigger_event = {
+			trigger_event = { 
 				id = fp2_struggle.2022
 				days = 1
-			}
+			} 
 		}
 	}
 }
@@ -11107,7 +11121,7 @@ fp2_struggle.3001 = {
 	desc = {
 		desc = fp2_struggle.3001.desc
 		first_valid = {
-			triggered_desc = {
+			triggered_desc = { 
 				trigger = {
 					is_at_war = yes
 				}
@@ -11134,7 +11148,7 @@ fp2_struggle.3001 = {
 		character = cp:councillor_steward
 		animation = personality_rational
 	}
-
+	
 	trigger = {
 		has_fp2_dlc_trigger = yes #dlc check
 		is_available_even_at_war_adult = yes
@@ -11170,9 +11184,9 @@ fp2_struggle.3001 = {
 			gold <= 10
 		}
 	}
-
+	
 	immediate = {
-		play_music_cue = "mx_cue_touching_moment"
+		play_music_cue = "mx_cue_touching_moment" 
 		if = {
 			limit = {
 				exists = cp:councillor_steward
@@ -11197,7 +11211,7 @@ fp2_struggle.3001 = {
 				save_scope_as = struggle_3001_crown_artifact
 			}
 		}
-		if = {
+		if = { 
 			limit = {
 				is_married = yes
 			}
@@ -11218,7 +11232,7 @@ fp2_struggle.3001 = {
 			arrogant = medium_stress_impact_gain
 			humble = minor_stress_loss
 		}
-
+		
 		ai_chance = {
 			base = 5
 			modifier = {
@@ -11231,7 +11245,7 @@ fp2_struggle.3001 = {
 			}
 		}
 	}
-
+	
 	option = { #sell artifact crown instead
 		name = fp2_struggle.3001.b
 		trigger = { #triggers if you actually have one
@@ -11243,7 +11257,7 @@ fp2_struggle.3001 = {
 		stress_impact = {
 			greedy = minor_stress_impact_gain
 		}
-
+		
 		ai_chance = {
 			base = 5
 			modifier = {
@@ -11256,7 +11270,7 @@ fp2_struggle.3001 = {
 			}
 		}
 	}
-
+	
 	option = { #but my spouse also has a crown...
 		name = fp2_struggle.3001.c
 		flavor = fp2_struggle.3001.c_flavour
@@ -11297,7 +11311,7 @@ fp2_struggle.3001 = {
 			generous = medium_stress_impact_gain
 			compassionate = medium_stress_impact_gain
 		}
-
+		
 		ai_chance = {
 			base = 10
 			modifier = {
@@ -11309,13 +11323,13 @@ fp2_struggle.3001 = {
 			}
 		}
 	}
-
+	
 	option = { #I'll be dead before losing my crown
 		name = fp2_struggle.3001.d
 		stress_impact = {
 			base = medium_stress_gain #you really need money
 		}
-
+		
 		ai_chance = {
 			base = 5
 		}
@@ -11333,7 +11347,7 @@ fp2_struggle.3011 = {
 	title = fp2_struggle.3011.t
 	desc = {
 		first_valid = {
-			triggered_desc = {
+			triggered_desc = { 
 				trigger = {
 					faith = { has_doctrine = doctrine_gender_female_dominated }
 				}
@@ -11355,7 +11369,7 @@ fp2_struggle.3011 = {
 		animation = marshal
 	}
 	lower_right_portrait = scope:bishop
-
+	
 	trigger = {
 		has_fp2_dlc_trigger = yes
 		fp2_character_any_involvement_iberian_struggle_trigger = yes #there's an ongoing struggle (includes dlc check)
@@ -11369,7 +11383,7 @@ fp2_struggle.3011 = {
 		faith = {
 			NOT = { has_doctrine = doctrine_gender_equal } #checks that this is unusual
 		}
-		OR = { #checks again that this makes sense, Ola Jentzsch's note
+		OR = { #checks again that this makes sense, Ola Jentzsch's note 
 			has_game_rule = default_gender_equality
 			has_game_rule = inversed_gender_equality
 		}
@@ -11379,7 +11393,7 @@ fp2_struggle.3011 = {
 				is_struggle_phase = struggle_iberia_phase_opportunity
 			}
 		}
-		any_sub_realm_barony = {
+		any_sub_realm_barony = { 
 			exists = holder
 			title_province = { has_holding_type = city_holding }
 		}
@@ -11388,11 +11402,11 @@ fp2_struggle.3011 = {
 	weight_multiplier  = {
 		base = 1
 	}
-
+	
 	immediate = {
 		cp:councillor_marshal = { save_scope_as = struggle_3011_marshal }
 		cp:councillor_court_chaplain = { save_scope_as = bishop }
-		random_sub_realm_barony = {
+		random_sub_realm_barony = { 
 			limit = {
 				exists = holder
 				title_province = { has_holding_type = city_holding }
@@ -11433,7 +11447,7 @@ fp2_struggle.3011 = {
 		stress_impact = {
 			zealous = medium_stress_impact_gain
 		}
-
+		
 		ai_chance = {
         	base = 10
         	ai_value_modifier = {
@@ -11443,7 +11457,7 @@ fp2_struggle.3011 = {
         	}
    		}
 	}
-
+	
 	option = { #ridiculous
 		name = {
 			trigger = {
@@ -11453,7 +11467,7 @@ fp2_struggle.3011 = {
 		}
 		name = {
 			trigger = {
-				faith = { has_doctrine = doctrine_gender_female_dominated }
+				faith = { has_doctrine = doctrine_gender_female_dominated } 
 			}
 			text = fp2_struggle.3011.b_men
 		}
@@ -11499,7 +11513,7 @@ fp2_struggle.3011 = {
 		stress_impact = {
 			cynical = medium_stress_impact_gain
 		}
-
+		
 		ai_chance = {
         	base = 10
         	ai_value_modifier = {
@@ -11508,7 +11522,7 @@ fp2_struggle.3011 = {
         	}
    		}
 	}
-
+	
 	option = { #witches!
 		name = fp2_struggle.3011.c
 		trigger = {
@@ -11519,8 +11533,8 @@ fp2_struggle.3011 = {
 			modifier = fp2_punished_order_of_the_hachet_modifier
 			years = 5
 		}
-
-		ai_chance = { #zealous AI will pick this option
+		
+		ai_chance = { #zealous AI will pick this option 
         	base = 1
         	ai_value_modifier = {
            		ai_zeal = 0.8
@@ -11529,9 +11543,9 @@ fp2_struggle.3011 = {
         	}
    		}
 	}
-
+	
 	option = { #I shall save these damsels in distress!
-		name = fp2_struggle.3011.d
+		name = fp2_struggle.3011.d 
 		trigger = {
 			faith = { has_doctrine = doctrine_gender_male_dominated }
 			OR = {
@@ -11550,7 +11564,7 @@ fp2_struggle.3011 = {
 				add_stress = medium_stress_impact_loss
 			}
 		}
-
+		
 		ai_chance = {
         	base = 10
    		}
@@ -11578,7 +11592,7 @@ fp2_struggle.3021 = {
 		animation = shock
 	}
 	lower_right_portrait = scope:struggle_3021_courtier
-
+	
 	trigger = {
 		has_fp2_dlc_trigger = yes
 		fp2_character_any_involvement_iberian_struggle_trigger = yes
@@ -11612,7 +11626,7 @@ fp2_struggle.3021 = {
 			is_at_war = yes
 		}
 	}
-
+	
 	immediate = {
 		add_character_flag = had_event_struggle_3021
 		random_knight = {
@@ -11642,10 +11656,10 @@ fp2_struggle.3021 = {
 			save_scope_as = lightning_stones_province
 		}
 	}
-
+	
 	option = { #we need to research this stuff
-		name = fp2_struggle.3021.a
-
+		name = fp2_struggle.3021.a 
+		
 		scope:struggle_3021_courtier = { #This is who is doing the research
 			duel = {
 				skill = learning #The skill needed for research
@@ -11686,14 +11700,14 @@ fp2_struggle.3021 = {
 						}
 					}
 				}
-			}
+			}	
 		}
-
+		
 		stress_impact = {
 			zealous = medium_stress_impact_gain
 		}
 	}
-
+	
 	option = { #this is not the greatest idea
 		name = fp2_struggle.3021.b
 		reverse_add_opinion = {
@@ -11708,7 +11722,7 @@ fp2_struggle.3021 = {
 			brave = medium_stress_impact_gain
 		}
 	}
-
+	
 	option = { #we can maybe use this in a feast
 		name = fp2_struggle.3021.c
 		trigger = {
@@ -11721,7 +11735,7 @@ fp2_struggle.3021 = {
 				has_lifestyle = intrigue_lifestyle
 			}
 		}
-
+		
 		duel = {
 			skill = learning
 			target = scope:struggle_3021_courtier
@@ -11735,7 +11749,7 @@ fp2_struggle.3021 = {
 					send_interface_toast = {
 						title = good_stone_research_title
 						left_icon = scope:struggle_3021_courtier
-
+						
 						add_character_modifier = {
 							modifier = fp2_lightning_stones_poison_modifier
 							years = 5
@@ -11753,7 +11767,7 @@ fp2_struggle.3021 = {
 						title = bad_stone_research_title
 						desc = bad_struggle_3021_courtier_desc
 						left_icon = scope:struggle_3021_courtier
-
+						
 						scope:struggle_3021_courtier = {
 							death = { death_reason = death_accident }
 						}
@@ -11761,7 +11775,7 @@ fp2_struggle.3021 = {
 				}
 			}
 		}
-
+		
 		stress_impact = {
 			forgiving = medium_stress_impact_gain
 			honest = medium_stress_impact_gain
@@ -11776,7 +11790,7 @@ fp2_struggle.3021 = {
 			}
 		}
 	}
-
+	
 	option = { #god's punihsment!
 		name = fp2_struggle.3021.d
 		trigger = {
@@ -11790,7 +11804,7 @@ fp2_struggle.3021 = {
 			zealous = minor_stress_loss
 		}
 	}
-
+	
 	option = { #lightning stones for the lightning stone god
 		name = fp2_struggle.3021.e
 		trigger = {

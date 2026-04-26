@@ -16,7 +16,7 @@ create_artifact_chest_effect = {
 
 		scope:owner = {
 			# Create the artifact
-			create_artifact = {
+			create_artifact = {	
 				name = artifact_chest_name
 				creator = scope:carpenter
 				description = placeholder # Will be regenerated in the post-creation effects
@@ -37,7 +37,7 @@ create_artifact_chest_effect = {
 				name = big_chest
 				value = yes
 			}
-
+			
 			add_scaled_artifact_modifier_grandeur_small_effect = yes
 			add_scaled_artifact_modifier_piety_effect = yes
 			if = {
@@ -51,7 +51,7 @@ create_artifact_chest_effect = {
 			}
 			remove_artifact_modifier = artifact_placeholder_modifier
 		}
-	}
+	}	
 }
 
 create_artifact_cabinet_effect = {
@@ -182,7 +182,7 @@ create_artifact_throne_effect = {
 
 		# Create the artifact
 		scope:owner = {
-			create_artifact = {
+			create_artifact = {	
 				name = artifact_throne_name
 				description = placeholder # Will be regenerated in the post-creation effects
 				creator = scope:maker
@@ -197,7 +197,7 @@ create_artifact_throne_effect = {
 		}
 		scope:newly_created_artifact = {
 			set_artifact_description = artifact_throne_description
-
+			
 			#Let's add modifiers!
 			add_scaled_artifact_modifier_prestige_effect = yes
 			if = {
@@ -209,7 +209,7 @@ create_artifact_throne_effect = {
 				limit = { rarity = famed }
 				add_scaled_artifact_modifier_majesty_effect = yes
 			}
-
+			
 			# All thrones have a chance to get some extra Grandeur
 			add_scaled_artifact_modifier_grandeur_big_effect = yes
 			remove_artifact_modifier = artifact_placeholder_modifier
@@ -279,7 +279,7 @@ create_artifact_tapestry_effect = {
 				limit = {
 					exists = scope:inspiration_owner
 				}
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_wall_tapestry_name
 					description = placeholder # Will be regenerated in the post-creation effects
 					creator = scope:weaver
@@ -296,7 +296,7 @@ create_artifact_tapestry_effect = {
 				limit = {
 					exists = scope:adventurer
 				}
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_wall_tapestry_name
 					description = placeholder # Will be regenerated in the post-creation effects
 					creator = scope:adventurer
@@ -316,7 +316,7 @@ create_artifact_tapestry_effect = {
 				}
 			}
 			else = {
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_wall_tapestry_name
 					description = placeholder # Will be regenerated in the post-creation effects
 					creator = scope:weaver
@@ -334,7 +334,7 @@ create_artifact_tapestry_effect = {
 			set_artifact_description = artifact_wall_tapestry_description
 			# Set grandeur
 			add_scaled_artifact_modifier_grandeur_big_effect = yes
-
+			
 			if = {
 				limit = {
 					has_artifact_feature = tapestry_scene_religious
@@ -424,7 +424,7 @@ get_animal_hunt_location_effect = {
 							}
 						}
 						random_neighboring_realm_same_rank_owner = {
-							limit = {
+							limit = { 
 								exists = capital_county
 							}
 							capital_county = {
@@ -435,7 +435,7 @@ get_animal_hunt_location_effect = {
 					1 = { # It's hunted in our current location (as a fallback if we're unlanded or only a baron).
 						trigger = {
 							OR = {
-								highest_held_title_tier < tier_county
+								highest_held_title_tier < tier_county 
 								is_landed = no
 							}
 						}
@@ -527,30 +527,32 @@ create_artifact_animal_hide_effect = {
 						scope:animal_hide_size = flag:big
 					}
 				}
-			}
+			}		
 			if = {
 				limit = {
 					NOT = { exists = scope:animal_hide_size }
 				}
 				save_scope_value_as = { name = animal_hide_size value = flag:big }
 			}
-			create_artifact = {
-				name = artifact_animal_hide_big_name
-				creator = scope:creator
-				description = placeholder
-				visuals = large_animal_hide
-				type = animal_hide_big
-				modifier = artifact_placeholder_modifier
-				wealth = scope:wealth
-				quality = scope:quality
-				save_scope_as = newly_created_artifact
-			}
-			scope:newly_created_artifact = {
-				# Set grandeur
-				add_scaled_artifact_modifier_grandeur_big_effect = yes
-				# Set prestige
-				add_scaled_artifact_modifier_prestige_effect = yes
-			}
+			scope:owner = {
+				create_artifact = {	
+					name = artifact_animal_hide_big_name
+					creator = scope:creator
+					description = placeholder
+					visuals = large_animal_hide
+					type = animal_hide_big
+					modifier = artifact_placeholder_modifier
+					wealth = scope:wealth
+					quality = scope:quality
+					save_scope_as = newly_created_artifact
+				}
+				scope:newly_created_artifact = {
+					# Set grandeur
+					add_scaled_artifact_modifier_grandeur_big_effect = yes
+					# Set prestige
+					add_scaled_artifact_modifier_prestige_effect = yes
+				}	
+			}				
 		}
 		else = {
 			if = {
@@ -559,42 +561,44 @@ create_artifact_animal_hide_effect = {
 				}
 				save_scope_value_as = { name = animal_hide_size value = flag:small }
 			}
-			create_artifact = {
-				name = artifact_small_hide_name
-				creator = scope:creator
-				description = placeholder
-				visuals = small_animal_hide
-				type = animal_hide
-				modifier = artifact_placeholder_modifier
-				wealth = scope:wealth
-				quality = scope:quality
-				save_scope_as = newly_created_artifact
-			}
-			scope:newly_created_artifact = {
-				if = {
-					limit = {
-						has_artifact_feature = animal_hide_type_cat
-						exists = scope:owner.var:story_cycle_cat_name
-					}
-					set_variable = {
-						name = pet_name
-						value = scope:owner.var:story_cycle_cat_name
-					}
+			scope:owner = {
+				create_artifact = {
+					name = artifact_small_hide_name
+					creator = scope:creator
+					description = placeholder
+					visuals = small_animal_hide
+					type = animal_hide
+					modifier = artifact_placeholder_modifier
+					wealth = scope:wealth
+					quality = scope:quality
+					save_scope_as = newly_created_artifact
 				}
-				else_if = {
-					limit = {
-						has_artifact_feature = animal_hide_type_dog
-						exists = scope:owner.var:story_cycle_dog_name
+				scope:newly_created_artifact = {
+					if = {
+						limit = {
+							has_artifact_feature = animal_hide_type_cat
+							exists = scope:owner.var:story_cycle_cat_name
+						}
+						set_variable = {
+							name = pet_name
+							value = scope:owner.var:story_cycle_cat_name
+						}
 					}
-					set_variable = {
-						name = pet_name
-						value = scope:owner.var:story_cycle_dog_name
+					else_if = {
+						limit = {
+							has_artifact_feature = animal_hide_type_dog
+							exists = scope:owner.var:story_cycle_dog_name
+						}
+						set_variable = {
+							name = pet_name
+							value = scope:owner.var:story_cycle_dog_name
+						}
 					}
+					# Set grandeur
+					add_scaled_artifact_modifier_grandeur_small_effect = yes
+					# Set prestige
+					add_scaled_artifact_modifier_minor_prestige_effect = yes
 				}
-				# Set grandeur
-				add_scaled_artifact_modifier_grandeur_small_effect = yes
-				# Set prestige
-				add_scaled_artifact_modifier_minor_prestige_effect = yes
 			}
 		}
 		scope:newly_created_artifact = {
@@ -705,7 +709,7 @@ create_artifact_wall_skull_effect = {
 		get_animal_hunt_location_effect = yes
 		scope:location = { add_to_list = artifact_material_sources }
 		scope:owner = {
-			create_artifact = {
+			create_artifact = {	
 				name = artifact_wall_skull_name
 				description = placeholder
 				creator = scope:creator
@@ -793,7 +797,7 @@ create_artifact_wall_narwhal_horn_effect = {
 				limit = {
 					exists = scope:adventurer
 				}
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_wall_narwhal_horn_name
 					description = artifact_wall_narwhal_horn
 					visuals = animal_trophy
@@ -811,7 +815,7 @@ create_artifact_wall_narwhal_horn_effect = {
 				}
 			}
 			else = {
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_wall_narwhal_horn_name
 					description = artifact_wall_narwhal_horn
 					creator = scope:hunter
@@ -916,7 +920,7 @@ create_artifact_animal_trinket_effect = {
 						scope:owner.var:animal_type ?= flag:cat
 					}
 				}
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_animal_trinket_name
 					creator = scope:hunter
 					description = placeholder
@@ -942,7 +946,7 @@ create_artifact_animal_trinket_effect = {
 						scope:owner.var:animal_type ?= flag:hyena
 					}
 				}
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_animal_trinket_name
 					creator = scope:hunter
 					description = placeholder
@@ -962,7 +966,7 @@ create_artifact_animal_trinket_effect = {
 						scope:owner.var:animal_type ?= flag:boar
 					}
 				}
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_animal_trinket_name
 					creator = scope:hunter
 					description = placeholder
@@ -982,7 +986,7 @@ create_artifact_animal_trinket_effect = {
 						scope:owner.var:animal_type ?= flag:unicorn
 					}
 				}
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_animal_trinket_name
 					creator = scope:hunter
 					description = placeholder
@@ -995,7 +999,7 @@ create_artifact_animal_trinket_effect = {
 				}
 			}
 			else = {
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_animal_trinket_name
 					creator = scope:hunter
 					description = placeholder
@@ -1075,7 +1079,7 @@ create_artifact_bird_feather_effect = {
 		get_animal_hunt_location_effect = yes
 		scope:location = { add_to_list = artifact_material_sources }
 		scope:owner = {
-			create_artifact = {
+			create_artifact = {	
 				name = artifact_bird_feather_name
 				creator = scope:hunter
 				description = placeholder
@@ -1111,7 +1115,7 @@ create_artifact_bird_feather_effect = {
 			# Set stress loss
 			add_scaled_artifact_modifier_stress_gain_effect = yes
 			remove_artifact_modifier = artifact_placeholder_modifier
-
+			
 			set_variable = {
 				name = animal_type
 				value = scope:owner.var:animal_type
@@ -1156,7 +1160,7 @@ create_artifact_box_small_effect = {
 				limit = {
 					exists = scope:adventurer
 				}
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_box_small_name
 					creator = scope:adventurer
 					description = placeholder
@@ -1176,7 +1180,7 @@ create_artifact_box_small_effect = {
 				}
 			}
 			else = {
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_box_small_name
 					creator = scope:carpenter
 					description = placeholder
@@ -1231,7 +1235,7 @@ create_artifact_box_medium_effect = {
 				limit = {
 					exists = scope:adventurer
 				}
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_box_medium_name
 					creator = scope:adventurer
 					description = placeholder
@@ -1251,7 +1255,7 @@ create_artifact_box_medium_effect = {
 				}
 			}
 			else = {
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_box_medium_name
 					creator = scope:carpenter
 					description = placeholder
@@ -1313,7 +1317,7 @@ create_artifact_goblet_effect = {
 		scope:owner = {
 			if = {
 				limit = { exists = scope:adventurer }
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_goblet_name
 					description = placeholder
 					visuals = goblet
@@ -1354,7 +1358,7 @@ create_artifact_goblet_effect = {
 			}
 			else_if = {
 				limit = { exists = scope:goldsmith }
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_goblet_name
 					creator = scope:goldsmith
 					description = placeholder
@@ -1368,7 +1372,7 @@ create_artifact_goblet_effect = {
 				}
 			}
 			else = {
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_goblet_name
 					description = placeholder
 					visuals = goblet
@@ -1387,7 +1391,7 @@ create_artifact_goblet_effect = {
 
 			# Set grandeur
 			add_scaled_artifact_modifier_grandeur_small_effect = yes
-
+			
 			# Let's add another random effect to keep goblets interesting!
 			random_list = {
 				10 = {
@@ -1416,7 +1420,7 @@ create_artifact_wall_banner_effect = {
 	#To generate a dynasty banner the variable banner_from_dynasty must be set
 	#To generate a house banner the variable banner_from_house must be set
 	#To generate a banner for a title no special variables need to be set
-
+	
 	hidden_effect_new_object = {
 		if = {
 			limit = { has_variable = epic_battle_location }
@@ -1429,7 +1433,7 @@ create_artifact_wall_banner_effect = {
 			remove_variable = epic_loser
 		}
 		# Dynasty banner rarity determined by Dynasty Splendor
-		if = {
+		if = { 
 			limit = {
 				scope:owner = { has_variable = banner_from_dynasty }
 			}
@@ -1592,7 +1596,7 @@ create_artifact_wall_banner_effect = {
 				}
 			}
 		}
-
+		
 		# Modifiers are completely randomized - Possible modifiers are based on the battle
 		scope:newly_created_artifact = {
 			add_scaled_artifact_modifier_grandeur_small_effect = yes
@@ -1751,7 +1755,7 @@ create_artifact_wall_banner_effect = {
 							}
 						}
 					}
-					# Chance to acquire an advantage bonus for the terrain the battle was fought in
+					# Chance to acquire an advantage bonus for the terrain the battle was fought in 
 					10 = { # Plains Advantage
 						trigger = {
 							exists = scope:epic_battle_location
@@ -2122,11 +2126,11 @@ create_artifact_wall_shield_effect = {
 	$OWNER$ = { save_scope_as = owner }
 	$TARGET$ = { save_scope_as = target }
 	$CREATOR$ = { save_scope_as = smith }
-
+	
 	hidden_effect_new_object = {
 		get_artifact_quality_effect = yes
 		get_artifact_wealth_effect = yes
-
+		
 		if = {
 			limit = {
 				scope:smith = { artifact_use_mediterranean_building_visuals_trigger = yes }
@@ -2207,7 +2211,7 @@ create_artifact_sculpture_effect = {
 		if = {
 			limit = {
 				OR = {
-					scope:sculpter = {
+					scope:sculpter = {	
 						OR = {
 							artifact_use_mena_building_visuals_trigger = yes
 							artifact_use_iranian_building_visuals_trigger = yes
@@ -2225,7 +2229,7 @@ create_artifact_sculpture_effect = {
 				}
 			}
 			scope:owner = {
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_sculpture_name
 					creator = scope:sculpter
 					description = placeholder
@@ -2241,7 +2245,7 @@ create_artifact_sculpture_effect = {
 		}
 		else = {
 			scope:owner = {
-				create_artifact = {
+				create_artifact = {	
 					name = artifact_sculpture_name
 					creator = scope:sculpter
 					description = placeholder
@@ -2265,7 +2269,7 @@ create_artifact_sculpture_effect = {
 			#Description
 			if = {
 				limit = {
-					OR = {
+					OR = { 
 						scope:sculpter = {
 							OR = {
 								artifact_use_mena_building_visuals_trigger = yes
@@ -2303,7 +2307,7 @@ create_artifact_pedestal_rock_effect = {
 	get_artifact_wealth_effect = yes
 
 	scope:owner = {
-		create_artifact = {
+		create_artifact = {	
 			name = artifact_pedestal_rock_name
 			creator = scope:owner
 			description = artifact_pedestal_rock_description
@@ -2329,7 +2333,7 @@ create_artifact_pedestal_pouch_effect = {
 	get_artifact_wealth_effect = yes
 
 	scope:owner = {
-		create_artifact = {
+		create_artifact = {	
 			name = artifact_pedestal_pouch_name
 			creator = scope:owner
 			description = artifact_pedestal_pouch_description
@@ -2352,7 +2356,7 @@ create_artifact_pedestal_scroll_effect = {
 	get_artifact_wealth_effect = yes
 
 	scope:owner = {
-		create_artifact = {
+		create_artifact = {	
 			name = artifact_pedestal_scroll_name
 			creator = scope:writer
 			description = artifact_pedestal_scroll_description
@@ -2378,7 +2382,7 @@ create_artifact_pedestal_religious_head_letter_effect = {
 	get_artifact_wealth_effect = yes
 
 	scope:owner = {
-		create_artifact = {
+		create_artifact = {	
 			name = artifact_pedestal_religious_head_letter_name
 			creator = scope:owner
 			description = artifact_pedestal_religious_head_letter_description
@@ -2406,7 +2410,7 @@ create_artifact_pedestal_crucifix_effect = {
 	get_artifact_wealth_effect = yes
 
 	scope:owner = {
-		create_artifact = {
+		create_artifact = {	
 			name = artifact_pedestal_crucifix_name
 			creator = scope:owner
 			description = artifact_pedestal_crucifix_description
@@ -2476,9 +2480,9 @@ create_artifact_pedestal_cross_effect = {
 
 create_artifact_pedestal_human_skull_effect = {
 	$OWNER$ = { save_scope_as = owner }
-
+	
 	$CREATOR$ = { save_scope_as = creator }
-
+	
 	$DESKULLED$ = { save_scope_as = killed }
 
 	get_artifact_quality_effect = yes
@@ -2525,7 +2529,7 @@ create_artifact_pedestal_human_skull_specific_effect = {
 	get_artifact_wealth_effect = yes
 
 	scope:owner = {
-		create_artifact = {
+		create_artifact = {	
 			name = artifact_pedestal_human_skull_name
 			creator = scope:owner
 			description = artifact_pedestal_human_skull_specific_description
@@ -2546,7 +2550,7 @@ create_artifact_pedestal_diamond_effect = {
 	get_artifact_wealth_effect = yes
 
 	scope:owner = {
-		create_artifact = {
+		create_artifact = {	
 			name = artifact_pedestal_massive_diamond_name
 			creator = scope:owner
 			description = artifact_pedestal_massive_diamond
@@ -2572,7 +2576,7 @@ create_artifact_pedestal_gold_effect = {
 	get_artifact_wealth_effect = yes
 
 	scope:owner = {
-		create_artifact = {
+		create_artifact = {	
 			name = artifact_pedestal_gold_nugget_name
 			description = artifact_pedestal_gold_nugget
 			creator = scope:owner
@@ -3534,14 +3538,17 @@ get_book_content_quality_effect = {
 						}
 						add = 60
 					}
-					else_if = { #Unop: Add this since level 4 & 5 were missing (Should it be capped at 60 or go to 100 :?)
+					else_if = {
 						limit = {
-							OR = {
-								has_trait = education_martial_4
-								has_trait = education_martial_5
-							}
+							has_trait = education_martial_4
 						}
 						add = 80
+					}
+					else_if = {
+						limit = {
+							has_trait = education_martial_5
+						}
+						add = 100
 					}
 				}
 			}
@@ -3574,14 +3581,17 @@ get_book_content_quality_effect = {
 						}
 						add = 60
 					}
-					else_if = { #Unop: Add this since level 4 & 5 were missing (Should it be capped at 60 or go to 100 :?)
+					else_if = {
 						limit = {
-							OR = {
-								has_trait = education_diplomacy_4
-								has_trait = education_diplomacy_5
-							}
+							has_trait = education_diplomacy_4
 						}
 						add = 80
+					}
+					else_if = {
+						limit = {
+							has_trait = education_diplomacy_5
+						}
+						add = 100
 					}
 				}
 			}
@@ -3614,14 +3624,17 @@ get_book_content_quality_effect = {
 						}
 						add = 60
 					}
-					else_if = { #Unop: Add this since level 4 & 5 were missing (Should it be capped at 60 or go to 100 :?)
+					else_if = {
 						limit = {
-							OR = {
-								has_trait = education_stewardship_4
-								has_trait = education_stewardship_5
-							}
+							has_trait = education_stewardship_4
 						}
 						add = 80
+					}
+					else_if = {
+						limit = {
+							has_trait = education_stewardship_5
+						}
+						add = 100
 					}
 				}
 			}
@@ -3657,14 +3670,17 @@ get_book_content_quality_effect = {
 						}
 						add = 60
 					}
-					else_if = { #Unop: Add this since level 4 & 5 were missing (Should it be capped at 60 or go to 100 :?)
+					else_if = {
 						limit = {
-							OR = {
-								has_trait = education_intrigue_4
-								has_trait = education_intrigue_5
-							}
+							has_trait = education_intrigue_4
 						}
 						add = 80
+					}
+					else_if = {
+						limit = {
+							has_trait = education_intrigue_5
+						}
+						add = 100
 					}
 				}
 			}
@@ -3697,14 +3713,17 @@ get_book_content_quality_effect = {
 						}
 						add = 60
 					}
-					else_if = { #Unop: Add this since level 4 & 5 were missing (Should it be capped at 60 or go to 100 :?)
+					else_if = {
 						limit = {
-							OR = {
-								has_trait = education_learning_4
-								has_trait = education_learning_5
-							}
+							has_trait = education_learning_4
 						}
 						add = 80
+					}
+					else_if = {
+						limit = {
+							has_trait = education_learning_5
+						}
+						add = 100
 					}
 				}
 			}
@@ -3768,7 +3787,7 @@ create_artifact_book_effect = {
 		# Get artifact quality and wealth
 		get_artifact_quality_effect = yes
 		get_artifact_wealth_effect = yes
-
+		
 
 		# To save the subject, topic, and other variables we'll need if it has been set in events or in the effect
 		get_book_variables_effect = yes
@@ -3788,7 +3807,7 @@ create_artifact_book_effect = {
 						scope:author = { artifacts_use_indian_books_trigger = yes }
 					}
 					scope:owner = {
-						create_artifact = {
+						create_artifact = {	
 							name = placeholder # Will be regenerated in the post-creation effects
 							creator = scope:author
 							description = placeholder # Will be regenerated in the post-creation effects
@@ -3804,7 +3823,7 @@ create_artifact_book_effect = {
 				}
 				else = { #Codices/Non-Indian books
 					scope:owner = {
-						create_artifact = {
+						create_artifact = {	
 							name = placeholder # Will be regenerated in the post-creation effects
 							creator = scope:author
 							description = placeholder # Will be regenerated in the post-creation effects
@@ -3825,7 +3844,7 @@ create_artifact_book_effect = {
 						scope:owner = { artifacts_use_indian_books_trigger = yes }
 					}
 					scope:owner = {
-						create_artifact = {
+						create_artifact = {	
 							name = placeholder # Will be regenerated in the post-creation effects
 							description = placeholder # Will be regenerated in the post-creation effects
 							visuals = indian_book
@@ -3840,7 +3859,7 @@ create_artifact_book_effect = {
 				}
 				else = { #This is a codex/non-indian book:
 					scope:owner = {
-						create_artifact = {
+						create_artifact = {	
 							name = placeholder # Will be regenerated in the post-creation effects
 							description = placeholder # Will be regenerated in the post-creation effects
 							visuals = book
@@ -3866,7 +3885,7 @@ create_artifact_book_effect = {
 						scope:author = { artifacts_use_indian_books_trigger = yes }
 					}
 					scope:owner = {
-						create_artifact = {
+						create_artifact = {	
 							name = placeholder # Will be regenerated in the post-creation effects
 							creator = scope:author
 							description = placeholder # Will be regenerated in the post-creation effects
@@ -3886,7 +3905,7 @@ create_artifact_book_effect = {
 				}
 				else = { #This is a codex/non-indian book
 					scope:owner = {
-						create_artifact = {
+						create_artifact = {	
 							name = placeholder # Will be regenerated in the post-creation effects
 							creator = scope:author
 							description = placeholder # Will be regenerated in the post-creation effects
@@ -3896,7 +3915,7 @@ create_artifact_book_effect = {
 							save_scope_as = newly_created_artifact
 							wealth = scope:wealth
 							quality = scope:quality
-
+							
 						}
 					}
 					# Subject and cover material is set as a required feature for a book-type artifact, but for a miscellaneous-type it's an optional feature, so we need to set it here
@@ -3912,7 +3931,7 @@ create_artifact_book_effect = {
 						scope:owner = { artifacts_use_indian_books_trigger = yes }
 					}
 					scope:owner = {
-						create_artifact = {
+						create_artifact = {	
 							name = placeholder # Will be regenerated in the post-creation effects
 							description = placeholder # Will be regenerated in the post-creation effects
 							visuals = indian_book
@@ -3931,7 +3950,7 @@ create_artifact_book_effect = {
 				}
 				else = { #This isn't a palm leaf/indian book
 					scope:owner = {
-						create_artifact = {
+						create_artifact = {	
 							name = placeholder # Will be regenerated in the post-creation effects
 							description = placeholder # Will be regenerated in the post-creation effects
 							visuals = book
@@ -3996,7 +4015,7 @@ create_artifact_book_effect = {
 				remove_artifact_modifier = artifact_placeholder_modifier
 				flag_as_trash_artifact = yes
 			}
-			else_if = {
+			else_if = { 
 				limit = { has_artifact_feature = book_subject_martial }
 				if = {
 					limit = {
@@ -4220,7 +4239,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_health_gain_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -4247,7 +4266,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_courtly_vassal_opinion_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -4274,7 +4293,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_prowess_3_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -4301,7 +4320,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_prowess_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -4329,7 +4348,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_learning_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -4362,7 +4381,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_stress_gain_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -4389,7 +4408,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_personal_scheme_phase_duration_add_5_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -4403,19 +4422,19 @@ create_artifact_book_effect = {
 						AND = {
 							has_artifact_feature = book_subject_cannibal
 							NOT = {
-								trait_is_criminal_in_faith_trigger = { TRAIT = cannibal FAITH = scope:owner.faith GENDER_CHARACTER = scope:owner }
+								trait_is_criminal_in_faith_trigger = { TRAIT = trait:cannibal FAITH = scope:owner.faith GENDER_CHARACTER = scope:owner }
 							}
 						}
 						AND = {
 							has_artifact_feature = book_subject_witch
 							NOT = {
-								trait_is_criminal_in_faith_trigger = { TRAIT = witch FAITH = scope:owner.faith GENDER_CHARACTER = scope:owner }
+								trait_is_criminal_in_faith_trigger = { TRAIT = trait:witch FAITH = scope:owner.faith GENDER_CHARACTER = scope:owner }
 							}
 						}
 						AND = {
 							has_artifact_feature = book_subject_deviant
 							NOT = {
-								trait_is_criminal_in_faith_trigger = { TRAIT = deviant FAITH = scope:owner.faith GENDER_CHARACTER = scope:owner }
+								trait_is_criminal_in_faith_trigger = { TRAIT = trait:deviant FAITH = scope:owner.faith GENDER_CHARACTER = scope:owner }
 							}
 						}
 
@@ -4431,7 +4450,7 @@ create_artifact_book_effect = {
 					}
 				}
 				remove_artifact_modifier = artifact_placeholder_modifier
-				add_artifact_modifier = artifact_monthly_prestige_add_2_modifier
+				add_artifact_modifier = artifact_monthly_prestige_add_2_modifier 
 				if = {
 					limit = {
 						artifact_type = book
@@ -4460,7 +4479,7 @@ create_artifact_book_effect = {
 						limit = { rarity = masterwork }
 						add_artifact_modifier = artifact_courtly_vassal_opinion_3_modifier
 						add_artifact_modifier = artifact_parochial_vassal_opinion_3_modifier
-					}
+					} 
 					else_if = {
 						limit = { rarity = common }
 						add_artifact_modifier = artifact_courtly_vassal_opinion_1_modifier
@@ -4490,7 +4509,7 @@ create_artifact_book_effect = {
 						limit = { rarity = masterwork }
 						add_artifact_modifier = artifact_scheme_resistance_add_2_modifier
 						add_artifact_modifier = artifact_scheme_resistance_add_2_modifier
-					}
+					} 
 					else_if = { # 2
 						limit = { rarity = common }
 						add_artifact_modifier = artifact_scheme_resistance_add_2_modifier
@@ -4512,7 +4531,7 @@ create_artifact_book_effect = {
 					else_if = { # 6
 						limit = { rarity = masterwork }
 						add_artifact_modifier = artifact_controlled_province_advantage_6_modifier
-					}
+					} 
 					else_if = { # 4
 						limit = { rarity = common }
 						add_artifact_modifier = artifact_controlled_province_advantage_4_modifier
@@ -4535,7 +4554,7 @@ create_artifact_book_effect = {
 					else_if = {
 						limit = { rarity = masterwork }
 						add_artifact_modifier = artifact_owned_personal_scheme_success_chance_add_12_modifier # 12
-					}
+					} 
 					else_if = {
 						limit = { rarity = common }
 						add_artifact_modifier = artifact_owned_personal_scheme_success_chance_add_8_modifier # 8
@@ -4563,7 +4582,7 @@ create_artifact_book_effect = {
 						add_artifact_modifier = artifact_monthly_piety_2_modifier
 						add_artifact_modifier = artifact_domain_tax_same_faith_mult_4_modifier
 						add_artifact_modifier = artifact_domain_tax_same_faith_mult_2_modifier
-					}
+					} 
 					else_if = { # 0.1 + 0.4
 						limit = { rarity = common }
 						add_artifact_modifier = artifact_monthly_piety_1_modifier
@@ -4575,7 +4594,7 @@ create_artifact_book_effect = {
 					add_artifact_modifier = artifact_monthly_prestige_add_2_modifier #This is renown, can be combined with the renown option during making and adds up with the base renown added to all chronicles
 				}
 				#Small boost from perspectives:
-
+				
 			}
 			# Modifiers applied based on topic
 			if = {
@@ -4620,7 +4639,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_intrigue_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -4665,7 +4684,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_intrigue_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -4689,7 +4708,7 @@ create_artifact_book_effect = {
 						}
 					}
 				}
-
+				
 				if = {
 					limit = {
 						rarity = illustrious
@@ -4707,14 +4726,14 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_fertility_gain_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
 					}
 					add_artifact_modifier = artifact_fertility_gain_1_modifier
 				}
-
+				
 				if = {
 					limit = {
 						rarity = illustrious
@@ -4732,7 +4751,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_intrigue_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -4740,7 +4759,7 @@ create_artifact_book_effect = {
 					add_artifact_modifier = artifact_monthly_intrigue_lifestyle_xp_1_modifier
 				}
 			}
-
+			
 			else_if = {
 				limit = {
 					trigger_if = {
@@ -4775,7 +4794,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_dread_baseline_add_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -4818,7 +4837,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_stewardship_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -4855,7 +4874,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_build_time_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -4899,7 +4918,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_raid_speed_4_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -4936,14 +4955,14 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_diplomacy_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
 					}
 					add_artifact_modifier = artifact_monthly_diplomacy_lifestyle_xp_1_modifier
 				}
-
+				
 				if = {
 					limit = {
 						rarity = illustrious
@@ -4961,7 +4980,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_owned_personal_scheme_success_chance_add_4_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -4998,14 +5017,14 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_diplomacy_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
 					}
 					add_artifact_modifier = artifact_monthly_diplomacy_lifestyle_xp_1_modifier
 				}
-
+				
 				if = {
 					limit = {
 						rarity = illustrious
@@ -5023,7 +5042,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_courtier_and_guest_opinion_3_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5053,7 +5072,7 @@ create_artifact_book_effect = {
 					}
 				}
 				add_artifact_modifier = artifact_monthly_stewardship_lifestyle_xp_1_modifier
-				add_artifact_modifier = artifact_monthly_diplomacy_lifestyle_xp_1_modifier
+				add_artifact_modifier = artifact_monthly_diplomacy_lifestyle_xp_1_modifier 
 			}
 			else_if = {
 				limit = {
@@ -5084,7 +5103,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_diplomacy_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5126,14 +5145,14 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_dynasty_opinion_3_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
 					}
 					add_artifact_modifier = artifact_dynasty_opinion_1_modifier
 				}
-
+				
 				if = {
 					limit = {
 						rarity = illustrious
@@ -5151,7 +5170,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_prestige_add_4_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5172,7 +5191,7 @@ create_artifact_book_effect = {
 					}
 				}
 				add_artifact_modifier = artifact_monthly_martial_lifestyle_xp_1_modifier
-
+				
 				if = {
 					limit = {
 						rarity = illustrious
@@ -5190,7 +5209,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_prowess_4_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5211,7 +5230,7 @@ create_artifact_book_effect = {
 					}
 				}
 				add_artifact_modifier = artifact_monthly_martial_lifestyle_xp_1_modifier
-
+				
 				if = {
 					limit = {
 						rarity = illustrious
@@ -5229,7 +5248,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_attraction_opinion_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5266,14 +5285,14 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_controlled_province_advantage_3_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
 					}
 					add_artifact_modifier = artifact_controlled_province_advantage_1_modifier
 				}
-
+				
 				if = {
 					limit = {
 						rarity = illustrious
@@ -5291,7 +5310,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_martial_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5337,7 +5356,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_learning_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5380,7 +5399,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_health_gain_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5431,7 +5450,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_piety_gain_mult_4_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5477,7 +5496,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_tyranny_3_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5514,7 +5533,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_attraction_opinion_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5552,7 +5571,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_dread_gain_mult_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5618,7 +5637,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_courtier_and_guest_opinion_3_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5655,7 +5674,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_clergy_opinion_3_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5679,7 +5698,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_learning_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5717,14 +5736,14 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_owned_hostile_scheme_success_chance_add_3_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
 					}
 					add_artifact_modifier = artifact_owned_hostile_scheme_success_chance_add_1_modifier
 				}
-
+				
 				if = {
 					limit = {
 						rarity = illustrious
@@ -5742,7 +5761,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_dread_gain_mult_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5780,16 +5799,16 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_income_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
 					}
 					add_artifact_modifier = artifact_monthly_income_1_modifier
 				}
-
+				
 				add_scaled_artifact_modifier_prestige_effect = yes
-
+				
 				if = {
 					limit = {
 						rarity = illustrious
@@ -5807,7 +5826,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_stewardship_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5844,16 +5863,16 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_income_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
 					}
 					add_artifact_modifier = artifact_monthly_income_1_modifier
 				}
-
+				
 				add_scaled_artifact_modifier_prestige_effect = yes
-
+				
 				if = {
 					limit = {
 						rarity = illustrious
@@ -5871,7 +5890,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_stewardship_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5880,8 +5899,8 @@ create_artifact_book_effect = {
 				}
 			}
 			else_if = {
-				limit = {
-					has_artifact_feature = book_subject_alchemy
+				limit = { 
+					has_artifact_feature = book_subject_alchemy 
 				}
 				if = {
 					limit = {
@@ -5900,7 +5919,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_learning_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -5948,7 +5967,7 @@ create_artifact_book_effect = {
 					}
 					add_artifact_modifier = artifact_hard_casualty_modifier_1_modifier
 				}
-
+				
 				if = {
 					limit = {
 						rarity = illustrious
@@ -5966,7 +5985,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_martial_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -6015,7 +6034,7 @@ create_artifact_book_effect = {
 						50 = { add_artifact_modifier = artifact_heavy_infantry_toughness_1_modifier }
 					}
 				}
-
+				
 				if = {
 					limit = {
 						rarity = illustrious
@@ -6033,7 +6052,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_martial_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -6071,7 +6090,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_diplomacy_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -6112,7 +6131,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_diplomacy_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -6195,7 +6214,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_monthly_stewardship_lifestyle_xp_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -6258,7 +6277,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_courtier_and_guest_opinion_3_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -6296,7 +6315,7 @@ create_artifact_book_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_vassal_limit_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -6313,7 +6332,7 @@ create_artifact_book_effect = {
 				}
 				if = { #We give a bigger boost here if it's illegal since they get nothing else
 					limit = {
-						trait_is_criminal_in_faith_trigger = { TRAIT = cannibal FAITH = root.faith GENDER_CHARACTER = root }
+						trait_is_criminal_in_faith_trigger = { TRAIT = trait:cannibal FAITH = root.faith GENDER_CHARACTER = root }
 					}
 					add_artifact_modifier = artifact_dread_baseline_add_2_modifier
 					add_artifact_modifier = artifact_vassal_opinion_penalty_1_modifier
@@ -6345,7 +6364,7 @@ create_artifact_book_effect = {
 				}
 				if = { #We give a bigger boost here if it's illegal since they get nothing else
 					limit = {
-						trait_is_criminal_in_faith_trigger = { TRAIT = witch FAITH = root.faith GENDER_CHARACTER = root }
+						trait_is_criminal_in_faith_trigger = { TRAIT = trait:witch FAITH = root.faith GENDER_CHARACTER = root }
 					}
 					add_artifact_modifier = artifact_dread_gain_mult_2_modifier
 					add_artifact_modifier = artifact_monthly_learning_lifestyle_xp_2_modifier
@@ -6361,7 +6380,7 @@ create_artifact_book_effect = {
 				}
 				if = { #We give a bigger boost here if it's illegal since they get nothing else
 					limit = {
-						trait_is_criminal_in_faith_trigger = { TRAIT = deviant FAITH = root.faith GENDER_CHARACTER = root }
+						trait_is_criminal_in_faith_trigger = { TRAIT = trait:deviant FAITH = root.faith GENDER_CHARACTER = root }
 					}
 					add_artifact_modifier = artifact_vassal_opinion_penalty_1_modifier
 					add_artifact_modifier = artifact_stress_gain_2_modifier
@@ -6448,9 +6467,9 @@ create_artifact_book_effect = {
 
 	if = {
 		limit = {
-			exists = scope:should_be_trinket
+			exists = scope:should_be_trinket 
 		}
-		clear_saved_scope = should_be_trinket
+		clear_saved_scope = should_be_trinket 	
 	}
 }
 
@@ -6524,7 +6543,7 @@ create_artifact_pedestal_reliquary_christian_effect = {
 	get_artifact_wealth_effect = yes
 
 	scope:owner = {
-		create_artifact = {
+		create_artifact = {	
 			name = artifact_pedestal_reliquary_christian_name
 			creator = scope:owner
 			description = artifact_pedestal_reliquary_christian_description
@@ -6602,7 +6621,7 @@ create_artifact_pedestal_reliquary_islam_effect = {
 	get_artifact_wealth_effect = yes
 
 	scope:owner = {
-		create_artifact = {
+		create_artifact = {	
 			name = artifact_pedestal_reliquary_islam_name
 			creator = scope:owner
 			description = artifact_pedestal_reliquary_islam_description
@@ -6686,7 +6705,7 @@ create_artifact_pedestal_reliquary_buddhism_effect = {
 	get_artifact_wealth_effect = yes
 
 	scope:owner = {
-		create_artifact = {
+		create_artifact = {	
 			name = artifact_pedestal_reliquary_buddhism_name
 			creator = scope:owner
 			description = artifact_pedestal_reliquary_buddhism_description
@@ -6728,7 +6747,7 @@ create_artifact_pedestal_reliquary_judaism_effect = {
 	get_artifact_wealth_effect = yes
 
 	scope:owner = {
-		create_artifact = {
+		create_artifact = {	
 			name = artifact_pedestal_reliquary_judaism_name
 			creator = scope:owner
 			description = artifact_pedestal_reliquary_judaism_description
@@ -6869,7 +6888,7 @@ create_artifact_panacea_effect = {
 					rarity = masterwork
 				}
 				add_artifact_modifier = artifact_negate_health_penalty_add_2_modifier
-			}
+			} 
 			else_if = {
 				limit = {
 					rarity = common
@@ -6933,7 +6952,7 @@ create_artifact_elixir_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_health_gain_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -6962,7 +6981,7 @@ create_artifact_elixir_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_fertility_gain_2_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -6988,7 +7007,7 @@ create_artifact_elixir_effect = {
 						rarity = masterwork
 					}
 					add_artifact_modifier = artifact_health_gain_1_modifier
-				}
+				} 
 				else_if = {
 					limit = {
 						rarity = common
@@ -7061,7 +7080,7 @@ create_artifact_philosophers_stone_effect = {
 					rarity = masterwork
 				}
 				add_artifact_modifier = artifact_health_gain_2_modifier
-			}
+			} 
 			else_if = {
 				limit = {
 					rarity = common

@@ -99,7 +99,7 @@ ep2_tournament_events.0001 = {
 	# Go for their leg
 	option = {
 		name = ep2_tournament_events.0001.b
-
+		
 		duel = {
 			skills = { intrigue prowess }
 			target = scope:versus_contestant
@@ -230,7 +230,7 @@ ep2_tournament_events.0002 = {
 			}
 		}
 		custom_tooltip = ep2_tournament_events.0002.a.tt
-
+		
 		activity_tournament_change_contestant_score_effect = { SCORE = increase_minor }
 
 		add_prestige = minor_prestige_gain
@@ -376,7 +376,7 @@ ep2_tournament_events.0003 = {
 		contest_versus_player_vs_ai_trigger = yes
 		trigger_if = {
 			limit = { this = scope:versus_matchee }
-			scope:versus_matcher = { contest_versus_wants_to_resign_trigger = yes }
+			scope:versus_matcher = { contest_versus_wants_to_resign_trigger = yes }		
 		}
 		trigger_else = {
 			scope:versus_matchee = { contest_versus_wants_to_resign_trigger = yes }
@@ -644,7 +644,7 @@ ep2_tournament_events.0004 = {
 	# Blame your opponent
 	option = {
 		name = ep2_tournament_events.0004.a
-
+	
 		trigger = {
 			has_trait = deceitful
 		}
@@ -908,9 +908,9 @@ ep2_tournament_events.0005 = {
 		}
 
 		activity_tournament_change_contestant_score_effect = { SCORE = increase_medium }
-
+		
 		accolade_minimal_glory_loss_with_checks_effect = yes
-
+		
 		add_prestige = minor_prestige_loss
 
 		add_character_modifier = {
@@ -954,7 +954,7 @@ ep2_tournament_events.0005 = {
 		trigger = {
 			scope:versus_contestant = { is_eunuch_trigger = no }
 		}
-
+		
 		accolade_minimal_glory_gain_with_checks_effect = yes
 
 		reverse_add_opinion = {
@@ -1052,7 +1052,7 @@ ep2_tournament_events.0006 = {
 		flavor = ep2_tournament_events.0006.a.tt
 
 		activity_tournament_change_contestant_score_effect = { SCORE = increase_miniscule }
-
+		
 		accolade_minimal_glory_gain_with_checks_effect = yes
 
 		add_character_modifier = {
@@ -1072,7 +1072,7 @@ ep2_tournament_events.0006 = {
 					modifier = tournament_ended_rightly_modifier
 					years = 15
 				}
-			}
+			}		
 
 			add_opinion = {
 				target = root
@@ -1081,7 +1081,7 @@ ep2_tournament_events.0006 = {
 			}
 		}
 
-		scope:activity = {
+		scope:activity = {		
 			add_activity_log_entry = {
 				key = tournament_ended_rightly_log
 				tags = { good }
@@ -1136,7 +1136,7 @@ ep2_tournament_events.0006 = {
 		name = ep2_tournament_events.0006.c
 
 		activity_tournament_change_contestant_score_effect = { SCORE = decrease_miniscule }
-
+		
 		accolade_minor_glory_gain_with_checks_effect = yes
 
 		progress_towards_friend_effect = {
@@ -1302,7 +1302,7 @@ ep2_tournament_events.0007 = {
 	# Refuse
 	option = {
 		name = ep2_tournament_events.0007.c
-
+		
 		scope:versus_contestant = {
 			add_opinion = {
 				target = root
@@ -1360,7 +1360,7 @@ ep2_tournament_events.0010 = {
 	# Attempt a risky counter
 	option = {
 		name = ep2_tournament_events.0010.a
-
+	
 		duel = {
 			skills = { prowess intrigue }
 			target = scope:versus_contestant
@@ -1603,7 +1603,7 @@ ep2_tournament_events.0010 = {
 		name = ep2_tournament_events.0010.c
 
 		flavor = ep2_tournament_events.0010.c.tt
-
+		
 		accolade_minimal_glory_gain_with_checks_effect = yes
 
 		activity_tournament_change_contestant_score_effect = { SCORE = decrease_miniscule }
@@ -1672,7 +1672,7 @@ ep2_tournament_events.0011 = {
 	# Pop it to your hand with the greatest of ease
 	option = {
 		name = ep2_tournament_events.0011.a
-
+	
 		trigger = {
 			OR = {
 				AND = {
@@ -1691,7 +1691,7 @@ ep2_tournament_events.0011 = {
 		flavor = ep2_tournament_events.0011.a.tt
 
 		add_character_modifier = tournament_ambidextrous_modifier
-
+		
 		accolade_minor_glory_gain_with_checks_effect = yes
 
 		activity_tournament_change_contestant_score_effect = { SCORE = increase_major }
@@ -1745,7 +1745,7 @@ ep2_tournament_events.0011 = {
 		duel = {
 			skills = { prowess intrigue }
 			target = scope:versus_contestant
-
+			
 			50 = { #It succeeds
 				compare_modifier = {
 					value = scope:duel_value
@@ -1938,7 +1938,7 @@ ep2_tournament_events.0011 = {
 								add_opinion = {
 									target = root
 									opinion = 5
-									modifier = impressed_opinion
+									modifier = impressed_opinion								
 								}
 							}
 						}
@@ -1977,10 +1977,10 @@ ep2_tournament_events.0011 = {
 
 # GO GO GADGET DUELING CLOAK
 # No but for real, it's taken from Di Grassi's manuals (yes, I know, slightly out of period, shhhh, rule of cool):
-# "The cloak may be flung or thrown with the edge of the sword, when one standeth at the low ward,
-# with the point of the sword turned backwards, on the left side and the left side with the cloak upon it,
-# followed at large upon the arm up to the elbow: but not wrapped about it, and whilest he falseth a reverse,
-# he may take the cloak on the edge of the sword and fling it towards his enemy,
+# "The cloak may be flung or thrown with the edge of the sword, when one standeth at the low ward, 
+# with the point of the sword turned backwards, on the left side and the left side with the cloak upon it, 
+# followed at large upon the arm up to the elbow: but not wrapped about it, and whilest he falseth a reverse, 
+# he may take the cloak on the edge of the sword and fling it towards his enemy, 
 # and then strike him with such a blow as shall be then most for his advantage deliver."
 ep2_tournament_events.0012 = {
 	type = activity_event
@@ -2004,7 +2004,7 @@ ep2_tournament_events.0012 = {
 	trigger = {
 		contest_versus_player_vs_ai_trigger = yes
 
-		has_character_flag = cloak_duelist_flag #Ensure you are wearing your DUELING CLOAK
+		has_character_flag = cloak_duelist_flag #Ensure you are wearing your DUELING CLOAK 
 	}
 
 	immediate = {
@@ -2016,7 +2016,7 @@ ep2_tournament_events.0012 = {
 	# Proudly fight in the cloak
 	option = {
 		name = ep2_tournament_events.0012.a
-
+	
 		trigger = {
 			has_trait = arrogant
 		}
@@ -2035,9 +2035,9 @@ ep2_tournament_events.0012 = {
 		else = {
 			add_prestige = medium_prestige_gain
 		}
-
+		
 		accolade_medium_glory_gain_with_checks_effect = yes
-
+		
 		activity_tournament_change_contestant_score_effect = { SCORE = decrease_miniscule }
 
 		stress_impact = {
@@ -2217,7 +2217,7 @@ ep2_tournament_events.0020 = {
 	# Loudly reveal their secret
 	option = {
 		name = ep2_tournament_events.0020.a
-
+	
 		trigger = {
 			exists = scope:secret #Unop: To prevent a failed context switch in the logs 
 			#scope:secret = {
@@ -2237,7 +2237,7 @@ ep2_tournament_events.0020 = {
 		scope:versus_contestant = {
 			activity_tournament_change_contestant_score_effect = { SCORE = decrease_major }
 		}
-
+		
 		accolade_minor_glory_loss_with_checks_effect = yes
 
 		reverse_add_opinion = {
@@ -2280,7 +2280,7 @@ ep2_tournament_events.0020 = {
 	# I know your seeeecreeeet!
 	option = {
 		name = ep2_tournament_events.0020.b
-
+	
 		trigger = {
 			exists = scope:secret #Unop: To prevent a failed context switch in the logs 
 			#scope:secret = {
@@ -2293,7 +2293,7 @@ ep2_tournament_events.0020 = {
 		scope:versus_contestant = {
 			activity_tournament_change_contestant_score_effect = { SCORE = decrease_medium }
 		}
-
+		
 		accolade_minimal_glory_loss_with_checks_effect = yes
 
 		reverse_add_opinion = {
@@ -2385,7 +2385,7 @@ ep2_tournament_events.0020 = {
 	# Decide against such underhanded tactics
 	option = {
 		name = ep2_tournament_events.0020.d
-
+		
 		accolade_minimal_glory_gain_with_checks_effect = yes
 
 		stress_impact = {
@@ -2471,7 +2471,7 @@ ep2_tournament_events.0021 = {
 	# CoD lobby trash talk, 2009
 	option = {
 		name = ep2_tournament_events.0021.a
-
+	
 		trigger = {
 			OR = {
 				has_trait = sadistic
@@ -2523,7 +2523,7 @@ ep2_tournament_events.0021 = {
 		scope:versus_contestant = {
 			activity_tournament_change_contestant_score_effect = { SCORE = decrease_medium }
 		}
-
+		
 		accolade_minimal_glory_gain_with_checks_effect = yes
 
 		reverse_add_opinion = {
@@ -2818,7 +2818,7 @@ ep2_tournament_events.1001 = {
 					has_trait = arrogant
 				}
 			}
-		}
+		}	
 	}
 }
 
@@ -2998,7 +2998,7 @@ ep2_tournament_events.1002 = {
 
 		ai_chance = {
 			base = 100
-		}
+		}	
 	}
 }
 
@@ -3080,7 +3080,7 @@ ep2_tournament_events.1003 = {
 				}
 				modifier = { #add a good physique too, for the same reasons
 					add = 2
-
+					
 					has_trait = physique_good
 				}
 
@@ -3227,7 +3227,7 @@ ep2_tournament_events.1004 = {
 			faith = root.location.faith
 			culture = root.location.culture
 			save_scope_as = comely_stray
-
+			
 		}
 		scope:comely_stray = {
 			hidden_effect = {
@@ -3259,7 +3259,7 @@ ep2_tournament_events.1004 = {
 		}
 
 		flavor = ep2_tournament_events.1004.a.tt
-
+		
 		accolade_minor_glory_gain_with_checks_effect = yes
 
 		had_sex_with_effect = {
@@ -3326,7 +3326,7 @@ ep2_tournament_events.1004 = {
 				has_trait = seducer
 			}
 		}
-
+		
 		accolade_minimal_glory_gain_with_checks_effect = yes
 
 		scope:comely_stray = { #Goodness, so dashing!
@@ -3387,7 +3387,7 @@ ep2_tournament_events.1004 = {
 		name = ep2_tournament_events.1004.c
 
 		activity_tournament_change_contestant_score_effect = { SCORE = decrease_minor }
-
+		
 		scope:rescuer_knight = {
 			accolade_minor_glory_gain_with_checks_effect = yes
 		}
@@ -3539,7 +3539,7 @@ ep2_tournament_events.1005 = {
 		character = root
 		animation = poison
 	}
-	cooldown = { years = 5 }
+	cooldown = { years = 1 }
 
 	trigger = {
 		scope:activity = {
@@ -3550,25 +3550,84 @@ ep2_tournament_events.1005 = {
 		}
 	}
 
-	# Die
+	# Chance to die
+	option = {
+		play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Tournaments/ConstructionKits/ep2_event_grand_tournament_ck_metal_clash"	
+		name = ep2_tournament_events.1005.a
+		duel = {
+			skill = prowess
+			value = root.contest_aptitude_fetch_value
+			30 = {
+				desc = ep2_tournament_events.1005.success
+				compare_modifier = {
+					 value = scope:duel_value
+					 multiplier = 3.5
+					 min = -49
+				}
+				scope:activity = {
+					add_activity_log_entry = {
+						key = tournament_accident_wounded_log
+						tags = { bad }
+						score = 5
+						character = root
+						root = {
+							increase_wounds_no_death_effect = { REASON = fight }
+						}
+					}
+				}
+			}
+			10 = {
+				desc = ep2_tournament_events.1005.fail
+				compare_modifier = {
+					 value = scope:duel_value
+					 multiplier = -3.5
+					 min = -49
+				}
+				scope:activity = {
+					add_activity_log_entry = {
+						key = tournament_melee_death_log
+						tags = { bad }
+						score = 10
+						character = root
+						root = {
+							death = {
+								death_reason = death_tournament_melee_throat
+							}
+						}
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	# Yield
 	option = {
 		play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Tournaments/ConstructionKits/ep2_event_grand_tournament_ck_metal_clash"
-		name = ep2_tournament_events.1005.a
+		name = ep2_tournament_events.1005.b
 
 		remove_variable = contest_aptitude
+		custom_tooltip = ep2_tournament_events.1005.resign
 		scope:activity = {
 			add_activity_log_entry = {
-				key = tournament_melee_death_log
+				key = tournament_melee_wounded_log
 				tags = { bad }
 				score = 10
 				character = root
+				root = {
+					add_trait = disfigured
+				}
+				remove_from_guest_subset = {
+					name = qualified
+					target = root
+				}
+				add_to_guest_subset = {
+					name = spectator
+					target = root
+				}
 			}
 		}
-
-		death = {
-			death_reason = death_tournament_melee_throat
-		}
-
 		ai_chance = {
 			base = 100
 		}
@@ -3627,7 +3686,7 @@ ep2_tournament_events.1006 = {
 		character = scope:surrendering_knight
 		animation = sword_yield_start
 	}
-	cooldown = { years = 5 }
+	cooldown = { years = 1 }
 
 	trigger = {
 		scope:activity = {
@@ -3716,7 +3775,7 @@ ep2_tournament_events.1006 = {
 				value = tournament_hastiludes_xp_gain_minor_value
 			}
 		}
-
+		
 		scope:surrendering_knight = {
 			accolade_medium_glory_loss_with_checks_effect = yes
 		}
@@ -3823,7 +3882,7 @@ ep2_tournament_events.1006 = {
 		name = ep2_tournament_events.1006.c
 
 		trigger = {
-			exists = scope:artifact  #Unop Use simpler trigger
+			exists = scope:artifact		
 		}
 
 		scope:artifact = {
@@ -3856,7 +3915,7 @@ ep2_tournament_events.1006 = {
 		trigger = {
 			scope:surrendering_knight = { #Unop Fix trigger conditions
 				gold < 5
-			}
+			}			
 			NOT = { exists = scope:artifact }
 		}
 
@@ -3929,7 +3988,7 @@ ep2_tournament_events.1007 = {
 	lower_left_portrait = {
 		character = scope:teammate_3
 	}
-	cooldown = { years = 5 }
+	cooldown = { years = 1 }
 
 	trigger = {
 		scope:activity = {
@@ -3970,16 +4029,16 @@ ep2_tournament_events.1007 = {
 				}
 				random_guest_subset_current_phase = {
 					name = team_alpha
-					limit = {
-						contest_event_general_contestant_valid_trigger = yes
+					limit = { 
+						contest_event_general_contestant_valid_trigger = yes 
 						this != scope:teammate_1
 					}
 					save_scope_as = teammate_2
 				}
 				random_guest_subset_current_phase = {
 					name = team_alpha
-					limit = {
-						contest_event_general_contestant_valid_trigger = yes
+					limit = { 
+						contest_event_general_contestant_valid_trigger = yes 
 						NOR = {
 							this = scope:teammate_1
 							this = scope:teammate_2
@@ -4327,7 +4386,7 @@ ep2_tournament_events.1011 = {
 					any_guest_subset_current_phase = {
 						name = team_alpha
 						this = root
-					}
+					}					
 				}
 				random_guest_subset_current_phase = {
 					name = team_beta
@@ -4814,7 +4873,7 @@ ep2_tournament_events.1011 = {
 		stress_impact = {
 			brave = major_stress_impact_gain
 			ambitious = medium_stress_impact_gain
-			arrogant = medium_stress_impact_gain
+			arrogant = medium_stress_impact_gain			
 			craven = medium_stress_impact_loss
 			content = miniscule_stress_impact_loss
 		}
@@ -4896,7 +4955,7 @@ ep2_tournament_events.1011 = {
 					}
 
 					activity_tournament_change_contestant_score_effect = { SCORE = increase_major }
-
+					
 					accolade_medium_glory_gain_with_checks_effect = yes
 				}
 			}
@@ -4911,7 +4970,7 @@ ep2_tournament_events.1011 = {
 					right_icon = scope:famous_knight
 
 					activity_tournament_change_contestant_score_effect = { SCORE = decrease_major }
-
+					
 					scope:famous_knight = {
 						accolade_minor_glory_gain_with_checks_effect = yes
 					}
@@ -5020,7 +5079,7 @@ ep2_tournament_events.1011 = {
 		stress_impact = {
 			brave = major_stress_impact_gain
 			ambitious = medium_stress_impact_gain
-			arrogant = medium_stress_impact_gain
+			arrogant = medium_stress_impact_gain			
 			craven = medium_stress_impact_loss
 			content = miniscule_stress_impact_loss
 		}
@@ -5055,7 +5114,7 @@ ep2_tournament_events.1012 = {
 		character = scope:caught_opponent
 		animation = shock
 	}
-	cooldown = { years = 5 }
+	cooldown = { years = 1 }
 
 	trigger = {
 		scope:activity = {
@@ -5238,7 +5297,7 @@ ep2_tournament_events.1012 = {
 					right_icon = scope:caught_opponent
 
 					activity_tournament_change_contestant_score_effect = { SCORE = increase_medium }
-
+					
 					accolade_minor_glory_gain_with_checks_effect = yes
 
 					if = {
@@ -5310,7 +5369,7 @@ ep2_tournament_events.1012 = {
 					right_icon = scope:caught_opponent
 
 					activity_tournament_change_contestant_score_effect = { SCORE = decrease_medium }
-
+					
 					scope:caught_opponent = {
 						accolade_minor_glory_gain_with_checks_effect = yes
 					}
@@ -5555,7 +5614,7 @@ ep2_tournament_events.1013 = {
 					any_guest_subset_current_phase = {
 						name = team_alpha
 						this = root
-					}
+					}					
 				}
 				random_guest_subset_current_phase = {
 					name = team_beta
@@ -5849,7 +5908,7 @@ ep2_tournament_events.1015 = {
 		character = root
 		animation = shock
 	}
-	cooldown = { years = 5 }
+	cooldown = { years = 1 }
 
 	trigger = {
 		scope:activity = {
@@ -5861,7 +5920,7 @@ ep2_tournament_events.1015 = {
 					}
 					any_guest_subset_current_phase = {
 						name = team_alpha
-						contest_event_general_contestant_valid_trigger = yes
+						contest_event_general_contestant_valid_trigger = yes		
 						OR = { #Ensure it's someone meaningful to you
 							is_close_family_or_spouse_of_root_trigger = yes
 							has_relation_lover = root
@@ -5877,7 +5936,7 @@ ep2_tournament_events.1015 = {
 					}
 					any_guest_subset_current_phase = {
 						name = team_beta
-						contest_event_general_contestant_valid_trigger = yes
+						contest_event_general_contestant_valid_trigger = yes		
 						OR = { #Ensure it's someone meaningful to you
 							is_close_family_or_spouse_of_root_trigger = yes
 							has_relation_lover = root
@@ -5899,7 +5958,7 @@ ep2_tournament_events.1015 = {
 					any_guest_subset_current_phase = {
 						name = team_alpha
 						this = root
-					}
+					}					
 				}
 				random_guest_subset_current_phase = {
 					name = team_alpha
@@ -6141,7 +6200,7 @@ ep2_tournament_events.1016 = {
 		character = scope:mysterious_knight
 		animation = marshal
 	}
-	cooldown = { years = 5 }
+	cooldown = { years = 1 }
 
 	immediate = {
 		hidden_effect = {
@@ -6359,7 +6418,7 @@ ep2_tournament_events.1016 = {
 			limit = {
 				scope:mysterious_knight.liege = root
 			}
-			scope:mysterious_knight = {
+			scope:mysterious_knight = {	
 				if = {
 					limit = { exists = var:progress_to_victory }
 					remove_variable = progress_to_victory
@@ -6421,7 +6480,7 @@ ep2_tournament_events.1017 = {
 	lower_left_portrait = {
 		character = scope:knight_3
 	}
-	cooldown = { years = 5 }
+	cooldown = { years = 1 }
 
 	trigger = {
 		scope:activity = {
@@ -6445,7 +6504,7 @@ ep2_tournament_events.1017 = {
 					any_guest_subset_current_phase = {
 						name = team_beta
 						contest_event_general_contestant_valid_trigger = yes
-						this != root
+						this != root	
 					}
 				}
 			}
@@ -6470,16 +6529,16 @@ ep2_tournament_events.1017 = {
 				}
 				random_guest_subset_current_phase = {
 					name = team_beta
-					limit = {
-						contest_event_general_contestant_valid_trigger = yes
+					limit = { 
+						contest_event_general_contestant_valid_trigger = yes 
 						this != scope:knight_1
 					}
 					save_scope_as = knight_2
 				}
 				random_guest_subset_current_phase = {
 					name = team_beta
-					limit = {
-						contest_event_general_contestant_valid_trigger = yes
+					limit = { 
+						contest_event_general_contestant_valid_trigger = yes 
 						NOR = {
 							this = scope:knight_1
 							this = scope:knight_2
@@ -6672,7 +6731,7 @@ ep2_tournament_events.1017 = {
 				send_interface_toast = {
 					title = ep2_tournament_events.1017.b.failure
 					left_icon = root
-
+					
 					add_stress = minor_stress_gain
 				}
 			}
@@ -6722,7 +6781,7 @@ ep2_tournament_events.1018 = {
 		character = scope:family
 		animation = admiration
 	}
-	cooldown = { years = 5 }
+	cooldown = { years = 1 }
 
 	trigger = {
 		exists = house
@@ -6809,7 +6868,7 @@ ep2_tournament_events.1018 = {
 		if = {
 			limit = {
 				house = {
-					NOT = {
+					NOT = { 
 						has_house_modifier = tournament_house_unity_modifier
 					}
 				}
@@ -6819,7 +6878,7 @@ ep2_tournament_events.1018 = {
 					modifier = tournament_house_unity_modifier
 					years = 15
 					desc = tournament_house_unity_modifier_desc
-				}
+				}			
 			}
 		}
 		else = {
@@ -6868,7 +6927,7 @@ ep2_tournament_events.1018 = {
 			scope:family = {
 				add_trait = loyal
 			}
-		}
+		}		
 
 		if = {
 			limit = {
@@ -6956,8 +7015,8 @@ ep2_tournament_events.1501 = {
 		scope:activity = {
 			random_guest_subset_current_phase = {
 				name = qualified
-				limit = {
-					is_alive = yes
+				limit = { 
+					is_alive = yes 
 					is_ai = yes # To ensure we don't reveal player secrets
 				}
 				save_scope_as = competitor
@@ -7517,7 +7576,7 @@ ep2_tournament_events.1503 = {
 		duel = {
 			skills = { diplomacy intrigue }
 			value = medium_skill_rating
-			# Find a
+			# Find a 
 			1 = {
 				desc = ep2_tournament_events.1503.b.success
 				show_chance = yes
@@ -7740,7 +7799,7 @@ ep2_tournament_events.2001 = {
 					has_trait = arrogant
 				}
 			}
-		}
+		}	
 	}
 }
 
@@ -7765,7 +7824,7 @@ ep2_tournament_events.2002 = {
 		NOT = { #Make sure player has two hands with which to fight
 			has_trait = maimed
 		}
-		contest_versus_player_vs_ai_trigger = yes
+		contest_versus_player_vs_ai_trigger = yes	
 	}
 
 	immediate = {
@@ -8362,7 +8421,7 @@ ep2_tournament_events.2005 = {
 				has_trait = chaste
 			}
 		}
-
+		
 		had_sex_with_effect = {
 			CHARACTER = scope:versus_contestant
 			PREGNANCY_CHANCE = 50
@@ -8580,22 +8639,77 @@ ep2_tournament_events.2006 = {
 		tournament_pivotal_flavor_variable_effect = { CONTEST = wrestling ID = 2006 }
 	}
 
-	# Die
+	# Chance to die
 	option = {
-		name = ep2_tournament_events.2006.a
+		play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Tournaments/ConstructionKits/ep2_event_grand_tournament_ck_metal_clash"
+		name = ep2_tournament_events.1005.a
+		duel = {
+			skill = prowess
+			value = root.contest_aptitude_fetch_value
+			30 = {
+				desc = ep2_tournament_events.1005.success
+				compare_modifier = {
+					 value = scope:duel_value
+					 multiplier = 3.5
+					 min = -49
+				}
+				scope:activity = {
+					add_activity_log_entry = {
+						key = tournament_accident_wounded_log
+						tags = { bad }
+						score = 5
+						character = root
+						root = {
+							increase_wounds_no_death_effect = { REASON = fight }
+						}
+					}
+				}
+			}
+			10 = {
+				desc = ep2_tournament_events.1005.fail
+				compare_modifier = {
+					 value = scope:duel_value
+					 multiplier = -3.5
+					 min = -49
+				}
+				scope:activity = {
+					add_activity_log_entry = {
+						key = tournament_wrestling_death_log
+						tags = { bad }
+						score = 10
+						character = root
+						root = {
+							death = {
+								death_reason = death_tournament_piledriver
+							}
+						}
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	# Yield
+	option = {
+		play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Tournaments/ConstructionKits/ep2_event_grand_tournament_ck_metal_clash"
+		name = ep2_tournament_events.1005.b
 
-		hidden_effect = {
-			tournament_contest_versus_resignation_effect = { RESIGNER = root CONTEST = wrestling SKILL = pugilism }
-		}
-		death = {
-			death_reason = death_tournament_piledriver
-		}
+		remove_variable = contest_aptitude
+		custom_tooltip = ep2_tournament_events.1005.resign
 		scope:activity = {
 			add_activity_log_entry = {
-				key = tournament_wrestling_death_log
+				key = tournament_melee_wounded_log
 				tags = { bad }
 				score = 10
 				character = root
+				root = {
+					add_trait = disfigured
+				}
+				hidden_effect = {
+					tournament_contest_versus_resignation_effect = { RESIGNER = root CONTEST = wrestling SKILL = pugilism }
+				}
 			}
 		}
 		ai_chance = {
@@ -8650,8 +8764,8 @@ ep2_tournament_events.2007 = {
 		scope:activity = {
 			random_guest_subset_current_phase = {
 				name = spectator
-				limit = {
-					is_alive = yes
+				limit = { 
+					is_alive = yes 
 					is_adult = yes
 					NOR = {
 						this = scope:versus_matchee
@@ -9036,7 +9150,7 @@ ep2_tournament_events.2501 = {
 			}
 			30 = { #It works reasonably well
 				custom_tooltip = ep2_tournament_events.2501.a.tt.success
-
+				
 				modifier = {
 					add = 10
 					prowess > high_skill_rating
@@ -9051,13 +9165,13 @@ ep2_tournament_events.2501 = {
 				}
 			}
 			5 = { #Your opponent sees it coming
-
+				
 				custom_tooltip = ep2_tournament_events.2501.a.tt.failure
 				modifier = {
 					add = 10
 					prowess < low_skill_rating
 				}
-
+				
 
 				send_interface_toast = {
 					title = ep2_tournament_events.2501.a.tt.failure
@@ -9119,7 +9233,7 @@ ep2_tournament_events.2502 = {
 					add = 10
 					has_trait = lifestyle_herbalist
 				}
-
+				
 				send_interface_toast = {
 					title = ep2_tournament_events.2502.a.tt.success
 					left_icon = root
@@ -9169,7 +9283,7 @@ ep2_tournament_events.2502 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				has_trait = craven
@@ -9208,7 +9322,7 @@ ep2_tournament_events.2502 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -9216,7 +9330,7 @@ ep2_tournament_events.2502 = {
 					has_trait = ambitious
 				}
 			}
-		}
+		}	
 	}
 }
 
@@ -9318,7 +9432,7 @@ ep2_tournament_events.2503 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -9582,7 +9696,7 @@ ep2_tournament_events.2504 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -9617,7 +9731,7 @@ ep2_tournament_events.2504 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -9654,27 +9768,79 @@ ep2_tournament_events.2506 = {
 		contest_versus_player_vs_ai_scope_effect = yes
 	}
 
-	# Urk!
+	# Chance to die
 	option = {
+		play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Tournaments/ConstructionKits/ep2_event_grand_tournament_ck_metal_clash"
 		name = ep2_tournament_events.2506.a
-
-		hidden_effect = {
-			tournament_contest_versus_resignation_effect = { RESIGNER = root CONTEST = wrestling SKILL = pugilism }
+		duel = {
+			skill = prowess
+			value = root.contest_aptitude_fetch_value
+			30 = {
+				desc = ep2_tournament_events.1005.success
+				compare_modifier = {
+					 value = scope:duel_value
+					 multiplier = 3.5
+					 min = -49
+				}
+				scope:activity = {
+					add_activity_log_entry = {
+						key = tournament_accident_wounded_log
+						tags = { bad }
+						score = 5
+						character = root
+						root = {
+							increase_wounds_no_death_effect = { REASON = fight }
+						}
+					}
+				}
+			}
+			10 = {
+				desc = ep2_tournament_events.1005.fail
+				compare_modifier = {
+					 value = scope:duel_value
+					 multiplier = -3.5
+					 min = -49
+				}
+				scope:activity = {
+					add_activity_log_entry = {
+						key = tournament_wrestling_death_log
+						tags = { bad }
+						score = 10
+						character = root
+						root = { #Unop scope here is activity, death needs character
+							death = {
+								death_reason = death_tournament_roundhouse
+							}
+						}
+					}
+				}
+			}
 		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	# Yield
+	option = {
+		play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Tournaments/ConstructionKits/ep2_event_grand_tournament_ck_metal_clash"
+		name = ep2_tournament_events.1005.b
 
+		remove_variable = contest_aptitude
+		custom_tooltip = ep2_tournament_events.1005.resign
 		scope:activity = {
 			add_activity_log_entry = {
-				key = tournament_wrestling_death_log
+				key = tournament_melee_wounded_log
 				tags = { bad }
 				score = 10
 				character = root
+				root = {
+					add_trait = disfigured
+				}
 			}
 		}
-
-		death = {
-			death_reason = death_tournament_roundhouse
+		hidden_effect = {
+			tournament_contest_versus_resignation_effect = { RESIGNER = root CONTEST = wrestling SKILL = pugilism }
 		}
-
 		ai_chance = {
 			base = 100
 		}
@@ -9893,7 +10059,7 @@ ep2_tournament_events.2507 = {
 
 		ai_chance = {
 			base = 100
-		}
+		}	
 	}
 }
 
@@ -9955,8 +10121,8 @@ ep2_tournament_events.3501 = {
 		scope:activity = {
 			random_guest_subset_current_phase = {
 				name = contestant
-				limit = {
-					tournament_events_3501_knight_trigger = yes
+				limit = { 
+					tournament_events_3501_knight_trigger = yes 
 					is_alive = yes
 				}
 				save_scope_as = knight1
@@ -9986,7 +10152,7 @@ ep2_tournament_events.3501 = {
 				modifier = flattered_opinion
 				opinion = 50
 			}
-
+			
 			accolade_medium_glory_gain_with_checks_effect = yes
 
 			scope:knight2 = {
@@ -10031,7 +10197,7 @@ ep2_tournament_events.3501 = {
 				modifier = flattered_opinion
 				opinion = 50
 			}
-
+			
 			accolade_medium_glory_gain_with_checks_effect = yes
 
 			scope:knight1 = {
@@ -10136,12 +10302,12 @@ ep2_tournament_events.3501 = {
 	# Pick neither
 	option = {
 		name = ep2_tournament_events.3501.d
-
+		
 		if = {
 			limit = { activity_is_competing_trigger = yes }
 			activity_tournament_change_contestant_score_effect = { SCORE = increase_minor }
 		}
-
+		
 		scope:knight1 = {
 
 			add_opinion = {
@@ -10230,9 +10396,9 @@ ep2_tournament_events.3502 = {
 		trigger = {
 			this = scope:host
 		}
-
+		
 		if = {
-			limit = { activity_is_competing_trigger = yes}
+			limit = { activity_is_competing_trigger = yes} 
 			activity_tournament_change_contestant_score_effect = { SCORE = increase_minor }
 		}
 
@@ -10256,7 +10422,7 @@ ep2_tournament_events.3502 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				has_trait = forgiving
@@ -10289,7 +10455,7 @@ ep2_tournament_events.3502 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				has_trait = forgiving
@@ -10322,7 +10488,7 @@ ep2_tournament_events.3502 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				has_trait = greedy
@@ -10346,7 +10512,7 @@ ep2_tournament_events.3502 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -10395,7 +10561,7 @@ ep2_tournament_events.3503 = {
 		scope:activity = {
 			random_guest_subset_current_phase = {
 				name = contestant
-				limit = {
+				limit = {					
 					contest_event_general_contestant_valid_trigger = yes
 					is_landed = no #Make sure they're not a noble
 					is_lowborn = yes #...and again
@@ -10517,7 +10683,7 @@ ep2_tournament_events.3503 = {
 					}
 				}
 			}
-		}
+		}		
 
 		ai_chance = {
 			base = 100
@@ -10602,7 +10768,7 @@ ep2_tournament_events.3503 = {
 
 	option = { # You decide you quite like them
 		name = ep2_tournament_events.3503.c
-
+		
 		if = {
 			limit = { activity_is_competing_trigger = yes }
 			activity_tournament_change_contestant_score_effect = { SCORE = increase_minor }
@@ -10633,7 +10799,7 @@ ep2_tournament_events.3503 = {
 	}
 	option = { # Laugh at them
 		name = ep2_tournament_events.3503.d
-		custom_tooltip = available_because_intent_tt
+		reason = activity_intent
 		trigger = { has_activity_intent = reduce_stress_intent }
 
 		progress_towards_rival_effect = {
@@ -10677,38 +10843,84 @@ ep2_tournament_events.3504 = {
 		}
 	}
 
-	option = { # Ouch!
+	# Chance to die
+	option = {
+		play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Tournaments/ConstructionKits/ep2_event_grand_tournament_ck_metal_clash"
 		name = ep2_tournament_events.3504.a
-
-		random_list = {
-			1 = {
-				desc = ep2_tournament_events.3504.wound_tt #Unop Add desc
-				show_chance = no
-				increase_wounds_effect = { REASON = accident }
-			}
-			1 = {
-				desc = ep2_tournament_events.3504.incapable_tt #Unop Add desc
-				show_chance = no
-				add_trait = incapable
-			}
-			1 = {
-				desc = ep2_tournament_events.3504.death_tt #Unop Add desc
-				show_chance = no
-				death = {
-					death_reason = death_tournament_quintain_hit
+		duel = {
+			skill = prowess
+			value = root.contest_aptitude_fetch_value
+			30 = {
+				desc = ep2_tournament_events.1005.success
+				compare_modifier = {
+					 value = scope:duel_value
+					 multiplier = 3.5
+					 min = -49
 				}
-
+				scope:activity = {
+					add_activity_log_entry = {
+						key = tournament_accident_wounded_log
+						tags = { bad }
+						score = 5
+						character = root
+						root = {
+							increase_wounds_no_death_effect = { REASON = fight }
+						}
+					}
+				}
+			}
+			10 = {
+				desc = ep2_tournament_events.1005.fail
+				compare_modifier = {
+					 value = scope:duel_value
+					 multiplier = -3.5
+					 min = -49
+				}
 				scope:activity = {
 					add_activity_log_entry = {
 						key = tournament_quintain_death_log
 						tags = { bad }
 						score = 10
 						character = root
+						root = {
+							death = {
+								death_reason = death_tournament_quintain_hit
+							}
+						}
 					}
 				}
 			}
 		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	# Yield
+	option = {
+		play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Tournaments/ConstructionKits/ep2_event_grand_tournament_ck_metal_clash"
+		name = ep2_tournament_events.1005.b
 
+		remove_variable = contest_aptitude
+		custom_tooltip = ep2_tournament_events.1005.resign
+		scope:activity = {
+			add_activity_log_entry = {
+				key = tournament_melee_wounded_log
+				tags = { bad }
+				score = 10
+				character = root
+				root = {
+					add_trait = disfigured
+				}
+				remove_from_guest_subset = {
+					name = qualified
+					target = root
+				}
+				add_to_guest_subset = {
+					name = spectator
+					target = root
+				}
+			}
+		}
 		ai_chance = {
 			base = 100
 		}
@@ -10739,7 +10951,7 @@ ep2_tournament_events.4001 = {
 	trigger = {
 		#DLC check.
 		#has_ep2_dlc_trigger = yes
-
+		
 		#Standard checks.
 		contest_versus_player_vs_ai_trigger = yes
 	}
@@ -10764,7 +10976,7 @@ ep2_tournament_events.4001 = {
 		trigger = {
 			OR = {
 				has_trait = physique_good
-				has_trait = strong
+				has_trait = strong		
 			}
 		}
 
@@ -10839,7 +11051,7 @@ ep2_tournament_events.4001 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -10965,7 +11177,7 @@ ep2_tournament_events.4002 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -11054,7 +11266,7 @@ ep2_tournament_events.4003 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -11115,7 +11327,7 @@ ep2_tournament_events.4003 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -11141,7 +11353,7 @@ ep2_tournament_events.4003 = {
 					multiplier = 3.5
 					min = -49
 				}
-
+				
 				send_interface_toast = {
 					title = ep2_tournament_events.4003.c.tt.win
 					left_icon = root
@@ -11189,7 +11401,7 @@ ep2_tournament_events.4003 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -11300,7 +11512,7 @@ ep2_tournament_events.4004 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -11417,7 +11629,7 @@ ep2_tournament_events.4005 = {
 				modifier = cruelty_opinion
 				opinion = -10
 			}
-		}
+		}	
 		else_if = { # If they're brave, stubborn or chivalric they'll respect you for respecting their wishes
 			limit = {
 				scope:versus_contestant = {
@@ -11490,7 +11702,7 @@ ep2_tournament_events.4005 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -11547,7 +11759,7 @@ ep2_tournament_events.4005 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -11620,7 +11832,7 @@ ep2_tournament_events.4006 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -11651,7 +11863,7 @@ ep2_tournament_events.4006 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -11748,7 +11960,7 @@ ep2_tournament_events.4007 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				has_trait = gregarious
@@ -11812,7 +12024,7 @@ ep2_tournament_events.4007 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -11873,7 +12085,7 @@ ep2_tournament_events.4008 = {
 		name = ep2_tournament_events.4008.a
 		random_list = {
 			45 = { #You win
-
+				
 				modifier = { #Skill buff
 					add = 15
 					prowess > high_skill_rating
@@ -11937,7 +12149,7 @@ ep2_tournament_events.4008 = {
 					}
 				}
 			}
-			15 = { #You get injured by the crowd throwing stuff at you
+			15 = { #You get injured by the crowd throwing stuff at you		
 				modifier = {
 					add = 10
 					has_trait = sadistic
@@ -12002,14 +12214,14 @@ ep2_tournament_events.4008 = {
 		}
 		ai_chance = {
 			base = 100
-
+	
 		}
 	}
 
 	# Throw the contest
 	option = {
 		name = ep2_tournament_events.4008.b
-
+		
 		add_prestige = minor_prestige_loss
 
 		tournament_contest_versus_resignation_effect = { RESIGNER = root CONTEST = joust SKILL = horse }
@@ -12021,7 +12233,7 @@ ep2_tournament_events.4008 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				has_trait = brave
@@ -12067,7 +12279,7 @@ ep2_tournament_events.4009 = {
 				has_trait = arrogant
 			}
 		}
-
+		
 		activity_tournament_change_contestant_score_effect = { SCORE = increase_medium }
 
 		progress_towards_rival_effect = {
@@ -12092,7 +12304,7 @@ ep2_tournament_events.4009 = {
 					has_trait = just
 					has_trait = gregarious
 				}
-			}
+			}		
 		}
 	}
 	# Lend them a lance
@@ -12129,10 +12341,10 @@ ep2_tournament_events.4009 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
-				OR = {
+				OR = {				
 					has_trait = callous
 					has_trait = arbitrary
 				}
@@ -12157,7 +12369,7 @@ ep2_tournament_events.4009 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -12230,7 +12442,7 @@ ep2_tournament_events.5501 = {
 				has_trait = shrewd
 			}
 		}
-
+		
 		activity_tournament_change_contestant_score_effect = { SCORE = increase_medium }
 
 		if = {
@@ -12254,7 +12466,7 @@ ep2_tournament_events.5501 = {
 
 			modifier = {
 				factor = 0
-			}
+			}		
 		}
 	}
 
@@ -12264,7 +12476,7 @@ ep2_tournament_events.5501 = {
 
 		random_list = {
 			9 = { #It goes well
-
+				
 				modifier = { #Skill buff
 					add = 15
 					diplomacy > high_skill_rating
@@ -12590,7 +12802,7 @@ ep2_tournament_events.5502 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				OR = {
@@ -12617,7 +12829,7 @@ ep2_tournament_events.5502 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
 				has_trait = honest
@@ -13055,7 +13267,7 @@ ep2_tournament_events.5504 = {
 			modifier = {
 				factor = 0
 				has_trait = brave
-			}
+			}	
 		}
 	}
 }
@@ -13068,7 +13280,7 @@ ep2_tournament_events.5505 = {
 		desc = ep2_tournament_events.5505.desc
 		first_valid = {
 			triggered_desc = {
-				trigger = {
+				trigger = { 
 					scope:enemy = {
 						AND = {
 							is_female = no
@@ -13082,7 +13294,7 @@ ep2_tournament_events.5505 = {
 				desc = ep2_tournament_events.5505.start.malevirgin
 			}
 			triggered_desc = {
-				trigger = {
+				trigger = { 
 					scope:enemy = {
 						AND = {
 							is_female = yes
@@ -13096,7 +13308,7 @@ ep2_tournament_events.5505 = {
 				desc = ep2_tournament_events.5505.start.femalevirgin
 			}
 			triggered_desc = {
-				trigger = {
+				trigger = { 
 					scope:enemy = {
 						age > 60
 					}
@@ -13104,7 +13316,7 @@ ep2_tournament_events.5505 = {
 				desc = ep2_tournament_events.5505.start.old
 			}
 			triggered_desc = {
-				trigger = {
+				trigger = { 
 					scope:enemy = {
 						current_weight > 50
 					}
@@ -13112,7 +13324,7 @@ ep2_tournament_events.5505 = {
 				desc = ep2_tournament_events.5505.start.fat
 			}
 			triggered_desc = {
-				trigger = {
+				trigger = { 
 					scope:enemy = {
 						has_trait = compassionate
 					}
@@ -13123,7 +13335,7 @@ ep2_tournament_events.5505 = {
 				desc = ep2_tournament_events.5505.start.soft
 			}
 			triggered_desc = {
-				trigger = {
+				trigger = { 
 					has_trait = compassionate
 				}
 				desc = ep2_tournament_events.5505.start.compassionate
@@ -13184,7 +13396,7 @@ ep2_tournament_events.5505 = {
 				}
 			}
 		}
-
+		
 		add_internal_flag = special
 
 		activity_tournament_change_contestant_score_effect = { SCORE = increase_medium }
@@ -13238,7 +13450,7 @@ ep2_tournament_events.5505 = {
 					has_trait = chaste
 					has_trait = celibate
 				}
-			}
+			}		
 		}
 	}
 
@@ -13252,7 +13464,7 @@ ep2_tournament_events.5505 = {
 		}
 
 		add_internal_flag = special
-
+		
 		activity_tournament_change_contestant_score_effect = { SCORE = increase_medium }
 
 		if = {
@@ -13300,7 +13512,7 @@ ep2_tournament_events.5505 = {
 					has_trait = compassionate
 					has_trait = gregarious
 				}
-			}
+			}		
 		}
 	}
 
@@ -13317,7 +13529,7 @@ ep2_tournament_events.5505 = {
 		}
 
 		add_internal_flag = special
-
+		
 		activity_tournament_change_contestant_score_effect = { SCORE = increase_medium }
 
 		if = {
@@ -13365,7 +13577,7 @@ ep2_tournament_events.5505 = {
 					has_trait = compassionate
 					has_trait = gregarious
 				}
-			}
+			}		
 		}
 	}
 
@@ -13380,7 +13592,7 @@ ep2_tournament_events.5505 = {
 		}
 
 		add_internal_flag = special
-
+		
 		activity_tournament_change_contestant_score_effect = { SCORE = decrease_minor }
 
 		reverse_add_opinion = {
@@ -13406,7 +13618,7 @@ ep2_tournament_events.5505 = {
 		}
 
 		add_internal_flag = special
-
+		
 		activity_tournament_change_contestant_score_effect = { SCORE = increase_medium }
 
 		scope:enemy = { #Unop Enemy becomes your rival, not vice versa
@@ -13465,7 +13677,7 @@ ep2_tournament_events.5505 = {
 					has_trait = compassionate
 					has_trait = gregarious
 				}
-			}
+			}		
 		}
 	}
 
@@ -13476,7 +13688,7 @@ ep2_tournament_events.5505 = {
 		trigger = {
 			has_trait = compassionate
 		}
-
+		
 		add_internal_flag = special
 
 		activity_tournament_change_contestant_score_effect = { SCORE = increase_minor }
@@ -13516,7 +13728,7 @@ ep2_tournament_events.5505 = {
 					has_trait = sadistic
 					has_trait = arrogant
 				}
-			}
+			}		
 		}
 	}
 
@@ -13561,14 +13773,14 @@ ep2_tournament_events.5505 = {
 					has_trait = compassionate
 					has_trait = gregarious
 				}
-			}
+			}		
 		}
 	}
 
 	# ...never mind
 	option = {
 		name = ep2_tournament_events.5505.getout
-
+		
 		activity_tournament_change_contestant_score_effect = { SCORE = decrease_medium }
 
 		stress_impact = {
@@ -13587,7 +13799,7 @@ ep2_tournament_events.5505 = {
 					has_trait = sadistic
 					has_trait = arrogant
 				}
-			}
+			}		
 		}
 	}
 }
@@ -13972,7 +14184,7 @@ ep2_tournament_events.6501 = {
 	option = {
 		name = ep2_tournament_events.6501.b
 		duel = {
-			skill = prowess
+			skill = prowess 
 			value = high_skill_rating
 			#You succeed!
 			50 = {
@@ -14160,7 +14372,7 @@ ep2_tournament_events.6502 = {
 					has_trait = just
 					has_trait = gregarious
 				}
-			}
+			}		
 		}
 	}
 
@@ -14168,7 +14380,7 @@ ep2_tournament_events.6502 = {
 	option = {
 		name = ep2_tournament_events.6502.b
 
-		trigger = {
+		trigger = {	
 			court_physician_available_trigger = yes
 		}
 
@@ -14280,10 +14492,10 @@ ep2_tournament_events.6502 = {
 
 		ai_chance = {
 			base = 100
-
+			
 			modifier = {
 				factor = 0
-				OR = {
+				OR = {				
 					has_trait = callous
 					has_trait = arbitrary
 				}
@@ -14386,7 +14598,7 @@ ep2_tournament_events.6503 = {
 		scope:activity = {
 			any_guest_subset_current_phase = {
 				count >= 2
-				name = qualified
+				name = qualified			
 				contest_event_general_contestant_valid_trigger = yes
 			}
 		}

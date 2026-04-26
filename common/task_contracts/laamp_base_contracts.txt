@@ -825,7 +825,7 @@ laamp_base_0031 = {
 		scope:contract = {
 			# Make our gold rewards static.
 			grab_gold_fuzz_number_effect = yes
-			save_scope_as = task_contract #Unop Ensure task_contract scope exsits
+			save_scope_as = task_contract
 			set_variable = {
 				name = gold_success_standard
 				value = task_contract_taker.task_contract_success_gold_gain_full_value
@@ -1283,6 +1283,7 @@ laamp_base_1001 = {
 			should_print_on_complete = yes
 			effect = {
 				task_contract_taker = { play_sound_effect = "event:/DLC/EP3/SFX/UI/Contracts/ep3_ui_contracts_success_on_contract" }
+				
 				save_scope_as = task_contract #Unop Ensure task_contract scope exsits
 				save_scope_value_as = { name = extra_reward value = flag:no }
 				# Standard Rewards.
@@ -2103,8 +2104,10 @@ laamp_base_5051 = {
 				}
 			}
 		}
-		task_contract_employer = { is_landed = yes }
-		NOT = { scope:employer = { government_has_flag = government_is_herder } }
+		task_contract_employer = {
+			is_landed = yes
+			NOT = { government_has_flag = government_is_herder }
+		}
 	}
 	valid_to_keep = {
 		# Standard triggers.
@@ -2112,8 +2115,10 @@ laamp_base_5051 = {
 			EMPLOYER = root.task_contract_employer
 			LAAMP = root.task_contract_taker
 		}
-		task_contract_employer = { is_landed = yes }
-		NOT = { scope:employer = { government_has_flag = government_is_herder } }
+		task_contract_employer = {
+			is_landed = yes
+			NOT = { government_has_flag = government_is_herder }
+		}
 	}
 
 	# On_actions
@@ -3958,7 +3963,7 @@ laamp_base_3001 = {
 		success_qualified = {
 			should_print_on_complete = yes
 			effect = {
-				task_contract_taker = { play_sound_effect = "event:/DLC/EP3/SFX/UI/Contracts/ep3_ui_contracts_success_on_contract" }				
+				task_contract_taker = { play_sound_effect = "event:/DLC/EP3/SFX/UI/Contracts/ep3_ui_contracts_success_on_contract" }
 				save_scope_as = task_contract #Unop Ensure task_contract scope exsits
 				save_scope_value_as = { name = extra_reward value = flag:no }
 				# Standard Rewards.

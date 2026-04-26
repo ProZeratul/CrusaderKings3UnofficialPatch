@@ -206,132 +206,24 @@ decrease_house_relation_level_effect = {
 # Effect for incrementing towards a level change - used actual gameplay effects, e.g. war declarations
 # Required parameters: HOUSE, CHAR, TARGET_CHAR, TITLE, VALUE, REASON
 change_house_relation_effect = {
-	# SAVE USEFUL SCOPES
-	save_scope_as = house
+	# Save scopes to use in localization of description.
 	$HOUSE$ ?= { save_scope_as = other_house }
 	$CHAR$ ?= { save_scope_as = char }
 	$TARGET_CHAR$ ?= { save_scope_as = target_char }
 	$TITLE$ ?= { save_scope_as = title }
+
+	save_scope_value_as = {
+		name = steps
+		value = $VALUE$
+	}
 	if = {
 		limit = {
-			exists = scope:house
 			exists = scope:other_house
-			scope:house != scope:other_house
 		}
-		save_scope_value_as = {
-			name = steps
-			value = $VALUE$
-		}
-		# IF A HOUSE RELATION ALREADY EXISTS, MODIFY IT
-		if = {
-			limit = {
-				scope:house = {
-					any_house_relation = {
-						any_relation_house = { scope:other_house = this }
-						# EASIER TO JUMP VIA TEMP SCOPE
-						save_temporary_scope_as = relation_temp
-					}
-				}
-			}
-			scope:relation_temp = { save_scope_as = house_relation }
-			if = {
-				limit = {
-					house_relation_is_valid_to_keep_trigger = {
-						HOUSE = scope:house
-						OTHER_HOUSE = scope:other_house
-					}
-				}
-				scope:relation_temp = {
-					if = {
-						limit = {
-							scope:steps < 0
-							NOT = { has_house_relation_level = feud } # already at min
-						}
-						change_house_relation_level = {
-							steps = scope:steps
-							description = house_relation_reason_$REASON$_desc
-						}
-					}
-					else_if = {
-						limit = {
-							NOT = { has_house_relation_level = amity } # already at max
-						}
-						change_house_relation_level = {
-							steps = scope:steps
-							description = house_relation_reason_$REASON$_desc
-						}
-					}
-				}
-				# INFORM PLAYERS OF CHANGE
-				every_player = {
-					limit = {
-						OR = {
-							house ?= scope:house
-							house ?= scope:other_house
-						}
-					}
-					house = { save_temporary_scope_as = house_temp }
-					scope:house_relation = {
-						random_relation_house = {
-							limit = { NOT = { this = scope:house_temp } }
-							save_temporary_scope_as = other_house_temp
-						}
-					}
-				}
-			}
-			else = {
-				scope:relation_temp = { save_scope_as = house_relation }
-				# INFORM PLAYERS OF CHANGE
-				every_player = {
-					limit = {
-						OR = {
-							house ?= scope:house
-							house ?= scope:other_house
-						}
-					}
-					house = { save_temporary_scope_as = house_temp }
-					scope:house_relation = {
-						random_relation_house = {
-							limit = { NOT = { this = scope:house_temp } }
-							save_temporary_scope_as = other_house_temp
-						}
-					}
-					send_interface_toast = {
-						type = msg_house_relation_cleared
-						title = house_relation_cleared_message_title
-						desc = house_relation_cleared_message_desc
-						left_icon = scope:house_temp
-						right_icon = scope:other_house_temp
-					}
-				}
-				scope:house_relation = { clear_house_relation = yes }
-			}
-		}
-		# OTHERWISE, SET STARTING
-		else_if = {
-			limit = {
-				house_relation_is_valid_to_start_trigger = {
-					HOUSE = scope:house
-					OTHER_HOUSE = scope:other_house
-				}
-			}
-			scope:house = {
-				if = {
-					limit = { scope:steps < 0 }
-					set_house_relation_level_effect = {
-						HOUSE = scope:other_house
-						REASON = $REASON$
-						LEVEL = quarrel
-					}
-				}
-				else = {
-					set_house_relation_level_effect = {
-						HOUSE = scope:other_house
-						REASON = $REASON$
-						LEVEL = cordial
-					}
-				}
-			}
+		impact_house_relation = {
+			target = scope:other_house
+			steps = scope:steps
+			description = house_relation_reason_$REASON$_desc
 		}
 	}
 }

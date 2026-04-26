@@ -30,12 +30,16 @@
 #I united the western slavs
 east_europe.0001 = { #by Mathilda Bjarnehed
 	type = character_event
+	window = big_event_window
 	title = east_europe.0001.t
 	desc = east_europe.0001.desc
-	theme = realm
+	theme = crown
+	override_effect_2d = { reference = legend_glow }
+	override_background = ep2_travel_farms
 	left_portrait = {
 		character = scope:western_slav_uniter
-		animation = personality_honorable
+		animation = sword_coup_degrace
+		camera = camera_event_center_very_large
 	}
 
 	immediate = {
@@ -116,10 +120,14 @@ east_europe.0010 = { #by Mathilda Bjarnehed
 	type = character_event
 	title = east_europe.0010.t
 	desc = east_europe.0010.desc
-	theme = realm
+	theme = crown
+	window = big_event_window
+	override_effect_2d = { reference = legend_glow }
+	override_background = courtyard
 	left_portrait = {
 		character = scope:slav_uniter
-		animation = personality_honorable
+		animation = jockey_wave
+		camera = camera_event_horse_right
 	}
 
 	immediate = {
@@ -2602,7 +2610,7 @@ east_europe.0125 = {
 			#Default to yes.
 			100 = {
 				trigger_event = {
-					id = east_europe.113
+					id = east_europe.0113
 					days = { 7 14 }
 				}
 

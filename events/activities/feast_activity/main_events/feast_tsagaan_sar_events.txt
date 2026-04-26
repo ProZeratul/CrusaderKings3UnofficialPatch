@@ -586,7 +586,7 @@ feast_tsagaan_sar_events.0002 = {
             }
             modifier = {
                 factor = 1.5
-                any_artifact = { artifact_owner = root is_equipped = no }
+                any_character_artifact = { is_equipped = no }
             }
             modifier = {
                 add = 10
@@ -1207,11 +1207,7 @@ feast_tsagaan_sar_events.0004 = {
     immediate = {
         every_character_artifact = {
             limit = {
-                NOR = {
-                    has_variable = banner_house
-                    has_variable = banner_dynasty
-                    has_variable = 1025_treasure_map
-                }
+                artifact_can_be_gift_to_trigger = { RECIPIENT = root.involved_activity.activity_host }
             }
             add_to_list = list_of_potential_artifacts_to_gift
         }
@@ -1290,8 +1286,8 @@ feast_tsagaan_sar_events.0004 = {
     option = {
         name = feast_tsagaan_sar_events.0004.a
         set_variable = {
-            name = tsagaan_sar_gift_amount
-            value = scope:artifact_1
+            name = tsagaan_sar_gift_item #Unop tsagaan_sar_gift_amount holds flags; use the correct var for artifacts
+            value = flag:artifact
         }
         involved_activity.activity_host = {
             send_interface_message = {
@@ -1323,8 +1319,8 @@ feast_tsagaan_sar_events.0004 = {
         name = feast_tsagaan_sar_events.0004.b
         trigger = { exists = scope:artifact_2 }
         set_variable = {
-            name = tsagaan_sar_gift_amount
-            value = scope:artifact_2
+            name = tsagaan_sar_gift_item #Unop tsagaan_sar_gift_amount holds flags; use the correct var for artifacts
+            value = flag:artifact
         }
 
         involved_activity.activity_host = {
@@ -1357,8 +1353,8 @@ feast_tsagaan_sar_events.0004 = {
         name = feast_tsagaan_sar_events.0004.c
         trigger = { exists = scope:artifact_3 }
         set_variable = {
-            name = tsagaan_sar_gift_amount
-            value = scope:artifact_3
+            name = tsagaan_sar_gift_item #Unop tsagaan_sar_gift_amount holds flags; use the correct var for artifacts
+            value = flag:artifact
         }
 
         involved_activity.activity_host = {

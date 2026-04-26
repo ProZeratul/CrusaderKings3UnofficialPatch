@@ -374,7 +374,7 @@ unop_has_prowess_court_position = { #Unop: Did not exists, just here as a remind
 
 court_position_stewardship_trigger = { # Is courtier suited to stewardship positions?
 	OR = {
-		has_education_stewardship_trigger = yes
+		has_education_stewardship_trigger = yes 
 		has_trait = diligent
 		stewardship >= medium_skill_rating
 	}
@@ -404,7 +404,13 @@ court_position_learning_trigger = { # Is courtier suited to learning positions?
 
 base_court_position_validity_trigger = { # would_be_valid_for_court_position ultimately traces back to this, so touch with caution
 	is_imprisoned = no
-	NOT = { is_at_war_with = $EMPLOYER$ }
+	NOT = {
+		is_at_war_with = $EMPLOYER$
+	}
+	custom_tooltip = {
+		text = not_travel_option_character
+		NOT = { has_character_flag = travel_option_added_character }
+	}
 	custom_tooltip = {
 		text = is_not_a_ceremonial_liege_trigger
 		tgp_is_ceremonial_liege_trigger = no
@@ -783,7 +789,7 @@ chief_qadi_validity_trigger = {
 		}
 		trigger_else = { always = yes }
 	}
-}
+}				
 
 garuda_validity_trigger = {
 	base_court_position_validity_trigger = { EMPLOYER = $EMPLOYER$ }
@@ -832,7 +838,7 @@ wet_nurse_validity_trigger = {
 	is_female = yes
 	custom_tooltip = {
 		text = wet_nurse_age_tt
-		age < 46
+		effective_age < 46
 	}
 	custom_tooltip = {
 		text = NONE_IS_NOT_CLOSE_FAMILY_OF_CHARACTER_COURT_POSITION
@@ -891,7 +897,7 @@ master_assassin_validity_trigger = {
 			has_doctrine = tenet_fp3_fedayeen
 			NOR = {
 				has_doctrine = tenet_pacifism
-				has_doctrine = tenet_dharmic_pacifism
+				has_doctrine = tenet_dharmic_pacifism 
 			}
 		}
 	}
@@ -947,7 +953,7 @@ akolouthos_validity_trigger = {
 				}
 				custom_tooltip = {
 					text = court_position_fp1_performative_honour
-					has_cultural_tradition = tradition_fp1_performative_honour
+					has_cultural_tradition = tradition_fp1_performative_honour 
 				}
 				custom_tooltip = {
 					text = court_position_north_germanic

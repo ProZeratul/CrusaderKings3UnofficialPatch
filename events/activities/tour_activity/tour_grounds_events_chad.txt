@@ -23,7 +23,7 @@
 scripted_trigger has_multiple_consorts_trigger = {
 	any_consort = {
 		count > 2
-		is_available_ai_adult = yes
+		is_available_ai_adult = yes 
 		NOT = { this = root } #Unop: Our char can be the consort of the visited vassal
 	}
 }
@@ -195,7 +195,7 @@ tour_grounds_events.6000 = {
 		trigger_if = {
 			limit = {
 				NOT = { is_incestuous_trigger = yes }
-				trait_is_criminal_in_faith_trigger = { TRAIT = incestuous FAITH = root.faith GENDER_CHARACTER = root }
+				trait_is_criminal_in_faith_trigger = { TRAIT = trait:incestuous FAITH = root.faith GENDER_CHARACTER = root }
 			}
 			NOT = { is_close_or_extended_family_of = scope:stop_host_scope }
 		}

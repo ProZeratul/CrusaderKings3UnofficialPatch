@@ -131,8 +131,21 @@ tgp_decision_events.0100 = {
                     var:movement_petition ?= flag:change_province_military
                     var:movement_petition ?= flag:change_province_protectorate
                 }
+                is_landless_ruler = no
             }
             desc = tgp_decision_events.0100.desc_change_province_petitioner
+        }
+        triggered_desc = {
+            trigger = {
+                OR = {
+                    var:movement_petition ?= flag:change_province_metropolitan
+                    var:movement_petition ?= flag:change_province_industrial
+                    var:movement_petition ?= flag:change_province_military
+                    var:movement_petition ?= flag:change_province_protectorate
+                }
+                is_landless_ruler = yes
+            }
+            desc = tgp_decision_events.0100.desc_change_province_no_petitioner
         }
         triggered_desc = {
             trigger = {
@@ -202,6 +215,7 @@ tgp_decision_events.0100 = {
                 ordered_situation_group_participant = {
                     order_by = var:movement_power_individual
                     limit = {
+                        is_landless_ruler = no
                         this != scope:petitioner
                         house = scope:petitioner.house
                         vassal_contract_has_modifiable_obligations = yes
@@ -212,8 +226,9 @@ tgp_decision_events.0100 = {
                 ordered_situation_group_participant = {
                     order_by = var:movement_power_individual
                     limit = {
+                        is_landless_ruler = no
                         this != scope:petitioner
-                        has_relation_disciple = scope:petitioner
+                        has_relation_elder = scope:petitioner
                         vassal_contract_has_modifiable_obligations = yes
                     }
                     save_scope_as = disciple_movement_member
@@ -221,6 +236,7 @@ tgp_decision_events.0100 = {
                 ordered_situation_group_participant = {
                     order_by = var:movement_power_individual
                     limit = {
+                        is_landless_ruler = no
                         this != scope:petitioner
                         house != scope:petitioner.house
                         vassal_contract_has_modifiable_obligations = yes
@@ -234,18 +250,15 @@ tgp_decision_events.0100 = {
                     }
                     random_situation_group_participant = {
                         limit = {
+                            is_landless_ruler = no
                             this != scope:petitioner
                             vassal_contract_has_modifiable_obligations = yes
                             trigger_if = {
-                                limit = {
-                                    exists = scope:house_movement_member
-                                }
+                                limit = { exists = scope:house_movement_member }
                                 this != scope:house_movement_member
                             }
                             trigger_if = {
-                                limit = {
-                                    exists = scope:disciple_movement_member
-                                }
+                                limit = { exists = scope:disciple_movement_member }
                                 this != scope:disciple_movement_member
                             }
                         }
@@ -264,7 +277,18 @@ tgp_decision_events.0100 = {
                 var:movement_petition ?= flag:increase_budget_salary
                 var:movement_petition ?= flag:increase_budget_military
                 var:movement_petition ?= flag:increase_budget_ministry
-            } 
+            }
+            trigger_if = {
+                limit = {
+                    OR = {
+                        var:movement_petition ?= flag:change_province_metropolitan
+                        var:movement_petition ?= flag:change_province_industrial
+                        var:movement_petition ?= flag:change_province_military
+                        var:movement_petition ?= flag:change_province_protectorate
+                    }
+                }
+                is_landless_ruler = no
+            }
         }
         if = {
             limit = {
@@ -475,6 +499,7 @@ tgp_decision_events.0100 = {
         }        
     }
 }
+
 #liege event
 tgp_decision_events.0101 = {
     type = character_event

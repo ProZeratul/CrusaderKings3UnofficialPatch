@@ -327,9 +327,7 @@ saved_contribution_value = {
 	min = 100
 	if = {
 		limit = {
-			scope:laamp_temp ?= {
-				has_character_flag = joined_as_mercenary
-			}
+			exists = scope:laamp_temp.var:joined_as_mercenary
 		}
 		value = 1
 	}
@@ -993,9 +991,11 @@ fp2_struggle_secure_iberian_foothold_religion_owned_value = {
 # Percentage owned Iberian counties of my Religion
 fp2_struggle_secure_iberian_foothold_religion_percent_value = {
 	value = fp2_struggle_secure_iberian_foothold_religion_owned_value
-	divide = fp2_struggle_secure_iberian_foothold_religion_total_value
+	divide = {
+		value = fp2_struggle_secure_iberian_foothold_religion_total_value
+		min = 1
+	}
 	multiply = 100
-	min = 1
 }
 
 # Target percentage owned Iberia counties of my Religion
