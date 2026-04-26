@@ -337,20 +337,20 @@ might_cheat_on_partner_trigger = {
 		# Players always have the option to cheat - we check this here so that we don't constantly need to OR it when using might_cheat_on_every_partner_trigger.
 		always = yes
 	}
-	trigger_else_if = {
-		limit = {
-			$PARTNER$ = {
-				government_has_flag = government_is_nomadic 
-			}
-		}
-		NOT = {
-			$PARTNER$ = {
-				domicile ?= {
-					has_domicile_parameter = nomad_yurt_spouse_will_not_cheat
-				}
-			}
-		}
-	}
+	#trigger_else_if = { #Unop Moved below so cheating of nomadic rulers doesn't depend only on domicile
+	#	limit = {
+	#		$PARTNER$ = {
+	#			government_has_flag = government_is_nomadic 
+	#		}
+	#	}
+	#	NOT = {
+	#		$PARTNER$ = {
+	#			domicile ?= {
+	#				has_domicile_parameter = nomad_yurt_spouse_will_not_cheat
+	#			}
+	#		}
+	#	}
+	#}
 	trigger_else_if = {
 		limit = {
 			# If $PARTNER$ isn't actually my partner, it's not cheating!
@@ -450,7 +450,7 @@ might_cheat_on_partner_trigger = {
 				}
 			}
 		}
-		#Unop: Move this here to still let players be able to cheat
+		#Unop: Move this here so cheating of nomadic rulers doesn't depend only on domicile
 		trigger_if = {
 			limit = {
 				$PARTNER$ = {
