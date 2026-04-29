@@ -18092,8 +18092,6 @@ hold_court.8100 = {
 				}
 			}
 		}
-		root = { save_scope_as = actor }
-		scope:ward = { save_scope_as = recipient }
 		# Trigger next event in chain.
 		hold_court_queue_next_event_effect = yes
 	}
@@ -18247,10 +18245,10 @@ hold_court.8100 = {
 			}
 		}
 		scope:recipient = {
-			create_character_memory = {
+			create_character_memory = { #Unop: Also add the adoption memory
 				type = was_adopted
 				participants = {
-					parent = scope:actor
+					parent = root
 				}
 			}
 			if = { #Unop: This should normally be given when the ward comes of age, leaving it since it was part of the initial effect
