@@ -2819,7 +2819,9 @@ imperial_examination.3010 = {
 				scope:examiner = { is_imprisoned = yes }
 			}
 			imperial_examination_create_appropriate_examiner_effect = yes
-			add_to_activity = scope:activity #Unop: We need to give the activity here (was new_examiner)
+			scope:new_examiner = {
+				add_to_activity = scope:activity #Unop: We need to give the activity here (was new_examiner)
+			}
 			scope:activity = {
 				add_to_guest_subset = {
 					name = imperial_examiners
