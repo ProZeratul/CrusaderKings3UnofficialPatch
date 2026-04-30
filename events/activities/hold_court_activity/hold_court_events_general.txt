@@ -18094,6 +18094,8 @@ hold_court.8100 = {
 		}
 		# Trigger next event in chain.
 		hold_court_queue_next_event_effect = yes
+
+		save_scope_as = actor #Unop: To make the yml of the adopt_effect happy (they rely on an actor scope)
 	}
 
 	option = { # Become the child's guardian
@@ -18244,32 +18246,25 @@ hold_court.8100 = {
 				child = scope:ward
 			}
 		}
-		scope:recipient = {
+		if = { #Unop: This should normally be given when the ward comes of age, leaving it since it was part of the initial effect
+			limit = {
+				can_add_hook = {
+					target = scope:ward
+					type = loyalty_hook
+				}
+			}
+			add_hook = {
+				target = scope:ward
+				type = loyalty_hook
+			}
+		}
+		scope:ward = {
 			create_character_memory = { #Unop: Also add the adoption memory
 				type = was_adopted
 				participants = {
 					parent = root
 				}
 			}
-			if = { #Unop: This should normally be given when the ward comes of age, leaving it since it was part of the initial effect
-				limit = {
-					can_add_hook = {
-						target = scope:ward
-						type = loyalty_hook
-					}
-				}
-				add_hook = {
-					target = scope:ward
-					type = loyalty_hook
-				}
-			}
-			set_relation_guardian = root
-			add_opinion = {
-				modifier = grateful_child
-				target = root
-				opinion = 40
-			}
-			add_character_modifier = { modifier = hold_court_8100_adopted_modifier }
 			hidden_effect = {
 				if = {
 					limit = {
@@ -18278,7 +18273,8 @@ hold_court.8100 = {
 					set_employer = root
 				}
 			}
-			#set_relation_guardian = root
+			set_relation_guardian = root
+			#Unop: All this is taken care by the adopt_effect
 			#if = {
 			#	limit = {
 			#		root = { is_male = yes }
@@ -18287,12 +18283,12 @@ hold_court.8100 = {
 			#}
 			#else = { set_mother = root }
 			#set_house = root.house
-			#add_opinion = {
-			#	modifier = grateful_child
-			#	target = root
-			#	opinion = 40
-			#}
-			#add_character_modifier = { modifier = hold_court_8100_adopted_modifier }
+			add_opinion = {
+				modifier = grateful_child
+				target = root
+				opinion = 40
+			}
+			add_character_modifier = { modifier = hold_court_8100_adopted_modifier }
 		}
 		scope:advocate = {
 			if = {
