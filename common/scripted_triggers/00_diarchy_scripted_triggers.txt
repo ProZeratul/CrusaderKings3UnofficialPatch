@@ -198,7 +198,7 @@ regency_for_personal_reasons_trigger = {
 			AND = {
 				is_adult = no
 				NOT = {
-					liege = { has_diarchy_parameter = diarchy_type_is_junior_emperorship }
+					liege ?= { has_diarchy_parameter = diarchy_type_is_junior_emperorship }  #Unop avoid context switch error for landless characters
 				}
 			}
 			is_incapable = yes
