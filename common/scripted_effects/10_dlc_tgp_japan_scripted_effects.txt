@@ -532,7 +532,9 @@ japanese_become_shogun_reward_effect = {
 	add_legitimacy = monumental_legitimacy_gain
 	add_realm_law = japanese_bureaucracy_1
 	dynasty = { add_dynasty_prestige = monumental_dynasty_prestige_gain }
-	culture = {
+	#culture = { #Unop Apply to all Japonic-heritage cultures, not just decision-taker's
+	every_culture_global = {
+		limit = { has_cultural_pillar = heritage_japonic }
 		if = {
 			limit = { has_cultural_tradition = tradition_tgp_imperial_peace }
 			custom_tooltip = {
@@ -4086,7 +4088,7 @@ tgp_dynasty_house_name_setup_effect = {
 	dynasty:korean_tak.dynasty_founder.house ?= { set_house_name = "dynn_Tak_Gwangsan" }
 	# Wang
 	dynasty:korean_wang.dynasty_founder.house ?= { set_house_name = "dynn_Wang_Goryeo" }
-	dynasty:korean_wang_haeju.dynasty_founder.house ?= { set_house_name = "dynn_Wang_Haeju" }
+	#dynasty:korean_wang_haeju.dynasty_founder.house ?= { set_house_name = "dynn_Wang_Haeju" } #Unop Dynasty korean_wang_haeju is commented out in vanilla
 	dynasty:korean_wang_gangneung.dynasty_founder.house ?= { set_house_name = "dynn_Wang_Gangneung" }
 	dynasty:korean_wang_goryeo.dynasty_founder.house ?= { set_house_name = "dynn_Wang_Goryeo" }
 	dynasty:korean_wang_seohae.dynasty_founder.house ?= { set_house_name = "dynn_Wang_Seohae" }
