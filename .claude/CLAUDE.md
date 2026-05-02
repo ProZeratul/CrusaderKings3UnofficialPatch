@@ -11,6 +11,7 @@ GitHub: [ProZeratul/CrusaderKings3UnofficialPatch](https://github.com/ProZeratul
 ## Concepts
 
 - **ck3-tiger** (aka "tiger"): A CK3 code analysis tool, [amtep/tiger](https://github.com/amtep/tiger).
+- **Vanilla**: The unmodified base game files, located under `${CK3_BASE_DIR}` (see `.env`).
 
 ## Context
 
@@ -62,6 +63,7 @@ All relevant directories are in [@../.env](../.env):
 - **Always** include a comment in the format `#Unop <description>` (preferred) or `#Unop: <description>` (acceptable) on the first changed line.
 - **Always** comment out rather than delete unneeded vanilla code.
   - Include an `#Unop` comment on the first deleted line.
+  - Comment out only the actually replaced/removed lines, not unchanged surrounding lines.
 
 ### Ignoring Tiger Errors
 
@@ -85,38 +87,23 @@ All relevant directories are in [@../.env](../.env):
 
 - When opening PRs for fixes, prefer creating a GitHub issue first and linking the PR to it by mentioning it in the PR description, e.g. `Fixes #<id>`.
 - If the issue was reported in Paradox forums or Reddit, don't open a GitHub issue and include the relevant link(s) in the PR description.
-- New vanilla files should be added without modifications in a separate commit, followed by a commit in the same PR with the actual changes. This makes these changes easier to identify and review.
+- Branch off `main`:
 
-### PR Review
-
-- Fetch any links to GitHub issues or external links, if the PR contains them.
-- **Always** compare Unop changes against vanilla (or `main`) to understand what was modified and why.
-- **Always** read the right files while analyzing.
-  - Unop files always override vanilla ones, so if an Unop file exists, read it instead of the vanilla one.
-- **Always** review the actual changes, not the entire files.
-- If particular changed lines raise a concern, propose a review comment for these lines.
-- If the PR contains multiple unrelated fixes, review each one separately.
-  - Ask the user to check each review before continuing with the next one.
-  - At the end, prepare one summary comment for all fixes.
-- Prefer concrete and concise feedback; avoid praise.
-- Group related changes together into a single "fix" in the summary.
-- Don't consider project maintenance changes (e.g. updates to `.gitignore`) as fixes.
-  - Only mention them if they raise concerns.
-- **Always** include a signature line when posting review comments on GitHub: `-- Review by Claude Code`
-- Use the template below for each fix in the final summary comment.
-  - Only include a title if there are multiple fixes.
-
-  ```markdown
-  ### Fix N: Title
-
-  * **File(s):** `file1`, `file2`
-  * **Issue:** A description of the issue (1-3 sentences)
-  * **Fix:** A description of the fix (1-3 sentences)
-  * **Analysis:** Analysis of the fix quality (1-2 sentences)
-  * **Recommendations:** What could be improved (1-2 sentences, only if needed)
-
-  _-- Review by Claude Code_
+  ```shell
+  git checkout main && git pull --ff-only
+  git checkout -b <branch>
   ```
 
-- **Always** ask the user for approval before posting reviews to GitHub.
-- **Never** approve PRs unless explicitly instructed.
+  - Branch name convention: `<git-user>-fix-<short-slug>` derived from the issue title (e.g. `pharaox-fix-court-positions`). Don't include the issue number.
+- Changes under `.claude/` are allowed to be uncommitted while you work — they should stay out of any PR.
+- Stage fix files **explicitly by path**. Never `git add -A` / `git add .` / `git commit -a` — they may sweep in dirty `.claude/` or other unrelated files.
+- Commit message style: short imperative summary (e.g. `Fix travel_events.2012 option B showing wrong tooltip`).
+- New vanilla files should be added without modifications in a separate commit, followed by a commit in the same PR with the actual changes. This makes these changes easier to identify and review.
+
+### Investigating Issues
+
+- Use the `unop-investigate-issue` skill.
+
+### Reviewing PRs
+
+- Use the `unop-review-pr` skill.
