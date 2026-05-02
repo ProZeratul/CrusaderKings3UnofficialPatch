@@ -107,34 +107,44 @@ If the affected area doesn't fit any of these (e.g. `map_data/`), **stop and ask
 
 #### Status (exactly one)
 
-- **`confirmed`** — reproduced against the files; the bug is real and a fix is feasible. Proceed to step 6 (Fix).
-- **`question`** — need more from the reporter to proceed: missing repro steps, file path, screenshot, save, mod list, game version, or `error.log` excerpt. Proceed to step 7 (Question).
-- **`invalid`** — analysis shows it isn't actually a bug, or it's already fixed, or it's out of Unop's scope (e.g. a balance change, a third-party mod conflict, a reporter on a stale version). Proceed to step 8 (Invalid).
+- **`confirmed`** — reproduced against the files; the bug is real and a fix is feasible. Proceed to step 5 (Fix).
+- **`question`** — need more from the reporter to proceed: missing repro steps, file path, screenshot, save, mod list, game version, or `error.log` excerpt. Proceed to step 8 (Question).
+- **`invalid`** — analysis shows it isn't actually a bug, or it's already fixed, or it's out of Unop's scope (e.g. a balance change, a third-party mod conflict, a reporter on a stale version). Proceed to step 9 (Invalid).
 
 Also flag (but don't apply):
 
 - **`duplicate`** — if you find an existing open or closed issue covering the same thing. Mention the number in the comment and let the user apply the label.
 - **`wontfix`** — if the fix appears to be risky or low value. Never decide this autonomously; ask the user.
 
-### 5. Present Findings to the User
+### 5. Formulate a Fix Approach
+
+Work out *how* you'd fix the bug before writing the comment — the fix shape often reveals investigation gaps.
+
+- **Look for the simpler fix first.** Is there an existing trigger, variable, flag, or guard that already encodes the state? Avoid new state and new files unless the existing surface really can't express the fix. See [`examples.md`](examples.md) (#420).
+- **Articulate the intent of any guard you propose to loosen.** State in one sentence why the original code added it. If you can't, keep investigating or ask the user. Look in nearby comments, the trigger's tooltip loc, related decisions. See [`examples.md`](examples.md) (#440).
+- **Verify against the other guards in the same block.** Before removing/loosening a guard, simulate the post-removal state against the other guards in the same `is_shown` / `is_valid` / `can_create`. If another guard still blocks the reporter's case, your fix doesn't work. See [`examples.md`](examples.md) (#440).
+simpler ones, so the user can redirect early.
+- **Propose the approach at a high level before drafting the diff.** Surface alternatives considered and why you rejected 
+
+**Paradox Script Gotchas:**
+
+- **`custom_description` is a tooltip wrapper, not a condition.** `custom_description = { text = X; <trigger> }` evaluates `<trigger>` and labels failures with `X`'s loc — the `text =` line is not a separate condition.
+- **`trigger_localization` entries are tooltip labels, not scripted triggers.** Names referenced in a `text =` field may live in `common/trigger_localization/` rather than `common/scripted_triggers/`. Grep both before concluding "trigger not found".
+
+### 6. Present Findings to the User
 
 Before touching GitHub, present:
 
 - The proposed labels (origin, area, status, any flagged candidates).
 - A short findings summary (3–8 bullets): what was reported, what files you checked, what you found, why you classified it this way.
 - The exact comment you intend to post on the issue.
-- If `confirmed`: a one-paragraph fix plan (which file, what change, why).
+- If `confirmed`: the fix approach from step 5 (which file, what change, why; alternatives considered).
 - If `question`: the specific list of questions to ask.
 - If `invalid`: the explanation and what you want the reporter to confirm.
 
-**For complex fixes** — multiple files, new files, or new state (variables, flags, counters):
-
-- **Look for a simpler approach first.** Is there an existing trigger, variable, flag, or guard that already encodes the state you'd re-derive? Is it really one missing/wrong condition rather than a missing subsystem?
-- **Propose the approach at a high level before drafting the diff.** Surface the alternatives considered and why you rejected the simpler ones, so the user can redirect early. See [`examples.md`](examples.md) (#420).
-
 **Wait for user approval** before posting anything or making code changes.
 
-### 6. Resolve — Fix
+### 7. Resolve — Fix
 
 After approval:
 
@@ -168,7 +178,7 @@ After approval:
 
 7. **Ask the user** to manually verify the fix in-game (and to run observer mode to check `error.log` if appropriate).
 
-### 7. Resolve — Question
+### 8. Resolve — Question
 
 After approval:
 
@@ -180,7 +190,7 @@ After approval:
 2. **Apply labels**: `question`, plus origin and area if you can determine them confidently from what's already there.
 3. Do **not** open a PR.
 
-### 8. Resolve — Invalid
+### 9. Resolve — Invalid
 
 After approval:
 
@@ -192,7 +202,7 @@ After approval:
 2. **Apply labels**: `invalid`, plus origin and area if applicable.
 3. Do **not** close the issue — the reporter or maintainer will close it after confirming.
 
-### 9. Report Summary
+### 10. Report Summary
 
 When done, report:
 
