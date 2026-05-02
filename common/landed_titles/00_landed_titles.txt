@@ -4558,11 +4558,14 @@ e_germany = {
 		custom_description = {
 			text = form_germania_christian_trigger
 
-			NOT = {
-				faith = {
-					religion_tag = christianity_religion
-					has_doctrine = doctrine_spiritual_head
+			OR = { #Unop allow Catholics to create Germania once HRE refoundation is permanently blocked
+				NOT = {
+					faith = {
+						religion_tag = christianity_religion
+						has_doctrine = doctrine_spiritual_head
+					}
 				}
+				exists = global_var:flag_restored_roman_empire
 			}
 		}
 		rule_title_creation_imperial_power_projection_title_creation_trigger = yes
