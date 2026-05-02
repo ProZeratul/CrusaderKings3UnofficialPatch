@@ -21325,6 +21325,11 @@ hold_court.8160 = {
 				}
 				save_scope_as = accused
 			}
+			#Unop Fall back to the actual plotter when no other suspect was found, otherwise scope:accused stays unset and the event renders with a blank accused
+			if = {
+				limit = { NOT = { exists = scope:accused } }
+				scope:debug_scheme_owner ?= { save_scope_as = accused }
+			}
 		}
 		# Save an advocate if necessary/relevant
 		scope:victim = { 
