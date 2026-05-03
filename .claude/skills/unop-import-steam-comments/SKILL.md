@@ -61,21 +61,16 @@ Parse the args per the **Arguments** section. Resolve scope, source, and approva
 
 ### 2. Fetch Comments
 
-See **Fetch URLs** in Reference for the exact endpoints and parameters.
+Run the bundled fetch script — it handles both sources, pagination, the 10-page cap, suggestions newest-on-last-page walk, and emits structured JSON. Prefer this over inline parsing.
 
-- **Main**: `curl` the JSON render endpoint in pages of 50 (`count=50`, increment `start` by 50). Each response includes `total_count` (total comments) and `comments_html` (the page's comments as an HTML fragment). Parse the fragment to extract each comment's author, date attribute (Unix timestamp on `<span class="commentthread_comment_timestamp" data-timestamp="...">`), and text. The timestamp attribute is authoritative — prefer it over the human-readable date.
-- **Suggestions**: `curl` (or `WebFetch`) the discussion URL with `?ctp=N` for page N (1-based). Same `commentthread_comment` block structure as the main page. **Order is oldest-first** with no sort control, so newest posts live on the **last** page — probe pages until one returns only the OP (~61 KB, 1 timestamp), then walk backwards. The thread OP repeats at the top of every page; dedup by comment id when merging.
+```shell
+.claude/skills/unop-import-steam-comments/scripts/fetch_steam_comments.py \
+  --source <main|suggestions> [--count N | --since YYYY-MM-DD]
+```
 
-Parsing strategy: pipe the HTML through a small `python3` heredoc using `html.parser` or a regex over the well-known class names. Don't lean on `WebFetch`'s summarization for the comment bodies — pull the raw text from the HTML so quoting is verbatim.
+Output is a JSON array on stdout, newest-first; each item has `id`, `ts`, `date_utc` (`YYYY-MM-DD HH:MM`, UTC), `author`, `text`, `page`. A page-cap warning is printed to stderr if the cap is hit.
 
-Normalize each `date` from the Unix timestamp to `YYYY-MM-DD HH:MM` (UTC, 24-hour).
-
-Stop fetching once the scope is satisfied:
-
-- **Count mode**: collected ≥ N posts.
-- **Since mode**: encountered a post older than the cutoff (or hit `total_count`).
-
-Cap walking at **10 pages** to bound runtime; warn the user if the cap is hit before the scope is satisfied.
+**Fallback**: if the script fails (non-zero exit, malformed JSON, missing fields, or output that looks structurally wrong — e.g. authors with leftover HTML tags, empty `text` for clearly non-empty comments), fall back to manual parsing: `curl` the endpoints in **Fetching URLs** (Reference) and parse the `commentthread_comment` blocks directly with a small `python3` heredoc using the per-comment fields documented there. Note the failure and the workaround used; surface this in the final report (step 8) so the script can be fixed afterwards.
 
 ### 3. Group into Threads
 
@@ -166,6 +161,7 @@ When done, report:
 - A list of newly filed issues with their numbers and URLs.
 - A ready-to-post Steam acknowledgement in BBCode — see **Steam Message Template** in Reference.
 - Suggested follow-up: "Run `/unop-investigate-issue <N>` on each to triage."
+- **If the fetch script failed** and manual parsing was used: state which step failed, what the symptom was, and that `scripts/fetch_steam_comments.py` likely needs an update.
 
 ## Reference
 
@@ -195,9 +191,8 @@ The marker comment **must** be the last line of the body and **must** match the 
 Steam BBCode acknowledgement to post on the Steam page:
 
 ```
-Thanks @<user1>, @<user2>, ... for the bug reports! We've opened the following GitHub issues to track them:
-
-- @<user>: [url=<issue-url>]#<N> <issue-title>[/url]
+@<user1>, @<user2>, ... Thanks for the reports! We've opened the following GitHub issues to track them:
+- [url=<issue-url>]#<N> <issue-title>[/url]
 - ...
 ```
 
