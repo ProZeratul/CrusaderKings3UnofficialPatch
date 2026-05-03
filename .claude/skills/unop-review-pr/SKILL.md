@@ -17,6 +17,7 @@ Review a pull request opened against the Unop GitHub repo. Compare changes again
 ## Context
 
 - Commands should be executed in the Unop repo root.
+- Source `.env` once at the start so vanilla paths use `"$CK3_BASE_DIR"`: `set -a; . ./.env; set +a`
 
 ## Arguments
 
@@ -38,11 +39,19 @@ Review a pull request opened against the Unop GitHub repo. Compare changes again
 
 ### 1. Fetch the PR
 
-Read the PR header, body, comments, and diff:
+Read the PR header, body, top-level comments, inline review comments, and diff.
 
 ```shell
 gh pr view <N> --comments
+gh api repos/ProZeratul/CrusaderKings3UnofficialPatch/pulls/<N>/comments
 gh pr diff <N>
+```
+
+For PRs that restructure code (not just small line edits), also fetch the PR branch so you can read PR-side files in full:
+
+```shell
+git fetch origin pull/<N>/head:pr-<N>
+git show pr-<N>:<path>   # PR-side view of a file
 ```
 
 Note linked issues (e.g. `Fixes #<id>`) and any external references — fetch their content for context.
@@ -55,10 +64,10 @@ Group related changes together into a single "fix". Count the distinct fixes in 
 
 For each fix, in turn:
 
-1. Read the relevant Unop and vanilla files (the actual changes; read more only if context requires).
+1. Read the relevant Unop and vanilla files. For non-trivial restructuring, read the PR-side file via `git show pr-<N>:<path>` (the working tree is on `main`).
 2. Compare against vanilla / `main` to understand what was modified and why.
 3. If particular changed lines raise a concern, draft an inline review comment for those specific lines. Keep it concrete and short.
-4. **For multi-fix PRs**, present the per-fix review to the user and wait for their go-ahead before moving to the next fix.
+4. Batch the whole review and present it to the user at once.
 
 ### 4. Prepare the Final Summary
 
@@ -106,11 +115,21 @@ Use this template for the final summary comment. Repeat the block per fix. Omit 
 ### gh Snippets
 
 ```shell
-# Read PR header + comments
+# Read PR header + issue/review comments (does NOT include inline review comments)
 gh pr view <N> --comments
+
+# Read inline review comments on diff lines
+gh api repos/ProZeratul/CrusaderKings3UnofficialPatch/pulls/<N>/comments
 
 # Read the diff
 gh pr diff <N>
+
+# Fetch the PR branch and read PR-side files
+git fetch origin pull/<N>/head:pr-<N>
+git show pr-<N>:<path>
+
+# Get the PR head commit SHA (needed as <sha> for inline comments)
+gh pr view <N> --json headRefOid --jq '.headRefOid'
 
 # Post summary as a top-level review comment (does not approve)
 gh pr review <N> --comment --body "$(cat <<'EOF'
