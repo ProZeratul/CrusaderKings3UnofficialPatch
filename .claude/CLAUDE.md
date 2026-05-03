@@ -5,6 +5,7 @@ Crusader Kings 3 Unofficial Patch (Unop) is a CK3 mod that fixes issues in the v
 GitHub: [ProZeratul/CrusaderKings3UnofficialPatch](https://github.com/ProZeratul/CrusaderKings3UnofficialPatch)
 
 [@../README.md](../README.md)
+[@../CONTRIBUTING.md](../CONTRIBUTING.md)
 [@../.env](../.env)
 
 ## Concepts
