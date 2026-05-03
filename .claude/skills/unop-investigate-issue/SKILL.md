@@ -123,8 +123,10 @@ Work out *how* you'd fix the bug before writing the comment — the fix shape of
 - **Look for the simpler fix first.** Is there an existing trigger, variable, flag, or guard that already encodes the state? Avoid new state and new files unless the existing surface really can't express the fix. See [`examples.md`](examples.md) (#420).
 - **Articulate the intent of any guard you propose to loosen.** State in one sentence why the original code added it. If you can't, keep investigating or ask the user. Look in nearby comments, the trigger's tooltip loc, related decisions. See [`examples.md`](examples.md) (#440).
 - **Verify against the other guards in the same block.** Before removing/loosening a guard, simulate the post-removal state against the other guards in the same `is_shown` / `is_valid` / `can_create`. If another guard still blocks the reporter's case, your fix doesn't work. See [`examples.md`](examples.md) (#440).
-simpler ones, so the user can redirect early.
-- **Propose the approach at a high level before drafting the diff.** Surface alternatives considered and why you rejected 
+- **Find all call sites of the buggy code path.** Grep the symbol you're about to guard. Vanilla often runs the same logic in 2-3 places; missing a duplicate leaves the bug unfixed. See [`examples.md`](examples.md) (#213).
+- **Evaluate the reporter's suggested fix critically.** Their diagnosis is one candidate, not the default. Watch for fixes that destroy state other systems still depend on. See [`examples.md`](examples.md) (#213).
+- **Don't hand-classify tiger warnings.** When `make tiger` reports new warnings, invoke the `tiger` skill before touching `ck3-tiger.conf`, as it has the authoritative fix-vs-ignore rules. See [`examples.md`](examples.md) (#213).
+- **Propose the approach at a high level before drafting the diff.** Surface alternatives considered and why you rejected simpler ones, so the user can redirect early.
 
 **Paradox Script Gotchas:**
 
@@ -163,7 +165,7 @@ After approval:
 
 5. **Validate**: run `make tiger` and ensure no new errors or warnings.
    - If new errors appear in newly-added vanilla files, fix or ignore them in the same PR.
-   - Use the `tiger` skill if loaded.
+   - **Always** invoke the `tiger` skill to handle tiger error reports if loaded.
 
 6. **Commit and open the PR as a draft** following the project `CLAUDE.md` "Opening PRs" guidelines (explicit `git add`, commit message style). After staging, committing, and pushing per CLAUDE.md, include `Fixes #<N>` in the PR body so GitHub auto-links the issue:
 
