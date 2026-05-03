@@ -198,7 +198,7 @@ After approval:
    - State exactly what you checked (file paths, line numbers).
    - State why the report doesn't hold (e.g. "Unop does not modify `<file>` at all").
    - Offer the most likely benign explanation (stale version, another mod, misread tooltip).
-   - Ask the reporter to confirm whether the issue still reproduces with only vanilla + Unop.
+   - Ask the reporter to confirm whether the issue still reproduces with only vanilla + Unop (if appropriate).
 2. **Apply labels**: `invalid`, plus origin and area if applicable.
 3. Do **not** close the issue — the reporter or maintainer will close it after confirming.
 
@@ -250,7 +250,7 @@ This doesn't appear to be a bug:
 - <reason>
 - <reason>
 
-Could you confirm whether this still reproduces with only **vanilla + Unop** (no other mods, latest version)?
+<questions>
 ```
 
 ### Examples
