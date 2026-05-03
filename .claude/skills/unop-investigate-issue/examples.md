@@ -23,3 +23,15 @@ Two near-misses:
 
 1. **First-draft fix targeted the wrong guard.** Proposed dropping `is_roman_emperor_trigger = yes` from `restore_holy_roman_empire_decision.is_shown`. The user pointed out the same block also had `NOT = { has_global_variable = flag_restored_roman_empire }` — which would still block the case. A no-op fix.
 2. **Almost loosened a guard whose intent was right there in the loc.** The trigger label `form_germania_christian_trigger` lives in `common/trigger_localization/`, and its loc reads *"As a Catholic ruler you can reform the HRE instead"* — the design intent in one line. That reframed the fix from "let Roman Emperors create Germania" to "release the Catholic gate only when HRE is no longer reachable" (i.e. `flag_restored_roman_empire` is set). Same one-line change, philosophically aligned with vanilla intent.
+
+## Issue 213 — find all call sites, watch for "boon to wrong party," use the tiger skill
+
+Lessons: Step 5 (find all call sites, evaluate the reporter's fix critically, invoke the `tiger` skill).
+
+Issue [#213](https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/213): an adopted bastard had their house/dynasty reset to the bio father's when the underlying bastard secret was later exposed.
+
+Three mistakes on the first pass:
+
+1. **Missed a duplicate of the buggy block.** Guarded `set_father` inside `secret_exposed_owner_effects_effect` but vanilla runs the same block again directly in `secret_unmarried_illegitimate_child.on_expose`. The duplicate would still fire and the bug wasn't actually fixed. Grep the symbol you're about to guard across the codebase first — vanilla often runs the same logic in 2-3 places.
+2. **Took the reporter's suggested fix uncritically.** Reporter suggested removing the secret on adoption; the user pointed out this silently strips intrigue leverage from secret owners — a "boon to the wrong party." Right shape: keep the secret, guard the harmful child-side consequences via a `unop_was_adopted` flag. The reporter's diagnosis is one candidate, not the default.
+3. **Hand-classified tiger warnings instead of invoking the `tiger` skill.** Added `# False positives` / `# Ignored` entries from intuition, at one point with the comment "vanilla bug, out of scope for this mod" — directly contradicting the project's purpose. Always invoke the `tiger` skill before touching `ck3-tiger.conf`.
