@@ -6,7 +6,6 @@ GitHub: [ProZeratul/CrusaderKings3UnofficialPatch](https://github.com/ProZeratul
 
 [@../README.md](../README.md)
 [@../.env](../.env)
-[@../ck3-tiger.conf](../ck3-tiger.conf)
 
 ## Concepts
 
