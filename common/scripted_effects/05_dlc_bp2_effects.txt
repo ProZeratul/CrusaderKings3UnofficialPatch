@@ -1104,6 +1104,7 @@ adopt_effect = {
 		adopt = $CHILD$
 		$CHILD$ = {
 			set_house = $ADOPTER$.house
+			add_character_flag = unop_was_adopted #Unop: Mark the child so bastard secret exposure does not undo the adoption
 			# Remove bastard traits
 			if = {
 				limit = {
@@ -1336,6 +1337,7 @@ adventurer_adopt_effect = {
 		$CHILD$ = {
 			hidden_effect = {
 				set_house = $ADOPTER$.house
+				add_character_flag = unop_was_adopted #Unop: Mark the child so bastard secret exposure does not undo the adoption
 				found_cadet_house_decision_effect = {
 					CHARACTER = scope:recipient
 					PRESTIGE = 0
