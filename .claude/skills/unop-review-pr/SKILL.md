@@ -101,8 +101,6 @@ Use this template for the final summary comment. Repeat the block per fix. Omit 
 * **Fix:** A description of the fix (1-3 sentences)
 * **Analysis:** Analysis of the fix quality (1-2 sentences)
 * **Recommendations:** What could be improved (1-2 sentences, only if needed)
-
-_-- Review by Claude Code_
 ```
 
 ### gh Snippets

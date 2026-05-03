@@ -185,8 +185,6 @@ When done, report:
 
 > <verbatim follow-up text>
 
-_-- Imported from Steam Workshop by Claude Code_
-
 <!-- steam-comment: <OP author> @ <OP date> -->
 ```
 

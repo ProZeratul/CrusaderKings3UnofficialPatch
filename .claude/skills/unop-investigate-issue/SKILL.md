@@ -251,8 +251,6 @@ This doesn't appear to be a bug:
 - <reason>
 
 Could you confirm whether this still reproduces with only **vanilla + Unop** (no other mods, latest version)?
-
-_-- Investigation by Claude Code_
 ```
 
 ### Examples
