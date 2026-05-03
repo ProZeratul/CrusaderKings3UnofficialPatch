@@ -80,6 +80,7 @@ Our current workflow looks roughly like this:
 * We play the game with a troubleshooting attitude. When something doesn't seem right, we investigate it.
 * We sometimes run the game in observer mode and inspect `error.log`.
 * We investigate the issues methodically and thoroughly, and try to come up with the simplest possible fix.
+* We reproduce all issues and verify all fixes in-game.
 * We run [ck3-tiger](https://github.com/amtep/tiger) - a static analysis tool ("linter") that checks for errors and inconsistencies in script files - on all files changed by the mod, and fix every non-false-positive error or warning it reports.
 * We open pull requests with the fixes and review each other's work before merging.
 * After a vanilla update, we adopt any vanilla fixes for issues we'd already patched, and drop any redundant files.
