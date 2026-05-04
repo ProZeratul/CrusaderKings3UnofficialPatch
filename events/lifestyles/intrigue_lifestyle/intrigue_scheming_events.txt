@@ -7616,11 +7616,6 @@ intrigue_scheming_special.1302 = {
 			}
 			else_if = {
 				limit = {
-					OR = { #Unop Apply the same check as above
-						scheme_type = murder
-						scheme_type = abduct
-					}
-					is_scheme_exposed = yes #Unop: We need to have the scheme exposed to find agents
 					any_scheme_agent_character = {
 						AND = {
 							is_in_the_same_court_as_or_guest = root
@@ -7630,6 +7625,7 @@ intrigue_scheming_special.1302 = {
 				}
 				save_scope_as = scheme_agent_found
 			}
+			save_scope_as = unop_1302_scheme
 		}
 		if = {
 			limit = {
@@ -8118,6 +8114,12 @@ intrigue_scheming_special.1304 = {
 			NOT = { has_character_flag = not_found }
 		}
 		add_intrigue_lifestyle_xp = massive_lifestyle_xp
+		scope:unop_1302_scheme = { #Unop: This will reveal the scheme, as an unknown revealed scheme will prevent to expose the agent
+			if = {
+				limit = { is_scheme_exposed = no }
+				expose_scheme = yes
+			}
+		}
 		if = {
 			limit = {
 				exists = scope:scheme_owner_found
@@ -8280,6 +8282,12 @@ intrigue_scheming_special.1399 = {
 			add_character_flag = {
 				flag = exposed
 				days = 10
+			}
+		}
+		scope:unop_1302_scheme = { #Unop: This will reveal the scheme, as an unknown revealed scheme will prevent to expose the agent
+			if = {
+				limit = { is_scheme_exposed = no }
+				expose_scheme = yes
 			}
 		}
 		if = {
