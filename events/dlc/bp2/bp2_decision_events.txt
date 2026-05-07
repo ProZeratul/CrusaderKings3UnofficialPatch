@@ -834,55 +834,13 @@ bp2_decision.0002 = { #rites of passage
 		}
 	}
 
-	option = { #opt out - refund cost and remove decision cooldown
+	option = { # opt out - trigger the decision cooldown, don't get your money back. Think of it as a non-refundable deposit.
 		name = bp2_decision.0002.f
+		flavor = bp2_decision.0002.tt
 		scope:teentribal ?= {
 			remove_variable ?= cleansing_type
 			remove_variable ?= chosen_rite_memory
 			clear_variable_list ?= possible_rites
-		}
-		remove_decision_cooldown = rites_of_passage_decision
-		add_gold = {
-			value = minor_gold_value
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_duchy
-				}
-				add = minor_gold_value
-			}
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_kingdom
-				}
-				add = minor_gold_value
-			}
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_empire
-				}
-				add = minor_gold_value
-			}
-		}
-		add_prestige = {
-			value = minor_prestige_value
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_duchy
-				}
-				add = minor_prestige_value
-			}
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_kingdom
-				}
-				add = minor_prestige_value
-			}
-			if = {
-				limit = {
-					highest_held_title_tier >= tier_empire
-				}
-				add = minor_prestige_value
-			}
 		}
 		ai_chance = { #there is no reason for the AI to back out at this point
 			base = 0
