@@ -14960,6 +14960,7 @@ scripted_trigger fp1_funeral_longship_likes_parties = {
 	# Faith must not consider this a bad thing.
 	faith = {
 		NOT = { trait_is_virtue = shy }
+		NOT = { trait_is_sin = trait:lifestyle_reveler } #Unop: Improve the logic here
 	}
 }
 
@@ -14971,7 +14972,8 @@ scripted_trigger fp1_funeral_longship_likes_duels = {
 	}
 	# Faith must not consider this a bad thing.
 	faith = {
-		NOT = { has_doctrine_parameter = holy_wars_forbidden }
+		NOT = { has_doctrine_parameter = holy_wars_forbidden } #Unop: Note: Is a reference to tenet_pacifism & tenet_dharmic_pacifism
+		NOT = { trait_is_sin = trait:lifestyle_blademaster } #Unop: Future proof this
 	}
 }
 
@@ -14979,7 +14981,12 @@ scripted_trigger fp1_funeral_longship_likes_hunting = {
 	hunt_lifestyle_track_greater_equal_trigger = { TRACK = hunter GREATER_EQUAL = 100 }
 	# Faith must not consider this a bad thing.
 	faith = {
-		NOT = { has_doctrine_parameter = holy_wars_forbidden }
+		NOT = { has_doctrine = tenet_dharmic_pacifism } #Unop: Was checking has_doctrine_parameter = holy_wars_forbidden but only tenet_dharmic_pacifism is considering animals as sacred
+		NOT = { trait_is_sin = trait:lifestyle_hunter }
+	}
+	#Unop: Culture must not consider this a bad thing.
+	culture = {
+		NOT = { has_cultural_parameter = cannot_hunt }
 	}
 }
 
@@ -15013,8 +15020,8 @@ fp1_yearly.1061 = {
 		# Must be significant in some way.
 		OR = {
 			highest_held_title_tier >= tier_duchy
-			piety_level >= high_prestige_level
-			prestige_level >= high_piety_level
+			piety_level >= high_piety_level #Unop: Was high_prestige_level
+			prestige_level >= high_prestige_level #Unop: Was high_piety_level
 			# Monarch of Parties.
 			fp1_funeral_longship_likes_parties = yes
 			# Monarch of Duels.
@@ -15087,21 +15094,21 @@ fp1_yearly.1061 = {
 			}
 		}
 		if = {
-			limit = { prestige_level = high_prestige_level }
+			limit = { piety_level = high_piety_level } #Unop: Was high_prestige_level
 			save_scope_value_as = {
 				name = reason_piety
 				value = flag:high
 			}
 		}
 		else_if = {
-			limit = { prestige_level = very_high_prestige_level }
+			limit = { piety_level = very_high_piety_level } #Unop: Was very_high_prestige_level
 			save_scope_value_as = {
 				name = reason_piety
 				value = flag:very_high
 			}
 		}
 		else_if = {
-			limit = { prestige_level >= max_prestige_level }
+			limit = { piety_level >= max_piety_level } #Unop: Was max_prestige_level
 			save_scope_value_as = {
 				name = reason_piety
 				value = flag:max
