@@ -11,14 +11,23 @@
 	ai_check_interval = 0
 
 	is_shown = {
-		has_variable = promised_grand_wedding_marriage_countdown
 		OR = {
-			var:promised_grand_wedding_marriage_countdown = { is_alive = no }
-			var:promised_grand_wedding_marriage_countdown = {
-				is_alive = yes
-				is_betrothed = no
+			AND = {
+				has_variable = promised_grand_wedding_marriage_countdown
+				OR = {
+					var:promised_grand_wedding_marriage_countdown = { is_alive = no }
+					var:promised_grand_wedding_marriage_countdown = {
+						is_alive = yes
+						is_betrothed = no
+					}
+					NOT = { exists = var:promised_grand_wedding_marriage_countdown }
+				}
 			}
-			NOT = { exists = var:promised_grand_wedding_marriage_countdown }
+			AND = {
+				has_variable = promised_grand_wedding_by
+				var:promised_grand_wedding_by = root
+				NOT = { has_variable = promised_grand_wedding_marriage_countdown }
+			}
 		}
 	}
 
@@ -43,6 +52,13 @@
 			else = {
 				remove_variable = promised_grand_wedding_marriage_countdown
 			}
+		}
+		else_if = {
+			limit = {
+				has_variable = promised_grand_wedding_by
+				var:promised_grand_wedding_by = root
+			}
+			remove_variable = promised_grand_wedding_by
 		}
 	}
 
