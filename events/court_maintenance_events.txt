@@ -332,7 +332,11 @@ court_maintenance.0011 = {
 			}
 
 			# Artifact for Coronations setup
-			create_proper_coronation_artifact_setup = yes
+			#Unop Don't spawn an inspiration if a proper coronation artifact is already owned
+			if = {
+				limit = { coronation_has_proper_artifact_trigger = no }
+				create_proper_coronation_artifact_setup = yes
+			}
 		}
 		
 		if = {
