@@ -1104,6 +1104,7 @@ adopt_effect = {
 		adopt = $CHILD$
 		$CHILD$ = {
 			set_house = $ADOPTER$.house
+			add_character_flag = unop_was_adopted #Unop: Mark the child so bastard secret exposure does not undo the adoption
 			# Remove bastard traits
 			if = {
 				limit = {
@@ -1112,7 +1113,7 @@ adopt_effect = {
 				remove_all_bastard_traits = yes
 			}
 		}
-		# Parochial vassals hate this
+		# Courtly vassals hate this #Unop: The comment was saying Parochial but the effect is target coutly, and courtly make more sense here
 		if = {
 			limit = {
 				NOR = {
@@ -1213,7 +1214,7 @@ adopt_effect = {
 		}
 		# Your other children hate this
 		every_child = {
-			limit = { #Unop: So now the children that you just adopt won't be mad at you & the content children won't be either (to respect the custom)
+			limit = { #Unop: So now the child that you just adopt won't be mad at you & the content children won't be either (to respect the custom)
 				NOR = { 
 					this = $CHILD$ 
 					has_trait = content
@@ -1336,6 +1337,7 @@ adventurer_adopt_effect = {
 		$CHILD$ = {
 			hidden_effect = {
 				set_house = $ADOPTER$.house
+				add_character_flag = unop_was_adopted #Unop: Mark the child so bastard secret exposure does not undo the adoption
 				found_cadet_house_decision_effect = {
 					CHARACTER = scope:recipient
 					PRESTIGE = 0

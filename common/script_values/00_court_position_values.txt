@@ -106,6 +106,18 @@ general_aptitude_bonus = {
 				desc = yeke_jarquchi_improve_court_aptitude_desc
 			}
 		}
+		#Unop: Add missing Khlon Glan entry, making the task doing nothing except gold/prestige sink
+		if = {
+			limit = {
+				liege.court_position:khlon_glan_court_position ?= {
+					has_variable = performing_improve_court
+				}
+			}
+			add = {
+				value = liege.court_position:khlon_glan_court_position.khlon_glan_improve_court_value
+				desc = khlon_glan_improve_court_aptitude_desc
+			}
+		}
 	}
 }
 

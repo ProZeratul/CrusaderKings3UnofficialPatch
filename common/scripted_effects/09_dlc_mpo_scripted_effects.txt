@@ -826,7 +826,7 @@ migration_title_and_vassal_change_effect = {
 				set_capital_county = scope:actor.capital_province.county
 			}
 		}
-		scope:recipient = {
+		scope:recipient ?= { #Unop Avoid errors for empty recipient
 			every_courtier_or_guest = {
 				limit = { unop_can_location_be_reset = { LIEGE = root } }
 				set_location_to_default = yes 
@@ -5894,18 +5894,18 @@ better_children_yurt_effect = {
 				limit = {
 					exists = scope:yurt_heir
 				}
-			}
-			send_interface_message = {
-				title = better_children_yurt_effect_tt
-				desc = better_children_yurt_effect_desc
-				left_icon = scope:yurt_heir
-				scope:yurt_heir = {
-					random_list = {
-						1 = { add_diplomacy_skill = 1 }
-						1 = { add_stewardship_skill = 1 }
-						1 = { add_intrigue_skill = 1 }
-						1 = { add_learning_skill = 1 }
-						1 = { add_martial_skill = 1 }
+				send_interface_message = { #Unop: Put this in the limit to ensure not sending an empty notification
+					title = better_children_yurt_effect_tt
+					desc = better_children_yurt_effect_desc
+					left_icon = scope:yurt_heir
+					scope:yurt_heir = {
+						random_list = {
+							1 = { add_diplomacy_skill = 1 }
+							1 = { add_stewardship_skill = 1 }
+							1 = { add_intrigue_skill = 1 }
+							1 = { add_learning_skill = 1 }
+							1 = { add_martial_skill = 1 }
+						}
 					}
 				}
 			}
