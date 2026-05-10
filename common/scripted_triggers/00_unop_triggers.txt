@@ -674,20 +674,18 @@ unop_can_adopt_trigger = {
 		AND = {
 			is_married = yes
 			# People in bisexual polygamous spheres are not valid for this
-			NOT = {
-				OR = {
-					AND = {
-						any_consort = {
-							is_female = yes
-						}
-						is_male = yes
-					}
-					AND = {
-						any_consort = {
-							is_male = yes
-						}
+			NOR = {
+				AND = {
+					any_consort = {
 						is_female = yes
 					}
+					is_male = yes
+				}
+				AND = {
+					any_consort = {
+						is_male = yes
+					}
+					is_female = yes
 				}
 			}
 		}
@@ -701,6 +699,7 @@ unop_can_adopt_trigger = {
 		}
 		# You have a cultrad that lets you adopt
 		culture = { has_cultural_parameter = allows_adoption }
+		has_variable = seeks_an_heir
 	}
 	OR = {
 		# You are unmarried
@@ -715,20 +714,18 @@ unop_can_adopt_trigger = {
 			matrilinear_marriage = no
 		}
 		# Your marriage is same-sex
-		NOT = {
-			OR = {
-				AND = {
-					any_consort = {
-						is_female = yes
-					}
-					is_male = yes
-				}
-				AND = {
-					any_consort = {
-						is_male = yes
-					}
+		NOR = {
+			AND = {
+				any_consort = {
 					is_female = yes
 				}
+				is_male = yes
+			}
+			AND = {
+				any_consort = {
+					is_male = yes
+				}
+				is_female = yes
 			}
 		}
 	}

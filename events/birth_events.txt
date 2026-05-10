@@ -3257,9 +3257,19 @@ birth.8001 = { #by Mathilda Bjarnehed
 
 	trigger = {
 		can_become_reincarnation_trigger = yes
-		any_close_or_extended_family_member = {
-			even_if_dead = yes
-			is_grandparent_of = root
+		#any_close_or_extended_family_member = { #Unop: Avoid iterating on the whole close_or_extended_family with the new trigger (1.19)
+		#	even_if_dead = yes
+		#	is_grandparent_of = root
+		#}
+		OR = {
+			any_grandparent = {
+				even_if_dead = yes
+				can_reincarnate_trigger = yes
+			}
+			any_great_grandparent = {
+				even_if_dead = yes
+				can_reincarnate_trigger = yes
+			}
 		}
 	}
 
@@ -3286,32 +3296,50 @@ birth.8001 = { #by Mathilda Bjarnehed
 
 			###Decide who you're an reincarnation of!###
 
-			#Build list of grandparents...
-			every_close_or_extended_family_member = {
+			#Unop: Remade this using the newly available every_grandparent & every_great_grandparent introduced in 1.19
+			every_grandparent = {
 				even_if_dead = yes
 				limit = {
-					is_grandparent_of = root
+					can_reincarnate_trigger = yes
+					sex_same_as = root
 				}
 				add_to_list = grandparents_and_great_grandparents
-				debug_log = "Adding grandparents"
 			}
-			#... and great grandparents
-			every_in_list = {
-				list = grandparents_and_great_grandparents
-				every_parent = {
-					even_if_dead = yes
-					add_to_list = grandparents_and_great_grandparents
+			every_great_grandparent = {
+				even_if_dead = yes
+				limit = {
+					can_reincarnate_trigger = yes
+					sex_same_as = root
 				}
-				debug_log = "Adding great grandparents"
+				add_to_list = grandparents_and_great_grandparents
 			}
+
+			##Build list of grandparents...
+			#every_close_or_extended_family_member = {
+			#	even_if_dead = yes
+			#	limit = {
+			#		is_grandparent_of = root
+			#	}
+			#	add_to_list = grandparents_and_great_grandparents
+			#	debug_log = "Adding grandparents"
+			#}
+			##... and great grandparents
+			#every_in_list = {
+			#	list = grandparents_and_great_grandparents
+			#	every_parent = {
+			#		even_if_dead = yes
+			#		add_to_list = grandparents_and_great_grandparents
+			#	}
+			#	debug_log = "Adding great grandparents"
+			#}
 
 			#Pick a random appropriate one
 			random_in_list = {
 				list = grandparents_and_great_grandparents
-				limit = {
-					sex_same_as = root
-					can_reincarnate_trigger = yes
-				}
+				#limit = { #Unop: Already checked above
+				#	sex_same_as = root
+				#	can_reincarnate_trigger = yes
+				#}
 				weight = {
 					base = 1
 					modifier = {
@@ -3319,11 +3347,11 @@ birth.8001 = { #by Mathilda Bjarnehed
 						add = 2
 					}
 					modifier = {
-						is_ruler = yes
+						highest_held_title_tier >= tier_county #Unop: Was is_ruler = yes but since they are dead, it don't work
 						add = 4
 					}
 				}
-				debug_log = "Finding ancestor"
+				#debug_log = "Finding ancestor" #Unop: Disable log
 				save_temporary_scope_as = ancestor
 			}
 
