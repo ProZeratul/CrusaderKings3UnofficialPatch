@@ -666,6 +666,24 @@ create_grand_wedding_matrilineal_betrothal = {
 	}
 }
 
+# Unop: Post-marry variant of clean_grand_wedding_betrothal_variables — clears the variable from
+# spouses (via every_spouse) rather than from betrothed, which is empty once they're married.
+unop_clean_grand_wedding_betrothal_variables = {
+	save_temporary_scope_as = unop_gw_host
+	var:promised_grand_wedding_marriage_countdown = {
+		remove_variable = promised_grand_wedding_by
+		every_spouse = {
+			limit = {
+				has_variable = promised_grand_wedding_by
+				var:promised_grand_wedding_by = scope:unop_gw_host
+			}
+			remove_variable = promised_grand_wedding_by
+		}
+	}
+	remove_variable = promised_grand_wedding_marriage_countdown
+	remove_variable = promised_grand_wedding_to
+}
+
 unop_add_renown_effect = {
 	if = {
 		limit = { exists = dynasty }
