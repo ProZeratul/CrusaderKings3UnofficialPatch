@@ -747,6 +747,12 @@ HorseStoryOppositeMareStallion = {
 WarhorseStoryNameAll = {
 	type = all
 	
+	text = { #Unop: To not have a blank in the story view & not flood the log (since the name is not set)
+		trigger = {
+			NOT = { exists = var:story_cycle_horse_name }
+		}
+		localization_key = not_yet_chosen
+	}
 	text = {
 		trigger = {
 			var:story_cycle_horse_name = flag:tencendur
