@@ -1544,6 +1544,14 @@ warhorse.8002 = {
 			remove_variable = story_cycle_horse_name
 			remove_variable = horse_gender
 			assign_horse_gender_effect = { GENDER = random }
+			#Unop: Need to flag the character so we can name this new horse
+			story_owner = {
+				add_character_flag = is_in_naming_event
+				trigger_event = {
+					id = warhorse.0001
+					days = 2
+				}
+			}
 		}
 	}
 }
