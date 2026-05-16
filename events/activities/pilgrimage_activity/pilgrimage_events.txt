@@ -2810,7 +2810,6 @@ scripted_trigger pilgrimage_2004_potential_friend_trigger = {
 	faith = root.faith
 	NOT = { is_courtier_of = root }
 	location = root.location
-	is_ruler = no #Unop To fix [ Trying to put character in court despite being a ruler ] (because of this char being taken in piligrimage travel)
 }
 
 #Run into a potential friend
@@ -2857,9 +2856,18 @@ pilgrimage.2004 = {
 			target = scope:potential_friend
 			modifier = divine_blessing_friendship_opinion
 		}
-		add_to_entourage_court_and_activity_effect = { 
-			CHAR_TO_ADD = scope:potential_friend 
-			NEW_COURT_OWNER = root 
+		if = { #Unop Don't poach a spouse, heir, or employed courtier of another ruler
+			limit = {
+				scope:potential_friend = { is_ruler = no }
+				can_recruit_character_to_court_trigger = {
+					RECRUITER = root
+					RECRUITEE = scope:potential_friend
+				}
+			}
+			add_to_entourage_court_and_activity_effect = {
+				CHAR_TO_ADD = scope:potential_friend
+				NEW_COURT_OWNER = root
+			}
 		}
 		hidden_effect = {
 			add_opinion = {
@@ -7673,6 +7681,10 @@ pilgrimage.6001 = {
 		if = {
 			limit = {
 				scope:friend = { is_ruler = no }
+				can_recruit_character_to_court_trigger = { #Unop Don't poach a spouse, heir, or employed courtier of another ruler
+					RECRUITER = root
+					RECRUITEE = scope:friend
+				}
 			}
 			add_to_entourage_court_and_activity_effect = { 
 				CHAR_TO_ADD = scope:friend
