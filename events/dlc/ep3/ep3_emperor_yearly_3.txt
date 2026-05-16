@@ -1199,9 +1199,10 @@ ep3_emperor_yearly.3010 = {
 		scope:army.location = {
 			OR = {
 				this = province:947
-				this = province:950
+				#Unop Don't fire in the open Black Sea, only in the strait
+				#this = province:950
 				this = province:948
-				this = province:8667
+				#this = province:8667
 				this = province:8668
 				this = province:8665
 			}
@@ -1209,7 +1210,8 @@ ep3_emperor_yearly.3010 = {
 		#A lot of jank would be introduced by multiplayer and armies continuing to move, unpaused
 		has_multiple_players = no
 		title:c_byzantion = { has_county_modifier = defensive_fire_dromons_modifier }
-		NOT = { has_character_flag = used_fire_dromons }
+		#Unop Check the cooldown on the defender, where .3011 sets it, not the invader
+		NOT = { title:c_byzantion.holder = { has_character_flag = used_fire_dromons } }
 		#this event is really going to f up the enemy army in a way no player will appreciate
 		is_ai = yes
 		
