@@ -640,6 +640,13 @@ adventurer_adopt_interaction = {
 		scope:recipient = {
 			NOT = { has_trait = gallivanter }
 		}
+		#Unop: Prevent an issue if you try to adopt someone who is OLDER than YOU
+		#Unop: This error is thrown by the engine so we can't do anything Error: adopt effect [ Parent can't be younger than their offspring ]
+		#Unop: As this will prevent the recipient to be considered a child of actor it will not be designated as heir
+		#Unop: This error is throw by the engine: Error: set_designated_heir effect [ Failed to designate 'X' as heir to 'Y' - only direct descendants can be designated ]
+		scope:recipient = { #Unop: So prevent players to designate older characters as the recipient of this interaction
+			age < scope:actor.age
+		}
 	}
 	
 	on_accept = {
