@@ -5285,6 +5285,7 @@ bp1_house_feud.9500 = {
 							scheme_owner = scope:joiner
 							any_scheme_agent_character = { this = scope:joiner }
 						}
+						save_temporary_scope_as = murder_scheme_temp #Unop: Move this up here since it will be used just after
 						scope:joiner = {
 							NOR = {
 								is_scheming_against = { target = scope:murder_scheme_temp.scheme_target_character }
@@ -5292,7 +5293,6 @@ bp1_house_feud.9500 = {
 							}
 							char_can_fit_into_scheme_trigger = { SCHEME = scope:murder_scheme_temp }
 						}
-						save_temporary_scope_as = murder_scheme_temp
 					}
 				}
 				weight = {
