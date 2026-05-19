@@ -2801,6 +2801,30 @@ the_tower_of_london_01 = {
 		tax_mult = 0.05
 	}
 	
+	on_complete = { #Unop: The tower of london is described as raising HotN pacification by 2
+		if = {
+			limit = {
+				NOT = { exists = scope:character }
+			}
+			county.holder = { save_scope_as = character }
+		}
+
+		#Unop: Note: this is based on_building_completed from common/on_action/province_on_actions.txt
+
+		# Harrying of the North - Pacification Gain
+		if = {
+			limit = {
+				scope:character.culture = culture:norman
+				has_global_variable = harrying_of_the_north
+				exists = global_var:harrying_of_the_north.var:pacification #Unop: The variable was checked on the story_owner instead of the story itself
+			}
+			global_var:harrying_of_the_north = { save_scope_as = story } #Unop: Needed for the effect
+			scope:character = {
+				ep3_increase_pacification_large_effect = yes #Unop: Use the dedicated effect so we get notified
+			}
+		}
+	}
+
 	ai_value = {
 		base = 8
 		culture_likely_to_fortify_modifier = yes
