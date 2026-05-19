@@ -98,6 +98,11 @@ If you've spotted a vanilla bug Unop doesn't yet cover, the most helpful thing y
 
 You can reach us either by opening an issue on [GitHub](https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues) or by posting in the [Fix suggestions discussion](https://steamcommunity.com/workshop/filedetails/discussion/2871648329/4697908845434539387/) on Steam. Pull requests with fixes are also very welcome.
 
+## Acknowledgment
+
+* [Patch 1.9.0](https://forum.paradoxplaza.com/forum/developer-diary/dev-diary-128-ck3-1-9-0-lance-update.1583293/)
+* [Patch 1.18.2](https://forum.paradoxplaza.com/forum/threads/update-1-18-2.1887748/)
+
 ## Links
 
 * [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2871648329)
