@@ -108,5 +108,6 @@ You can reach us either by opening an issue on [GitHub](https://github.com/ProZe
 * [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2871648329)
 * [GitHub Repository](https://github.com/ProZeratul/CrusaderKings3UnofficialPatch)
 * [German Localization Add-on](https://steamcommunity.com/sharedfiles/filedetails/?id=3355568022)
+* [French Localization Add-on](https://steamcommunity.com/sharedfiles/filedetails/?id=3728831113)
 
 If you'd like to support the lead maintainer's work: [ko-fi.com/kazarion](https://ko-fi.com/kazarion).
