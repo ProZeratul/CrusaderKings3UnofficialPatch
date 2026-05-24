@@ -64,6 +64,8 @@ The current version is compatible with **CK3 1.19**. Older CK3 versions are supp
 
 With the above load order, Unop is compatible with practically every other mod. If another mod replaces a file Unop also edits, you lose Unop's fixes for that file, but you avoid breaking the other mod's content.
 
+One exception: if another mod overrides `common/court_positions/types/00_mandala_court_positions.txt` without the Unop fix of the `khlon_glan_court_position` aptitude, the game will crash. In that case, please ask the other mod's author to incorporate the fix.
+
 The mod works with all DLCs and is save-game compatible.
 
 ## Localization
