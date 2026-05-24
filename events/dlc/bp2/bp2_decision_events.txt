@@ -52,6 +52,14 @@ bp2_decision.0001 = { #find wet nurse candidates
 				random_pool_character = {
 					province = root.capital_province
 					limit = { can_be_employed_as = wet_nurse_court_position}
+					weight = { #Unop: Prefer selecting younger char as the wet nurse is capped at 45 and the template are creating in the 18-25 range
+						base = 50
+						compare_modifier = {
+							value = age
+							multiplier = -0.5
+							min = -49
+						}
+					}
 					save_scope_as = wet_nurse_candidate_1
 				}
 				if = {
@@ -63,7 +71,22 @@ bp2_decision.0001 = { #find wet nurse candidates
 							this != scope:wet_nurse_candidate_1
 						}
 					}
-					save_scope_as = wet_nurse_candidate_2
+					random_pool_character = { #Unop: As this random_pool_character was missing, wet_nurse_candidate_2 was root
+						province = root.capital_province
+						limit = { 
+							can_be_employed_as = wet_nurse_court_position
+							this != scope:wet_nurse_candidate_1
+						}
+						weight = { #Unop: Prefer selecting younger char as the wet nurse is capped at 45 and the template are creating in the 18-25 range
+							base = 50
+							compare_modifier = {
+								value = age
+								multiplier = -0.5
+								min = -49
+							}
+						}
+						save_scope_as = wet_nurse_candidate_2
+					}
 				}
 				else = {
 					create_character = { #create poor candidate without a child
