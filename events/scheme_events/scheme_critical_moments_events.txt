@@ -7186,6 +7186,19 @@ scheme_critical_moments.8031 = {
 									}
 									save_scope_value_as = { name = stolen_building value = flag:tea }
 								}
+								#Unop: Add missing east_asian building version
+								10 = { # Learning Upgrade (east_asian)
+									trigger = {
+										scope:owner = {
+											NOT = { has_character_modifier = raid_insight_library }
+										}
+										scope:target_domicile = { has_domicile_building_or_higher = east_asian_estate_library_01 }
+										scope:owner.domicile ?= {
+											NOT = { has_domicile_building = east_asian_estate_library_education_04 }
+										}
+									}
+									save_scope_value_as = { name = stolen_building value = flag:library }
+								}
 							}
 						}
 					}
