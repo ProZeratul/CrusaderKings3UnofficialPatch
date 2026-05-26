@@ -64,6 +64,8 @@ The current version is compatible with **CK3 1.19**. Older CK3 versions are supp
 
 With the above load order, Unop is compatible with practically every other mod. If another mod replaces a file Unop also edits, you lose Unop's fixes for that file, but you avoid breaking the other mod's content.
 
+One exception: if another mod overrides `common/court_positions/types/00_mandala_court_positions.txt` without the Unop fix of the `khlon_glan_court_position` aptitude, the game will crash. In that case, please ask the other mod's author to incorporate the fix.
+
 The mod works with all DLCs and is save-game compatible.
 
 ## Localization
@@ -108,5 +110,6 @@ You can reach us either by opening an issue on [GitHub](https://github.com/ProZe
 * [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2871648329)
 * [GitHub Repository](https://github.com/ProZeratul/CrusaderKings3UnofficialPatch)
 * [German Localization Add-on](https://steamcommunity.com/sharedfiles/filedetails/?id=3355568022)
+* [French Localization Add-on](https://steamcommunity.com/sharedfiles/filedetails/?id=3728831113)
 
 If you'd like to support the lead maintainer's work: [ko-fi.com/kazarion](https://ko-fi.com/kazarion).
