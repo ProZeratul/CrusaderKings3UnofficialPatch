@@ -17414,7 +17414,7 @@ hold_court.8090 = {
 		trigger = {
 			OR = {
 				AND = {
-					has_imprisonment_reason = scope:vassal
+					#has_imprisonment_reason = scope:vassal #Unop: Not mandatory, but will make you get stress if just
 					can_appoint_char_to_court_position = {
 						CHAR = scope:vassal
 						COURT_POS = executioner_court_position
@@ -17446,6 +17446,41 @@ hold_court.8090 = {
 				}
 			}
 		}
+
+		random_list = { #Unop: Randomize the bad CP to not always be executioner > jester > taster
+			1 = {
+				trigger = {
+					can_appoint_char_to_court_position = {
+						CHAR = scope:vassal
+						COURT_POS = executioner_court_position
+					}
+				}
+				modifier = { # But weight a little more if you have an imprisonment reason
+					add = 2
+					has_imprisonment_reason = scope:vassal
+				}
+				save_scope_as = unop_8090_executioner
+			}
+			1 = {
+				trigger = {
+					can_appoint_char_to_court_position = {
+						CHAR = scope:vassal
+						COURT_POS = court_jester_court_position
+					}
+				}
+				save_scope_as = unop_8090_jester
+			}
+			1 = {
+				trigger = {
+					can_appoint_char_to_court_position = {
+						CHAR = scope:vassal
+						COURT_POS = food_taster_court_position
+					}
+				}
+				save_scope_as = unop_8090_taster
+			}
+		}
+
 		scope:vassal = {
 			if = {
 				limit = {
@@ -17460,10 +17495,11 @@ hold_court.8090 = {
 		}
 		if = {
 			limit = { # Executioner
-				can_appoint_char_to_court_position = {
-					CHAR = scope:vassal
-					COURT_POS = executioner_court_position
-				}
+				exists = scope:unop_8090_executioner
+				#can_appoint_char_to_court_position = {
+				#	CHAR = scope:vassal
+				#	COURT_POS = executioner_court_position
+				#}
 				#NOR = {
 				#	scope:vassal.var:target_court_position = flag:executioner
 				#	scope:vassal.var:backup_court_position = flag:executioner
@@ -17485,10 +17521,11 @@ hold_court.8090 = {
 		}
 		else_if = { # Jester
 			limit = {
-				can_appoint_char_to_court_position = {
-					CHAR = scope:vassal
-					COURT_POS = court_jester_court_position
-				}
+				exists = scope:unop_8090_jester
+				#can_appoint_char_to_court_position = {
+				#	CHAR = scope:vassal
+				#	COURT_POS = court_jester_court_position
+				#}
 				#NOR = {
 				#	scope:vassal.var:target_court_position = flag:court_jester
 				#	scope:vassal.var:backup_court_position = flag:court_jester
@@ -17506,10 +17543,11 @@ hold_court.8090 = {
 		}
 		else_if = { # Taster
 			limit = {
-				can_appoint_char_to_court_position = {
-					CHAR = scope:vassal
-					COURT_POS = food_taster_court_position
-				}
+				exists = scope:unop_8090_taster
+				#can_appoint_char_to_court_position = {
+				#	CHAR = scope:vassal
+				#	COURT_POS = food_taster_court_position
+				#}
 				#NOR = {
 				#	scope:vassal.var:target_court_position = flag:food_taster
 				#	scope:vassal.var:backup_court_position = flag:food_taster
