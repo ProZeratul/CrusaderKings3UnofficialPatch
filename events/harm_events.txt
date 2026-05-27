@@ -9681,6 +9681,12 @@ harm.9501 = {
 		is_incapable = no
 	}
 
+	#Unop Make the yearly chance to trigger a harm event respect the Random Harm game rule
+	weight_multiplier = {
+		base = 0
+		modifier = { add = harm_game_rule_likelihood_value }
+	}
+
 	immediate = {
 		trigger_event = { on_action = harm_events_pulse }
 	}
