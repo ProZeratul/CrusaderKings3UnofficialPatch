@@ -459,6 +459,9 @@ successful_popular_revolt_outcome_effect = {
 					change = scope:change_tooltip
 					take_baronies = no
 				}
+			}
+			#Unop: becomes_independent need on a character scope, as we are in a show_as_tooltip it didn't do anything, just didn't show in tooltip, also moved outsite the loop
+			scope:faction_leader = {
 				becomes_independent = {
 					change = scope:change_tooltip
 				}
@@ -506,7 +509,7 @@ successful_popular_revolt_outcome_effect = {
 					culture = scope:capital_county.culture
 					faith = scope:capital_county.faith
 					template = peasant_faction_leader_template
-					gender_female_chance = scope:capital_county.location_faith_dominant_gender_female_chance
+					gender_female_chance = scope:capital_county.unop_landed_title_faith_dominant_gender_female_chance #Unop: was location_faith_dominant_gender_female_chance but location does not exists on this scope
 					save_scope_as = new_county_holder
 				}
 				scope:new_county_holder = {
@@ -1661,6 +1664,7 @@ peasant_faction_demands_enforced = {
 		if = {
 			limit = {
 				NOT = { exists = scope:attacker }
+				exists = scope:peasant_leader #Unop: Ensure it exists before using it
 			}
 			scope:peasant_leader = {
 				save_scope_as = attacker

@@ -208,3 +208,17 @@ unop_old_harm_event_random_list_medium_odd_success_value = 50
 unop_old_harm_event_random_list_medium_odd_failure_value = 50
 unop_old_harm_event_random_list_high_odd_success_value = 60
 unop_old_harm_event_random_list_high_odd_failure_value = 40
+
+unop_landed_title_faith_dominant_gender_female_chance = {
+	if = {
+		limit = { faith = { has_doctrine = doctrine_gender_male_dominated } }
+		add = 0
+	}
+	else_if = {
+		limit = { faith = { has_doctrine = doctrine_gender_female_dominated } }
+		add = 100
+	}
+	else = {
+		add = 50
+	}
+}
