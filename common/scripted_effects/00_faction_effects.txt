@@ -1941,7 +1941,8 @@ setup_populist_leader_effect = {
 		}
 	}
 	# If we can't find any, then generate a new character to be the populist leader of the revolt.
-	else = {
+	if = { #Unop: Fix logic, only create a character if the peasant_leader is still undefined
+		limit = { NOT = { exists = scope:peasant_leader } }
 		create_character = {
 			location = scope:peasant_county.title_province
 			template = populist_faction_leader_template
