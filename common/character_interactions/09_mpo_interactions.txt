@@ -3890,8 +3890,8 @@ mpo_interaction_grant_paiza = {
 			NOT = {
 				any_character_artifact = {
 					scope:recipient = { can_benefit_from_artifact = prev }
-					scope:artifact.var:paiza_patron ?= { is_gurkhan = yes }
-					scope:artifact.var:paiza_patron ?= scope:actor
+					var:paiza_patron ?= { is_gurkhan = yes } #Unop: Was scoped to the scope:artifact that does not exists
+					var:paiza_patron ?= scope:actor  #Unop: Was scoped to the scope:artifact that does not exists
 				}
 			}
 		}
