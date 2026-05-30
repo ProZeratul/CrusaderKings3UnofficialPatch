@@ -28,6 +28,11 @@ estate_hire_agents_decisions = {
 		domicile ?= {
 			has_domicile_parameter = estate_unlock_hire_agents_decision
 		}
+		#Unop AI is charged influence in effect, not the cost block, so still require it can afford it
+		trigger_if = {
+			limit = { is_ai = yes }
+			influence >= major_influence_value
+		}
 	}
 
 	is_valid = {
@@ -38,14 +43,27 @@ estate_hire_agents_decisions = {
 	}
 
 	effect = {
+		debug_log = "unop_475 estate_hire_agents_decisions" #Unop debug log to confirm issue #475
 		add_character_modifier = {
 			modifier = ep3_estate_hired_agents_modifier
 			years = 15
 		}
+		#Unop AI pays the influence here since the cost block is free for it
+		if = {
+			limit = { is_ai = yes }
+			change_influence = major_influence_loss
+		}
 	}
-	
+
 	cost = {
-		influence = major_influence_value
+		#Unop AI never budgets cost-block influence; charge it via is_shown/effect below
+		influence = {
+			value = 0
+			if = {
+				limit = { is_ai = no }
+				add = major_influence_value
+			}
+		}
 	}
 
 	ai_potential = {
@@ -112,6 +130,11 @@ estate_bolster_security_decision = {
 		domicile ?= {
 			has_domicile_parameter = estate_unlock_bolster_security_decision
 		}
+		#Unop AI is charged influence in effect, not the cost block, so still require it can afford it
+		trigger_if = {
+			limit = { is_ai = yes }
+			influence >= major_influence_value
+		}
 	}
 
 	is_valid = {
@@ -122,14 +145,27 @@ estate_bolster_security_decision = {
 	}
 
 	effect = {
+		debug_log = "unop_475 estate_bolster_security_decision" #Unop debug log to confirm issue #475
 		add_character_modifier = {
 			modifier = ep3_estate_bolster_security_modifier
 			years = 15
 		}
+		#Unop AI pays the influence here since the cost block is free for it
+		if = {
+			limit = { is_ai = yes }
+			change_influence = major_influence_loss
+		}
 	}
-	
+
 	cost = {
-		influence = major_influence_value
+		#Unop AI never budgets cost-block influence; charge it via is_shown/effect below
+		influence = {
+			value = 0
+			if = {
+				limit = { is_ai = no }
+				add = major_influence_value
+			}
+		}
 	}
 
 	ai_potential = {
@@ -664,6 +700,11 @@ consolidate_rule_decision = {
 				this != root
 			}
 		}
+		#Unop AI is charged influence in effect, not the cost block, so still require it can afford it
+		trigger_if = {
+			limit = { is_ai = yes }
+			influence >= medium_influence_value
+		}
 	}
 
 	is_valid = {
@@ -678,12 +719,25 @@ consolidate_rule_decision = {
 	}
 
 	effect = {
+		debug_log = "unop_475 consolidate_rule_decision" #Unop debug log to confirm issue #475
 		custom_tooltip = consolidate_rule_decision_effect_tt
 		trigger_event = ep3_decisions_event.4050
+		#Unop AI pays the influence here since the cost block is free for it
+		if = {
+			limit = { is_ai = yes }
+			change_influence = medium_influence_loss
+		}
 	}
 	
 	cost = {
-		influence = medium_influence_value
+		#Unop AI never budgets cost-block influence; charge it via is_shown/effect below
+		influence = {
+			value = 0
+			if = {
+				limit = { is_ai = no }
+				add = medium_influence_value
+			}
+		}
 		piety = medium_piety_value
 	}
 
@@ -1655,6 +1709,11 @@ renounce_governorship_decision = {
 			is_governor_or_admin_count = yes
 			tgp_is_any_minister = yes
 		}
+		#Unop AI is charged influence in effect, not the cost block, so still require it can afford it
+		trigger_if = {
+			limit = { is_ai = yes }
+			influence >= minor_influence_value
+		}
 	}
 
 	is_valid_showing_failures_only = {
@@ -1669,6 +1728,7 @@ renounce_governorship_decision = {
 	}
 
 	effect = {
+		debug_log = "unop_475 renounce_governorship_decision" #Unop debug log to confirm issue #475
 		if = {
 			limit = {
 				tgp_is_any_minister = yes
@@ -1724,10 +1784,22 @@ renounce_governorship_decision = {
 			view = decisions
 			player = root
 		}
+		#Unop AI pays the influence here since the cost block is free for it
+		if = {
+			limit = { is_ai = yes }
+			change_influence = minor_influence_loss
+		}
 	}
-	
+
 	cost = {
-		influence = minor_influence_value
+		#Unop AI never budgets cost-block influence; charge it via is_shown/effect below
+		influence = {
+			value = 0
+			if = {
+				limit = { is_ai = no }
+				add = minor_influence_value
+			}
+		}
 	}
 
 	ai_potential = {

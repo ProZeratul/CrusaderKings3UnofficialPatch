@@ -566,10 +566,12 @@ tgp_japan_establish_soryo_administration_decision = {
 		prestige = {
 			value = massive_prestige_gain
 		}
+		#Unop AI never budgets cost-block influence; charge it via is_shown/effect below
 		influence = {
-			value = {
-				value = monumental_influence_gain
-				multiply = 2
+			value = 0
+			if = {
+				limit = { is_ai = no }
+				add = unop_soryo_administration_influence_cost
 			}
 		}
 	}
@@ -578,9 +580,14 @@ tgp_japan_establish_soryo_administration_decision = {
 		has_tgp_dlc_trigger = yes
 		is_independent_ruler = yes
 		government_is_japanese_trigger = yes
-		NOR = { 
-			government_has_flag = government_is_japan_feudal 
+		NOR = {
+			government_has_flag = government_is_japan_feudal
 			has_global_variable = shogunate_established
+		}
+		#Unop AI is charged influence in effect, not the cost block, so still require it can afford it
+		trigger_if = {
+			limit = { is_ai = yes }
+			influence >= unop_soryo_administration_influence_cost
 		}
 	}
 
@@ -617,6 +624,7 @@ tgp_japan_establish_soryo_administration_decision = {
 	}
 
 	effect = {
+		debug_log = "unop_475 tgp_japan_establish_soryo_administration_decision" #Unop debug log to confirm issue #475
 		add_achievement_global_variable_effect = {
 			VARIABLE = achieved_ep4_18_yes_i_need_my_samurai_achievement
 			VALUE = yes
@@ -628,8 +636,13 @@ tgp_japan_establish_soryo_administration_decision = {
 			id = tgp_japan_decision.9601
 			delayed = yes
 		}
+		#Unop AI pays the influence here since the cost block is free for it
+		if = {
+			limit = { is_ai = yes }
+			change_influence = { subtract = unop_soryo_administration_influence_cost }
+		}
 	}
-	
+
 	ai_check_interval_by_tier = {
 		barony = 0
 		county = 0
@@ -914,6 +927,7 @@ tgp_japan_imperial_branch_decision = {
 	}
 
 	effect = {
+		debug_log = "unop_475 tgp_japan_imperial_branch_decision" #Unop debug log to confirm issue #475 (control)
 		# Find nearest Emperor
 		top_liege.primary_title.var:administrative_ui_special_title ?= {
 			random_past_holder = {

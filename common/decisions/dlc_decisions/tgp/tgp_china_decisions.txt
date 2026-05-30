@@ -448,6 +448,11 @@ tgp_minister_request_bestowal_of_honors_decision = {
 			has_title = title:e_minister_of_justice
 			has_title = title:e_minister_of_works
 		}
+		#Unop AI is charged influence in effect, not the cost block, so still require it can afford it
+		trigger_if = {
+			limit = { is_ai = yes }
+			influence >= 5000
+		}
 	}
 	
 	is_valid = {
@@ -567,12 +572,18 @@ tgp_minister_request_bestowal_of_honors_decision = {
 	}
 	
 	cost = {
+		#Unop AI never budgets cost-block influence; charge it via is_shown/effect below
 		influence = {
-			value = 5000
+			value = 0
+			if = {
+				limit = { is_ai = no }
+				add = 5000
+			}
 		}
 	}
 
 	effect = {
+		debug_log = "unop_475 tgp_minister_request_bestowal_of_honors_decision" #Unop debug log to confirm issue #475
 		close_view = {
 			view = decisions
 			player = root
@@ -659,8 +670,13 @@ tgp_minister_request_bestowal_of_honors_decision = {
 			}
 			dynasty = { add_dynasty_prestige = 2000 }
 		}
+		#Unop AI pays the influence here since the cost block is free for it
+		if = {
+			limit = { is_ai = yes }
+			change_influence = -5000
+		}
 	}
-	
+
 	ai_check_interval_by_tier = {
 		barony = 0
 		county = 0

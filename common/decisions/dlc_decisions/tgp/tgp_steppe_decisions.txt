@@ -417,6 +417,11 @@ convert_to_meritocratic_decision = {
 			}
 		}
 		is_playable_character = yes
+		#Unop AI is charged influence in effect, not the cost block, so still require it can afford it
+		trigger_if = {
+			limit = { is_ai = yes }
+			influence >= monumental_influence_value
+		}
 	}
 
 	is_valid = {
@@ -476,12 +481,18 @@ convert_to_meritocratic_decision = {
 		prestige = {
 			value = massive_prestige_value
 		}
+		#Unop AI never budgets cost-block influence; charge it via is_shown/effect below
 		influence = {
-			value = monumental_influence_value
+			value = 0
+			if = {
+				limit = { is_ai = no }
+				add = monumental_influence_value
+			}
 		}
 	}
 
 	effect = {
+		debug_log = "unop_475 convert_to_meritocratic_decision" #Unop debug log to confirm issue #475
 		add_legitimacy_effect = { LEGITIMACY = monumental_legitimacy_gain }
 		dynasty = {
 			add_dynasty_prestige = monumental_dynasty_prestige_gain
@@ -540,6 +551,11 @@ convert_to_meritocratic_decision = {
 					}
 				}
 			}
+		}
+		#Unop AI pays the influence here since the cost block is free for it
+		if = {
+			limit = { is_ai = yes }
+			change_influence = monumental_influence_loss
 		}
 	}
 
