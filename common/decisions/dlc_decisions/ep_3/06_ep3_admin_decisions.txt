@@ -608,6 +608,8 @@ admin_confirmation_decision = {
 			name = confirmation_liege_scope
 			value = liege
 		}
+		save_scope_as = confirmation_vassal #Unop Moved from below as these scopes are used by admin_confirmation_vassal_reward_guts_effect
+		liege ?= { save_scope_as = confirmation_liege }
 		custom_tooltip = admin_confirmation_decision_effects
 		show_as_tooltip = {
 			stress_impact = {
@@ -620,8 +622,8 @@ admin_confirmation_decision = {
 			}
 			admin_confirmation_vassal_reward_guts_effect = yes
 		}
-		save_scope_as = confirmation_vassal
-		liege ?= { save_scope_as = confirmation_liege }
+		#save_scope_as = confirmation_vassal #Unop Moved to above
+		#liege ?= { save_scope_as = confirmation_liege }
 		switch = {
 			trigger = has_trait
 			shy = { add_stress = medium_stress_impact_gain }
