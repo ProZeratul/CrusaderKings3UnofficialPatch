@@ -154,20 +154,22 @@ After approval:
 
 2. **Apply labels**: the chosen status (`confirmed`), origin, and area.
 
-3. **Create a feature branch from `main`** following the project `CLAUDE.md` "Opening PRs" guidelines (branching, naming, `.claude/` allowed-dirty rule). Before branching, check there are no uncommitted mod files:
+3. **Enter a worktree** with the `EnterWorktree` tool before making any code changes, so the fix is isolated from the user's working copy and other parallel jobs. Skip only if your cwd is already under `.claude/worktrees/`. If `EnterWorktree` fails, continue in place.
+
+4. **Create a feature branch from `main`** following the project `CLAUDE.md` "Opening PRs" guidelines (branching, naming, `.claude/` allowed-dirty rule). Before branching, check there are no uncommitted mod files:
 
    ```shell
    # Should print nothing. If it prints anything, stop and ask the user.
    git status --porcelain | grep -v '^.. \.claude/'
    ```
 
-4. **Prepare the fix** following the project `CLAUDE.md` "General", "Style", and "Opening PRs" guidelines (minimal change, `#Unop` comment, comment-out vs. delete, separate commit for newly-added vanilla files).
+5. **Prepare the fix** following the project `CLAUDE.md` "General", "Style", and "Opening PRs" guidelines (minimal change, `#Unop` comment, comment-out vs. delete, separate commit for newly-added vanilla files).
 
-5. **Validate**: run `make tiger` and ensure no new errors or warnings.
+6. **Validate**: run `make tiger` and ensure no new errors or warnings.
    - If new errors appear in newly-added vanilla files, fix or ignore them in the same PR.
    - **Always** invoke the `tiger` skill to handle tiger error reports if loaded.
 
-6. **Commit and open the PR as a draft** following the project `CLAUDE.md` "Opening PRs" guidelines (explicit `git add`, commit message style). After staging, committing, and pushing per CLAUDE.md, include `Fixes #<N>` in the PR body so GitHub auto-links the issue:
+7. **Commit and open the PR as a draft** following the project `CLAUDE.md` "Opening PRs" guidelines (explicit `git add`, commit message style). After staging, committing, and pushing per CLAUDE.md, include `Fixes #<N>` in the PR body so GitHub auto-links the issue:
 
    ```shell
    gh pr create --draft --title "<title>" --body "$(cat <<'EOF'
@@ -178,7 +180,7 @@ After approval:
    )"
    ```
 
-7. **Ask the user** to manually verify the fix in-game (and to run observer mode to check `error.log` if appropriate).
+8. **Ask the user** to manually verify the fix in-game (and to run observer mode to check `error.log` if appropriate).
 
 ### 8. Resolve — Question
 
