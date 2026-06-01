@@ -664,7 +664,7 @@ wanderer_lifestyle_events.40 = { # Miscommunication
 	trigger = {
 		is_landless_adventurer = yes
 		has_lifestyle = wanderer_lifestyle
-		domicile.provisions <= twenty_percent_provisions_value
+		domicile ?= { provisions <= twenty_percent_provisions_value } # Unop: Need the domicile scope for twenty_percent_provisions_value to work properly
 		NOT = { knows_language_of_culture = root.domicile.domicile_location.county.culture }
 	}
 	
