@@ -307,7 +307,9 @@ steal_back_artifact_ongoing.1001 = {
 					limit = {
 						is_courtier_of = root
 						is_landed = no
-						NOT = { scheme_is_character_agent = this }
+						scope:scheme = { #Unop: You need to be in the scheme to call scheme_is_character_agent
+							NOT = { scheme_is_character_agent = prev }
+						}
 					}
 					select_and_move_to_pool_effect = yes
 				}
