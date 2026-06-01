@@ -684,7 +684,10 @@ wedding_gift = {
 				is_physically_able_ai_adult = yes
 				location = scope:province
 				any_character_artifact = {
-					artifact_can_be_gift_to_trigger = { RECIPIENT = scope:second }
+					OR = { #Unop: Fix using scope:second that does not exists yet, try check it can be gifted to either spouse
+						artifact_can_be_gift_to_trigger = { RECIPIENT = scope:activity.special_guest:spouse_1 }
+						artifact_can_be_gift_to_trigger = { RECIPIENT = scope:activity.special_guest:spouse_2 }
+					}
 					is_equipped = no
 				}
 				OR = {
