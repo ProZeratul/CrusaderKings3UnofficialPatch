@@ -447,6 +447,11 @@
 	on_court_position_invalidated = {
 		basic_invalidated_court_position_effect = yes
 	}
+	on_court_position_vacated = { #Unop: Missing block that is needed for automation to work properly
+		court_position_vacated_event_effect = {
+			COURT_POSITION_TYPE = eparch_court_position
+		}
+	}
 
 	# Scripted value to determine whether an AI will hire/fire a position or not. Hires over 0, fires under -50. Look in _court_positions.info for more extensive documentation!
 	ai_position_score = {
