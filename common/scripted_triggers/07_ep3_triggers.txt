@@ -1797,7 +1797,7 @@ laamp_as_mercenary_payout_trigger = {
 				scope:merc_temp = { is_attacker_in_war = scope:war_temp }
 			}
 			trigger_else = {
-				scope:merc_temp = { is_attacker_in_war = scope:war_temp }
+				scope:merc_temp = { is_defender_in_war = scope:war_temp } #Unop should check defender, not attacker, when employer is a defender
 			}
 		}
 		NOT = { is_leader_in_war = scope:war_temp }

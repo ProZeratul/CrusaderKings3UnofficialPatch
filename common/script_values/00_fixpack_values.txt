@@ -201,6 +201,52 @@ khlon_glan_improve_court_value = {
 	}
 }
 
+# Decision influence costs
+unop_ask_western_help_influence_cost = {
+	value = massive_influence_value
+	multiply = 2
+}
+
+unop_foster_integration_influence_cost = {
+	value = major_influence_value
+	multiply = 2
+}
+
+unop_gather_faction_support_influence_cost = {
+	value = massive_influence_value
+	multiply = 2
+}
+
+unop_soryo_administration_influence_cost = {
+	value = monumental_influence_gain
+	multiply = 2
+}
+
+unop_house_head_consults_heaven_influence_cost = {
+	value = 2000
+	add = {
+		value = 0
+		every_close_or_extended_family_member = {
+			limit = { is_governor = yes }
+			add = 10
+		}
+		multiply = -1
+	}
+	add = {
+		value = 0
+		every_close_or_extended_family_member = {
+			limit = { merit_level >= 4 }
+			add = 10
+		}
+		multiply = -1
+	}
+	if = {
+		limit = { scope:discount_none ?= yes }
+		multiply = 0.5
+	}
+	min = 100
+}
+
 # Those are the values that were used before the nerf made after community hatred of the harm events
 unop_old_harm_event_random_list_low_odd_success_value = 20
 unop_old_harm_event_random_list_low_odd_failure_value = 80

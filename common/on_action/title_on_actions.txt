@@ -381,8 +381,33 @@ on_title_gain = {
 							}
 							title_domicile = {
 								add_domicile_building = yurt_main_02
-								add_domicile_building = yurt_main_03
-								add_domicile_building = yurt_main_04
+								if = { #Unop: Taken from the current_year >= 1100 checks to avoid error in logs
+									limit = {
+										has_domicile_building = yurt_main_02
+										owner ?= {
+											OR = {
+												has_realm_law = nomadic_authority_2
+												has_realm_law = nomadic_authority_3
+												has_realm_law = nomadic_authority_4
+												has_realm_law = nomadic_authority_5
+											}
+										}
+									}
+									add_domicile_building = yurt_main_03
+									if = {
+										limit = {
+											has_domicile_building = yurt_main_03
+											owner ?= {
+												OR = {
+													has_realm_law = nomadic_authority_3
+													has_realm_law = nomadic_authority_4
+													has_realm_law = nomadic_authority_5
+												}
+											}
+										}
+										add_domicile_building = yurt_main_04
+									}
+								}
 								add_random_yurt_external_building_effect = yes
 								add_random_yurt_external_building_effect = yes
 								add_random_yurt_external_building_effect = yes
@@ -399,8 +424,33 @@ on_title_gain = {
 							}
 							title_domicile = {
 								add_domicile_building = yurt_main_02
-								add_domicile_building = yurt_main_03
-								add_domicile_building = yurt_main_04
+								if = { #Unop: Taken from the current_year >= 1100 checks to avoid error in logs
+									limit = {
+										has_domicile_building = yurt_main_02
+										owner ?= {
+											OR = {
+												has_realm_law = nomadic_authority_2
+												has_realm_law = nomadic_authority_3
+												has_realm_law = nomadic_authority_4
+												has_realm_law = nomadic_authority_5
+											}
+										}
+									}
+									add_domicile_building = yurt_main_03
+									if = {
+										limit = {
+											has_domicile_building = yurt_main_03
+											owner ?= {
+												OR = {
+													has_realm_law = nomadic_authority_3
+													has_realm_law = nomadic_authority_4
+													has_realm_law = nomadic_authority_5
+												}
+											}
+										}
+										add_domicile_building = yurt_main_04
+									}
+								}
 								add_random_yurt_external_building_effect = yes
 								add_random_yurt_external_building_effect = yes
 								add_random_yurt_external_building_effect = yes

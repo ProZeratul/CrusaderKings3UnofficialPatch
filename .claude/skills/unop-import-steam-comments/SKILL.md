@@ -49,6 +49,10 @@ Examples: `30`, `main 30`, `suggestions`, `--since 2026-04-01 suggestions`, `50 
 - **Never** modify the Steam page — Steam is read-only here.
 - If a candidate's classification is genuinely ambiguous, list it under "Uncertain" in the presentation and let the user decide. With `--yes`, exclude uncertain candidates.
 - Quote the Steam comment text **verbatim**. Do not paraphrase, translate, or "fix" the user's wording.
+- If a single comment reports **multiple distinct bugs**, file one issue per bug, don't bundle them into a single one.
+  - Title and quote each issue to its single bug; don't repeat the full comment.
+  - Put the marker on **one** split (the first); in the others, omit the marker and add `Marker on companion issue #<N>.`. The marker is the dedup key per *post*, so one is enough.
+  - List each planned split as its own line in the candidate summary.
 - If a comment links to an image, fetch it, confirm relevance, and attach to the issue — see **Fetching Images** in Reference. If an image-only follow-up can't be fetched or isn't relevant, mark the candidate Uncertain.
 - If a maintainer reply links to a GitHub issue, skip the candidate — already tracked.
 - If a maintainer reply attributes the report to a stale mod version (e.g. "wait for the update", "don't use the mod before it's updated") and that update has since shipped, mark the candidate Uncertain — the bug may already be fixed.

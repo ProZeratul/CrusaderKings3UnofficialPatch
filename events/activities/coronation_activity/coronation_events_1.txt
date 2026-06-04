@@ -10177,7 +10177,11 @@ coronation_events.1037 = {
         	limit = {
         		scope:respected_elder = {
         			num_of_relation_disciple < disciples_limit_value
+					government_allows = merit #Unop: To be sync with find_elder_interaction
         		}
+				#Unop: Add the 2 lines below to be sync with find_elder_interaction & prevent hegemon to get an elder
+				government_allows = merit
+				is_independent_ruler = no #exclude top lieges
         	}
         	set_elder_relation_effect = {
 				ELDER = scope:respected_elder
