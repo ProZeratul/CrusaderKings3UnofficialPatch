@@ -131,6 +131,7 @@ restore_backwater_counties_decision = {
 			OR = {
 				tier = tier_duchy
 				tier = tier_kingdom
+				tier = tier_empire #Unop Don't exclude emperor-tier vassals (e.g. under a hegemony)
 			}
 		}
 		any_sub_realm_county = {
@@ -272,6 +273,18 @@ restore_backwater_counties_decision = {
 				# Trigger the event for the emperor to see if all the counties have been cleared
 				trigger_event = ep3_decisions_event.3001
 			}
+		}
+	}
+
+	ai_will_do = { #Unop Add missing weights so the AI takes the decision
+		base = 30
+		modifier = {
+			has_trait = diligent
+			add = 20
+		}
+		modifier = {
+			has_trait = ambitious
+			add = 20
 		}
 	}
 }
