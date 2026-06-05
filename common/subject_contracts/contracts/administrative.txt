@@ -88,6 +88,15 @@ administrative_themes = {
 			score = 0
 			color = { 0.2 0.2 0.7 1.0 }
 
+			#Unop Reset to the default theme when the noble family loses its governorship (only holds its noble family title)
+			is_valid = {
+				scope:subject = {
+					any_held_title = {
+						is_noble_family_title = no
+					}
+				}
+			}
+
 			tax_factor = 0.5
 
 			subject_modifier = {
@@ -141,6 +150,15 @@ administrative_themes = {
 			
 			score = 0
 			color = { 0.7 0.2 0.2 1.0 }
+
+			#Unop Reset to the default theme when the noble family loses its governorship (only holds its noble family title)
+			is_valid = {
+				scope:subject = {
+					any_held_title = {
+						is_noble_family_title = no
+					}
+				}
+			}
 
 			levies_factor = 0.75
 			
@@ -249,7 +267,13 @@ administrative_themes = {
 			score = 0
 			color = { 0.7 0.0 0.7 1.0 }
 			
+			#Unop Reset to the default theme when the noble family loses its governorship (only holds its noble family title)
 			is_valid = {
+				scope:subject = {
+					any_held_title = {
+						is_noble_family_title = no
+					}
+				}
 				scope:liege = {
 					highest_held_title_tier >= tier_empire
 				}
