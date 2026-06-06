@@ -89,9 +89,9 @@ japan_administrative_provinces = {
 			
 			is_valid = {
 				trigger_if = {
-					limit = { exists = this }
+					limit = { exists = scope:liege } #Unop `this` is none here; the direct-vassal guard must reference the contract liege
 					# Only for direct vassals of the top liege
-					scope:liege.top_liege = this
+					scope:liege.top_liege = scope:liege
 				}
 				# There can only be a limited number of industries at a time
 				custom_tooltip = {
@@ -179,9 +179,9 @@ japan_administrative_provinces = {
 			
 			is_valid = {
 				trigger_if = {
-					limit = { exists = this }
+					limit = { exists = scope:liege } #Unop `this` is none here; the direct-vassal guard must reference the contract liege
 					# Only for direct vassals of the top liege
-					scope:liege.top_liege = this
+					scope:liege.top_liege = scope:liege
 				}
 				# There can only be a limited number of militaries at a time
 				custom_tooltip = {
