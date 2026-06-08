@@ -51,59 +51,34 @@ All relevant directories are in [@../.env](../.env):
 
 ### General
 
-- **Never** assume that vanilla code is correct.
-- Avoid changes that can't be regarded as fixing issues but rather as additions or balance changes.
-- **Always** do the minimal change required to fix an issue.
-- **Always** adhere to the formatting of the original code in the place where the fix is introduced.
-- Avoid accidental unrelated changes, e.g. to whitespace.
-- When enclosing existing code in a scope, indent it properly.
+- **Question vanilla.** Don't assume the base game code is correct. It's full of issues, that's why Unop exists.
+- **Fix, don't add or rebalance.** Avoid changes that read as additions or balance tweaks rather than fixing an issue.
+- **Prefer the minimal change.** Do the minimal change required to fix the issue.
+- **Match local formatting.** Follow the formatting of the surrounding code where the fix goes, and indent properly when wrapping existing code in a scope.
+- **Avoid incidental edits.** Avoid unrelated changes, e.g. to whitespace.
 
 ### Style
 
-- **Always** include a comment in the format `#Unop <description>` (preferred) or `#Unop: <description>` (acceptable) on the first changed line.
-- **Always** comment out rather than delete unneeded vanilla code.
-  - Include an `#Unop` comment on the first deleted line.
-  - Comment out only the actually replaced/removed lines, not unchanged surrounding lines.
+- **Mark every change.** Put a `#Unop <description>` (preferred) or `#Unop: <description>` (acceptable) comment on the first changed line.
+- **Comment out, don't delete.** Comment out unneeded vanilla code rather than removing it, with an `#Unop` comment on the first deleted line. Comment out only the replaced/removed lines, not unchanged surrounding ones.
 
 ### Ignoring Tiger Errors
 
-- Use the correct `ck3-tiger.conf` section when adding rules:
-  - `# False positives`: false positives
-  - `# Ignored`: ignored
-- When adding a new rule to `ck3-tiger.conf`, group it with similar rules of the same type in that section.
-  - If there are no such rules, add it at the end.
+- **Use the right section.** In `ck3-tiger.conf`, put genuine false positives under `# False positives` and deliberate ignores under `# Ignored`.
+- **Group with similar rules.** Place a new rule next to similar ones of the same type; if there are none, append it at the end.
 
 ### Validation and Testing
 
-- After making a new fix, ensure that tiger passes with no errors or warnings.
-- **Always** run tiger by running `make tiger`.
-- When adding new vanilla files, tiger may report new errors in these files that are unrelated to the original fix.
-  - Fix or ignore them in the same PR so that tiger reports no errors or warnings in this case as well.
-- If fixing an issue reported by an external party, ask the user to manually verify that the fix works.
-- After introducing a new fix, ask the user to run the vanilla game + Unop in observer mode.
-  - Then check the game's `logs/error.log` in the CK3 user data directory for any errors related to the fix.
+- **Run tiger.** After a fix, run `make tiger`; it must report no errors or warnings.
+- **Clean up new tiger errors.** New vanilla files may surface unrelated tiger errors; fix or ignore them in the same PR so tiger stays clean.
+- **Ask for in-game verification.** For an externally-reported issue, ask the user to confirm the fix works.
+- **Check error.log.** Ask the user to run vanilla + Unop in observer mode, then check `${CK3_USER_DIR}/logs/error.log` for errors related to the fix.
 
 ### Opening PRs
 
-- When opening PRs for fixes, prefer creating a GitHub issue first and linking the PR to it by mentioning it in the PR description, e.g. `Fixes #<id>`.
-- If the issue was reported in Paradox forums or Reddit, don't open a GitHub issue and include the relevant link(s) in the PR description.
-- Branch off `main`:
-
-  ```shell
-  git checkout main && git pull --ff-only
-  git checkout -b <branch>
-  ```
-
-  - Branch name convention: `<git-user>-fix-<short-slug>` derived from the issue title (e.g. `pharaox-fix-court-positions`). Don't include the issue number.
-- Changes under `.claude/` are allowed to be uncommitted while you work — they should stay out of any PR.
-- Stage fix files **explicitly by path**. Never `git add -A` / `git add .` / `git commit -a` — they may sweep in dirty `.claude/` or other unrelated files.
-- Commit message style: short imperative summary (e.g. `Fix travel_events.2012 option B showing wrong tooltip`).
-- New vanilla files should be added without modifications in a separate commit, followed by a commit in the same PR with the actual changes. This makes these changes easier to identify and review.
-
-### Investigating Issues
-
-- Use the `unop-investigate-issue` skill.
-
-### Reviewing PRs
-
-- Use the `unop-review-pr` skill.
+- **Link the issue.** Prefer opening a GitHub issue first and linking the PR with `Fixes #<id>` in its description.
+- **Use appropriate branch names.** Branch off `main` as `<git-user>-fix-<short-slug>` from the issue title (e.g. `pharaox-fix-court-positions`). Don't include the issue number.
+- **Keep `.claude/` out.** Changes under `.claude/` may stay uncommitted while you work; don't add them to a fix PR.
+- **Stage by path.** Stage fix files explicitly by path; avoid `git add -A` / `git add .` / `git commit -a`, which can sweep in dirty `.claude/` or unrelated files.
+- **Use imperative commit messages.** Use short imperative summary (e.g. `Fix travel_events.2012 option B showing wrong tooltip`).
+- **Add vanilla files in a separate commit.** Add new vanilla files unmodified in their own commit, then the actual changes in a follow-up commit, so the diff is easy to review.

@@ -21,7 +21,7 @@ trap 'rm -f "$body"' EXIT
 } > "$body"
 
 if [ -n "$id" ]; then
-  gh api -X PATCH "repos/$REPO/issues/comments/$id" -F body=@"$body"
+  gh api --silent -X PATCH "repos/$REPO/issues/comments/$id" -F body=@"$body"
 else
-  gh issue comment "$N" --repo "$REPO" --body-file "$body"
+  gh api --silent -X POST "repos/$REPO/issues/$N/comments" -F body=@"$body"
 fi
