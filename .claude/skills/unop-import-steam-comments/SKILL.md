@@ -1,71 +1,72 @@
 ---
 name: unop-import-steam-comments
-description: Scan recent Steam comments for bug reports and open GitHub issues for them
-argument-hint: "[count|--since YYYY-MM-DD] [main|suggestions] [--yes]"
+description: Scan recent Steam comments for bug reports and open or update GitHub issues for them
+argument-hint: "[count|--since YYYY-MM-DD] [main|suggestions] [identity]"
 ---
 
 # Import Unop Steam Comments as GitHub Issues
 
-Scan recent comments on the Unop Steam Workshop page (or its "Fix suggestions" discussion), filter to bug reports, group multi-post threads, deduplicate against existing issues, and open a GitHub issue for each new bug — autonomously, with a single user approval before posting.
+Scan recent comments on the Unop Steam Workshop page or its "Fix suggestions" discussion, filter to bug reports, group multi-post threads, reconcile against existing issues, and open a GitHub issue for each new bug, or append newly-appeared follow-up posts as comments on an issue that already exists.
+
+This skill runs **autonomously**, without asking for approval. Any human gates belong to the calling workflow, not here. It reports a summary at the end.
 
 ## Concepts
 
-- **Steam page (main)**: <https://steamcommunity.com/sharedfiles/filedetails/?id=2871648329> — the mod's Workshop page comment stream.
-- **Steam page (suggestions)**: <https://steamcommunity.com/workshop/filedetails/discussion/2871648329/4697908845434539387/> — the dedicated "Fix suggestions" discussion thread.
+- **Steam page (main)**: <https://steamcommunity.com/sharedfiles/filedetails/?id=2871648329>, the mod's Workshop page comment stream.
+- **Steam page (suggestions)**: <https://steamcommunity.com/workshop/filedetails/discussion/2871648329/4697908845434539387/>, the dedicated "Fix suggestions" discussion thread.
 - **Maintainer**: Steam users `Kazarion` and `pharaox`, identify by author username. Maintainer posts are not bug reports themselves but may anchor a thread.
-- **Thread**: One bug report's worth of posts. Steam shows posts flat (no nesting), so a thread is inferred from chronology and content — typically a user's bug post, followed by a maintainer reply asking for details, followed by the same user's clarification.
-- **Marker**: A machine-greppable HTML comment placed in each filed issue's body, of the form `<!-- steam-comment: <author> @ <YYYY-MM-DD HH:MM> -->`. Used to detect duplicates on subsequent runs.
+- **Thread**: One bug report's worth of posts. Steam shows posts flat, so a thread is inferred from chronology and content: typically a user's bug post, a maintainer reply asking for details, then the same user's clarification.
+- **Marker**: A machine-greppable HTML comment placed on each filed post, of the form `<!-- steam-comment: <author> @ <YYYY-MM-DD HH:MM> -->`. The OP's marker lives in the issue body; each follow-up post's marker lives in its own issue comment. Markers are the per-post dedup key across runs. See **Marker Format**.
+- **Result file**: `tmp/steam-import-<source>-<YYYY-MM-DD-HHMM>.md`, written at the end of each run. Records which issues were created and updated, the outcome of every scanned post, and the Steam acknowledgements. See **Result File**.
 - **GitHub repo**: `ProZeratul/CrusaderKings3UnofficialPatch`. Use the `gh` CLI for all GitHub operations.
 
 ## Context
 
 - Commands should be executed in the Unop repo root.
 - Steam exposes two fetch surfaces, both read-only:
-  - **Main page**: a JSON "render" endpoint returns paginated comments — see **Fetch URLs** in Reference.
-  - **Suggestions thread**: a normal HTML page paginated by `?ctp=N` — see **Fetch URLs** in Reference.
+  - **Main page**: a JSON render endpoint returns paginated comments. See **Fetching URLs**.
+  - **Suggestions thread**: a normal HTML page paginated by `?ctp=N`. See **Fetching URLs**.
 - `WebFetch` summarizes by default, so prompts must explicitly demand verbatim, structured output. For the JSON endpoint, `curl` via `Bash` is more reliable.
-- The `steam` label already exists on the repo.
 
 ## Arguments
 
-Both arguments are optional and order-independent.
+All arguments are optional and order-independent.
 
-- **Scope** (one of):
-  - `<count>`: integer, scan the most recent N posts. Default: `20`.
+- **Scope**, one of:
+  - `<count>`: integer, scan the most recent N posts. Default `20`.
   - `--since YYYY-MM-DD`: scan posts on or after this date. Overrides `<count>`.
-- **Source** (one of): `main` (default) or `suggestions`.
-- **Approval** (flag): `--yes` skips the candidate-list approval step and files all `bug` candidates directly. Default is **on** (i.e. ask for approval).
+- **Source**, one of: `main` (default) or `suggestions`.
+- **Identity**: the role this skill posts as on follow-up comments. Default `steam-importer`.
 
-Examples: `30`, `main 30`, `suggestions`, `--since 2026-04-01 suggestions`, `50 --yes`.
+Examples: `30`, `main 30`, `suggestions`, `--since 2026-04-01 suggestions`, `50 steam-importer`.
 
 ## Guidelines
 
-- **Always** read the project's `CLAUDE.md` first.
-- **Always** present the candidate list to the user **before** filing any issue, unless `--yes` is given. One batch approval is enough — don't prompt per issue.
-- **Only** file `bug` candidates. Skip everything else (thanks, install help, compatibility questions, feature/balance requests, off-topic).
-- **Never** file an issue without the marker comment in the body. The marker is what prevents duplicates on the next run.
-- **Never** edit, delete, or close existing issues from this skill — only create new ones.
-- **Never** assign labels other than `steam`. Triage labels (`confirmed`, `vanilla`, `mod`, area labels) are assigned by other skills.
-- **Never** modify the Steam page — Steam is read-only here.
-- If a candidate's classification is genuinely ambiguous, list it under "Uncertain" in the presentation and let the user decide. With `--yes`, exclude uncertain candidates.
-- Quote the Steam comment text **verbatim**. Do not paraphrase, translate, or "fix" the user's wording.
-- If a single comment reports **multiple distinct bugs**, file one issue per bug, don't bundle them into a single one.
+- **Read the project's `CLAUDE.md`** first.
+- **Identify yourself.** Begin each follow-up comment's first line with `**<identity>:**`.
+- **File every bug report, and default to filing when unsure.** Open an issue for every thread that is a bug report; if you genuinely can't tell whether a thread is one, open it anyway. Only skip threads that are confidently not bugs, or that show positive evidence of being handled already.
+- **Apply only the `steam` label.** The skill is standalone: it imports and deduplicates, nothing more. Never assign any other label.
+- **Add the post marker** to every issue and follow-up comment. The marker is what prevents duplicates on the next run.
+- **Don't close existing issues, change their labels, or edit their bodies.** You may only create new issues and append follow-up comments to issues that already carry a matching marker.
+- **Don't modify the Steam page.** Steam is read-only here.
+- **Quote the Steam comment text verbatim.** Do not paraphrase, translate, or "fix" the user's wording.
+- If a single comment reports multiple distinct bugs, **file one issue per bug**, don't bundle them.
   - Title and quote each issue to its single bug; don't repeat the full comment.
-  - Put the marker on **one** split (the first); in the others, omit the marker and add `Marker on companion issue #<N>.`. The marker is the dedup key per *post*, so one is enough.
-  - List each planned split as its own line in the candidate summary.
-- If a comment links to an image, fetch it, confirm relevance, and attach to the issue — see **Fetching Images** in Reference. If an image-only follow-up can't be fetched or isn't relevant, mark the candidate Uncertain.
-- If a maintainer reply links to a GitHub issue, skip the candidate — already tracked.
-- If a maintainer reply attributes the report to a stale mod version (e.g. "wait for the update", "don't use the mod before it's updated") and that update has since shipped, mark the candidate Uncertain — the bug may already be fixed.
+  - Give each split its own marker, suffixed ` #<n>` numbered `1`, `2`, `3` in the order the bugs appear in the comment, so every split is uniquely keyed. See **Marker Format**.
+- If a comment links to an image, fetch it, confirm relevance, and attach it to the issue. See **Fetching Images**. If an image-only follow-up can't be fetched or isn't relevant, don't file an issue.
+- **Skip on positive evidence it's handled:** a maintainer reply links to a GitHub issue, or attributes the report to a stale mod version that has since shipped.
+- **Take the fetch result at face value** Trust what the fetch returns, including an empty result; don't widen the scope to second-guess it.
+- **Give up on rate limits.** If a Steam or GitHub call hits a rate limit, stop and report it; don't retry or work around it.
 
 ## Workflow
 
 ### 1. Parse Arguments
 
-Parse the args per the **Arguments** section. Resolve scope, source, and approval flag.
+Resolve scope, source, and identity per the **Arguments** section.
 
 ### 2. Fetch Comments
 
-Run the bundled fetch script — it handles both sources, pagination, the 10-page cap, suggestions newest-on-last-page walk, and emits structured JSON. Prefer this over inline parsing.
+Run the bundled fetch script. It handles both sources, pagination, the 10-page cap, the suggestions newest-on-last-page walk, and emits structured JSON. Prefer it over inline parsing.
 
 ```shell
 .claude/skills/unop-import-steam-comments/scripts/fetch_steam_comments.py \
@@ -74,27 +75,30 @@ Run the bundled fetch script — it handles both sources, pagination, the 10-pag
 
 Output is a JSON array on stdout, newest-first; each item has `id`, `ts`, `date_utc` (`YYYY-MM-DD HH:MM`, UTC), `author`, `text`, `page`. A page-cap warning is printed to stderr if the cap is hit.
 
-**Fallback**: if the script fails (non-zero exit, malformed JSON, missing fields, or output that looks structurally wrong — e.g. authors with leftover HTML tags, empty `text` for clearly non-empty comments), fall back to manual parsing: `curl` the endpoints in **Fetching URLs** (Reference) and parse the `commentthread_comment` blocks directly with a small `python3` heredoc using the per-comment fields documented there. Note the failure and the workaround used; surface this in the final report (step 8) so the script can be fixed afterwards.
+**Fallback**: if the script fails or its output looks structurally wrong, `curl` the endpoints in **Fetching URLs** and parse the `commentthread_comment` blocks with a small `python3` heredoc using the per-comment fields documented there. Note the failure in the final report so the script can be fixed afterwards.
 
 ### 3. Group into Threads
 
-Steam posts are flat. Reconstruct threads by walking the posts in chronological order and applying:
+Steam posts are flat. Reconstruct threads by walking the posts in chronological order:
 
 1. A non-maintainer post starts a new candidate thread.
-2. A maintainer post attaches to the most recent candidate thread **only if** it plausibly replies to it (mentions the user or topic).
-3. A subsequent post by the **same** non-maintainer user attaches to their most recent thread if its content continues the same topic (answers a maintainer question, adds repro details, etc.).
+2. A maintainer post attaches to the most recent candidate thread only if it plausibly replies to it.
+3. A later post by the same non-maintainer user attaches to their most recent thread if its content continues the same topic.
 
-The thread's marker is built from the **first** non-maintainer post (the OP): `<!-- steam-comment: <OP author> @ <OP date> -->`.
+The thread's OP is the first non-maintainer post. Each later post gets its own marker built from its own author and date.
 
-If a maintainer post stands alone with no preceding user post in scope, drop it — it's the maintainer's release note or unrelated reply.
+If a maintainer post stands alone with no preceding user post in scope, drop it; it's a release note or unrelated reply.
 
 ### 4. Classify Each Thread
 
-For each thread, classify as one of: `bug`, `feature`, `thanks`, `question`, `help`, `other`.
+Decide one of two outcomes per thread:
 
-Bug indicators (lean `bug`): error log excerpts, "broken", "doesn't work", "wrong tooltip", "missing localization", specific event/decision/trait IDs paired with a complaint, "stuck on", "CTD/crash", "infinite loop", reports of unintended NPC behavior tied to a specific mechanic.
+- **Bug**: file it, or append follow-ups. Default here when in doubt.
+- **Not a bug**: skip.
 
-Skip indicators:
+**Bug** indicators: error log excerpts, "broken", "doesn't work", "wrong tooltip", "missing localization", specific object IDs paired with a complaint, "stuck on", "CTD/crash", reports of unintended behavior tied to a specific mechanic.
+
+**Not a bug** indicators:
 
 - `feature`: "could you add", "please make", "I wish", balance tuning requests.
 - `thanks`: "thanks", "great mod", "love it" with no bug content.
@@ -102,117 +106,138 @@ Skip indicators:
 - `help`: install issues, load order issues, launcher problems.
 - `other`: off-topic, spam, untranslatable.
 
-Keep only `bug`. List ambiguous ones under "Uncertain" in the presentation.
+Anything that could be a bug but you can't confirm counts as **Bug**; file it, don't drop it. Only the edge cases mentioned in **Guidelines** should be skipped despite looking like bugs.
 
-### 5. Deduplicate Against GitHub
+### 5. Reconcile Against GitHub
 
-For each `bug` candidate, search for an existing issue with the marker:
-
-```shell
-gh search issues "steam-comment: <OP author> @ <OP date>" \
-  --repo ProZeratul/CrusaderKings3UnofficialPatch --json number,title,url
-```
-
-Quote the marker text exactly when searching. Drop candidates that match. Here "match" means the marker substring appears in an existing issue's body. If the search returns hits but none truly contain the marker, treat as no match.
-
-### 6. Present Candidates and (Optionally) Wait for Approval
-
-Show the user a single concise summary:
-
-```
-Found N bug candidates from <source>, scope <scope>:
-
-1. <OP author> @ <OP date> — <one-line summary>
-   Title: "<proposed issue title>"
-   Posts in thread: <count>
-
-2. ...
-
-Uncertain (excluded by default):
-- <OP author> @ <OP date> — <one-line summary> (reason: <why uncertain>)
-
-Skipped as duplicates of existing issues:
-- <OP author> @ <OP date> → #<issue-number>
-
-Skipped as not-bug:
-- <count> total (<count by category>)
-```
-
-- If `--yes` was **not** given: ask "File the N bug candidates as new issues?" and wait for explicit approval. 
-- If `--yes` was given: skip the prompt and proceed to step 7. Still show the summary first. Uncertain candidates are excluded.
-
-### 7. File Issues
-
-For each approved candidate, create the issue with the **Issue Template** in Reference. Apply the `steam` label. Title format: short imperative summary derived from the bug content.
+Build the marker map once per run, passing the oldest post date in scope:
 
 ```shell
-gh issue create \
-  --repo ProZeratul/CrusaderKings3UnofficialPatch \
+.claude/skills/unop-import-steam-comments/scripts/build_steam_issue_map.py --since <oldest post date>
+```
+
+It maps each marker's inner text, `<author> @ <date>`, to its issue number. See **Building the Issue Map**.
+
+Match each bug thread by **any** of its posts, not only the OP, since the OP is often older than the scan window while a later filed post still falls inside it. A post is already filed when a key starts with `<author> @ <date>`; same-minute posts and multi-bug splits add a ` #<n>` suffix.
+
+- **No post matches**: the thread is new. Create an issue, step 6a.
+- **A post matches issue N**: the thread belongs to issue N. Append every post not yet mapped as a follow-up comment, step 6b. Don't reopen a closed issue. If all posts already match, do nothing.
+
+### 6. File Issues and Post Follow-up Comments
+
+#### 6a. Create a new issue
+
+Create the issue with the **Issue Template**. Its title is a short imperative summary of the bug. Apply the `steam` label.
+
+```shell
+gh issue create --repo ProZeratul/CrusaderKings3UnofficialPatch \
   --label steam \
-  --title "<title>" \
-  --body "$(cat <<'EOF'
-<body per template>
+  --title "<title>" --body "$(cat <<'EOF'
+<body per Issue Template>
 EOF
 )"
 ```
 
-### 8. Report Summary
+Then post each follow-up post in the thread as its own comment, step 6b.
 
-When done, report:
+#### 6b. Append follow-up comments
 
-- Source and scope used.
-- Counts: candidates found / filed / skipped-duplicate / skipped-not-bug / uncertain.
-- A list of newly filed issues with their numbers and URLs.
-- A ready-to-post Steam acknowledgement in BBCode — see **Steam Message Template** in Reference.
-- Suggested follow-up: "Run `/unop-investigate-issue <N>` on each to triage."
-- **If the fetch script failed** and manual parsing was used: state which step failed, what the symptom was, and that `scripts/fetch_steam_comments.py` likely needs an update.
+For each follow-up post, in chronological order, post one comment with the **Follow-up Comment Template**: verbatim text, the author/date header, and the post's own marker.
+
+```shell
+gh issue comment <N> --repo ProZeratul/CrusaderKings3UnofficialPatch --body "$(cat <<'EOF'
+**<identity>:** Follow-up by `<author>` on `<date>`:
+
+> <verbatim follow-up text>
+
+<!-- steam-comment: <author> @ <date> -->
+EOF
+)"
+```
+
+Leave the issue's labels unchanged.
+
+### 7. Write the Result File and Report
+
+Write `tmp/steam-import-<source>-<YYYY-MM-DD-HHMM>.md`, creating `tmp/` if needed. Format in **Result File**.
+
+Then report to the user:
+
+- Source, scope, and identity.
+- Counts: threads found, issues created, issues updated with follow-ups, threads skipped.
+- The created issues with numbers and URLs, and the issues that received follow-up comments.
+- The result file path, and the acknowledgement BBCode inline.
+- If the fetch script needed the manual-parsing fallback, say so; it likely needs an update.
 
 ## Reference
 
 ### Issue Template
+
+The issue body holds only the OP post and the OP marker. Follow-up posts go in separate comments.
 
 ```markdown
 **Reported on Steam by `<OP author>` on `<OP date>`** (<link>).
 
 > <verbatim OP comment text, blockquoted; preserve line breaks>
 
-<!-- For multi-post threads, append clarifications: -->
-**Follow-up by `<author>` on `<date>`:**
-
-> <verbatim follow-up text>
-
-**Follow-up by `<author>` on `<date>`:**
-
-> <verbatim follow-up text>
-
 <!-- steam-comment: <OP author> @ <OP date> -->
 ```
 
-The marker comment **must** be the last line of the body and **must** match the format exactly — it's the dedup key for future runs.
+The marker must be the last line of the body and must match the format exactly.
 
-### Steam Message Template
+### Follow-up Comment Template
 
-Steam BBCode acknowledgement to post on the Steam page:
+One comment per follow-up post, each carrying its own post marker:
 
+```markdown
+**<identity>:** Follow-up by `<author>` on `<date>`:
+
+> <verbatim follow-up text>
+
+<!-- steam-comment: <author> @ <date> -->
 ```
-@<user1>, @<user2>, ... Thanks for the reports! We've opened the following GitHub issues to track them:
-- [url=<issue-url>]#<N> <issue-title>[/url]
-- ...
-```
 
-One bullet per filed issue (a reporter with multiple issues gets multiple bullets). Steam caps comments at 1000 characters, so split into separate self-contained comments of **at most 4 issues each**, each with its own header listing only the reporters in that batch.
+### Result File
+
+A markdown file, `tmp/steam-import-<source>-<YYYY-MM-DD-HHMM>.md`. The frontmatter records the run and the issue numbers created and updated. The body maps every scanned post to its outcome. A final section holds the Steam acknowledgements as `bbcode` blocks for a human to post.
+
+````markdown
+---
+source: main
+scope: "--since 2026-05-25"
+created: [531, 532]
+updated: [512]
+---
+
+## Posts
+
+- `alice @ 2026-05-01 10:00` - created 531
+- `dave @ 2026-05-09 08:00` - created 532
+- `bob @ 2026-05-10 09:00` - updated 512
+- `carol @ 2026-05-11 12:00` - skipped, thanks
+
+## Acknowledgements
+
+```bbcode
+@alice, @dave Thanks for the reports! We've opened the following GitHub issues to track them:
+- [url=<url>]#531 <title>[/url]
+- [url=<url>]#532 <title>[/url]
+```
+````
+
+One bullet per scanned post, marker first, then `created N`, `updated N`, or `skipped, <reason>`. One `bbcode` block per Steam comment to post: only created issues are acknowledged, at most 4 issues per block to stay under Steam's 1000-character cap, each block headed with only that block's reporters.
 
 ### Fetching URLs
 
-**Main** (JSON, paginated by offset):
+**Main**, JSON, paginated by offset:
 
 ```
 GET https://steamcommunity.com/comment/PublishedFile_Public/render/76561198047801064/2871648329/?start=<offset>&count=<n>
 ```
 
-Newest-first. Response JSON has `total_count` and `comments_html` (HTML fragment of `<div class="commentthread_comment ...">` blocks). `76561198047801064` is the mod owner's SteamID64; `2871648329` is the Workshop ID.
+Newest-first. Response JSON has `total_count` and `comments_html`, an HTML fragment of `<div class="commentthread_comment ...">` blocks. `76561198047801064` is the mod owner's SteamID64; `2871648329` is the Workshop ID.
 
-**Suggestions** (HTML, paginated by `?ctp=N`, 1-based):
+**Suggestions**, HTML, paginated by `?ctp=N`, 1-based:
 
 ```
 GET https://steamcommunity.com/workshop/filedetails/discussion/2871648329/4697908845434539387/?ctp=<page>
@@ -223,7 +248,7 @@ Same `commentthread_comment` block structure as the main page.
 **Per-comment fields** in each block:
 
 - Author: text inside `<bdi>` under `class="commentthread_author_link"`.
-- Timestamp: `data-timestamp="<unix-seconds>"` on `<span class="commentthread_comment_timestamp">` — authoritative; the visible date string is locale-formatted.
+- Timestamp: `data-timestamp="<unix-seconds>"` on `<span class="commentthread_comment_timestamp">`, authoritative; the visible date string is locale-formatted.
 - Text: inside `<div class="commentthread_comment_text">`; preserve `<br>` as newlines and unescape HTML entities.
 
 ### Fetching Images
@@ -232,11 +257,11 @@ Same `commentthread_comment` block structure as the main page.
 
 1. Fetch the album/post page: `curl -sS -L -A "Mozilla/5.0" "<imgur-url>" -o /tmp/album.html`.
 2. Extract image URLs: `grep -oE 'i\.imgur\.com/[A-Za-z0-9]+\.(jpg|jpeg|png|gif)' /tmp/album.html | sort -u`. The `og:image` meta tag is also reliable for single-image albums.
-3. Download each image to a temp file: `curl -sS -L -A "Mozilla/5.0" "https://<image-url>" -o /tmp/img.jpeg`.
+3. Download each image: `curl -sS -L -A "Mozilla/5.0" "https://<image-url>" -o /tmp/img.jpeg`.
 4. Use the `Read` tool on the temp file to view the image.
-5. Attach the original imgur URL in the issue body (don't try to re-host).
+5. Attach the original imgur URL in the issue body; don't try to re-host.
 
-The album hash and image hash differ — guessing `i.imgur.com/<album-hash>.jpg` returns a 503-byte placeholder, not the image.
+The album hash and image hash differ. Guessing `i.imgur.com/<album-hash>.jpg` returns a 503-byte placeholder, not the image.
 
 ### Marker Format
 
@@ -244,21 +269,38 @@ The album hash and image hash differ — guessing `i.imgur.com/<album-hash>.jpg`
 <!-- steam-comment: <author> @ <YYYY-MM-DD HH:MM> -->
 ```
 
-- `<author>`: Steam username verbatim, **without** any `[developer]` tag.
+- `<author>`: Steam username verbatim, without any `[developer]` tag.
 - Date in 24-hour ISO-ish form, single space between date and time.
-- Build the marker from the **OP** of the thread, never from a maintainer's reply.
+- One marker per post: the OP's marker in the issue body, each follow-up's marker in its own comment.
+- When one `<author> @ <date>` would otherwise map to more than one issue, append ` #<n>` to each marker to keep them unique, numbered `1`, `2`, `3`: in chronological order for multiple posts in the same minute, or in order of appearance for multiple bugs split from a single post. When looking a post up in the issue map, treat a key that starts with `<author> @ <date>` as a match.
+
+### Building the Issue Map
+
+`scripts/build_steam_issue_map.py [--since YYYY-MM-DD]` reads each `steam` issue's body and all its comments, extracts every `<!-- steam-comment: ... -->` marker, and prints a JSON object mapping each marker's inner text to the issue number:
+
+```shell
+.claude/skills/unop-import-steam-comments/scripts/build_steam_issue_map.py --since 2026-05-25
+```
+
+```json
+{ "alice @ 2026-05-01 10:00": 500, "alice @ 2026-05-03 14:00": 500, "bob @ 2026-05-10 09:00": 512 }
+```
+
+All open `steam` issues are included, plus closed ones updated on or after `--since`. Compose a post's key as `<author> @ <date>`; a key starting with it means that post is already filed in the mapped issue. The script targets `ProZeratul/CrusaderKings3UnofficialPatch` and uses `gh`; run it from the repo root.
 
 ### gh Snippets
 
 ```shell
-# Dedup search
-gh search issues "steam-comment: <author> @ <date>" \
-  --repo ProZeratul/CrusaderKings3UnofficialPatch --json number,title,url
-
-# File an issue
+# Create an issue
 gh issue create --repo ProZeratul/CrusaderKings3UnofficialPatch \
   --label steam --title "<title>" --body "$(cat <<'EOF'
 <body>
+EOF
+)"
+
+# Append a follow-up comment
+gh issue comment <N> --repo ProZeratul/CrusaderKings3UnofficialPatch --body "$(cat <<'EOF'
+<comment>
 EOF
 )"
 ```
