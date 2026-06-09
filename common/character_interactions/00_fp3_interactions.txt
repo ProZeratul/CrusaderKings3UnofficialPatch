@@ -1794,18 +1794,18 @@ fp3_change_allegiance = {
 		### + Disloyal.
 		modifier = {
 			add = 15
-			desc = HAS_LOYAL_TRAIT
+			desc = HAS_DISLOYAL_TRAIT #Unop: Was HAS_LOYAL_TRAIT
 			scope:recipient = { has_trait = disloyal }
 		}
 		### - Loyal.
 		modifier = {
-			add = 15
-			desc = HAS_DISLOYAL_TRAIT
+			add = -15 #Unop: Was 15 but a it's flagged as it should be negative incentive & it make sense that a loyal char would stay loyal to his side
+			desc = HAS_LOYAL_TRAIT #Unop: Was HAS_DISLOYAL_TRAIT
 			scope:recipient = { has_trait = loyal }
 		}
 		### -- Stubborn.
 		modifier = {
-			add = 25
+			add = -25 #Unop: Was 25 but a it's flagged as it should be negative incentive & it make sense that a stubborn char would not change his mind
 			desc = ASK_FOR_CONVERSION_RECIPIENT_IS_STUBBORN
 			scope:recipient = { has_trait = stubborn }
 		}

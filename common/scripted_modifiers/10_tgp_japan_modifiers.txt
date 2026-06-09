@@ -124,7 +124,7 @@ house_relation_ai_accept_confederation_member_modifiers = {
 			}
 			multiply = $MULTIPLIER$
 		}
-		desc = AI_HOUSE_RELATION_ALL_MEMBERS_REASON
+		desc = AI_HOUSE_RELATION_REASON #Unop: Was AI_HOUSE_RELATION_ALL_MEMBERS_REASON but it does not exists
 	}
 }
 
@@ -251,7 +251,7 @@ house_bloc_desire_to_join_modifiers = {
 			value = -25
 			multiply = $MULTIPLIER$
 		}
-		desc = AI_LOYAL_TRAIT_REASON
+		desc = HAS_LOYAL_TRAIT #Unop: Was AI_LOYAL_TRAIT_REASON but does not exists
 	}
 	# Government
 	modifier = { # Different government type
@@ -278,7 +278,7 @@ house_bloc_desire_to_join_modifiers = {
 		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		exists = scope:inviter_temp.dynasty
 		scope:joiner_temp.dynasty ?= scope:inviter_temp.dynasty
-		OR = {
+		#OR = { #Unop: Useless OR
 			scope:joiner_temp = {
 				any_ancestor = {
 					OR = {
@@ -291,12 +291,12 @@ house_bloc_desire_to_join_modifiers = {
 					}
 				}
 			}
-		}
+		#}
 		add = {
 			value = 25
 			multiply = $MULTIPLIER$
 		}
-		desc = AI_CLOSE_HOUSE_REASON
+		desc = CLOSE_FAMILY_REASON #Unop: Was AI_CLOSE_HOUSE_REASON but does not exists
 	}
 	modifier = { # Distant dynasty house
 		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
