@@ -115,7 +115,7 @@ restore_backwater_counties_decision = {
 		county = 0
 		duchy = 120
 		kingdom = 120
-		empire = 0
+		empire = 120 #Unop Let the AI check this decision for empire-tier vassal governors
 		hegemony = 0
 	}
 
@@ -127,12 +127,13 @@ restore_backwater_counties_decision = {
 
 	is_shown = {
 		has_ep3_dlc_trigger = yes
-		primary_title ?= {
-			OR = {
-				tier = tier_duchy
-				tier = tier_kingdom
-			}
-		}
+		is_governor = yes #Unop Gate on being a governor (vassal with a liege) instead of duchy/kingdom tier, so empire-tier vassal governors qualify while independent emperors stay excluded
+		#primary_title ?= {
+		#	OR = {
+		#		tier = tier_duchy
+		#		tier = tier_kingdom
+		#	}
+		#}
 		any_sub_realm_county = {
 			has_county_modifier = backwater_county_modifier
 		}
@@ -272,6 +273,26 @@ restore_backwater_counties_decision = {
 				# Trigger the event for the emperor to see if all the counties have been cleared
 				trigger_event = ep3_decisions_event.3001
 			}
+		}
+	}
+
+	ai_will_do = { #Unop Give the AI weights so governors actually take this decision
+		base = 20
+		modifier = {
+			has_trait = ambitious
+			add = 20
+		}
+		modifier = {
+			has_trait = diligent
+			add = 10
+		}
+		modifier = {
+			has_trait = content
+			add = -10
+		}
+		modifier = {
+			has_trait = lazy
+			add = -10
 		}
 	}
 }
