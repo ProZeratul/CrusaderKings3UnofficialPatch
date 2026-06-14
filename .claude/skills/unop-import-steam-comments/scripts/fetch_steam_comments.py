@@ -25,6 +25,7 @@ import html
 import json
 import re
 import sys
+import time
 import urllib.request
 import urllib.error
 
@@ -44,12 +45,51 @@ SUGGESTIONS_URL = (
 UA = "Mozilla/5.0 (compatible; unop-import-steam-comments/1.0)"
 PAGE_CAP = 10
 MAIN_PAGE_SIZE = 50
+REQUEST_DELAY = 1.0  # seconds between requests, to stay under Steam's rate limit
+
+_last_request = 0.0
 
 
 def http_get(url: str) -> str:
+    global _last_request
+    wait = REQUEST_DELAY - (time.monotonic() - _last_request)
+    if wait > 0:
+        time.sleep(wait)
     req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        return resp.read().decode("utf-8", errors="replace")
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return resp.read().decode("utf-8", errors="replace")
+    finally:
+        _last_request = time.monotonic()
+
+
+def extract_comment_text(block: str) -> str:
+    """Return a comment's plain text, preserving quoted replies.
+
+    The comment_text div contains nested <div> blocks: Steam renders a quote as
+    a <blockquote> wrapping a <div class="bb_quoteauthor">. A non-greedy match to
+    the first </div> would stop inside that quote and drop the reply body after
+    it, so find the matching close by counting <div> depth. Quotes are rendered
+    as markdown blockquotes to keep them distinct from the reply.
+    """
+    m = re.search(r'<div class="commentthread_comment_text"[^>]*>', block)
+    if not m:
+        return ""
+    inner = block[m.end():]
+    depth = 1
+    for tm in re.finditer(r"<(/?)div\b[^>]*>", inner):
+        depth += -1 if tm.group(1) else 1
+        if depth == 0:
+            inner = inner[: tm.start()]
+            break
+    inner = re.sub(r"<blockquote[^>]*>", "\n> ", inner, flags=re.IGNORECASE)
+    inner = re.sub(r"</blockquote>", "\n", inner, flags=re.IGNORECASE)
+    inner = re.sub(r"<br\s*/?>", "\n", inner, flags=re.IGNORECASE)
+    inner = re.sub(r"<[^>]+>", "", inner)
+    text = html.unescape(inner)
+    text = re.sub(r"[ \t]+\n", "\n", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return text.strip()
 
 
 def parse_comment_blocks(fragment: str, page: int) -> list[dict]:
@@ -85,14 +125,7 @@ def parse_comment_blocks(fragment: str, page: int) -> list[dict]:
             if ts else "?"
         )
 
-        txt_m = re.search(
-            r'<div class="commentthread_comment_text"[^>]*>(.*?)</div>',
-            block, re.DOTALL,
-        )
-        raw = txt_m.group(1) if txt_m else ""
-        raw = re.sub(r"<br\s*/?>", "\n", raw)
-        raw = re.sub(r"<[^>]+>", "", raw)
-        text = html.unescape(raw).strip()
+        text = extract_comment_text(block)
 
         out.append({
             "id": cid, "ts": ts, "date_utc": date_utc,
@@ -134,32 +167,41 @@ def fetch_main(count_target: int, since_ts: int | None) -> tuple[list[dict], boo
     return collected, cap_hit
 
 
-def probe_suggestions_last_page() -> int:
-    """Find the last page of the suggestions thread.
+def suggestions_last_page(body: str) -> int | None:
+    """Last page number, read from any page's "Showing A-B of N comments" summary.
 
-    Walks pages forward until one returns only the OP (length below threshold
-    or only 1 timestamp). Returns the last non-empty page number.
+    Avoids walking the thread forward to locate the end. Returns None if the
+    summary can't be parsed.
     """
-    last_full = 1
-    for page in range(1, PAGE_CAP + 1):
-        body = http_get(SUGGESTIONS_URL.format(page=page))
-        ts_count = len(re.findall(r'data-timestamp="\d+"', body))
-        if ts_count <= 1 and page > 1:
-            return page - 1
-        last_full = page
-    return last_full
+    m = re.search(r'forum_paging_summary.*?</div>', body, re.DOTALL)
+    if not m:
+        return None
+    summary = re.sub(r"<[^>]+>", " ", m.group(0))
+    mm = re.search(r"Showing\s+(\d+)\s*-\s*(\d+)\s+of\s+(\d+)", summary)
+    if not mm:
+        return None
+    first, last, total = (int(g) for g in mm.groups())
+    per_page = max(last - first + 1, 1)
+    return -(-total // per_page)  # ceil
 
 
 def fetch_suggestions(count_target: int, since_ts: int | None) -> tuple[list[dict], bool]:
-    last_page = probe_suggestions_last_page()
+    # Page 1 (oldest) tells us the page count and is reused if we walk that far back.
+    bodies = {1: http_get(SUGGESTIONS_URL.format(page=1))}
+    last_page = suggestions_last_page(bodies[1])
+    if last_page is None:
+        raise RuntimeError("suggestions: could not read comment count from paging summary")
+
     collected: list[dict] = []
     seen_ids: set[str] = set()
-    pages_used = 0
-    page = last_page
-    while page >= 1 and pages_used < PAGE_CAP:
-        pages_used += 1
-        body = http_get(SUGGESTIONS_URL.format(page=page))
-        items = parse_comment_blocks(body, page)
+    cap_hit = False
+    for page in range(last_page, 0, -1):
+        if page not in bodies:
+            if len(bodies) >= PAGE_CAP:
+                cap_hit = True
+                break
+            bodies[page] = http_get(SUGGESTIONS_URL.format(page=page))
+        items = parse_comment_blocks(bodies[page], page)
         items.sort(key=lambda x: x["ts"], reverse=True)
 
         new_items = [it for it in items if it["id"] not in seen_ids]
@@ -172,13 +214,8 @@ def fetch_suggestions(count_target: int, since_ts: int | None) -> tuple[list[dic
             break
         if since_ts is None and len(collected) >= count_target:
             break
-        page -= 1
 
     collected.sort(key=lambda x: x["ts"], reverse=True)
-    cap_hit = pages_used >= PAGE_CAP and (
-        (since_ts is not None and page >= 1) or
-        (since_ts is None and len(collected) < count_target)
-    )
     return collected, cap_hit
 
 
