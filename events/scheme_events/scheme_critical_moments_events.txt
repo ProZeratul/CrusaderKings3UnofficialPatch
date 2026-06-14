@@ -6853,6 +6853,47 @@ scheme_critical_moments.8031 = {
 										#Unop Add missing domicile buildings
 										has_domicile_building_or_higher = market_01
 										has_domicile_building_or_higher = courtyard_01
+
+										# Chinese estate buildings
+										has_domicile_building_or_higher = east_asian_estate_library_01
+										has_domicile_building_or_higher = east_asian_estate_living_quarters_01
+										has_domicile_building_or_higher = east_asian_estate_commander_study_01
+										has_domicile_building_or_higher = east_asian_estate_office_01
+										has_domicile_building_or_higher = east_asian_estate_servants_quarters_01
+										has_domicile_building_or_higher = east_asian_estate_bath_01
+										has_domicile_building_or_higher = east_asian_estate_guest_room_01
+										has_domicile_building_or_higher = east_asian_estate_wine_cellar_01
+										has_domicile_building_or_higher = east_asian_estate_courtyard_01
+										has_domicile_building_or_higher = east_asian_estate_prison_01
+										has_domicile_building_or_higher = east_asian_estate_reception_hall_01
+										has_domicile_building_or_higher = east_asian_estate_cabinet_of_curiosities_01
+										has_domicile_building_or_higher = east_asian_estate_tea_01
+										has_domicile_building_or_higher = east_asian_estate_market_01
+										has_domicile_building_or_higher = east_asian_estate_silk_01
+										has_domicile_building_or_higher = east_asian_estate_temple_01
+										has_domicile_building_or_higher = east_asian_estate_barracks_01
+										has_domicile_building_or_higher = east_asian_estate_watchtower_01
+										has_domicile_building_or_higher = east_asian_estate_garden_01
+										has_domicile_building_or_higher = east_asian_estate_stable_01
+										has_domicile_building_or_higher = east_asian_estate_workshop_01
+										has_domicile_building_or_higher = east_asian_estate_storage_01
+										has_domicile_building_or_higher = east_asian_estate_grazing_land_01
+
+										# Japanese estate buildings
+										has_domicile_building_or_higher = japanese_manor_poetry_library_01
+										has_domicile_building_or_higher = japanese_manor_trophy_room_01
+										has_domicile_building_or_higher = japanese_manor_office_01
+										has_domicile_building_or_higher = japanese_manor_servants_quarters_01
+										has_domicile_building_or_higher = japanese_manor_library_confucian_01
+										has_domicile_building_or_higher = japanese_fields_01
+										has_domicile_building_or_higher = japanese_shrine_01
+										has_domicile_building_or_higher = japanese_watch_house_01
+										has_domicile_building_or_higher = japanese_horse_pastures_01
+										has_domicile_building_or_higher = japanese_tea_plantation_01
+										has_domicile_building_or_higher = japanese_stables_01
+										has_domicile_building_or_higher = japanese_workshop_01
+										has_domicile_building_or_higher = japanese_tea_house_01
+										has_domicile_building_or_higher = japanese_garden_01
 									}
 								}
 							}
@@ -7144,6 +7185,19 @@ scheme_critical_moments.8031 = {
 										}
 									}
 									save_scope_value_as = { name = stolen_building value = flag:tea }
+								}
+								#Unop: Add missing east_asian building version
+								10 = { # Learning Upgrade (east_asian)
+									trigger = {
+										scope:owner = {
+											NOT = { has_character_modifier = raid_insight_library }
+										}
+										scope:target_domicile = { has_domicile_building_or_higher = east_asian_estate_library_01 }
+										scope:owner.domicile ?= {
+											NOT = { has_domicile_building = east_asian_estate_library_education_04 }
+										}
+									}
+									save_scope_value_as = { name = stolen_building value = flag:library }
 								}
 							}
 						}
