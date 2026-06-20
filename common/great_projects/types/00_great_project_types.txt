@@ -232,10 +232,12 @@ mandala_capital_01 = {
 				owner = yes
 			}
 
-			contributor_is_valid = { 
+			contributor_is_valid = {
+				#Unop wrap the cap and aspect checks in custom_description so trigger_if is not rendered in the unevaluated contributor tooltip
 				#Only 2 Capital Temple Complexes per De Jure Kingdom
-				trigger_if = {
-					limit = {
+				custom_description = {
+					text = not_already_full_on_mandala_capitals
+					NOT = {
 						capital_county.kingdom = {
 							any_in_de_jure_hierarchy = {
 								count >= mandala_capitals_per_dejure_kingdom
@@ -258,19 +260,16 @@ mandala_capital_01 = {
 											OR = {
 												great_project_construction_phase_is = in_progress
 												great_project_construction_phase_is = completed
-											}	
+											}
 										}
 									}
 								}
 							}
 						}
 					}
-					custom_tooltip = {
-						text = not_already_full_on_mandala_capitals
-						always = no
-					}	
 				}
-				trigger_else = {
+				custom_description = {
+					text = rite_of_worthiness_per_aspect
 					#Aspect of Creation
 					trigger_if = {
 						limit = {
@@ -301,10 +300,7 @@ mandala_capital_01 = {
 					}
 					#No Aspect, no dice
 					trigger_else = {
-						custom_tooltip = {
-							text = rite_of_worthiness_per_aspect
-							always = no
-						}
+						always = no
 					}
 				}
 			}
@@ -923,39 +919,40 @@ mandala_capital_02 = {
 			allowed_contributor_filter = {
 				owner = yes
 			}
-			contributor_is_valid = { 
-				#Aspect of Creation
-				trigger_if = {
-					limit = {
-						scope:owner.house = { has_house_aspiration_parameter = aspect_of_creation }
+			contributor_is_valid = {
+				#Unop wrap the aspect checks in custom_description so trigger_if is not rendered in the unevaluated contributor tooltip
+				custom_description = {
+					text = rite_of_worthiness_per_aspect
+					#Aspect of Creation
+					trigger_if = {
+						limit = {
+							scope:owner.house = { has_house_aspiration_parameter = aspect_of_creation }
+						}
+						creation_second_tier_trigger = yes
 					}
-					creation_second_tier_trigger = yes
-				}
-				#Aspect of Serenity
-				trigger_else_if = {
-					limit = {
-						scope:owner.house = { has_house_aspiration_parameter = aspect_of_serenity }
+					#Aspect of Serenity
+					trigger_else_if = {
+						limit = {
+							scope:owner.house = { has_house_aspiration_parameter = aspect_of_serenity }
+						}
+						serenity_second_tier_trigger = { MANDALA = scope:owner }
 					}
-					serenity_second_tier_trigger = { MANDALA = scope:owner }
-				}
-				#Aspect of Destruction
-				trigger_else_if = {
-					limit = {
-						scope:owner.house = { has_house_aspiration_parameter = aspect_of_destruction }
+					#Aspect of Destruction
+					trigger_else_if = {
+						limit = {
+							scope:owner.house = { has_house_aspiration_parameter = aspect_of_destruction }
+						}
+						destruction_second_tier_trigger = yes
 					}
-					destruction_second_tier_trigger = yes
-				}
-				#Aspect of Trickery
-				trigger_else_if = {
-					limit = {
-						scope:owner.house = { has_house_aspiration_parameter = aspect_of_trickery }
+					#Aspect of Trickery
+					trigger_else_if = {
+						limit = {
+							scope:owner.house = { has_house_aspiration_parameter = aspect_of_trickery }
+						}
+						trickery_second_tier_trigger = yes
 					}
-					trickery_second_tier_trigger = yes
-				}
-				#No Aspect, no dice
-				trigger_else = {
-					custom_tooltip = {
-						text = rite_of_worthiness_per_aspect
+					#No Aspect, no dice
+					trigger_else = {
 						always = no
 					}
 				}
@@ -1568,39 +1565,40 @@ mandala_capital_03 = {
 			allowed_contributor_filter = {
 				owner = yes
 			}
-			contributor_is_valid = { 
-				#Aspect of Creation
-				trigger_if = {
-					limit = {
-						scope:owner.house = { has_house_aspiration_parameter = aspect_of_creation }
+			contributor_is_valid = {
+				#Unop wrap the aspect checks in custom_description so trigger_if is not rendered in the unevaluated contributor tooltip
+				custom_description = {
+					text = rite_of_worthiness_per_aspect
+					#Aspect of Creation
+					trigger_if = {
+						limit = {
+							scope:owner.house = { has_house_aspiration_parameter = aspect_of_creation }
+						}
+						creation_third_tier_trigger = yes
 					}
-					creation_third_tier_trigger = yes
-				}
-				#Aspect of Serenity
-				trigger_else_if = {
-					limit = {
-						scope:owner.house = { has_house_aspiration_parameter = aspect_of_serenity }
+					#Aspect of Serenity
+					trigger_else_if = {
+						limit = {
+							scope:owner.house = { has_house_aspiration_parameter = aspect_of_serenity }
+						}
+						serenity_third_tier_trigger = { MANDALA = scope:owner }
 					}
-					serenity_third_tier_trigger = { MANDALA = scope:owner }
-				}
-				#Aspect of Destruction
-				trigger_else_if = {
-					limit = {
-						scope:owner.house = { has_house_aspiration_parameter = aspect_of_destruction }
+					#Aspect of Destruction
+					trigger_else_if = {
+						limit = {
+							scope:owner.house = { has_house_aspiration_parameter = aspect_of_destruction }
+						}
+						destruction_third_tier_trigger = yes
 					}
-					destruction_third_tier_trigger = yes
-				}
-				#Aspect of Trickery
-				trigger_else_if = {
-					limit = {
-						scope:owner.house = { has_house_aspiration_parameter = aspect_of_trickery }
+					#Aspect of Trickery
+					trigger_else_if = {
+						limit = {
+							scope:owner.house = { has_house_aspiration_parameter = aspect_of_trickery }
+						}
+						trickery_third_tier_trigger = yes
 					}
-					trickery_third_tier_trigger = yes
-				}
-				#No Aspect, no dice
-				trigger_else = {
-					custom_tooltip = {
-						text = rite_of_worthiness_per_aspect
+					#No Aspect, no dice
+					trigger_else = {
 						always = no
 					}
 				}
@@ -2412,39 +2410,40 @@ mandala_capital_04 = {
 			allowed_contributor_filter = {
 				owner = yes
 			}
-			contributor_is_valid = { 
-				#Aspect of Creation
-				trigger_if = {
-					limit = {
-						scope:owner.house = { has_house_aspiration_parameter = aspect_of_creation }
+			contributor_is_valid = {
+				#Unop wrap the aspect checks in custom_description so trigger_if is not rendered in the unevaluated contributor tooltip
+				custom_description = {
+					text = rite_of_worthiness_per_aspect
+					#Aspect of Creation
+					trigger_if = {
+						limit = {
+							scope:owner.house = { has_house_aspiration_parameter = aspect_of_creation }
+						}
+						creation_fourth_tier_trigger = yes
 					}
-					creation_fourth_tier_trigger = yes
-				}
-				#Aspect of Serenity
-				trigger_else_if = {
-					limit = {
-						scope:owner.house = { has_house_aspiration_parameter = aspect_of_serenity }
+					#Aspect of Serenity
+					trigger_else_if = {
+						limit = {
+							scope:owner.house = { has_house_aspiration_parameter = aspect_of_serenity }
+						}
+						serenity_fourth_tier_trigger = { MANDALA = scope:owner }
 					}
-					serenity_fourth_tier_trigger = { MANDALA = scope:owner }
-				}
-				#Aspect of Destruction
-				trigger_else_if = {
-					limit = {
-						scope:owner.house = { has_house_aspiration_parameter = aspect_of_destruction }
+					#Aspect of Destruction
+					trigger_else_if = {
+						limit = {
+							scope:owner.house = { has_house_aspiration_parameter = aspect_of_destruction }
+						}
+						destruction_fourth_tier_trigger = yes
 					}
-					destruction_fourth_tier_trigger = yes
-				}
-				#Aspect of Trickery
-				trigger_else_if = {
-					limit = {
-						scope:owner.house = { has_house_aspiration_parameter = aspect_of_trickery }
+					#Aspect of Trickery
+					trigger_else_if = {
+						limit = {
+							scope:owner.house = { has_house_aspiration_parameter = aspect_of_trickery }
+						}
+						trickery_fourth_tier_trigger = yes
 					}
-					trickery_fourth_tier_trigger = yes
-				}
-				#No Aspect, no dice
-				trigger_else = {
-					custom_tooltip = {
-						text = rite_of_worthiness_per_aspect
+					#No Aspect, no dice
+					trigger_else = {
 						always = no
 					}
 				}
@@ -3077,39 +3076,40 @@ mandala_capital_05 = {
 			allowed_contributor_filter = {
 				owner = yes
 			}
-			contributor_is_valid = { 
-				#Aspect of Creation
-				trigger_if = {
-					limit = {
-						scope:owner.house = { has_house_aspiration_parameter = aspect_of_creation }
+			contributor_is_valid = {
+				#Unop wrap the aspect checks in custom_description so trigger_if is not rendered in the unevaluated contributor tooltip
+				custom_description = {
+					text = rite_of_worthiness_per_aspect
+					#Aspect of Creation
+					trigger_if = {
+						limit = {
+							scope:owner.house = { has_house_aspiration_parameter = aspect_of_creation }
+						}
+						creation_fifth_tier_trigger = yes
 					}
-					creation_fifth_tier_trigger = yes
-				}
-				#Aspect of Serenity
-				trigger_else_if = {
-					limit = {
-						scope:owner.house = { has_house_aspiration_parameter = aspect_of_serenity }
+					#Aspect of Serenity
+					trigger_else_if = {
+						limit = {
+							scope:owner.house = { has_house_aspiration_parameter = aspect_of_serenity }
+						}
+						serenity_fifth_tier_trigger = { MANDALA = scope:owner }
 					}
-					serenity_fifth_tier_trigger = { MANDALA = scope:owner }
-				}
-				#Aspect of Destruction
-				trigger_else_if = {
-					limit = {
-						scope:owner.house = { has_house_aspiration_parameter = aspect_of_destruction }
+					#Aspect of Destruction
+					trigger_else_if = {
+						limit = {
+							scope:owner.house = { has_house_aspiration_parameter = aspect_of_destruction }
+						}
+						destruction_fifth_tier_trigger = yes
 					}
-					destruction_fifth_tier_trigger = yes
-				}
-				#Aspect of Trickery
-				trigger_else_if = {
-					limit = {
-						scope:owner.house = { has_house_aspiration_parameter = aspect_of_trickery }
+					#Aspect of Trickery
+					trigger_else_if = {
+						limit = {
+							scope:owner.house = { has_house_aspiration_parameter = aspect_of_trickery }
+						}
+						trickery_fifth_tier_trigger = yes
 					}
-					trickery_fifth_tier_trigger = yes
-				}
-				#No Aspect, no dice
-				trigger_else = {
-					custom_tooltip = {
-						text = rite_of_worthiness_per_aspect
+					#No Aspect, no dice
+					trigger_else = {
 						always = no
 					}
 				}
