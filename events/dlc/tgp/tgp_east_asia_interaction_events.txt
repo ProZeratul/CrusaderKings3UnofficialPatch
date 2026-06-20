@@ -5,7 +5,16 @@ namespace = tgp_east_asia_interaction_events
 tgp_east_asia_interaction_events.0010 = {
 	type = letter_event
 	opening = tgp_east_asia_interaction_events.0010.opening
-	desc = tgp_east_asia_interaction_events.0010.desc
+	#Unop Use the mandala-only "Devaraja" wording only for mandala tributaries
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:leaving_tributary = { government_has_flag = government_is_mandala } }
+				desc = tgp_east_asia_interaction_events.0010.desc
+			}
+			desc = tgp_east_asia_interaction_events.0010.desc.unop_non_mandala
+		}
+	}
 	sender = {
 		character = scope:leaving_tributary
 		animation = personality_honorable
