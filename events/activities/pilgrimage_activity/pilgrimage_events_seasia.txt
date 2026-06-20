@@ -787,7 +787,7 @@ pilgrimage_seasia.500 = {
 			limit = {
 				scope:background_terrain_scope.faith != root.faith
 			}
-			scope:background_terrain_scope = {
+			scope:background_terrain_scope.county = { #Unop set_county_faith needs a county scope, not a province
 				set_county_faith = root.faith
 			}
 		}
@@ -1616,7 +1616,13 @@ pilgrimage_seasia.1000 = {
 				limit = {
 					tier = tier_county
 					religion = religion:islam_religion
-					title_province = { province_has_no_holding_trigger = no }
+					#Unop inline the former province_has_no_holding_trigger body: this picks a developed merchant home, unrelated to whether a holding can be built
+					title_province = {
+						NOT = {
+							has_ongoing_construction = no
+							has_holding = no
+						}
+					}
 					is_coastal_county = yes
 				}
 				save_scope_as = merchant_home
