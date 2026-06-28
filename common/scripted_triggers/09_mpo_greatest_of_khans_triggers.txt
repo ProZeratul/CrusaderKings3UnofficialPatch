@@ -239,50 +239,6 @@ mpo_war_of_defiance_notified_player_trigger = {
 	}
 }
 
-unop_war_of_defiance_notified_player_trigger = {
-	#Unop counterpart taking the gok as a parameter; the caller is a casus belli on_victory where root is the casus belli, not a character
-	NOT = {
-		this = $GOK$
-	}
-	OR = {
-		top_liege = $GOK$
-		top_suzerain = $GOK$
-		any_character_situation = {
-			this = situation:the_great_steppe
-		}
-		any_relation = {
-			type = rival
-			this = $GOK$
-		}
-		#Those within same de jure empire
-		capital_county ?= {
-			empire = {
-				any_de_jure_county = {
-					holder.top_liege = {
-						this = $GOK$
-					}
-				}
-			}
-		}
-		capital_county ?= {
-			empire = {
-				any_de_jure_county = {
-					holder.top_suzerain = {
-						this = $GOK$
-					}
-				}
-			}
-		}
-		AND = {
-			exists = $GOK$.capital_county
-			realm_to_title_distance_squared = {
-				target = $GOK$.capital_county
-				value <= squared_distance_almost_massive
-			}
-		}
-	}
-}
-
 gok_desirable_vassal_trigger = {
 	OR = {
 		ai_boldness <= low_negative_ai_value
