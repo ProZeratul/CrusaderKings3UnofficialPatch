@@ -197,25 +197,26 @@ mpo_gok_submitting_coward_trigger = {
 }
 
 mpo_war_of_defiance_notified_player_trigger = {
+	#Unop take the gok as a parameter; vanilla used root, but the caller is a casus belli on_victory where root is the casus belli, not a character
 	NOT = {
-		this = root
+		this = $GOK$
 	}
 	OR = {
-		top_liege = root
-		top_suzerain = root
+		top_liege = $GOK$
+		top_suzerain = $GOK$
 		any_character_situation = {
 			this = situation:the_great_steppe
 		}
 		any_relation = {
 			type = rival
-			this = root
+			this = $GOK$
 		}
 		#Those within same de jure empire
 		capital_county ?= {
 			empire = {
 				any_de_jure_county = {
 					holder.top_liege = {
-						this = root
+						this = $GOK$
 					}
 				}
 			}
@@ -224,15 +225,15 @@ mpo_war_of_defiance_notified_player_trigger = {
 			empire = {
 				any_de_jure_county = {
 					holder.top_suzerain = {
-						this = root
+						this = $GOK$
 					}
 				}
 			}
 		}
 		AND = {
-			exists = root.capital_county
+			exists = $GOK$.capital_county
 			realm_to_title_distance_squared = {
-				target = root.capital_county
+				target = $GOK$.capital_county
 				value <= squared_distance_almost_massive
 			}
 		}
@@ -469,7 +470,7 @@ mpo_offer_submission_or_ruin_valid_recipient_trigger = {
 	NOT = {
 		is_at_war_with = scope:actor
 	}
-	NOT = { is_imprisoned_by = scope:actor } #Unop can't demand submission from someone you already hold captive - on rejection the war's defender leader would already be imprisoned, an instant win
+	NOT = { is_imprisoned_by = scope:actor } #Unop don't demand submission from a captive - rejection-war starts with the defender leader imprisoned (instant win)
 	custom_description = {
 		text = was_recently_granted_independence
 		NOT = {
