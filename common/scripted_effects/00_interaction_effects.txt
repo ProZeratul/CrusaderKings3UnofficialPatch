@@ -2912,17 +2912,40 @@ start_tributary_interaction_effect = {
 				contract_group = tributary_subjugated
 				suzerain = $SUZERAIN$
 			}
-			if = {
+			if = { #Unop give the rich (high) tier a distinct, higher prestige obligation so expected != rich
+				limit = {
+					OR = {
+						scope:high_obligations ?= yes
+						exists = scope:tributary_war
+					}
+				}
+				if = {
+					limit = { is_tributary = yes } # suppress error logging
+					hidden_effect = {
+						tributary_contract_set_obligation_level = { type = default_tributary_taxes level = 2 }
+						tributary_contract_set_obligation_level = { type = default_tributary_prestige level = 2 }
+						tributary_contract_set_obligation_level = { type = suzerain_war_participation_guarantee level = 1 }
+						tributary_contract_set_obligation_level = { type = tributary_war_participation_obligation level = 0 }
+					}
+				}
+				custom_tooltip = high_subjugated_tribute_taxes
+				custom_tooltip = high_subjugated_tribute_prestige
+				custom_tooltip = suzerain_guarantee
+			}
+			else_if = {
 				limit = { scope:low_obligations ?= yes }
 				if = {
 					limit = { is_tributary = yes } # suppress error logging
 					hidden_effect = {
 						tributary_contract_set_obligation_level = { type = default_tributary_taxes level = 1 }
 						tributary_contract_set_obligation_level = { type = default_tributary_prestige level = 0 }
+						tributary_contract_set_obligation_level = { type = suzerain_war_participation_guarantee level = 0 } #Unop meager tier does not grant the guarantee
+						tributary_contract_set_obligation_level = { type = tributary_war_participation_obligation level = 0 }
 					}
 				}
 				custom_tooltip = low_subjugated_tribute_taxes
 				custom_tooltip = none_subjugated_tribute_prestige
+				custom_tooltip = no_suzerain_guarantee #Unop tooltip now matches the obligation actually set
 			}
 			else = {
 				if = {
@@ -2936,8 +2959,8 @@ start_tributary_interaction_effect = {
 				}
 				custom_tooltip = high_subjugated_tribute_taxes
 				custom_tooltip = normal_subjugated_tribute_prestige
+				custom_tooltip = suzerain_guarantee
 			}
-			custom_tooltip = suzerain_guarantee
 			custom_tooltip = no_tributary_war_obligations
 		}
 	}
