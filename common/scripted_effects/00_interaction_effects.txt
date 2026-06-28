@@ -2495,7 +2495,7 @@ start_tributary_interaction_effect = {
 							level = 1
 						}
 						tributary_contract_set_obligation_level = { type = default_tributary_taxes level = 1 }
-						tributary_contract_set_obligation_level = { type = default_tributary_prestige level = 1 }
+						tributary_contract_set_obligation_level = { type = default_tributary_prestige level = 0 } #Unop meager prestige to 0 so it differs from expected and matches its tooltip
 					}
 				}
 				custom_tooltip = low_wanua_tribute_barter_goods
@@ -2744,7 +2744,7 @@ start_tributary_interaction_effect = {
 							tributary_contract_set_obligation_level = { type = nomad_government_prestige level = 2 }
 						}
 					}
-					custom_tooltip = high_nomad_tribute_herd
+					custom_tooltip = high_subjugated_tribute_taxes #Unop tooltip now matches the taxes obligation actually set, not herd
 					custom_tooltip = high_nomad_tribute_prestige
 				}
 				else_if = {
@@ -2756,7 +2756,7 @@ start_tributary_interaction_effect = {
 							tributary_contract_set_obligation_level = { type = nomad_government_prestige level = 0 }
 						}
 					}
-					custom_tooltip = low_nomad_tribute_herd
+					custom_tooltip = low_subjugated_tribute_taxes #Unop tooltip now matches the taxes obligation actually set, not herd
 					custom_tooltip = none_nomad_tribute_prestige
 				}
 				else = {
@@ -2767,7 +2767,7 @@ start_tributary_interaction_effect = {
 							tributary_contract_set_obligation_level = { type = nomad_government_prestige level = 1 }
 						}
 					}
-					custom_tooltip = normal_nomad_tribute_herd
+					custom_tooltip = high_subjugated_tribute_taxes #Unop tooltip now matches the taxes obligation actually set, not herd
 					custom_tooltip = normal_nomad_tribute_prestige
 				}
 			}
@@ -2924,13 +2924,10 @@ start_tributary_interaction_effect = {
 					hidden_effect = {
 						tributary_contract_set_obligation_level = { type = default_tributary_taxes level = 2 }
 						tributary_contract_set_obligation_level = { type = default_tributary_prestige level = 2 }
-						tributary_contract_set_obligation_level = { type = suzerain_war_participation_guarantee level = 1 }
-						tributary_contract_set_obligation_level = { type = tributary_war_participation_obligation level = 0 }
 					}
 				}
 				custom_tooltip = high_subjugated_tribute_taxes
 				custom_tooltip = high_subjugated_tribute_prestige
-				custom_tooltip = suzerain_guarantee
 			}
 			else_if = {
 				limit = { scope:low_obligations ?= yes }
@@ -2939,13 +2936,10 @@ start_tributary_interaction_effect = {
 					hidden_effect = {
 						tributary_contract_set_obligation_level = { type = default_tributary_taxes level = 1 }
 						tributary_contract_set_obligation_level = { type = default_tributary_prestige level = 0 }
-						tributary_contract_set_obligation_level = { type = suzerain_war_participation_guarantee level = 0 } #Unop meager tier does not grant the guarantee
-						tributary_contract_set_obligation_level = { type = tributary_war_participation_obligation level = 0 }
 					}
 				}
 				custom_tooltip = low_subjugated_tribute_taxes
 				custom_tooltip = none_subjugated_tribute_prestige
-				custom_tooltip = no_suzerain_guarantee #Unop tooltip now matches the obligation actually set
 			}
 			else = {
 				if = {
@@ -2953,14 +2947,19 @@ start_tributary_interaction_effect = {
 					hidden_effect = {
 						tributary_contract_set_obligation_level = { type = default_tributary_taxes level = 2 }
 						tributary_contract_set_obligation_level = { type = default_tributary_prestige level = 1 }
-						tributary_contract_set_obligation_level = { type = suzerain_war_participation_guarantee level = 1 }
-						tributary_contract_set_obligation_level = { type = tributary_war_participation_obligation level = 0 }
 					}
 				}
 				custom_tooltip = high_subjugated_tribute_taxes
 				custom_tooltip = normal_subjugated_tribute_prestige
-				custom_tooltip = suzerain_guarantee
 			}
+			if = {
+				limit = { is_tributary = yes } # suppress error logging
+				hidden_effect = {
+					tributary_contract_set_obligation_level = { type = suzerain_war_participation_guarantee level = 1 }
+					tributary_contract_set_obligation_level = { type = tributary_war_participation_obligation level = 0 }
+				}
+			}
+			custom_tooltip = suzerain_guarantee
 			custom_tooltip = no_tributary_war_obligations
 		}
 	}
