@@ -197,7 +197,50 @@ mpo_gok_submitting_coward_trigger = {
 }
 
 mpo_war_of_defiance_notified_player_trigger = {
-	#Unop take the gok as a parameter; vanilla used root, but the caller is a casus belli on_victory where root is the casus belli, not a character
+	NOT = {
+		this = root
+	}
+	OR = {
+		top_liege = root
+		top_suzerain = root
+		any_character_situation = {
+			this = situation:the_great_steppe
+		}
+		any_relation = {
+			type = rival
+			this = root
+		}
+		#Those within same de jure empire
+		capital_county ?= {
+			empire = {
+				any_de_jure_county = {
+					holder.top_liege = {
+						this = root
+					}
+				}
+			}
+		}
+		capital_county ?= {
+			empire = {
+				any_de_jure_county = {
+					holder.top_suzerain = {
+						this = root
+					}
+				}
+			}
+		}
+		AND = {
+			exists = root.capital_county
+			realm_to_title_distance_squared = {
+				target = root.capital_county
+				value <= squared_distance_almost_massive
+			}
+		}
+	}
+}
+
+unop_war_of_defiance_notified_player_trigger = {
+	#Unop counterpart taking the gok as a parameter; the caller is a casus belli on_victory where root is the casus belli, not a character
 	NOT = {
 		this = $GOK$
 	}

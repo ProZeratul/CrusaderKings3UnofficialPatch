@@ -4555,11 +4555,11 @@ mpo_great_war_of_defiance_cb = {
 					any_character_war = {
 						this = scope:gok_war
 					}
-					#Unop pass the gok explicitly; vanilla tried to bind root via save_temporary_scope_as (a no-op in a trigger), so the connection checks ran against the casus belli instead of the defender
+					#Unop call a unop counterpart taking the gok explicitly; vanilla tried to bind root via save_temporary_scope_as (a no-op in a trigger), so the connection checks ran against the casus belli instead of the defender
 #					scope:defender = {
 #						save_temporary_scope_as = root
 #					}
-					mpo_war_of_defiance_notified_player_trigger = { GOK = scope:defender }
+					unop_war_of_defiance_notified_player_trigger = { GOK = scope:defender }
 				}
 			}
 			trigger_event = {
