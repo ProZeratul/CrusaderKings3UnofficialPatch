@@ -18,9 +18,19 @@ e_goryeo = {
 					}
 				}
 			}
-			custom_tooltip = {
-				text = unify_goryeo_decision_requirement_tt
-				NOT = { government_allows = administrative }
+			OR = { #Unop also allow recreation after e_goryeo is destroyed, once the one-time formation decision is gone
+				custom_tooltip = {
+					text = unify_goryeo_decision_requirement_tt
+					NOT = { government_allows = administrative }
+				}
+				custom_description = {
+					text = unify_goryeo_recreate_after_destruction_tt
+					NOT = { exists = title:e_goryeo.holder }
+					is_target_in_global_variable_list = {
+						name = unavailable_unique_decisions
+						target = flag:unify_goryeo_decision
+					}
+				}
 			}
 		}
 	}
