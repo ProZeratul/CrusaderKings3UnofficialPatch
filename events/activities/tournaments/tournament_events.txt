@@ -15101,7 +15101,10 @@ tournament_events.6053 = { # Disqualification ping
 			}
 			if = {
 				limit = { exists = scope:sabotage_disqualified }
-				custom_tooltip = tournament_contest_disqualify_tt
+				custom_description = {
+					text = tournament_contest_disqualify_tt
+					subject = scope:sabotage_actor
+				}
 				scope:sabotage_actor = {
 					add_opinion = {
 						target = scope:host
