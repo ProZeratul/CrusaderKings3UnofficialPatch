@@ -233,8 +233,8 @@ tribute_mission_decision_effect = {
 				tribute_mission_set_up_tribute_travel_effect = yes
 			}
 
-			scope:tribute_mission_concubine = { # Concubine
-				every_courtier_or_guest = {
+			scope:tribute_mission_concubine = { # Concubine				
+				random_courtier_or_guest = { #Unop: Rewrite the script as the original one was ... special
 					limit = {
 						can_be_offered_as_concubine_to_character_trigger = {
 							GIVER = root
@@ -242,48 +242,44 @@ tribute_mission_decision_effect = {
 						}
 						tribute_mission_is_available_concubine_trigger = yes
 					}
-					add_to_list = potential_concubine_tribute_list
-					random_in_list = {
-						list = potential_concubine_tribute_list
-						weight = {
-							#Let's try to make a sane choice here
-							base = 0
-							#No marginally relevant court people
-							modifier = {
-								add = 10
-								NOR = {
-									is_councillor = yes
-									has_any_court_position = yes
-								}
-							}
-							#No knights
-							modifier = {
-								add = 5
-								is_knight = no
-							}
-							#No inspired people?
-							modifier = {
-								add = 20
-								NOT = { exists = inspiration }
-							}
-							#No close family
-							modifier = {
-								add = 15
-								NOT = { is_close_or_extended_family_of = root }
-							}
-							#No friends?
-							modifier = {
-								add = 20
-								NOT = { has_relation_friend = root }
-							}
-							#No children
-							modifier = {
-								add = 25
-								NOT = { is_child_of = root }
+					weight = {
+						#Let's try to make a sane choice here
+						base = 0
+						#No marginally relevant court people
+						modifier = {
+							add = 10
+							NOR = {
+								is_councillor = yes
+								has_any_court_position = yes
 							}
 						}
-						save_scope_as = decision_predetermined_concubine_tribute
-					}
+						#No knights
+						modifier = {
+							add = 5
+							is_knight = no
+						}
+						#No inspired people?
+						modifier = {
+							add = 20
+							NOT = { exists = inspiration }
+						}
+						#No close family
+						modifier = {
+							add = 15
+							NOT = { is_close_or_extended_family_of = root }
+						}
+						#No friends?
+						modifier = {
+							add = 20
+							NOT = { has_relation_friend = root }
+						}
+						#No children
+						modifier = {
+							add = 25
+							NOT = { is_child_of = root }
+						}
+					}					
+					save_scope_as = decision_predetermined_concubine_tribute
 				}
 				scope:decision_predetermined_concubine_tribute = {
 					add_character_flag = {

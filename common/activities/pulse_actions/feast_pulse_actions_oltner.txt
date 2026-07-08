@@ -897,13 +897,14 @@ guest_impressed_by_court_artifact = {
 		}
 		
 		scope:host = {
-			save_scope_as = second
+			#save_scope_as = second #Unop: the second scope is a hard link to the toast in the activity panel (it is not the case in the activity log)
 			random_character_artifact = { #Unop: Changed to show the artifact in the activity journal
 				limit = {
 					ep1_artifact_is_court_artifact_trigger = yes
 					is_equipped = yes
 				}
-				save_scope_as = artifact
+				save_scope_as = second #Unop: Registering the second as the artifact itself to be shown in the toast
+				save_scope_as = artifact #Unop: This could be removed and only use second, but for clarity I seperate this one
 			}
 		}
 		random_attending_character = {
@@ -919,7 +920,7 @@ guest_impressed_by_court_artifact = {
 			key = guest_impressed_by_court_artifact
 			tags = { pulse_action }
 			character = scope:first
-			#target = scope:second
+			#target = scope:second #Unop: Commented out to show the artifact properly
 			artifact = scope:artifact #Unop: Changed to show the artifact in the activity journal
 			
 			scope:host = {
