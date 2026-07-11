@@ -14635,10 +14635,12 @@ tournament_events.6051 = { # Sabotage Outcome
 						}
 					}
 				}
-				remove_variable = contest_aptitude
-				add_character_flag = {
-					flag = disqualified_contest_flag #Unop: Use correct flag
-					months = 2
+				scope:sabotage_actor = {
+					remove_variable = contest_aptitude
+					add_character_flag = {
+						flag = disqualified_contest_flag #Unop: Use correct flag
+						months = 2
+					}
 				}
 				scope:activity = {
 					add_activity_log_entry = {
@@ -14901,7 +14903,7 @@ tournament_events.6052 = { # Host disqualification decision
 			}
 		}
 		ai_chance = {
-			base = 100
+			base = 500
 			opinion_modifier = {
 				who = scope:host
 				opinion_target = scope:sabotage_target
@@ -14953,7 +14955,7 @@ tournament_events.6052 = { # Host disqualification decision
 			}
 		}
 		ai_chance = {
-			base = 50
+			base = 0
 			opinion_modifier = {
 				who = scope:host
 				opinion_target = scope:sabotage_actor

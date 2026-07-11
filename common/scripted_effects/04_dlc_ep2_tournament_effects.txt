@@ -2646,6 +2646,7 @@ tournament_contest_versus_disqualification_effect = {
 		save_scope_as = contest_loser
 		remove_variable = contest_aptitude
 		remove_variable = progress_to_victory
+		remove_variable = progress_to_victory_score #Unop: Also remove that one
 		add_character_flag = {
 			flag = disqualified_contest_flag
 			months = 2
@@ -2686,6 +2687,11 @@ tournament_contest_versus_disqualification_effect = {
 					target = scope:disqualify_match
 					phase = tournament_phase_$CONTEST$
 				}
+				#add_to_guest_subset = {
+				#	name = second_place
+				#	target = scope:disqualify_target
+				#	phase = tournament_phase_$CONTEST$
+				#}
 			}
 		}
 		add_activity_log_entry = {
@@ -2745,6 +2751,7 @@ tournament_contest_disqualification_effect = {
 	scope:disqualify_target = {
 		remove_variable = contest_aptitude
 		remove_variable = progress_to_victory
+		remove_variable = progress_to_victory_score #Unop: Also remove that one
 		add_character_flag = {
 			flag = disqualified_contest_flag
 			months = 2
@@ -6971,6 +6978,7 @@ tournament_contest_replace_qualifier_effect = {
 	scope:old_contestant = {
 		remove_variable = contest_aptitude
 		remove_variable = progress_to_victory
+		remove_variable = progress_to_victory_score
 		save_scope_as = disqualify_target
 	}
 	scope:new_contestant = {
