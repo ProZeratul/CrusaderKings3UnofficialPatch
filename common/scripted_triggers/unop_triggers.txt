@@ -11,3 +11,51 @@ unop_is_coup_powerful_vassal_trigger = {
 		is_powerful_vassal = yes
 	}
 }
+
+unop_is_loaded = { #Unop: For other mods to check if unop is there
+	always = yes
+}
+
+# Counterpart of vanilla mpo_war_of_defiance_notified_player_trigger taking the new Gurkhan as a parameter; the vanilla one is called from a casus belli on_victory where root is the casus belli, not a character
+unop_war_of_defiance_notified_player_trigger = {
+	NOT = {
+		this = $GOK$
+	}
+	OR = {
+		top_liege = $GOK$
+		top_suzerain = $GOK$
+		any_character_situation = {
+			this = situation:the_great_steppe
+		}
+		any_relation = {
+			type = rival
+			this = $GOK$
+		}
+		#Those within same de jure empire
+		capital_county ?= {
+			empire = {
+				any_de_jure_county = {
+					holder.top_liege = {
+						this = $GOK$
+					}
+				}
+			}
+		}
+		capital_county ?= {
+			empire = {
+				any_de_jure_county = {
+					holder.top_suzerain = {
+						this = $GOK$
+					}
+				}
+			}
+		}
+		AND = {
+			exists = $GOK$.capital_county
+			realm_to_title_distance_squared = {
+				target = $GOK$.capital_county
+				value <= squared_distance_almost_massive
+			}
+		}
+	}
+}

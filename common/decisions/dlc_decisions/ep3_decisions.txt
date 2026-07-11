@@ -115,7 +115,7 @@ restore_backwater_counties_decision = {
 		county = 0
 		duchy = 120
 		kingdom = 120
-		empire = 0
+		empire = 120 #Unop Let the AI check this decision for empire-tier vassal governors
 		hegemony = 0
 	}
 
@@ -127,12 +127,13 @@ restore_backwater_counties_decision = {
 
 	is_shown = {
 		has_ep3_dlc_trigger = yes
-		primary_title ?= {
-			OR = {
-				tier = tier_duchy
-				tier = tier_kingdom
-			}
-		}
+		is_governor = yes #Unop Gate on being a governor (vassal with a liege) instead of duchy/kingdom tier, so empire-tier vassal governors qualify while independent emperors stay excluded
+		#primary_title ?= {
+		#	OR = {
+		#		tier = tier_duchy
+		#		tier = tier_kingdom
+		#	}
+		#}
 		any_sub_realm_county = {
 			has_county_modifier = backwater_county_modifier
 		}
@@ -272,6 +273,26 @@ restore_backwater_counties_decision = {
 				# Trigger the event for the emperor to see if all the counties have been cleared
 				trigger_event = ep3_decisions_event.3001
 			}
+		}
+	}
+
+	ai_will_do = { #Unop Give the AI weights so governors actually take this decision
+		base = 20
+		modifier = {
+			has_trait = ambitious
+			add = 20
+		}
+		modifier = {
+			has_trait = diligent
+			add = 10
+		}
+		modifier = {
+			has_trait = content
+			add = -10
+		}
+		modifier = {
+			has_trait = lazy
+			add = -10
 		}
 	}
 }
@@ -676,6 +697,11 @@ ask_western_help_decision = {
 			NOT = { has_doctrine_parameter = great_holy_wars_active }
 		}
 		government_has_flag = government_is_administrative
+		#Unop AI is charged influence in effect, not the cost block, so still require it can afford it
+		trigger_if = {
+			limit = { is_ai = yes }
+			influence >= unop_ask_western_help_influence_cost
+		}
 	}
 
 	is_valid = {
@@ -744,13 +770,18 @@ ask_western_help_decision = {
 		prestige = {
 			value = 300
 		}
+		#Unop AI never budgets cost-block influence; charge it via is_shown/effect below
 		influence = {
-			value = massive_influence_value
-			multiply = 2
+			value = 0
+			if = {
+				limit = { is_ai = no }
+				add = unop_ask_western_help_influence_cost
+			}
 		}
 	}
 
 	effect = {
+		debug_log = "unop_475 ask_western_help_decision" #Unop debug log to confirm issue #475
 		custom_tooltip = ask_western_help_decision_effect_desc
 		hidden_effect = {
 			save_scope_as = caller
@@ -893,6 +924,11 @@ ask_western_help_decision = {
 					days = 3
 				}
 			}
+		}
+		#Unop AI pays the influence here since the cost block is free for it
+		if = {
+			limit = { is_ai = yes }
+			change_influence = { subtract = unop_ask_western_help_influence_cost }
 		}
 	}
 
@@ -2995,6 +3031,11 @@ foster_integration_decision = {
 			}
 			domicile.domicile_location.county.culture != root.top_liege.culture
 		}
+		#Unop AI is charged influence in effect, not the cost block, so still require it can afford it
+		trigger_if = {
+			limit = { is_ai = yes }
+			influence >= unop_foster_integration_influence_cost
+		}
 	}
 
 	is_valid = {
@@ -3017,15 +3058,18 @@ foster_integration_decision = {
 	}
 
 	cost = {
+		#Unop AI never budgets cost-block influence; charge it via is_shown/effect below
 		influence = {
-			value = {
-				add = major_influence_value
-				multiply = 2
+			value = 0
+			if = {
+				limit = { is_ai = no }
+				add = unop_foster_integration_influence_cost
 			}
 		}
 	}
 
 	effect = {
+		debug_log = "unop_475 foster_integration_decision" #Unop debug log to confirm issue #475
 		domicile.domicile_location.county = { save_scope_as = target_county }
 		add_character_modifier = {
 			modifier = ep3_integration_promoter_modifier
@@ -3106,6 +3150,11 @@ foster_integration_decision = {
 				}
 			}
 		}
+		#Unop AI pays the influence here since the cost block is free for it
+		if = {
+			limit = { is_ai = yes }
+			change_influence = { subtract = unop_foster_integration_influence_cost }
+		}
 	}
 
 	ai_check_interval_by_tier = {
@@ -3162,6 +3211,11 @@ gather_faction_support_decision = {
 		domicile ?= {
 			is_domicile_type = estate
 		}
+		#Unop AI is charged influence in effect, not the cost block, so still require it can afford it
+		trigger_if = {
+			limit = { is_ai = yes }
+			influence >= unop_gather_faction_support_influence_cost
+		}
 	}
 
 	is_valid = {
@@ -3184,15 +3238,18 @@ gather_faction_support_decision = {
 	}
 
 	cost = {
+		#Unop AI never budgets cost-block influence; charge it via is_shown/effect below
 		influence = {
-			value = {
-				add = massive_influence_value
-				multiply = 2
+			value = 0
+			if = {
+				limit = { is_ai = no }
+				add = unop_gather_faction_support_influence_cost
 			}
 		}
 	}
 
 	effect = {
+		debug_log = "unop_475 gather_faction_support_decision" #Unop debug log to confirm issue #475
 		joined_faction = { save_scope_as = the_faction }
 		add_joined_faction_discontent = 20
 		custom_tooltip = gathered_support_for_faction_get_army_tt
@@ -3200,6 +3257,11 @@ gather_faction_support_decision = {
 			name = gathered_support_for_faction
 			value = scope:the_faction
 			years = 5
+		}
+		#Unop AI pays the influence here since the cost block is free for it
+		if = {
+			limit = { is_ai = yes }
+			change_influence = { subtract = unop_gather_faction_support_influence_cost }
 		}
 	}
 

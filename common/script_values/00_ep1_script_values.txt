@@ -156,7 +156,27 @@ basic_fund_inspiration_cost = {
 	value = 100
 	if = {
 		limit = {
-			scope:inspiration_sponsor.confederation ?= { has_cohesion_level_parameter = any_member_commission_and_inspiration_reduced } #Unop: Use inspiration_sponsor for checking confederation levels
+			exists = scope:inspiration_sponsor
+		}
+		if = {
+			limit = {
+				scope:inspiration_sponsor.confederation ?= { has_cohesion_level_parameter = any_member_commission_and_inspiration_reduced } #Unop: Use inspiration_sponsor for checking confederation levels
+			}
+		}
+		multiply = {
+			value = 0.9
+			desc = CB_COHESION_PARAMETER_DISCOUNT
+		}
+	}
+	else_if = {
+		limit = {
+			exists = scope:inspiration_owner
+			exists = scope:inspiration_owner.liege
+		}
+		if = {
+			limit = {
+				scope:inspiration_owner.liege.confederation ?= { has_cohesion_level_parameter = any_member_commission_and_inspiration_reduced } #Unop: Use liege for checking confederation levels
+			}
 		}
 		multiply = {
 			value = 0.9

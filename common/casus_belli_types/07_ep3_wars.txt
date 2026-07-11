@@ -6052,11 +6052,17 @@ ep3_laamp_peasant_war = {
 				save_scope_as = old_title
 			}
 			show_pow_release_message_effect = yes
-			#set this to not display the event to keep playing as landless
-			set_variable = became_landed_through_separatist_uprising_var
-			#swap the peasant trait for the better one 
-			remove_trait = peasant_leader
-			add_trait = populist_leader
+			#Unop only set the variable and swap the trait when actually becoming landed
+			if = {
+				limit = {
+					NOT = { has_variable = ep3_laamp_peasant_war_remain_laamp }
+				}
+				#set this to not display the event to keep playing as landless
+				set_variable = became_landed_through_separatist_uprising_var
+				#swap the peasant trait for the better one
+				remove_trait = peasant_leader
+				add_trait = populist_leader
+			}
 			if = {
 				limit = {
 					has_variable = ep3_laamp_peasant_war_remain_laamp

@@ -1614,7 +1614,24 @@ alchemy_inspiration = {
 }
 
 research_inspiration = {
-	gold = scope:inspiration_sponsor.fp3_research_base_cost #Unop: So the cost is actually correctly calculated
+	gold = { #Unop: So the cost is actually correctly calculated
+		value = 0
+		if = {
+			limit = {
+				exists = scope:inspiration_sponsor
+			}
+			add = scope:inspiration_sponsor.fp3_research_base_cost
+		}
+		else_if = {
+			limit = {
+				exists = scope:inspiration_owner.liege
+			}
+			add = scope:inspiration_owner.liege.fp3_research_base_cost
+		}
+		else = {
+			add = scope:inspiration_owner.fp3_research_base_cost
+		}	
+	}
 
 	progress_chance = 75
 
@@ -1702,7 +1719,24 @@ research_inspiration = {
 }
 
 religious_inspiration = {
-	gold = scope:inspiration_sponsor.medium_gold_value #Unop: So the cost is actually correctly calculated
+	gold = { #Unop: So the cost is actually correctly calculated
+		value = 0
+		if = {
+			limit = {
+				exists = scope:inspiration_sponsor
+			}
+			add = scope:inspiration_sponsor.medium_gold_value
+		}
+		else_if = {
+			limit = {
+				exists = scope:inspiration_owner.liege
+			}
+			add = scope:inspiration_owner.liege.medium_gold_value
+		}
+		else = {
+			add = scope:inspiration_owner.medium_gold_value
+		}	
+	}
 
 	progress_chance = 100
 

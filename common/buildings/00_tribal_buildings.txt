@@ -245,11 +245,21 @@ tribe_02 = {
 	can_construct_potential = {
 	}
 	can_construct_showing_failures_only = {
-		OR = {
+		trigger_if = { #Unop: Do not call mpo_permafrost_building_trigger = yes, instead do it like this so the condition to upgrade will be respected and shown if not
+			limit = {
+				county = {
+					has_county_modifier = mpo_siberian_permafrost_modifier
+				}		
+			}
+			culture ?= scope:holder.culture
+			culture ?= {
+				has_cultural_tradition = tradition_mpo_northern_tribes
+			}
+		}
+		trigger_else = {
 			scope:holder = {
 				culture = { has_innovation = innovation_plenary_assemblies }
 			}
-			mpo_permafrost_building_trigger = yes
 		}
 	}
 	
@@ -359,12 +369,22 @@ longhouses_02 = {
 		scope:holder = { NOT = { government_has_flag = government_is_wanua } }
 	}
 	can_construct_showing_failures_only = {
-		OR = {
-			mpo_permafrost_building_trigger = yes
+		trigger_if = { #Unop: Do not call mpo_permafrost_building_trigger = yes, instead do it like this so the condition to upgrade will be respected and shown if not
+			limit = {
+				county = {
+					has_county_modifier = mpo_siberian_permafrost_modifier
+				}		
+			}
+			culture ?= scope:holder.culture
+			culture ?= {
+				has_cultural_tradition = tradition_mpo_northern_tribes
+			}
+		}
+		trigger_else = {
 			scope:holder = {
 				culture = { has_innovation = innovation_barracks }
 			}
-		}		
+		}
 	}
 	
 	cost_prestige = expensive_building_tier_2_cost
@@ -452,8 +472,18 @@ war_camps_02 = {
 		scope:holder = { NOT = { government_has_flag = government_is_wanua } }
 	}
 	can_construct_showing_failures_only = {
-		OR = {
-			mpo_permafrost_building_trigger = yes
+		trigger_if = { #Unop: Do not call mpo_permafrost_building_trigger = yes, instead do it like this so the condition to upgrade will be respected and shown if not
+			limit = {
+				county = {
+					has_county_modifier = mpo_siberian_permafrost_modifier
+				}		
+			}
+			culture ?= scope:holder.culture
+			culture ?= {
+				has_cultural_tradition = tradition_mpo_northern_tribes
+			}
+		}
+		trigger_else = {
 			scope:holder = {
 				culture = { has_innovation = innovation_barracks }
 			}
@@ -549,8 +579,18 @@ palisades_02 = {
 		scope:holder = { NOT = { government_has_flag = government_is_wanua } }
 	}
 	can_construct_showing_failures_only = {
-		OR = {
-			mpo_permafrost_building_trigger = yes
+		trigger_if = { #Unop: Do not call mpo_permafrost_building_trigger = yes, instead do it like this so the condition to upgrade will be respected and shown if not
+			limit = {
+				county = {
+					has_county_modifier = mpo_siberian_permafrost_modifier
+				}		
+			}
+			culture ?= scope:holder.culture
+			culture ?= {
+				has_cultural_tradition = tradition_mpo_northern_tribes
+			}
+		}
+		trigger_else = {
 			scope:holder = {
 				culture = { has_innovation = innovation_barracks }
 			}
@@ -629,8 +669,18 @@ market_villages_02 = {
 		scope:holder = { NOT = { government_has_flag = government_is_wanua } }
 	}
 	can_construct_showing_failures_only = {
-		OR = {
-			mpo_permafrost_building_trigger = yes
+		trigger_if = { #Unop: Do not call mpo_permafrost_building_trigger = yes, instead do it like this so the condition to upgrade will be respected and shown if not
+			limit = {
+				county = {
+					has_county_modifier = mpo_siberian_permafrost_modifier
+				}		
+			}
+			culture ?= scope:holder.culture
+			culture ?= {
+				has_cultural_tradition = tradition_mpo_northern_tribes
+			}
+		}
+		trigger_else = {
 			scope:holder = {
 				culture = { has_innovation = innovation_barracks }
 			}
