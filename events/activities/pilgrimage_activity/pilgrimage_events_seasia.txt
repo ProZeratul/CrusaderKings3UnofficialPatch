@@ -1616,11 +1616,11 @@ pilgrimage_seasia.1000 = {
 				limit = {
 					tier = tier_county
 					religion = religion:islam_religion
-					#Unop inline the former province_has_no_holding_trigger body: this picks a developed merchant home, unrelated to whether a holding can be built
+					#Unop inline the former province_has_no_holding_trigger body (De Morgan of its negation): pick a developed merchant home, unrelated to whether a holding can be built
 					title_province = {
-						NOT = {
-							has_ongoing_construction = no
-							has_holding = no
+						OR = {
+							has_ongoing_construction = yes
+							has_holding = yes
 						}
 					}
 					is_coastal_county = yes
