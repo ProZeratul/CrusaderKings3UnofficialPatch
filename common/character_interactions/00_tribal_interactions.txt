@@ -692,6 +692,26 @@ support_feudalize_tribal_holding_interaction = {
 				}	
 			}
 		}
+		#Unop Feudalizing the holding through this interaction must also clear the Siberian permafrost debuff, mirroring feudalize_holding_interaction
+		hidden_effect = {
+			scope:target ?= {
+				if = {
+					limit = {
+						title_province = {
+							geographical_region = geographical_region:mpo_region_permafrost
+						}
+					}
+					if = {
+						limit = { has_county_modifier = mpo_siberian_permafrost_modifier }
+						remove_county_modifier = mpo_siberian_permafrost_modifier
+					}
+					else_if = {
+						limit = { has_county_modifier = mpo_siberian_permafrost_modifier_bad }
+						remove_county_modifier = mpo_siberian_permafrost_modifier_bad
+					}
+				}
+			}
+		}
 		scope:actor = {
 			# If you are admin, you get some influence for your efforts
 			if = {
