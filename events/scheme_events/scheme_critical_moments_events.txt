@@ -2461,13 +2461,13 @@ scheme_critical_moments.1172 = {
 		scope:target = {
 			save_scope_as = recipient # To fix loc
 			set_variable = {
-				#Unop Reward is a fraction of the target's own influence (steal_herd model), not the flat "50 + scheme_success_chance" which tied the payout to the unrelated success percentage and paid the same for a pauper as for the emperor
+				#Unop Reward is a fraction of the target's own influence, not the flat "50 + scheme_success_chance" which tied the payout to the unrelated success percentage and paid the same for a pauper as for the emperor
 				name = challenge_status_influence_loss
 				value = {
-					value = influence #Unop the target's current influence (this block runs inside scope:target)
-					multiply = 0.25 #Unop fraction of the target's influence transferred; magnitude is a balance call, flagged for tuning
-					min = 0 #Unop a target with no (or negative) influence yields nothing rather than conjuring a reward
-					max = 200 #Unop absolute ceiling; higher than the old ~145 max so rare 800+ influence targets compensate for the smaller reward on less influential ones
+					value = influence
+					multiply = 0.25
+					min = 0
+					max = 200
 				}
 			}
 		}
