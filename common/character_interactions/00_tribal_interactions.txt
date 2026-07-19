@@ -741,7 +741,9 @@ support_feudalize_tribal_holding_interaction = {
 		is_at_war = no
 		is_adult = yes
 		# The AI only does this if they have plenty of gold to spare
-		gold >= { value = feudalize_holding_interaction_cost multiply = 4 }
+		#Unop feudalize_holding_interaction_cost reads scope:target.county, which is not set here in ai_potential, so its permafrost surcharge branch never applied; use the resolved base cost (500) x4 directly
+		#gold >= { value = feudalize_holding_interaction_cost multiply = 4 }
+		gold >= 2000
 		# Warring AI don't do this - They want to spend their gold on war!
 		ai_has_warlike_personality = no
 		# Piety and Legitimacy, you say... ?
