@@ -16391,8 +16391,14 @@ ep3_laamp_decision_event.1050 = {
 				}
 			}
 			#Been there, done that
+			#Unop Also block on the persistent cooldown variable, so leaving and re-entering the settlement (which drops the saved scope) does not reset the training cooldown
 			trigger_else_if = {
-				limit = { scope:laamp_decision_has_trained ?= flag:yes }
+				limit = {
+					OR = {
+						scope:laamp_decision_has_trained ?= flag:yes
+						has_variable = 1051_has_trained_recently
+					}
+				}
 				custom_tooltip = {
 					text = ep3_laamp_decision_event.1050.a.cooldown.tt
 					always = no
@@ -16739,6 +16745,11 @@ scripted_effect 1051_finished_training_effect = {
 	save_scope_value_as = {
 		name = laamp_decision_has_trained
 		value = flag:yes
+	}
+	#Unop Persistent cooldown so training can't be repeated by leaving and re-entering the settlement, mirroring the storyteller's 1031_has_storied_recently
+	set_variable = {
+		name = 1051_has_trained_recently
+		days = visit_settlement_minimum_cooldown_days
 	}
 	#Go back to castle grounds
 	hidden_effect = { 1051_return_to_castle_effect = yes }
