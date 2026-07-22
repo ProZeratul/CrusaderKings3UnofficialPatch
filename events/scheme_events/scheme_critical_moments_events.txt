@@ -2461,10 +2461,13 @@ scheme_critical_moments.1172 = {
 		scope:target = {
 			save_scope_as = recipient # To fix loc
 			set_variable = {
+				#Unop Reward is a fraction of the target's own influence, not the flat "50 + scheme_success_chance" which tied the payout to the unrelated success percentage and paid the same for a pauper as for the emperor
 				name = challenge_status_influence_loss
 				value = {
-					value = 50
-					add = scope:scheme.scheme_success_chance
+					value = influence
+					multiply = 0.25
+					min = 0
+					max = 200
 				}
 			}
 		}
