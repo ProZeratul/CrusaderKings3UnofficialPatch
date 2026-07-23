@@ -42,11 +42,38 @@
 				#That someone and their betrothed are alive and adults and can marry
 				var:promised_grand_wedding_marriage_countdown = {
 					is_valid_grand_wedding_special_guest_trigger = { OTHER_SPOUSE = root.var:promised_grand_wedding_marriage_countdown.betrothed }
-					NOT = { any_invited_activity = {} }
+					#NOT = { any_invited_activity = {} } #Unop: Moved below as this as nothing to do with the actual text
 				}
 				var:promised_grand_wedding_marriage_countdown.betrothed = {
 					is_valid_grand_wedding_special_guest_trigger = { OTHER_SPOUSE = root.var:promised_grand_wedding_marriage_countdown }
-					NOT = { any_invited_activity = {} }
+					#NOT = { any_invited_activity = {} } #Unop: Moved below as this as nothing to do with the actual text
+				}
+			}
+			#Unop: Make a tooltip saying who is invited and can still join an activity
+			custom_tooltip = {
+				text = gw_betrothed_invited
+				var:promised_grand_wedding_marriage_countdown = {
+					NOT = { 
+						any_invited_activity = {
+							root.var:promised_grand_wedding_marriage_countdown = {
+								can_join_activity = prev
+								can_arrive_in_time_to_activity_minimum = prev
+							}
+						}
+					}
+				}
+			}
+			custom_tooltip = {
+				text = gw_betrothed2_invited
+				var:promised_grand_wedding_marriage_countdown.betrothed = {
+					NOT = { 
+						any_invited_activity = {
+							root.var:promised_grand_wedding_marriage_countdown.betrothed = {
+								can_join_activity = prev
+								can_arrive_in_time_to_activity_minimum = prev
+							}
+						}
+					}
 				}
 			}
 		}
