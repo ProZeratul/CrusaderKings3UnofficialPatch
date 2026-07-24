@@ -59,3 +59,16 @@ unop_war_of_defiance_notified_player_trigger = {
 		}
 	}
 }
+
+# An independent nomad settling into administration should reach the Meritocratic Khanate (steppe_admin)
+# government - the natural steppe-admin form - rather than skipping it for plain Meritocratic/Administrative.
+# Used in change_to_administrative_effect to give the steppe_admin branch an independent-ruler resolution path,
+# mirroring the meritocratic/celestial/ritsuryo branches. Restricted to current nomads so other callers are unaffected.
+unop_should_become_steppe_admin_trigger = {
+	government_has_flag = government_is_nomadic
+	has_tgp_dlc_trigger = yes
+	is_independent_ruler = yes
+	capital_province = {
+		geographical_region = world_steppe
+	}
+}

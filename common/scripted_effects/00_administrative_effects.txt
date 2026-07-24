@@ -195,6 +195,12 @@ change_to_administrative_effect = {
 					# There's a separate decision to go from Nomad to Meritocratic Khanate, so you cannot pick it from here
 					always = no
 				}
+				trigger_else_if = { #Unop An independent settling nomad should reach the Meritocratic Khanate, not skip it for plain Meritocratic
+					limit = {
+						scope:governor_liege ?= this
+					}
+					unop_should_become_steppe_admin_trigger = yes
+				}
 				trigger_else = {
 					scope:governor_liege = { government_has_flag = government_is_steppe_admin }
 				}
