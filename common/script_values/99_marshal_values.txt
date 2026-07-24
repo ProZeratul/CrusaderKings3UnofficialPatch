@@ -605,7 +605,7 @@ marshal_overtime_boost_scale = {
 		limit = {
 			scope:councillor_liege = { has_variable = marshal_overtime_boost }
 		}
-		add = liege.var:marshal_overtime_boost
+		add = scope:councillor_liege.var:marshal_overtime_boost #Unop the variable is stored on the council owner (scope:councillor_liege), not on the owner's own liege
 	}
 }
 
@@ -636,9 +636,9 @@ marshal_overtime_decrease_scale = {
 	}
 	else_if = {
 		limit = {
-			scope:councillor_liege = { has_variable = marshal_overtime_boost }
+			scope:councillor_liege = { has_variable = marshal_overtime_decrease } #Unop guard on the variable actually read below (was marshal_overtime_boost, a copy-paste error)
 		}
-		add = liege.var:marshal_overtime_decrease
+		add = scope:councillor_liege.var:marshal_overtime_decrease #Unop the variable is stored on the council owner (scope:councillor_liege), not on the owner's own liege
 	}
 	multiply = -1
 }
