@@ -3854,7 +3854,31 @@ accolade_squires_boost_prowess_effect = {
 		}
 	}
 	#If prowess is too low, get up to minimum
+	#Unop The minimum must match the knight requirement, otherwise the new acclaimed knight is rejected as a knight
 	if = {
+		limit = {
+			scope:owner.culture ?= {
+				has_cultural_parameter = minimum_prowess_for_knights
+			}
+			prowess < 12
+		}
+		save_scope_value_as = {
+			name = prowess
+			value = prowess
+		}
+
+		if = {
+			limit = {
+				prowess > 0
+			}
+			add_prowess_skill = {
+				value = scope:prowess
+				multiply = -1
+			}
+		}
+		add_prowess_skill = 12
+	}
+	else_if = {
 		limit = {
 			prowess < 8
 		}
@@ -4989,7 +5013,9 @@ accolade_squire_training_effect = {
 							title_tier = county
 							is_landless_type_title = no
 							any_county_province = {
-								location_has_harsh_winter_trigger = yes
+								#Unop Already in province scope here, so `location` does not resolve
+								#location_has_harsh_winter_trigger = yes
+								has_province_modifier = winter_harsh_modifier
 							}
 						}
 					}
@@ -5805,7 +5831,9 @@ accolade_squire_training_effect = {
 										title_tier = county
 										is_landless_type_title = no
 										any_county_province = {
-											location_has_harsh_winter_trigger = yes
+											#Unop Already in province scope here, so `location` does not resolve
+											#location_has_harsh_winter_trigger = yes
+											has_province_modifier = winter_harsh_modifier
 										}
 									}
 								}
@@ -7537,7 +7565,9 @@ accolade_knight_training_effect = {
 							title_tier = county
 							is_landless_type_title = no
 							any_county_province = {
-								location_has_harsh_winter_trigger = yes
+								#Unop Already in province scope here, so `location` does not resolve
+								#location_has_harsh_winter_trigger = yes
+								has_province_modifier = winter_harsh_modifier
 							}
 						}
 					}
@@ -8232,7 +8262,9 @@ accolade_knight_training_effect = {
 										title_tier = county
 										is_landless_type_title = no
 										any_county_province = {
-											location_has_harsh_winter_trigger = yes
+											#Unop Already in province scope here, so `location` does not resolve
+											#location_has_harsh_winter_trigger = yes
+											has_province_modifier = winter_harsh_modifier
 										}
 									}
 								}
