@@ -71,18 +71,24 @@ ep3_roman_restoration.0100 = {
 				destroy_title = prev
 			}
 		}
-		set_character_faith = faith:hellenic_pagan
+		#Unop Don't convert an already Hellenic ruler, so reformed Hellenic faiths are preserved
+		if = {
+			limit = {
+				NOT = { faith.religion = faith:hellenic_pagan.religion }
+			}
+			set_character_faith = faith:hellenic_pagan
+		}
 		if = {
 			limit = { 
-				faith:hellenic_pagan = { has_doctrine = doctrine_monotheist }
+				faith = { has_doctrine = doctrine_monotheist }
 			}
 			custom_description_no_bullet = { text = mandala_monotheist_warning_tt }
 		}
-		primary_title = { set_state_faith = faith:hellenic_pagan }
+		primary_title = { set_state_faith = root.faith }
 		every_held_title = {
 			custom = custom.every_held_county
 			title_tier = county
-			set_county_faith = faith:hellenic_pagan
+			set_county_faith = root.faith
 		}
 		every_vassal = {
 			custom = custom.every_vassal
@@ -133,18 +139,24 @@ ep3_roman_restoration.0100 = {
 				destroy_title = prev
 			}
 		}
-		set_character_faith = faith:hellenic_pagan
+		#Unop Don't convert an already Hellenic ruler, so reformed Hellenic faiths are preserved
+		if = {
+			limit = {
+				NOT = { faith.religion = faith:hellenic_pagan.religion }
+			}
+			set_character_faith = faith:hellenic_pagan
+		}
 		if = {
 			limit = { 
-				faith:hellenic_pagan = { has_doctrine = doctrine_monotheist }
+				faith = { has_doctrine = doctrine_monotheist }
 			}
 			custom_description_no_bullet = { text = mandala_monotheist_warning_tt }
 		}
-		primary_title = { set_state_faith = faith:hellenic_pagan }
+		primary_title = { set_state_faith = root.faith }
 		every_held_title = {
 			custom = custom.every_held_county
 			title_tier = county
-			set_county_faith = faith:hellenic_pagan
+			set_county_faith = root.faith
 		}
 		every_vassal = {
 			custom = custom.every_vassal
@@ -200,7 +212,8 @@ ep3_roman_restoration.0101 = {
 		desc = ep3_roman_restoration.0101.intro
 		first_valid = {
 			triggered_desc = {
-				trigger = { scope:scoped_emperor.primary_title.state_faith ?= faith:hellenic_pagan }
+				#Unop Also match reformed Hellenic faiths
+				trigger = { scope:scoped_emperor.primary_title.state_faith.religion ?= faith:hellenic_pagan.religion }
 				desc = ep3_roman_restoration.0101.hellenic
 			}
 			triggered_desc = {
