@@ -40,7 +40,9 @@ choose_designated_terrain_decision = {
 
 	is_shown = {
 		OR = {
-			is_landed = no
+			#Unop Only adventurers, not every landless government
+			#is_landed = no
+			is_landless_adventurer = yes
 			government_has_flag = government_is_nomadic
 		}
 		has_perk = mustering_the_troops_perk
@@ -199,7 +201,12 @@ choose_master_terrain_decision = {
 	decision_group_type = major
 
 	is_shown = {
-		is_landed = no
+		#Unop Only adventurers and nomads, not every landless government
+		#is_landed = no
+		OR = {
+			is_landless_adventurer = yes
+			government_has_flag = government_is_nomadic
+		}
 		has_perk = personal_touch_perk
 		NOR = {
 			# Woodlands
