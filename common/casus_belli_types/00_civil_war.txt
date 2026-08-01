@@ -243,30 +243,35 @@ independence_faction_war = {
 				multiply = -1
 			}
 			
-			if = {
-				limit = { has_realm_law = crown_authority_1 }
-				add_realm_law = crown_authority_0
-			}
-			if = {
-				limit = { has_realm_law = crown_authority_2 }
-				add_realm_law = crown_authority_1
-			}
-			if = {
-				limit = { has_realm_law = crown_authority_3 }
-				add_realm_law = crown_authority_2
-			}
-			if = {
-				limit = { has_realm_law = tribal_authority_1 }
-				add_realm_law = tribal_authority_0
-			}
-			if = {
-				limit = { has_realm_law = tribal_authority_2 }
-				add_realm_law = tribal_authority_1
-			}
-			if = {
-				limit = { has_realm_law = tribal_authority_3 }
-				add_realm_law = tribal_authority_2
-			}
+			#Unop Use the authority helpers so Administrative and Nomad rulers also lose authority, not just Feudal/Tribal
+#			if = {
+#				limit = { has_realm_law = crown_authority_1 }
+#				add_realm_law = crown_authority_0
+#			}
+#			if = {
+#				limit = { has_realm_law = crown_authority_2 }
+#				add_realm_law = crown_authority_1
+#			}
+#			if = {
+#				limit = { has_realm_law = crown_authority_3 }
+#				add_realm_law = crown_authority_2
+#			}
+#			if = {
+#				limit = { has_realm_law = tribal_authority_1 }
+#				add_realm_law = tribal_authority_0
+#			}
+#			if = {
+#				limit = { has_realm_law = tribal_authority_2 }
+#				add_realm_law = tribal_authority_1
+#			}
+#			if = {
+#				limit = { has_realm_law = tribal_authority_3 }
+#				add_realm_law = tribal_authority_2
+#			}
+			decrease_crown_authority_effect = yes
+			decrease_tribal_authority_effect = yes
+			decrease_imperial_bureaucracy_effect = yes
+			decrease_nomadic_authority_effect = yes
 		}
 		resolve_title_and_vassal_change = scope:change
 
@@ -803,7 +808,7 @@ populist_war = {
 					involvement = involved
 					activate_struggle_catalyst = {
 						catalyst = catalyst_populist_uprise
-						character = this
+						character = scope:defender #Unop `this` is the struggle here, not the character
 					}
 				}
 			}
@@ -1577,30 +1582,35 @@ refused_liege_demand_war = {
 					value = primary_title
 					months = 1
 				}
-				if = {
-					limit = { has_realm_law = crown_authority_1 }
-					add_realm_law = crown_authority_0
-				}
-				if = {
-					limit = { has_realm_law = crown_authority_2 }
-					add_realm_law = crown_authority_1
-				}
-				if = {
-					limit = { has_realm_law = crown_authority_3 }
-					add_realm_law = crown_authority_2
-				}
-				if = {
-					limit = { has_realm_law = tribal_authority_1 }
-					add_realm_law = tribal_authority_0
-				}
-				if = {
-					limit = { has_realm_law = tribal_authority_2 }
-					add_realm_law = tribal_authority_1
-				}
-				if = {
-					limit = { has_realm_law = tribal_authority_3 }
-					add_realm_law = tribal_authority_2
-				}
+				#Unop Use the authority helpers so Administrative and Nomad rulers also lose authority, not just Feudal/Tribal
+#				if = {
+#					limit = { has_realm_law = crown_authority_1 }
+#					add_realm_law = crown_authority_0
+#				}
+#				if = {
+#					limit = { has_realm_law = crown_authority_2 }
+#					add_realm_law = crown_authority_1
+#				}
+#				if = {
+#					limit = { has_realm_law = crown_authority_3 }
+#					add_realm_law = crown_authority_2
+#				}
+#				if = {
+#					limit = { has_realm_law = tribal_authority_1 }
+#					add_realm_law = tribal_authority_0
+#				}
+#				if = {
+#					limit = { has_realm_law = tribal_authority_2 }
+#					add_realm_law = tribal_authority_1
+#				}
+#				if = {
+#					limit = { has_realm_law = tribal_authority_3 }
+#					add_realm_law = tribal_authority_2
+#				}
+				decrease_crown_authority_effect = yes
+				decrease_tribal_authority_effect = yes
+				decrease_imperial_bureaucracy_effect = yes
+				decrease_nomadic_authority_effect = yes
 
 				add_prestige = -500
 
