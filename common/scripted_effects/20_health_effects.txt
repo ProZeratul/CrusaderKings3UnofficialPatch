@@ -3222,13 +3222,23 @@ add_wound_treatment_modifier_effect = {
 					remove_trait = wounded_3
 					add_trait = wounded_2
 				}
+				#Unop Also grant the treatment modifier, otherwise a critical success is worse than a regular one
+				if = {
+					limit = {
+						OR = {
+							has_trait = wounded_1
+							has_trait = wounded_2
+						}
+					}
+					add_character_modifier = { modifier = risky_wound_treatment_success_modifier days = wound_treatment_success_duration }
+				}
 			}
 
 			#Risky treatment regular success
 			else_if = {
 				limit = {
 					scope:treatment_result_treatment = flag:risky
-					scope:treatment_result_outcome = flag:critical_success
+					scope:treatment_result_outcome = flag:success #Unop Was critical_success, making this branch unreachable
 				}
 				add_character_modifier = { modifier = risky_wound_treatment_success_modifier days = wound_treatment_success_duration }
 			}
