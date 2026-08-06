@@ -144,14 +144,17 @@ has_artifact_tribute_trigger = {
 }
 
 has_concubine_tribute_trigger = {
-	overlord = { 
+	save_temporary_scope_as = concubine_tribute_giver #Unop remember the offering tributary so the candidate check below can pass it as GIVER
+	overlord = {
 		is_adult = yes
 		save_temporary_scope_as = overlord_check
 	}
 	custom_tooltip = {
 		text = tribute_mission_concubine_interaction.no_valid_concubines
+		#Unop match the effect's stricter candidate filter so the option is only shown when a courtier/guest can actually be sent
 		any_courtier_or_guest = {
-			can_become_concubine_of_character_valid_trigger = { CHARACTER = scope:overlord_check }
+			can_be_offered_as_concubine_to_character_trigger = { GIVER = scope:concubine_tribute_giver CHARACTER = scope:overlord_check }
+			tribute_mission_is_available_concubine_trigger = yes
 		}
 	}
 }
