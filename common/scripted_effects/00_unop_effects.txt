@@ -739,3 +739,30 @@ unop_distribute_determined_court_position_effect = {
 		}
 	}
 }
+
+# Saves scope:movement_petition_effect from var:movement_petition for petition types
+# that reach tgp_decision_events.0100 without it being set (e.g. via ai_movement_petition_change_laws_decision).
+# save_scope_value_as cannot take a flag read out of a variable, so the flag is re-derived as a literal per case.
+unop_save_movement_petition_effect = {
+	if = {
+		limit = { NOT = { exists = scope:movement_petition_effect } }
+		switch = {
+			trigger = var:movement_petition
+			flag:change_bureaucracy_laws_increase = { save_scope_value_as = { name = movement_petition_effect value = flag:change_bureaucracy_laws_increase } }
+			flag:change_bureaucracy_laws_decrease = { save_scope_value_as = { name = movement_petition_effect value = flag:change_bureaucracy_laws_decrease } }
+			flag:change_army_laws_increase = { save_scope_value_as = { name = movement_petition_effect value = flag:change_army_laws_increase } }
+			flag:change_army_laws_decrease = { save_scope_value_as = { name = movement_petition_effect value = flag:change_army_laws_decrease } }
+			flag:change_province_metropolitan = { save_scope_value_as = { name = movement_petition_effect value = flag:change_province_metropolitan } }
+			flag:change_province_industrial = { save_scope_value_as = { name = movement_petition_effect value = flag:change_province_industrial } }
+			flag:change_province_military = { save_scope_value_as = { name = movement_petition_effect value = flag:change_province_military } }
+			flag:change_province_protectorate = { save_scope_value_as = { name = movement_petition_effect value = flag:change_province_protectorate } }
+			flag:hold_examinations = { save_scope_value_as = { name = movement_petition_effect value = flag:hold_examinations } }
+			flag:change_retirement_law_increase = { save_scope_value_as = { name = movement_petition_effect value = flag:change_retirement_law_increase } }
+			flag:change_retirement_law_decrease = { save_scope_value_as = { name = movement_petition_effect value = flag:change_retirement_law_decrease } }
+			flag:change_candidate_score_law = { save_scope_value_as = { name = movement_petition_effect value = flag:change_candidate_score_law } }
+			flag:increase_budget_salary = { save_scope_value_as = { name = movement_petition_effect value = flag:increase_budget_salary } }
+			flag:increase_budget_ministry = { save_scope_value_as = { name = movement_petition_effect value = flag:increase_budget_ministry } }
+			flag:increase_budget_military = { save_scope_value_as = { name = movement_petition_effect value = flag:increase_budget_military } }
+		}
+	}
+}
