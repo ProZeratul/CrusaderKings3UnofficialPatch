@@ -694,6 +694,20 @@ dynastic_cycle = {
 						}
 						add_realm_law = celestial_bureaucracy_2
 					}
+					#Unop Step the army command law down one level instead of letting it revert to the group default (Autonomous), mirroring the bureaucracy step-down above
+					if = {
+						limit = {
+							has_realm_law = celestial_army_liege_law_3
+						}
+						add_realm_law = celestial_army_liege_law_2
+						#Unop Step the vassals' mirrored army law down too, so they don't cascade-revert to the group default (Autonomous) once the liege drops below level 3
+						every_vassal_or_below = {
+							limit = {
+								has_realm_law = celestial_army_vassal_law_3
+							}
+							add_realm_law_skip_effects = celestial_army_vassal_law_2
+						}
+					}
 				}
 			}
 
