@@ -24,10 +24,11 @@ import datetime as dt
 import html
 import json
 import re
+import subprocess
 import sys
 import time
-import urllib.request
 import urllib.error
+import urllib.request
 
 WORKSHOP_ID = "2871648329"
 OWNER_STEAMID64 = "76561198047801064"
@@ -51,16 +52,48 @@ _last_request = 0.0
 
 
 def http_get(url: str) -> str:
+    """Fetch a URL via curl.
+
+    Steam's edge rejects Python's urllib by TLS client fingerprint, answering
+    every request with HTTP 429 regardless of headers, User-Agent, or elapsed
+    time. The 429 is misleading: it is bot detection, not throttling, so
+    retrying or backing off never clears it. curl's handshake is accepted, so
+    shell out to it rather than using urllib.
+    """
     global _last_request
     wait = REQUEST_DELAY - (time.monotonic() - _last_request)
     if wait > 0:
         time.sleep(wait)
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
     try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            return resp.read().decode("utf-8", errors="replace")
+        proc = subprocess.run(
+            [
+                "curl",
+                "--silent",
+                "--show-error",
+                "--location",
+                "--max-time",
+                "30",
+                "--user-agent",
+                UA,
+                "--write-out",
+                "\n%{http_code}",
+                url,
+            ],
+            capture_output=True,
+            text=True,
+        )
+    except FileNotFoundError as e:
+        raise RuntimeError("curl not found; it is required to fetch Steam pages") from e
     finally:
         _last_request = time.monotonic()
+
+    if proc.returncode != 0:
+        raise RuntimeError(f"curl failed ({proc.returncode}): {proc.stderr.strip()}")
+
+    body, _, status = proc.stdout.rpartition("\n")
+    if status.strip() != "200":
+        raise RuntimeError(f"HTTP {status.strip()} for {url}")
+    return body
 
 
 def extract_comment_text(block: str) -> str:
