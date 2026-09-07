@@ -14635,33 +14635,57 @@ tournament_events.6051 = { # Sabotage Outcome
 						}
 					}
 				}
-				remove_variable = contest_aptitude
-				add_character_flag = {
-					flag = disqualified_contest_flag #Unop: Use correct flag
-					months = 2
-				}
+				#Unop Only the aptitude was removed, so the saboteur kept being matched and could reach the finals.
+				# Route by phase to the proper disqualification effect, as the sibling event tournament_events.6052 does.
+				#remove_variable = contest_aptitude
+				#add_character_flag = {
+				#	flag = disqualified_contest_flag #Unop: Use correct flag
+				#	months = 2
+				#}
+				#scope:activity = {
+				#	add_activity_log_entry = {
+				#		key = tournament_disqualified_log
+				#		score = 50
+				#		tags = { contestant removal }
+				#		character = scope:sabotage_actor
+				#		target = scope:host
+				#
+				#		# Effects
+				#		custom_description = {
+				#			text =  tournament_contest_disqualify_tt
+				#			subject = scope:sabotage_actor # DISQUALIFIED
+				#		}
+				#		scope:sabotage_actor = {
+				#			if = {
+				#				limit = { is_ai = yes }
+				#				add_opinion = {
+				#					target = scope:host
+				#					modifier = tournament_disqualified_opinion
+				#					opinion = -15
+				#				}
+				#			}
+				#		}
+				#	}
+				#}
 				scope:activity = {
-					add_activity_log_entry = {
-						key = tournament_disqualified_log
-						score = 50
-						tags = { contestant removal }
-						character = scope:sabotage_actor
-						target = scope:host
-
-						# Effects
-						custom_description = {
-							text =  tournament_contest_disqualify_tt
-							subject = scope:sabotage_actor # DISQUALIFIED
+					switch = {
+						trigger = has_current_phase
+						# Versus Contests require more specific script
+						tournament_phase_joust = {
+							tournament_contest_versus_disqualification_effect = { DISQUALIFIED = scope:sabotage_actor MATCH = scope:sabotage_target CONTEST = joust SKILL = horse }
 						}
-						scope:sabotage_actor = {
-							if = {
-								limit = { is_ai = yes }
-								add_opinion = {
-									target = scope:host
-									modifier = tournament_disqualified_opinion
-									opinion = -15
-								}
-							}
+						tournament_phase_wrestling = {
+							tournament_contest_versus_disqualification_effect = { DISQUALIFIED = scope:sabotage_actor MATCH = scope:sabotage_target CONTEST = wrestling SKILL = pugilism }
+						}
+						tournament_phase_duel = {
+							tournament_contest_versus_disqualification_effect = { DISQUALIFIED = scope:sabotage_actor MATCH = scope:sabotage_target CONTEST = duel SKILL = foot }
+						}
+						tournament_phase_board_game = {
+							tournament_contest_versus_disqualification_effect = { DISQUALIFIED = scope:sabotage_actor MATCH = scope:sabotage_target CONTEST = board_game SKILL = board_game }
+						}
+						# Non-Versus contests
+						fallback = {
+							tournament_contest_disqualification_effect = { DISQUALIFIED = scope:sabotage_actor }
 						}
 					}
 				}
