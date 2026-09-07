@@ -14621,7 +14621,33 @@ tournament_events.6051 = { # Sabotage Outcome
 						}
 					}
 				}
+				#Unop: The rest of this effect have been moved into the option as the scope is defined inside a random an it mess the tooltip outcome (as the random from the immediate is garanteed)
 			}
+		}
+	}
+
+	option = {
+		name = {
+			trigger = { exists = scope:sabotage_success }
+			text = tournament_events.6051.a
+		}
+		name = {
+			trigger = { exists = scope:sabotage_disqualified }
+			text = tournament_events.6051.a.disqualified
+		}
+		name = {
+			trigger = { exists = scope:sabotage_detected }
+			text = tournament_events.6051.a.detected
+		}
+		name = {
+			trigger = {
+				NOR = {
+					exists = scope:sabotage_success
+					exists = scope:sabotage_disqualified
+					exists = scope:sabotage_detected
+				}
+			}
+			text = tournament_events.6051.a.failure
 		}
 		if = {
 			limit = { exists = scope:sabotage_disqualified }
@@ -14714,31 +14740,6 @@ tournament_events.6051 = { # Sabotage Outcome
 					}
 				}
 			}
-		}
-	}
-
-	option = {
-		name = {
-			trigger = { exists = scope:sabotage_success }
-			text = tournament_events.6051.a
-		}
-		name = {
-			trigger = { exists = scope:sabotage_disqualified }
-			text = tournament_events.6051.a.disqualified
-		}
-		name = {
-			trigger = { exists = scope:sabotage_detected }
-			text = tournament_events.6051.a.detected
-		}
-		name = {
-			trigger = {
-				NOR = {
-					exists = scope:sabotage_success
-					exists = scope:sabotage_disqualified
-					exists = scope:sabotage_detected
-				}
-			}
-			text = tournament_events.6051.a.failure
 		}
 	}
 
