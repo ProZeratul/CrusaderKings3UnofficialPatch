@@ -3910,6 +3910,31 @@ tgp_renounce_estate_effect = {
 				set_house_head = scope:new_player
 			}
 		}
+		#Unop Also hand over the treasury/gold, otherwise the heir inherits everything except the wealth
+		if = {
+			limit = {
+				trigger_if = {
+					limit = { has_treasury = yes }
+					treasury > 0
+				}
+				trigger_else = {
+					gold > 0
+				}
+			}
+			pay_treasury_or_gold = {
+				target = scope:new_player
+				value = {
+					value = 0
+					if = {
+						limit = { has_treasury = yes }
+						add = treasury
+					}
+					else = {
+						add = gold
+					}
+				}
+			}
+		}
 		if = {
 			limit = {
 				exists = scope:new_human_player_character
