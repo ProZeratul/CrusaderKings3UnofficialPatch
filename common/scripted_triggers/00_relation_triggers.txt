@@ -570,7 +570,7 @@ is_of_major_interest_trigger = {
 	OR = {
 		is_heir_of = $CHARACTER$
 		is_diarch_of_target = $CHARACTER$
-		liege ?= $CHARACTER$
+		$CHARACTER$.liege ?= this #Unop Check if I am the character's liege, not they are my liege
 		betrothed ?= $CHARACTER$
 		is_spouse_of = $CHARACTER$
 		has_relation_soulmate = $CHARACTER$
@@ -607,11 +607,12 @@ is_of_major_interest_trigger = {
 		}
 		# Activity Intents
 		trigger_if = {
+			#Unop Check if I am the intent target of the character, not vice versa
 			limit = {
-				exists = involved_activity
-				exists = intent_target
+				exists = $CHARACTER$.involved_activity
+				exists = $CHARACTER$.intent_target
 			}
-			intent_target = $CHARACTER$
+			$CHARACTER$.intent_target = this
 		}
 	}
 }
