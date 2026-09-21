@@ -2735,17 +2735,17 @@ demand_admin_interaction = {
 		modifier = {
 			factor = 0
 			scope:recipient = { highest_held_title_tier >= tier_county }
-			gold >= 300
+			treasury_or_gold < 300 #Unop: This was inverted, zeroing the desire when we could afford it, and only checked gold although administrative governments pay from treasury
 		}
 		modifier = {
 			factor = 0
 			scope:recipient = { highest_held_title_tier >= tier_duchy }
-			gold >= 600
+			treasury_or_gold < 600 #Unop: This was inverted, zeroing the desire when we could afford it, and only checked gold although administrative governments pay from treasury
 		}
 		modifier = {
 			factor = 0
 			scope:recipient = { highest_held_title_tier >= tier_kingdom }
-			gold >= 2000
+			treasury_or_gold < 2000 #Unop: This was inverted, zeroing the desire when we could afford it, and only checked gold although administrative governments pay from treasury
 		}
 	}
 
