@@ -6273,14 +6273,14 @@ death_management.0098 = {
 	hidden = yes
 	
 	trigger = {
-		any_spouse = {
-			this = prev.primary_spouse
+		any_consort = { #Unop was any_spouse gated on primary_spouse, missing secondary spouses and concubines
+#			this = prev.primary_spouse
 			has_character_modifier = rejected_from_marriage_bed_modifier
 		}
 	}
 
 	immediate = {
-		every_spouse = {
+		every_consort = { #Unop was every_spouse, which excluded concubines
 			remove_character_modifier = rejected_from_marriage_bed_modifier
 		}
 	}
