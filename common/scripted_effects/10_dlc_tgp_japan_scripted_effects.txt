@@ -3865,7 +3865,10 @@ tgp_renounce_estate_effect = {
 					is_governor = no
 				}
 				every_held_title = {
-					limit = { tier > tier_barony }
+					limit = { #Unop don't hand ministries to the estate heir, they have their own appointment succession
+						tier > tier_barony
+						is_landless_type_title = no
+					}
 					change_title_holder_include_vassals = {
 						holder = scope:new_player
 						change = scope:title_change
@@ -3893,13 +3896,24 @@ tgp_renounce_estate_effect = {
 					add_claim_on_loss = no
 				}
 				every_held_title = {
-					limit = { tier > tier_barony }
+					limit = { #Unop likewise keep ministries out of the heir sweep
+						tier > tier_barony
+						is_landless_type_title = no
+					}
 					change_title_holder_include_vassals = {
 						holder = scope:heir_temp
 						change = scope:title_change
 					}
 				}
 				resolve_title_and_vassal_change = scope:title_change
+			}
+			#Unop pass any ministry to its own appointment heir instead of letting it follow the estate
+			if = {
+				limit = {
+					tgp_is_any_minister = yes
+				}
+				liege = { save_scope_as = councillor_liege } # Needed for the effect
+				fired_minister_position_effect = yes
 			}
 		}
 		house = {
