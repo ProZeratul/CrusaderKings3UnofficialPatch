@@ -2940,11 +2940,12 @@ task_contract_success_gold_gain_travel_value = {
 			}
 			multiply = 1.25
 		}
-		#if = { #Unop: Crime Pays only doubles criminal contract rewards, not transport ones
-			#limit = {
-				#scope:task_contract.task_contract_taker = { has_perk = malice_implicit_perk }
-			#}
-			#multiply = 2
+		#Unop: Crime Pays only doubles criminal contract rewards, not transport ones
+		#if = {
+		#	limit = {
+		#		scope:task_contract.task_contract_taker = { has_perk = malice_implicit_perk }
+		#	}
+		#	multiply = 2
 		#}
 	}
 	# Stuff that NEEDS to stay at the bottom.
