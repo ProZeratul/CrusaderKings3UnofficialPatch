@@ -319,9 +319,13 @@
 
 				is_valid = {
 					custom_tooltip = {
-						text = camp_party_drinks_adequate_invalid
-						domicile ?= {
-							has_domicile_building_or_higher = mess_tent_01
+						#Unop Also accept a modded building granting the parameter
+						text = unop_camp_party_drinks_adequate_invalid
+						OR = {
+							domicile ?= {
+								has_domicile_building_or_higher = mess_tent_01
+							}
+							domicile ?= { has_domicile_parameter = unop_camp_unlocks_camp_party_adequate_drink_option }
 						}
 					}
 				}
@@ -396,7 +400,7 @@
 							domicile ?= {
 								has_domicile_building_or_higher = mess_tent_brewers
 							}
-							domicile ?= { has_domicile_parameter = unop_camp_unlocks_camp_party_drink_option }
+							domicile ?= { has_domicile_parameter = unop_camp_unlocks_camp_party_abundant_drink_option }
 						}
 					}
 				}
