@@ -938,8 +938,12 @@ enact_legacy_of_adventurer_decision = {
 			any_contact = { count >= 5 }
 		}
 		custom_tooltip = {
-			text = has_max_level_pavilion_tt
-			domicile = { has_domicile_building_or_higher = camp_main_04 }
+			#Unop Also accept a modded main building granting the parameter
+			text = unop_has_max_level_main_building_tt
+			OR = {
+				domicile = { has_domicile_building_or_higher = camp_main_04 }
+				domicile ?= { has_domicile_parameter = unop_camp_unlocks_adventurer_legacy }
+			}
 		}
 		trigger_if = {
 			limit = {
