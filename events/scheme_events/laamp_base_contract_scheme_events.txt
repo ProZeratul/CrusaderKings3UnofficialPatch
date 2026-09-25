@@ -2332,6 +2332,9 @@ scripted_trigger laamp_base_contract_schemes_0321_valid_impressionable_courtier_
 
 scripted_effect laamp_base_contract_schemes_0321_transfer_chosen_courtier_effect = {
 	add_courtier = $COURTIER_CHOSEN$
+	$COURTIER_CHOSEN$ = { #Unop: The chosen character can be a guest, and add_courtier alone does not end an ongoing court visit, so they would stay at the original court instead of travelling with us
+		hidden_effect = { return_to_court = yes }
+	}
 	$REJECTED_1$ ?= {
 		add_opinion = {
 			target = root
