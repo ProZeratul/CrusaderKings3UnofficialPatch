@@ -873,7 +873,7 @@ ep3_become_landed_transfer_effect = {
 			government_is_clan = {
 				save_scope_value_as = { name = old_government value = flag:clan }
 			}
-			government_is_tribal = {
+			government_is_tribal_excluding_wanua = { #Unop: Wanua has the government_is_tribal flag too, so it matched this case first and the wanua case below was unreachable
 				save_scope_value_as = { name = old_government value = flag:tribal }
 			}
 			government_is_republic = {
@@ -1278,7 +1278,7 @@ ep3_become_landed_transfer_effect = {
 			else_if = {
 				limit = {
 					OR = {
-						scope:new_liege ?= { government_has_flag = government_is_tribal }
+						scope:new_liege ?= { government_has_flag = government_is_tribal_excluding_wanua } #Unop: Wanua has the government_is_tribal flag too, so a Wanua liege matched here and the Wanua branch below was unreachable
 						scope:old_government ?= flag:tribal
 					}
 				}
