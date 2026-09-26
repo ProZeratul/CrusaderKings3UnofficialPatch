@@ -165,7 +165,12 @@ decrease_nomadic_authority_effect = {
 	if = {
 		limit = { has_realm_law_flag = uses_nomadic_authority }
 		#Laws
+		#Unop Handle the top tier too, otherwise rulers at maximum nomadic authority lose nothing
 		if = {
+			limit = { has_realm_law = nomadic_authority_5 }
+			add_realm_law = nomadic_authority_4
+		}
+		else_if = {
 			limit = { has_realm_law = nomadic_authority_4 }
 			add_realm_law = nomadic_authority_3
 		}
