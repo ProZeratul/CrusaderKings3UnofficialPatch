@@ -1079,6 +1079,15 @@ on_lost_faction_revolt_war = {
 				value = yes
 			}
 			every_faction_member = {
+				#Unop revolters imprisoned mid-war are dropped from the war, so every_war_attacker below misses them - remember them before they leave the faction
+				if = {
+					limit = {
+						is_imprisoned_by = scope:defender
+						exists = liege
+						any_liege_or_above = { this = scope:defender }
+					}
+					add_to_list = imprisoned_revolters
+				}
 				if = {
 					limit = {
 						exists = scope:attacker.joined_faction # Can get destroyed as we loop through
@@ -1127,7 +1136,6 @@ on_lost_faction_revolt_war = {
 					IMPRISONER = scope:defender
 				}
 			}
-			add_to_list = punished_revolters #Unop track who was punished, so the pass below doesn't punish them twice
 			scope:defender = {
 				add_opinion = {
 					target = prev
@@ -1145,25 +1153,13 @@ on_lost_faction_revolt_war = {
 			}
 		}
 	}
-	#Unop revolters imprisoned mid-war are dropped from the war, so every_war_attacker above misses them - punish them too
-	if = {
-		limit = {
-			exists = scope:attacker.joined_faction
-		}
-		scope:attacker.joined_faction = {
-			every_faction_member = {
-				limit = {
-					is_imprisoned_by = scope:defender
-					exists = liege
-					any_liege_or_above = { this = scope:defender }
-					NOT = { is_in_list = punished_revolters }
-				}
-				scope:defender = {
-					add_opinion = {
-						target = prev
-						modifier = vassal_lost_faction_revolt_war
-					}
-				}
+	#Unop punish the revolters imprisoned mid-war as well
+	every_in_list = {
+		list = imprisoned_revolters
+		scope:defender = {
+			add_opinion = {
+				target = prev
+				modifier = vassal_lost_faction_revolt_war
 			}
 		}
 	}
