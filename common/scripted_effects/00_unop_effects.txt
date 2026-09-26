@@ -740,6 +740,53 @@ unop_distribute_determined_court_position_effect = {
 	}
 }
 
+#Unop Trigger physician treatments for the employer and their court; called from the court physician's on_court_position_received hook so every appointment route works, not just the paid hire event
+unop_trigger_physician_treatments_effect = {
+	hidden_effect = {
+		if = {
+			limit = {
+				has_treatable_disease_trigger = yes
+				has_recent_treatment_trigger = no
+			}
+			save_scope_as = sick_character
+			trigger_event = {
+				id = health.3101
+				days = { physician_treatment_delay_ruler_min physician_treatment_delay_ruler_max }
+			}
+		}
+		else_if = {
+			limit = {
+				has_recent_wound_treatment_trigger = no
+				has_wounds_trigger = yes
+			}
+			save_scope_as = sick_character
+			trigger_event = {
+				id = health.4001
+				days = { physician_treatment_delay_ruler_min physician_treatment_delay_ruler_max }
+			}
+		}
+		every_courtier_or_guest = {
+			if = {
+				limit = {
+					has_treatable_disease_trigger = yes
+					has_recent_treatment_trigger = no
+				}
+				set_worst_disease_effect = yes
+				save_scope_as = sick_character
+				decide_who_picks_disease_treatment_effect = yes #Sends health.3101 to them or 3102 to liege (you)
+			}
+			else_if = {
+				limit = {
+					has_recent_wound_treatment_trigger = no
+					has_wounds_trigger = yes
+				}
+				save_scope_as = sick_character
+				decide_who_picks_wound_treatment_effect = yes
+			}
+		}
+	}
+}
+
 # Saves scope:movement_petition_effect from var:movement_petition for petition types
 # that reach tgp_decision_events.0100 without it being set (e.g. via ai_movement_petition_change_laws_decision).
 # save_scope_value_as cannot take a flag read out of a variable, so the flag is re-derived as a literal per case.
