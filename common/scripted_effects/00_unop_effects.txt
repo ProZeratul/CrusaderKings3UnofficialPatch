@@ -766,3 +766,61 @@ unop_save_movement_petition_effect = {
 		}
 	}
 }
+
+# Counterparts of vanilla decrease_imperial_bureaucracy_effect for the other bureaucracy ladders
+unop_decrease_celestial_bureaucracy_effect = {
+	if = {
+		limit = { has_realm_law_flag = uses_celestial_bureaucracy }
+		#Laws
+		if = {
+			limit = { has_realm_law = celestial_bureaucracy_3 }
+			add_realm_law = celestial_bureaucracy_2
+		}
+		else_if = {
+			limit = { has_realm_law = celestial_bureaucracy_2 }
+			add_realm_law = celestial_bureaucracy_1
+		}
+		else_if = {
+			limit = { has_realm_law = celestial_bureaucracy_1 }
+			add_realm_law = celestial_bureaucracy_0
+		}
+	}
+}
+
+unop_decrease_meritocratic_bureaucracy_effect = {
+	if = {
+		limit = { has_realm_law_flag = uses_meritocratic_bureaucracy }
+		#Laws
+		if = {
+			limit = { has_realm_law = meritocratic_bureaucracy_3 }
+			add_realm_law = meritocratic_bureaucracy_2
+		}
+		else_if = {
+			limit = { has_realm_law = meritocratic_bureaucracy_2 }
+			add_realm_law = meritocratic_bureaucracy_1
+		}
+		else_if = {
+			limit = { has_realm_law = meritocratic_bureaucracy_1 }
+			add_realm_law = meritocratic_bureaucracy_0
+		}
+	}
+}
+
+unop_decrease_japanese_bureaucracy_effect = {
+	if = {
+		limit = { has_realm_law_flag = uses_japanese_bureaucracy }
+		#Laws
+		if = {
+			limit = { has_realm_law = japanese_bureaucracy_3 }
+			add_realm_law = japanese_bureaucracy_2
+		}
+		else_if = {
+			limit = { has_realm_law = japanese_bureaucracy_2 }
+			add_realm_law = japanese_bureaucracy_1
+		}
+		else_if = {
+			limit = { has_realm_law = japanese_bureaucracy_1 }
+			add_realm_law = japanese_bureaucracy_0
+		}
+	}
+}
