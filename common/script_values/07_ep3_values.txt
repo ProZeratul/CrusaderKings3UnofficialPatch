@@ -2730,9 +2730,9 @@ task_contract_tier_gold_multiplier_value = {
 		}
 		# Courtiers first, as we give them a bit less.
 		else_if = {
-			limit = { scope:task_contract.task_contract_employer.highest_held_title_tier <= 0 }
-			add = 0.5
-			ceiling = yes
+			limit = { scope:task_contract.task_contract_employer.highest_held_title_tier <= 0 }		
+			add = -0.5 #Unop Subtract instead of add with no ceiling, so courtiers get less rather than double
+			#ceiling = yes
 		}
 	}
 }
@@ -2804,7 +2804,7 @@ task_contract_failure_prestige_loss_double_value = {
 ## Criminal scaling loss on failure.
 ### A little higher, for obvious reasons.
 task_contract_failure_prestige_loss_crime_value = {
-	value = task_contract_failure_prestige_loss_full_value
+	value = -50 #Unop Double the base loss instead of applying the tier multiplier twice
 	multiply = task_contract_tier_other_reward_multiplier_value
 }
 task_contract_failure_prestige_loss_crime_half_value = {
