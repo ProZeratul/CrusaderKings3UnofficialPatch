@@ -1361,49 +1361,50 @@ set_court_physician_effect = {
 		}
 	
 		#Trigger treatments if needed
-		hidden_effect = {
-			if = {
-				limit = {
-					has_treatable_disease_trigger = yes
-					has_recent_treatment_trigger = no
-				}
-				save_scope_as = sick_character
-				trigger_event = {
-					id = health.3101
-					days = { physician_treatment_delay_ruler_min physician_treatment_delay_ruler_max }
-				}
-			}
-			else_if = {
-				limit = {
-					has_recent_wound_treatment_trigger = no
-					has_wounds_trigger = yes
-				}
-				save_scope_as = sick_character
-				trigger_event = {
-					id = health.4001
-					days = { physician_treatment_delay_ruler_min physician_treatment_delay_ruler_max }
-				}
-			}
-			every_courtier_or_guest = {
-				if = {
-					limit = {
-						has_treatable_disease_trigger = yes
-						has_recent_treatment_trigger = no
-					}
-					set_worst_disease_effect = yes
-					save_scope_as = sick_character
-					decide_who_picks_disease_treatment_effect = yes #Sends health.3101 to them or 3102 to liege (you)
-				}
-				else_if = {
-					limit = {
-						has_recent_wound_treatment_trigger = no
-						has_wounds_trigger = yes
-					}
-					save_scope_as = sick_character
-					decide_who_picks_wound_treatment_effect = yes
-				}
-			}
-		}
+		#Unop Moved to the court physician on_court_position_received hook so all appointment routes trigger treatments
+#		hidden_effect = {
+#			if = {
+#				limit = {
+#					has_treatable_disease_trigger = yes
+#					has_recent_treatment_trigger = no
+#				}
+#				save_scope_as = sick_character
+#				trigger_event = {
+#					id = health.3101
+#					days = { physician_treatment_delay_ruler_min physician_treatment_delay_ruler_max }
+#				}
+#			}
+#			else_if = {
+#				limit = {
+#					has_recent_wound_treatment_trigger = no
+#					has_wounds_trigger = yes
+#				}
+#				save_scope_as = sick_character
+#				trigger_event = {
+#					id = health.4001
+#					days = { physician_treatment_delay_ruler_min physician_treatment_delay_ruler_max }
+#				}
+#			}
+#			every_courtier_or_guest = {
+#				if = {
+#					limit = {
+#						has_treatable_disease_trigger = yes
+#						has_recent_treatment_trigger = no
+#					}
+#					set_worst_disease_effect = yes
+#					save_scope_as = sick_character
+#					decide_who_picks_disease_treatment_effect = yes #Sends health.3101 to them or 3102 to liege (you)
+#				}
+#				else_if = {
+#					limit = {
+#						has_recent_wound_treatment_trigger = no
+#						has_wounds_trigger = yes
+#					}
+#					save_scope_as = sick_character
+#					decide_who_picks_wound_treatment_effect = yes
+#				}
+#			}
+#		}
 	}
 }
 
