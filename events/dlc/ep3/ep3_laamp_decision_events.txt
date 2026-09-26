@@ -9519,7 +9519,7 @@ scripted_effect 1031_boost_lowest_skill_effect = {
 			trigger = {
 				trigger_if = {
 					limit = { has_variable = 1031_skill_gain_variable }
-					var:1031_skill_gain_variable != visit_settlement_skill_gain_cap_value
+					var:1031_skill_gain_variable < visit_settlement_skill_gain_cap_value #Unop Use < so the cap holds if it is lowered
 				}
 				trigger_else = { always = yes }
 			}
@@ -9583,7 +9583,7 @@ scripted_effect 1031_boost_lowest_skill_effect = {
 			else_if = {
 				limit = {
 					has_variable = 1031_skill_gain_variable
-					var:1031_skill_gain_variable != visit_settlement_skill_gain_cap_value
+					var:1031_skill_gain_variable < visit_settlement_skill_gain_cap_value #Unop Use < so the cap holds if it is lowered
 				}
 				change_variable = {
 					name = 1031_skill_gain_variable
@@ -10155,11 +10155,23 @@ ep3_laamp_decision_event.1031 = {
 		}
 		trigger = {
 			#Put a cooldown on strongarming it
-			trigger_if = {
-				limit = { 1031_is_max_witty_trigger = yes }
+			#Unop Also put a cooldown on learning, so it can't be repeated by leaving and re-entering the settlement
+			#trigger_if = {
+			#	limit = { 1031_is_max_witty_trigger = yes }
 				custom_tooltip = {
 					text = ep3_laamp_decision_event.1031.b.cooldown.tt
 					NOT = { has_variable = 1031_has_reveled_recently }
+				}
+			#}
+			#Unop Cap strongarmed skill gains, as for contemplating a story
+			trigger_if = {
+				limit = {
+					1031_is_max_witty_trigger = yes
+					has_variable = 1031_skill_gain_variable
+				}
+				custom_tooltip = {
+					text = unop_1031_skill_gain_capped_tt
+					var:1031_skill_gain_variable < visit_settlement_skill_gain_cap_value
 				}
 			}
 			#If we're zealous, we also need to be eccentric
@@ -10192,6 +10204,22 @@ ep3_laamp_decision_event.1031 = {
 				name = 1031_has_reveled_recently
 				days = visit_settlement_small_cooldown_days #Unop: Was using months = (so the CD was 180/12=15 years)
 			}
+			#Unop Count towards the skill gain cap
+			if = {
+				limit = {
+					NOT = { has_variable = 1031_skill_gain_variable }
+				}
+				set_variable = {
+					name = 1031_skill_gain_variable
+					value = 1
+				}
+			}
+			else = {
+				change_variable = {
+					name = 1031_skill_gain_variable
+					add = 1
+				}
+			}
 			stress_impact = {
 				base = medium_stress_impact_gain
 				ambitious = minor_stress_impact_loss
@@ -10203,6 +10231,11 @@ ep3_laamp_decision_event.1031 = {
 			pay_short_term_gold = {
 				target = scope:laamp_storyteller
 				gold = minor_gold_laamps_value
+			}
+			#Unop Persistent cooldown so learning can't be repeated by leaving and re-entering the settlement, mirroring 1031_has_storied_recently
+			set_variable = {
+				name = 1031_has_reveled_recently
+				days = visit_settlement_minimum_cooldown_days
 			}
 			#Gain trait
 			if = {
