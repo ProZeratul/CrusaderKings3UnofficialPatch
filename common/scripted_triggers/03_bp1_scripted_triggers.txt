@@ -13,11 +13,12 @@ house_has_feud_relation_with_trigger = {
 	exists = house
 	exists = $TARGET$.house
 	house != $TARGET$.house
+	$TARGET$.house = { save_temporary_scope_as = temp_target_house } #Unop Use saved scope to avoid issues with relative links
 	OR = {
 		house = {
 			any_house_relation = {
 				has_house_relation_level = feud
-				any_relation_house = { $TARGET$.house = this }
+				any_relation_house = { scope:temp_target_house = this } #Unop Use saved scope to avoid issues with relative links
 			}
 		}
 		exists = scope:return_feud_as_true_for_debug

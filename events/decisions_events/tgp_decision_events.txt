@@ -489,10 +489,7 @@ tgp_decision_events.0100 = {
         }
     }
     after = {
-        if = { #Unop save missing scope:movement_petition_effect for petition types that bypass movement_petition_change_laws_decision
-            limit = { NOT = { exists = scope:movement_petition_effect } }
-            save_scope_value_as = { name = movement_petition_effect value = var:movement_petition }
-        }
+        unop_save_movement_petition_effect = yes #Unop save missing scope:movement_petition_effect for petition types that bypass movement_petition_change_laws_decision
         display_movement_petition_recipient_acceptance_effect = yes
         scope:petition_recipient = {
             trigger_event = tgp_decision_events.0101

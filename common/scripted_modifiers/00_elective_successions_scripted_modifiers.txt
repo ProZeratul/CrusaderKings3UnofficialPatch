@@ -532,8 +532,8 @@ elector_voting_pattern_circumstances_feudal_elective_modifier = {
 		add = {
 			subtract = 30
 			if = { #Candidate is a foreign non-dejure ruler.
-				limit = {
-					NOT = { capital_county = { scope:title = { is_de_jure_liege_or_above_target = prev } } }
+				limit = { #Unop: Adding scope:candidate to make it actually work
+					NOT = { scope:candidate.capital_county = { scope:title = { is_de_jure_liege_or_above_target = prev } } }
 				}
 				subtract = 470
 			}
@@ -2761,8 +2761,8 @@ elector_voting_pattern_circumstances_gaelic_elective_modifier = {
 		add = {
 			subtract = 100
 			if = { #Candidate is a foreign non-dejure ruler.
-				limit = {
-					NOT = { capital_county = { scope:title = { is_de_jure_liege_or_above_target = prev } } }
+				limit = { #Unop: Adding scope:candidate to make it actually work
+					NOT = { scope:candidate.capital_county = { scope:title = { is_de_jure_liege_or_above_target = prev } } }
 				}
 				subtract = 500
 			}
@@ -3367,8 +3367,8 @@ elector_voting_pattern_circumstances_tribal_elective_modifier = {
 		add = {
 			subtract = 100
 			if = { #Candidate is a foreign non-dejure ruler.
-				limit = {
-					NOT = { capital_county = { scope:title = { is_de_jure_liege_or_above_target = prev } } }
+				limit = { #Unop: Adding scope:candidate to make it actually work
+					NOT = { scope:candidate.capital_county = { scope:title = { is_de_jure_liege_or_above_target = prev } } }
 				}
 				subtract = 500
 			}
