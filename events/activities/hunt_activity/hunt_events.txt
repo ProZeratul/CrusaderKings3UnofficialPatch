@@ -17694,6 +17694,12 @@ hunt.4012 = {
 						scope:activity = { set_variable = hunt_4013 } # First Legendary hunt
 					}
 					else = {
+						scope:activity = { #Unop let hunt.4013 fire during a regular hunt only after this event
+							set_variable = {
+								name = unop_hunt_4013_regular
+								days = 5
+							}
+						}
 						hunt_activity_success_change_effect = { CHANGE = decrease_medium }
 						trigger_event = {
 							id = hunt.4013
@@ -17798,6 +17804,9 @@ hunt.4013 = {
 					has_activity_option = { category = special_type option = hunt_type_legendary }
 				}
 				exists = scope:activity.var:hunt_4013 # First Legendary hunt
+			}
+			trigger_else = { #Unop during a regular hunt, only after hunt.4012
+				exists = scope:activity.var:unop_hunt_4013_regular
 			}
 		}
 	}
