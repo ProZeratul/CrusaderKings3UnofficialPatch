@@ -134,7 +134,31 @@ find_follower_of_faith = {
 		}
 
 		# Personal Scheme Shared
-		personal_scheme_base_success_chance_modifiers = yes
+		#personal_scheme_base_success_chance_modifiers = yes #Unop Use only the modifiers that don't expect a character target, as the target is a faith
+		# house_head_request_interaction
+		modifier = {
+			add = personal_scheme_variable_list_value
+			scope:owner = { has_variable_list = supporting_personal_schemes }
+			desc = HOUSE_HEAD_SCHEME_SUPPORT_DESC
+		}
+		modifier = {
+			add = -10
+			scope:owner = { has_character_modifier = personal_schemes_distracted_modifier }
+			desc = personal_schemes_distracted_modifier
+		}
+		# Estate
+		modifier = {
+			scope:owner.domicile ?= { has_domicile_parameter = increased_success_personal_schemes_1 }
+			add = estate_increased_personal_scheme_success_1_value
+		}
+		modifier = {
+			scope:owner.domicile ?= { has_domicile_parameter = increased_success_personal_schemes_2 }
+			add = estate_increased_personal_scheme_success_2_value
+		}
+		modifier = {
+			scope:owner.domicile ?= { has_domicile_parameter = increased_success_personal_schemes_3 }
+			add = estate_increased_personal_scheme_success_3_value
+		}
 	}
 
 	# On Actions

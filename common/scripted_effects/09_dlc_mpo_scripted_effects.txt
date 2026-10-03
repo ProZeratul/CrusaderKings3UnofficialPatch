@@ -803,13 +803,34 @@ migration_title_and_vassal_change_effect = {
 	hidden_effect = {
 		scope:actor = {
 			update_domicile_and_courtier_location_effect = yes
+			random_held_title = { #Unop Reset the de jure capital of the nomad title to the new location
+				limit = {
+					is_nomad_title = yes
+					exists = title_domicile
+				}
+				set_capital_county = scope:actor.capital_province.county
+			}
 		}
 		scope:recipient ?= {
 			update_domicile_and_courtier_location_effect = yes
+			random_held_title = { #Unop Reset the de jure capital of the nomad title to the new location
+				limit = {
+					is_nomad_title = yes
+					exists = title_domicile
+				}
+				set_capital_county = scope:recipient.capital_province.county
+			}
 		}
 		every_in_list = {
 			list = settled_vassal
 			update_domicile_and_courtier_location_effect = yes
+			random_held_title = { #Unop Reset the de jure capital of the nomad title to the new location
+				limit = {
+					is_nomad_title = yes
+					exists = title_domicile
+				}
+				set_capital_county = prev.capital_province.county
+			}
 		}
 	}
 }
@@ -1758,7 +1779,7 @@ mpo_find_suitable_merchant_effect = {
 			modifier = {
 				add = title:c_venezia.title_province.unop_paiza_merchant_distance_modifier_value
 			}
-			title:c_venezia = {
+			title:b_venezia = { #Unop Was c_venezia, but merchant_origin should be a barony like the others
 				save_scope_as = merchant_origin
 			}
 		}

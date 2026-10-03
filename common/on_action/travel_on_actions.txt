@@ -581,7 +581,7 @@ on_travel_plan_movement = {
 					#Not if you already have a badge originating from this place
 					any_character_artifact = { 
 						has_variable = is_pilgrim_badge
-						var:pilgrim_badge_location.title_province ?= root.current_travel_plan.current_location
+						var:pilgrim_badge_location ?= root.current_travel_plan.current_location #Unop Was var:pilgrim_badge_location.title_province, but the variable is already a province
 					}
 					#Nor if you can go on a pilgrimage here, sheesh
 					faith = {

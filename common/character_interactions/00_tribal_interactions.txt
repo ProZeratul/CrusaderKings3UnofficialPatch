@@ -246,7 +246,7 @@ support_feudalize_tribal_holding_interaction = {
 			limit = { is_ai = yes }
 			is_adult = yes
 			# The AI only does this if they have plenty of gold to spare
-			gold >= { value = feudalize_holding_interaction_cost multiply = 4 }
+			#gold >= { value = feudalize_holding_interaction_cost multiply = 4 } #Unop Moved to can_be_picked_title, as the cost depends on scope:target
 			# Some basic triggers
 			is_at_war = no
 			# Piety and Legitimacy, you say... ?
@@ -292,6 +292,13 @@ support_feudalize_tribal_holding_interaction = {
 					barony_controller = scope:recipient
 					has_ongoing_construction = no
 				}
+			}
+		}
+		trigger_if = { #Unop Moved from is_available, as the cost depends on scope:target
+			limit = { scope:actor = { is_ai = yes } }
+			# The AI only does this if they have plenty of gold to spare
+			scope:actor = {
+				treasury_or_gold >= { value = feudalize_holding_interaction_cost multiply = 4 } #Unop Was gold, but the cost is paid with treasury_or_gold
 			}
 		}
 	}

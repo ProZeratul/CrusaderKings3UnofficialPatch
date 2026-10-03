@@ -1351,7 +1351,7 @@ convert_whole_realm_to_feudalism_effect = {
 				save_scope_as = new_house
 			}
 			create_noble_family_effect = { GOVERNMENT_GIVER = this }
-			scope:new_title = {
+			scope:new_title ?= { #Unop scope:new_title is only set if a noble family title was created
 				#set_title_name_dynamic = japanese_noble_family_name
 				set_coa = scope:new_house
 			}

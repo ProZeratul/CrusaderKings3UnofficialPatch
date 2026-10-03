@@ -8079,6 +8079,17 @@ request_governorship_interaction = {
 
 	redirect = {
 		scope:recipient = { save_scope_as = secondary_recipient }
+		if = { #Unop Merged from the second redirect below, as only one redirect is used
+			limit = {
+				scope:actor.top_liege = {
+					tgp_has_access_to_ministry_trigger = yes
+					exists = cp:minister_personnel
+				}
+			}
+			title:e_minister_of_personnel.holder ?= {
+				save_scope_as = recipient
+			}
+		}
 	}
 
 	cost = {
@@ -8160,19 +8171,19 @@ request_governorship_interaction = {
 		}
 	}
 
-	redirect = {
-		if = {
-			limit = {
-				scope:actor.top_liege = {
-					tgp_has_access_to_ministry_trigger = yes
-					exists = cp:minister_personnel
-				}
-			}
-			title:e_minister_of_personnel.holder ?= {
-				save_scope_as = recipient
-			}
-		}
-	}
+	#redirect = { #Unop Merged into the first redirect above
+	#	if = {
+	#		limit = {
+	#			scope:actor.top_liege = {
+	#				tgp_has_access_to_ministry_trigger = yes
+	#				exists = cp:minister_personnel
+	#			}
+	#		}
+	#		title:e_minister_of_personnel.holder ?= {
+	#			save_scope_as = recipient
+	#		}
+	#	}
+	#}
 
 	is_valid_showing_failures_only = {
 		scope:actor = {

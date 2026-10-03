@@ -358,6 +358,14 @@ has_learning_court_position = {
 	}
 }
 
+unop_has_prowess_court_position = { #Unop: Did not exists, just here as a reminder
+	OR = {
+		#has_court_position = master_of_hunt_court_position #Unop: In martial ?
+		has_court_position = charioteer_court_position
+		#has_court_position = bodyguard_court_position #Unop: In martial ?
+	}
+}
+
 court_position_stewardship_trigger = { # Is courtier suited to stewardship positions?
 	OR = {
 		has_education_stewardship_trigger = yes 
@@ -1262,7 +1270,7 @@ free_court_position_revoke_trigger = {
 
 # Sadly we cannot use court_position_inner_circle_salary_trigger since it's made to use scope:liege that is not given in the revoke block
 court_position_inner_circle_revoke_trigger = {
-	liege_or_court_owner ?= {
+	root ?= { #Unop: Was liege_or_court_owner, but in revoke_cost root is already the liege
 		dynasty ?= { has_dynasty_perk = fp2_coterie_legacy_1 }
 		employs_court_position = $POS$_court_position
 		any_court_position_holder = {
@@ -1273,7 +1281,7 @@ court_position_inner_circle_revoke_trigger = {
 }
 
 camp_officer_inner_circle_revoke_trigger = {
-	liege_or_court_owner ?= {
+	root ?= { #Unop: Was liege_or_court_owner, but in revoke_cost root is already the liege
 		dynasty ?= { has_dynasty_perk = fp2_coterie_legacy_1 }
 		employs_court_position = $POS$_camp_officer
 		any_court_position_holder = {

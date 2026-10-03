@@ -233,7 +233,7 @@ give_pilgrim_trait_or_xp_effect = {
 							}
 							add_trait = pilgrim
 						}
-						else_if = {
+						else = { #Unop Was else_if without limit
 							if = {
 								limit = {
 									has_pam_dlc_trigger = yes
@@ -255,19 +255,17 @@ give_pilgrim_trait_or_xp_effect = {
 										value < 100
 									}
 								}
-							}
-							else = {
-								add_trait_xp = { 
+								add_trait_xp = { #Unop Moved from the else below, which was only reached with 100 xp
 									trait = pilgrim 
 									value = 20
 								}
 							}
+							else_if = { #Unop Moved from below, as in the non-host case
+								limit = { has_lifestyle = learning_lifestyle }
+								add_learning_lifestyle_xp = major_lifestyle_xp
+							}
+							else = { add_character_flag = should_get_trait_piety } #Unop Moved from below, as in the non-host case
 						}
-						else_if = {
-							limit = { has_lifestyle = learning_lifestyle }
-							add_learning_lifestyle_xp = major_lifestyle_xp
-						}
-						else = { add_character_flag = should_get_trait_piety }
 					}
 				}
 			}
@@ -279,7 +277,7 @@ give_pilgrim_trait_or_xp_effect = {
 				}
 				add_trait = pilgrim
 			}
-			else_if = {
+			else = { #Unop Was else_if without limit
 				if = {
 					limit = {
 						has_pam_dlc_trigger = yes

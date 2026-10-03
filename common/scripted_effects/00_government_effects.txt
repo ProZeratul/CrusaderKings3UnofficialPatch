@@ -15,8 +15,22 @@ assign_tribal_governments_effect = {
 			OR = {
 				government_has_flag = government_is_wanua
 				scope:old_government ?= government_type:wanua_government
-				scope:capital_county.title_province ?= {
-					geographical_region = world_asia_southeast_islands
+				trigger_if = { #Unop Fall back to scope:new_capital or the own capital, as most callers don't set scope:capital_county
+					limit = { exists = scope:capital_county }
+					scope:capital_county.title_province ?= {
+						geographical_region = world_asia_southeast_islands
+					}
+				}
+				trigger_else_if = {
+					limit = { exists = scope:new_capital }
+					scope:new_capital.title_province ?= {
+						geographical_region = world_asia_southeast_islands
+					}
+				}
+				trigger_else = {
+					capital_county.title_province ?= {
+						geographical_region = world_asia_southeast_islands
+					}
 				}
 			}
 		}

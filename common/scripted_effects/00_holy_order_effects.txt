@@ -561,14 +561,17 @@ create_monastic_order_founder_effect = {
 
 	change_spiritual_fulfillment = minor_spiritual_fulfillment_value
 
-	scope:leader = {
-		save_scope_as = order_master
-	}
+	if = { #Unop scope:leader is not set when the decision shows this effect as a tooltip
+		limit = { exists = scope:leader }
+		scope:leader = {
+			save_scope_as = order_master
+		}
 
-	create_character_memory = {
-		type = founded_monastic_order_memory
-		participants = {
-			order_master = scope:leader
+		create_character_memory = {
+			type = founded_monastic_order_memory
+			participants = {
+				order_master = scope:leader
+			}
 		}
 	}
 
@@ -2210,7 +2213,7 @@ set_up_historical_monastic_orders_effect = {
 			limit = {
 				exists = scope:brythonic
 				#These are either sort of gone or not Celtic anymore afterwards
-				current_year < 868.1.1
+				current_date < 868.1.1 #Unop Was current_year, which can't be compared with a date
 			}
 			#WALES
 			title:b_caerphilly = { lease_out_to_holy_order = scope:brythonic }
@@ -6089,7 +6092,7 @@ monastic_tenet_espousing_effect = {
 				highest_held_title_tier <= tier_county
 				is_ai = yes
 			}
-			limit = {
+			alternative_limit = { #Unop Was limit, which overrides the first one
 				highest_held_title_tier <= tier_duchy
 				is_ai = yes
 			}

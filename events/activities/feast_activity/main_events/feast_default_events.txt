@@ -13415,20 +13415,20 @@ feast_default.6410 = {
 					limit = {
 						has_variable = is_pilgrim_badge
 						NOR = { 
-							var:pilgrim_badge_location.title_province ?= root.location
-							var:pilgrim_badge_location.title_province ?= root.capital_province
+							var:pilgrim_badge_location ?= root.location #Unop Was var:pilgrim_badge_location.title_province, but the variable is already a province
+							var:pilgrim_badge_location ?= root.capital_province #Unop Was var:pilgrim_badge_location.title_province, but the variable is already a province
 						}
 						save_temporary_scope_as = artifact_check
 						root = {
 							any_character_artifact = {
 								has_variable = is_pilgrim_badge
 								NOR = { 
-									var:pilgrim_badge_location.title_province ?= scope:guest.location
+									var:pilgrim_badge_location ?= scope:guest.location #Unop Was var:pilgrim_badge_location.title_province, but the variable is already a province
 									var:pilgrim_badge_location ?= scope:artifact_check.var:pilgrim_badge_location
 								}
 								trigger_if = {
 									limit = { exists = scope:guest.capital_province }
-									NOT = { var:pilgrim_badge_location.title_province ?= scope:guest.capital_province }
+									NOT = { var:pilgrim_badge_location ?= scope:guest.capital_province } #Unop Was var:pilgrim_badge_location.title_province, but the variable is already a province
 								}
 								trigger_else = { always = yes }
 							}
@@ -13442,12 +13442,12 @@ feast_default.6410 = {
 			limit = {
 				has_variable = is_pilgrim_badge
 				NOR = { 
-					var:pilgrim_badge_location.title_province ?= scope:guest.location
+					var:pilgrim_badge_location ?= scope:guest.location #Unop Was var:pilgrim_badge_location.title_province, but the variable is already a province
 					var:pilgrim_badge_location ?= scope:their_badge.var:pilgrim_badge_location
 				}
 				trigger_if = {
 					limit = { exists = scope:guest.capital_province }
-					NOT = { var:pilgrim_badge_location.title_province ?= scope:guest.capital_province }
+					NOT = { var:pilgrim_badge_location ?= scope:guest.capital_province } #Unop Was var:pilgrim_badge_location.title_province, but the variable is already a province
 				}
 				trigger_else = { always = yes }
 			}

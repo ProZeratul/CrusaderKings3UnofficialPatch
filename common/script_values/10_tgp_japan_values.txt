@@ -391,7 +391,7 @@ japanese_kampaku_house_governorship_value = {
 		value = 0
 		house ?= {
 			if = {
-				limit = { tgp_is_in_ceremonial_house_trigger = no }
+				limit = { house_head ?= { tgp_is_in_ceremonial_house_trigger = no } } #Unop Was called in house scope, but it is a character trigger
 				every_house_member = {
 					limit = { is_governor = yes }
 					add = 1
@@ -529,7 +529,7 @@ japanese_kampaku_house_bloc_size_heir_score_value = {
 			limit = {
 				save_temporary_scope_as = heir_temp
 				house = {
-					house_confederation.leading_house ?= house
+					house_confederation.leading_house ?= this #Unop Was house, but this is already the house
 					house_head = {
 						is_independent_ruler = yes
 						any_held_title = {

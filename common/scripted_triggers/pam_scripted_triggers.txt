@@ -4002,11 +4002,12 @@ valid_holy_war_incited_attacker_trigger = {
 			holder.top_liege = $RECIPIENT$
 		}
 	}
-	tgp_japan_offensive_wars_ban_trigger = yes
+	#tgp_japan_offensive_wars_ban_trigger = yes #Unop Moved below, as it uses scope:defender and scope:attacker
 	$RECIPIENT$ = {
 		save_temporary_scope_as = defender
 	}
 	save_temporary_scope_as = attacker
+	tgp_japan_offensive_wars_ban_trigger = yes #Unop Moved from above
 	trigger_if = {
 		limit = {
 			scope:attacker = {
@@ -4595,6 +4596,8 @@ valid_claim_war_incited_attacker_trigger = {
 			target_is_same_character_or_above = $RECIPIENT$
 		}
 	}
+	$RECIPIENT$ = { save_temporary_scope_as = defender } #Unop Save the scopes used by tgp_japan_offensive_wars_ban_trigger
+	save_temporary_scope_as = attacker
 	tgp_japan_offensive_wars_ban_trigger = yes
 }
 claim_war_incited_attacker_can_be_picked_trigger = {

@@ -2679,7 +2679,7 @@ pam_secular_faith_events.0020 = {
 		add_character_flag = pam_sf_first_church_consecrated
 		scope:pam_sf_consecrated_county = {
 			save_scope_as = consecrated_county
-			save_scope_as = holy_site_scope
+			title_province = { save_scope_as = holy_site_scope } #Unop Was the county, but the background triggers expect a province
 		}
 		cp:councillor_court_chaplain = { save_scope_as = chaplain }
 	}
@@ -4105,7 +4105,7 @@ pam_secular_faith_events.0030 = {
 				any_county_province = { has_holding_type = church_holding }
 			}
 			save_scope_as = county_scope
-			save_scope_as = holy_site_scope
+			#save_scope_as = holy_site_scope #Unop Moved below, as the background triggers expect a province
 			random_county_province = {
 				limit = {
 					has_holding_type = church_holding
@@ -4114,6 +4114,7 @@ pam_secular_faith_events.0030 = {
 					}
 				}
 				save_scope_as = church_scope
+				save_scope_as = holy_site_scope #Unop Moved from above
 			}
 		}
 	}
@@ -7917,13 +7918,14 @@ pam_secular_faith_events.0057 = {
 				}
 			}
 			save_scope_as = ale_county
-			save_scope_as = holy_site_scope
+			#save_scope_as = holy_site_scope #Unop Moved below, as the background triggers expect a province
 			random_county_province = {
 				limit = {
 					has_holding_type = church_holding
 					has_building_or_higher = breweries_01
 				}
 				barony = { save_scope_as = ale_church }
+				save_scope_as = holy_site_scope #Unop Moved from above
 			}
 		}
 	}

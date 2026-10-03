@@ -592,7 +592,7 @@ tgp_mongol_vassal_will_become_admin = {
 		#An admin type
 		has_trait = governor
 		faith.religion = religion:confucianism_religion
-		culture_is_historically_admin_trigger = yes
+		culture = { culture_is_historically_admin_trigger = yes } #Unop Was called in character scope, but it is a culture trigger
 		#Nomad type
 		government_has_flag = government_is_nomadic
 		has_trait = nomadic_philosophy
@@ -1028,7 +1028,7 @@ tgp_has_cultural_naming_in_chinese = {
 tgp_has_unique_chinese_naming = {
 	OR = {
 		capital_county.title_province ?= { tgp_is_in_chinese_naming_region = yes }
-		scope:title.capital_county.title_province ?= { tgp_is_in_chinese_naming_region = yes }
+		scope:title.title_capital_county.title_province ?= { tgp_is_in_chinese_naming_region = yes } #Unop Was capital_county, which is for characters
 		culture = { tgp_has_cultural_naming_in_chinese = no }
 	}
 }
@@ -1054,7 +1054,7 @@ tgp_chinese_naming_tier_trigger = {
 			}
 		}
 		scope:title ?= {
-			capital_county.title_province ?= { 
+			title_capital_county.title_province ?= { #Unop Was capital_county, which is for characters
 				trigger_if = {
 					limit = {
 						geographical_region = tgp_county_chinese_naming_region
