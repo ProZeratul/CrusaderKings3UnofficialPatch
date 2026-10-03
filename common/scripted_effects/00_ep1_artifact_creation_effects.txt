@@ -19,74 +19,74 @@ get_artifact_quality_effect = {
 				}
 			}
 			hidden_effect = { #Unop: Prevent tooltip pollution with each entries being 20% nothing happen
-			random_list = {
-				20 = {
-					save_scope_value_as = {
-						name = random_quality_bonus
-						value = 4
+				random_list = {
+					20 = {
+						save_scope_value_as = {
+							name = random_quality_bonus
+							value = 4
+						}
 					}
-				}
-				20 = {
-					save_scope_value_as = {
-						name = random_quality_bonus
-						value = 8
+					20 = {
+						save_scope_value_as = {
+							name = random_quality_bonus
+							value = 8
+						}
 					}
-				}
-				20 = {
-					save_scope_value_as = {
-						name = random_quality_bonus
-						value = 12
+					20 = {
+						save_scope_value_as = {
+							name = random_quality_bonus
+							value = 12
+						}
 					}
-				}
-				20 = {
-					save_scope_value_as = {
-						name = random_quality_bonus
-						value = 16
+					20 = {
+						save_scope_value_as = {
+							name = random_quality_bonus
+							value = 16
+						}
 					}
-				}
-				20 = {
-					save_scope_value_as = {
-						name = random_quality_bonus
-						value = 20
+					20 = {
+						save_scope_value_as = {
+							name = random_quality_bonus
+							value = 20
+						}
 					}
 				}
 			}
-		}
 		}
 		else_if = {
 			limit = {
 				NOT = { exists = scope:random_inspired_skill_quality_bonus }
 			}
 			hidden_effect = { #Unop: Prevent tooltip pollution with each entries being 20% nothing happen
-			random_list = {
-				20 = {
-					save_scope_value_as = {
-						name = random_inspired_skill_quality_bonus
-						value = 0.5
+				random_list = {
+					20 = {
+						save_scope_value_as = {
+							name = random_inspired_skill_quality_bonus
+							value = 0.5
+						}
 					}
-				}
-				20 = {
-					save_scope_value_as = {
-						name = random_inspired_skill_quality_bonus
-						value = 1
+					20 = {
+						save_scope_value_as = {
+							name = random_inspired_skill_quality_bonus
+							value = 1
+						}
 					}
-				}
-				20 = {
-					save_scope_value_as = {
-						name = random_inspired_skill_quality_bonus
-						value = 2
+					20 = {
+						save_scope_value_as = {
+							name = random_inspired_skill_quality_bonus
+							value = 2
+						}
 					}
-				}
-				20 = {
-					save_scope_value_as = {
-						name = random_inspired_skill_quality_bonus
-						value = 2.5
+					20 = {
+						save_scope_value_as = {
+							name = random_inspired_skill_quality_bonus
+							value = 2.5
+						}
 					}
-				}
-				20 = {
-					save_scope_value_as = {
-						name = random_inspired_skill_quality_bonus
-						value = 3
+					20 = {
+						save_scope_value_as = {
+							name = random_inspired_skill_quality_bonus
+							value = 3
 						}
 					}
 				}
@@ -183,7 +183,7 @@ get_artifact_quality_effect = {
 							else_if = {
 								limit = { ep1_character_had_or_has_inspiration_type_trigger = { TYPE = alchemy } }
 								value = alchemy_inspiration_average_skill_value
-							} 
+							}
 							else_if = {
 								limit = { ep1_character_had_or_has_inspiration_type_trigger = { TYPE = bow } }
 								value = weapon_inspiration_average_skill_value #Unop: As there is no "bow_inspiration_average_skill_value", use the weapon one
@@ -10064,30 +10064,7 @@ create_artifact_weapon_effect = {
 						scope:newly_created_artifact = { set_variable = replica_sassanian_sword }
 					}
 					1 = {
-						trigger = {
-							trigger_if = { #Unop: Since the artifact does not exists yet, we can't use artifact_should_use_gfx_type_trigger
-								limit = {
-									exists = scope:smith
-									exists = scope:smith.culture
-								}
-								scope:smith = { artifact_use_iranian_building_visuals_trigger = yes }
-							}
-							trigger_else_if = { #If the creator is not found we use the owner. Often this would be if the creator is a dummy, which has no culture
-								limit = {
-									exists = scope:owner
-									exists = scope:owner.culture
-								}
-								scope:owner = {
-									culture = {
-										has_unit_gfx = western_unit_gfx
-										has_cultural_era_or_later = culture_era_late_medieval
-									}
-								}
-							}
-							trigger_else = {
-								always = no #We should never get here as all created artifacts should have an owner.
-							}
-						}
+						trigger = { sword_could_be_longsword_trigger = yes }
 						create_artifact = {
 							name = artifact_longsword_name
 							description = placeholder # Will be re-generated once decorations are added in the post-creation effects.

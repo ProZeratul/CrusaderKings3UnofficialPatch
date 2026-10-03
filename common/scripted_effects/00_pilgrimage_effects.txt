@@ -1075,7 +1075,12 @@ christian_saint_bone_creation_effect = {
 					is_ai = yes
 				}
 				save_scope_as = saint_bone_owner
-				add_character_flag = unop_got_relic_from_pilgrimage #Unop: Flag the char has having received an artifact from the pilgrimage
+				scope:saint_bone_owner = {
+					add_character_flag = unop_got_relic_from_pilgrimage  #Unop: Flag the char has having received an artifact from the pilgrimage
+					involved_activity.activity_location.county = {
+						save_scope_as = unop_holy_site_location #Unop: This is needed to have the correct location
+					}
+				}
 				hidden_effect_new_object = {
 					create_artifact = {
 						name = christian_saint_bone_name
@@ -1093,7 +1098,7 @@ christian_saint_bone_creation_effect = {
 						}
 						set_variable = { # required to track usability for template
 							name = holy_site_var
-							value = scope:saint_bone_owner.involved_activity.activity_location.county
+							value = scope:unop_holy_site_location
 						}
 					}
 					scope:activity ?= {
