@@ -12,6 +12,13 @@ fp3_demand_submission_interaction = {
 	greeting = positive
 	notification_text = DEMAND_SUBMISSION_NOTIFICATION
 	
+	is_available = {
+		trigger_if = {
+			limit = { is_ai = yes }
+			is_physically_able = yes
+		}
+	}
+
 	is_shown = {
 		scope:actor != scope:recipient
 		struggle:persian_struggle ?= { has_struggle_phase_parameter = demand_submission_interaction_unlocked }
@@ -239,10 +246,6 @@ fp3_demand_submission_interaction = {
 	}
 	send_options_exclusive = no
 
-	ai_potential = {
-		is_physically_able = yes
-	}
-
 	ai_targets = {
 		ai_recipients = neighboring_rulers
 	}
@@ -352,20 +355,38 @@ fp3_request_turkic_invasion_interaction = {
 	icon = request_mercenary
 	desc = fp3_request_turkic_invasion_interaction_desc
 
-	is_shown = {
-		scope:actor = {
-			OR = {
-				AND = {
-					has_trait = fp3_struggle_detractor
-					any_character_struggle = { is_struggle_type = persian_struggle }
-				}
-				top_participant_group:dynastic_cycle ?= {
-					participant_group_type = expansion_movement
-				}
+	is_available = {
+		OR = {
+			AND = {
+				has_trait = fp3_struggle_detractor
+				any_character_struggle = { is_struggle_type = persian_struggle }
+			}
+			top_participant_group:dynastic_cycle ?= {
+				participant_group_type = expansion_movement
 			}
 		}
+		trigger_if = {
+			limit = { is_ai = yes }
+			ai_greed <= 25
+			OR = {
+				has_trait = fp3_struggle_detractor
+				AND = {
+					vassal_contract_has_flag = celestial_military_appointment
+					top_participant_group:dynastic_cycle ?= {
+						participant_group_type = expansion_movement
+					}
+				}
+			}
+			NOT = { culture = { has_cultural_pillar = heritage_turkic } }
+			ai_has_builder_or_pious_builder_personality = no
+			is_at_war = no
+		}
+	}
+
+	is_shown = {
 		scope:recipient = {
 			is_playable_character = yes
+			is_landed = yes
 			trigger_if = {
 				limit = {
 					scope:actor = {
@@ -381,7 +402,7 @@ fp3_request_turkic_invasion_interaction = {
 					any_character_struggle = { is_struggle_type = persian_struggle }
 					title:d_sunni.holder ?= this
 				}
-				top_liege = this
+				top_liege ?= this
 
 			}
 			is_ai = yes
@@ -883,7 +904,7 @@ fp3_request_turkic_invasion_interaction = {
 		# Pacifist AI don't like raiding
 		modifier = {
 			add = -25
-			scope:secondary_recipient.faith = { has_doctrine_parameter = pacifist_opinion_active }
+			scope:secondary_recipient.faith = { has_doctrine_parameter = pacifist }
 			desc = PT_AI_IS_PACIFIST_FAITH_2
 		}
 		modifier = {
@@ -937,21 +958,6 @@ fp3_request_turkic_invasion_interaction = {
 	ai_targets = {
 		ai_recipients = neighboring_rulers
 		ai_recipients = liege
-	}
-	ai_potential = {
-		OR = {
-			has_trait = fp3_struggle_detractor
-			AND = {
-				top_participant_group:dynastic_cycle ?= {
-					participant_group_type = expansion_movement
-				}
-				vassal_contract_has_flag = celestial_military_appointment
-			}
-		}
-		is_at_war = no
-		ai_has_builder_or_pious_builder_personality = no
-		ai_greed <= 25
-		NOT = { culture = { has_cultural_pillar = heritage_turkic } }
 	}
 	ai_will_do = {
 		base = 0
@@ -1055,22 +1061,30 @@ fp3_challenge_house_head_interaction = {
 	
 	cooldown_against_recipient = { years = 10 }
 
+	is_available = {
+		OR = {
+			government_has_flag = government_is_clan
+			government_is_japanese_trigger = yes
+		}
+		trigger_if = {
+			limit = { is_ai = yes }
+			is_house_head = no
+			is_physically_able = yes
+		}
+	}
+
 	is_shown = {
 		has_fp3_dlc_trigger = yes
 		scope:actor = {
 			this != scope:recipient
-			OR = {
-				government_has_flag = government_is_clan
-				government_is_japanese_trigger = yes
-			}
 			house ?= {
-				house_head = scope:recipient
+				house_head ?= scope:recipient
 				OR = {
 					has_house_unity_parameter = unity_can_challenge_house_head
+					house_head ?= { government_is_japanese_trigger = yes }
 					scope:actor = {
 						any_character_struggle = { has_struggle_phase_parameter = unlocks_challenge_house_head_for_clans }
 					}
-					house_head ?= { government_is_japanese_trigger = yes }
 				}
 			}
 		}
@@ -1116,6 +1130,12 @@ fp3_challenge_house_head_interaction = {
 				object = scope:recipient
 				scope:hook = yes
 			}
+		}
+		trigger_else_if = {
+			limit = {
+				scope:recipient = { is_vassal_or_below_of = scope:actor }
+			}
+			scope:recipient = { is_vassal_or_below_of = scope:actor }
 		}
 		trigger_else_if = {
 			limit = {
@@ -1305,11 +1325,6 @@ fp3_challenge_house_head_interaction = {
 	send_options_exclusive = no
 
 	# AI
-
-	#auto_accept = { #Unop: This one is duplicated, leaving the one above as it looks better
-	#	scope:recipient = { is_vassal_or_below_of = scope:actor }
-	#}
-	
 	ai_accept = {
 		base = 25
 		modifier = {
@@ -1415,16 +1430,6 @@ fp3_challenge_house_head_interaction = {
 		adult = yes
 	}
 	
-	ai_potential = {
-		is_ruler = yes
-		is_house_head = no
-		OR = {
-			government_has_flag = government_is_clan
-			government_is_japanese_trigger = yes
-		}
-		is_physically_able = yes
-	}
-
 	ai_targets = {
 		ai_recipients = dynasty
 		ai_recipients = family
@@ -1603,6 +1608,7 @@ fp3_change_allegiance = {
 	icon = change_allegiance
 
 	greeting = positive
+	notification_text = fp3_change_allegiance_notification
 
 	should_use_extra_icon = { scope:actor = { has_usable_hook = scope:recipient } }
 	extra_icon = "gfx/interface/icons/character_interactions/hook_icon.dds"
@@ -1611,6 +1617,18 @@ fp3_change_allegiance = {
 
 	ai_maybe = yes
 
+	is_available = {
+		any_character_struggle = { is_struggle_type = persian_struggle }
+		trigger_if = {
+			limit = { is_ai = yes }
+			OR = {
+				has_trait = fp3_struggle_detractor
+				has_trait = fp3_struggle_supporter
+			}
+			primary_title.tier >= tier_duchy
+		}
+	}
+
 	is_shown = {
 		has_fp3_dlc_trigger = yes
 		# There has to be a caliph around to sway on.
@@ -1618,7 +1636,6 @@ fp3_change_allegiance = {
 		exists = title:d_sunni.holder
 		scope:recipient != scope:actor
 		scope:actor = {
-			any_character_struggle = { is_struggle_type = persian_struggle }
 			OR = {
 				# Detractors are made from supporters.
 				AND = {
@@ -1991,14 +2008,6 @@ fp3_change_allegiance = {
 		hegemony = 120
 	}
 
-	ai_potential = {
-		primary_title.tier >= tier_duchy
-		OR = {
-			has_trait = fp3_struggle_detractor
-			has_trait = fp3_struggle_supporter
-		}
-	}
-
 	ai_targets = {
 		ai_recipients = liege
 		ai_recipients = neighboring_rulers
@@ -2169,6 +2178,17 @@ fp3_request_honorary_titles_interaction = {
 					}
 				}
 				subtract = medium_piety_value
+			}
+		}
+	}
+
+	is_available = {
+		trigger_if = {
+			limit = { is_ai = yes }
+			any_vassal = {
+				any_held_title = {
+					this = title:d_sunni
+				}
 			}
 		}
 	}
@@ -2382,14 +2402,6 @@ fp3_request_honorary_titles_interaction = {
 		hegemony = 60
 	}
 
-	ai_potential = {
-		any_vassal = {
-			any_held_title = {
-				this = title:d_sunni
-			}
-		}
-	}
-
 	ai_targets = {
 		ai_recipients = vassals
 	}
@@ -2421,11 +2433,20 @@ fp3_request_house_unity_change_interaction = {
 		piety = medium_piety_value
 	}
 
+	is_available = {
+		government_has_flag = government_is_clan
+		trigger_if = {
+			limit = { is_ai = yes }
+			any_vassal = {
+				any_held_title = {
+					this = title:d_sunni
+				}
+			}
+		}
+	}
+
 	is_shown = {
 		fp3_reward_from_vassalization_ending = yes
-		scope:actor = {
-			government_has_flag = government_is_clan
-		}
 	}
 
 	is_valid = {
@@ -2446,7 +2467,7 @@ fp3_request_house_unity_change_interaction = {
 	send_option = {
 		flag = unity_gain
 		localization = INCREASE_HOUSE_UNITY
-		starts_enabled = { always = yes	}
+		starts_enabled = { always = yes }
 	}
 
 	send_option = {
@@ -2484,14 +2505,6 @@ fp3_request_house_unity_change_interaction = {
 		kingdom = 60
 		empire = 60
 		hegemony = 60
-	}
-
-	ai_potential = {
-		any_vassal = {
-			any_held_title = {
-				this = title:d_sunni
-			}
-		}
 	}
 
 	ai_targets = {

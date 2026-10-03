@@ -220,6 +220,7 @@ high_skill_court_physician_cost = {
 		}
 		multiply = 0.5
 	}
+	multiply = pam_court_position_event_cost_mult
 }
 
 low_skill_court_physician_cost = {
@@ -230,6 +231,7 @@ low_skill_court_physician_cost = {
 		}
 		multiply = 0.5
 	}
+	multiply = pam_court_position_event_cost_mult
 }
 
 physician_base_skill_factor = {
@@ -371,6 +373,12 @@ overweight_value = 50
 
 feast_weight_modifier_value = {
 	add = 5
+	if = {
+		limit = {
+			has_personal_tenet_flag = tenet_hedonistic_feast_weight_gain
+		}
+		add = 5
+	}
 	# You have a lot of very desirable food
 	if = {
 		limit = {

@@ -122,7 +122,7 @@ unop_is_sexually_compatible_with_character = {
 				}
 				#Unop: This is based from freely_accepts_sodomy_with_trigger but with the perk check added
 				trigger_if = {
-					limit = { relation_with_character_is_sodomy_in_my_or_lieges_faith_trigger = { CHARACTER = $CHARACTER$ } }
+					limit = { relation_with_character_is_sodomy_in_my_or_lieges_rite_trigger = { CHARACTER = $CHARACTER$ } }
 					OR = { #Will ignore sodomy consequences (because there are none or they have done this before)
 						has_trait = deviant
 						has_trait = sodomite
@@ -216,7 +216,7 @@ unop_can_be_combatant_based_on_culture_trigger = {
 unop_can_be_combatant_based_on_clergy_fighter_trigger = {
 	faith = $ARMY_OWNER$.faith
 	OR = {
-		faith = { has_doctrine_parameter = clergy_can_fight }
+		rite = { rite_has_parameter = clergy_can_fight }
 		culture = { has_cultural_parameter = culture_clergy_can_fight }
 	}
 }
@@ -249,13 +249,13 @@ unop_can_be_combatant_based_on_martial_or_faith_custom_trigger = {
 			object = this
 			subject = $ARMY_OWNER$
 			OR = {
-				$ARMY_OWNER$ = { faith = { has_doctrine_parameter = combatant_can_be_either_gender_if_no_roco } }
+				$ARMY_OWNER$.rite = { rite_has_parameter = combatant_can_be_either_gender_if_no_roco }
 				AND = {
-					$ARMY_OWNER$ = { faith = { has_doctrine_parameter = combatant_must_be_male_if_no_roco } }
+					$ARMY_OWNER$.rite = { rite_has_parameter = combatant_must_be_male_if_no_roco }
 					is_male = yes
 				}
 				AND = {
-					$ARMY_OWNER$ = { faith = { has_doctrine_parameter = combatant_must_be_female_if_no_roco } }
+					$ARMY_OWNER$.rite = { rite_has_parameter = combatant_must_be_female_if_no_roco }
 					is_female = yes
 				}
 			}
@@ -622,38 +622,6 @@ unop_could_perform_standard_legendary_hunt = {
 	}
 }
 
-# Sadly we cannot use court_position_inner_circle_salary_trigger since it's made to use scope:liege that is not given in the revoke block
-unop_court_position_inner_circle_revoke_trigger = {
-	trigger_if = {
-		limit = { exists = $LIEGE$ }
-		$LIEGE$ = {
-			dynasty ?= { has_dynasty_perk = fp2_coterie_legacy_1 }
-			employs_court_position = $POS$_court_position
-			any_court_position_holder = {
-				type = $POS$_court_position
-				house ?= prev.house
-			}
-		}
-	}
-	trigger_else = { always = no }
-}
-
-# Sadly we cannot use court_position_inner_circle_salary_trigger since it's made to use scope:liege that is not given in the revoke block
-unop_camp_officer_inner_circle_revoke_trigger = {
-	trigger_if = {
-		limit = { exists = $LIEGE$ }
-		$LIEGE$ = {
-			dynasty ?= { has_dynasty_perk = fp2_coterie_legacy_1 }
-			employs_court_position = $POS$_camp_officer
-			any_court_position_holder = {
-				type = $POS$_camp_officer
-				house ?= prev.house
-			}
-		}
-	}
-	trigger_else = { always = no }
-}
-
 # All this taken from adopt_interaction => is_shown so now we have a base-trigger to rule them all (the goal is to use it in event option)
 unop_can_adopt_trigger = {
 	NOT = { has_game_rule = no_adoption }
@@ -850,18 +818,18 @@ unop_can_have_vassal_religious_rights_contract = { #Unop: Taken from religious_r
 	}
 	OR = {
 		NOT = {
-			scope:unop_liege.faith = {
+			scope:unop_liege = {
 				OR = {
-					has_doctrine = tenet_tax_nonbelievers
-					has_doctrine = special_doctrine_jizya
+					rite = { rite_has_tenet = tenet_tax_nonbelievers }
+					faith = { has_doctrine = special_doctrine_jizya }
 				}
 			}
 		}
 		AND = {
-			scope:unop_liege.faith = {
+			scope:unop_liege = {
 				OR = {
-					has_doctrine = tenet_tax_nonbelievers
-					has_doctrine = special_doctrine_jizya
+					rite = { rite_has_tenet = tenet_tax_nonbelievers }
+					faith = { has_doctrine = special_doctrine_jizya }
 				}
 			}
 			scope:unop_vassal = {
@@ -892,39 +860,6 @@ unop_can_have_vassal_succession_rights_contract = { #Unop: Taken from succession
 	}
 }
 
-# Need a CP as a flag parameter without the _court_position suffix
-unop_is_multi_slot_cp = {
-	OR = {
-		$CP$_court_position = flag:bodyguard_court_position #2
-		$CP$_court_position = flag:lady_in_waiting_court_position #2
-		$CP$_court_position = flag:garuda_court_position #2
-		#$CP$_court_position = flag:minister_bureaucrat_court_position #2 #Unop: Reminder as it's a special case on this one
-		$CP$_court_position = flag:court_artificer_court_position #3
-	}
-}
-
-unop_employer_can_have_cp = {
-	#Unop: We need to have an OR since can_employ_court_position_type will return false if we have the maximum amount of character for a given slot (like 2 bodyguard)
-	OR = {
-		can_employ_court_position_type = $COURT_POS$
-		AND = {
-			employs_court_position = $COURT_POS$
-			any_court_position_holder = {
-				type = $COURT_POS$
-				aptitude:$COURT_POS$ < 4
-			}
-		}
-	}
-}
-
-unop_employer_can_have_cp_lax = {
-	#Unop: We need to have an OR since can_employ_court_position_type will return false if we have the maximum amount of character for a given slot (like 2 bodyguard)
-	OR = {
-		can_employ_court_position_type = $COURT_POS$
-		employs_court_position = $COURT_POS$
-	}
-}
-
 #unop_can_disappear_trigger = { # Commented out to avoid game start errors
 #	NOR = {
 #		is_ruler = yes
@@ -946,49 +881,3 @@ unop_employer_can_have_cp_lax = {
 #		is_concubine = yes
 #	}
 #}
-
-unop_can_location_be_reset = {
-	location != $LIEGE$.capital_province
-	is_alive = yes
-	is_imprisoned = no
-	is_travelling = no
-	is_in_army = no
-	NOT = { exists = involved_activity }
-	num_taken_task_contracts <= 0
-}
-
-unop_guardian_or_court_tutor_3_trait = {
-	trigger_if = {
-		limit = {
-			any_relation = {
-				type = guardian
-			}
-		}
-		any_relation = {
-			type = guardian
-			OR = {
-				has_trait = $TRAIT$
-				has_trait = $TRAIT_2$
-				has_trait = $TRAIT_3$
-			}
-		}
-	}
-	trigger_else = {
-		OR = {
-			court_owner.court_position:court_tutor_court_position ?= {
-				OR = {
-					has_trait = $TRAIT$
-					has_trait = $TRAIT_2$
-					has_trait = $TRAIT_3$
-				}
-			}
-			court_owner.court_position:court_guru_court_position ?= {
-				OR = {
-					has_trait = $TRAIT$
-					has_trait = $TRAIT_2$
-					has_trait = $TRAIT_3$
-				}
-			}
-		}
-	}
-}

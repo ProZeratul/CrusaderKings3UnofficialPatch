@@ -24,6 +24,7 @@ diplomatic_intent = {
 	is_target_valid = {
 		NOT = { this = scope:target } #Unop Prevent selecting yourself as intent target
 		scope:target ?= {
+			this != root
 			is_ai = yes
 			is_playable_character = yes
 			OR = {
@@ -68,6 +69,7 @@ matchmaking_intent = {
 	is_target_valid = {
 		NOT = { this = scope:target } #Unop Prevent selecting yourself as intent target
 		scope:target = {
+			this != root
 			is_ai = yes
 			is_close_or_extended_family_of = root
 			can_marry_trigger = yes

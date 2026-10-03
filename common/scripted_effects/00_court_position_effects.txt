@@ -49,6 +49,49 @@ basic_gained_court_position_effect = {
 	}
 }
 
+# PAM Celestial Hierarchy personal tenet: fulfillment on high-aptitude hire
+# Needs COURT_POSITION = <court_position_type>
+pam_celestial_hierarchy_hire_fulfillment_effect = {
+	scope:liege = {
+		if = {
+			limit = {
+				has_personal_tenet_flag = tenet_celestial_hierarchy_sp_from_court_position
+				scope:employee = {
+					aptitude = {
+						court_position = $COURT_POSITION$
+						value >= 3
+					}
+				}
+			}
+			send_interface_toast = {
+				type = event_generic_good
+				title = pam_celestial_hierarchy_hire_sp_toast
+				left_icon = scope:liege
+				right_icon = scope:employee
+				change_spiritual_fulfillment = minor_spiritual_fulfillment_value
+			}
+		}
+	}
+}
+
+# PAM Celestial Hierarchy personal tenet: employer loses spiritual fulfillment when firing a court position.
+pam_celestial_hierarchy_fire_fulfillment_effect = {
+	scope:liege = {
+		if = {
+			limit = {
+				has_personal_tenet_flag = tenet_celestial_hierarchy_sp_from_court_position
+			}
+			send_interface_toast = {
+				type = event_generic_bad
+				title = pam_celestial_hierarchy_hire_sp_toast
+				left_icon = scope:liege
+				right_icon = scope:employee
+				change_spiritual_fulfillment = minor_spiritual_fulfillment_loss
+			}
+		}
+	}
+}
+
 #Basic effect for losing a court position
 basic_revoked_court_position_effect = {
 	scope:employee = {
@@ -96,6 +139,7 @@ basic_revoked_court_position_effect = {
 		#	REVERSE_NON_HOUSE_TARGET = no
 		#}
 	}
+	pam_celestial_hierarchy_fire_fulfillment_effect = yes
 	employed_booner_invalidation_effect = { EMPLOYEE = scope:employee LIEGE = scope:liege }
 }
 
@@ -116,6 +160,7 @@ court_physician_title_accepted_effect = {
 	scope:liege = {
 		unop_trigger_physician_treatments_effect = yes
 	}
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = court_physician_court_position }
 }
 court_physician_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -127,6 +172,7 @@ court_physician_title_invalidated_effect = {
 # COURT EUNUCH
 chief_eunuch_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = chief_eunuch_court_position }
 }
 chief_eunuch_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -138,6 +184,7 @@ chief_eunuch_title_invalidated_effect = {
 # KEEPER OF SWANS
 keeper_of_swans_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = keeper_of_swans_court_position }
 }
 keeper_of_swans_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -149,6 +196,7 @@ keeper_of_swans_title_invalidated_effect = {
 # MASTER OF THE HORSE
 master_of_horse_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = master_of_horse_court_position }
 }
 master_of_horse_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -159,7 +207,7 @@ master_of_horse_title_invalidated_effect = {
 
 # COURT JESTER
 court_jester_title_accepted_effect = {
-
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = court_jester_court_position }
 }
 court_jester_title_revoked_effect = {
 	scope:employee = {
@@ -177,6 +225,7 @@ court_jester_title_revoked_effect = {
 			}
 		}
 	}
+	pam_celestial_hierarchy_fire_fulfillment_effect = yes
 }
 court_jester_title_invalidated_effect = {
 	basic_invalidated_court_position_effect = yes
@@ -185,6 +234,7 @@ court_jester_title_invalidated_effect = {
 # MASTER OF THE HUNT
 master_of_hunt_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = master_of_hunt_court_position }
 }
 master_of_hunt_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -196,6 +246,7 @@ master_of_hunt_title_invalidated_effect = {
 # HIGH ALMONER
 high_almoner_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = high_almoner_court_position }
 }
 high_almoner_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -207,6 +258,7 @@ high_almoner_title_invalidated_effect = {
 # CUPBEARER
 cupbearer_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = cupbearer_court_position }
 }
 cupbearer_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -218,6 +270,7 @@ cupbearer_title_invalidated_effect = {
 # SENESCHAL
 seneschal_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = seneschal_court_position }
 }
 seneschal_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -229,6 +282,7 @@ seneschal_title_invalidated_effect = {
 # ANTIQUARIAN
 antiquarian_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = antiquarian_court_position }
 }
 antiquarian_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -240,6 +294,7 @@ antiquarian_title_invalidated_effect = {
 # COURT TUTOR
 court_tutor_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = court_tutor_court_position }
 }
 court_tutor_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -251,6 +306,7 @@ court_tutor_title_invalidated_effect = {
 # ROYAL ARCHITECT
 royal_architect_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = royal_architect_court_position }
 }
 royal_architect_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -262,6 +318,7 @@ royal_architect_title_invalidated_effect = {
 # COURT POET
 court_poet_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = court_poet_court_position }
 }
 court_poet_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -273,6 +330,7 @@ court_poet_title_invalidated_effect = {
 # BODYGUARD
 bodyguard_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = bodyguard_court_position }
 }
 bodyguard_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -284,6 +342,7 @@ bodyguard_title_invalidated_effect = {
 # CHAMPION
 champion_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = champion_court_position }
 }
 champion_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -295,6 +354,7 @@ champion_title_invalidated_effect = {
 # COURT MUSICIAN
 court_musician_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = court_musician_court_position }
 }
 court_musician_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -306,6 +366,7 @@ court_musician_title_invalidated_effect = {
 # FOOD TASTER
 food_taster_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = food_taster_court_position }
 }
 food_taster_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -317,6 +378,7 @@ food_taster_title_invalidated_effect = {
 # LADY-IN-WAITING
 lady_in_waiting_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = lady_in_waiting_court_position }
 }
 lady_in_waiting_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -337,6 +399,7 @@ executioner_title_accepted_effect = {
 		}
 	}
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = executioner_court_position }
 }
 executioner_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -348,6 +411,7 @@ executioner_title_invalidated_effect = {
 # GARUDA
 garuda_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = garuda_court_position }
 }
 garuda_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -359,6 +423,7 @@ garuda_title_invalidated_effect = {
 # COURT GARDENER
 court_gardener_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = court_gardener_court_position }
 }
 court_gardener_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -370,6 +435,7 @@ court_gardener_title_invalidated_effect = {
 # CARAVAN MASTER
 court_travel_leader_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = travel_leader_court_position }
 }
 court_travel_leader_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes 
@@ -381,6 +447,7 @@ court_travel_leader_title_invalidated_effect = {
 # WET NURSE
 wet_nurse_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = wet_nurse_court_position }
 	scope:liege = { #set wet_nurse and nursed_child relation with liege's children, siblings, hostages and liege if they are not adult
 		every_courtier = {
 			limit = {
@@ -428,7 +495,7 @@ wet_nurse_title_revoked_effect = {
 						has_relation_best_friend = prev
 					}
 					NOT = { mother = scope:employee } #Unop: Prevent the event to fire if the wet-nurse is the actual mother of the selected child
-					NOT = { this = scope:liege  } #Unop: Prevent this event to fire if you are the child that like the wet-nurse
+					this != scope:liege
 				}
 			}
 		}
@@ -451,6 +518,7 @@ wet_nurse_title_revoked_effect = {
 						has_relation_best_friend = prev
 					}
 					NOT = { mother = scope:employee } #Unop: Prevent the event to fire if the wet-nurse is the actual mother of the selected child
+					this != scope:liege
 				}
 				save_scope_as = nursed_child
 			}
@@ -472,6 +540,7 @@ wet_nurse_title_invalidated_effect = {
 # AKOLOUTHOS
 akolouthos_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = akolouthos_court_position }
 }
 akolouthos_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -483,6 +552,7 @@ akolouthos_title_invalidated_effect = {
 # COURT BREWMASTER
 court_brewmaster_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = court_brewmaster_court_position }
 }
 court_brewmaster_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -495,6 +565,7 @@ court_brewmaster_title_invalidated_effect = {
 
 grand_preceptor_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = grand_preceptor_court_position }
 }
 grand_preceptor_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -507,6 +578,7 @@ grand_preceptor_title_invalidated_effect = {
 
 grand_guardian_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = grand_guardian_court_position }
 }
 grand_guardian_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -519,6 +591,7 @@ grand_guardian_title_invalidated_effect = {
 
 grand_mentor_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = grand_mentor_court_position }
 }
 grand_mentor_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -531,6 +604,7 @@ grand_mentor_title_invalidated_effect = {
 
 fire_dragon_engineer_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = fire_dragon_engineer_court_position }
 }
 fire_dragon_engineer_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -543,6 +617,7 @@ fire_dragon_engineer_title_invalidated_effect = {
 
 keeper_of_the_harem_title_accepted_effect = {
 	basic_gained_court_position_effect = yes
+	pam_celestial_hierarchy_hire_fulfillment_effect = { COURT_POSITION = keeper_of_the_harem_court_position }
 }
 keeper_of_the_harem_title_revoked_effect = {
 	basic_revoked_court_position_effect = yes
@@ -577,41 +652,31 @@ camp_officer_old_holder_effect = { # Save existing holder if relevant
 
 court_position_grant_effect = { # Give position, and revoke old holder's if they exist
 	if = { #Multi-slot court positions - we replace the worst one
-		limit = { unop_is_multi_slot_cp = { CP = flag:$POS$ } }
-		save_scope_value_as = {
-			name = unop_multi_slot_cp
-			value = flag:$POS$_court_position
-		}
-		if = { # CP with 2 slots
-			limit = {
-				OR = {
-					scope:unop_multi_slot_cp = flag:bodyguard_court_position #2
-					scope:unop_multi_slot_cp = flag:lady_in_waiting_court_position #2
-					scope:unop_multi_slot_cp = flag:garuda_court_position #2
-					#scope:unop_multi_slot_cp = flag:minister_bureaucrat_court_position #2 #Unop: Reminder as it's a special case on this one
+		limit = {
+			$EMPLOYER$ = {
+				NOT = { can_employ_court_position_type = $POS$_court_position }
+				any_court_position_holder = {
+					type = $POS$_court_position 
+					count >= 2
 				}
 			}
-			unop_get_worst_cp_holder = {
-				EMPLOYER = $EMPLOYER$
-				POS = $POS$
-				SLOT = 2
-			}
 		}
-		else_if = {
-			limit = { scope:unop_multi_slot_cp = flag:court_artificer_court_position } #3
-			unop_get_worst_cp_holder = {
-				EMPLOYER = $EMPLOYER$
-				POS = $POS$
-				SLOT = 3
+		$EMPLOYER$ = {
+			ordered_court_position_holder = {
+				type = $POS$_court_position
+				order_by = {
+					value = aptitude:$POS$_court_position 
+					multiply = -1
+				}
+				save_scope_as = old_holder #Should be the one with worst aptitude
 			}
-		}
-		if = {
-			limit = { exists = scope:unop_worst_char_for_cp }
-			save_scope_as = old_holder
 		}
 	}
-	else = {
-		$EMPLOYER$.court_position:$POS$_court_position ?= { save_scope_as = old_holder }
+	else_if = {
+		limit = {
+			$EMPLOYER$.court_position:$POS$_court_position ?= { has_court_position = $POS$_court_position }
+		}
+		$EMPLOYER$.court_position:$POS$_court_position = { save_scope_as = old_holder }
 	}
 	$CANDIDATE$ = {
 		save_scope_as = candidate
@@ -756,6 +821,8 @@ camp_officer_generator_variable_effect = {
 # VAR - can be used to allow multiple event options: 'target', 'second', 'backup'
 # EMPLOYER - should be the char hiring the position
 # ROOT - should be the char taking the position
+# ONLY_EMPTY - replace occupied position or not
+# scope:allow_bad_position for allowing 'bad' position, since generally it's nonsense for someone to ask for such position
 # Saves scope:old_holder as existing holder if they exist
 # NOTE: candidates must be courtiers of the employer for this to work
 court_position_generator_effect = {
@@ -937,6 +1004,7 @@ court_position_generator_effect = {
 		}
 		1 = { # COURT JESTER
 			trigger = {
+				exists = scope:allow_bad_position
 				court_position_generator_pickable_trigger = { POS = court_jester EMPLOYER = $EMPLOYER$ }
 			}
 			court_position_generator_shared_modifier = {
@@ -951,6 +1019,7 @@ court_position_generator_effect = {
 		}
 		2 = { # EXECUTIONER
 			trigger = {
+				exists = scope:allow_bad_position
 				court_position_generator_pickable_trigger = { POS = executioner EMPLOYER = $EMPLOYER$ }
 			}
 			court_position_generator_shared_modifier = {
@@ -965,6 +1034,7 @@ court_position_generator_effect = {
 		}
 		2 = { # FOOD TASTER
 			trigger = {
+				exists = scope:allow_bad_position
 				court_position_generator_pickable_trigger = { POS = food_taster EMPLOYER = $EMPLOYER$ }
 			}
 			court_position_generator_shared_modifier = {
@@ -1445,8 +1515,7 @@ court_position_generator_effect = {
 				EMPLOYER = $EMPLOYER$
 			}
 		}
-		
-		2 = { #Unop: added the BREWMASTER
+		2 = { # BREWMASTER
 			trigger = {
 				court_position_generator_pickable_trigger = { POS = court_brewmaster EMPLOYER = $EMPLOYER$ }
 			}
@@ -1460,7 +1529,6 @@ court_position_generator_effect = {
 				EMPLOYER = $EMPLOYER$
 			}
 		}
-
 	}
 	clear_saved_scope = only_empty
 }
@@ -1661,7 +1729,7 @@ court_position_generator_assignment_effect = {
 		flag:khlon_glan = {
 			court_position_grant_effect = { POS = khlon_glan CANDIDATE = $CANDIDATE$ EMPLOYER = $EMPLOYER$ }
 		}
-		# Brewmaster #Unop: Added Brewmaster
+		# Brewmaster
 		flag:court_brewmaster = {
 			court_position_grant_effect = { POS = court_brewmaster CANDIDATE = $CANDIDATE$ EMPLOYER = $EMPLOYER$ }
 		}
@@ -2239,7 +2307,7 @@ decide_court_position_to_give_effect = {
 						}
 						$CANDIDATE$ = { add_character_flag = fire_dragon_engineer_flag }
 					}
-					10 = { #Unop: Missing entry
+					10 = {
 						trigger = {
 							can_appoint_char_to_court_position = {
 								CHAR = $CANDIDATE$
@@ -2484,7 +2552,7 @@ decide_court_position_to_give_effect = {
 						}
 						$CANDIDATE$ = { add_character_flag = seneschal_flag }
 					}
-					10 = { #Unop: Missing entry
+					10 = {
 						trigger = {
 							can_appoint_char_to_court_position = {
 								CHAR = $CANDIDATE$
@@ -2780,7 +2848,7 @@ assign_appropriate_court_position_effect = {
 				}
 				$CANDIDATE$ = { add_character_flag = foreign_emissary_flag }
 			}
-			10 = { #Unop: Missing entry
+			10 = {
 				trigger = {
 					can_employ_court_position_type = court_brahmin_court_position
 				}
@@ -2834,7 +2902,7 @@ assign_appropriate_court_position_effect = {
 				}
 				$CANDIDATE$ = { add_character_flag = yurtchi_flag }
 			}
-			10 = { #Unop: Missing entry
+			10 = {
 				trigger = {
 					can_employ_court_position_type = khlon_glan_court_position
 				}
@@ -3177,14 +3245,14 @@ distribute_determined_court_position_effect = {
 				court_position = keeper_of_the_horses_court_position
 			}
 		}
-		else_if = { #Unop: Missing entry
+		else_if = {
 			limit = { $CANDIDATE$ = { has_character_flag = khlon_glan_flag } }
 			appoint_court_position = {
 				recipient = $CANDIDATE$
 				court_position = khlon_glan_court_position
 			}
 		}		
-		else_if = { #Unop: Missing entry
+		else_if = {
 			limit = { $CANDIDATE$ = { has_character_flag = court_brahmin_flag } }
 			appoint_court_position = {
 				recipient = $CANDIDATE$
@@ -3286,8 +3354,8 @@ instill_virtue_trait_effect = {
 			has_trait_category = personality
 			save_temporary_scope_as = temp_trait
 			scope:child_character = {
-				faith = {
-					trait_is_virtue = scope:temp_trait
+				rite = {
+					trait_is_virtue_rite = scope:temp_trait
 				}
 				NOT = {
 					has_trait = scope:temp_trait
@@ -3420,96 +3488,48 @@ court_astrologer_task_remove_seasonal_modifiers_effect = {
 court_astrologer_task_add_seasonal_modifiers_effect = {
 	hidden_effect = {
 		save_scope_as = current_character
-		capital_province.county ?= { #Unop: Rework all this below so we actually get the modifier for the situation our capital is in, not from the other steppe season
-			if = {
+		capital_province.county = {
+			random_county_situation_sub_region = {
 				limit = {
-					any_county_situation = {
-						any_situation_sub_region = {
-							sub_region_current_phase = situation_steppe_abundant_grazing_season
-							situation_sub_region_has_county = scope:current_character.capital_county
+					situation_sub_region_has_county = prev
+				}
+				switch = {
+					trigger = sub_region_current_phase
+					situation_steppe_abundant_grazing_season = {
+						scope:current_character = {
+							add_character_modifier = court_astrologer_abundant_grazing_modifier
 						}
 					}
-				}
-				scope:current_character = {
-					add_character_modifier = court_astrologer_abundant_grazing_modifier
-				}
-			}
-			else_if = {
-				limit = {
-					any_county_situation = {
-						any_situation_sub_region = {
-							sub_region_current_phase = situation_steppe_warm_nights_season
-							situation_sub_region_has_county = scope:current_character.capital_county
+					situation_steppe_warm_nights_season = {
+						scope:current_character = {
+							add_character_modifier = court_astrologer_warm_nights_modifier
 						}
 					}
-				}
-				scope:current_character = {
-					add_character_modifier = court_astrologer_warm_nights_modifier
-				}
-			}
-			else_if = {
-				limit = {
-					any_county_situation = {
-						any_situation_sub_region = {
-							sub_region_current_phase = situation_steppe_sky_blessing_season
-							situation_sub_region_has_county = scope:current_character.capital_county
+					situation_steppe_sky_blessing_season = {
+						scope:current_character = {
+							add_character_modifier = court_astrologer_sky_blessing_modifier
 						}
 					}
-				}
-				scope:current_character = {
-					add_character_modifier = court_astrologer_sky_blessing_modifier
-				}
-			}
-			else_if = {
-				limit = {
-					any_county_situation = {
-						any_situation_sub_region = {
-							sub_region_current_phase = situation_steppe_white_zud_season
-							situation_sub_region_has_county = scope:current_character.capital_county
+					situation_steppe_white_zud_season = {
+						scope:current_character = {
+							add_character_modifier = court_astrologer_white_zud_modifier
 						}
 					}
-				}
-				scope:current_character = {
-					add_character_modifier = court_astrologer_white_zud_modifier
-				}
-			}
-			else_if = {
-				limit = {
-					any_county_situation = {
-						any_situation_sub_region = {
-							sub_region_current_phase = situation_steppe_cold_zud_season
-							situation_sub_region_has_county = scope:current_character.capital_county
+					situation_steppe_cold_zud_season = {
+						scope:current_character = {
+							add_character_modifier = court_astrologer_cold_zud_modifier
 						}
 					}
-				}
-				scope:current_character = {
-					add_character_modifier = court_astrologer_cold_zud_modifier
-				}
-			}
-			else_if = {
-				limit = {
-					any_county_situation = {
-						any_situation_sub_region = {
-							sub_region_current_phase = situation_steppe_severe_drought_season
-							situation_sub_region_has_county = scope:current_character.capital_county
+					situation_steppe_severe_drought_season = {
+						scope:current_character = {
+							add_character_modifier = court_astrologer_severe_drought_modifier
 						}
 					}
-				}
-				scope:current_character = {
-					add_character_modifier = court_astrologer_severe_drought_modifier
-				}
-			}
-			else_if = {
-				limit = {
-					any_county_situation = {
-						any_situation_sub_region = {
-							sub_region_current_phase = situation_steppe_havsarsan_zud_season
-							situation_sub_region_has_county = scope:current_character.capital_county
+					situation_steppe_havsarsan_zud_season = {
+						scope:current_character = {
+							add_character_modifier = court_astrologer_havsarsan_zud_modifier
 						}
 					}
-				}
-				scope:current_character = {
-					add_character_modifier = court_astrologer_havsarsan_zud_modifier
 				}
 			}
 		}

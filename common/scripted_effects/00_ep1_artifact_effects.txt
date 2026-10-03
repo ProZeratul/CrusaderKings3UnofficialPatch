@@ -522,11 +522,17 @@ destroy_artifact_aniconist_effect = {
 		if = {
 			limit = {
 				OR = {
-					$DESTROYER$.faith = { has_doctrine_parameter = destroying_artifacts_is_pious }
+					$DESTROYER$.rite = { rite_has_parameter = destroying_artifacts_is_pious }
 					$PIETY_BY_DEFAULT$ = yes
 				}
 			}
 			give_destroyed_artifact_piety = yes
+		}
+		if = {
+			limit = {
+				has_personal_tenet_flag = tenet_aniconism_destruction_fulfillment
+			}
+			change_spiritual_fulfillment = minor_spiritual_fulfillment_value
 		}
 		if = {
 			limit = {
@@ -595,7 +601,8 @@ destroy_artifact_aniconist_effect = {
 						multiply = 0.5
 					}
 				}
-				
+
+				round = yes
 				min = 1
 			}
 		}
@@ -649,10 +656,10 @@ give_destroyed_artifact_piety = {
 		}
 		# Boost the value up to something meaningful
 		multiply = 20
-		# Relics are way cooler to burn, double the final value
+		# Holy Relics are way cooler to burn, double the final value
 		if = {
 			limit = {
-				scope:artifact = { exists = var:relic }
+				scope:artifact = { is_holy_relic = yes }
 			}
 			multiply = {
 				value = 2

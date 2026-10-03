@@ -18,6 +18,10 @@ has_law_allowing_title_revocation_crown = {
 	first_not = I_LACK_LAW_ALLOWING_TITLE_REVOCATION_CROWN
 }
 
+has_law_allowing_title_revocation_church = {
+	first_not = I_LACK_LAW_ALLOWING_TITLE_REVOCATION_CHURCH
+}
+
 has_law_allowing_title_revocation_soryo = {
 	first_not = I_LACK_LAW_ALLOWING_TITLE_REVOCATION_SORYO
 }
@@ -95,6 +99,10 @@ has_law_allowing_vassal_retraction_crown = {
 	first_not = I_LACK_LAW_ALLOWING_VASSAL_RETRACTION_CROWN
 }
 
+has_law_allowing_vassal_retraction_church = {
+	first_not = I_LACK_LAW_ALLOWING_VASSAL_RETRACTION_CHURCH
+}
+
 has_law_allowing_vassal_retraction_admin = {
 	first_not = I_LACK_LAW_ALLOWING_VASSAL_RETRACTION_ADMIN
 }
@@ -115,6 +123,14 @@ has_tribal_law_allowing_succession_law_change = {
 	first_not = I_LACK_TRIBAL_LAW_ALLOWING_SUCCESSION_LAW_CHANGE
 }
 
+has_crown_law_allowing_succession_law_change_feudal = {
+	first_not = I_LACK_LAW_ALLOWING_SUCCESSION_LAW_CHANGE_FEUDAL
+}
+
+has_crown_law_allowing_succession_law_change_japanese_feudal = {
+	first_not = I_LACK_LAW_ALLOWING_SUCCESSION_LAW_CHANGE_JAPANESE_FEUDAL
+}
+
 has_crown_law_allowing_succession_law_change = {
 	first_not = I_LACK_LAW_ALLOWING_SUCCESSION_LAW_CHANGE
 }
@@ -133,46 +149,57 @@ no_powerful_vassal_with_negative_opinion = {
 
 can_target_character_with_scheme = {
 	first_not = I_AM_ALREADY_SCHEMING_AGAINST_THIS_CHARACTER
+	third_not = THEY_ARE_ALREADY_SCHEMING_AGAINST_THIS_CHARACTER
 }
 
 can_start_more_schemes_of_category = {
 	first_not = I_AM_AT_SCHEME_CATEGORY_LIMIT
+	third_not = I_AM_AT_SCHEME_CATEGORY_LIMIT
 }
 
 befriend_already_lover = {
 	first = befriend_already_lover
+	third = THEY_ARE_ALREADY_IN_LOVE
 } 
 
 befriend_already_friend = {
 	first = I_AM_ALREADY_FRIEND
+	third = THEY_ARE_ALREADY_FRIEND
 }
 
 seduce_already_lover = {
 	first = I_AM_ALREADY_LOVER
+	third = THEY_ARE_ALREADY_LOVER
 }
 
 romance_already_soulmate = {
 	first = I_AM_ALREADY_SOULMATE
+	third = THEY_ARE_ALREADY_SOULMATE
 }
 
 SCHEME_SEDUCE_UNWILLING_INCEST_TOO_YOUNG = {
 	first = SCHEME_SEDUCE_UNWILLING_INCEST_TOO_YOUNG
+	third = THEY_SCHEME_SEDUCE_UNWILLING_INCEST_TOO_YOUNG
 }
 
 seduce_blocked = {
 	first_not = I_AM_BLOCKED_FROM_SEDUCING_THIS_CHARACTER
+	third_not = THEY_ARE_BLOCKED_FROM_SEDUCING_THIS_CHARACTER
 }
 
 seduce_cooldown = {
 	first_not = I_HAVE_SEDUCE_COOLDOWN_ON_THIS_CHARACTER
+	third_not = THEY_HAVE_SEDUCE_COOLDOWN_ON_THIS_CHARACTER
 }
 
 romance_cooldown = {
 	first_not = I_HAVE_ROMANCE_COOLDOWN_ON_THIS_CHARACTER
+	third_not = THEY_HAVE_ROMANCE_COOLDOWN_ON_THIS_CHARACTER
 }
 
 romance_success_blocked = {
 	first_not = I_HAVE_ALREADY_ROMANCED_THIS_CHARACTER
+	third_not = THEY_HAVE_ALREADY_ROMANCED_THIS_CHARACTER
 }
 
 seduce_general_10_year_cooldown = {
@@ -182,6 +209,8 @@ seduce_general_10_year_cooldown = {
 no_attraction_due_to_gender = {
 	first = NOT_ATTRACTED_TO_GENDER
 	first_not = NOT_ATTRACTED_TO_GENDER
+	third = NOT_ATTRACTED_TO_GENDER
+	third_not = NOT_ATTRACTED_TO_GENDER
 }
 
 no_attraction_due_to_gender_me = {
@@ -192,6 +221,7 @@ no_attraction_due_to_gender_me = {
 
 abduct_own_children_block = {
 	first_not = abduct_own_children_block
+	third_not = THEY_ABDUCT_OWN_CHILDREN_BLOCK
 }
 
 test_interaction_not_implemented = {
@@ -236,6 +266,7 @@ recently_divorced = {
 
 spending_hook = {
 	first = I_SPEND_MY_HOOK_ON_RECIPIENT
+	third = THEY_SPEND_THEIR_HOOK_ON_RECIPIENT
 }
 
 is_betrothed_auto_accept = {
@@ -299,6 +330,7 @@ education_interaction_two_wards_only = {
 
 character_to_educate_exists = {
 	third_not = character_to_educate_exists
+	global_not = character_to_educate_exists
 }
 
 already_scheming_language = {
@@ -331,14 +363,17 @@ recently_took_tribal_challenge_ruler_decision = {
 
 I_have_imprisoned_target = {
 	first_not = I_IMPRISONED_THEM_TRIGGER
+	third_not = THEY_IMPRISONED_THEM_TRIGGER
 }
 
 i_have_been_caught_trying_to_murder_target = {
 	first_not = YOU_HAVE_BEEN_CAUGHT_TRYING_TO_MURDER_TARGET
+	third_not = THEY_HAVE_BEEN_CAUGHT_TRYING_TO_MURDER_TARGET
 }
 
 you_have_been_caught_trying_to_elope_with_target = {
 	first_not = YOU_HAVE_BEEN_CAUGHT_TRYING_TO_ELOPE_WITH_TARGET
+	third_not = THEY_HAVE_BEEN_CAUGHT_TRYING_TO_ELOPE_WITH_TARGET
 }
 
 you_have_been_caught_trying_to_steal_artifact_from_target = {
@@ -401,6 +436,7 @@ declare_war_hook_on_liege = {
 
 is_not_bankrupt = {
 	first_not = I_CANNOT_DECLARE_WAR_WHILE_BANKRUPT
+	third_not = CANNOT_DECLARE_WAR_WHILE_BANKRUPT
 }
 
 army_blocks_defender_army = {
@@ -423,7 +459,8 @@ yearly_1010_abductor = {
 }
 
 hof_ask_for_gold_excommunicated = {
-	global_not = HOF_ASK_FOR_GOLD_EXCOMMUNICATED
+	first_not = HOF_ASK_FOR_GOLD_EXCOMMUNICATED
+	third_not = HOF_ASK_FOR_GOLD_EXCOMMUNICATED_THIRD
 }
 
 hof_ask_for_claim_no_baronies = {
@@ -440,13 +477,6 @@ hof_ask_for_claim_has_pressed_claim_already = {
 
 hof_ask_for_claim_excommunicated = {
 	global_not = HOF_ASK_FOR_CLAIM_EXCOMMUNICATED
-}
-
-hof_interaction_unreformed_faith = {
-	first = HOF_INTERACTION_UNREFORMED_FAITH
-	global = HOF_INTERACTION_UNREFORMED_FAITH
-	first_not = HOF_INTERACTION_UNREFORMED_FAITH
-	global_not = HOF_INTERACTION_UNREFORMED_FAITH
 }
 
 seek_indulgences_excommunicated = {
@@ -551,6 +581,10 @@ is_escaped_prisoner = {
 	global = is_escaped_prisoner
 }
 
+is_paiza_merchant = {
+	global = is_paiza_merchant
+}
+
 is_war_enemy_with_another_target_war_enemy = {
 	third_not = IS_WAR_ENEMY_WITH_ANOTHER_TARGET_WAR_ENEMY
 }
@@ -639,6 +673,7 @@ join_faction_target = {
 
 sway_blocked = {
 	first_not = I_AM_BLOCKED_FROM_SWAYING_THIS_CHARACTER
+	third_not = THEY_ARE_BLOCKED_FROM_SWAYING_THIS_CHARACTER
 }
 
 modify_vassal_contract_select_different_obligation_level = {
@@ -662,6 +697,12 @@ vassal_modify_vassal_contract_unnecessary_hook_usage_vassal_favor = {
 }
 vassal_modify_vassal_contract_unnecessary_hook_usage_equal = {
 	first_not = vassal_modify_vassal_contract_unnecessary_hook_usage_equal
+}
+tributary_modify_tributary_contract_unnecessary_hook_usage_tributary_favor = {
+	first_not = tributary_modify_tributary_contract_unnecessary_hook_usage_tributary_favor
+}
+tributary_modify_tributary_contract_unnecessary_hook_usage_equal = {
+	first_not = tributary_modify_tributary_contract_unnecessary_hook_usage_equal
 }
 
 is_dynast = {
@@ -748,14 +789,40 @@ cannot_imprison_almohad_leader = {
 
 character_interactions_hostile_actions_disabled_delay = {
 	first_not = I_AM_AWATING_RESPONSE_FROM_A_PREVIOUS_REQUEST
+	third_not = THEY_ARE_AWAITING_RESPONSE_FROM_A_PREVIOUS_REQUEST
 }
 
 character_interactions_not_rel_head_title = {
 	third = TITLE_IS_REAL_HEAD
 }
 
+character_interactions_not_clerical_region_title = {
+	third = TITLE_IS_NOT_CLERICAL_REGION
+}
+
+character_interactions_not_clerical_elector_title = {
+	third = TITLE_IS_NOT_CLERICAL_ELECTOR
+}
+
+character_interactions_not_antipope_office_title = {
+	third = TITLE_IS_NOT_ANTIPOPE_OFFICE
+}
+
+character_is_real_head = {
+	first_not = NOT_CHARACTER_IS_REAL_HEAD
+}
+
 character_is_not_real_head = {
 	first_not = CHARACTER_IS_REAL_HEAD
+}
+
+character_is_rite_head = {
+	first = character_is_rite_head_first
+	first_not = not_character_is_rite_head_first
+	third = character_is_rite_head_third
+	third_not = not_character_is_rite_head_third
+	global = character_is_rite_head_global
+	global_not = not_character_is_rite_head_global
 }
 
 cannot_demand_religious_head_conversion = {
@@ -768,6 +835,10 @@ cannot_demand_holy_order_master_conversion = {
 
 cannot_demand_unsubordinate_landed_ruler_conversion = {
 	third_not = CANNOT_DEMAND_CONVERSION_FROM_UNSUBORDINATE_LANDED_RULER
+}
+
+cannot_demand_steadfast_character_conversion = {
+	third_not = CANNOT_DEMAND_CONVERSION_FROM_STEADFAST_CHARACTER
 }
 
 release_take_vows_invalid_recruit = {
@@ -878,6 +949,10 @@ has_tribal_authority_cooldown = {
 
 has_nomadic_authority_cooldown = {
 	first_not = NOMADIC_AUTHORITY_IS_ON_COOLDOWN
+}
+
+has_church_authority_cooldown = {
+	first_not = CHURCH_AUTHORITY_IS_ON_COOLDOWN
 }
 
 nomadic_authority_2_level_requirement = {
@@ -1148,6 +1223,7 @@ banned_from_combat_old_and_frail = {
 steal_back_artifact_must_have_claim_blocker = {
 	global_not = they_steal_back_artifact_must_have_claim_blocker
 	first_not = i_steal_back_artifact_must_have_claim_blocker
+	third_not = they_steal_back_artifact_must_have_claim_blocker
 }
 
 need_non_house_head_hook = {
@@ -1305,4 +1381,25 @@ steal_herd_blocked_target_none_tt = {
 #Unop Added missing localization
 ask_for_herd_not_enough_herd = {
 	third_not = ask_for_herd_not_enough_herd
+}
+
+liege_demands_vow_taking = {
+	global = liege_demands_vow_taking
+}
+
+# Grant Title Government Type picker custom_description keys
+grant_government_too_many_theocratic_vassals_tt = {
+	first_not = GRANT_GOVERNMENT_TOO_MANY_THEOCRACY_VASSALS
+}
+
+grant_government_cooldown_tt = {
+	first_not = GRANT_GOVERNMENT_COOLDOWN_ACTIVE
+}
+
+grant_government_kingdom_blocked_tt = {
+	first_not = GRANT_GOVERNMENT_KINGDOM_BLOCKED
+}
+
+grant_government_nomad_settled_only_tt = {
+	first_not = GRANT_GOVERNMENT_NOMAD_SETTLED_ONLY
 }

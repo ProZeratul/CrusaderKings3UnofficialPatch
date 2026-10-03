@@ -35,7 +35,6 @@
 # Setting AI Intent
 fp2_struggle.0003 = {
 	hidden = yes
-	#scope = none #Unop
 	scope = struggle
 
 	trigger = { # Should not need this, but, redundancy check!
@@ -242,7 +241,7 @@ fp2_struggle.0003 = {
 # Set AI Intent on join
 fp2_struggle.004 = {
 	hidden = yes
-	type = character_event #Unop
+	type = character_event
 
 	immediate = {
 		set_variable = {
@@ -283,9 +282,9 @@ fp2_struggle.004 = {
 
 		if = {
 			limit = {
-				NOR = {
-					has_character_flag = agenda_towards_escalation
-					has_character_flag = agenda_towards_deescalation
+				has_none_of_variables = {
+					name = agenda_towards_escalation
+					name = agenda_towards_deescalation
 				}
 			}
 
@@ -445,6 +444,7 @@ fp2_struggle.004 = {
 fp2_struggle.0501 = { # Fullscreen Intro Event
 	type = character_event
 	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/splash_icons/splash_iberia.dds"
 	title = fp2_struggle.0501.t
 	desc = {
 		desc = fp2_struggle.0501.desc
@@ -498,7 +498,7 @@ fp2_struggle.0501 = { # Fullscreen Intro Event
 	}
 	option = {
 		name = fp2_struggle.0501.a
-		play_sound_effect = "event:/DLC/FP2/SFX/UI/fp2_struggle_start_select" #Unop Use correct effect
+		play_sound_effect = "event:/DLC/FP2/SFX/UI/fp2_struggle_start_select"
 	}
 }
 
@@ -510,6 +510,7 @@ fp2_struggle.0501 = { # Fullscreen Intro Event
 fp2_struggle.0900 = { # Hostility
 	type = character_event
 	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/splash_icons/splash_iberia.dds"
 	title = fp2_struggle.0900.t
 	desc = {
 		first_valid = {
@@ -577,7 +578,7 @@ fp2_struggle.0900 = { # Hostility
 		custom_description_no_bullet = { text = fp2_struggle_house_tt }
 		custom_tooltip = fp2_struggle_hostility_holy_cb_tt
 		custom_tooltip = fp2_struggle_hostility_conversion_holy_tt
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			cynical = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -611,7 +612,7 @@ fp2_struggle.0900 = { # Hostility
 			text = fp2_struggle_hostility_culture_tt
 			fp2_struggle_hostility_cultural_acceptance_effect = yes
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			humble = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -644,7 +645,7 @@ fp2_struggle.0900 = { # Hostility
 			text = fp2_struggle_hostility_culture_large_tt 
 			fp2_struggle_hostility_cultural_acceptance_large_effect = yes
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			humble = medium_stress_impact_gain
 			cynical = medium_stress_impact_gain
 		}
@@ -676,6 +677,7 @@ fp2_struggle.0900 = { # Hostility
 fp2_struggle.0910 = {
 	type = character_event
 	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/splash_icons/splash_iberia.dds"
 	title = fp2_struggle.0900.t
 	desc = {
 		first_valid = {
@@ -711,7 +713,7 @@ fp2_struggle.0910 = {
 		##### Major Effects #####
 		show_as_tooltip = {
 			scope:struggle_ender = {
-				#dynasty = { add_dynasty_prestige = 10000 }
+				#dynasty ?= { add_dynasty_prestige = 10000 }
 				unop_add_renown_effect = { PRESTIGE_MODIFIER = raw_struggle_ending_dynasty_prestige_value } #Unop: Use our custom effect to better handle renown
 				fp2_struggle_hostility_ender_effect = yes
 			}
@@ -762,6 +764,7 @@ fp2_struggle.0910 = {
 fp2_struggle.0901 = { # Compromise
 	type = character_event
 	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/splash_icons/splash_iberia.dds"
 	title = fp2_struggle.0901.t
 	desc = {
 		first_valid = {
@@ -861,7 +864,7 @@ fp2_struggle.0901 = { # Compromise
 	}
 
 	after = {
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = medium_stress_impact_gain
 		}
 
@@ -883,6 +886,7 @@ fp2_struggle.0901 = { # Compromise
 fp2_struggle.0911 = {
 	type = character_event
 	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/splash_icons/splash_iberia.dds"
 	title = fp2_struggle.0901.t
 	desc = {
 		first_valid = {
@@ -950,6 +954,7 @@ fp2_struggle.0911 = {
 fp2_struggle.0902 = { # Conciliation
 	type = character_event
 	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/splash_icons/splash_iberia.dds"
 	title = fp2_struggle.0902.t
 	desc = {
 		first_valid = {
@@ -1018,7 +1023,7 @@ fp2_struggle.0902 = { # Conciliation
 	}
 
 	after = {
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = medium_stress_impact_gain
 			zealous = medium_stress_impact_gain
 		}
@@ -1041,6 +1046,7 @@ fp2_struggle.0902 = { # Conciliation
 fp2_struggle.0912 = {
 	type = character_event
 	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/splash_icons/splash_iberia.dds"
 	title = fp2_struggle.0902.t
 	desc = {
 		first_valid = {
@@ -1241,7 +1247,7 @@ fp2_struggle.1000 = {
         	}
    		}
 
-   		stress_impact = {
+   		stress_and_fulfillment_impact = {
 			# Righteous characters find this a very unappealing option. 
 			compassionate = medium_stress_impact_gain
 			gallant = medium_stress_impact_gain
@@ -1333,7 +1339,7 @@ fp2_struggle.1000 = {
         	}
    		}
 
-   		stress_impact = {
+   		stress_and_fulfillment_impact = {
 			# Righteous characters find this a very unappealing option. 
 			compassionate = medium_stress_impact_gain
 			gallant = medium_stress_impact_gain
@@ -1451,7 +1457,7 @@ fp2_struggle.1000 = {
         	}
    		}
 
-   		stress_impact = {
+   		stress_and_fulfillment_impact = {
 			# Aggressive characters find this an unappealing option.
 			wrathful = minor_stress_impact_gain
 			zealous = minor_stress_impact_gain
@@ -1535,7 +1541,7 @@ fp2_struggle.1000 = {
         	}
    		}
 
-   		stress_impact = {
+   		stress_and_fulfillment_impact = {
 			# Aggressive characters find this unappealing
 			wrathful = minor_stress_impact_gain
 			zealous = major_stress_impact_gain
@@ -1677,8 +1683,8 @@ fp2_struggle.1001 = {
 				is_powerful_vassal = yes
 			}
 			alternative_limit = { #Unop: Saw warn that expectant_courtier could still be null, just put the scope as defined in the trigger block of this event
-				fp2_struggle.1001_expectant_vassal_or_courtier_traits = yes
-			}
+                fp2_struggle.1001_expectant_vassal_or_courtier_traits = yes
+            }
 			save_scope_as = expectant_courtier
 		} 
 		
@@ -1714,7 +1720,7 @@ fp2_struggle.1001 = {
 	option = { #A good idea! I shall create such a fund. 
 		name = fp2_struggle.1001.a
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			# Arrogant or cruel characters find this an unappealing option.
 			arbitrary = medium_stress_impact_gain
 			arrogant = medium_stress_impact_gain
@@ -1764,14 +1770,14 @@ fp2_struggle.1001 = {
 		flavor = fp2_struggle.1001.b.tt
 		trigger = {
 			fp2_struggle.1001_weird_option_traits = no
-			trait_is_shunned_or_criminal_in_faith_trigger = {
-				FAITH = faith
+			trait_is_shunned_or_criminal_in_rite_trigger = {
+				RITE = rite
 				TRAIT = trait:adulterer
 				GENDER_CHARACTER = dummy_female
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			# Truly righteous characters wouldn't say this. 
 			compassionate = minor_stress_impact_gain
 			gallant = minor_stress_impact_gain 
@@ -1827,7 +1833,7 @@ fp2_struggle.1001 = {
 	 		fp2_struggle.1001_weird_option_traits = yes 
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			# Cheap or shy character's don't like this
 			greedy = medium_stress_impact_gain
 			shy = medium_stress_impact_gain
@@ -1886,11 +1892,11 @@ fp2_struggle.1001 = {
 		if = {
 			limit = { 
 				root = {
-					faith = {
+					rite = {
 						OR = {
-							trait_is_virtue = gregarious
-							trait_is_virtue = humble
-							trait_is_virtue = generous  	
+							trait_is_virtue_rite = gregarious
+							trait_is_virtue_rite = humble
+							trait_is_virtue_rite = generous  	
 						}	
 					}
 				}
@@ -1916,7 +1922,7 @@ fp2_struggle.1001 = {
 			}
 		}
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			# Careful or dilpomatically minded characters won't do this.
 			content = medium_stress_impact_gain
 			diplomat = medium_stress_impact_gain 
@@ -1998,7 +2004,7 @@ fp2_struggle.1001 = {
 	option = { #I am your king, not a wet nurse!  
 		name = fp2_struggle.1001.e
 	
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			# Benevolent characters wouldn't ignore this.
 			compassionate = medium_stress_impact_gain
 			gallant = medium_stress_impact_gain 
@@ -2254,7 +2260,7 @@ fp2_struggle.1002 = {
 		 	create_character = { 
 			 	age = { 40 70 } #their rough age during the period of their flourishing 
 			 	location = root.capital_province
-			 	name = "Abu al-Qasim Al-Zahrawi" #Albucasis
+			 	name = "Albucasis"
 			 	gender = male
 			 	template = scholar_character
 			 	trait = intellect_good_3 #He was one of the Middle Ages' greatest geniuses
@@ -2276,10 +2282,11 @@ fp2_struggle.1002 = {
 				 	deviant = {}
 				 	sodomite = {}		
 			 	}
-			 	culture = culture:andalusian
-			 	dynasty = none 
-			 	faith = faith:muwalladi
-			 	save_scope_as = albucasis_physician #this is needed to get the loc right 	
+				culture = culture:andalusian
+				dynasty = none 
+				faith = faith:sunni
+				rite = rite:maliki
+				save_scope_as = albucasis_physician #this is needed to get the loc right
 		 	}
 		 	set_global_variable = albucasis_created 
 		 	scope:albucasis_physician = {
@@ -2300,11 +2307,11 @@ fp2_struggle.1002 = {
 			create_character = {
 			 	age = { 31 71 } #their rough age during the period of their flourishing 
 			 	location = root.capital_province
-			 	name = "Abū Marwān ibn Zuhr" #Avenzoar
+			 	name = "Avenzoar"
 			 	gender = male
 			 	template = scholar_character
 			 	trait = intellect_good_2
-			 	trait = scholar 
+			 	trait = erudite 
 			 	trait = lifestyle_physician 
 			 	trait = education_learning_4
 			 	random_traits_list = { #his personality, extrapolated from my research 
@@ -2321,10 +2328,11 @@ fp2_struggle.1002 = {
 				 	sodomite = {}
 				 	murderer = {}		
 				}
-			 	culture = culture:andalusian
-			 	dynasty = none
-			 	faith = faith:muwalladi
-			 	save_scope_as = avenzoar_physician 	
+				culture = culture:andalusian
+				dynasty = none
+				faith = faith:sunni
+				rite = rite:maliki
+				save_scope_as = avenzoar_physician
 		 	}
 		 	
 		 	set_global_variable = avenzoar_created
@@ -2346,7 +2354,7 @@ fp2_struggle.1002 = {
 		 	create_character = {
 			 	age = { 35 75 } #their rough age during the period of their flourishing 
 			 	location = root.capital_province
-			 	name = "Abū Bakr ibn Tufail" #Ibn Tufail
+			 	name = "Ibn_Tufail"
 			 	gender = male
 			 	template = scholar_character
 			 	trait = intellect_good_2
@@ -2368,10 +2376,11 @@ fp2_struggle.1002 = {
 				 	sodomite = {}
 				 	witch = {}	
 			 	}
-			 	culture = culture:andalusian
-			 	dynasty = none 
-			 	faith = faith:muwalladi
-			 	save_scope_as = tufail_physician 	
+				culture = culture:andalusian
+				dynasty = none 
+				faith = faith:sunni
+				rite = rite:maliki
+				save_scope_as = tufail_physician
 		 	}
 		 	set_global_variable = tufail_created
 		 	scope:tufail_physician = {
@@ -2405,9 +2414,10 @@ fp2_struggle.1002 = {
 				 	incestuous = {}
 				 	witch = {}
 			 	}
-			 	culture = scope:xenophilic_culture 
-			 	faith = faith:muwalladi
-			 	save_scope_as = great_physician 
+				culture = scope:xenophilic_culture 
+				faith = faith:sunni
+				rite = rite:maliki
+				save_scope_as = great_physician
 		 	}
 	 	}
 
@@ -2450,7 +2460,7 @@ fp2_struggle.1002 = {
 		 	}
 		}
 
-	 	stress_impact = {
+	 	stress_and_fulfillment_impact = {
 			# Conservative characters don't want to do this. 
 			content = minor_stress_impact_gain
 			 
@@ -2515,7 +2525,7 @@ fp2_struggle.1002 = {
 		 	}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			# Conservative, dull or cheap characters won't do this
 			content = minor_stress_impact_gain
 			greedy = minor_stress_impact_gain
@@ -2605,7 +2615,7 @@ fp2_struggle.1002 = {
 		 	}
 		}
 
-	 	stress_impact = {
+	 	stress_and_fulfillment_impact = {
 		 	# Conservative, dull or cheap characters won't do this
 		 	content = minor_stress_impact_gain
 		 	greedy = minor_stress_impact_gain
@@ -2684,7 +2694,7 @@ fp2_struggle.1002 = {
 		 	}
 		}
 
-	 	stress_impact = {
+	 	stress_and_fulfillment_impact = {
 			#Caring, carefree or just characters won't do this
 		 	generous = minor_stress_impact_gain
 		 	gregarious = minor_stress_impact_gain
@@ -2764,11 +2774,10 @@ fp2_struggle.1002 = {
 	 	name = fp2_struggle.1002.e
 	 
 	 	trigger = {	#This only triggers for Christianity and similar faiths 
-		 	faith = {
-			   	has_doctrine_parameter = theocracy_temple_lease	
+		 	rite = {
+			   	rite_has_parameter = theocracy_temple_lease	
 			   	NOR = {
-				 	has_doctrine_parameter = legalism_modified_law_costs
-				   	has_doctrine_parameter = literalist_debate_enabled 
+				   	rite_has_parameter = literalist_debate_enabled 
 			 	}
 		 	} 
 		 	NOT = { has_lifestyle = learning_lifestyle } #So that this doesn't fire if you have the "Wash your hands" perk
@@ -2782,7 +2791,7 @@ fp2_struggle.1002 = {
 		 	}
 		}
 
-	 	stress_impact = {
+	 	stress_and_fulfillment_impact = {
 		 	# Innovative or nervous chracters wouldn't pick this option. 
 		 	ambitious = minor_stress_impact_gain
 		 	craven = minor_stress_impact_gain
@@ -2822,11 +2831,10 @@ fp2_struggle.1002 = {
 	 
 	 	trigger = {	
 		 	current_year >= 1065 #because this option refers to developments in islam that happened within the Seljuk empire 
-		 	faith = { #it checks for doctrines, rather than islam itself, to make the event more dynamic 
+		 	rite = { #it checks for doctrines, rather than islam itself, to make the event more dynamic 
 			 	OR = {
-				   	has_doctrine_parameter = legalism_modified_law_costs
-				   	has_doctrine_parameter = literalist_debate_enabled 
-				   	has_doctrine_parameter = religious_legal_pronouncements_law_cost_reduction 
+				   	rite_has_parameter = literalist_debate_enabled 
+				   	rite_has_parameter = religious_legal_pronouncements_law_cost_reduction 
 			 	}
 		 	} 
 	 	}
@@ -2839,7 +2847,7 @@ fp2_struggle.1002 = {
 		 	}
 		}
 
-		 stress_impact = {
+		 stress_and_fulfillment_impact = {
 		 	#True rationalists abhor this option
 		  	ambitious = medium_stress_impact_gain
 		 	diligent = medium_stress_impact_gain
@@ -2903,12 +2911,11 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
 		is_ai = no
 		has_fp2_dlc_trigger = yes
 		any_held_county = {
-			#Unop Only fire for iberian struggle counties
 			any_county_struggle = {
 				is_struggle_type = iberian_struggle
-			}		
-			title_province = {
-				has_building_or_higher = blacksmiths_01
+			}
+			any_county_province = {
+				has_building_or_higher = blacksmiths_01 #This event needs ROOT to have a blacksmith building
 			}
 		}
 		fp2_character_involved_in_struggle_trigger = yes 
@@ -2919,12 +2926,11 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
 	immediate = {
 
 		random_held_county = { #this is to find the county that has the blacksmith
-			limit = { 
-				#Unop Only fire for iberian struggle counties
+			limit = {
 				any_county_struggle = {
 					is_struggle_type = iberian_struggle
-				}		
-				title_province = {
+				}
+				any_county_province = {
 					has_building_or_higher = blacksmiths_01
 				}
 			}
@@ -2999,7 +3005,7 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
         	}
    		}
 
-   		stress_impact = { #arrogant or visionless rulers dislike this option 
+   		stress_and_fulfillment_impact = { #arrogant or visionless rulers dislike this option 
    			arrogant = minor_stress_impact_gain
    			callous = minor_stress_impact_gain
    			content = minor_stress_impact_gain
@@ -3063,7 +3069,7 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
         	}
    		}
 
-   		stress_impact = { #this is not what a Buddha would do 
+   		stress_and_fulfillment_impact = { #this is not what a Buddha would do 
    			compassionate = major_stress_impact_gain
    			generous = medium_stress_impact_gain
    			gregarious = medium_stress_impact_gain
@@ -3117,7 +3123,7 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
         	}
    		}
 
-   		stress_impact = { 
+   		stress_and_fulfillment_impact = { 
    			content = minor_stress_impact_gain
    			craven = minor_stress_impact_gain
    			greedy = minor_stress_impact_gain
@@ -3177,7 +3183,7 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
         	}
    		}
 
-   		stress_impact = { #this is an extravagant option, not for the humble or temperate - but just people don't like it either, since it still lets the blacksmith usurp the guilds. 
+   		stress_and_fulfillment_impact = { #this is an extravagant option, not for the humble or temperate - but just people don't like it either, since it still lets the blacksmith usurp the guilds. 
    			humble = minor_stress_impact_gain
    			just = minor_stress_impact_gain
    			temperate = minor_stress_impact_gain
@@ -3225,7 +3231,7 @@ fp2_struggle.1010 = { # Soul of Iron, by Ola Jentzsch
         	}
    		}
 
-   		stress_impact = { #this is not the option for opportunists, but a good option for some humble stress loss
+   		stress_and_fulfillment_impact = { #this is not the option for opportunists, but a good option for some humble stress loss
    			ambitious = major_stress_impact_gain
    			diligent = medium_stress_impact_gain
    			content = minor_stress_impact_loss
@@ -3686,7 +3692,7 @@ fp2_struggle.1011 = { # The Masterwork, by Ola Jentzsch
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
    			compassionate = minor_stress_impact_gain
    		}
 
@@ -4053,15 +4059,15 @@ fp2_struggle.1020 = {
 			limit = {
 				any_ruler = {
 					is_ai = yes
+					this != root
 					is_close_or_extended_family_of = scope:minority_councillor 
-					NOT = { this = root } #Unop
 				}
 			}
 			random_ruler = {
 				limit = {
-					is_ai = yes 
+					is_ai = yes
+					this != root
 					is_close_or_extended_family_of = scope:minority_councillor 
-					NOT = { this = root } #Unop
 				}
 				save_scope_as = councillor_executor 
 				set_variable = relative_created
@@ -4092,6 +4098,7 @@ fp2_struggle.1020 = {
 				template = merchant_template
 				culture = scope:minority_councillor.culture 
 				faith = scope:minority_councillor.faith 
+				rite = scope:minority_councillor.rite
 				save_scope_as = councillor_executor  
 			}
 			hidden_effect = {
@@ -4105,19 +4112,16 @@ fp2_struggle.1020 = {
 
 		scope:minority_councillor = {
 			every_close_or_extended_family_member = {
-				limit = { NOT = { this = root } } #Unop
 				custom = all_family_members
-				if = {
-					limit = { 
-						is_ai = yes 
-						this != root
-					}
-					add_opinion = {
-						target = root
-						opinion = -20
-						modifier = blames_for_death_of_relative_opinion 
-					}
-				}					
+				limit = { 
+					is_ai = yes 
+					this != root
+				}
+				add_opinion = {
+					target = root
+					opinion = -20
+					modifier = blames_for_death_of_relative_opinion 
+				}	
 			}		
 		}	
 	}
@@ -4143,7 +4147,7 @@ fp2_struggle.1020 = {
         	}
    		}
 
-   		stress_impact = {
+   		stress_and_fulfillment_impact = {
 			#arrogant characters don't care for this
 			arrogant = minor_stress_impact_gain
 			callous = minor_stress_impact_gain 
@@ -4161,7 +4165,7 @@ fp2_struggle.1020 = {
 
 		scope:minority_councillor = {
 			every_close_or_extended_family_member = {
-				custom = all_family_members
+			custom = all_family_members
 				if = {
 					limit = { #Unop
 						is_ai = yes
@@ -4197,7 +4201,7 @@ fp2_struggle.1020 = {
         	}
    		}
 
-   		stress_impact = {
+   		stress_and_fulfillment_impact = {
 			#arrogant characters don't wanna do this 
 			arrogant = minor_stress_impact_gain
 			callous = minor_stress_impact_gain 
@@ -4229,7 +4233,7 @@ fp2_struggle.1020 = {
         	}
    		}
 
-   		stress_impact = { #this is cruel and a lot of effort... 
+   		stress_and_fulfillment_impact = { #this is cruel and a lot of effort... 
 			compassionate = minor_stress_impact_gain
 			forgiving = minor_stress_impact_gain
 			lazy = minor_stress_impact_gain 
@@ -4271,7 +4275,7 @@ fp2_struggle.1020 = {
         	}
    		}
 
-   		stress_impact = {
+   		stress_and_fulfillment_impact = {
 			#cruel or lazy characters don't bother with this
 			callous = minor_stress_impact_gain
 			lazy = minor_stress_impact_gain 
@@ -4400,7 +4404,7 @@ fp2_struggle.1050 = {
 	trigger = { 
 		has_fp2_dlc_trigger = yes
 
-		is_landed_or_landless_administrative = yes
+		is_landed_or_landless_administrative_or_theocratic = yes
 		
 		any_spouse = { is_courtier = yes }
 
@@ -4445,10 +4449,10 @@ fp2_struggle.1050 = {
 	name = fp2_struggle.1050.a
 
 		trigger = {
-			faith = {
+			rite = {
 				OR = {
-					has_doctrine_parameter = witchcraft_illegal
-					has_doctrine_parameter = witchcraft_shunned 
+					rite_has_parameter = witchcraft_illegal
+					rite_has_parameter = witchcraft_shunned
 				}
 			}
 		}
@@ -4464,6 +4468,8 @@ fp2_struggle.1050 = {
             	ai_honor = -0.5
         	}
    		}
+
+   		pam_witch_justice_fulfillment_effect = yes
 
    		stress_impact = { 
    			compassionate = major_stress_impact_gain #compassionate people don't accuse their spouse of being a witch
@@ -4484,7 +4490,7 @@ fp2_struggle.1050 = {
 	}
 
 	option = {
-	name = fp2_struggle.1050.b
+		name = fp2_struggle.1050.b
 
 		ai_chance = { #lazy zealous AI pick this option 
         	base = 10
@@ -4495,7 +4501,7 @@ fp2_struggle.1050 = {
         	}
    		}
 
-   		stress_impact = { 
+   		stress_and_fulfillment_impact = { 
    			cynical = minor_stress_impact_gain #cynics don't really put their faith in God
    		}
 
@@ -4575,7 +4581,7 @@ fp2_struggle.1050 = {
 	}
 
 	option = { #Come, tell me more of your visions 
-	name = fp2_struggle.1050.c
+		name = fp2_struggle.1050.c
 
 		ai_chance = { #compassionate AIs pick this option
         	base = 10
@@ -4586,7 +4592,7 @@ fp2_struggle.1050 = {
         	}
    		}
 
-   		stress_impact = { #unpleasant types don't pick this option... 
+   		stress_and_fulfillment_impact = { #unpleasant types don't pick this option... 
    			arrogant = minor_stress_impact_gain 
    			callous = medium_stress_impact_gain
    			sadistic = medium_stress_impact_gain
@@ -4616,11 +4622,11 @@ fp2_struggle.1050 = {
 		}
 
 		custom_tooltip = fp2_struggle.1050.condition_might_improve
-					hidden_effect = {
-						scope:visionary_spouse = { 
-							recover_from_disease_effect = { DISEASE = ill }		
-						}
-					}
+		hidden_effect = {
+			scope:visionary_spouse = { 
+				recover_from_disease_effect = { DISEASE = ill }
+			}
+		}
 
 		add_character_modifier = {
 			modifier = frightened_by_portent_modifier
@@ -4641,7 +4647,7 @@ fp2_struggle.1050 = {
         	}
    		}
 
-   		stress_impact = { 
+   		stress_and_fulfillment_impact = { 
    			compassionate = minor_stress_impact_gain
 			eccentric = minor_stress_impact_gain
    		}
@@ -4695,13 +4701,15 @@ fp2_struggle.2000 = {
 	trigger = {
 		has_fp2_dlc_trigger = yes
 		has_religion = religion:islam_religion
-		faith = {
-			OR = {
-				has_doctrine = tenet_tax_nonbelievers
-				has_doctrine = special_doctrine_jizya
-				has_doctrine = tenet_religious_legal_pronouncements
-				has_doctrine = tenet_legalism
+		OR = {
+			rite = {
+				OR = {
+					rite_has_tenet = tenet_tax_nonbelievers
+					rite_has_tenet = tenet_religious_legal_pronouncements
+					rite_has_tenet = tenet_legalism
+				}
 			}
+			faith = { has_doctrine = special_doctrine_jizya }
 		}
 
 		exists = cp:councillor_steward
@@ -4739,6 +4747,7 @@ fp2_struggle.2000 = {
 			trait = temperate
 			culture = root.culture
 			faith = root.faith
+			rite = root.rite
 
 			dynasty = none
 			after_creation = { 
@@ -4771,7 +4780,7 @@ fp2_struggle.2000 = {
 	option = { # Mandatory lunatic option (now rakish)
 		name = fp2_struggle.2000.f
 		trigger = { has_trait = rakish }
-		stress_impact = { 
+		stress_and_fulfillment_impact = { 
 			chaste = major_stress_impact_gain
 			zealous = major_stress_impact_gain
 		}
@@ -4782,7 +4791,7 @@ fp2_struggle.2000 = {
 			title = fp2_struggle.2000.f.notif
 			desc = fp2_struggle.2000.f.notif.desc
 
-			stress_impact = { chaste = medium_stress_impact_gain }
+			stress_and_fulfillment_impact = { chaste = medium_stress_impact_gain }
 
 			scope:2000_scoped_chaplain = {
 				add_opinion = {
@@ -4821,7 +4830,7 @@ fp2_struggle.2000 = {
 				has_trait = aggressive_attacker 
 			}
 		}
-		stress_impact = { 
+		stress_and_fulfillment_impact = { 
 			just = major_stress_impact_gain
 			forgiving = major_stress_impact_gain
 			calm = minor_stress_impact_gain
@@ -4997,7 +5006,7 @@ fp2_struggle.2000 = {
 		name = fp2_struggle.2000.d
 		flavor = fp2_struggle.2000.d.desc
 
-		stress_impact = { 
+		stress_and_fulfillment_impact = { 
 			zealous = major_stress_impact_gain
 			humble = medium_stress_impact_gain
 			content = medium_stress_impact_gain
@@ -5048,7 +5057,7 @@ fp2_struggle.2000 = {
 		name = fp2_struggle.2000.b
 		flavor = fp2_struggle.2000.b.desc
 
-		stress_impact = { compassionate = medium_stress_impact_gain }
+		stress_and_fulfillment_impact = { compassionate = medium_stress_impact_gain }
 		add_dread = miniscule_dread_gain
 
 		send_interface_toast = {
@@ -5290,7 +5299,7 @@ fp2_struggle.2001 = {
 			}
 		}
 
-		stress_impact = { 
+		stress_and_fulfillment_impact = { 
 			compassionate = minor_stress_impact_gain 
 			humble = minor_stress_impact_gain 
 			content = minor_stress_impact_gain 
@@ -5477,7 +5486,7 @@ fp2_struggle.2001 = {
 		name = fp2_struggle.2001.a
 		custom_tooltip = fp2_struggle.2001.b.desc # Three extra years for not attaching any strings
 
-		stress_impact = { 
+		stress_and_fulfillment_impact = { 
 			craven = minor_stress_impact_gain 
 			shy = minor_stress_impact_gain 
 			lazy = minor_stress_impact_gain 
@@ -5488,7 +5497,7 @@ fp2_struggle.2001 = {
 				exists = scope:fp2_2001_exclusive_option_greed
 				NOT = { exists = scope:fp2_2001_exclusive_option_faith }
 			}
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				greedy = medium_stress_impact_gain
 				avaricious = minor_stress_impact_gain
 			}
@@ -5571,7 +5580,7 @@ fp2_struggle.2001 = {
 			}
 		}
 		
-		stress_impact = { 
+		stress_and_fulfillment_impact = { 
 			craven = medium_stress_impact_gain
 			content = minor_stress_impact_gain
 		}
@@ -5660,7 +5669,7 @@ fp2_struggle.2001 = {
 	option = { # Betray and inform ruler of treachery
 		name = fp2_struggle.2001.f
 
-		stress_impact = { 
+		stress_and_fulfillment_impact = { 
 			compassionate = major_stress_impact_gain 
 			forgiving = major_stress_impact_gain 
 		}
@@ -5775,7 +5784,7 @@ fp2_struggle.2001 = {
 	option = { # Dismiss
 		name = fp2_struggle.2001.e
 		custom_tooltip = fp2_struggle.2001.e.desc
-		stress_impact = { compassionate = minor_stress_impact_gain }
+		stress_and_fulfillment_impact = { compassionate = minor_stress_impact_gain }
 
 		scope:fp2_2001_desperate_county.holder.top_liege.capital_province.county = {
 			if = {
@@ -5966,7 +5975,7 @@ fp2_struggle.2002 = {
 		scope:fp2_2001_desperate_elder ?= { #Unop Prevens missing scope errors
 			if = { #Unop Only disappear if not a ruler (they may be a peasant leader or even landed if their rebellion succeeded)
 				limit = { is_ruler = no }
-				silent_disappearance_effect = yes
+			silent_disappearance_effect = yes
 			}
 		}
 	}
@@ -6023,6 +6032,7 @@ fp2_struggle.2003 = {
 			trait = wounded_2
 			culture = root.culture
 			faith = root.faith
+			rite = root.rite
 
 			dynasty = none
 			after_creation = { 
@@ -6050,7 +6060,7 @@ fp2_struggle.2003 = {
 			}
 			gold > medium_gold_value # Locals need to be paid in advance
 		}
-		stress_impact = { greedy = major_stress_impact_gain }
+		stress_and_fulfillment_impact = { greedy = major_stress_impact_gain }
 
 		send_interface_toast = {
 			title = fp2_struggle.2003.e.notif.c
@@ -6097,7 +6107,7 @@ fp2_struggle.2003 = {
 			}
 		}
 
-		stress_impact = { greedy = minor_stress_impact_gain }
+		stress_and_fulfillment_impact = { greedy = minor_stress_impact_gain }
 
 		remove_treasury_or_gold = medium_treasury_or_gold_value
 		send_interface_toast = {
@@ -6151,7 +6161,7 @@ fp2_struggle.2003 = {
 
 	option = { # Implore them to leave
 		name = fp2_struggle.2003.a
-		stress_impact = { shy = minor_stress_impact_gain }
+		stress_and_fulfillment_impact = { shy = minor_stress_impact_gain }
 
 		trigger = {
 			NOT = { has_trait = lunatic_genetic } # Cuts down the options to four in case of lunacy event, lunatics do not negotiate.
@@ -6278,7 +6288,7 @@ fp2_struggle.2003 = {
 		name = fp2_struggle.2003.c
 		flavor = fp2_struggle.2003.c.desc
 
-		stress_impact = { trusting = minor_stress_impact_gain } # Craven do not suffer a penalty, because they only plan the fight, not partake in it
+		stress_and_fulfillment_impact = { trusting = minor_stress_impact_gain } # Craven do not suffer a penalty, because they only plan the fight, not partake in it
 
 		duel = {
 			skill = martial
@@ -6483,7 +6493,7 @@ fp2_struggle.2003 = {
 		name = fp2_struggle.2003.e
 		flavor = fp2_struggle.2003.e.desc
 
-		stress_impact = { 
+		stress_and_fulfillment_impact = { 
 			compassionate = major_stress_impact_gain
 			just = medium_stress_impact_gain
 			paranoid = minor_stress_impact_gain
@@ -6697,7 +6707,7 @@ fp2_struggle.2004 = {
 					}
 					modifier = {
 						add = 10
-						has_trait = scholar
+						has_trait = erudite
 					}
 					modifier = {
 						add = 15
@@ -6882,7 +6892,7 @@ fp2_struggle.2004 = {
 					}
 					modifier = {
 						add = 10
-						has_trait = scholar
+						has_trait = erudite
 					}
 					modifier = {
 						add = 15
@@ -7051,7 +7061,6 @@ fp2_struggle.2005 = {
 					chance = 25
 					add_character_flag = fp2_2004_critical_success_achieved
 				}
-				#save_scope_as = 2005_scoped_steward #Unop: Comment this scope out. It will set "root" as the designer... (probably a c/p from the random_courtier_or_guest block)
 			}
 		}
 	}
@@ -7297,13 +7306,13 @@ fp2_struggle.2006 = {
 
 	trigger = {
 		has_fp2_dlc_trigger = yes
-		root.top_liege = root
-		cp:councillor_court_chaplain ?= { save_temporary_scope_as = 2006_scoped_chaplain_temp } #Unop save temp scope
+		liege = root
+		cp:councillor_court_chaplain ?= { save_temporary_scope_as = 2006_scoped_chaplain_temp }
 		any_sub_realm_county = {
 			fp2_event2006_check_if_right_vassal_target = yes
-			trigger_if = { #Unop
+			trigger_if = {
 				limit = { exists = scope:2006_scoped_chaplain_temp }
-				NOT = { holder = { this = scope:2006_scoped_chaplain_temp } }
+				holder != scope:2006_scoped_chaplain_temp
 			}
 			holder = {
 				any_neighboring_top_liege_realm_owner = {
@@ -7319,15 +7328,16 @@ fp2_struggle.2006 = {
 			cp:councillor_court_chaplain = { save_scope_as = 2006_scoped_chaplain }
 		}
 		random_sub_realm_county = {
-			limit = { #Unop
+			limit = {
 				fp2_event2006_check_if_right_vassal_target = yes
-				NOT = { holder = { this = scope:2006_scoped_chaplain } }
+				holder != scope:2006_scoped_chaplain
 			}
 			holder = {
 				save_scope_as = fp2_2006_vassal_in_crisis
 				random_neighboring_top_liege_realm_owner = {
 					limit = { faith != root.faith }
-					faith = { save_scope_as = fp2_2006_foreign_faith } 
+					faith = { save_scope_as = fp2_2006_foreign_faith }
+					rite = { save_scope_as = fp2_2006_foreign_rite }
 				}
 			}
 		}
@@ -7396,16 +7406,16 @@ fp2_struggle.2006 = {
 				}
 				if = {
 					limit = {
-						trait_is_criminal_in_faith_trigger = {
+						trait_is_criminal_in_rite_trigger = {
 							TRAIT = trait:witch
 							GENDER_CHARACTER = scope:fp2_2006_vassal_in_crisis
-							FAITH = scope:fp2_2006_vassal_in_crisis.faith
+							RITE = scope:fp2_2006_vassal_in_crisis.rite
 						}
 						NOT = {
-							trait_is_criminal_in_faith_trigger = {
+							trait_is_criminal_in_rite_trigger = {
 								TRAIT = trait:witch
 								GENDER_CHARACTER = scope:fp2_2006_vassal_in_crisis
-								FAITH = scope:fp2_2006_foreign_faith
+								RITE = scope:fp2_2006_foreign_rite
 							}
 						}
 					}
@@ -7454,7 +7464,7 @@ fp2_struggle.2006 = {
 			}
 		}
 		name = fp2_struggle.2006.d
-		stress_impact = { 
+		stress_and_fulfillment_impact = { 
 			compassionate = medium_stress_impact_gain 
 			gallant = medium_stress_impact_gain 
 		}
@@ -7501,7 +7511,7 @@ fp2_struggle.2006 = {
 
 	option = { # I will fix him myself
 		name = fp2_struggle.2006.b
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			cynical = minor_stress_impact_gain
 		}
 
@@ -7635,6 +7645,10 @@ fp2_struggle.2006 = {
 					add = 10
 					has_trait = saint
 				}
+				modifier = {
+					add = 10
+					has_trait = herald
+				}
 
 				send_interface_toast = {
 					type = event_toast_effect_good
@@ -7684,7 +7698,7 @@ fp2_struggle.2006 = {
 				}
 			}
 		}
-		stress_impact = { zealous = minor_stress_impact_gain }
+		stress_and_fulfillment_impact = { zealous = minor_stress_impact_gain }
 
 		scope:fp2_2006_vassal_in_crisis = {
 			progress_towards_friend_effect = {
@@ -7717,7 +7731,7 @@ fp2_struggle.2006 = {
 		name = fp2_struggle.2006.a
 		flavor = fp2_struggle.2006.a.desc
 		show_as_unavailable = { NOT = { exists = scope:2006_scoped_chaplain } } # Replaces trigger, teases player to possibility.
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = medium_stress_impact_gain
 			humble = minor_stress_impact_gain
 			trusting = medium_stress_impact_gain
@@ -7977,6 +7991,10 @@ fp2_struggle.2006 = {
 						add = 10
 						has_trait = saint
 					}
+					modifier = {
+						add = 10
+						has_trait = herald
+					}
 
 					hidden_effect = {
 						scope:fp2_2006_vassal_in_crisis = { add_piety = minor_piety_gain }
@@ -8031,7 +8049,7 @@ scripted_trigger fp2_struggle_2007_can_build_castle_trigger = { # Ensures that t
 		any_county_province = { has_holding_type = city_holding }
 	}
 	exists = holder
-	holder != scope:fp2_2007_scoped_steward
+	holder != root.cp:councillor_steward
 }
 
 fp2_struggle.2007 = {
@@ -8122,10 +8140,8 @@ fp2_struggle.2007 = {
 		}
 		random_vassal = {
 			limit = { 
-				NOT = { 
-					religion = root.religion
-					this = scope:fp2_2007_scoped_steward
-				}
+				religion != root.religion
+				this != scope:fp2_2007_scoped_steward
 			}
 			save_scope_as = 2007_vassal_sponsor
 		}
@@ -8727,7 +8743,7 @@ fp2_struggle.2008 = {
 				has_trait = diplomat
 			}
 		}
-		stress_impact = { 
+		stress_and_fulfillment_impact = { 
 			just = medium_stress_impact_gain 
 			trusting = minor_stress_impact_gain
 			temperate = minor_stress_impact_gain
@@ -8835,7 +8851,7 @@ fp2_struggle.2008 = {
 
 	option = { # Imprison chaplain outright
 		name = fp2_struggle.2008.a
-		stress_impact = { trusting = minor_stress_impact_gain }
+		stress_and_fulfillment_impact = { trusting = minor_stress_impact_gain }
 
 		rightfully_imprison_character_effect = {
 			TARGET = scope:fps_2008_misdeed_actor
@@ -8878,7 +8894,7 @@ fp2_struggle.2008 = {
 	option = { # Combined general output (threaten into teaching you how to forge like they do)
 		name = fp2_struggle.2008.b.a
 		flavor = fp2_struggle.2008.b.flavor
-		stress_impact = { 
+		stress_and_fulfillment_impact = { 
 			just = minor_stress_impact_gain
 			honest = medium_stress_impact_gain
 		}
@@ -8928,7 +8944,7 @@ fp2_struggle.2008 = {
 		name = fp2_struggle.2008.c
 		flavor = fp2_struggle.2008.c.flavor
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = medium_stress_impact_gain
 			zealous = minor_stress_impact_gain
 		}
@@ -9034,10 +9050,8 @@ fp2_struggle.2009 = {
 				top_liege = this
 				primary_title = { is_mercenary_company = no }
 				is_landed = yes
+				location ?= { is_sea_province = no }
 				count > 1 # Redundancy check in response to more errors on nigtly. Now on the bottom of the block. Reduced by one to total 3.
-				#Unop Avoid sea provinces 
-				exists = location
-				location = { NOT = { is_sea_province = yes } }
 			}
 			
 			OR = {
@@ -9066,9 +9080,7 @@ fp2_struggle.2009 = {
 					top_liege = this
 					primary_title = { is_mercenary_company = no }
 					is_landed = yes
-					#Unop Avoid sea provinces 
-					exists = location
-					location = { NOT = { is_sea_province = yes } }
+					location ?= { is_sea_province = no }
 				}
 				save_scope_as = fp2_2009_involved_ruler 
 			} 
@@ -9108,11 +9120,11 @@ fp2_struggle.2009 = {
 				location = scope:fp2_2009_involved_ruler.location
 				gender_female_chance = {
 					if = {
-						limit = { scope:fp2_2009_involved_ruler.location.county.faith = { has_doctrine = doctrine_gender_male_dominated } }
+						limit = { scope:fp2_2009_involved_ruler.location.county.rite = { rite_has_doctrine = doctrine_gender_male_dominated } }
 						add = 0
 					}
 					else_if = {
-						limit = { scope:fp2_2009_involved_ruler.location.county.faith = { has_doctrine = doctrine_gender_female_dominated } }
+						limit = { scope:fp2_2009_involved_ruler.location.county.rite = { rite_has_doctrine = doctrine_gender_female_dominated } }
 						add = 100
 					}
 					else = {
@@ -9265,7 +9277,7 @@ fp2_struggle.2009 = {
 			days = { 6 31 }
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = minor_stress_impact_gain
 			craven = minor_stress_impact_gain
 			content = medium_stress_impact_gain
@@ -9316,7 +9328,7 @@ fp2_struggle.2009 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			wrathful = minor_stress_impact_gain
 			vengeful = minor_stress_impact_gain
 			sadistic = minor_stress_impact_gain
@@ -9392,7 +9404,7 @@ fp2_struggle.2009 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = medium_stress_impact_gain
 			content = minor_stress_impact_gain
 			just = major_stress_impact_gain
@@ -9429,7 +9441,7 @@ fp2_struggle.2009 = {
 			} 
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			brave = minor_stress_impact_gain
 			honest = medium_stress_impact_gain
 			compassionate = minor_stress_impact_gain
@@ -9537,7 +9549,7 @@ fp2_struggle.2009 = {
 			} 
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_gain
 			forgiving = minor_stress_impact_gain
 		}
@@ -9643,7 +9655,7 @@ fp2_struggle.2010 = { # 2009 duel follow-up
 			value = major_treasury_or_gold_value
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			brave = major_stress_impact_gain
 			just = major_stress_impact_gain
 			arrogant = major_stress_impact_gain
@@ -9841,7 +9853,7 @@ fp2_struggle.2013 = {
 				save_scope_as = fp2_2013_secret_to_tell
 			}
 
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				brave = medium_stress_impact_gain
 				gallant = medium_stress_impact_gain
 				confider = major_stress_impact_gain
@@ -9987,7 +9999,7 @@ fp2_struggle.2013 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = major_stress_impact_gain
 			just = medium_stress_impact_gain
 			forgiving = medium_stress_impact_gain
@@ -10327,7 +10339,7 @@ fp2_struggle.2015 = {
 	trigger = {
 		is_ai = no # Murder schemes are heavy for performance
 		has_fp2_dlc_trigger = yes
-		is_independent_ruler = yes #Unop
+		root.top_liege = root
 
 		any_powerful_vassal = { 
 			fp2_struggle_2015_vassal_check_trigger = yes 
@@ -10339,40 +10351,21 @@ fp2_struggle.2015 = {
 	}
 
 	immediate = {
-		#Unop Rework fp2_struggle_2015_murder_requester_vassal
 		ordered_vassal = {
 			limit = { 
-				fp2_struggle_2015_vassal_check_trigger = yes
 				is_powerful_vassal = yes
+				fp2_struggle_2015_vassal_check_trigger = yes
+				opinion = {
+					target = root
+					value < 30
+				}
 			}
 			order_by = {
-				# Nab _something_ like opinion.
-				add = calc_rough_root_opinion_value
-				# Invert it, as we want characters who hate us ranked first.
-				multiply = -1
+				subtract = "opinion(root)"
 				# Aaaand multiply by tier to get more interesting characters who hate us.
-				if = {
-					# Unlanded have a rank of zero, so filter this a bit.
-					limit = { is_landed = yes }
-					multiply = highest_held_title_tier
-				}
+				multiply = highest_held_title_tier
 			}
 			save_scope_as = fp2_struggle_2015_murder_requester_vassal
-		}
-
-		if = { #Unop Add debug logging
-			limit = { NOT = { exists = scope:fp2_struggle_2015_murder_requester_vassal } }
-
-			every_vassal = {
-				limit = {
-					fp2_struggle_2015_vassal_check_trigger = yes
-					is_powerful_vassal = yes
-				}
-				add_to_list = unop_debug_2015
-			}
-
-			debug_log = "UNOP: fp2_struggle_2015_murder_requester_vassal is undefined"
-			debug_log_scopes = yes
 		}
 
 		create_character = {
@@ -10382,6 +10375,7 @@ fp2_struggle.2015 = {
 			trait = trusting
 			random_traits = yes
 			faith = scope:fp2_struggle_2015_murder_requester_vassal.location.county.faith
+			rite = scope:fp2_struggle_2015_murder_requester_vassal.location.county.rite
 			culture = scope:fp2_struggle_2015_murder_requester_vassal.location.county.culture
 			save_scope_as = fp2_struggle_2015_peasant_to_murder
 		}
@@ -10544,7 +10538,7 @@ fp2_struggle.2015 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_gain
 			gallant = minor_stress_impact_gain
 		}
@@ -10613,7 +10607,7 @@ fp2_struggle.2015 = {
 						modifier = broke_promise
 					}
 
-					stress_impact = {
+					stress_and_fulfillment_impact = {
 						forgiving = minor_stress_impact_gain
 						humble = minor_stress_impact_gain
 						just = minor_stress_impact_gain
@@ -10793,24 +10787,8 @@ fp2_struggle.2021 = { # Main event
 			cp:councillor_spymaster = { save_scope_as = fp2_2021_spymaster }
 		}
 
-		hidden_effect = { # Hides exceptions from players, fix is not necessary
-			scope:fp2_2009_garduna_guild_master = { 
-				save_scope_as = dueltarget # For Loc
-				#Unop Send to root capital is current location is a sea province
-				if = {
-					limit = { root.location = { is_sea_province = yes } }
-					if = {
-						limit = { exists = root.capital_province }
-						move_to_pool_at = root.capital_province
-					}
-					else = {
-						move_to_pool_at = root.location #Unop: This will fail in the log, but I've no idea where to send this char
-					}
-				}
-				else = {
-					move_to_pool_at = root.location # Fixes endless loop where the thief gets stretched across half the map
-				}
-			}
+		scope:fp2_2009_garduna_guild_master = { 
+			save_scope_as = dueltarget # For Loc
 		}
 	}
 
@@ -10909,16 +10887,16 @@ fp2_struggle.2021 = { # Main event
 					opinion = 15
 				}
 
-				if = { #Unop: Needed since this scope can be undefined
-					limit = { exists = scope:fp2_2021_spymaster }
-					if = { # There can only be one top dog, one master of the shadows.
-					limit = { scope:fp2_2021_spymaster != scope:fp2_2009_garduna_young_thief }
-						random = {
-							chance = 25
-							set_relation_rival = {
-								target = scope:fp2_2021_spymaster
-								reason = rival_garduna_young_thief
-							}
+				if = { # There can only be one top dog, one master of the shadows.
+					limit = {
+						exists = scope:fp2_2021_spymaster
+						scope:fp2_2021_spymaster != scope:fp2_2009_garduna_young_thief
+					}
+					random = {
+						chance = 25
+						set_relation_rival = {
+							target = scope:fp2_2021_spymaster
+							reason = rival_garduna_young_thief
 						}
 					}
 				}
@@ -11014,6 +10992,27 @@ fp2_struggle.2021 = { # Main event
 			set_variable = {
 				name = signature_weapon
 				value = flag:dagger
+			}
+		}
+
+		hidden_effect = { # Hides exceptions from players, fix is not necessary
+			# Fixes endless loop where the thief gets stretched across half the map
+			scope:fp2_2009_garduna_guild_master = { 
+				if = {
+					limit = { location ?= { is_sea_province = no } }
+					move_to_pool_at = location
+				}
+				else_if = {
+					limit = { root.location ?= { is_sea_province = no } }
+					move_to_pool_at = root.location
+				}
+				else_if = {
+					limit = { exists = root.capital_province }
+					move_to_pool_at = root.capital_province
+				}
+				else = {
+					move_to_pool_at = title:c_napoli.title_province
+				}
 			}
 		}
 
@@ -11228,7 +11227,7 @@ fp2_struggle.3001 = {
 		give_nickname = nick_the_crownless #now everyone knows
 		add_gold = medium_gold_max_value
 		add_prestige = major_prestige_loss
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = medium_stress_impact_gain
 			humble = minor_stress_loss
 		}
@@ -11249,12 +11248,12 @@ fp2_struggle.3001 = {
 	option = { #sell artifact crown instead
 		name = fp2_struggle.3001.b
 		trigger = { #triggers if you actually have one
-			exists = scope:struggle_3001_crown_artifact #Unop: Check for scope existence instead since the trigger used was different than in the immediate and caused issue
+			exists = scope:struggle_3001_crown_artifact
 		}
 		add_gold = medium_gold_value
 		add_prestige = minor_prestige_loss
 		destroy_artifact = scope:struggle_3001_crown_artifact
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = minor_stress_impact_gain
 		}
 		
@@ -11307,7 +11306,7 @@ fp2_struggle.3001 = {
 				add_character_flag = sold_crown_charmod #your spouse loses their crown
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = medium_stress_impact_gain
 			compassionate = medium_stress_impact_gain
 		}
@@ -11326,7 +11325,7 @@ fp2_struggle.3001 = {
 	
 	option = { #I'll be dead before losing my crown
 		name = fp2_struggle.3001.d
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_gain #you really need money
 		}
 		
@@ -11349,7 +11348,7 @@ fp2_struggle.3011 = {
 		first_valid = {
 			triggered_desc = { 
 				trigger = {
-					faith = { has_doctrine = doctrine_gender_female_dominated }
+					rite = { rite_has_doctrine = doctrine_gender_female_dominated }
 				}
 				desc = fp2_struggle.3011.desc_men #reverse genre event
 			}
@@ -11374,14 +11373,14 @@ fp2_struggle.3011 = {
 		has_fp2_dlc_trigger = yes
 		fp2_character_any_involvement_iberian_struggle_trigger = yes #there's an ongoing struggle (includes dlc check)
 		is_available_even_at_war_adult = yes
-		is_landed_or_landless_administrative = yes
+		is_landed_or_landless_administrative_or_theocratic = yes
 		any_character_war = {
 			war_days >= 30 #a battle has likely happened
 		}
 		exists = cp:councillor_marshal #someone tells you about the incident
 		exists = cp:councillor_court_chaplain
-		faith = {
-			NOT = { has_doctrine = doctrine_gender_equal } #checks that this is unusual
+		rite = {
+			NOT = { rite_has_doctrine = doctrine_gender_equal } #checks that this is unusual
 		}
 		OR = { #checks again that this makes sense, Ola Jentzsch's note 
 			has_game_rule = default_gender_equality
@@ -11444,7 +11443,7 @@ fp2_struggle.3011 = {
 				modifier = annoyed_opinion
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			zealous = medium_stress_impact_gain
 		}
 		
@@ -11461,13 +11460,13 @@ fp2_struggle.3011 = {
 	option = { #ridiculous
 		name = {
 			trigger = {
-				faith = { has_doctrine = doctrine_gender_male_dominated }
+				rite = { rite_has_doctrine = doctrine_gender_male_dominated }
 			}
 			text = fp2_struggle.3011.b
 		}
 		name = {
 			trigger = {
-				faith = { has_doctrine = doctrine_gender_female_dominated } 
+				rite = { rite_has_doctrine = doctrine_gender_female_dominated }
 			}
 			text = fp2_struggle.3011.b_men
 		}
@@ -11480,7 +11479,7 @@ fp2_struggle.3011 = {
 		}
 		if = {
 			limit = {
-				faith = { has_doctrine = doctrine_gender_male_dominated }
+				rite = { rite_has_doctrine = doctrine_gender_male_dominated }
 			}
 			every_courtier = {
 				custom = custom.every_female_courtier
@@ -11496,7 +11495,7 @@ fp2_struggle.3011 = {
 		}
 		else_if = {
 			limit = {
-				faith = { has_doctrine = doctrine_gender_female_dominated }
+				rite = { rite_has_doctrine = doctrine_gender_female_dominated }
 			}
 			every_courtier = {
 				custom = custom.every_male_courtier
@@ -11510,7 +11509,7 @@ fp2_struggle.3011 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			cynical = medium_stress_impact_gain
 		}
 		
@@ -11547,7 +11546,7 @@ fp2_struggle.3011 = {
 	option = { #I shall save these damsels in distress!
 		name = fp2_struggle.3011.d 
 		trigger = {
-			faith = { has_doctrine = doctrine_gender_male_dominated }
+			rite = { rite_has_doctrine = doctrine_gender_male_dominated }
 			OR = {
 				has_trait = gallant
 				has_trait = arrogant
@@ -11607,10 +11606,8 @@ fp2_struggle.3021 = {
 		}
 		any_courtier = { #someone will research this
 			is_available_healthy_ai_adult = yes
-			NOR = { #Unop you shouldn't lose your spouse or heir because of this
-				this = root.primary_spouse
-				this = root.player_heir
-			}
+			this != root.primary_spouse #you shouldn't lose your spouse or heir because of this
+			this != root.player_heir
 			count > 0
 		}
 		any_directly_owned_province = { #we have a castle to use it on
@@ -11703,7 +11700,7 @@ fp2_struggle.3021 = {
 			}	
 		}
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			zealous = medium_stress_impact_gain
 		}
 	}
@@ -11715,7 +11712,7 @@ fp2_struggle.3021 = {
 			modifier = insulted_opinion
 			opinion = -15
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			zealous = medium_stress_impact_gain
 			craven = minor_stress_impact_loss
@@ -11776,7 +11773,7 @@ fp2_struggle.3021 = {
 			}
 		}
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			forgiving = medium_stress_impact_gain
 			honest = medium_stress_impact_gain
 			compassionate = medium_stress_impact_gain
@@ -11800,7 +11797,7 @@ fp2_struggle.3021 = {
 			}
 		}
 		add_piety = minor_piety_gain
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			zealous = minor_stress_loss
 		}
 	}

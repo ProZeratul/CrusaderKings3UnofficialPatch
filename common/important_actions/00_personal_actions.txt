@@ -12,13 +12,28 @@
 				actor = root
 			}
 		}
-		
 	}
 
 	effect = {
 		scope:actor = {
-			open_view_data = {
-				view = character
+			if = {
+				limit = {
+					has_pam_dlc_trigger = yes
+					has_spiritual_fulfillment_type = christian_fulfillment 
+				}
+				open_view_data = {
+			        view = decision_detail
+			        data = decision:pam_decision_last_rites
+			        player = scope:actor
+			    }
+			    open_view_data = {
+					view = character
+				}
+			}
+			else = {
+				open_view_data = {
+					view = character
+				}
 			}
 		}
 	}
@@ -121,42 +136,42 @@ action_can_ransom = {
 					}
 				}
 			}
-			every_prisoner = {
-				limit = {
-					OR = {
-						AND = {
-							OR = {
-								is_pool_guest = yes
-								is_ruler = yes
-							}
+		every_prisoner = {
+			limit = {
+				OR = {
+					AND = {
+						OR = {
+							is_pool_guest = yes
+							is_ruler = yes
+						}
+						gold > 10
+					}
+					AND = {
+						is_ruler = no
+						liege ?= {
 							gold > 10
 						}
-						AND = {
-							is_ruler = no
-							liege ?= {
-								gold > 10
-							}
-						}
 					}
-					NOT = { is_at_war_with = root }
-					root = {
-						is_character_interaction_potentially_accepted = {
-							recipient = prev
-							interaction = ransom_interaction
-						}
+				}
+				NOT = { is_at_war_with = root }
+				root = {
+					is_character_interaction_potentially_accepted = {
+						recipient = prev
+						interaction = ransom_interaction
 					}
-					# Can't ransom to self
-					NOT = { liege ?= root }
 				}
-				try_create_important_action = {
-					important_action_type = action_can_ransom
-					actor = root
-					recipient = this
-				}
+				# Can't ransom to self
+				NOT = { liege ?= root }
+			}
+			try_create_important_action = {
+				important_action_type = action_can_ransom
+				actor = root
+				recipient = this
 			}
 		}
+		}
 	}
-
+		
 	effect = {
 		open_interaction_window = {
 			interaction = ransom_interaction
@@ -499,6 +514,7 @@ action_can_ask_hof_for_money = {
 			limit = {
 				exists = faith.religious_head
 				faith.religious_head = {
+					this != root
 					root = {
 						is_character_interaction_potentially_accepted = {
 							recipient = prev
@@ -534,6 +550,9 @@ action_can_ask_hof_for_claim = {
 		if = {
 			limit = {
 				exists = faith.religious_head
+				NOT = {
+					root = faith.religious_head
+				}
 			}
 			if = {
 				limit = {

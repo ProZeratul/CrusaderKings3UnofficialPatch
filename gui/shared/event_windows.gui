@@ -1,4 +1,5 @@
-﻿####################################
+﻿
+####################################
 # Event window types and templates #
 ####################################
 
@@ -371,7 +372,7 @@ types Events
 								name = "artifact_icon"
 								visible = "[ReasonItem.IsFlag( 'artifact' )]"
 								size = { 34 34 }
-								texture = "gfx/interface/icons/artifact/artefact_icons_unique_artifact_excalibur.dds"
+								texture = "gfx/interface/icons/artifact/artifact_icons_unique_artifact_excalibur.dds"
 								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_ARTIFACT"
 							}
 
@@ -648,6 +649,14 @@ types Events
 							}
 
 							icon = {
+								name = "ritual_cannibalism_icon"
+								visible = "[ReasonItem.IsFlag( 'ritual_cannibalism' )]"
+								size = { 34 34 }
+								texture = "[GetPlayer.GetRite.GetIcon]"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_RITUAL_CANNIBALISM"
+							}
+
+							icon = {
 								name = "knight_errant_icon"
 								visible = "[ReasonItem.IsFlag( 'knight_errant' )]"
 								size = { 34 34 }
@@ -799,7 +808,7 @@ types Events
 								name = "sell_artifacts_icon"
 								visible = "[ReasonItem.IsFlag( 'sell_artifacts' )]"
 								size = { 34 34 }
-								texture = "gfx/interface/icons/artifact/artefact_icons_unique_artifact_excalibur.dds"
+								texture = "gfx/interface/icons/artifact/artifact_icons_unique_artifact_excalibur.dds"
 								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_VISIT_SETTLEMENT_ARTIFACTS"
 							}
 							icon = {
@@ -967,10 +976,10 @@ types Events
 							}
 							icon = {
 								name = "scholar_icon"
-								visible = "[ReasonItem.IsFlag( 'scholar' )]"
+								visible = "[ReasonItem.IsFlag( 'erudite' )]"
 								size = { 34 34 }
-								texture = "gfx/interface/icons/traits/scholar.dds"
-								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_SCHOLAR"
+								texture = "gfx/interface/icons/traits/erudite.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_ERUDITE"
 							}
 							icon = {
 								name = "language_icon"
@@ -1152,6 +1161,13 @@ types Events
 								texture = "gfx/interface/icons/character_interactions/icon_culture.dds"
 								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_TRADITIONS"
 							}
+							icon = {
+								name = "has_tenet_icon"
+								visible = "[ReasonItem.IsFlag( 'has_tenet' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/character_interactions/religious.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_TENET"
+							}
 
 							# Introduce heir MPO event
 							icon = {
@@ -1177,6 +1193,42 @@ types Events
 								size = { 34 34 }
 								texture = "gfx/interface/icons/activities/activity_tutorial.dds"
 								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_RULER_OBJECTIVES"
+							}
+
+							# INCREASE CONTROL CONTRACT - TAXES
+							icon = {
+								name = "increase_control_taxes_icon"
+								visible = "[ReasonItem.IsFlag( 'increase_control_taxes' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/character_interactions/icon_gold.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_INCREASE_CONTROL_TAXES"
+							}
+
+							# INCREASE CONTROL CONTRACT - BANDITS
+							icon = {
+								name = "increase_control_bandits_icon"
+								visible = "[ReasonItem.IsFlag( 'increase_control_bandits' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/character_interactions/icon_raid_estate.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_INCREASE_CONTROL_BANDITS"
+							}
+
+							# INCREASE CONTROL CONTRACT - RIOTS
+							icon = {
+								name = "increase_control_riots_icon"
+								visible = "[ReasonItem.IsFlag( 'increase_control_riots' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/character_interactions/faction.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_INCREASE_CONTROL_RIOTS"
+							}
+
+							# INCREASE CONTROL CONTRACT - LOW CONTROL
+							icon = {
+								name = "increase_control_low_control_icon"
+								visible = "[ReasonItem.IsFlag( 'increase_control_low_control' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/court_position_types/master_thief_camp_officer.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_INCREASE_CONTROL_LOW_CONTROL"
 							}
 
 							#ALERT
@@ -1295,7 +1347,7 @@ types Events
 								name  = "greatest_hunter_oath_icon"
 								visible = "[ReasonItem.IsFlag( 'greatest_hunter_oath' )]"
 								size = { 34 34 }
-								texture = "gfx/interface/icons/activities/activity_hunt.dds" #Unop: Replace the hunter lifestyle icon with the activity one (to not have one icon with a background)
+								texture = "gfx/interface/icons/activities/activity_hunt.dds"
 							}
 							icon = {
 								name  = "heir_preparation_oath_icon"
@@ -1347,7 +1399,7 @@ types Events
 								texture = "[GetPlayer.GetInvolvedActivity.GetType.GetIcon]"
 								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_HOST_ACTIVITY_INTENT"
 							}
-							
+
 							
 							icon = {
 								name = "caravan_master_icon"
@@ -1532,31 +1584,7 @@ types Events
 							}
 						}
 
-						container = {
-							visible = "[OptionEffectItem.IsStress]"
-							alwaystransparent = yes
-
-							icon = {
-								visible = "[And(OptionEffectItem.IsGain,Not(OptionEffectItem.IsCritical))]"
-								texture = "gfx/interface/icons/stress/icon_stress_gain.dds"
-								name = "stress_gain"
-								size = { 34 34 }
-							}
-
-							icon = {
-								visible = "[OptionEffectItem.IsLoss]"
-								texture = "gfx/interface/icons/stress/icon_stress_loss.dds"
-								name = "stress_loss"
-								size = { 34 34 }
-							}
-
-							icon = {
-								visible = "[OptionEffectItem.IsCritical]"
-								texture = "gfx/interface/icons/stress/icon_stress_gain_critical.dds"
-								name = "stress_critical"
-								size = { 34 34 }
-							}
-						}
+						option_event_item_stress_fulfillment_container = {}
 
 						icon = {
 							name = "death"
@@ -1799,7 +1827,7 @@ template Event_Window_Debug_Info
 		button_icon = {
 			size = { 30 30 }
 			parentanchor = center
-			texture = "gfx/interface/icons/flat_icons/development.dds"
+			texture = "gfx/interface/icons/flat_icons/tower_construction.dds"
 			tooltip = "TOGGLE_DEVELOPER_EVENT_TOOLS"
 			using = tooltip_below
 			onclick = "[EventWindowData.ToggleEventTools]"
@@ -2151,7 +2179,7 @@ template Event_Window_Debug_EventTools
 			shortcut = "event_tooltips"
 		}
 	}
-	
+
 	widget = {
 		name = "event_window_event_tools"
 		visible_at_creation = no
@@ -2461,6 +2489,116 @@ types Events {
 			size = { 15 20 }
 		}
 		using = Show_Event_Number
+	}
+
+	type option_event_item_stress_fulfillment_container = container
+	{
+		# only stress, no fulfillment
+		container = {
+			visible = "[OptionEffectItem.IsStress]"
+
+			alwaystransparent = yes
+
+			highlight_icon = {
+				name = "stress_gain"
+				visible = "[And( OptionEffectItem.IsGain , Not( OptionEffectItem.IsCritical ) )]"
+				size = { 34 34 }
+
+				texture = "gfx/interface/icons/stress/icon_stress_gain.dds"
+			}
+
+			highlight_icon = {
+				name = "stress_loss"
+				visible = "[OptionEffectItem.IsLoss]"
+				size = { 34 34 }
+
+				texture = "gfx/interface/icons/stress/icon_stress_loss.dds"
+			}
+
+			highlight_icon = {
+				name = "stress_critical"
+				visible = "[OptionEffectItem.IsCritical]"
+				size = { 34 34 }
+
+				texture = "gfx/interface/icons/stress/icon_stress_gain_critical.dds"
+			}
+		}
+		# only fulfillment, no stress
+		container = {
+			visible = "[OptionEffectItem.IsFulfillment]"
+
+			alwaystransparent = yes
+
+			highlight_icon = {
+				name = "sf_gain"
+				visible = "[OptionEffectItem.IsGain]"
+				size = { 34 34 }
+
+				texture = "gfx/interface/icons/spiritual_fulfillment_levels/spiritual_fulfillment_06.dds"
+			}
+
+			highlight_icon = {
+				name = "sf_loss"
+				visible = "[OptionEffectItem.IsLoss]"
+				size = { 34 34 }
+
+				texture = "gfx/interface/icons/spiritual_fulfillment_levels/spiritual_fulfillment_02.dds"
+			}
+		}
+		# both stress and fulfillment
+		container = {
+			visible = "[OptionEffectItem.IsStressAndFulfillment]"
+
+			alwaystransparent = yes
+
+			# critical
+			highlight_icon = {
+				name = "crit_stress_gain_sf_gain"
+				visible = "[And( OptionEffectItem.IsCritical, OptionEffectItem.IsSecondaryGain )]"
+				size = { 34 34 }
+
+				texture = "gfx/interface/icons/stress/stress_gain_critical_sf_gain.dds"
+			}
+			highlight_icon = {
+				name = "crit_stress_gain_sf_loss"
+				visible = "[And( OptionEffectItem.IsCritical, OptionEffectItem.IsSecondaryLoss )]"
+				size = { 34 34 }
+
+				texture = "gfx/interface/icons/stress/stress_gain_critical_sf_loss.dds"
+			}
+
+			# non-critical stress gain
+			highlight_icon = {
+				name = "stress_gain_sf_gain"
+				visible = "[And( And( OptionEffectItem.IsGain, OptionEffectItem.IsSecondaryGain ), Not( OptionEffectItem.IsCritical ) )]"
+				size = { 34 34 }
+
+				texture = "gfx/interface/icons/stress/stress_gain_sf_gain.dds"
+			}
+			highlight_icon = {
+				name = "stress_gain_sf_loss"
+				visible = "[And( And( OptionEffectItem.IsGain, OptionEffectItem.IsSecondaryLoss ), Not( OptionEffectItem.IsCritical ) )]"
+				size = { 34 34 }
+
+				texture = "gfx/interface/icons/stress/stress_gain_sf_loss.dds"
+			}
+
+			# stress loss
+			highlight_icon = {
+				name = "stress_loss_sf_gain"
+				visible = "[And( And( OptionEffectItem.IsLoss, OptionEffectItem.IsSecondaryGain ), Not( OptionEffectItem.IsCritical ) )]"
+				size = { 34 34 }
+
+				texture = "gfx/interface/icons/stress/stress_loss_sf_gain.dds"
+			}
+			highlight_icon = {
+				name = "stress_loss_sf_loss"
+				visible = "[And( And( OptionEffectItem.IsLoss, OptionEffectItem.IsSecondaryLoss ), Not( OptionEffectItem.IsCritical ) )]"
+				size = { 34 34 }
+
+				texture = "gfx/interface/icons/stress/stress_loss_sf_loss.dds"
+			}
+		}
 	}
 }
 

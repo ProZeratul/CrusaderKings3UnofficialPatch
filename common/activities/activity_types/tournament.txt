@@ -2,24 +2,10 @@
 	is_shown = {
 		highest_held_title_tier > tier_barony
 		is_landed = yes
-		trigger_if = {
-			limit = {
-				is_ai = yes
-			}
-			is_at_war = no
-			NOT = { has_variable = conqueror }
-		}
 		has_dlc_feature = tours_and_tournaments
 		has_dlc_feature = advanced_activities
-		#Every other activity must be blocked until an uncrowned AI crowns themselves
-		trigger_if = {
-			limit = {
-				is_ai = yes
-			}
-			NOT = {
-				has_realm_law = uncrowned
-			}
-		}
+		ai_activity_war_check = yes
+		ai_activity_coronation_check = yes
 	}
 	
 	can_start_showing_failures_only = {
@@ -28,6 +14,10 @@
 	}
 
 	is_valid = {
+		scope:host = {
+			is_physically_able = yes
+			is_landed = yes
+		}
 		# If no one shows up
 		trigger_if = {
 			limit = {
@@ -44,28 +34,11 @@
 			tournament_clear_tournament_variables_effect = yes
 			tournament_clear_tournament_modifiers_effect = yes
 		}
-		# Host becomes unlanded
-		if = {
-			limit = {
-				scope:host = { is_landed = no }
-			}
-			scope:activity = {
-				activity_type = { save_scope_as = activity_type }
-			}
-			every_attending_character = {
-				trigger_event = activity_system.0320
-			}
-		}
-		if = { # No one shows up
-			limit = {
-				has_attending_activity_guests = no
-			}
-			scope:activity = {
-				activity_type = { save_scope_as = activity_type }
-				activity_location = { save_scope_as = location }
-			}
-			scope:host = { trigger_event = activity_system.0100 }
-		}
+		invalidation_imprisoned_effect = yes
+		invalidation_incapable_effect = yes
+		invalidation_unlanded_effect = yes
+		invalidation_nobody_present_effect = yes
+		invalidation_host_isolated_effect = yes
 		scope:activity = {
 			every_attending_character = {
 				limit = { is_ai = no }
@@ -97,19 +70,7 @@
 	}
 
 	on_host_death = {
-		# Make the player heir the new host
-		if = {
-			limit = { exists = scope:host.player_heir }
-			scope:host.player_heir = { save_scope_as = new_host }
-		}
-		# Otherwise pass to any successor
-		else = {
-			scope:host.primary_heir = { save_scope_as = new_host }
-		}
-		set_activity_host = scope:new_host
-		scope:new_host = {
-			trigger_event = { id = activity_system.0080 days = 1 }
-		}
+		activity_try_use_new_host_effect = yes
 	}
 
 	# desc is only shown in debug AI watch window
@@ -653,56 +614,7 @@
             	desc = "tournament_world_asia_japan_demotivation"
             }
         }
-        # Plague
-		if = {
-        	limit = {
-        	    any_held_title = {
-					title_tier = county
-        	        has_province_with_epidemic = { intensity < apocalyptic }
-        	    }
-        	    would_follow_social_distancing_value >= -1
-        	}
-        	add = {
-        	    value = -60
-        	    desc = "Plague in Domain"
-        	}
-    	}
-    	else_if = {
-    	    limit = {
-    	        any_realm_county = {
-    	            has_province_with_epidemic = { intensity < apocalyptic }
-    	        }
-    	        would_follow_social_distancing_value >= -1
-    	    }
-    	    add = {
-    	        value = -20
-    	        desc = "Plague in Top Realm"
-    	    }
-    	}
-    	if = {
-    	    limit = {
-    	        any_held_title = {
-					title_tier = county
-    	            has_province_with_epidemic = { intensity = apocalyptic }
-    	        }
-    	    }
-    	    add = {
-    	        value = -200
-    	        desc = "Apocalyptic Plague in Domain"
-    	    }
-    	}
-    	else_if = {
-    	    limit = {
-    	        any_held_title = {
-					title_tier = county
-    	            has_province_with_epidemic = { intensity = apocalyptic }
-    	        }
-    	    }
-    	    add = {
-    	        value = -40
-    	        desc = "Apocalyptic Plague in Top Realm"
-    	    }
-    	}
+		add = activity_general_ai_will_do_value
     	#we don't want the Pope to host tournaments
     	if = {
     		limit = {
@@ -1106,7 +1018,10 @@
 			value = 0
 			if = {
 				limit = {
-					has_treasury = no
+					OR = {
+						has_treasury = no
+						government_has_flag = government_is_theocracy
+					}
 				}
 				add = {
 					add = {
@@ -1197,6 +1112,7 @@
 			if = {
 				limit = {
 					has_treasury = yes
+					NOT = { government_has_flag = government_is_theocracy }
 				}
 				add = {
 					add = {
@@ -1281,7 +1197,10 @@
 			value = 0
 			if = {
 				limit = {
-					has_treasury = no
+					OR = {
+						has_treasury = no
+						government_has_flag = government_is_theocracy
+					}
 				}
 				add = {
 					value = tournament_base_cost
@@ -1360,6 +1279,7 @@
 			if = {
 				limit = {
 					has_treasury = yes
+					NOT = { government_has_flag = government_is_theocracy }
 				}
 				add = {
 					value = tournament_base_cost
@@ -1633,6 +1553,12 @@
 
 	map_entity = "building_western_tournament_01_entity"
 
+	###################
+	# GRAPHICS
+	###################
+
+	header_background = "gfx/interface/illustrations/activity_header_backgrounds/activity_tournament.dds"
+
 	background = {
 		texture = "gfx/interface/illustrations/activity_header_backgrounds/activity_tournament.dds"
 		environment = "environment_jerusalem"
@@ -1692,7 +1618,6 @@
 						}
 						OR = {
 							geographical_region = world_india
-							geographical_region = world_burma
 							geographical_region = world_asia_southeast
 						}
 					}
@@ -1726,13 +1651,19 @@
 	options = {
 		tournament_option_accommodations = {
 			tournament_accommodations_bad = {
+				default = {
+					has_personal_tenet_flag = tenet_vows_of_poverty_humble_host
+				}
 
 				cost = {
 					gold = {
 						value = 0
 						if = {
 							limit = {
-								has_treasury = no
+								OR = {
+									has_treasury = no
+									government_has_flag = government_is_theocracy
+								}
 							}
 							add = {
 								desc = tournament_accommodations_bad
@@ -1775,6 +1706,7 @@
 						if = {
 							limit = {
 								has_treasury = yes
+								NOT = { government_has_flag = government_is_theocracy }
 							}
 							add = {
 								desc = tournament_accommodations_bad
@@ -1843,14 +1775,22 @@
 				}
 			}
 			tournament_accommodations_normal = {
-				default = yes
+				is_valid = {
+					pam_vows_of_poverty_premium_activity_option_valid_trigger = yes
+				}
+				default = {
+					NOT = { has_personal_tenet_flag = tenet_vows_of_poverty_humble_host }
+				}
 
 				cost = {
 					gold = {
 						value = 0
 						if = {
 							limit = {
-								has_treasury = no
+								OR = {
+									has_treasury = no
+									government_has_flag = government_is_theocracy
+								}
 							}
 							add = {
 								desc = tournament_accommodations_normal
@@ -1893,6 +1833,7 @@
 						if = {
 							limit = {
 								has_treasury = yes
+								NOT = { government_has_flag = government_is_theocracy }
 							}
 							add = {
 								desc = tournament_accommodations_normal
@@ -1940,6 +1881,9 @@
 				}
 			}
 			tournament_accommodations_good = {
+				is_valid = {
+					pam_vows_of_poverty_premium_activity_option_valid_trigger = yes
+				}
 
 				on_start = {
 					scope:host = {
@@ -1981,7 +1925,10 @@
 						value = 0
 						if = {
 							limit = {
-								has_treasury = no
+								OR = {
+									has_treasury = no
+									government_has_flag = government_is_theocracy
+								}
 							}
 							add = {
 								desc = tournament_accommodations_good
@@ -2024,6 +1971,7 @@
 						if = {
 							limit = {
 								has_treasury = yes
+								NOT = { government_has_flag = government_is_theocracy }
 							}
 							add = {
 								desc = tournament_accommodations_good
@@ -2067,12 +2015,18 @@
 
 		tournament_option_prizes = {
 			tournament_prizes_bad = {
+				default = {
+					has_personal_tenet_flag = tenet_vows_of_poverty_humble_host
+				}
 				cost = {
 					gold = {
 						value = 0
 						if = {
 							limit = {
-								has_treasury = no
+								OR = {
+									has_treasury = no
+									government_has_flag = government_is_theocracy
+								}
 							}
 							add = {
 								desc = tournament_prizes_bad
@@ -2115,6 +2069,7 @@
 						if = {
 							limit = {
 								has_treasury = yes
+								NOT = { government_has_flag = government_is_theocracy }
 							}
 							add = {
 								desc = tournament_prizes_bad
@@ -2183,12 +2138,18 @@
 				}
 			}
 			tournament_prizes_normal = {
+				is_valid = {
+					pam_vows_of_poverty_premium_activity_option_valid_trigger = yes
+				}
 				cost = {
 					gold = {
 						value = 0
 						if = {
 							limit = {
-								has_treasury = no
+								OR = {
+									has_treasury = no
+									government_has_flag = government_is_theocracy
+								}
 							}
 							add = {
 								desc = tournament_prizes_normal
@@ -2231,6 +2192,7 @@
 						if = {
 							limit = {
 								has_treasury = yes
+								NOT = { government_has_flag = government_is_theocracy }
 							}
 							add = {
 								desc = tournament_prizes_normal
@@ -2279,14 +2241,22 @@
 				}
 			}
 			tournament_prizes_good = {
-				default = yes
+				is_valid = {
+					pam_vows_of_poverty_premium_activity_option_valid_trigger = yes
+				}
+				default = {
+					NOT = { has_personal_tenet_flag = tenet_vows_of_poverty_humble_host }
+				}
 				
 				cost = {
 					gold = {
 						value = 0
 						if = {
 							limit = {
-								has_treasury = no
+								OR = {
+									has_treasury = no
+									government_has_flag = government_is_theocracy
+								}
 							}
 							add = {
 								desc = tournament_prizes_good
@@ -2329,6 +2299,7 @@
 						if = {
 							limit = {
 								has_treasury = yes
+								NOT = { government_has_flag = government_is_theocracy }
 							}
 							add = {
 								desc = tournament_prizes_good
@@ -2404,12 +2375,18 @@
 				}
 			}
 			tournament_prizes_very_good = {
+				is_valid = {
+					pam_vows_of_poverty_premium_activity_option_valid_trigger = yes
+				}
 				cost = {
 					gold = {
 						value = 0
 						if = {
 							limit = {
-								has_treasury = no
+								OR = {
+									has_treasury = no
+									government_has_flag = government_is_theocracy
+								}
 							}
 							add = {
 								desc = tournament_prizes_very_good
@@ -2452,6 +2429,7 @@
 						if = {
 							limit = {
 								has_treasury = yes
+								NOT = { government_has_flag = government_is_theocracy }
 							}
 							add = {
 								desc = tournament_prizes_very_good
@@ -2536,13 +2514,19 @@
 				}
 			}
 			tournament_prizes_splendid = {
-				
+				is_valid = {
+					pam_vows_of_poverty_premium_activity_option_valid_trigger = yes
+				}
+
 				cost = {
 					gold = {
 						value = 0
 						if = {
 							limit = {
-								has_treasury = no
+								OR = {
+									has_treasury = no
+									government_has_flag = government_is_theocracy
+								}
 							}
 							add = {
 								desc = tournament_prizes_splendid
@@ -2585,6 +2569,7 @@
 						if = {
 							limit = {
 								has_treasury = yes
+								NOT = { government_has_flag = government_is_theocracy }
 							}
 							add = {
 								desc = tournament_prizes_splendid
@@ -2837,7 +2822,10 @@
 					value = 0
 					if = {
 						limit = {
-							has_treasury = no
+							OR = {
+								has_treasury = no
+								government_has_flag = government_is_theocracy
+							}
 						}
 						add = {
 							add = {
@@ -2915,6 +2903,7 @@
 					if = {
 						limit = {
 							has_treasury = yes
+							NOT = { government_has_flag = government_is_theocracy }
 						}
 						add = {
 							add = {
@@ -3161,7 +3150,10 @@
 					value = 0
 					if = {
 						limit = {
-							has_treasury = no
+							OR = {
+								has_treasury = no
+								government_has_flag = government_is_theocracy
+							}
 						}
 						add = {
 							add = {
@@ -3239,6 +3231,7 @@
 					if = {
 						limit = {
 							has_treasury = yes
+							NOT = { government_has_flag = government_is_theocracy }
 						}
 						add = {
 							add = {
@@ -3546,7 +3539,10 @@
 					value = 0
 					if = {
 						limit = {
-							has_treasury = no
+							OR = {
+								has_treasury = no
+								government_has_flag = government_is_theocracy
+							}
 						}
 						add = {
 							add = {
@@ -3620,6 +3616,7 @@
 					if = {
 						limit = {
 							has_treasury = yes
+							NOT = { government_has_flag = government_is_theocracy }
 						}
 						add = {
 							add = {
@@ -3929,7 +3926,10 @@
 					value = 0
 					if = {
 						limit = {
-							has_treasury = no
+							OR = {
+								has_treasury = no
+								government_has_flag = government_is_theocracy
+							}
 						}
 						add = {
 							add = {
@@ -4007,6 +4007,7 @@
 					if = {
 						limit = {
 							has_treasury = yes
+							NOT = { government_has_flag = government_is_theocracy }
 						}
 						add = {
 							add = {
@@ -4228,7 +4229,10 @@
 					value = 0
 					if = {
 						limit = {
-							has_treasury = no
+							OR = {
+								has_treasury = no
+								government_has_flag = government_is_theocracy
+							}
 						}
 						add = {
 							add = {
@@ -4286,6 +4290,7 @@
 					if = {
 						limit = {
 							has_treasury = yes
+							NOT = { government_has_flag = government_is_theocracy }
 						}
 						add = {
 							add = {
@@ -4461,7 +4466,10 @@
 					value = 0
 					if = {
 						limit = {
-							has_treasury = no
+							OR = {
+								has_treasury = no
+								government_has_flag = government_is_theocracy
+							}
 						}
 						add = {
 							add = {
@@ -4539,6 +4547,7 @@
 					if = {
 						limit = {
 							has_treasury = yes
+							NOT = { government_has_flag = government_is_theocracy }
 						}
 						add = {
 							add = {
@@ -4787,7 +4796,10 @@
 					value = 0
 					if = {
 						limit = {
-							has_treasury = no
+							OR = {
+								has_treasury = no
+								government_has_flag = government_is_theocracy
+							}
 						}
 						add = {
 							add = {
@@ -4865,6 +4877,7 @@
 					if = {
 						limit = {
 							has_treasury = yes
+							NOT = { government_has_flag = government_is_theocracy }
 						}
 						add = {
 							add = {
@@ -5210,7 +5223,10 @@
 					value = 0
 					if = {
 						limit = {
-							has_treasury = no
+							OR = {
+								has_treasury = no
+								government_has_flag = government_is_theocracy
+							}
 						}
 						add = {
 							add = {
@@ -5288,6 +5304,7 @@
 					if = {
 						limit = {
 							has_treasury = yes
+							NOT = { government_has_flag = government_is_theocracy }
 						}
 						add = {
 							add = {
@@ -5439,13 +5456,13 @@
 	}
 
 	host_intents = {
-		intents = { reduce_stress_intent win_contest_intent recruit_knights_intent murder_attendee_intent woo_attendee_intent befriend_attendee_intent }
+		intents = { reduce_stress_intent win_contest_intent recruit_knights_intent murder_attendee_intent woo_attendee_intent befriend_attendee_intent spread_personal_tenet_intent }
 		default = reduce_stress_intent
 		player_defaults = { win_contest_intent reduce_stress_intent }
 	}
 
 	guest_intents = {
-		intents = { reduce_stress_intent win_contest_intent recruit_knights_intent murder_attendee_intent woo_attendee_intent befriend_attendee_intent }
+		intents = { reduce_stress_intent win_contest_intent recruit_knights_intent murder_attendee_intent woo_attendee_intent befriend_attendee_intent spread_personal_tenet_intent }
 		default = reduce_stress_intent
 		player_defaults = { win_contest_intent reduce_stress_intent }
 	}
@@ -5468,7 +5485,10 @@
    		   add = accolade_tournament_invite_acceptance_value
    		}
 		modifier = {
-   		   government_has_flag = government_is_mercenary
+   			OR = {
+   		   		government_has_flag = government_is_mercenary
+   		   		government_has_flag = government_is_monastic_holy_order
+   		   	}
    		   add = -5000
    		}
 		modifier = {
@@ -5528,7 +5548,7 @@
 	###################
 
 	pulse_actions = {
-		entries = { guest_friendship guest_insulted tournament_guest_ptv_small tournament_acclaimed_participant tournament_entry_fee tournament_win_memory tournament_studied_techniques tournament_knight_skill spouse_skill_diplomacy_improves spouse_gives_hook relation_gains_friend host_gains_diplo_xp host_gains_steward_xp host_gains_intrigue_xp tournament_learned_from_knight tournament_game_of_rhetoric tournament_equipment_improved tournament_relaxed_in_tavern tournament_explored_village tournament_prayed_temple tournament_host_feted tournament_host_gifted tournament_tilting_demonstration tournament_archery_arrow_split tournament_recital_successful_verse tournament_joust_lance_broken tournament_joust_unhorsed tournament_horse_stumbles }
+		entries = { guest_friendship guest_insulted tournament_guest_ptv_small tournament_acclaimed_participant tournament_entry_fee tournament_win_memory tournament_studied_techniques tournament_knight_skill spouse_skill_diplomacy_improves spouse_gives_hook relation_gains_friend host_gains_diplo_xp host_gains_steward_xp host_gains_intrigue_xp tournament_learned_from_knight tournament_game_of_rhetoric tournament_equipment_improved tournament_relaxed_in_tavern tournament_explored_village tournament_prayed_temple tournament_host_feted tournament_host_gifted tournament_tilting_demonstration tournament_archery_arrow_split tournament_recital_successful_verse tournament_joust_lance_broken tournament_joust_unhorsed tournament_horse_stumbles apa_passive_religious_learning_host apa_passive_religious_learning_guest apa_pam_spread_tenet_host apa_pam_spread_tenet_guest apa_pam_mendicant_preachers_conversion }
 		chance_of_no_event = 3
 	}
 

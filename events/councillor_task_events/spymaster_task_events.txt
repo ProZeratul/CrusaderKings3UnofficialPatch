@@ -160,7 +160,7 @@ spymaster_task.0301 = {
 					add = -3
 					secret_type = secret_crypto_religionist
 					secret_owner = {
-						secret_faith ?= { has_doctrine_parameter = sanctioned_false_conversion }
+						secret_faith ?= { main_rite = { rite_has_parameter = sanctioned_false_conversion } }
 					}
 				}
 				# Less likely to pick crypto-religionist secrets (b/c narratively they are hard to discover)
@@ -188,7 +188,7 @@ spymaster_task.0301 = {
 					value = 50
 					# Even more likely to not discover this secret if the target practices Taqiya
 					if = {
-						limit = { secret_faith ?= { has_doctrine_parameter = sanctioned_false_conversion } }
+						limit = { secret_faith ?= { main_rite = { rite_has_parameter = sanctioned_false_conversion } } }
 						add = 25
 					}
 				}
@@ -197,24 +197,65 @@ spymaster_task.0301 = {
 				save_temporary_scope_value_as = {
 					name = dont_reveal
 					value = yes
-				}
+			}
 			}
 		}
 		#Unop Don't reveal the secret if should not be discovered
 		if = {
 			limit = {
 				NOT = { exists = scope:dont_reveal }
-			}
-			scope:councillor_liege = {
-				if = { #It's someone I care about
-					limit = {
-						OR = {
-							spymaster_find_secrets_secret_holder_is_interesting_to_me_trigger = yes
-							scope:secret_to_reveal = {
-								spymaster_find_secrets_secret_target_is_interesting_to_me_trigger = yes
-							}
+		}
+		scope:councillor_liege = {
+			if = { #It's someone I care about
+				limit = {
+					OR = {
+						spymaster_find_secrets_secret_holder_is_interesting_to_me_trigger = yes
+						scope:secret_to_reveal = {
+							spymaster_find_secrets_secret_target_is_interesting_to_me_trigger = yes
 						}
 					}
+				}
+				trigger_event = {
+					on_action = task_find_secrets_reveal_selection
+				}
+			}
+			else = { #For everyone else, send a feed message
+				send_interface_message = {
+					type = msg_spymaster_task_good
+					title = spymaster_task.0311.notification
+					desc = {
+						triggered_desc = {
+							trigger = {
+								scope:active_councillor = { intrigue <= average_skill_level }
+							}
+							desc = task_intrigue_good_unskilled_notification_tooltip
+						}
+						triggered_desc = {
+							trigger = {
+								scope:active_councillor = { intrigue > average_skill_level }
+							}
+							desc = task_intrigue_good_skilled_notification_tooltip
+						}
+					}
+					
+					left_icon = scope:secret_holder
+					right_icon = scope:councillor
+					
+					scope:secret_to_reveal = {
+						reveal_to = scope:councillor_liege
+					}
+				}
+			}
+		}
+		scope:councillor = {
+			if = { #Check that the Spymaster doesn't already know the secret
+				limit = {
+					scope:secret_to_reveal = {
+						NOT = { is_known_by = prev }
+					}
+				}
+				if = { #It's the owner of the court or someone else I care about
+					limit = { spymaster_find_secrets_secret_holder_is_interesting_to_me_trigger = yes }
 					trigger_event = {
 						on_action = task_find_secrets_reveal_selection
 					}
@@ -223,54 +264,13 @@ spymaster_task.0301 = {
 					send_interface_message = {
 						type = msg_spymaster_task_good
 						title = spymaster_task.0311.notification
-						desc = {
-							triggered_desc = {
-								trigger = {
-									scope:active_councillor = { intrigue <= average_skill_level }
-								}
-								desc = task_intrigue_good_unskilled_notification_tooltip
-							}
-							triggered_desc = {
-								trigger = {
-									scope:active_councillor = { intrigue > average_skill_level }
-								}
-								desc = task_intrigue_good_skilled_notification_tooltip
-							}
-						}
 						
 						left_icon = scope:secret_holder
-						right_icon = scope:councillor
+						
+						desc = blank_line
 						
 						scope:secret_to_reveal = {
-							reveal_to = scope:councillor_liege
-						}
-					}
-				}
-			}
-			scope:councillor = {
-				if = { #Check that the Spymaster doesn't already know the secret
-					limit = {
-						scope:secret_to_reveal = {
-							NOT = { is_known_by = prev }
-						}
-					}
-					if = { #It's the owner of the court or someone else I care about
-						limit = { spymaster_find_secrets_secret_holder_is_interesting_to_me_trigger = yes }
-						trigger_event = {
-							on_action = task_find_secrets_reveal_selection
-						}
-					}
-					else = { #For everyone else, send a feed message
-						send_interface_message = {
-							type = msg_spymaster_task_good
-							title = spymaster_task.0311.notification
-							
-							left_icon = scope:secret_holder
-							
-							desc = blank_line
-							
-							scope:secret_to_reveal = {
-								reveal_to = scope:councillor
+							reveal_to = scope:councillor
 							}
 						}
 					}
@@ -550,15 +550,15 @@ spymaster_task.0342 = {
 			triggered_desc = {
 				trigger = {
 					OR = {
-						trait_is_shunned_in_faith_trigger = {
+						trait_is_shunned_in_rite_trigger = {
 							TRAIT = trait:sodomite
 							GENDER_CHARACTER = scope:secret_holder
-							FAITH = root.faith
+							RITE = root.rite
 						}
-						trait_is_criminal_in_faith_trigger = {
+						trait_is_criminal_in_rite_trigger = {
 							TRAIT = trait:sodomite
 							GENDER_CHARACTER = scope:secret_holder
-							FAITH = root.faith
+							RITE = root.rite
 						}
 					}
 				}
@@ -1633,7 +1633,7 @@ spymaster_task.0353 = {
 				trigger = {
 					NOT = { exists = secret_faith }
 					faith = scope:secret_holder.secret_faith
-					faith = { has_doctrine_parameter = sanctioned_false_conversion }
+					rite = { rite_has_parameter = sanctioned_false_conversion }
 				}
 				desc = spymaster_task.0311.secret_crypto_religionist.shared_faith_taqiya
 			}
@@ -1825,7 +1825,7 @@ spymaster_task.0381 = {
 			type = fabrication_hook
 		}
 		remove_short_term_gold = medium_gold_value
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -2483,7 +2483,7 @@ spymaster_task.2001 = {
 		name = spymaster_task.2001.b
 		add_piety = major_piety_loss
 		add_dread = medium_dread_gain
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			zealous = medium_stress_impact_gain
 			just = major_stress_impact_gain
 			compassionate = major_stress_impact_gain

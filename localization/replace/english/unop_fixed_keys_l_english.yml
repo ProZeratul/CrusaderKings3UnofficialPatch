@@ -2,152 +2,30 @@
 
  # Added the TARGET_CHARACTER
  TOP_LIEGE_EQUAL_FIRST:1 "You are the [top_liege|E] of [TARGET_CHARACTER.GetShortUIName]"
- # Fix usage of woo_target
- hunt.9001.woo_potential:1 "I caught [ROOT.Char.GetIntentTarget.GetFirstName] attention, but more work is required if I am to win [ROOT.Char.GetIntentTarget.GetHerHis] heart...\n\n"
- # Fix the culture call
- court.3031.c:0 "I wish to establish a better relationship with the [reference_county.GetCountyData.GetCulture.GetCollectiveNounNoTooltip]."
  # Add missing " at the end
- hold_court.6130.desc:0 ""My [ROOT.Char.GetLadyLord]," [6130_proposer.Custom2('MyCharacterIntroduction', ROOT.Char)] speaks up "I propose a cadastral survey of all the counties you own."\n\n"Improved knowledge and mapping of your land will certainly increase its prosperity!""
- # Harmonized with the hold_court.6130.a.tt that has the same design and give better tooltip
- hold_court.6120.a.tt:0 "The survey begins. It will take several months to be completed, and when complete it will give the following rewards:"
+ hold_court.6130.desc:0 ""[ROOT.Char.Custom('FormOfAddressForLiege')|U]," [6130_proposer.Custom2('MyCharacterIntroduction', ROOT.Char)] speaks up "I propose a cadastral survey of all the counties you own."\n\n"Improved knowledge and mapping of your land will certainly increase its prosperity!""
  # Not really a fix but since I had to change the scope name to fix the scope pollution in the event, here they are
  hold_court.8090.desc.rival:2 "— and be done with [unop_hold_court_8090_target.GetTitledFirstName], that [unop_hold_court_8090_target.Custom('InsultAdjective')] [unop_hold_court_8090_target.Custom('InsultNoun')]"
  hold_court.8090.desc.superior:3 "— a job [unop_hold_court_8090_target.GetTitledFirstName] fails to live up to"
  hold_court.8090.desc.other_advocate:2 "— a position [vassal.GetFirstName] deserves far more than [unop_hold_court_8090_target.GetTitledFirstName] does"
  hold_court.8090.desc.other:2 "— a position I am far better suited to than [unop_hold_court_8090_target.GetTitledFirstName]"
  hold_court.8090.b:0 "[unop_hold_court_8090_target.GetFirstNameNoTooltip] will step aside."
- # To not have error log spam due to conflict so chose to force 'blot' for everyone
- gruesome_festival_activity.piety_gain.rump:0 "at the $gruesomefestivalname_blot$"
- # To not have error log spam due to conflict so chose to force 'blot' for everyone
- gruesome_festival_immediate_log_title:0 "$gruesomefestivalname_blot$ Completed"
- # Fix along vs alone
- ep3_laamp_flavour_ewan.1111.desc.no_kennels: "[ROOT.Char.GetFaith.KnowledgeGodName] alone knows where [child.GetSheHe] picked it up, but,"
- # Fix missing #! to close the #EMP
- cid.2000.b.flavor: "#EMP I desire to send you to [liege.GetTitledFirstNameNoTooltip], my natural lord, with a hundred horses of this spoil, that you kiss [liege.GetHerHis] hand for me.#!"
- # Fix get_region_flower_type_plural call
- tour_general.3001.desc_beauty:0 "As soon as I lay eyes on [tour_general_3001_target_courtier.GetFirstName], I catch my breath. It is as if [ROOT.Char.GetFaith.HighGodName] [ROOT.Char.GetFaith.HighGodHerselfHimself] has blessed [tour_general_3001_target_courtier.GetFirstNameNoTooltip] with the beauty of a thousand [ROOT.Char.GetCurrentLocation.Custom('get_region_flower_type_plural')] and time itself stops as I take in [tour_general_3001_target_courtier.GetHerHis] delicate features. \n\nSuch beauty is wasted on this peasant rabble."
- # Fix get_region_flower_type_plural call
- ep3_laamp_decision_event.1000.desc_outro_returned_generic_06:0 "\n\nOn my right, a small flowerbed of vibrant [ROOT.Char.GetCurrentLocation.Custom('get_region_flower_type_plural')] stands, providing a delightful clique of color to the [ROOT.Char.Custom('GetSquareCommons')]."
- # Replace intrigue_foreign_affairs_focus since it does not exists
- SCHEME_FOREIGN_AFFAIRS_FOCUS: "[GetFocus('diplomacy_foreign_affairs_focus').GetName]: $VALUE|+0=$"
- # Replace intrigue_family_focus since it does not exists
- SCHEME_FAMILY_FOCUS: "[GetFocus('diplomacy_family_focus').GetName]: $VALUE|+0=$"
- # Fix DogStorHerHis missing 'y'
- hunt.1080.dog_appears:0 "\n\nA loud bark sounds: I turn and see my beloved dog, [ROOT.Char.Custom('DogStoryName')] bounding towards me protectively, loudly heralding [ROOT.Char.Custom('DogStoryHerHis')] arrival."
- # Fix typo 'EventTitleDisdease'
- health.1003.t:1 "[SCOPE.Custom('EventTitleDisease')]: The Price of Indulgence"
- # Remove the final '.' because the tooltip add a ':' just after so it will show .: and I find it ugly
- travel_events.1005.a.tt.success:0 "Your Caravan Master successfully saves the artifact"
- # Remove the final '.' because the tooltip add a ':' just after so it will show .: and I find it ugly
- travel_events.1005.a.tt.failure:0 "Your Caravan Master dies trying to save the artifact"
- # Removed the extra Enlarged
- building_london_bridge_01_desc: "$building_type_london_bridge_01_desc$"
- # Fix wrong usage of QuirkPresentPosOrNeg
- intrigue_scheme_ongoing.1007.desc:0 ""What if [target.GetTitledFirstName] were to discover you? Is it wise to continue this time consuming effort?"\n\n[caring_agent.GetTitledFirstName] [ROOT.Char.Custom2('QuirkPresentPosOrNeg', SCOPE.sC('caring_agent'))], and even though I know [caring_agent.GetSheHe] will follow my lead in this, I can tell [caring_agent.GetHerHis] concern for me is genuine."
- # Missing 'and I'
- feast_default.5010.desc: "In all the celebration and revelry, there is a lull in conversation across the entirety of the attendees. [rando_guest.GetName|U] and I are the only ones still exchanging words, but I feel myself compelled into silence as eyes begin to fall on me.\n\nPerhaps this quiet moment is my opportunity to talk about [ROOT.Char.GetPromotedLegend.GetName]."
- # stewardship instead of stewardship_candidate
- laamp_base_contract_schemes.0551.c: "[stewardship_candidate.GetFirstNameNoTooltip] and I have much in common."
  # Missing 'in'
  public_execution_tooltip:0 "Because you hold a public execution in your [capital|E]:"
- # only to players only
- setting_title_creation_imperial_power_projection_targeting_player_only_desc: "Extra restrictions on the creation of [empire|E]-[title_tier|E] [titles|E] will apply only to players"
- # Fix payed
- hunt.1337.e:0 "Good thing I've already paid for the rights!"
- # Fix wrong contract reference
- laamp_base_contract_schemes.6031.t: "$laamp_base_6031_contract_scheme$"
  # All 3 below used GetProvince.GetNameNoTier that does not exists
  byz_held_triumph_desc: "I held an imperial triumph in [ROOT.Var('triumph_location').GetProvince.GetNameNoTooltip]"
  byz_held_triumph_desc_second_perspective: "you held an imperial triumph in [ROOT.Var('triumph_location').GetProvince.GetNameNoTooltip]"
  byz_held_triumph_desc_third_perspective: "[owner.GetTitledFirstName] held an imperial triumph in [ROOT.Var('triumph_location').GetProvince.GetNameNoTooltip]"
  # Fix the values to match the ones in the code (was 50 but in give_legendary_building_location_standard_effect it's 62)
  clear_ground_legendary_hunting_lodge_tt: "You must have completed a Mythical or Illustrious [legend|E] about a beast, or have #V 62#! #EMP Venator or Falconer#! [GetTrait('lifestyle_hunter').GetName( GetNullCharacter )] [trait_level_track_xp|E], or the [GetCultureTradition('tradition_hunters').GetName] or [GetCultureTradition('tradition_ep2_avid_falconers').GetName] [tradition|E]"
- # In fixed keys since it existed, then got removed for unknown reason but is still needed.
- county_chastised_beloved_adventurer_modifier:0 "Chastised Beloved Adventurer"
- # Replace recipient with actor so we have the date until instead of the actual date
- contact_list_request_interaction.request_tournament_cooldown: "Cannot request another #color_white [GetActivityType( 'activity_tournament' ).GetName]#! until [GetCurrentDateWithDiff( GetVarTimeRemaining( actor.MakeScope, 'laamp_recently_requested_tourney') )|V]"
- # Add the number of currently controlled counties of old vasconia
- favour_the_countryside_basques_decision.completely_control_X_counties_from_old_vasconia:0 "You must [completely_control|E] at least [EmptyScope.ScriptValue('favour_the_countryside_basques_decision_counties_to_control_value')|0] [counties|E] from [GetGeographicalRegion('dlc_fp2_old_vasconia').GetName] ([GetPlayer.MakeScope.ScriptValue('unop_favour_the_countryside_basques_decision_counties_to_control_current_value')|0]/[EmptyScope.ScriptValue('favour_the_countryside_basques_decision_counties_to_control_value')|0])"
- # Many mistakes here, this events is from murder_target POV so it should have been murder_actor that is described (probably a copy/paste mistake from tournament_events.6013)
- tournament_events.6014.desc:0 "As I make my way back to my tent, feebly holding my side, a [murder_actor.GetWomanMan] rushes up behind me!"
- tournament_events.6014.death:0 "Before I can react, [murder_actor.GetSheHe] has pulled my head back and brought a dagger to my neck!"
- tournament_events.6014.fallback:0 "I spin round, knocking [murder_actor.GetHerHim] to the ground with a groan, and rush headlong into the labyrinth of tents."
- #Added "beast" between 'The' and 'we'
- travel_start_event.1070.desc_my_hunt_outro_legendary:1 "\n\nThe beast we pursue is the stuff of legends, if it is real at all..."
- #Fix both 'the felled by our'
- hunt.9001.opening_falconry_master_of_hunt:1 "[hunt_participant.GetTitledFirstName], the [ROOT.Char.Custom('GetHuntMasterDesc')], gathers together the brace of birds felled by our [activity.Custom('GetRaptorPlural')],"
- hunt.9001.opening_falconry_courtier:1 "[hunt_participant.GetTitledFirstName], gathers together the brace of birds felled by our [activity.Custom('GetRaptorPlural')],"
- # GetTitledFirstFirstName > GetTitledFirstName
- ep3_contract_event.0565.desc.success: "[councillor.GetTitledFirstName] is no more. The rough act of violence is not perfectly done, but the truth is the same: I have slain my mark.\n\nThe cold light of day washes my sins nearly clean; a bath in a local stream does the rest.\n\nAn agent awaits on the bank — whether the same as before, I cannot tell — with a heavy sack hanging from [messenger.GetHerHis] saddle.\n\n"The [task_contract_employer.GetTitleAsNameNoTooltip] thanks you for your work. Your service will be remembered.""
- #boldakritai > bold akritai
- AKRITAI_GLOSS: "The Greek term #bold akritai#!, derived from the word #EMP akron#! or "border," refers to the frontier soldiers sometimes glorified as defenders against #EMP ghazi#! incursion, and occasionally condemned as brigands."
- #[ROOT.Char.Custom('GetCourt'|l)] -> [ROOT.Char.Custom('GetCourt')|l]
- stress_trait_coping_decisions.3001.desc:0 "As soon as the [ROOT.Char.Custom('GetCourt')|l] gathers I smile [ROOT.Char.Custom('quirk_neg_adverb')] – the time has come.\n\n"You, over there! Were you born such a churl, or did that come later in life?""
- #[child.GetDaughterSon] -> [child.Custom('GetDaughterSon')]
- stress_threshold_prison.3011.child: "My [child.Custom('GetDaughterSon')], [child.GetFirstName], holds my hand, keeping the light in my eyes shining."
- #GetHerHe > GetSheHe
- laamp_extra_contract_schemes.0002.desc_intrigue: "[task_contract_target.GetName] is a rather complex [task_contract_target.GetWomanMan] — [task_contract_target.GetHerHis] morals, not [task_contract_target.GetHerHis] intellect! I've amassed a rich bounty of downright poisonous rumors; a few carefully planned words, and the [task_contract_target.GetTitleAsNameNoTooltip] will be aware of all the dignity [task_contract_target.GetSheHe] will lose by opposing [task_contract_employer.GetTitledFirstName].\n\n"How easily my liege's court could become a vile nest of vipers!" crows [task_contract_employer.GetTitledFirstName]. "I shall be merciful, and give him the chance to grant my peoples' rights... before I send [task_contract_employer.GetHerHis] affairs spiraling out of control.""
- # task_contract_employerr > task_contract_employer
- laamp_extra_contract_schemes.0003.desc_diplomacy: "[task_contract_target.GetNamePossessive] give me nothing, no leeway or sympathy whatsoever. No matter my words, [task_contract_target.GetPrimaryTitle.GetAdjective] representatives have simply cackled in my face\n\n"I'm told my liege has had #EMP quite enough#! of your nagging!" shouts [task_contract_employer.GetTitledFirstNameNoTooltip]. "Your soft heart — any my piteous people — are mocked throughout [task_contract_employer.GetPrimaryTitle.GetNameNoTierNoTooltip]! Yours was an obvious ploy... and now #EMP we#! bear the consequences."
- # 'location.GetName' > location.GetName
- legend_spread_events.5015.desc: "I test the blade of a sword as my chronicler [chronicler.GetFirstName] and I peruse the armory in [SelectLocalization( IsLandlessAdventurer( ROOT.Char ), 'my camp', location.GetName)]. It is sharp and well-honed. [chronicler.GetFirstNameNoTooltip], however, is more interested in another weapon hanging from the wall.\n\n"I've heard so much tell about this mighty weapon, my [ROOT.Char.GetLadyLord]." [chronicler.GetSheHe|U] breathes, admiring it. "I've heard it has killed a half-dozen by your hand alone!\n\n[artifact.GetName] hangs there placidly. It is true that it has been a trusty and lethal weapon over its lifetime, its flanks repeatedly slaked in the blood of enemies. A good blade. A red blade."
  # All 3 of them have the same issue > [activity_camp_party|E] > [GetActivityType( 'activity_camp_party').GetName]
  ep3_camp_party_sad_lonesome_desc: "This character hosted a [GetActivityType( 'activity_camp_party').GetName] only for themselves and is haunted by the memory of the troubled silence of solitude"
  ep3_camp_party_shadows_in_the_dark_desc: "This character sat through their [GetActivityType( 'activity_camp_party').GetName] alone, and very, very still"
  camp_party_fortress_of_solitude_desc: "This character hosted a [GetActivityType( 'activity_camp_party').GetName] only for themselves and is warmed by the memory of the peaceful silence of solitude"
- # [recipient,GetShortUIName|U] > [recipient.GetShortUIName|U]
- ep3_join_faction_war_interaction_ongoing_tt: "[recipient.GetShortUIName|U] is already fighting in a [faction|E] [war|E] against [secondary_recipient.GetShortUIName]"
- # [ROOT.Char.random_NegativeAfter] > [ROOT.Char.GetFaith.random_NegativeAfterLife]
- ep3_laamp_flavour_ewan.0051.desc.purpose.legitimists.1: "knowledge that these people would follow me to [ROOT.Char.GetFaith.random_NegativeAfterLife] if I asked them to,"
- # [ realm.GetNameNoTier] > [realm.GetNameNoTier]
- ward_returned_home_desc_guardian: "[ward.GetTitledFirstName] returned from [ward.GetHerHis] education under [guardian.GetTitledFirstName] in [realm.GetNameNoTier]"
- # [ROOT.Var('target_trait_opposite').Trait.GetNameNoTooltip( GetNullCharacter )( GetNullCharacter )|l] > [ROOT.Var('target_trait_opposite').Trait.GetNameNoTooltip( GetNullCharacter )|l]
- ancestor_opposite_trait_memory_desc: "I became [ROOT.Var('target_trait_opposite').Trait.GetNameNoTooltip( GetNullCharacter )|l], in spite of my ancestor [ancestor.GetFirstName]"
- # GetTiledFirstNamePossessive > GetTitledFirstNamePossessive
- laamp_base_contract_schemes.2672.desc.resolution_type.officer: "[officer.GetTitledFirstNamePossessive|U] position as my $head_porter_camp_officer$"
- # Missing 'o' to Hippodrome (was Hippdrome)
- trait_charioteer_blue_2_character_desc: "[ROOT.Char.GetFirstNameNoTooltip] excels in the art of chariot racing, displaying remarkable control and finesse as they navigate the perilous tracks of the Hippodrome."
  # Removed [family_member.Custom2('MyCharacterIntroduction', ROOT.Char)] that doesn't make sense to be there
  intrigue_dread.2101.desc.intro:0 ""Those foul rumors about your [ROOT.Char.Custom2('RelationToMeShort', SCOPE.sC('family_member'))]... I have traced them to the source." [spymaster.Custom2('MyCharacterIntroduction', ROOT.Char)] pats a bundle of letters.\n\nThe letters prove that [hater.GetName] has been trying to drag [family_member.GetFirstNamePossessive] name through the mud. "
  # Replace [ROOT.Char.GetWomanMan|U] by [mulan.GetWomanManOpposite|U] to ensure the title make sense
  tournament_events.7000.t:1 "$tournament_header$ Be A [mulan.Custom('GetWomanManOpposite')|U]!"
- # Exeuction > Execution
- intrigue_dread.2401.b:0 "Execution attendance is mandatory!"
- # Just added the extra blank line for the whole text to be less "wall of text"
- contest_events.0720.final:0 "\n\nOnly a few more arrows are remaining for each competitor. The end is at hand."
- # In this event, it's TARGET_CHARACTER that does the plagiarism not CHARACTER
- tournament_plagiarism_log:0 "[TARGET_CHARACTER.GetTitledFirstName] found themselves under fire for plagiarizing a verse in the Recital"
- # Replace at the end of the string [ROOT.Char.Custom2('RelationToMeShort', marriage_prize)] with [host.Custom2('RelationToMeShort', marriage_prize)] as it's host relation that should be displayed, not root
- tournament_events.0161.desc:0 "The contests are finally over, and [host.GetTitledFirstNamePossessive] announced prize of [marriage_prize.GetTitledFirstNamePossessive] hand in marriage to a worthy winner has not been forgotten by the contestants — or [host.GetHerHis] [host.Custom2('RelationToMeShort', marriage_prize)]...\n\n"
- # Double " > Looks like they added the /n/n but forgot to remove one of the " as it is no more the start of the string marker  (all 4 just below)
- contest_events_closing_marriage_wedding_host:0 "\n\n"Following [host.GetHerHis] own ruling, [host.GetTitledFirstNameNoTooltip] has married [host.GetHerHis] [host.Custom2('RelationToMeShort', marriage_prize)], [marriage_prize.GetFirstNamePossessive], as the victor!""
- # Also, on this one, replaced contest_winner with marriage_winner
- contest_events_closing_marriage_wedding:0 "\n\n"As promised, [host.GetTitledFirstNameNoTooltip] has given [host.GetHerHis] [host.Custom2('RelationToMeShort', marriage_prize)], [marriage_prize.GetFirstNamePossessive], hand in marriage to [marriage_winner.GetFirstNameNoTooltip]!""
- contest_events_closing_marriage_betrothal_host:0 "\n\n"Following [host.GetHerHis] own ruling, [host.GetTitledFirstNameNoTooltip] has betrothed [host.GetHerHis] [host.Custom2('RelationToMeShort', marriage_prize)], [marriage_prize.GetFirstName], as the victor!"
- # Also, on this one, replaced contest_winner with marriage_winner
- contest_events_closing_marriage_betrothal:1 "\n\n"As promised, [host.GetTitledFirstNameNoTooltip] has offered [host.GetHerHis] [host.Custom2('RelationToMe', marriage_prize)], [marriage_prize.GetFirstNamePossessive], betrothal to [marriage_winner.GetFirstNameNoTooltip]!""
- # Replaced [marriage_prize.Custom('GetBrideGroom')] with [bachelor_2.Custom('GetBrideGroom')] as we are speaking about the same scope in all this
- tournament_events.0160.c:0 "[bachelor_2.GetFirstNameNoTooltip] will make a fine [bachelor_2.Custom('GetBrideGroom')], [bachelor_2.GetFirstNameNoTooltip]!"
- # Missing space after [vassal_faction_target.GetFullName]
- hold_court.8260.desc.intro:1 "[vassal_faction_target.GetFullName] approaches sour-faced, impatient to deliver [vassal_faction_target.GetHerHis] appeal. \n\n"[ROOT.Char.GetTitleAsNameNoTooltip], my [vassal_faction_target.Custom2('RelationToMeShort', SCOPE.sC('vassal_faction_leader'))], [vassal_faction_leader.GetTitledFirstName], seeks to challenge my rightful position,"
- # suddently > suddenly
- hunt.7212.failure:0 "\n\nThere is clearly something wrong here. [murder_actor.GetFirstNameNoTooltip] suddenly lunges at me, and I tumble to the ground awkwardly, but manage to scramble to my feet as [murder_actor.GetSheHe] loses [murder_actor.GetHerHis] balance in the [ROOT.Char.GetCurrentLocation.Custom('GetProvinceGroundDesc')], cursing.\n\nI sprint into the [ROOT.Char.GetCurrentLocation.Custom('GetProvinceFoliageDesc')], screaming for help. The party cannot be far!"
- # excercise > exercise
- tournament_events.9000.impatient:0 "Sentimental nonsense! #EMP I need to exercise!#!"
- # it's owner > its owner"
- hunt_punished_trappers_modifier_desc:0 "The hunting traps of this county's peasants incurred the wrath of its owner."
- # it's toll > its toll"
- hunt.1006.desc:2 "I convincingly stagger sideways, out if its way, sending my spear straight into a yowling [murder_target.GetFirstNamePossessive] side!\n\nWhile not quite as lethal as I'd hoped, with any luck that wound will take its toll. We put down the [activity.Custom('GetAnimalMale')] as [murder_target.GetSheHe] is dragged away..."
- #triumpant > triumphant
- hunt.1081.murderer:0 "[murderer.GetFirstNameNoTooltip] looks triumphant as [murderer.GetSheHe] scampers away into the [host.GetCurrentLocation.Custom('GetProvinceFoliageDesc')]."
- # Hardocded 'his petition' > [county_petitioner.GetHerHis]
- hold_court.3060.desc.opening:0 "My [ROOT.GetCharacter.Custom2('RelationToMe', SCOPE.sC('county_petitioner'))], [county_petitioner.GetTitledFirstName], [ROOT.Char.Custom2('QuirkPresentPosOrNeg', SCOPE.sC('county_petitioner'))] before stepping forward to voice [county_petitioner.GetHerHis] petition. "[ROOT.Char.Custom2('RelationToMeAddress', county_petitioner)|U], I seek your aid in combating the issue of "
- # In the fp3_is_valid_loyal_puppet, the trigger exclude barons from selection so I added this fact to the text
- fp3_install_loyalist_cb.tt.loyalist_stooge: "[defender.GetTitledFirstName] must have at least one [count|E] rank or higher [vassal|E] [GetTrait('fp3_struggle_supporter').GetName( GetNullCharacter )] who they are neither [friends|E] with nor have a [hook|E] on"
- # Not really a fix, just adding 1 at the end to match the other religious clothes (since the buddhist variant is not there)
- PORTRAIT_MODIFIER_custom_clothes_female_clothes_religious_hindu_devoted_01:0 "Eastern Religious Robe 1"
- # Use GetNameNoTooltip instead GetNamePossessiveNoTooltip as the latter is not valid for geographical regions
- legend_chronicle_great_deed_region: "[legend_region.GetNameNoTooltip]'s True Hero"
  # Add "My" before [ROOT.Char.GetTitleAsNameNoTooltip] (I find this prettier IMHO)
  hold_court.8100.desc.intro:1 "I am faced with [ward.GetFullNameNicknamedPossessive] sad eyes, which grow larger and more pitiful as [ward.GetHerHis] [ward.Custom2('RelationToMeShort', SCOPE.sC('advocate'))] [advocate.GetTitledFirstName] gently ushers [ward.GetHerHim] towards my throne. \n\n"My [ROOT.Char.GetTitleAsNameNoTooltip]", [advocate.GetSheHe] laments, "the [ward.Custom('GirlBoy')] has been at"
 
@@ -164,284 +42,54 @@
  #msg_set_relation_lover_title:1 "Gained a Lover"
  #msg_set_relation_soulmate_title:1 "Found Soulmate"
 
- # As of 1.16.1 [Character.GetPrimaryTitle.GetProvince.GetTerrain.GetNameNoTooltip] does not work, so use the GetCapitalLocation instead (so it will not be [   of XXX])
- county_herder: "[Character.GetCapitalLocation.GetTerrain.GetNameNoTooltip]"
  # Look at my with > Look at me with
  mpo_nerge.0110.desc: "Despite our best attempts, the hunt has been a depressing sight. A couple of beasts have fallen, but not nearly as many as we had planned or hoped for.\n\nMy fellow riders look at me with despondent eyes, the shame as heavy on them as it is on me. How can we possibly show our faces in [ROOT.Char.GetCapitalLocation.GetName] after this?"
  # [ROOT.Char.Custom('VenomousCreature')] > [SCOPE.Custom('VenomousCreature')]
  murder_outcome.5001.creepy_crawly_known:0 "Even in the faint moonlight I can recognize the shape of a [SCOPE.Custom('VenomousCreature')]."
  # [ROOT.Char.Custom('VenomousCreatureAttack')] > [SCOPE.Custom('VenomousCreatureAttack')]
  murder_outcome.5001.creepy_crawly_end:0 "The [SCOPE.Custom('VenomousCreatureAttack')] barely stings at first, but soon my whole body is engulfed in searing pain. I try to call for help, but my voice is too weak as my limbs grow numb and my consciousness fades."
- # Add a |U after love_letter_section_2_part_3 so the new phrase start uppercased
- love_letter_compliment_system_text:0 "[ROOT.Char.Custom2('love_letter_compliment_system_section_1_part_1' , SCOPE.sC('second') )] [ROOT.Char.Custom2('love_letter_section_1_part_2' , SCOPE.sC('second') )]\n[ROOT.Char.Custom2('love_letter_section_2_part_1' , SCOPE.sC('second') )] [ROOT.Char.Custom2('love_letter_compliment_system_section_2_part_2' , SCOPE.sC('second') )]\n[ROOT.Char.Custom2('love_letter_section_2_part_3' , SCOPE.sC('second') )|U]\n[ROOT.Char.Custom2('love_letter_section_3_part_1' , SCOPE.sC('second') )]"
- #Removed the "" at the start of the second phrase
- legend_spread_events.5235.desc: "I am recounting my exploits in battle to [chronicler.GetFirstName] when [chronicler.GetSheHe] interrupts abruptly.\n\n"Is it true, then? Did you slay the vile enemy commander in single combat?" [chronicler.GetHerHis|U] eyes sparkle with the possibilities. Clearly this is some sort of tall tale absorbed through word of mouth.\n\nI was truly there in the battle, but the confusion of the melee makes a possibility of practically any event..."
- # Reversed the scopes for the call of RelationToMeShort
- learning_theology.3054.b:0 "It is my [ROOT.Char.Custom2('RelationToMeShort', family_actor)|U]’s time to shine!"
  # Reversed the scopes for the call of RelationToMeShort
  learning_theology.3054.c:0 "My [ROOT.Char.Custom2('RelationToMeShort', random_actor)|U] is a natural charmer."
- # Fix the lying text saying the char will use YOUR diplomacy skill instead of THEIR
- learning_theology.3054.b.tt:0 "[family_actor.GetName] will attempt to outperform [passion_playwright.GetName] in a duel using [family_actor.GetHerHis] [diplomacy_skill]."
- # Fix the lying text saying the char will use YOUR diplomacy skill instead of THEIR
- learning_theology.3054.c.tt:0 "[random_actor.GetName] will attempt to outperform [passion_playwright.GetName] in a duel using [random_actor.GetHerHis] [diplomacy_skill]."
- # antiquarian > rival (rival is the scope intended since antiquarian and/or artificier could be undefined)
- fund_inspiration.2080.a:0 ""[rival.GetFirstNameNoTooltip] #EMP will#! ensure its quality, [inspiration_owner.GetFirstNameNoTooltip].""
- # antiquarian > rival (rival is the scope intended since antiquarian and/or artificier could be undefined)
- fund_inspiration.2080.b:0 ""Stick to your own duties, [rival.GetFirstNameNoTooltip].""
- # antiquarian > rival (rival is the scope intended since antiquarian and/or artificier could be undefined)
- fund_inspiration.2080.success:0 "[rival.GetFirstNameNoTooltip] improves [inspiration_owner.GetFirstNamePossessiveNoTooltip] work"
- # antiquarian > rival (rival is the scope intended since antiquarian and/or artificier could be undefined)
- fund_inspiration.2080.failure:0 "[rival.GetFirstNameNoTooltip] stifles [inspiration_owner.GetFirstNameNoTooltip]"
  # [ROOT.Char.ReligiousHeadTitleName] > [ROOT.Char.GetFaith.ReligiousHeadName] & [ROOT.Char.ReligiousHeadTitle] > [ROOT.Char.GetFaith.ReligiousHeadName]
  bp1_yearly.9020.desc.hof:0 "what it would be like to lay with the [ROOT.Char.GetFaith.ReligiousHeadName]? All that time, the [ROOT.Char.GetFaith.ReligiousHeadName]'s fingers spend sifting over the holy books, why imagine how it must feel! Be my [ROOT.Char.GetFaith.ReligiousHeadName] and make me your [ROOT.Char.GetFaith.ReligiousText]!""
- # Add the actual score by the addition of chancellor_foreign_affairs_realm_opinion_scale
- task_foreign_affairs_fallback_effect_desc:0 "\n\nFellow Vassal Opinion: #P +[SCOPE.ScriptValue('chancellor_foreign_affairs_realm_opinion_scale')|1]#!"
- # Reversed language [ROOT.Char.GetCulture.GetLanguage.GetNameNoTooltip] > [owner.GetCulture.GetLanguage.GetNameNoTooltip]
- murder_save.1014.desc:0 "One evening as I am preparing for bed, I hear two of my servants talking in hushed voices. It takes me a moment to realize they are speaking in [owner.GetCulture.GetLanguage.GetNameNoTooltip] rather than [ROOT.Char.GetCulture.GetLanguage.GetNameNoTooltip]. They clearly don't realize I can understand them.\n\n"Wait for [ROOT.Char.GetHerHim] to fall asleep. Then you keep watch while I slit [ROOT.Char.GetHerHis] throat".\n\nI swiftly exit my quarters to inform my guards that there are assassins in my room. Thank [ROOT.Char.GetFaith.HighGodName] I speak [owner.GetCulture.GetLanguage.GetNameNoTooltip]!"
- # Add \n\n to not have a wall of text on the weapon desc
- ep2_locale_events_artifact_motto_desc:0 "[my_weapon.GetDesc]\n\nAlong the blade it reads [my_weapon.GetOwner.GetHouse.GetMotto]."
- # [touring_grounds_scope.Custom('get_carvable_surface')] >[touring_grounds_scope.GetProvince.Custom('get_carvable_surface')]
- tour_grounds_events.3016.desc:0 "I at last manage to find myself alone in the wilds of [touring_grounds_scope.GetNameNoTooltip] and my mind wanders to thoughts of [liege_lover_scope.Custom2('MyCharacterIntroduction', ROOT.Char)].\n\nI cannot deny that [touring_grounds_scope.GetNameNoTooltip] is a place of true beauty, almost beautiful enough to match my beloved [liege_lover_scope.GetNameNoTooltip]. I feel compelled to leave a mark here so all who pass through [touring_grounds_scope.GetNameNoTooltip] will know my love for [liege_lover_scope.GetHerHim]. Perhaps carving [liege_lover_scope.GetHerHis] name into a [touring_grounds_scope.GetProvince.Custom('get_carvable_surface')]!"
  # [ROOT.Char.ReligiousHeadTitleName] > [ROOT.Char.GetFaith.ReligiousHeadName]
  fp1_other_decisions.0022.desc:0 "It would seem that the [unlucky_guest.GetFaith.GetAdherentNamePlural] of the world have not taken my sacrifice of their false-[unlucky_guest.GetFaith.ReligiousHeadName] particularly well.\n\n"
  # Show the artifact you are being challenged for by adding [target.GetName]
  challenge_to_artifact_combat_interaction_victor_gets.tt:0 "The Victor will keep or gains [target.GetName]"
  # the Artifact > [target.GetName] (same reason as above)
  challenge_to_artifact_combat_interaction_loser_gets.tt:0 "The Loser will lose [target.GetName] or any [personal_artifact_claim|E]"
- # [house_feud_rival.GetFirstNameNoTooltip] > [house_feud_rival.GetHouse.GetBaseNameNoTooltip] (house_feud_rival is a character we want the name of the house here)
- bp1_house_feud.0500.a:0 "House [house_feud_rival.GetHouse.GetBaseNameNoTooltip] will regret this."
- # Removed the extra space at the end
- building_type_capital_bureau_01: "Capital Magistracy"
- # Add the missing scope so primary_prisoner > SCOPE.sC('primary_prisoner')
- combat_event.1004.pow_message.t:0 "[ROOT.Char.Custom2('RelationToMeShort', SCOPE.sC('primary_prisoner'))|U] Taken Prisoner"
  # [CharYouSheHe(CHARACTER)] flinch > [CharYouHerHim(CHARACTER)] flinch
  nick_the_fearless_desc:1 "[CHARACTER.GetShortUINamePossessiveNoTooltipNoFormat|U] soldiers say they've never seen [CharYouHerHim(CHARACTER)] flinch — neither to man, nor horse, nor missile. Most people believe them."
- # and, next to him > and, next to [stop_host_scope.GetHerHim]
- cultural_festival.3060.desc.vassal:0 "I spot [stop_host_scope.GetTitledFirstName] among the crowd and, next to [stop_host_scope.GetHerHim], one of the most beautiful [vassal_spouse.GetWomenMen] I've ever seen..."
- # Add it is after : just like hostile_scheme_discovery.1002.intro
- hostile_scheme_discovery.1002.intro_no_spymaster:0 "Grave news has reached me: it is [owner.Custom2('MyCharacterIntroduction', ROOT.Char)]"
- # Not really a fix, but since 2 agents are for 'secrecy' but this scheme does not use it, it mean the agent are useless so I've replaced agent_lookout & agent_decoy with agent_lookout_speed & agent_muscle
- ep3_contract_event.0030.agents: "$schemes.tt.agent_packages.list_boilerplate$\n$EFFECT_LIST_BULLET$[success_chance_max_i] [GetAgentSlotType( 'agent_thief' ).GetName]\n$EFFECT_LIST_BULLET$[success_chance_max_i] [GetAgentSlotType( 'agent_thug' ).GetName]\n$EFFECT_LIST_BULLET$[success_chance_max_i] [GetAgentSlotType( 'agent_muscle' ).GetName]\n$EFFECT_LIST_BULLET$[scheme_speed_i] [GetAgentSlotType( 'agent_infiltrator' ).GetName]\n$EFFECT_LIST_BULLET$[scheme_speed_i] [GetAgentSlotType( 'agent_lookout_speed' ).GetName]"
  # Fix the double "
  ai_opinion.reason.laamp_stooge: "Not a chance : $VALUE|=+0$"
- # Changed the "of #V you" in of #V [owner.GetShortUIName] so if we get our herd stole, it won't show of 'you'
- steal_herd_vassal_tt: "Every [powerful_vassal|E] of [target.GetShortUIName]:\n$EFFECT_LIST_BULLET$Loses #n 15#! [opinion|E] of #V [owner.GetShortUIName]#! #weak (-0.60/year) (Stole my Liege's Herd)#!"
- # [marriage_prize.Custom('GetBrideGroom')] > [host.Custom('GetBrideGroom')]
- contest_events_closing_marriage_valid_host_only:1 "\n\nIn a strange turn of fortune, and undeniable skill, I am the only viable [host.Custom('GetBrideGroom')]..."
  # [target_activity_host.GetPossessiveNameRegnal|U] > [target_activity_host.GetTitledFirstNamePossessive|U]
  activity_system.0310.desc.intro:0 "The blaring of the war horns have reached me here in [target_activity_location.GetName] as I am attending [target_activity_host.GetTitledFirstNamePossessive|U] [target_activity_type.GetNameNoTooltip]. I have been summoned to aid in the war between [attacker.GetTitledFirstName|U] and [defender.GetTitledFirstName|U]."
- # relation > target_relation
- agent_events.3041.tt.forced_to_stay: "[target_relation.GetFirstName] will be forced to stay in the [scheme.GetName] [scheme|E]"
- # relation > target_relation
- agent_events.3041.b.tt.success: "[target_relation.GetFirstNameNoTooltip] will stay"
- # relation > target_relation
- agent_events.3041.b.tt.failure: "[target_relation.GetFirstNameNoTooltip] is free to leave"
- # Typo: journey_provice > journey_province & wrong script value call: [minor_cultural_acceptance_gain] > [EmptyScope.ScriptValue('minor_cultural_acceptance_gain')]
- cultural_acceptance_enjoyed_music: "The [cultural_acceptance|E] between the [journey_province.GetCounty.GetCulture.GetCollectiveNoun] and the [journey_province.GetCounty.GetCulture.GetCollectiveNoun] increases by [EmptyScope.ScriptValue('minor_cultural_acceptance_gain')]."
- # All reindeer building are pointing to the sheep one
- reindeer_yurt_02_domicile_building: "$reindeer_yurt_01_domicile_building$"
- reindeer_yurt_03_domicile_building: "$reindeer_yurt_01_domicile_building$"
- reindeer_yurt_04_domicile_building: "$reindeer_yurt_01_domicile_building$"
- reindeer_yurt_05_domicile_building: "$reindeer_yurt_01_domicile_building$"
- reindeer_yurt_06_domicile_building: "$reindeer_yurt_01_domicile_building$"
- # [GetBuilding('building_vatapi_caves_01').GetName] > [GetBuilding('vatapi_caves_01').GetName]
- building_vatapi_caves_01_destination_desc: "Constructed by the early Chalukya dynasty the [GetBuilding('vatapi_caves_01').GetName] have been cut deep into an imperious sandstone formation. Inside lies a most holy and silent inner world. A triumphal gate leads pilgrims into the monolithic face of the mountain."
- # You migtht > You might
- ra_kurultai_1_desc: "You have a [kurultai|E] [council|E] as a ruler in the [the_great_steppe|E]. \n\nYou might already be familiar with having a Council, but when playing as a [nomad|E] you will have a new type of administrators that will focus more on supporting your [county_fertility|E] growth or [herd|E]."
- # [ROOT.Char.WealthGodName] > [ROOT.Char.GetFaith.WealthGodName]
- hunt.8020.b:0 ""These riches belong to [ROOT.Char.GetFaith.WealthGodName].""
- # Fix the gold display being there twice in a case, an none in the other
- mpo_call_for_merchants_decision.merchant_will_arrive_generic: "A wealthy foreigner will travel to your court, leading a caravan bound for the well-developed, settled cities. Upon their return, you may receive the following benefits:\n$BULLET_WITH_TAB$[artifact|E] creation materials that unlock the #V $commission_artifact_decision$#! [decision|E]\n$BULLET_WITH_TAB$Armaments for your [horde|E] and [archer_cavalry|E]"
- mpo_call_for_merchants_decision.merchant_will_arrive: "$mpo_call_for_merchants_decision.merchant_will_arrive_generic$\n$BULLET_WITH_TAB$Around #P 40%#! of your [gold|E] investement\n$BULLET_WITH_TAB$Random [innovation|E] progress"
  # Not a fix, just rephrased it since you are now allowing you to build on another special building slot
  mpo_pleasure_dome_barony_decision_tt_first: "#weak The holding must be the capital of its [county|E], not be [leased|E], not already have a [special_building|E], and be in the [the_great_steppe|E]#!\n@warning_icon! #weak #color_red You will not be able to change this location at a later time!#!\n@warning_icon! #weak #color_red If the province has a special building slot, it will be used!#!"
  #Replace hardcoded his with [famous_dead_parent.GetHerHis]
- bp2_yearly.4012.desc: "A long time has passed since I decided to focus on emulating the fame of my dead [famous_dead_parent.GetMotherFather], even longer since [famous_dead_parent.GetHerHis] death. It is stressful and demanding to step out of [famous_dead_parent.GetHerHis] shadow. I still feel the world judging me not by my deeds alone but always in comparison to [famous_dead_parent.GetTitledFirstName].\n\nI know I am respected, but is it enough? What more can I do to be remembered? To be more than my [famous_dead_parent.GetMotherFather] ever was!"
- #Replace hardcoded his with [famous_dead_parent.GetHerHis]
  bp2_yearly.4022.desc: "The light of [ROOT.Char.GetFaith.HighGodName] guides me in my holy quest, as it once guided my [pious_dead_parent.GetMotherFather], the great [pious_dead_parent.GetTitledFirstName]. The life of [ROOT.Char.GetFaith.HighGodNamePossessive] pious servant is not an easy one, yet I feel compelled to become even greater than my [pious_dead_parent.GetMotherFather].\n\nShould a good [ROOT.Char.GetFaith.GetAdherentNameNoTooltip] always relentlessly pursue the recognition of both [pious_dead_parent.GetHerHis] peers and [ROOT.Char.GetFaith.HighGodName]? Is a [pious_dead_parent.GetMotherFather]'s example a beacon to follow or a goal to achieve and surpass?"
- # smile is as wide [last_place.GetFirstNamePossessive] > smile is as wide as [last_place.GetFirstNamePossessive]
- chariot_race.4000.desc: ""Ah, would you look at that! [activity.MakeScope.Var('first_place').Char.GetName] is in the lead!" [target_governor.GetTitledFirstName|U] approaches me. [target_governor.GetHerHis|U] smile is as wide as [last_place.GetFirstNamePossessive] turns.\n\n"[target_governor.Custom('GetGovernorChitChat')] How fare you, dear [ROOT.Char.GetFirstNameNoTooltip]?"\n\nSuch a polite conversation between governors could be turned to more productive topics..."
  # triump and glory > triumph and glory
  chariot_race.0500.desc: "As the Hippodrome echoes with the fading cheers of the [Glossary( 'hoi polloi', 'HOI_POLLOI_GLOSS')], I take a moment to reflect on the dazzling displays of skill and competition that comprise our culture.\n\nFor the victors, triumph and glory; for the crowd, fiery passion. The heart of the empire beats on with unmatched fervor."
- # to surive > to survive
- hungry_times_desc: "A recent pestilence has caused a famine, which has pushed some locals to #EMP desperate#! measures to survive."
  # Only the Basileus of the Byzantine Empire can change > Only the Emperor of the Realm can change (since admin are not Byzantine only)
  MY_REALM_WINDOW_LAWS_PROVINCIAL_LAWS_DESC: "Only the Emperor of the Realm can change the Provincial laws"
  # [loser.GetHouseGetName] > [loser.GetHouse.GetName]
  game_rule.1121.desc.opposing_army: "The Saxons of [loser.GetFirstName] [loser.GetHouse.GetName] fight us"
- # [bp1_yearly_9001_toy_hater.SheHe|U] > [bp1_yearly_9001_toy_hater.GetSheHe|U]
- bp1_yearly.9005.desc.imprisoned:0 "At last I have [bp1_yearly_9001_toy_hater.Custom2('MyCharacterIntroduction', ROOT.Char)] locked away in my dungeons where [bp1_yearly_9001_toy_hater.GetSheHe] belongs! [bp1_yearly_9001_toy_hater.GetSheHe|U] probably forgot that [bp1_yearly_9001_toy_hater.GetSheHe] destroyed my precious toy, my best friend, all those years ago, but I didn't forget. I never forget and I scantly forgive.\n\n"
- # [proselytiser.GerSheHe] > [proselytiser.GetSheHe]
- south_asia.0041.desc:0 "It is the fifth monk of the day passing through my court that arouses my interest; it's rare for members of the faith to be so common out in the open. A quick questioning reveals the reason for this new deluge of the faithful across my lands.\n\n[proselytiser.GetFullName], a foreign [proselytiser.GetLadyLord], has been establishing the [proselytiser.GetFaith.GetName] faith across [proselytiser.GetHerHis] realm, and word has reached them about the trials and tribulations our shared faith has undergone in my realm over past generations as well.\n\nIn response, [proselytiser.GetSheHe] has sent many bhikku to help spread and support the faith in its ancestral homelands."
- # [ROOT.Char.Custom2(''RelationToMe'Possessive' > [ROOT.Char.Custom2('RelationToMePossessive'
- seduce_ongoing.5102.a:0 "My [ROOT.Char.Custom2('RelationToMePossessive', SCOPE.sC('owner'))] attention is flattering."
- # [other_child.GetFirstName,] > [other_child.GetFirstName]
- child_personality.7101.desc:0 "[ROOT.Char.Custom('CulturalCurse')|U]! Those accursed children, my [ROOT.Char.Custom2('RelationToMeShort', SCOPE.sC('child'))] [child.GetFirstName] and [child.GetHerHis] compatriot [other_child.GetFirstName] were caught red-handed having snuck into the armory, don't they know that weapons are dangerous?!\n\n"
- # [ward.getSheHe] > [ward.GetSheHe]
- childhood.2005.desc:0 "I am out playing with [ward.GetTitledFirstName] when [ward.GetSheHe] suddenly disappears into the [ROOT.Char.Custom('TerrainType')]. Where did [ward.GetSheHe] go? I turn in a circle, looking, and suddenly [ward.GetSheHe] reappears, holding a small puppy out towards me.\n\n"[friend.GetFirstNameNoTooltip]! It's for you!""
- # [ward.getSheHe] > [ward.GetSheHe]
- childhood.2006.desc:0 "I am out playing with [ward.GetTitledFirstName] when [ward.GetSheHe] suddenly disappears into the [ROOT.Char.Custom('TerrainType')]. Where did [ward.GetSheHe] go? I turn in a circle, looking, and suddenly [ward.GetSheHe] reappears, holding a small kitten out towards me.\n\n"[friend.GetFirstNameNoTooltip]! It's for you!""
- # [ROOT.Char.faith.HighGodNamePossessive] > [ROOT.Char.GetFaith.HighGodNamePossessive]
- tour_grounds_events.6100.desc.zealous:0 "I stand in awe at the wonder of [ROOT.Char.GetFaith.HighGodNamePossessive] works in the world. This building is divinity made manifest."
- # [GetTrait('lifestyle_traveler').GetName] > [GetTrait('lifestyle_traveler').GetName(GetNullCharacter)]
- just_one_more_hill_perk_effect: "Children have a chance to gain $game_concept_prowess_i$[prowess|E] and [GetTrait('lifestyle_traveler').GetName(GetNullCharacter)]"
- # HighGodSheHe > HighGodNameSheHe
- mpo_migration_travel_events.0040.c_christian: "If [ROOT.Char.GetFaith.HighGodName] can split the sea, surely [ROOT.Char.GetFaith.HighGodNameSheHe] can help us cross."
- # GetFirtNameNoTooltip > GetFirstNameNoTooltip
- mpo_nomad_events.1011.desc_cant_send: "[victim.GetFirstNameNoTooltip] is a spent gobbet of meat, a meal for carrion..."
-# [learning skill|E] > [learning_skill|E]
-mpo_events_anna.0010.a.tt.learning: "[whistler.GetFirstNamePossessive] [learning_skill|E] will increase your chance to succeed"
-# [CHARACTER.HerHis] > [CHARACTER.GetHerHis]
-legitimacy_speech_fail_log: "[CHARACTER.GetShortUIName|U] opened the races by desperately invoking every conceivable symbol and ceremony of [CHARACTER.GetHerHis] office, but all self-praise was cut short by the deafening contempt of the crowd."
-# [diplo_target.GgetHerHis] > [diplo_target.GetHerHis]
-ep2_wedding.2000.after.subjugate:0 "[diplo_target.GetShortUINameNoTooltip] wants you to be [diplo_target.GetHerHis] liege"
-# [portrait_scope.GetHerHi] > [portrait_scope.GetHerHim]
-contest_events.1133.wound_enemy:0 "\n\nAs the sparks fly, I spot an opportunity, nicking [portrait_scope.GetHerHim] forcefully before [portrait_scope.GetSheHe] recovers, though the others arrive before we can continue..."
-# activity.GetOwner > activity.GetHost
- activity_playdate_name:0 "[ACTIVITY.GetHost.GetNamePossessiveOrMy|U] Peer Meet"
- activity_feast_name:0 "[ACTIVITY.GetHost.GetNamePossessiveOrMy|U] Feast"
- activity_hunt_name:0 "[ACTIVITY.GetHost.GetNamePossessiveOrMy|U] Hunt"
- activity_meditation_name:0 "[ACTIVITY.GetHost.GetNamePossessiveOrMy|U] Secluded Meditation"
- activity_meditation_desc:0 "[ACTIVITY.GetHost.GetTitledFirstName] has retreated into seclusion so that they may meditate in peace."
- activity_hold_court_name:1 "[ACTIVITY.GetHost.GetNamePossessiveOrMy|U] Court Audience"
- activity_hold_court_desc:0 "[ACTIVITY.GetHost.GetTitledFirstName] has invited all of their subjects to bring any and all matters which need [ACTIVITY.GetHost.GetHerHis] attention before [ACTIVITY.GetHost.GetHerHim]."
- activity_petition_liege_name:0 "[ACTIVITY.GetHost.GetNamePossessiveOrMy|U] Petition"
- activity_petition_liege_desc:0 "[ACTIVITY.GetHost.GetTitledFirstName] has petitioned [ACTIVITY.GetHost.GetHerHis] liege, [ACTIVITY.GetHost.GetLiege.GetTitledFirstName], for relief in certain matters."
- activity_adventure_desc:0 "[ACTIVITY.GetHost.GetTitledFirstName] is adventuring in the area."
- activity_pay_homage_name:0 "[ACTIVITY.GetHost.GetNamePossessiveOrMy|U] Homage"
- activity_pay_homage_desc:0 "[ACTIVITY.GetHost.GetTitledFirstName] wishes to pay formal homage to [ACTIVITY.GetHost.GetHerHis] liege, [ACTIVITY.GetHost.GetLiege.GetTitledFirstName]."
- feast_default.1016.desc_default:0 "\n\n[activity.GetHost.GetTitledFirstNameNoTooltip] sure seems to be well-off, [activity.GetHost.GetSheHe] couldn't possibly miss this miniscule trinket..."
- feast_main_befriend.2003.ending:0 "\n\nLater, [activity.GetHost.GetTitledFirstName] told me how all the guests had noticed the humility and kindness I displayed among my lessers."
- feast_main_befriend.2001.getting_close:0 "What could have been a disaster became a blessing in disguise, as I ended up close to our host, [activity.GetHost.GetTitledFirstName]!"
- feast_main_befriend.2001.friendship:0 "\n\nFrom my seat at the low tables, the feast was a success, not least because [activity.GetHost.GetFirstNameNoTooltip] agreed it could not be the last time we sat down together to feast and talk and laugh."
- feast_main_befriend.2002.arrogant_guest:1 "I couldn't believe it as the entire upper nobility was relocated from the dais to the floor among barons and $knight_culture_player_plural_no_tooltip_lowercase$. What does [activity.GetHost.GetTitledFirstName] take me for? A mere commoner?! I let as many people as I could know how I felt, not the least those mock nobles around me!"
- feast_main_befriend.5004.a:1 "Until next time, my [ROOT.Char.Custom2('RelationToMe', activity.GetHost)]!"
- feast_main_stable_breakin.0006.all_in_good_fun:0 "\n\nIt made for a good show, apparently, so [activity.GetHost.GetTitledFirstName] made it clear [activity.GetHost.GetSheHe] will not have us punished for our actions."
- feast_main_stew_flood.0002.stew_introduction:0 "In the bustle of the feast, one of [activity.GetHost.GetTitledFirstNamePossessive] servants accidentally unlatched the enormous cauldron that hung over the fireplace in the middle of the feasting hall! Savory broth welled forth to cover half the room in a sea of stew!"
- feast_main_stew_flood.0004.stew_introduction:0 "In the bustle of the feast, one of [activity.GetHost.GetTitledFirstNamePossessive] servants accidentally unlatched the enormous cauldron that hung over the fireplace in the middle of the feasting hall! Savory broth welled forth to cover half the room in a sea of stew!"
- feast_main_stew_flood.0005.stew_introduction:0 "In the bustle of the feast, one of [activity.GetHost.GetTitledFirstNamePossessive] servants accidentally unlatched the enormous cauldron that hung over the fireplace in the middle of the feasting hall! Savory broth welled forth to cover half the room in a sea of stew!"
- feast_main_stew_flood.0006.stew_introduction:0 "In the bustle of the feast, one of [activity.GetHost.GetTitledFirstNamePossessive] servants accidentally unlatched the enormous cauldron that hung over the fireplace in the middle of the feasting hall! Savory broth welled forth to cover half the room in a sea of stew!"
- letter_opening:0 "To my [activity.GetHost.Custom2('RelationDescriptor', ROOT.Char)] [activity.GetHost.Custom2('RelationToMe', ROOT.Char)], [ROOT.Char.GetTitledFirstName].\n\n"
- activity_witch_ritual_name:0 "[ACTIVITY.GetHost.GetNamePossessiveOrMy|U] Grand Rite"
- # [owner.HerHis] > [owner.GetHerHis]
- failed_riot_at_races_memory_desc_third_perspective:0 "[owner.GetName] failed to prevent mob violence that ruined [owner.GetHerHis] races and wounded many guests"
- # pas_darmes_sinstigator > pas_darmes_instigator
- tournament_events.1141.kill_them:0 "\n\nReaching the end of the run, I bring my horse around grinning, looking for [pas_darmes_instigator.GetFirstNameNoTooltip]. I spot [pas_darmes_instigator.GetHerHis] crumpled form face down in the dust, horse nuzzling at [pas_darmes_instigator.GetHerHis] foot."
  # Not really a fix, but display the bonus for everyone instead of just for nomad gov, so we don't have an ulgy empty dot in the UI
  nomad_motte_innovation_bonus: "[GetGovernment( 'nomad_government' ).GetName] [rulers|E] have $nomad_motte_innovation_bonus_desc|l$"
  # [location.GetTitle.NameNoTier] > [location.GetTitle.GetNameNoTier]
  coronation_events.0205.aachen: "Charlemagne's storied palace of [location.GetTitle.GetNameNoTier]."
- # Add the " surrounding the phrase like the other options in this event
- prelude_events.0160.c: ""We must remain humble.""
- # Added "My" before [aggressor_vassal.Custom2('RelationToMeShort', ROOT.Char)|U], as it would begin the phrase with only "King,"
- hold_court.8210.desc.intro:0 "A markedly disgruntled [aggressor_vassal.GetTitledFirstName] hurries to your throne... \n\n"My [aggressor_vassal.Custom2('RelationToMeShort', ROOT.Char)|U], "
- # Replace the hardcoded liege into [ROOT.Char.GetLadyLord]
- coronation_events.1029.desc: "I hear a distinct unfolding of a long scroll. "My [ROOT.Char.GetLadyLord], " [priest.GetFirstName], my [ROOT.Char.Custom2('RelationToMe', SCOPE.sC('priest'))] says, bowing slightly, "I found this among the oldest [primary_title.GetAdjective] records. It speaks of a vow sworn by [ROOT.GetCharacter.Custom('GetMythicalFounder')], granting rulers to come rights and privileges that time has forgotten."\n\n[guest.GetFirstName], my [ROOT.Char.Custom2('RelationToMe', SCOPE.sC('guest'))], leans in with visible curiosity. "A forgotten promise? This could be... interesting," [guest.GetSheHe] murmurs."
- # Replace the hardcoded liege into [ROOT.Char.GetLadyLord]
- coronation_events.1029.supporter.desc: "The smell of a weathered scroll hits my nostrils. "My [ROOT.Char.GetLadyLord]," [priest.GetFirstName], my [ROOT.Char.Custom2('RelationToMe', SCOPE.sC('priest'))] declares, "this is a vow sworn by [ROOT.GetCharacter.Custom('GetMythicalFounder')], binding ruler and loyal subjects together in mutual duty and reward, from our oldest archives! And surely meant for times such as this."\n\n[guest.GetFirstName], my [ROOT.Char.Custom2('RelationToMe', SCOPE.sC('guest'))] and loyal supporter, grins broadly. "A perfect moment to renew old promises.""
- # Replace the hardcoded liege into [ROOT.Char.GetLadyLord]
- coronation_events.1029.detractor.desc: "[priest.GetFirstName], my [ROOT.Char.Custom2('RelationToMe', SCOPE.sC('priest'))], unrolls a weathered scroll. "My [ROOT.Char.GetLadyLord]," [priest.GetSheHe] announces, "this is the vow of [ROOT.GetCharacter.Custom('GetMythicalFounder')], a declaration of sovereign authority over all the lands! 'Twas recently unearthed from the archives of [primary_title.GetNameNoTier]. This vow affirms your right to command loyalty — and to punish defiance."\n\n[guest.GetFirstName], my [ROOT.Char.Custom2('RelationToMe', SCOPE.sC('guest'))] and outspoken detractor, scoffs aloud. "Old words, and dead ones at that!""
  #Unop: Added space to the text before the cost "Unraised MaintenanceNo Cost/month" (see #290)
  MAA_DESTROY_TOOLTIP:1 "#T Destroy Regiment#!\n$MAA_FULL_MAINTENANCE_TEXT$: [Regiment.CalcReinforcementCost]/month\n$MAA_UNRAISED_MAINTENANCE_TEXT$: [Regiment.CalcUnraisedCost]/month"
- #Added a space betweend and & [TARGET_CHARACTER.GetUIName]
- BETROTHAL_BOTH_CHARACTERS:3 "Propose that [CHARACTER.GetUIName] and [TARGET_CHARACTER.GetUIName] get [betrothed|E], since both are [children|E]"
  #Added a space betweend the & [tributary_war...]
  action_join_tributary_war_label: "@war_icon! You can join the [tributary_war.GetName] war against your Tributary, [recipient.GetShortUIName]"
- #Added a space betweend the & [inspiration|E]
- DESTROY_INSPIRATION:0 "Ends the [inspiration|E]"
- #Remove the : at the end since it appear twice
- ep3_story_cycle_harrying.1005.c.tt1: "All Anglo-Saxon-held [counties|E] on the [Glossary( 'Great North Road', 'GNR_GLOSS' )]"
- #Remove the : at the end since it appear twice
- ep3_story_cycle_harrying.1005.c.tt2: "All Norman-held [counties|E] on the [Glossary( 'Great North Road', 'GNR_GLOSS' )]"
- # [ROOT.Province.GetCounty.GetFaith > [ROOT.Char.GetCurrentLocation.GetCounty.GetFaith
- prelude_events.0180.desc.guest: "I finally manage to leave the other guests behind and enter the [ROOT.Char.GetCurrentLocation.GetCounty.GetFaith.HouseOfWorship], in search of a quiet moment.\n\n"
- # [ROOT.Char.GetTitleAsNameNoTooltip] > [host.GetTitleAsNameNoTooltip]
- coronation_events.0312.desc.low_magnificence: "The meager coronation is finished. [host.GetName] might be a poor host, but a [host.GetTitleAsNameNoTooltip] nonetheless."
  # Remove the space between in " My rule
  coronation_events.0110.desc.fallback: "#emp \"My rule will be remembered, by those who come after, as the start of a golden age for [activity.GetHost.GetPrimaryTitle.GetNameNoTier].\"#!"
- # Remove flavor_character
- endured_greek_fire_memory_desc: "I watched sailors burn alive during a horrifying Greek fire attack by [attacker.GetNamePossessive] fleet"
- endured_greek_fire_memory_desc_second_perspective: "You watched sailors burn alive during a horrifying Greek fire attack by [attacker.GetNamePossessive] fleet"
- endured_greek_fire_memory_desc_third_perspective: "[owner.GetFirstName] watched sailors burn alive during a horrifying Greek fire attack by [attacker.GetNamePossessive] fleet"
- # and he leaves > and [duel_loser.GetSheHe] leaves
- rivalry.1022.desc:2 "I begin my duel with [duel_loser.GetTitledFirstName] and realize we're more evenly matched than I expected. We trade strikes and parries back and forth for some time, neither gaining an advantage over the other for long.\n\nEventually we both start suffering from exhaustion and [duel_loser.GetSheHe] leaves himself open, allowing me to [ROOT.GetCharacter.Custom('SignatureWeaponCritical')] [duel_loser.GetHerHis] leg and end the match!"
- # [passion_playwright.GetRandomPositiveTrait] >[passion_playwright.Custom('GetRandomPositiveTrait')]
- learning_theology.3051.my_immortal:0 "My [passion_playwright.Custom('GetRandomPositiveTrait')]"
- # is said to have delivered [pas_darmes_victim.GetHerHim] a > is said to have delivered [pas_darmes_instigator.GetHerHim] a
- tournament_events.1120.desc:0 "[pas_darmes_instigator.GetTitledFirstName], the showy [pas_darmes_instigator.Custom('MountedWarriorTerm')] who guards [pas_darmes_instigator.GetHerHis] passage by challenging all comers, has had one fight too many.\n\n[pas_darmes_victim.GetTitledFirstName] is said to have delivered [pas_darmes_instigator.GetHerHim] a frightful injury, opening the way for nobles to pass freely once more."
- # incresed > increased
- coronation_events.0312.cultural_acceptance: "Thanks to [host.GetTitledFirstNamePossessiveNoTooltip] #V Impress Attendees#! [intent|E] the [cultural_acceptance|E] between [ROOT.Char.GetCulture.GetName] and [host.GetCulture.GetName] has increased."
- # \n\nt > \n\nIt
- feast_main_live_fowl.9001.bird_killer:0 "[host_saying_goodbye.GetTitledFirstNamePossessive] feast is soon going to be at an end.\n\nMost every guest seems to be pleased, maybe except for [fowl_dinner_target.GetFirstName], who is still clutching [fowl_dinner_target.GetHerHis] nose where the [ROOT.GetCharacter.Custom('exotic_fowl_type')] marked [fowl_dinner_target.GetHerHim].\n\nIt also seems no one wishes to sit close to [fowl_bird_killer.GetFirstName], after [fowl_bird_killer.GetHerHis] brutal disposal of the bird."
- # Add a space after the 'to' was: change [faith|E] to[council
- task_conversion_effect_desc:1 "#S At #V 100%#!#!:\n$TAB$The [county|E] will change [faith|E] to [councillor.GetFaith.GetTextIcon][councillor.GetFaith.GetName]"
- # is the greates under > is the greatest under (missing t)
- tgp_china_ministry.0005.desc_won: "[great_project.GetName] was a great success. The lands of [target_kingdom.GetName] are now an integral part of the [GetTitleByKey('h_china').GetName]\n\n"Expected outcome, but a reason to celebrate nonetheless." The emperor rejoices, "Let the people know that the [ROOT.Char.GetPrimaryTitle.GetName] is the greatest under the Heaven!""
  # Removed the farm_estates_01 since nothing allows it actually in scripts
  culture_parameter_rice_cultivators_can_construct_paddy_fields_in_hills_and_jungle: "The [GetBuilding('paddy_fields_01').GetTypeName|V] line of [buildings|E] may be built in [GetTerrain( 'hills' ).GetName] and [GetTerrain( 'jungle' ).GetName]"
- # Remove the extra building at the end of the sentence making no sense
- culture_parameter_sacred_pool_additional_bonuses: "The [GetBuilding('sacred_pool_01').GetTypeName|V] line of [buildings|E] have additional bonuses in [counties|E] of this [culture|E]"
- culture_parameter_waterworks_additional_bonuses: "The [GetBuilding('waterworks_01').GetTypeName|V] line of [buildings|E] have additional bonuses in [counties|E] of this [culture|E]"
- # Removed "and be able to produce children for longer" since it's not really the case
- game_concept_life_expectancy_desc:0 "$game_concept_life_expectancy$ is the number of years a character is expected to live before dying of natural causes.\n\nA high $game_concept_life_expectancy$ will make characters visibly age slower."
- # Replaced rf_eastern with rf_sinitic below
- sinitic_hostility_doctrine_desc: "The following religions are Sinitic:\n[GetReligionFamily('rf_sinitic').GetReligions]"
 
  # Use the [SelectLocalization( IsLandlessAdventurer(lover).. to not have duchy's appearing when the lover is an adventurer (disable need more test)
  #spymaster_task.0311.secret_lover.lustful:0 "\n\n[secret_holder.GetSheHe|U] has been engaged in carnality with [lover.GetTitledFirstName], running [secret_holder.GetHerHis] hands across the [SelectLocalization( IsLandlessAdventurer(lover), activity_adventure_owner, lover.GetTitleTierNamePossessive)] body, locking lips in all manner of ways... Oh, the scandal if this was to become public knowledge!"
 
- # All those were reverse (10 being unknown and 0 being legendary)
- custom_loc_dynasty_prestige_level_0:0 "unknown"
- custom_loc_dynasty_prestige_level_1:0 "obscure"
- custom_loc_dynasty_prestige_level_2:0 "insignificant"
- custom_loc_dynasty_prestige_level_3:0 "noteworthy"
- custom_loc_dynasty_prestige_level_4:0 "reputable"
- #5 is the same so skip it
- custom_loc_dynasty_prestige_level_6:0 "significant"
- custom_loc_dynasty_prestige_level_7:0 "famous"
- custom_loc_dynasty_prestige_level_8:0 "glorious"
- custom_loc_dynasty_prestige_level_9:0 "fabled"
- custom_loc_dynasty_prestige_level_10:0 "legendary"
- 
- # Key exists in game but with a typo: 'king_administraiive_female_japanese'
- king_administrative_female_japanese: "$king_administrative_male_japanese$" 
- # with this [vassal_contract|E]" > with this [task_contract|E]"
- gallowsbait_thief_blocked_from_contract.tt: "You're too far gone in the [GetTrait('gallowsbait').GetName( GetNullCharacter )] [GetTrait( 'gallowsbait' ).GetTraitTrackByKey( 'thief' ).GetName] [trait|E] to be trusted with this [task_contract|E]"
- # CharYourHerHim > CharYouHerHim
- nick_ushiwakamaru_desc: "[CHARACTER.GetShortUINameNoTooltipNoFormat|U] is known for having the strength and tenacity of a young bull, feared by those around [CharYouHerHim(CHARACTER)]."
- # Hardcoded 25% but it's 20% actually
- domicile_building_parameter_camp_improved_learning_contract_success: "[learning_i][learning|E] [task_contract|E] [success_chance|E]: #P +[EmptyScope.ScriptValue('laamp_improved_learning_contract_success_value')|0]%#!"
- # Hardcoded 25% but it's 20% actually
- domicile_building_parameter_camp_improved_tracker_contract_success: "Relevant [task_contract|E] [success_chance|E]: #P +[EmptyScope.ScriptValue('laamp_improved_tracker_contract_success_value')|0]%#!"
- # All 3 below are showing +1 (search nomad_yurt_kurultai_more_loyal_lvl_ for real values)
- domicile_building_parameter_nomad_yurt_kurultai_more_loyal_lvl_1: "Your [kurultai|E] members [obedience|E] score: #P +6#!"
- domicile_building_parameter_nomad_yurt_kurultai_more_loyal_lvl_2: "Your [kurultai|E] members [obedience|E] score: #P +12#!"
- domicile_building_parameter_nomad_yurt_kurultai_more_loyal_lvl_3: "Your [kurultai|E] members [obedience|E] score: #P +18#!"
- # Wrong modifier_base_contribution, should be modifier_contribution to match the _mult variant (compare with belligerent_tax_contribution_mult)
- belligerent_levy_contribution_mult: "$belligerent_vassal$ [levy|E] [modifier_contribution|E]"
- 
- # Removed the ',' after [secret_exposer.Custom2('MyCharacterIntroduction', secret_target)] as it will put 2 comma (see #423)
- secrets.0122.start.desc.intro:1 "According to [secret_exposer.Custom2('MyCharacterIntroduction', secret_target)] [secret_owner.Custom2('MyCharacterIntroduction', secret_target)] has been secretly stealing from me! The evidence offered is indisputable, the tallies corresponding exactly with missing or wasted taxes and tithes from across my realm.\n\n"
- # This is a new one, but since it's a spelling mistake, put it here (extra S at pemba currently see #427)
- building_type_swahili_port_pemba: "$building_type_swahili_port_pembas$"
- # Typo occational > occasional
- CONQUEROR_STORY_PRACTICAL_INFORMATION_STRING: "Conquerors receive many powerful bonuses, such as a reduction in [factions|E], access to the [vassalize_casus_belli|E], and occasional powerful events.\n\nYou will stop being a Conqueror if:\n$BULLET_WITH_TAB$You are not [independent|E]\n$BULLET_WITH_TAB$Your rank is reduced to [count|E]\n$BULLET_WITH_TAB$You become [unlanded|E]\n$BULLET_WITH_TAB$You're not at [war|E] for #V 10#! years\n$BULLET_WITH_TAB$You're deep in [debt|E]\n$BULLET_WITH_TAB$You lose #V 3#! or more [wars|E]\n$BULLET_WITH_TAB$You become [GetTrait('incapable').GetName( GetNullCharacter )]"
- # Typo occationally > occasionally
- IMAGINARY_FRIEND_INFORMATION_STRING: "Your imaginary friend's name is [Story.MakeScope.Var('imaginary_friend_name').Char.GetShortUINameNoTooltip]. You will occationally get opportunities to interact with [Story.MakeScope.Var('imaginary_friend_name').Char.GetHerHim]."
- # Typo sucessfully > successfully
- frankokratia_installed_byz_claimant_memory_desc_third_perspective: "[owner.GetTitledFirstName] and [owner.GetHerHis] fellow Crusaders successfully fought for [claimant.GetTitledFirstNamePossessive] claim on [GetTitleByKey('e_byzantium').GetNameNoTier]"
- # Add missing tradition_devoted_horsemanship tradition that also have unlock_voluntary_laampdom
- unlock_voluntary_laampdom_name: "[GetCultureTradition('tradition_swords_for_hire').GetName], [GetCultureTradition('tradition_horse_lords').GetName], [GetCultureTradition('tradition_futuwaa').GetName], [GetCultureTradition('tradition_ep3_audacious_cadets').GetName], [GetCultureTradition('tradition_hird').GetName], [GetCultureTradition('tradition_caravaneers').GetName], [GetCultureTradition('tradition_diasporic').GetName], [GetCultureTradition('tradition_fp1_coastal_warriors').GetName] or [GetCultureTradition('tradition_devoted_horsemanship').GetName]"
- # An Promoted legend > A Promoted legend
- game_concept_promoted_legend_desc: "A $game_concept_promoted_legend$ is a [legend|E] owned by a different [ruler|E] that is being supported by [legend_promoters|E], who pay a monthly contribution to also get part of its bonuses."
- #One day, thanks to him, foul > One day, thanks to [ROOT.Char.GetHerHim], foul
- bp2_yearly.6140.desc: "As sacred rites distract all minders, my [ROOT.Char.Custom2('RelationToMeShort', SCOPE.sC('kin'))] [kin.GetFirstName] and the hostage [hostage.GetName] unleash their growing hatred.\n\n"My [kin.Custom2('RelationToMeShort', SCOPE.sC('root_scope'))] is the mightiest [ROOT.Char.GetTitleAsName] in all the land!" hisses [kin.GetFirstNameNoTooltip]. "One day, thanks to [ROOT.Char.GetHerHim], foul [home_court.GetPrimaryTitle.GetNameNoTier] will be ablaze, and your head will hang from a $knight_culture_player_no_tooltip_lowercase$'s saddle!"\n\n"I wish my [hostage.Custom2('RelationToMeShort', SCOPE.sC('home_court'))] would take me home," replies [hostage.GetFirstNameNoTooltip], "you'd be deathly afraid to insult me there!"\n\nWhen did my [ROOT.Char.Custom2('RelationToMeShort', SCOPE.sC('kin'))] start speaking so? And to an honored guest!"
- # let his reign > let [host.GetHerHis] reign
- ach_coronation.0001.ending.friendly_host: "\n\n[host.GetTitledFirstNameNoTooltip] is known to be fond of me — let [host.GetHerHis] reign prove fruitful for us both! Or at least myself..."
- # Subject and possessor swapped: the ally heeded the war leader's calls, not vice versa (see #479)
- friend_alliance:0 "[TARGET_CHARACTER.GetShortUIName|U] heeded many of [CHARACTER.GetShortUINamePossessive] calls to war, proving that a valuable alliance had been formed."
- # Subject and possessor swapped: the ally heeded the war leader's calls, not vice versa (see #479)
- friend_alliance_corresponding:0 "[CHARACTER.GetShortUIName|U] heeded many of [TARGET_CHARACTER.GetShortUINamePossessive] calls to war, proving that a valuable alliance had been formed."
  # Base and corresponding swapped: the saver (TARGET_CHARACTER) rescued the other, not vice versa (see #575)
  friend_saved_as_children:0 "While still children, [TARGET_CHARACTER.GetShortUIName|U] saved [CHARACTER.GetShortUIName] from being beaten by a group of rowdy youths."
  # Base and corresponding swapped: the saver (TARGET_CHARACTER) rescued the other, not vice versa (see #575)
@@ -452,11 +100,6 @@ contest_events.1133.wound_enemy:0 "\n\nAs the sparks fly, I spot an opportunity,
  rival_lost_duel_corresponding:1 "[CHARACTER.GetShortUIName|U] bested [TARGET_CHARACTER.GetShortUIName] in a duel."
  # Missing ! markup for warning_icon
  fabricate_hook_hook_gained_on_you:0 "@warning_icon! [owner.GetShortUIName] has fabricated a [hook|E] on you!"
- # ROOT.GetDaughterSon > [ROOT.Char.Custom('GetDaughterSon')]
- turtle_daughterson: "[ROOT.Char.Custom('GetDaughterSon')] of a turtle"
- turtle_granddaughterson: "grand[ROOT.Char.Custom('GetDaughterSon')] of a turtle"
- turtle_daughterson_plural: "turtle's [ROOT.Char.Custom('GetDaughterSon')]s"
- turtle_granddaughterson_plural: "turtle's grand[ROOT.Char.Custom('GetDaughterSon')]s"
  # [spouse.GetShe|U] > [spouse.GetShe|U]
  coronation_events.6140.d_dislikes_spouse: "[spouse.GetSheHe|U] is still a wretched [spouse.GetWomanMan]..."
  # [ROOT.Char.GetChamber] > [ROOT.Char.Custom('GetChamber')]
@@ -465,26 +108,18 @@ contest_events.1133.wound_enemy:0 "\n\nAs the sparks fly, I spot an opportunity,
  bp2_yearly.2015.desc: ""Will I never be free of that [bully.Custom2('InsultNoun', ROOT.Char)]?!" I lament, head hung in defeat after suffering further public ridicule from my bully, [bully.GetFirstName].\n\nAs hot tears stream down my face, I'm surprised by a soft touch on my shoulder. It's my friend, [ROOT.Var('imaginary_friend_name').Char.GetFirstNameNoTooltip]. [ROOT.Char.Custom('GetSheHeOpposite')|U] is always there when I need [ROOT.Char.GetHerHim].\n\n"It's past time you stand up to that loathsome [bully.GetFirstNameNoTooltip]. I'd suggest starting a rumor about what [bully.GetSheHe] likes to do with [bully.GetHerHis] [bully.Custom('child_favorite_toy')] while alone in [bully.GetHerHis] chambers...""
  # Fix coma for the function
  legend_spread_events.8181.t: "The [killer.Custom2('InsultNoun', ROOT.Char)|U] Buried"
- #[recipient,GetShortUIName|U] > [recipient.GetShortUIName|U]
- ep3_join_faction_war_interaction_ongoing_tt: "[recipient.GetShortUIName|U] is already fighting in a [faction|E] [war|E] against [secondary_recipient.GetShortUIName]"
  # Fix missing Custom2 call
  clan_unity_proper_courtier_position.desc: "offered [beneficiary_of_nepotism.GetName] a position as a courtier, which is less than what [beneficiary_of_nepotism.GetHerHis] [beneficiary_of_nepotism.Custom2('RelationToMe', SCOPE.sC('advocate_of_nepotism'))] [advocate_of_nepotism.GetName] wanted"
  # Fix missing coma in Custom2 call
  title_event.0014.desc:0 "The recent formation of an independent [castille.GetBaseName], ruled by [castille_char.Custom2('MyCharacterIntroduction', leon_char)], has shattered my realm's claim to be the [asturias.GetBaseName].\n\nWith our eastern lands firmly lost to us, we are dominated by the inland area of [leon.GetBaseNameNoTier], and folk of every class and sect are letting the old title fall by the wayside."
- # Fix misplaced |l
- stress_trait_coping_decisions.3001.desc:0 "As soon as the [ROOT.Char.Custom('GetCourt')|l] gathers I smile [ROOT.Char.Custom('quirk_neg_adverb')] – the time has come.\n\n"You, over there! Were you born such a churl, or did that come later in life?""
  # GetHimHer > GetHerHim
  murder_save.1015.actual_weapon_artifact.desc:1 "$murder_save.1015.start_desc$ [this_artifact.GetName]. The color drains from [attempted_assassin.GetHerHis] face as [attempted_assassin.GetSheHe] realizes I am armed. It takes little effort to dispatch [attempted_assassin.GetHerHim] with the [SCOPE.Custom('ThisArtifactType')]."
  # Fix missing coma in Custom2 call
- prison.1001.anothers_secret.desc:1 ""You know something about [reveal_secret_owner.Custom2('MyCharacterIntroductionNoComma', SCOPE.sC('actor'))]," [actor.GetTitledFirstName] says. "Tell me everything, or else...""
+ prison.1001.anothers_secret.desc:1 ""You know something about [reveal_secret_owner.Custom2('MyCharacterIntroductionNoComma', SCOPE.sC('puppet_or_actor'))]," [puppet_or_actor.GetTitledFirstName] says. "Tell me everything, or else...""
  #HerHim > GetHerHim
  playdate.5010.desc: ""Get him! Push her into the wall! That's it!" [obnoxious_parent.GetFirstNamePossessive] voice booms out across the courtyard. [obnoxious_parent.GetSheHe|U] has posted up in the corner to watch [embarrassed_child.GetFirstName] play in the game of football, their bias towards the [embarrassed_child.Custom('GirlBoy')] clear to see.\n\nSuffice to say, [obnoxious_parent.GetFirstNameNoTooltip] is taking it a #EMP tad#! too seriously.\n\n"Hey! No pushing [embarrassed_child.GetHerHim], that's cheating!" [obnoxious_parent.GetFirstNamePossessiveNoTooltip] histrionics are really beginning to grate."
 
- guest_impressed_by_court_artifact_title:0 "$activity_pulse_action_guest_impressed_by_court_artifact$"
  activity_pulse_action_guest_impressed_by_court_artifact:1 "[first.GetShortUINameNoTooltip] Impressed by your [second.GetNameNoTooltip]"
  
- # we are expects us to > the realm expects us to
- marriage_effect.2001.desc.start_normal:0 "With my marriage to [new_spouse.GetTitledFirstName], the realm expects us to throw a suitably extravagant wedding celebration."
-
  # Add the cooldown since UNOP is adding one to this one (see ep3_laamp_decision_event.1050)
  ep3_laamp_decision_event.1050.a.cooldown.tt: "The training grounds are busy catering to a scheduled practice — return on [GetCurrentDateWithDiff( GetVarTimeRemaining( THIS.Char.MakeScope, '1051_has_trained_recently') )]"

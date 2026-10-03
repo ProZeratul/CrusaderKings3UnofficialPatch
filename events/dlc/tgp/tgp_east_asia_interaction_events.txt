@@ -10,7 +10,7 @@ tgp_east_asia_interaction_events.0010 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = { scope:leaving_tributary = { government_has_flag = government_is_mandala } }
-				desc = tgp_east_asia_interaction_events.0010.desc
+	desc = tgp_east_asia_interaction_events.0010.desc
 			}
 			desc = tgp_east_asia_interaction_events.0010.desc.unop_non_mandala
 		}
@@ -292,7 +292,7 @@ tgp_east_asia_interaction_events.1000 = {
 				change_to_mandala_interaction_effect = yes
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -383,7 +383,7 @@ tgp_east_asia_interaction_events.1001 = {
 				change_to_mandala_interaction_effect = yes
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -485,7 +485,7 @@ tgp_east_asia_interaction_events.1002 = {
 				change_to_mandala_interaction_effect = yes
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -658,19 +658,19 @@ scripted_trigger is_root_faith_dominant_gender = {
 	OR = {
 		AND = {
 			is_male = yes
-			root.faith = {
+			root.rite = {
 				OR = {
-					has_doctrine_parameter = male_dominated_law
-					has_doctrine_parameter = gender_equal_law
+					rite_has_parameter = male_dominated_law
+					rite_has_parameter = gender_equal_law
 				}
 			}
 		}
 		AND = {
 			is_female = yes
-			root.faith = {
+			root.rite = {
 				OR = {
-					has_doctrine_parameter = female_dominated_law
-					has_doctrine_parameter = gender_equal_law
+					rite_has_parameter = female_dominated_law
+					rite_has_parameter = gender_equal_law
 				}
 			}
 		}
@@ -1094,7 +1094,7 @@ tgp_east_asia_interaction_events.2000 = {
 			limit = {
 				has_execute_reason = scope:recipient
 			}
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				sadistic = medium_stress_impact_loss
 				compassionate = minor_stress_impact_gain
 				forgiving = medium_stress_impact_gain
@@ -1102,7 +1102,7 @@ tgp_east_asia_interaction_events.2000 = {
 			}
 		}
 		else = {
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				sadistic = medium_stress_impact_loss
 				compassionate = major_stress_impact_gain
 				forgiving = medium_stress_impact_gain
@@ -1110,6 +1110,13 @@ tgp_east_asia_interaction_events.2000 = {
 				trusting = minor_stress_impact_gain
 				content = minor_stress_impact_gain
 			}
+		}
+		# Benevolent Governance personal tenet: counted once for the purge, not once per body
+		if = {
+			limit = {
+				has_personal_tenet_flag = tenet_benevolent_governance_clemency_fulfillment
+			}
+			change_spiritual_fulfillment = massive_spiritual_fulfillment_loss
 		}
 	}
 }

@@ -2726,7 +2726,7 @@ house_of_wisdom_01 = {
 		monthly_lifestyle_xp_gain_mult = 0.15
 		different_culture_opinion = 10
 		cultural_head_fascination_mult = 0.10
-		faith_creation_piety_cost_mult = -0.2
+		rite_creation_piety_cost_mult = -0.1
 		monthly_dynasty_prestige_mult = 0.05
 	}
 	county_modifier = {
@@ -2801,30 +2801,6 @@ the_tower_of_london_01 = {
 		tax_mult = 0.05
 	}
 	
-	on_complete = { #Unop: The tower of london is described as raising HotN pacification by 2
-		if = {
-			limit = {
-				NOT = { exists = scope:character }
-			}
-			county.holder = { save_scope_as = character }
-		}
-
-		#Unop: Note: this is based on_building_completed from common/on_action/province_on_actions.txt
-
-		# Harrying of the North - Pacification Gain
-		if = {
-			limit = {
-				scope:character.culture = culture:norman
-				has_global_variable = harrying_of_the_north
-				exists = global_var:harrying_of_the_north.var:pacification #Unop: The variable was checked on the story_owner instead of the story itself
-			}
-			global_var:harrying_of_the_north = { save_scope_as = story } #Unop: Needed for the effect
-			scope:character = {
-				ep3_increase_pacification_large_effect = yes #Unop: Use the dedicated effect so we get notified
-			}
-		}
-	}
-
 	ai_value = {
 		base = 8
 		culture_likely_to_fortify_modifier = yes
@@ -5154,7 +5130,7 @@ imam_reza_shrine_01 = {
 	character_modifier = {
 		monthly_piety = 0.2
 		learning_per_piety_level = 1
-		imami_opinion = 10
+		shia_opinion = 10
 		advantage_against_coreligionists = 5
 		monthly_dynasty_prestige_mult = 0.05
 	}
@@ -5312,7 +5288,7 @@ palace_of_ctesiphon_02 = {
 			AND = {
 				OR = {
 					zoroastrian_or_syncretic_with_eastern_trigger = { CHARACTER = scope:holder }
-					faith = faith:manichean
+					faith = faith:manichaean_faith
 					faith = faith:nestorian
 					faith.religion = faith:hellenic_pagan.religion #Unop Also allow reformed Hellenic faiths
 				}
@@ -6674,7 +6650,9 @@ meteora_01 = {
 	}
 	
 	is_enabled = {
-		scope:holder.faith = faith:orthodox
+		scope:holder.rite = {
+			rite_has_doctrine = special_doctrine_is_eastern_christian_faith
+		}
 	}
 
 	character_modifier = {
@@ -6732,7 +6710,9 @@ meteora_02 = {
 	}
 	
 	is_enabled = {
-		scope:holder.faith = faith:orthodox
+		scope:holder.rite = {
+			rite_has_doctrine = special_doctrine_is_eastern_christian_faith
+		}
 	}
 
 	character_modifier = {
@@ -6795,7 +6775,9 @@ mount_athos_01 = {
 	}
 	
 	is_enabled = {
-		scope:holder.faith = faith:orthodox
+		scope:holder.rite = {
+			rite_has_doctrine = special_doctrine_is_eastern_christian_faith
+		}
 	}
 
 	character_modifier = {
@@ -6844,7 +6826,9 @@ mount_athos_02 = {
 	}
 	
 	is_enabled = {
-		scope:holder.faith = faith:orthodox
+		scope:holder.rite = {
+			rite_has_doctrine = special_doctrine_is_eastern_christian_faith
+		}
 	}
 
 	character_modifier = {
@@ -6905,13 +6889,15 @@ mount_athos_03 = {
 	}
 	
 	is_enabled = {
-		scope:holder.faith = faith:orthodox
+		scope:holder.rite = {
+			rite_has_doctrine = special_doctrine_is_eastern_christian_faith
+		}
 	}
 
 	character_modifier = {
 		monthly_piety = 0.4
 		cultural_head_fascination_mult = 0.10
-		faith_creation_piety_cost_mult = -0.2
+		rite_creation_piety_cost_mult = -0.1
 		religious_vassal_opinion = 10
 		zealot_opinion = 10
 		clergy_opinion = 10
@@ -7152,7 +7138,7 @@ etchmiadzin_cathedral = {
 	}
 	
 	is_enabled = {
-		scope:holder.faith = faith:armenian_apostolic
+		scope:holder.rite = rite:armenian_rite
 	}
 
 	character_modifier = {
@@ -9910,7 +9896,7 @@ kofuku_ji_01 = {
 	character_modifier = {
 		monthly_piety = 0.25
 		monthly_dynasty_prestige_mult = 0.05
-		faith_creation_piety_cost_mult = -0.1
+		rite_creation_piety_cost_mult = -0.1
 	}
 	
 	county_modifier = {
@@ -9954,7 +9940,7 @@ enryaku_ji_01 = {
 	character_modifier = {
 		monthly_piety = 0.25
 		monthly_dynasty_prestige_mult = 0.05
-		faith_creation_piety_cost_mult = -0.1
+		rite_creation_piety_cost_mult = -0.1
 	}
 	
 	county_modifier = {
@@ -10634,7 +10620,7 @@ mount_apo_01 = {
 	
 	character_modifier = {
 		piety_level_impact_mult = 0.25
-		faith_creation_piety_cost_mult = -0.15
+		rite_creation_piety_cost_mult = -0.1
 		stress_loss_mult = 0.05
 		realm_priest_opinion = 10
 	}
@@ -11048,7 +11034,7 @@ maoshan_academy_01 = {
 	character_modifier = {
 		monthly_piety = 0.25
 		monthly_dynasty_prestige_mult = 0.05
-		faith_creation_piety_cost_mult = -0.1
+		rite_creation_piety_cost_mult = -0.1
 	}
 	
 	county_modifier = {
@@ -11105,7 +11091,7 @@ tiantai_monasteries_01 = {
 
 	character_modifier = {
 		monthly_piety = 0.20
-		faith_creation_piety_cost_mult = -0.05
+		rite_creation_piety_cost_mult = -0.05
 	}
 	
 	county_modifier = {
@@ -11163,7 +11149,7 @@ jizu_shan_temples_01 = {
 
 	character_modifier = {
 		monthly_piety = 0.20
-		faith_creation_piety_cost_mult = -0.05
+		rite_creation_piety_cost_mult = -0.05
 	}
 	
 	county_modifier = {
@@ -11221,7 +11207,7 @@ nanhua_temple_01 = {
 
 	character_modifier = {
 		monthly_piety = 0.20
-		faith_creation_piety_cost_mult = -0.05
+		rite_creation_piety_cost_mult = -0.05
 	}
 	
 	county_modifier = {
