@@ -1,0 +1,169 @@
+﻿# referenced in code, do not remove
+find_follower_of_faith = {
+	# Basic Setup
+	skill = learning
+	desc = find_follower_of_faith_desc_general
+	success_desc = "find_follower_of_faith_SUCCESS_DESC"
+	icon = icon_scheme_study_faith
+	illustration = "gfx/interface/illustrations/event_scenes/corridor.dds"
+	target_type = faith
+	is_secret = no
+	is_basic = yes
+	
+	# Parameters
+	speed_per_skill_point = -1
+	spymaster_speed_per_skill_point = -1
+	uses_resistance = no
+	# base progress is low, we add a modifier if looking for dead faith.
+	base_progress_goal = 30
+	base_maximum_success = 100
+	minimum_success = 10
+	
+	# Core Triggers
+	allow = {
+		is_ai = no
+		knows_rite_level = {
+			target = scope:target.main_rite
+			value < 1
+		}
+		scope:target.main_rite = {
+			is_rite_enabled = yes
+			can_convert_to_rite = yes
+		}
+		OR = {
+			AND = {
+				scope:target = { is_dead_faith = yes }
+				learning >= high_skill_rating
+				OR = {
+					has_trait = theologian
+					has_trait = lifestyle_mystic
+					has_trait = lunatic
+					has_trait = erudite
+					has_trait = witch
+				}
+			}
+			any_realm_county = {
+				faith = scope:target
+			}
+		}
+	}
+	valid = {
+		always = yes
+	}
+
+	# Base Chances
+	base_success_chance = {
+		base = 10
+		modifier = {
+			add = {
+				value = scope:owner.learning
+				multiply = 2
+				floor = yes
+			}
+			desc = SCHEME_YOUR_LEARNING
+		}
+		modifier = {
+			add = {
+				value = scope:owner.intrigue
+				floor = yes
+			}
+			desc = SCHEME_YOUR_INTRIGUE
+		}
+		
+		# already in your realm - it is guaranteed to find someone
+		modifier = {
+			add = 100
+			desc = find_follower_of_faith_in_realm_bonus
+			scope:owner = {
+				any_realm_county = {
+					faith = scope:target
+				}
+			}
+		}
+		
+		# accepting other faiths, cultures, or practices of witchcraft
+		modifier = {
+			add = 15
+			desc = find_follower_of_faith_pluralistic_bonus
+			scope:owner = { rite = { rite_has_parameter = pluralism_pluralistic_proselytization_penalty } }
+		}
+		modifier = {
+			add = 15
+			desc = find_follower_of_faith_witchcraft_bonus
+			scope:owner = { rite = { rite_has_parameter = witchcraft_accepted } }
+		}
+		modifier = {
+			add = 10
+			desc = find_follower_of_faith_multicultural_court_bonus
+			scope:owner.dynasty ?= { has_dynasty_perk = erudition_legacy_1 }
+		}
+
+		# same religion
+		modifier = {
+			add = 20
+			desc = find_follower_of_faith_same_religion_bonus
+			scope:owner.religion = scope:target.religion
+		}
+		# same religious group
+		modifier = {
+			add = 5
+			desc = find_follower_of_faith_same_religious_group_bonus
+			scope:owner.religion != scope:target.religion
+			scope:owner.religion = { is_in_same_religious_family_trigger = { FAITH = scope:target } }
+		}
+
+		# dead faith - way more difficult
+		modifier = {
+			add = -60
+			desc = find_follower_of_faith_dead_faith
+			scope:target = { is_dead_faith = yes }
+		}
+
+		# Realm Priest is helping out
+		modifier = {
+			add = scope:owner.cp:councillor_court_chaplain.learning
+			desc = "theocracy_lessee_approval_simple"
+
+			exists = scope:owner.cp:councillor_court_chaplain
+			scope:owner.cp:councillor_court_chaplain ?= {
+				opinion = {
+					target = scope:owner
+					value > medium_positive_opinion
+				}
+			}
+		}
+
+		# Personal Scheme Shared
+		personal_scheme_base_success_chance_modifiers = yes
+	}
+
+	# On Actions
+	on_start = {
+		# add speed modifier if looking for dead faith
+		if = {
+			limit = {
+				scheme_owner = {
+					not = {
+						any_realm_county = {
+							faith = scope:target
+						}
+					}
+				}
+			}
+			add_scheme_modifier = { type = followers_of_dead_faith_scheme_modifier }
+		}
+	}
+
+	on_phase_completed = {
+		# Grab our scopes.
+		save_scope_as = scheme
+		scheme_target_faith = { save_scope_as = target }
+		scheme_owner = { save_scope_as = owner }
+
+		# Roll our result.
+		random = {
+			chance = scope:scheme.scheme_success_chance
+			scope:owner = { trigger_event = study_faith_outcome.0010 }
+		}
+	}
+}
