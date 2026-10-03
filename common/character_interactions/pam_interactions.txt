@@ -720,7 +720,7 @@ increase_theocratic_heir_candidacy = {
 		}
 	}
 
-	auto_accept = yes
+	#auto_accept = yes #Unop Duplicate
 
 	cost = {
 		piety = {
@@ -6006,6 +6006,7 @@ request_legitimacy_interaction = {
 				OR = {
 					any_powerful_vassal = {
 						is_ai = yes
+						liege ?= scope:puppet_or_actor #Unop The trigger below errors for powerful vassals that are no longer direct vassals
 						NOT = {
 							scope:puppet_or_actor = {
 								meets_legitimacy_expectation_of = prev
@@ -8801,7 +8802,7 @@ ecclesiastic_grant_claim_interaction = {
 		}
 		modifier = {
 			scope:secondary_recipient ?= {
-				this = scope:puppet_or_actor.religious_head
+				this = scope:puppet_or_actor.faith.religious_head #Unop religious_head is for faiths
 			}
 			scope:target.tier < tier_duchy
 			factor = 0
@@ -10488,7 +10489,7 @@ ecclesiastic_transfer_land_interaction = {
 		}
 		modifier = {
 			scope:secondary_recipient ?= {
-				this = scope:actor.religious_head
+				this = scope:actor.faith.religious_head #Unop religious_head is for faiths
 			}
 			scope:target.tier < tier_duchy
 			factor = 0
@@ -10687,8 +10688,10 @@ create_new_ecclesiastical_title_interaction = {
 						exists = cp:councillor_court_chaplain
 					}
 				}
-				any_courtier = {
-					can_be_court_chaplain_trigger = { COURT_OWNER = scope:actor }
+				scope:actor = { #Unop Root is not the actor here
+					any_courtier = {
+						can_be_court_chaplain_trigger = { COURT_OWNER = scope:actor }
+					}
 				}
 			}
 		}
@@ -12048,7 +12051,7 @@ ecclesiastic_incite_holy_war_interaction = {
 	target_source = recipient
 	notification_text = ecclesiastic_incite_holy_war_interaction_notification
 	greeting = negative
-	use_diplomatic_range = yes
+	#use_diplomatic_range = yes #Unop Overridden by use_diplomatic_range = no below
 	ai_min_reply_days = 1
 	ai_max_reply_days = 5
 	popup_on_receive = no
@@ -14645,7 +14648,7 @@ increase_papabile_score_interaction = {
 	filter_tags = { papabile }
 
 	desc = increase_papabile_score_interaction_desc
-	filter_tags = { papabile }
+	#filter_tags = { papabile } #Unop Duplicate
 
 	is_available = {
 		faith ?= { has_doctrine_parameter = has_clerical_electors }
@@ -17277,7 +17280,7 @@ pam_evangelize_personal_tenet_interaction = {
 			starts_enabled = { always = yes }
 		}
 
-	auto_accept = no
+	#auto_accept = no #Unop Overrides the strong hook auto_accept above
 
 	on_send = {
 		#holy order interaction uses order tenet
@@ -17701,7 +17704,7 @@ pam_ai_evangelize_personal_tenet_interaction = {
 		}
 	}
 
-	auto_accept = no
+	#auto_accept = no #Unop Overrides the strong hook auto_accept above
 
 	on_send = {
 		# A random tenet uses the same two is_shown checks, so there is always one left to pick
@@ -20942,7 +20945,7 @@ request_enforce_succession_interaction = {
 			value = 0
 			if = {
 				limit = { scope:donate_faith = yes }
-				add = major_gold_value
+				add = scope:actor.major_gold_value #Unop Root is not the actor here
 			}
 		}
 	}
@@ -27998,7 +28001,7 @@ ecclesiastical_de_jure_shifting_grant_interaction = {
 			scope:target ?= {
 				any_de_jure_county = {
 					this = scope:puppet_or_actor.capital_county
-					scope:puppet_or_actor.culture = capital_county.culture
+					scope:puppet_or_actor.culture = culture #Unop This is already the capital county
 				}
 			}
 			factor = 0.1

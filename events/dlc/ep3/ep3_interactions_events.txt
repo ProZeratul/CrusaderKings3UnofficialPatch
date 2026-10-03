@@ -1678,7 +1678,10 @@ ep3_interactions_events.0111 = {
 				NOR = {
 					this = scope:puppet_or_actor.primary_title
 					this = scope:puppet_or_actor.capital_county
-					duchy = scope:puppet_or_actor.capital_county.duchy
+					AND = { #Unop duchy is only valid for counties and baronies
+						tier <= tier_county
+						duchy = scope:puppet_or_actor.capital_county.duchy
+					}
 				}
 			}
 		}

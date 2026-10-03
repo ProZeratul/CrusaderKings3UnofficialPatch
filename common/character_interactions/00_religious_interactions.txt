@@ -735,7 +735,7 @@ demand_conversion_interaction = {
 		religion_demand_conversion_christian_situation_modifier = yes
 	}
 
-	can_send_despite_rejection = yes
+	#can_send_despite_rejection = yes #Unop Duplicate
 	force_notification = yes
 
 	#Use hook
@@ -3294,7 +3294,10 @@ excommunicate_interaction = {
 					}
 					situation:the_christian_church = { trigger_situation_catalyst = catalyst_excommunicate }
 				}
-				else = {
+				else_if = { #Unop Not all phases have the minor catalyst
+					limit = {
+						situation:the_christian_church = { situation_top_has_catalyst = catalyst_excommunicate_minor }
+					}
 					situation:the_christian_church = { trigger_situation_catalyst = catalyst_excommunicate_minor }
 				}
 			}
@@ -4625,7 +4628,7 @@ send_to_holy_order_interaction = {
 		}
  	}
 
-	auto_accept = no
+	#auto_accept = no #Unop Overrides the strong hook auto_accept above
 
 	ai_accept = {
 		base = 0 # Try to make it 0 for most interactions
@@ -5625,7 +5628,7 @@ take_vows_interaction = {
 		}
  	}
 
-	auto_accept = no
+	#auto_accept = no #Unop Overrides the strong hook auto_accept above
 
 	ai_accept = {
 		base = 0 # Try to make it 0 for most interactions
@@ -9861,7 +9864,7 @@ take_monastic_vows_interaction = {
 		}
  	}
 
-	auto_accept = no
+	#auto_accept = no #Unop Overrides the strong hook auto_accept above
 
 	ai_accept = {
 		base = 0 # Try to make it 0 for most interactions
@@ -10919,7 +10922,7 @@ monastic_donation_interaction = {
 		}
  	}
 
-	auto_accept = no
+	#auto_accept = no #Unop Overrides the strong hook auto_accept above
 
 	ai_accept = {
 		base = 0 # Try to make it 0 for most interactions
@@ -11618,7 +11621,7 @@ lease_title_to_existing_monastic_order_interaction = {
 		}
  	}
 
-	auto_accept = no
+	#auto_accept = no #Unop Overrides the strong hook auto_accept above
 
 	ai_accept = {
 		base = 50 # Try to make it 0 for most interactions

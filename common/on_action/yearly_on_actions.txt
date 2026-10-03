@@ -816,13 +816,13 @@ yearly_global_pulse = {
 			}
 		}
 		#Yearly Imperial Grace Reduction for Hegemonic Tributaries
-		if = {
-			limit = {
-				exists = suzerain
-				suzerain = { highest_held_title_tier = tier_hegemony }
-				NOT = { exists = suzerain.top_participant_group:dynastic_cycle }
-			}
-		}
+		#if = { #Unop Empty, and there is no character scope in the global pulse
+		#	limit = {
+		#		exists = suzerain
+		#		suzerain = { highest_held_title_tier = tier_hegemony }
+		#		NOT = { exists = suzerain.top_participant_group:dynastic_cycle }
+		#	}
+		#}
 		# Empire Faith Gate: multi-empire-same-faith legitimacy (iterate list, not every_independent_ruler).
 		if = {
 			limit = { empire_faith_gate_enabled_trigger = yes }
@@ -1411,6 +1411,7 @@ yearly_playable_pulse = {
 					limit = {
 						is_landless_type_title = no
 						is_noble_family_title = no
+						is_capital_barony = no #Unop Capital baronies go with their county
 					}
 					add_to_list = revoked_titles
 				}
