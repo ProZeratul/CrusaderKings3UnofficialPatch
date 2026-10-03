@@ -3566,6 +3566,7 @@ laamp_join_faction_contract = {
 				save_temporary_scope_as = temp_faction
 			}
 		}
+		scope:temp_faction = { faction_is_at_war = no } #Unop A faction at war can't be joined
 		is_a_faction_member = no
 		#don't spawn contracts for the same factions or faction targets
 		NOT = {
@@ -3608,6 +3609,10 @@ laamp_join_faction_contract = {
 		custom_tooltip = {
 			text = NOT_FACTION_JOIN_CREATE_CONDITION_NOT_FACTION_MEMBER
 			is_a_faction_member = no
+		}
+		custom_tooltip = { #Unop A faction at war can't be joined
+			text = unop_faction_not_at_war_tt
+			scope:employer.joined_faction ?= { faction_is_at_war = no }
 		}
 		#passes_faction_hard_block from 00_rules.txt
 		scope:employer ?= {
