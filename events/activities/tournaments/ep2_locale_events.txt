@@ -136,7 +136,7 @@ scripted_trigger tournament_tavern_round_recipient_trigger = {
 	age >= 18
 	trigger_if = {
 		limit = {
-			faith = { trait_is_sin = drunkard }
+			rite = { trait_is_sin_rite = drunkard }
 		}
 		NOT = { has_trait = zealous }
 	}
@@ -369,7 +369,7 @@ ep2_locale_events.1000 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			temperate = minor_stress_impact_gain
 			honest = minor_stress_impact_gain
 			just = minor_stress_impact_gain
@@ -437,7 +437,7 @@ ep2_locale_events.1000 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			temperate = medium_stress_impact_gain
 			honest = medium_stress_impact_gain
 			just = medium_stress_impact_gain
@@ -464,7 +464,7 @@ ep2_locale_events.1000 = {
 		trigger = { this = scope:host }
 		if = {
 			limit = {
-				faith = { trait_is_virtue = temperate }
+				rite = { trait_is_virtue_rite = temperate }
 			}
 			add_piety = minor_piety_gain
 		}
@@ -490,7 +490,7 @@ ep2_locale_events.1000 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			drunkard = minor_stress_impact_gain
 			hashishiyah = minor_stress_impact_gain
 			gluttonous = minor_stress_impact_gain
@@ -527,9 +527,9 @@ ep2_locale_events.1000 = {
 		}
 		if = {
 			limit = { has_activity_intent = win_contest_intent }
-			stress_impact = { base = medium_stress_impact_gain }
+			stress_and_fulfillment_impact = { base = medium_stress_impact_gain }
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			sadistic = medium_stress_impact_gain
 			drunkard = minor_stress_impact_gain
 			hashishiyah = minor_stress_impact_gain
@@ -621,6 +621,7 @@ ep2_locale_events.1002 = {
 		create_character = {
 			template = generic_peasant_character
 			faith = root.faith #to ensure he also drinks
+			rite = root.rite
 			location = root.location
 			save_scope_as = local_drunk
 		}
@@ -652,7 +653,7 @@ ep2_locale_events.1002 = {
 
 		try_to_create_recurring_character_effect = { CHARACTER = scope:local_drunk }
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_loss
 			calm = minor_stress_impact_loss
 			humble = minor_stress_impact_loss
@@ -743,7 +744,7 @@ ep2_locale_events.1002 = {
 
 		try_to_create_recurring_character_effect = { CHARACTER = scope:local_drunk }
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			shy = minor_stress_impact_gain
 			gluttonous = medium_stress_impact_loss
@@ -777,7 +778,7 @@ ep2_locale_events.1002 = {
 			opinion = -20
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			shy = miniscule_stress_impact_loss
 			gluttonous = major_stress_impact_gain
 			temperate = miniscule_stress_impact_loss
@@ -885,7 +886,7 @@ ep2_locale_events.1010 = {
 	#
 	#	trigger_event = ep2_locale_events.1011
 	#
-	#	stress_impact = {
+	#	stress_and_fulfillment_impact = {
 	#		deceitful = minor_stress_impact_loss
 	#		arbitrary = minor_stress_impact_loss
 	#		greedy = miniscule_stress_impact_loss
@@ -914,7 +915,7 @@ ep2_locale_events.1010 = {
 
 		trigger_event = ep2_locale_events.1011
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			profligate = miniscule_stress_impact_loss
 			paranoid = minor_stress_impact_gain
 			greedy = minor_stress_impact_gain
@@ -1716,7 +1717,7 @@ ep2_locale_events.1014 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gluttonous = miniscule_stress_impact_loss
 			gregarious = miniscule_stress_impact_loss
 			greedy = medium_stress_impact_gain
@@ -1743,7 +1744,7 @@ ep2_locale_events.1014 = {
 			var:root_wins > var:gambler_wins
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			greedy = miniscule_stress_impact_loss
 			temperate = miniscule_stress_impact_loss
@@ -1773,7 +1774,7 @@ ep2_locale_events.1014 = {
 
 		remove_short_term_gold = minor_gold_value
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = miniscule_stress_impact_loss
 			gluttonous = miniscule_stress_impact_loss
 			gregarious = miniscule_stress_impact_loss
@@ -1801,7 +1802,7 @@ ep2_locale_events.1014 = {
 			var:root_wins < var:gambler_wins
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			greedy = miniscule_stress_impact_loss
 			temperate = miniscule_stress_impact_loss
@@ -1831,7 +1832,7 @@ ep2_locale_events.1014 = {
 
 		remove_short_term_gold = minor_gold_value
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = miniscule_stress_impact_loss
 			gluttonous = miniscule_stress_impact_loss
 			gregarious = miniscule_stress_impact_loss
@@ -1859,7 +1860,7 @@ ep2_locale_events.1014 = {
 			var:root_wins = var:gambler_wins
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			greedy = miniscule_stress_impact_loss
 			temperate = miniscule_stress_impact_loss
@@ -1991,7 +1992,7 @@ ep2_locale_events.1050 = {
 			opinion = -45
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			compassionate = medium_stress_impact_gain
 			trusting = medium_stress_impact_gain
@@ -2039,7 +2040,7 @@ ep2_locale_events.1050 = {
 			opinion = 35
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			wrathful = miniscule_stress_impact_loss
 			vengeful = miniscule_stress_impact_loss
@@ -2081,7 +2082,7 @@ ep2_locale_events.1050 = {
 			opinion = 25
 		}		
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = miniscule_stress_impact_loss
 			stubborn = medium_stress_impact_gain
 			arrogant = miniscule_stress_impact_loss
@@ -2111,7 +2112,7 @@ ep2_locale_events.1050 = {
 			opinion = -15
 		}		
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			stubborn = miniscule_stress_impact_loss
 			arrogant = medium_stress_impact_gain
@@ -2346,7 +2347,7 @@ ep2_locale_events.1500 = {
 			limit = {
 				NOT = { has_activity_intent = win_contest_intent }
 			}
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				humble = minor_stress_impact_gain
 				content = minor_stress_impact_gain
 			}
@@ -2373,7 +2374,7 @@ ep2_locale_events.1500 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			forgiving = minor_stress_impact_gain
 			compassionate = minor_stress_impact_gain
 		}
@@ -2405,13 +2406,13 @@ ep2_locale_events.1500 = {
 			OPINION = default_friend_opinion
 		}
 		add_piety = minor_piety_gain
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			sadistic = minor_stress_impact_gain
 			callous = minor_stress_impact_gain
 		}
 		if = {
 			limit = { has_activity_intent = win_contest_intent }
-			stress_impact = { base = medium_stress_impact_gain }
+			stress_and_fulfillment_impact = { base = medium_stress_impact_gain }
 		}
 		ai_chance = {
 			base = 50
@@ -2438,7 +2439,7 @@ ep2_locale_events.1500 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			forgiving = minor_stress_impact_gain
 			compassionate = minor_stress_impact_gain
 		}
@@ -2455,8 +2456,7 @@ ep2_locale_events.1500 = {
 	option = {
 		name = ep2_locale_events.1500.e
 		trigger = {
-			exists = scope:backup_prayer_target
-			scope:backup_prayer_target = { is_in_list = good_prayer_targets }
+			scope:backup_prayer_target ?= { is_in_list = good_prayer_targets }
 		}
 		scope:backup_prayer_target = {
 			if = {
@@ -2473,13 +2473,13 @@ ep2_locale_events.1500 = {
 			OPINION = default_friend_opinion
 		}
 		add_piety = minor_piety_gain
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			sadistic = minor_stress_impact_gain
 			callous = minor_stress_impact_gain
 		}
 		if = {
 			limit = { has_activity_intent = win_contest_intent }
-			stress_impact = { base = medium_stress_impact_gain }
+			stress_and_fulfillment_impact = { base = medium_stress_impact_gain }
 		}
 		ai_chance = {
 			base = 50
@@ -2503,13 +2503,13 @@ ep2_locale_events.1500 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = minor_stress_impact_gain
 			greedy = minor_stress_impact_loss
 		}
 		if = {
 			limit = { has_activity_intent = win_contest_intent }
-			stress_impact = { base = medium_stress_impact_gain }
+			stress_and_fulfillment_impact = { base = medium_stress_impact_gain }
 		}
 		ai_chance = {
 			base = 50
@@ -2524,7 +2524,7 @@ ep2_locale_events.1500 = {
 	option = {
 		name = ep2_locale_events.1500.g
 		add_piety = medium_piety_gain
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			zealous = minor_stress_impact_loss
 			calm = minor_stress_impact_loss
@@ -2661,7 +2661,7 @@ ep2_locale_events.1501 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			zealous = miniscule_stress_impact_loss
 			cynical = major_stress_impact_gain
 		}
@@ -2756,7 +2756,7 @@ ep2_locale_events.1501 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			cynical = miniscule_stress_impact_loss
 			zealous = major_stress_impact_gain
 		}
@@ -2806,8 +2806,8 @@ ep2_locale_events.1510 = {
 		        trigger = {
 					scope:instigator_scope = {
 						OR = {
-							faith = {
-								NOT = { trait_is_sin = drunkard }
+							rite = {
+								NOT = { trait_is_sin_rite = drunkard }
 							}
 							has_trait = drunkard
 						}
@@ -2819,8 +2819,8 @@ ep2_locale_events.1510 = {
 		        trigger = {
 					scope:instigator_scope = {
 						OR = {
-							faith = {
-								NOT = { trait_is_sin = hashishiyah }
+							rite = {
+								NOT = { trait_is_sin_rite = hashishiyah }
 							}
 							has_trait = hashishiyah
 						}
@@ -2844,8 +2844,8 @@ ep2_locale_events.1510 = {
 		triggered_animation = {
 			trigger = {
 				OR = {
-					faith = {
-						NOT = { trait_is_sin = drunkard }
+					rite = {
+						NOT = { trait_is_sin_rite = drunkard }
 					}
 					has_trait = drunkard
 				}
@@ -2855,8 +2855,8 @@ ep2_locale_events.1510 = {
 		triggered_animation = {
 			trigger = {
 				NOR = {
-					faith = {
-						NOT = { trait_is_sin = drunkard }
+					rite = {
+						NOT = { trait_is_sin_rite = drunkard }
 					}
 					has_trait = drunkard
 				}
@@ -2947,14 +2947,6 @@ ep2_locale_events.1510 = {
 		}
 	}
 
-	weight_multiplier = {
-		base = 100
-		modifier = {
-			factor = 0.5
-			has_trait = cynical
-		}
-	}
-
 	option = { # Imprison
 		name = ep2_locale_events.1510.a
 		add_piety = medium_piety_gain
@@ -2973,7 +2965,7 @@ ep2_locale_events.1510 = {
 			opinion = -10
 		}
 		try_to_create_recurring_character_effect = { CHARACTER = scope:tournament_priest }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gluttonous = minor_stress_impact_gain
 			cynical = minor_stress_impact_gain
 			gregarious = minor_stress_impact_gain
@@ -3010,7 +3002,7 @@ ep2_locale_events.1510 = {
 			}
 		}
 		try_to_create_recurring_character_effect = { CHARACTER = scope:instigator_scope }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			temperate = minor_stress_impact_gain
 			shy = minor_stress_impact_gain
 			zealous = minor_stress_impact_gain
@@ -3057,7 +3049,7 @@ ep2_locale_events.1510 = {
 			}
 		}
 		try_to_create_recurring_character_effect = { CHARACTER = scope:instigator_scope }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			theologian = minor_stress_impact_gain
 			forgiving = minor_stress_impact_gain
 			compassionate = minor_stress_impact_gain
@@ -3090,7 +3082,7 @@ ep2_locale_events.1510 = {
 			opinion = 5
 		}
 		try_to_create_recurring_character_effect = { CHARACTER = scope:tournament_priest }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			vengeful = minor_stress_impact_gain
 			wrathful = minor_stress_impact_gain
 			arbitrary = minor_stress_impact_gain
@@ -3180,7 +3172,7 @@ ep2_locale_events.2001 = {
 			limit = { activity_is_competing_trigger = yes }
 			activity_tournament_change_contestant_score_effect = { SCORE = increase_miniscule }
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = minor_stress_impact_gain
 			generous = miniscule_stress_impact_loss
 			arrogant = minor_stress_impact_loss
@@ -3214,7 +3206,7 @@ ep2_locale_events.2001 = {
 			limit = { activity_is_competing_trigger = yes }
 			activity_tournament_change_contestant_score_effect = { SCORE = increase_miniscule }
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = minor_stress_impact_gain
 			generous = miniscule_stress_impact_loss
 			diligent = minor_stress_impact_loss
@@ -3240,7 +3232,7 @@ ep2_locale_events.2001 = {
 			opinion = -15
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = minor_stress_impact_loss
 			generous = minor_stress_impact_gain
 		}
@@ -3314,6 +3306,7 @@ ep2_locale_events.2002 = {
 			gender_female_chance = 50
 			culture = scope:tournament_armorer.culture
 			faith = scope:tournament_armorer.faith
+			rite = scope:tournament_armorer.rite
 			location = scope:tournament_armorer.location
 			save_scope_as = apprentice
 		}
@@ -3344,7 +3337,7 @@ ep2_locale_events.2002 = {
 			activity_tournament_change_contestant_score_effect = { SCORE = increase_medium }
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			wrathful = miniscule_stress_impact_loss
 			vengeful = miniscule_stress_impact_loss
 			sadistic = miniscule_stress_impact_loss
@@ -3414,7 +3407,7 @@ ep2_locale_events.2002 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			shy = minor_stress_impact_gain
 			trusting = medium_stress_impact_gain
 			forgiving = medium_stress_impact_gain
@@ -3448,7 +3441,7 @@ ep2_locale_events.2002 = {
 			opinion = -10
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			wrathful = medium_stress_impact_gain
 			vengeful = medium_stress_impact_gain
 			calm = miniscule_stress_impact_loss
@@ -3476,7 +3469,7 @@ ep2_locale_events.2002 = {
 			activity_tournament_change_contestant_score_effect = { SCORE = decrease_medium }
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			diligent = medium_stress_impact_gain
 			trusting = medium_stress_impact_gain
 			lazy = miniscule_stress_impact_loss
@@ -4115,7 +4108,7 @@ ep2_locale_events.2050 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			paranoid = minor_stress_impact_gain #I don't want to let this armour out of my sight!
 			craven = miniscule_stress_impact_loss #Anything to protect me!
@@ -4144,7 +4137,7 @@ ep2_locale_events.2050 = {
 			opinion = -10
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = miniscule_stress_impact_loss
 			paranoid = miniscule_stress_impact_loss
 			craven = medium_stress_impact_gain
@@ -4277,11 +4270,11 @@ ep2_locale_events.2500 = {
 			text = ep2_locale_events.2500.a
 		}
 		scope:tailor_mixup = {
-			stress_impact = { base = medium_stress_impact_gain }
+			stress_and_fulfillment_impact = { base = medium_stress_impact_gain }
 		}
 		if = {
 			limit = { tournament_tailor_rivalry_trigger = yes }
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				base = medium_stress_impact_loss
 			}
 		}
@@ -4292,7 +4285,7 @@ ep2_locale_events.2500 = {
 				OPINION = default_rival_opinion
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = minor_stress_impact_gain
 			compassionate = minor_stress_impact_gain
 		}
@@ -4324,7 +4317,7 @@ ep2_locale_events.2500 = {
 			years = 10
 		}
 		custom_tooltip = ep2_locale_events.2500.b.tt
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = minor_stress_impact_gain
 			brave = minor_stress_impact_gain
 			greedy = minor_stress_impact_gain
@@ -4348,7 +4341,7 @@ ep2_locale_events.2500 = {
 			modifier = tournament_tailor_fancy_crest_modifier
 			years = 5
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = minor_stress_impact_gain
 			humble = minor_stress_impact_gain
 		}
@@ -4365,7 +4358,7 @@ ep2_locale_events.2500 = {
 	# Nevermind
 	option = {
 		name = ep2_locale_events.2500.d
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			deceitful = minor_stress_impact_gain
 			arrogant = minor_stress_impact_gain
 			generous = minor_stress_impact_gain
@@ -4464,6 +4457,7 @@ ep2_locale_events.2501 = {
 		}
 
 		set_artifact_rarity_common = yes
+
 		create_artifact = {
 			name = fake_papal_tiara_name
 			description = fake_papal_tiara_description
@@ -4496,7 +4490,7 @@ ep2_locale_events.2501 = {
 			opinion = 10
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			zealous = major_stress_impact_gain
 			greedy = medium_stress_impact_gain
 			gregarious = miniscule_stress_impact_loss
@@ -4539,7 +4533,7 @@ ep2_locale_events.2501 = {
 			opinion = -20
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			zealous = minor_stress_impact_loss
 			greedy = miniscule_stress_impact_loss
 			gregarious = medium_stress_impact_gain
@@ -4610,7 +4604,7 @@ ep2_locale_events.2502 = {
 
 		remove_short_term_gold = minor_gold_value
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			humble = medium_stress_impact_gain
 			generous = miniscule_stress_impact_loss
@@ -4634,7 +4628,7 @@ ep2_locale_events.2502 = {
 
 		activity_tournament_change_contestant_score_effect = { SCORE = increase_minor }	
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = minor_stress_impact_gain
 			arrogant = minor_stress_impact_gain
 			greedy = miniscule_stress_impact_loss
@@ -5180,7 +5174,7 @@ ep2_locale_events.3001 = {
 			PREGNANCY_CHANCE = pregnancy_chance
 		}
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
 			chaste = medium_stress_impact_gain
 			ambitious = minor_stress_impact_gain
 			lustful = minor_stress_impact_loss
@@ -5213,7 +5207,7 @@ ep2_locale_events.3001 = {
 			opinion = 30
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			chaste = miniscule_stress_impact_loss
 			ambitious = medium_stress_impact_gain
@@ -5252,7 +5246,7 @@ ep2_locale_events.3001 = {
 			opinion = -15
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_loss
 			diligent = miniscule_stress_impact_loss
 			lustful = medium_stress_impact_gain
@@ -5342,6 +5336,9 @@ ep2_locale_events.3002 = {
 	desc = ep2_locale_events.3002.desc
 	theme = tournament_locale_camp
 	cooldown = { years = 1 }
+	override_background = {
+		reference = ep3_relaxing_tent
+	}
 	left_portrait = {
 		character = root
 		animation = stress
@@ -5544,8 +5541,8 @@ ep2_locale_events.3002 = {
 
 		if = { #Your faith says no to adultery by your gender
 			limit = {
-				trait_is_shunned_or_criminal_in_faith_trigger = {
-					FAITH = root.faith
+				trait_is_shunned_or_criminal_in_rite_trigger = {
+					RITE = root.rite
 					TRAIT = trait:adulterer
 					GENDER_CHARACTER = this
 				}
@@ -5572,7 +5569,7 @@ ep2_locale_events.3002 = {
 
 		ep2_locale_events_3002_recurring_character_tumbola_effect = yes
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
 			base = major_stress_impact_loss
 			lazy = miniscule_stress_impact_loss
 			lustful = minor_stress_impact_loss
@@ -5611,7 +5608,7 @@ ep2_locale_events.3002 = {
 
 		hidden_effect = { ep2_locale_events_3002_recurring_character_tumbola_effect = yes }
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = miniscule_stress_impact_loss
 			diligent = miniscule_stress_impact_loss
 			lustful = major_stress_impact_gain
@@ -5649,8 +5646,8 @@ ep2_locale_events.3002 = {
 
 		if = { #Your faith says no to adultery by your gender
 			limit = {
-				trait_is_shunned_or_criminal_in_faith_trigger = {
-					FAITH = root.faith
+				trait_is_shunned_or_criminal_in_rite_trigger = {
+					RITE = root.rite
 					TRAIT = trait:adulterer
 					GENDER_CHARACTER = this
 				}
@@ -5662,7 +5659,7 @@ ep2_locale_events.3002 = {
 			add_piety = minor_piety_gain
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_gain
 			diligent = minor_stress_impact_gain
 			content = miniscule_stress_impact_loss
@@ -5790,7 +5787,7 @@ ep2_locale_events.3500 = {
 		}
 
 		add_prestige = minor_prestige_gain
-        stress_impact = {
+        stress_and_fulfillment_impact = {
 			irritable = minor_stress_impact_loss
 			wrathful = minor_stress_impact_loss
 			calm = minor_stress_impact_gain
@@ -5827,7 +5824,7 @@ ep2_locale_events.3500 = {
 			modifier = hate_opinion
 			opinion = -40
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			irritable = medium_stress_impact_loss
 			wrathful = medium_stress_impact_loss
 			calm = medium_stress_impact_gain
@@ -5853,7 +5850,7 @@ ep2_locale_events.3500 = {
 			modifier = disappointed_opinion
 			opinion = -30
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			irritable = minor_stress_impact_loss
 			wrathful = minor_stress_impact_loss
 			calm = minor_stress_impact_gain
@@ -5874,14 +5871,14 @@ ep2_locale_events.3500 = {
 	option = {
 		name = ep2_locale_events.3500.d
 		add_dread = miniscule_dread_loss
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			wrathful = medium_stress_impact_gain
 			arbitrary = medium_stress_impact_gain
 			greedy = medium_stress_impact_gain
 		}
 		if = {
 			limit = { has_activity_intent = win_contest_intent }
-			stress_impact = { base = medium_stress_impact_gain }
+			stress_and_fulfillment_impact = { base = medium_stress_impact_gain }
 		}
 		reverse_add_opinion = {
 			target = scope:tournament_farrier
@@ -6005,7 +6002,7 @@ ep2_locale_events.4001 = {
 			opinion = -15
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			wrathful = minor_stress_impact_gain
 			forgiving = medium_stress_impact_gain
 			diligent = miniscule_stress_impact_loss
@@ -6035,7 +6032,7 @@ ep2_locale_events.4001 = {
 			opinion = 10
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			wrathful = medium_stress_impact_gain
 			forgiving = miniscule_stress_impact_loss
 			lazy = miniscule_stress_impact_loss
@@ -6065,7 +6062,7 @@ ep2_locale_events.4001 = {
 			opinion = -40
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			wrathful = miniscule_stress_impact_loss
 			forgiving = medium_stress_impact_gain
 			lazy = medium_stress_impact_gain
@@ -6578,7 +6575,7 @@ ep2_locale_events.4050 = {
 			exists = var:tournament_bowyer
 			var:tournament_bowyer = { is_alive = yes }
 		}
-		OR = { #Unop: Mitigate this event from happening too much if we already bought the bracer
+		OR = {
 			NOT = { has_character_modifier = tournament_bracer_modifier }
 			AND = {
 				has_trait = profligate
@@ -6688,7 +6685,7 @@ ep2_locale_events.4050 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			avaricious = minor_stress_impact_loss
 			greedy = miniscule_stress_impact_loss
 			generous = medium_stress_impact_gain
@@ -6720,13 +6717,17 @@ ep2_locale_events.4050 = {
 			remove_character_modifier = tournament_bracer_modifier
 		}
 		add_character_modifier = tournament_two_bracers_modifier
+		if = {
+			limit = { has_character_modifier = tournament_bracer_modifier }
+			remove_character_modifier = tournament_bracer_modifier
+		}
 		reverse_add_opinion = {
 			target = scope:tournament_bowyer
 			modifier = pleased_opinion
 			opinion = 20
 		}		
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = major_stress_impact_gain
 			generous = minor_stress_impact_loss
 		}
@@ -6752,7 +6753,7 @@ ep2_locale_events.4050 = {
 
 		add_character_modifier = tournament_bracer_modifier
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = miniscule_stress_impact_loss
 			content = minor_stress_impact_gain
 			generous = miniscule_stress_impact_loss
@@ -6767,7 +6768,7 @@ ep2_locale_events.4050 = {
 	option = {
 		name = ep2_locale_events.4050.d
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = miniscule_stress_impact_loss
 			generous = medium_stress_impact_gain
 			craven = medium_stress_impact_gain
@@ -6860,6 +6861,7 @@ ep2_locale_events.4500 = {
 			gender_female_chance = 50
 			culture = scope:tournament_weaponsmith.culture
 			faith = scope:tournament_weaponsmith.faith
+			rite = scope:tournament_weaponsmith.rite
 			location = scope:tournament_weaponsmith.location
 			save_scope_as = apprentice
 		}
@@ -6925,7 +6927,7 @@ ep2_locale_events.4500 = {
 
 		activity_tournament_change_contestant_score_effect = { SCORE = increase_minor }
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			calm = medium_stress_impact_gain
 			wrathful = miniscule_stress_impact_loss
 			lazy = medium_stress_impact_gain
@@ -6966,7 +6968,7 @@ ep2_locale_events.4500 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			generous = miniscule_stress_impact_loss
 			paranoid = medium_stress_impact_gain
@@ -6998,7 +7000,7 @@ ep2_locale_events.4500 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = miniscule_stress_impact_loss
 			generous = medium_stress_impact_gain
 			vengeful = medium_stress_impact_gain
@@ -7065,6 +7067,7 @@ ep2_locale_events.4501 = {
 			is_adult = yes
 			is_attracted_to_gender_of = scope:tournament_weaponsmith_temporary 
 			is_attracted_to_gender_of = root
+			might_cheat_on_every_partner_trigger = yes
 		}
 	}
 
@@ -7137,7 +7140,7 @@ ep2_locale_events.4501 = {
 			PREGNANCY_CHANCE = pregnancy_chance
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			seducer = miniscule_stress_impact_loss
 			gregarious = miniscule_stress_impact_loss
 			shy = medium_stress_impact_loss
@@ -7172,7 +7175,7 @@ ep2_locale_events.4501 = {
 			opinion = 30
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			shy = minor_stress_impact_loss
 			seducer = medium_stress_impact_gain
 			lustful = minor_stress_impact_gain
@@ -7194,7 +7197,7 @@ ep2_locale_events.4501 = {
 			opinion = -15
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			calm = medium_stress_impact_gain
 			content = medium_stress_impact_gain
 			lustful = minor_stress_impact_gain
@@ -7226,7 +7229,7 @@ ep2_locale_events.4501 = {
 			opinion = 15
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			calm = miniscule_stress_impact_loss
 			content = miniscule_stress_impact_loss
 			wrathful = medium_stress_impact_gain
@@ -7268,11 +7271,10 @@ ep2_locale_events.4505 = {
 	}
 	override_background = { reference = armory }
 
-	trigger = { #Unop: This trigger could not fire at all since the root scope did not have the var:tournament_weaponsmith
-		scope:activity = { # You have a weaponsmith
+	trigger = {
+		scope:activity = { 
+			var:tournament_weaponsmith ?= { is_alive = yes }
 			has_active_locale = tournament_locale_artisans
-			exists = var:tournament_weaponsmith
-			var:tournament_weaponsmith = { is_alive = yes }
 		}
 		has_trait = tourney_participant
 		has_trait_xp = { #Make sure you are a famed soldier
@@ -7283,17 +7285,16 @@ ep2_locale_events.4505 = {
 	}
 
 	immediate = {
-		save_scope_as = owner #Unop: For add_scaled_artifact_modifier_combat_effect to work properly
-		scope:activity = { #Unop: Replace the random_courtier_or_guest that will select a random courtier or guest instead of the desired tournament_weaponsmith 
+		save_scope_as = owner
+		scope:activity = {
 			var:tournament_weaponsmith = { save_scope_as = tournament_weaponsmith }
 		}
 
-		# Get artifact quality and wealth. #Unop: Ensure both quality & wealth are defined
 		get_artifact_quality_effect = yes
 		get_artifact_wealth_effect = yes
 
 		scope:tournament_weaponsmith = {
-			hidden_effect = { #Unop: Lower this effect since it's using tournament_weaponsmith scope that was not defined in original script.
+			hidden_effect = {
 				create_artifact = {
 					name = artisanal_sword
 					description = artisanal_sword_description
@@ -7350,7 +7351,7 @@ ep2_locale_events.4505 = {
 
 		trigger_event = ep2_locale_events.4506
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = miniscule_stress_impact_loss
 			content = minor_stress_impact_gain
 			generous = medium_stress_impact_gain
@@ -7392,7 +7393,7 @@ ep2_locale_events.4505 = {
 
 		trigger_event = ep2_locale_events.4506
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			content = minor_stress_impact_gain
 			generous = miniscule_stress_impact_loss
@@ -7424,7 +7425,7 @@ ep2_locale_events.4505 = {
 			opinion = -60
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = medium_stress_impact_gain
 			ambitious = minor_stress_impact_gain
 			greedy = miniscule_stress_impact_loss
@@ -7916,7 +7917,7 @@ ep2_locale_events.4506 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			humble = minor_stress_impact_gain
 			arrogant = miniscule_stress_impact_loss
 		}
@@ -7935,7 +7936,7 @@ ep2_locale_events.4506 = {
 
 		add_prestige = 200
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = miniscule_stress_impact_loss
 			humble = minor_stress_impact_loss
 			arrogant = medium_stress_impact_gain
@@ -8515,11 +8516,14 @@ ep2_locale_events.4520 = {
 						min = -49
 					}
 					desc = ep2_locale_events.4520.a.success
+					save_scope_value_as = { name = wealth value = 70 }
+					save_scope_value_as = { name = quality value = 70 }
 					root = {
 						send_interface_toast = {
 							title = ep2_locale_events.4520.a.success
 							left_icon = root
 							right_icon = scope:tournament_weaponsmith
+
 							scope:tournament_weaponsmith = {
 								create_artifact = {
 									name = blooded_blade
@@ -8530,23 +8534,23 @@ ep2_locale_events.4520 = {
 									modifier = artifact_monthly_prestige_3_modifier
 									modifier = artifact_dread_gain_mult_2_modifier
 									modifier = artifact_prowess_1_negative_modifier
-									wealth = 70
-									quality = 70
+									wealth = scope:wealth
+									quality = scope:quality
 									save_scope_as = blooded_blade
 								}
 							}
 						}
 						add_character_flag = blooded_blade
 					}
-					hidden_effect_new_object = { #Unop: Need to save quality & wealth var to the artifact
+					hidden_effect_new_object = { #Unop Save quality and wealth as variables on the artifact, as other artifacts do
 						scope:blooded_blade = {
 							set_variable = {
 								name = quality
-								value = 70
+								value = scope:quality
 							}
 							set_variable = {
 								name = wealth
-								value = 70
+								value = scope:wealth
 							}
 						}
 					}
@@ -8560,11 +8564,14 @@ ep2_locale_events.4520 = {
 						min = -49
 					}
 					desc = ep2_locale_events.4520.a.failure
+					save_scope_value_as = { name = wealth value = 40 }
+					save_scope_value_as = { name = quality value = 40 }
 					root = {
 						send_interface_toast = {
 							title = ep2_locale_events.4520.a.failure
 							left_icon = root
 							right_icon = scope:tournament_weaponsmith
+
 							scope:tournament_weaponsmith = {
 								create_artifact = {
 									name = sullied_blooded_blade
@@ -8574,26 +8581,26 @@ ep2_locale_events.4520 = {
 									creator = scope:tournament_weaponsmith
 									modifier = artifact_monthly_prestige_2_modifier
 									modifier = artifact_prowess_2_negative_modifier
-									wealth = 40
-									quality = 40
+									wealth = scope:wealth
+									quality = scope:quality
 									save_scope_as = blooded_blade
 								}
-							}
-							scope:blooded_blade = {
-								flag_as_unwanted_artifact = yes
+								scope:blooded_blade = {
+									flag_as_unwanted_artifact = yes
+								}
 							}
 						}
-						add_character_flag = sullied_blooded_blade
 					}
-					hidden_effect_new_object = { #Unop: Need to save quality & wealth var to the artifact
+					add_character_flag = sullied_blooded_blade
+					hidden_effect_new_object = { #Unop Save quality and wealth as variables on the artifact, as other artifacts do
 						scope:blooded_blade = {
 							set_variable = {
 								name = quality
-								value = 40
+								value = scope:quality
 							}
 							set_variable = {
 								name = wealth
-								value = 40
+								value = scope:wealth
 							}
 						}
 					}
@@ -8603,7 +8610,7 @@ ep2_locale_events.4520 = {
 
 		trigger_event = ep2_locale_events.4521
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_loss
 			craven = medium_stress_impact_gain
 			paranoid = medium_stress_impact_gain
@@ -8658,6 +8665,9 @@ ep2_locale_events.4520 = {
 								limit = { activity_is_competing_trigger = yes }
 								activity_tournament_change_contestant_score_effect = { SCORE = increase_minor }
 							}
+							save_scope_value_as = { name = wealth value = 70 }
+							save_scope_value_as = { name = quality value = 70 }
+
 							scope:tournament_weaponsmith = {
 								create_artifact = {
 									name = blooded_blade
@@ -8668,23 +8678,23 @@ ep2_locale_events.4520 = {
 									modifier = artifact_monthly_prestige_3_modifier
 									modifier = artifact_dread_gain_mult_2_modifier
 									modifier = artifact_prowess_1_negative_modifier
-									wealth = 70
-									quality = 70
+									wealth = scope:wealth
+									quality = scope:quality
 									save_scope_as = blooded_blade
 								}
 							}
-							add_character_flag = blooded_blade
 						}
+						add_character_flag = blooded_blade
 					}
-					hidden_effect_new_object = { #Unop: Need to save quality & wealth var to the artifact
+					hidden_effect_new_object = { #Unop Save quality and wealth as variables on the artifact, as other artifacts do
 						scope:blooded_blade = {
 							set_variable = {
 								name = quality
-								value = 70
+								value = scope:quality
 							}
 							set_variable = {
 								name = wealth
-								value = 70
+								value = scope:wealth
 							}
 						}
 					}
@@ -8707,6 +8717,8 @@ ep2_locale_events.4520 = {
 								limit = { activity_is_competing_trigger = yes }
 								activity_tournament_change_contestant_score_effect = { SCORE = increase_miniscule }
 							}
+							save_scope_value_as = { name = wealth value = 40 }
+							save_scope_value_as = { name = quality value = 40 }
 							scope:tournament_weaponsmith = {
 								create_artifact = {
 									name = sullied_blooded_blade
@@ -8716,26 +8728,26 @@ ep2_locale_events.4520 = {
 									creator = scope:tournament_weaponsmith
 									modifier = artifact_monthly_prestige_2_modifier
 									modifier = artifact_prowess_2_negative_modifier
-									wealth = 40
-									quality = 40
+									wealth = scope:wealth
+									quality = scope:quality
 									save_scope_as = blooded_blade
 								}
+								scope:blooded_blade = {
+									flag_as_unwanted_artifact = yes
+								}
 							}
-							scope:blooded_blade = {
-								flag_as_unwanted_artifact = yes
-							}
-							add_character_flag = sullied_blooded_blade
 						}
+						add_character_flag = sullied_blooded_blade
 					}
-					hidden_effect_new_object = { #Unop: Need to save quality & wealth var to the artifact
+					hidden_effect_new_object = { #Unop Save quality and wealth as variables on the artifact, as other artifacts do
 						scope:blooded_blade = {
 							set_variable = {
 								name = quality
-								value = 40
+								value = scope:quality
 							}
 							set_variable = {
 								name = wealth
-								value = 40
+								value = scope:wealth
 							}
 						}
 					}
@@ -8745,7 +8757,7 @@ ep2_locale_events.4520 = {
 
 		trigger_event = ep2_locale_events.4521
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = miniscule_stress_impact_loss
 			content = medium_stress_impact_gain
 			craven = minor_stress_impact_gain
@@ -8810,6 +8822,9 @@ ep2_locale_events.4520 = {
 								limit = { activity_is_competing_trigger = yes }
 								activity_tournament_change_contestant_score_effect = { SCORE = increase_minor }
 							}
+							save_scope_value_as = { name = wealth value = 70 }
+							save_scope_value_as = { name = quality value = 70 }
+
 							scope:tournament_weaponsmith = {
 								create_artifact = {
 									name = blooded_blade
@@ -8820,23 +8835,23 @@ ep2_locale_events.4520 = {
 									modifier = artifact_monthly_prestige_3_modifier
 									modifier = artifact_dread_gain_mult_2_modifier
 									modifier = artifact_prowess_1_negative_modifier
-									wealth = 70
-									quality = 70
+									wealth = scope:wealth
+									quality = scope:quality
 									save_scope_as = blooded_blade
 								}
 							}
 						}
 						add_character_flag = blooded_blade
 					}
-					hidden_effect_new_object = { #Unop: Need to save quality & wealth var to the artifact
+					hidden_effect_new_object = { #Unop Save quality and wealth as variables on the artifact, as other artifacts do
 						scope:blooded_blade = {
 							set_variable = {
 								name = quality
-								value = 70
+								value = scope:quality
 							}
 							set_variable = {
 								name = wealth
-								value = 70
+								value = scope:wealth
 							}
 						}
 					}
@@ -8859,6 +8874,9 @@ ep2_locale_events.4520 = {
 								limit = { activity_is_competing_trigger = yes }
 								activity_tournament_change_contestant_score_effect = { SCORE = increase_miniscule }
 							}
+							save_scope_value_as = { name = wealth value = 40 }
+							save_scope_value_as = { name = quality value = 40 }
+
 							scope:tournament_weaponsmith = {
 								create_artifact = {
 									name = sullied_blooded_blade
@@ -8868,26 +8886,26 @@ ep2_locale_events.4520 = {
 									creator = scope:tournament_weaponsmith
 									modifier = artifact_monthly_prestige_2_modifier
 									modifier = artifact_prowess_2_negative_modifier
-									wealth = 40
-									quality = 40
+									wealth = scope:wealth
+									quality = scope:quality
 									save_scope_as = blooded_blade
 								}
-							}
-							scope:blooded_blade = {
-								flag_as_unwanted_artifact = yes
+								scope:blooded_blade = {
+									flag_as_unwanted_artifact = yes
+								}
 							}
 						}
 						add_character_flag = sullied_blooded_blade
 					}
-					hidden_effect_new_object = { #Unop: Need to save quality & wealth var to the artifact
+					hidden_effect_new_object = { #Unop Save quality and wealth as variables on the artifact, as other artifacts do
 						scope:blooded_blade = {
 							set_variable = {
 								name = quality
-								value = 40
+								value = scope:quality
 							}
 							set_variable = {
 								name = wealth
-								value = 40
+								value = scope:wealth
 							}
 						}
 					}
@@ -8897,7 +8915,7 @@ ep2_locale_events.4520 = {
 
 		trigger_event = ep2_locale_events.4521
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			content = medium_stress_impact_gain
 			craven = minor_stress_impact_gain
 			paranoid = medium_stress_impact_gain
@@ -8929,7 +8947,7 @@ ep2_locale_events.4520 = {
 			opinion = -30
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			content = miniscule_stress_impact_loss
 			craven = minor_stress_impact_loss
 			paranoid = miniscule_stress_impact_loss
@@ -8990,7 +9008,7 @@ ep2_locale_events.4521 = {
 			set_owner = root
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = miniscule_stress_impact_loss
 			greedy = miniscule_stress_impact_loss
 			generous = medium_stress_impact_gain
@@ -9016,7 +9034,8 @@ ep2_locale_events.4521 = {
 				gold = 35
 			}
 		}
-		hidden_effect = { #Unop: Make sure to not leak into the weaponsmith inventory
+
+		hidden_effect = {
 			destroy_artifact = scope:blooded_blade
 		}
 
@@ -9037,7 +9056,7 @@ ep2_locale_events.4521 = {
 			opinion = 20
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = medium_stress_impact_gain
 			greedy = medium_stress_impact_gain
 			eccentric = medium_stress_impact_gain

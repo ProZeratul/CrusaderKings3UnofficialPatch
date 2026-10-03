@@ -123,12 +123,21 @@ adventurers_gather_inspiration_option = {
 
 adventurers_proselytize_zealously_option = {
 	is_shown = {
-   		has_government = landless_adventurer_government
+		OR = {
+			has_government = landless_adventurer_government
+			government_has_flag = government_is_theocracy
+			has_personal_tenet_flag = tenet_mendicant_preachers_proselytize_travel_option
+		}
 	}
 
 	is_valid = {
-		has_perk = zealous_proselytizer_perk
-		has_government = landless_adventurer_government
+		custom_tooltip = {
+			text = adventurers_proselytize_zealously_option.tt.perk_or_tenet
+			OR = {
+				has_perk = zealous_proselytizer_perk
+				has_personal_tenet_flag = tenet_mendicant_preachers_proselytize_travel_option
+			}
+		}
 	}
 	
 	travel_modifier = {
@@ -184,7 +193,7 @@ purchase_rough_terrain_gear_option = {
 		gold = {
 			add = {
 				value = low_travel_option_cost
-				desc = purchase_rough_terrain_gear_option #Unop: Was purchase_mountaineer_gear_option
+				desc = purchase_rough_terrain_gear_option
 			}
 		}
 	}
@@ -285,7 +294,7 @@ purchase_forest_gear_option = {
 		gold = {
 			add = {
 				value = low_travel_option_cost
-				desc = purchase_forest_gear_option #Unop: Was purchase_rough_terrain_gear_option
+				desc = purchase_forest_gear_option
 			}
 		}
 	}

@@ -74,7 +74,7 @@ bp2_yearly.4000 = {
 			modifier = parental_conviction
 			years = 10
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_gain
 		}
 
@@ -95,7 +95,7 @@ bp2_yearly.4000 = {
 			}
 		}
 		flavor = bp2_yearly.4000.b.flavor
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_loss
 			cynical = minor_stress_loss
 			callous = minor_stress_loss
@@ -113,7 +113,7 @@ bp2_yearly.4000 = {
 		name = bp2_yearly.4000.c
 
 		add_piety = medium_piety_gain
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			zealous = medium_stress_loss
 			patient = minor_stress_loss
 			cynical = medium_stress_gain
@@ -161,8 +161,7 @@ bp2_yearly.4001 = {
 		any_memory = {
 			memory_type = relative_died
 			any_memory_participant = {
-				exists = this.killer
-				killer = {
+				killer ?= {
 					is_imprisoned_by = root
 				}
 			}
@@ -176,7 +175,7 @@ bp2_yearly.4001 = {
 			limit = {
 				has_variable = childhood_memory
 				any_memory_participant = {
-					killer = {
+					killer ?= {
 						is_imprisoned_by = root
 					}
 				}
@@ -225,8 +224,8 @@ bp2_yearly.4001 = {
 
 		if = {
 			limit = {
-				root.faith = {
-					trait_is_virtue = vengeful
+				root.rite = {
+					trait_is_virtue_rite = vengeful
 				}
 			}
 			add_character_modifier = {
@@ -278,8 +277,8 @@ bp2_yearly.4001 = {
 
 		if = {
 			limit = {
-				root.faith = {
-					trait_is_virtue = forgiving
+				root.rite = {
+					trait_is_virtue_rite = forgiving
 				}
 			}
 			add_character_modifier = {
@@ -378,7 +377,7 @@ bp2_yearly.4002 = { #drunkard
 			modifier = drinking_stop
 			years = 5
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = major_stress_gain
 		}
 
@@ -394,7 +393,7 @@ bp2_yearly.4002 = { #drunkard
 	option = { #drink more
 		name = bp2_yearly.4002.b
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_loss
 		}
 		add_character_modifier = {
@@ -528,7 +527,7 @@ bp2_yearly.4003 = { #became a ruler at young age
 				opinion = 20
 				target = root
 			}
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				base = medium_stress_loss
 			}
 		}
@@ -552,7 +551,7 @@ bp2_yearly.4003 = { #became a ruler at young age
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = minor_stress_loss
 		}
 
@@ -584,7 +583,7 @@ bp2_yearly.4003 = { #became a ruler at young age
 				opinion = -20
 				target = root
 			}
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				base = minor_stress_gain
 			}
 		}
@@ -595,7 +594,7 @@ bp2_yearly.4003 = { #became a ruler at young age
 				add_stewardship_skill = 4
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = minor_stress_gain
 			callous = minor_stress_loss
 		}
@@ -668,7 +667,7 @@ bp2_yearly.4010 = { #child parent is at least Illustrious
 		remove_trait = humble
 		add_trait = arrogant		
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = major_stress_gain
 		}
 
@@ -870,7 +869,7 @@ bp2_yearly.4011 = { #the parent has been dead for a while
 			modifier = famed_parent_opt_out_base
 			years = 10
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_loss
 		}
 
@@ -888,7 +887,7 @@ bp2_yearly.4011 = { #the parent has been dead for a while
 			var:parent_fame_lvl <= prestige_level
 		}
 		name = bp2_yearly.4011.d
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_gain
 			ambitious = minor_stress_loss
 			arrogant = minor_stress_loss
@@ -942,7 +941,7 @@ bp2_yearly.4012 = { #prestige vibe check
 		}
 		name = bp2_yearly.4012.a
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_gain
 			ambitious = minor_stress_gain
 			arrogant = minor_stress_gain
@@ -995,7 +994,7 @@ bp2_yearly.4012 = { #prestige vibe check
 		}
 		name = bp2_yearly.4012.c
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_loss
 			ambitious = medium_stress_gain
 			arrogant = medium_stress_gain
@@ -1020,7 +1019,7 @@ bp2_yearly.4012 = { #prestige vibe check
 		}
 		name = bp2_yearly.4012.d
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_gain
 			ambitious = minor_stress_loss
 			arrogant = minor_stress_loss
@@ -1099,7 +1098,7 @@ bp2_yearly.4013 = { #conclusion
 			var:parent_fame_lvl > prestige_level
 		}
 		name = bp2_yearly.4013.a
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_gain
 			ambitious = medium_stress_gain
 			arrogant = medium_stress_gain
@@ -1115,7 +1114,7 @@ bp2_yearly.4013 = { #conclusion
 			var:parent_fame_lvl <= prestige_level
 		}
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_loss
 			ambitious = major_stress_gain
 			arrogant = major_stress_gain
@@ -1149,7 +1148,7 @@ bp2_yearly.4013 = { #conclusion
 			var:parent_fame_lvl <= prestige_level
 		}
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_gain
 			ambitious = medium_stress_loss
 			arrogant = medium_stress_loss
@@ -1383,7 +1382,7 @@ bp2_yearly.4021 = { #the parent has been dead for a while
 		}
 		name = bp2_yearly.4021.c
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_loss
 		}
 
@@ -1407,7 +1406,7 @@ bp2_yearly.4021 = { #the parent has been dead for a while
 			var:parent_piety_lvl <= piety_level
 		}
 		name = bp2_yearly.4021.d
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_gain
 			ambitious = medium_stress_loss
 			zealous = medium_stress_loss
@@ -1462,7 +1461,7 @@ bp2_yearly.4022 = { #piety vibe check
 		}
 		name = bp2_yearly.4022.a
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_gain
 			ambitious = minor_stress_gain
 			zealous = minor_stress_gain
@@ -1517,7 +1516,7 @@ bp2_yearly.4022 = { #piety vibe check
 		}
 		name = bp2_yearly.4022.c
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_loss
 			ambitious = major_stress_gain
 			zealous = major_stress_gain
@@ -1543,7 +1542,7 @@ bp2_yearly.4022 = { #piety vibe check
 		}
 		name = bp2_yearly.4022.d
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_gain
 			ambitious = minor_stress_loss
 			zealous = minor_stress_loss
@@ -1623,7 +1622,7 @@ bp2_yearly.4023 = { #conclusion
 			var:parent_piety_lvl > piety_level
 		}
 		name = bp2_yearly.4023.a
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_gain
 			ambitious = minor_stress_gain
 			zealous = minor_stress_gain
@@ -1639,7 +1638,7 @@ bp2_yearly.4023 = { #conclusion
 			var:parent_piety_lvl <= piety_level
 		}
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_loss
 			ambitious = medium_stress_gain
 			zealous = medium_stress_gain
@@ -1674,7 +1673,7 @@ bp2_yearly.4023 = { #conclusion
 			var:parent_piety_lvl <= piety_level
 		}
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_gain
 			ambitious = medium_stress_loss
 			zealous = medium_stress_loss
@@ -1764,7 +1763,7 @@ bp2_yearly.4030 = { #While commanding army in winter province, you are struck wi
 			years = 4
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_loss
 			shy = medium_stress_loss
 		}
@@ -1785,7 +1784,7 @@ bp2_yearly.4030 = { #While commanding army in winter province, you are struck wi
 			years = 4
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			shy = minor_stress_gain
 			brave = minor_stress_loss
 		}
@@ -1927,7 +1926,7 @@ bp2_yearly.4031 = { #you where imprisoned as a child, and guess what? You are im
 
 		custom_tooltip = bp2_yearly.4031.a.ct
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			brave = minor_stress_loss
 			stubborn = minor_stress_loss
 			impatient = minor_stress_loss
@@ -1953,7 +1952,7 @@ bp2_yearly.4031 = { #you where imprisoned as a child, and guess what? You are im
 			years = 10
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			patient = minor_stress_loss
 			craven = minor_stress_loss
 			trusting = minor_stress_loss
@@ -2027,7 +2026,7 @@ bp2_yearly.4032 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_gain
 		}
 
@@ -2049,7 +2048,7 @@ bp2_yearly.4032 = {
 				years = 8
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_loss
 		}
 		ai_chance = {

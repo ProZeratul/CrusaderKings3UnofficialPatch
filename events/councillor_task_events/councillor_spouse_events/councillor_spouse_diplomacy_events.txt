@@ -1361,8 +1361,8 @@ councillor_spouse_diplomacy.2002 = {
 							limit = { #Unop: Ensure they do not already have the relation
 								NOT = { has_relation_crush = scope:vassal_heir_1 }
 							}
- 							set_relation_crush = scope:vassal_heir_1
- 						}
+							set_relation_crush = scope:vassal_heir_1
+						}
 					}
 				}
 			}
@@ -1612,7 +1612,7 @@ councillor_spouse_diplomacy.2003 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			vengeful = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -1660,7 +1660,7 @@ councillor_spouse_diplomacy.2003 = {
 				opinion = -20
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -1730,7 +1730,6 @@ scripted_trigger councillor_spouse_diplomacy_2004_claimant_trigger = {
 }
 
 scripted_trigger councillor_spouse_diplomacy_2004_title_trigger = {
-	exists = this
 	holder ?= {
 		is_ai = yes
 		root = {
@@ -1875,7 +1874,7 @@ councillor_spouse_diplomacy.2004 = {
 			target = scope:current_holder
 			type = favor_hook
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_gain
 			just = medium_stress_impact_gain
 		}

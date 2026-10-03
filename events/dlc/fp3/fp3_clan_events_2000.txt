@@ -270,7 +270,7 @@ clan_event.2000 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			impatient = medium_stress_impact_gain
 			arbitrary = major_stress_impact_gain
 			arrogant = medium_stress_impact_gain
@@ -323,7 +323,7 @@ clan_event.2000 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			forgiving = medium_stress_impact_gain
 			compassionate = major_stress_impact_gain
 		}
@@ -377,7 +377,7 @@ clan_event.2000 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			lazy = medium_stress_impact_gain
 		}
 
@@ -445,7 +445,7 @@ clan_event.2000 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = major_stress_impact_gain
 			trusting = major_stress_impact_gain
 		}
@@ -499,7 +499,7 @@ clan_event.2000 = {
 			add_piety = miniscule_piety_gain
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			zealous = medium_stress_impact_loss
 			cynical = major_stress_impact_gain
 		}
@@ -546,7 +546,7 @@ clan_event.2000 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = minor_stress_impact_loss
 			just = major_stress_impact_gain
 			generous = major_stress_impact_gain
@@ -581,7 +581,7 @@ clan_event.2000 = {
 			add_prestige = medium_prestige_gain
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = medium_stress_impact_loss
 			humble = major_stress_impact_gain
 		}
@@ -864,7 +864,7 @@ clan_event.2001 = {
 				}
 			}
 
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				base = massive_stress_impact_gain
 			}
 		}
@@ -877,7 +877,7 @@ clan_event.2001 = {
 
 		add_prestige = medium_prestige_loss
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			patient = medium_stress_impact_gain
 			just = medium_stress_impact_gain
 			compassionate = major_stress_impact_gain
@@ -1070,7 +1070,7 @@ clan_event.2005 = {
 			is_ai = yes
 			tax_collector_aptitude = {
 				target = clan_tax_slot
-				value <= 2
+				value <= 1
 			}
 			save_temporary_scope_as = unop_temp_bad_collector #Unop: To be use in the vassal check
 		}
@@ -1085,6 +1085,7 @@ clan_event.2005 = {
 					value >= 50
 				}
 			}
+			is_tax_collector = no
 			NOT = { has_relation_rival = root }
 			is_available_ai_adult = yes
 			government_has_flag = government_is_clan
@@ -1099,7 +1100,7 @@ clan_event.2005 = {
 				is_ai = yes
 				tax_collector_aptitude = {
 					target = clan_tax_slot
-					value <= 2
+					value <= 1
 				}
 			}
 			save_scope_as = bad_tax_collector
@@ -1116,6 +1117,7 @@ clan_event.2005 = {
 						value >= 50
 					}
 				}
+				is_tax_collector = no
 				NOT = { has_relation_rival = root }
 				is_available_ai_adult = yes
 				government_has_flag = government_is_clan
@@ -1156,14 +1158,15 @@ clan_event.2005 = {
 			template = administrator_character
 			employer = scope:loyal_vassal
 			faith = scope:loyal_vassal.faith
+			rite = scope:loyal_vassal.rite
 			culture = scope:loyal_vassal.culture
 			gender_female_chance = {
 				if = {
-					limit = { root.faith = { has_doctrine = doctrine_gender_male_dominated } }
+					limit = { root.rite = { rite_has_doctrine = doctrine_gender_male_dominated } }
 					add = 0
 				}
 				else_if = {
-					limit = { root.faith = { has_doctrine = doctrine_gender_female_dominated } }
+					limit = { root.rite = { rite_has_doctrine = doctrine_gender_female_dominated } }
 					add = 100
 				}
 				else = {
@@ -1256,7 +1259,7 @@ clan_event.2005 = {
 		scope:bad_tax_collector = {
 			add_stewardship_skill = 1
 
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				base = massive_stress_impact_gain
 			}
 		}
@@ -1371,7 +1374,7 @@ clan_event.2007 = {
 			add_stewardship_lifestyle_xp = medium_lifestyle_xp
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			stubborn = medium_stress_impact_gain
 			paranoid = medium_stress_impact_gain
 		}
@@ -1427,12 +1430,12 @@ clan_event.2007 = {
 					title = clan_event.2007.failure
 					left_icon = root
 					add_prestige = medium_prestige_loss
-					stress_impact = { base = major_stress_impact_gain }
+					stress_and_fulfillment_impact = { base = major_stress_impact_gain }
 				}
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			lazy = major_stress_impact_gain
 			impatient = medium_stress_impact_gain
 		}

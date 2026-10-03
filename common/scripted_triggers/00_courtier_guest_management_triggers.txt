@@ -320,13 +320,13 @@ guest_allowed_to_arrive_trigger = {
 	#Isn't too good for host
 	NAND = {
 		OR = {
-			any_claim = { tier = tier_empire }
-			any_close_family_member = { highest_held_title_tier = tier_empire }
+			any_claim = { tier >= tier_empire }
+			any_close_family_member = { highest_held_title_tier >= tier_empire }
 		}
 		$HOST$ = { highest_held_title_tier <= tier_county }
 	}
 
-	#Unop Prevent paiza merchants from arriving as guests
+	# Prevent paiza merchants from arriving as guests
 	NOT = { has_variable = merchant_var }
 } #Note: this trigger used to contain opinion triggers but then some awful rulers could never get guests because everyone hates them
 
@@ -397,38 +397,38 @@ can_recruit_character_to_court_trigger = {
 			trigger_if = {
 				limit = { exists = host }
 				OR = { #Unop: Block recruiting an employed character (vanilla missing OR made this an unsatisfiable AND)
-					#Are they employed?
-					is_councillor_of = scope:recruitee.host
-					is_knight_of = scope:recruitee.host
-					any_relation = {
-						type = ward
-						OR = {
-							this = scope:recruitee.host
-							is_close_family_of = scope:recruitee.host
-						}
+				#Are they employed?
+				is_councillor_of = scope:recruitee.host
+				is_knight_of = scope:recruitee.host
+				any_relation = {
+					type = ward
+					OR = {
+						this = scope:recruitee.host
+						is_close_family_of = scope:recruitee.host
 					}
-					any_relation = {
-						type = guardian
-						OR = {
-							this = scope:recruitee.host
-							is_close_family_of = scope:recruitee.host
-						}
+				}
+				any_relation = {
+					type = guardian
+					OR = {
+						this = scope:recruitee.host
+						is_close_family_of = scope:recruitee.host
 					}
-					any_relation = {
-						type = mentor
-						OR = {
-							this = scope:recruitee.host
-							is_close_family_of = scope:recruitee.host
-						}
+				}
+				any_relation = {
+					type = mentor
+					OR = {
+						this = scope:recruitee.host
+						is_close_family_of = scope:recruitee.host
 					}
-					any_relation = {
-						type = student
-						OR = {
-							this = scope:recruitee.host
-							is_close_family_of = scope:recruitee.host
-						}
+				}
+				any_relation = {
+					type = student
+					OR = {
+						this = scope:recruitee.host
+						is_close_family_of = scope:recruitee.host
 					}
-					any_court_position_employer = { this = scope:recruitee.host }
+				}
+				any_court_position_employer = { this = scope:recruitee.host }
 				}
 			}
 			trigger_if = {
@@ -563,8 +563,13 @@ can_recruit_character_to_court_trigger = {
 					}
 				}
 			}
-			#Unop Disable Invite to Court for paiza merchants
-			has_variable = merchant_var
+			custom_description = {
+				text = "is_paiza_merchant"
+				subject = scope:recruitee
+				scope:recruitee = {
+					has_variable = merchant_var
+				}
+			}
 		}
 	}
 }
@@ -594,7 +599,7 @@ useful_courtier_or_guest_claim_trigger = {
 	#The higher tier the ruler has, the longer distance is acceptable
 	#We prefer to measure against the title's province, but if there is none, check its holder
 	trigger_if = {
-		limit = { $RULER$ = { highest_held_title_tier = tier_empire } }
+		limit = { $RULER$ = { highest_held_title_tier >= tier_empire } }
 		trigger_if = {
 			limit = { exists = title_province }
 			title_province = { squared_distance = { target = $RULER$.capital_province value <= squared_distance_almost_massive } }
@@ -798,7 +803,6 @@ pool_character_is_pruneable_trigger = {
 			is_ai = no
 		}
 		has_character_flag = easteregg
-		#Unop Prevent pruning paiza merchants
 		has_variable = merchant_var
 	}
 	trigger_if = {
@@ -846,11 +850,11 @@ guest_herder_candidate_trigger = {
 	government_has_flag = government_is_herder
 	has_trait = lifestyle_seasoned_pastor
 	trigger_if = {
-		limit = { root.faith = { has_doctrine = doctrine_gender_male_dominated } }
+		limit = { root.rite = { rite_has_doctrine = doctrine_gender_male_dominated } }
 		is_male = yes
 	}
 	trigger_if = {
-		limit = { root.faith = { has_doctrine = doctrine_gender_female_dominated } }
+		limit = { root.rite = { rite_has_doctrine = doctrine_gender_female_dominated } }
 		is_female = yes
 	}
 	age < 45

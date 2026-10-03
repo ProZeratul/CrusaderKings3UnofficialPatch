@@ -244,12 +244,12 @@ keeper_of_the_harem_court_position_task_select_palace_beauties = {
 		}
 	}
 
-	on_yearly = {	#Unop: Making it the same to the original loc description and reducing the rates of new concubines.
+	on_yearly = {
 		scope:liege = {
 			if = {
 				limit = {
 					number_of_fertile_concubines < max_number_of_concubines
-					any_concubine = {	#Unop: changing to concubine from consorts
+					any_concubine = {
 						is_ai = yes
 						is_designated_diarch = no
 						OR = {
@@ -263,9 +263,7 @@ keeper_of_the_harem_court_position_task_select_palace_beauties = {
 							}
 						}
 						NOR = {
-							any_child = {
-								exists = this #Unop exists = yes doesn't work
-							}
+							any_child = {}
 							has_relation_best_friend = scope:liege
 							has_relation_friend = scope:liege
 							has_relation_lover = scope:liege
@@ -273,9 +271,9 @@ keeper_of_the_harem_court_position_task_select_palace_beauties = {
 						}
 					}
 				}
-				random_concubine = {	#Unop: changing to concubine from consorts
-					limit = {			#Unop: reworking the block, so it respects previous limits.
-						is_ai = yes
+				random_concubine = {
+					limit = {
+						is_ai = yes #Unop: Respect the previous limits
 						is_designated_diarch = no
 						OR = {
 							AND = {
@@ -288,9 +286,7 @@ keeper_of_the_harem_court_position_task_select_palace_beauties = {
 							}
 						}
 						NOR = {
-							any_child = {
-								exists = this #Unop exists = yes doesn't work
-							}
+							any_child = {}
 							has_relation_best_friend = scope:liege
 							has_relation_friend = scope:liege
 							has_relation_lover = scope:liege

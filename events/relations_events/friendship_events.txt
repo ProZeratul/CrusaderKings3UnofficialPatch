@@ -196,24 +196,20 @@ friendship.0003 = {
 
 	trigger = {
 		is_adult = yes
-		is_eunuch_trigger = no
 		NOR = {
 			has_trait = celibate
 			has_character_flag = had_potential_lover_event_flag
 			has_character_flag = might_develop_romance_with_friend
 		}
+		might_cheat_on_every_partner_trigger = yes
 		any_relation = {
 			type = friend
-			is_adult = yes
-			is_eunuch_trigger = no
+			can_set_relation_lover_trigger = { CHARACTER = root }
 			NOR = {
 				has_trait = celibate
 				#Is not currently involved in another budding romance
 				has_character_flag = might_develop_romance_with_friend
-				any_relation = {
-					type = lover
-					this = root
-				}
+				
 			}
 			#Friends must like each other a lot
 			opinion = {
@@ -224,9 +220,6 @@ friendship.0003 = {
 				target = root
 				value > 50
 			}
-			#Must have matching gender/sexualities
-			save_temporary_scope_as = sexuality_check_friend
-			matching_gender_and_sexuality_trigger = { CHARACTER_1 = root CHARACTER_2 = scope:sexuality_check_friend }
 		}
 	}
 
@@ -235,15 +228,12 @@ friendship.0003 = {
 		random_relation = {
 			type = friend
 			limit = {
-				is_eunuch_trigger = no
+				can_set_relation_lover_trigger = { CHARACTER = root }
+				might_cheat_on_every_partner_trigger = yes
 				NOR = {
+					has_trait = celibate
 					is_close_family_of = root
 					has_character_flag = might_develop_romance_with_friend
-					has_trait = celibate
-					any_relation = {
-						type = lover
-						this = root
-					}
 				}
 				opinion = {
 					target = root
@@ -253,19 +243,12 @@ friendship.0003 = {
 					target = root
 					value > 50
 				}
-				#Must have matching gender/sexualities
-				save_temporary_scope_as = sexuality_check_friend
-				matching_gender_and_sexuality_trigger = { CHARACTER_1 = root CHARACTER_2 = scope:sexuality_check_friend }
 			}
 			alternative_limit = {
-				is_eunuch_trigger = no
+				can_set_relation_lover_trigger = { CHARACTER = root }
 				NOR = {
-					has_character_flag = might_develop_romance_with_friend
 					has_trait = celibate
-					any_relation = {
-						type = lover
-						this = root
-					}
+					has_character_flag = might_develop_romance_with_friend
 				}
 				opinion = {
 					target = root
@@ -275,9 +258,6 @@ friendship.0003 = {
 					target = root
 					value > 50
 				}
-				#Must have matching gender/sexualities
-				save_temporary_scope_as = sexuality_check_friend
-				matching_gender_and_sexuality_trigger = { CHARACTER_1 = root CHARACTER_2 = scope:sexuality_check_friend }
 			}
 			save_scope_as = friend_as_potential_lover
 		}
@@ -297,7 +277,7 @@ friendship.0003 = {
 		}
 		custom_tooltip = friendship.0003.goes_for_it_tooltip
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			chaste = major_stress_impact_gain
 			content = medium_stress_impact_gain
 		}
@@ -325,7 +305,7 @@ friendship.0003 = {
 	option = { #No, we're just friends
 		name = friendship.0003.b
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			lustful = major_stress_impact_gain
 		}
 		ai_chance = {
@@ -362,6 +342,9 @@ friendship.0004 = {
 
 	option = { #There is something more to our relationship
 		name = friendship.0004.a
+		trigger = {
+			might_cheat_on_every_partner_trigger = yes
+		}
 		hidden_effect = {
 			add_character_flag = might_develop_romance_with_friend
 			scope:first_friend = {
@@ -373,7 +356,7 @@ friendship.0004 = {
 		}
 		custom_tooltip = friendship.0004.goes_for_it_tooltip
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			chaste = major_stress_impact_gain
 		}
 		ai_chance = {
@@ -398,7 +381,7 @@ friendship.0004 = {
 		name = friendship.0004.b
 		scope:first_friend = { trigger_event = friendship.0005 }
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			lustful = major_stress_impact_gain
 		}
 		ai_chance = {
@@ -436,7 +419,7 @@ friendship.0005 = {
 
 	option = { #Try to get over it
 		name = friendship.0005.a
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = medium_stress_impact_loss
 		}
 	}
@@ -655,7 +638,7 @@ friendship.0010 = { #by Mathilda Bjarnehed
 
 		add_stress = medium_stress_gain
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			shy = minor_stress_impact_gain
 			content = minor_stress_impact_gain
 			callous = minor_stress_impact_gain
@@ -765,7 +748,7 @@ friendship.0010 = { #by Mathilda Bjarnehed
 			scope:best_friend = { trigger_event = friendship.0011 }
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = medium_stress_impact_gain
 			compassionate = medium_stress_impact_gain
 			generous = minor_stress_impact_gain
@@ -785,7 +768,6 @@ friendship.0011 = { #by Mathilda Bjarnehed
 	title = friendship.0011.t
 	desc = friendship.0011.desc
 	theme = friend_relation
-	#theme = unfriendly # Unop: Duplicated just above
 	left_portrait = {
 		character = scope:other_best_friend
 		animation = sadness
@@ -799,7 +781,7 @@ friendship.0011 = { #by Mathilda Bjarnehed
 	option = {
 		name = friendship.0011.a
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = medium_stress_impact_gain
 			compassionate = medium_stress_impact_gain
 		}
@@ -1023,7 +1005,7 @@ friendship.0018 = {
 				has_trait = diplomat
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = major_stress_gain
 		}
 	}
@@ -1160,14 +1142,14 @@ friendship.1001 = {
 				scope:friend_gift_target = {
 					trigger_event = friendship.1002
 				}
-				stress_impact = {
+				stress_and_fulfillment_impact = {
 					base = minor_stress_impact_loss
 					greedy = medium_stress_impact_gain
 				}
 			}
 			50 = { #stag
 				trigger = {
-					scope:friend_gift_target = { is_landed_or_landless_administrative = yes }
+					scope:friend_gift_target = { is_landed_or_landless_administrative_or_theocratic = yes }
 				}
 				scope:friend_gift_target = {
 					trigger_event = friendship.1003
@@ -1428,7 +1410,7 @@ friendship.1006 = {
 				target = scope:friend
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			generous = massive_stress_impact_gain
 			compassionate = medium_stress_impact_gain
@@ -1566,7 +1548,7 @@ friendship.1009 = {
 				target = scope:first_friend
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			paranoid = major_stress_impact_gain
 		}
 		ai_chance = {
@@ -1587,7 +1569,7 @@ friendship.1009 = {
 				target = root
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = minor_stress_impact_gain
 			greedy = minor_stress_impact_gain
 		}
@@ -1704,7 +1686,7 @@ friendship.2001 = {
 				trigger_event = friendship.2002
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			paranoid = major_stress_impact_gain
 			deceitful = minor_stress_impact_gain
 		}
@@ -1719,7 +1701,7 @@ friendship.2001 = {
 
 	option = {
 		name = friendship.2001.b
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			contrite = major_stress_impact_gain
 		}
@@ -1868,7 +1850,7 @@ friendship.2002 = {
 			}
 		}
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			paranoid = major_stress_impact_gain
 			deceitful = medium_stress_impact_gain
 		}
@@ -2017,7 +1999,7 @@ friendship.2004 = {
 				trigger_event = friendship.2005
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			paranoid = major_stress_impact_gain
 			deceitful = minor_stress_impact_gain
 		}
@@ -2032,7 +2014,7 @@ friendship.2004 = {
 
 	option = {
 		name = friendship.2001.b
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			contrite = major_stress_impact_gain
 		}
@@ -2169,7 +2151,7 @@ friendship.2005 = {
 			}
 		}
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			paranoid = major_stress_impact_gain
 			deceitful = medium_stress_impact_gain
 		}
@@ -2228,14 +2210,13 @@ friendship.2006 = {
 scripted_trigger friendship_2007_liege_trigger = {
 	is_available_ai = yes
 	AND = {
-		exists = this.liege
-		reverse_opinion = {
-			target = this.liege
-			value < 10
-		}
-		this.liege = {
+		liege ?= {
 			this != prev
 			this != root
+		}
+		reverse_opinion = {
+			target = liege
+			value < 10
 		}
 	}
 }
@@ -2442,7 +2423,7 @@ friendship.2007 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			shy = medium_stress_impact_gain
 			arrogant = minor_stress_impact_gain
 			callous = minor_stress_impact_gain
@@ -2464,7 +2445,7 @@ friendship.2007 = {
 
 	option = { #No
 		name = friendship.2007.b
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = minor_stress_impact_gain
 			gregarious = minor_stress_impact_gain
 			trusting = minor_stress_impact_gain
@@ -2872,7 +2853,7 @@ friendship.3006 = {
 				target = scope:friend_on_council
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = minor_stress_impact_gain
 			trusting = minor_stress_impact_gain
 			humble = minor_stress_impact_gain
@@ -2896,7 +2877,7 @@ friendship.3006 = {
 				target = root
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			greedy = minor_stress_impact_gain
 			ambitious = minor_stress_impact_gain
@@ -3011,18 +2992,18 @@ friendship.3007 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					OR = {
-					has_character_flag = minor_stress_reduction_flag
-					has_character_flag = medium_stress_reduction_flag
+					has_variable = {
+						name = minor_stress_reduction_flag
+						name = medium_stress_reduction_flag
 					}
 				}
 				desc = friendship.3007.end_chill
 			}
 			triggered_desc = {
 				trigger = {
-					OR = {
-					has_character_flag = major_stress_reduction_flag
-					has_character_flag = massive_stress_reduction_flag
+					has_variable = {
+						name = major_stress_reduction_flag
+						name = massive_stress_reduction_flag
 					}
 				}			
 				desc = friendship.3007.end_severe
@@ -3087,7 +3068,7 @@ friendship.3007 = {
 		trigger = {
 			has_character_flag = major_stress_reduction_flag
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = major_stress_loss
 		}
 		remove_character_flag = major_stress_reduction_flag
@@ -3098,7 +3079,7 @@ friendship.3007 = {
 		trigger = {
 			has_character_flag = medium_stress_reduction_flag
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_loss
 		}
 		remove_character_flag = medium_stress_reduction_flag
@@ -3110,7 +3091,7 @@ friendship.3007 = {
 			has_character_flag = minor_stress_reduction_flag
 		}
 		fallback = yes
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_loss
 		}
 		remove_character_flag = minor_stress_reduction_flag
@@ -3121,7 +3102,7 @@ friendship.3007 = {
 		trigger = {
 			has_character_flag = massive_stress_reduction_flag
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = massive_stress_loss
 		}
 		remove_character_flag = massive_stress_reduction_flag

@@ -92,16 +92,10 @@ festival_romance = {
 			save_temporary_scope_as = first_lover_temp
 		}
 		any_attending_character = {
-			this != scope:first_lover_temp
+			can_set_relation_lover_trigger = { CHARACTER = scope:first_lover_temp }
 			might_cheat_on_every_partner_trigger = yes
-			NOT = { has_relation_lover = scope:first_lover_temp }
 			num_of_relation_lover < 2
 			is_physically_able_ai_adult = yes
-			save_temporary_scope_as = second_lover_temp
-			matching_gender_and_sexuality_trigger = {
-				CHARACTER_1 = scope:second_lover_temp
-				CHARACTER_2 = scope:first_lover_temp
-			}
 		}
 	}
 
@@ -116,16 +110,10 @@ festival_romance = {
 				save_temporary_scope_as = first_lover_temp
 				scope:activity = {
 					any_attending_character = {
-						this != scope:first_lover_temp
+						can_set_relation_lover_trigger = { CHARACTER = scope:first_lover_temp }
 						might_cheat_on_every_partner_trigger = yes
-						NOT = { has_relation_lover = scope:first_lover_temp }
 						num_of_relation_lover < 2
 						is_physically_able_ai_adult = yes
-						save_temporary_scope_as = second_lover_temp
-						matching_gender_and_sexuality_trigger = {
-							CHARACTER_1 = scope:second_lover_temp
-							CHARACTER_2 = scope:first_lover_temp
-						}
 					}
 				}
 			}
@@ -133,16 +121,10 @@ festival_romance = {
 		}
 		random_attending_character = {
 			limit = {
-				this != scope:first
+				can_set_relation_lover_trigger = { CHARACTER = scope:first }
 				might_cheat_on_every_partner_trigger = yes
-				NOT = { has_relation_lover = scope:first }
 				num_of_relation_lover < 2
 				is_physically_able_ai_adult = yes
-				save_temporary_scope_as = second_lover_temp
-				matching_gender_and_sexuality_trigger = {
-					CHARACTER_1 = scope:second_lover_temp
-					CHARACTER_2 = scope:first
-				}
 			}
 			weight = {
 				base = 1

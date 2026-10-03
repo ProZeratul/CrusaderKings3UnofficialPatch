@@ -168,7 +168,7 @@ travel_danger_events.6000 = { #Animal attack
 	}
 
 	trigger = {
-		is_available_travelling_adult = yes #Unop Ensure traveling and available character
+		is_available_travelling_adult = yes
 		is_location_valid_for_travel_event_on_land = yes
 		exists = current_travel_plan.next_destination_province
 		location = {
@@ -261,7 +261,7 @@ travel_danger_events.6000 = { #Animal attack
 			}
 		}
 		save_scope_as = fighter
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			craven = medium_stress_gain
 		}
 		travel_danger_events_6000_beast_duel_effect = { FIGHTER = root }
@@ -296,7 +296,7 @@ travel_danger_events.6000 = { #Animal attack
 		}
 		trigger = { scope:beast_victim ?= { is_adult = yes } }
 		travel_danger_events_6000_beast_duel_effect = { FIGHTER = scope:beast_victim }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_gain
 			brave = minor_stress_impact_gain
 		}
@@ -312,10 +312,10 @@ travel_danger_events.6000 = { #Animal attack
 	option = { #Run!
 		name = travel_danger_events.6000.c
 		add_prestige = minor_prestige_loss
-		current_travel_plan ?= { #Unop Handle non-existing scope
+		current_travel_plan ?= { 
 			delay_travel_plan = { days = 10 }
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			brave = medium_stress_impact_gain
 			craven = minor_stress_impact_loss
 		}
@@ -357,7 +357,7 @@ travel_danger_events.6000 = { #Animal attack
 }
 
 scripted_effect travel_danger_events_6010_imprison_effect = {
-	$TARGET$.current_travel_plan = { 
+	$TARGET$.current_travel_plan ?= { 
 		if = {
 			limit = { can_cancel = yes }
 			cancel_travel_plan = yes
@@ -479,7 +479,7 @@ travel_danger_events.6010 = { #Siege
 	cooldown = { months = 1 }
 
 	trigger = {
-		is_available_travelling_adult = yes #Unop Ensure traveling and available character
+		is_available_travelling_adult = yes
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
 			exists = province_owner
@@ -555,6 +555,7 @@ travel_danger_events.6010 = { #Siege
 			template = bandit_character
 			culture = scope:siege_owner.culture
 			faith = scope:siege_owner.faith
+			rite = scope:siege_owner.rite
 			location = root.location
 			dynasty = none
 			save_scope_as = soldier
@@ -599,7 +600,7 @@ travel_danger_events.6010 = { #Siege
 				else = { remove_short_term_gold = minor_gold_value }
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = minor_stress_impact_gain
 			brave = minor_stress_impact_gain
 		}
@@ -708,7 +709,7 @@ travel_danger_events.6010 = { #Siege
 				else = { remove_short_term_gold = minor_gold_value }
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_gain
 			brave = minor_stress_impact_gain
 		}
@@ -812,7 +813,7 @@ travel_danger_events.6010 = { #Siege
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			craven = medium_stress_impact_gain
 			lazy = minor_stress_impact_gain
 		}
@@ -835,7 +836,7 @@ travel_danger_events.6010 = { #Siege
 			CHAR_TO_ADD = scope:soldier 
 			NEW_COURT_OWNER = root 
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			brave = minor_stress_impact_gain
 			arrogant = minor_stress_impact_gain
@@ -938,7 +939,7 @@ travel_danger_events.6011 = { #Battal
 	cooldown = { months = 1 }
 
 	trigger = {
-		is_available_travelling_adult = yes #Unop Ensure traveling and available character
+		is_available_travelling_adult = yes
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
 			exists = province_owner
@@ -1087,7 +1088,7 @@ travel_danger_events.6011 = { #Battal
 				else = { remove_short_term_gold = minor_gold_value }
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = minor_stress_impact_gain
 			brave = minor_stress_impact_gain
 		}
@@ -1224,7 +1225,7 @@ travel_danger_events.6011 = { #Battal
 				else = { remove_short_term_gold = minor_gold_value }
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_gain
 			brave = minor_stress_impact_gain
 		}
@@ -1328,7 +1329,7 @@ travel_danger_events.6011 = { #Battal
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			craven = medium_stress_impact_gain
 			lazy = minor_stress_impact_gain
 		}
@@ -1351,7 +1352,7 @@ travel_danger_events.6011 = { #Battal
 			CHAR_TO_ADD = scope:soldier 
 			NEW_COURT_OWNER = root 
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			brave = minor_stress_impact_gain
 			arrogant = minor_stress_impact_gain
@@ -1440,7 +1441,7 @@ travel_danger_events.6012 = { #Army
 	cooldown = { months = 1 }
 
 	trigger = {
-		is_available_travelling_adult = yes #Unop Ensure traveling and available character
+		is_available_travelling_adult = yes
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
 			exists = province_owner
@@ -1502,6 +1503,7 @@ travel_danger_events.6012 = { #Army
 			dynasty = none
 			culture = scope:army_owner.culture
 			faith = scope:army_owner.faith
+			rite = scope:army_owner.rite
 			location = root.location
 			save_scope_as = soldier
 		}
@@ -1545,7 +1547,7 @@ travel_danger_events.6012 = { #Army
 				else = { remove_short_term_gold = minor_gold_value }
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = minor_stress_impact_gain
 			brave = minor_stress_impact_gain
 		}
@@ -1641,7 +1643,7 @@ travel_danger_events.6012 = { #Army
 				else = { remove_short_term_gold = minor_gold_value }
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_gain
 			brave = minor_stress_impact_gain
 		}
@@ -1703,7 +1705,7 @@ travel_danger_events.6012 = { #Army
 				else = { remove_short_term_gold = minor_gold_value }
 				if = {
 					limit = {
-						current_travel_plan = { 
+						current_travel_plan ?= { 
 							any_entourage_character = {
 								is_adult = yes
 							}
@@ -1747,7 +1749,7 @@ travel_danger_events.6012 = { #Army
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			craven = medium_stress_impact_gain
 			lazy = minor_stress_impact_gain
 		}
@@ -1770,7 +1772,7 @@ travel_danger_events.6012 = { #Army
 			CHAR_TO_ADD = scope:soldier 
 			NEW_COURT_OWNER = root 
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			brave = minor_stress_impact_gain
 			arrogant = minor_stress_impact_gain
@@ -1847,7 +1849,7 @@ travel_danger_events.6013 = { #Occupation
 	cooldown = { months = 1 }
 
 	trigger = {
-		is_available_travelling_adult = yes #Unop Ensure traveling and available character
+		is_available_travelling_adult = yes
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
 			exists = province_owner
@@ -1900,6 +1902,7 @@ travel_danger_events.6013 = { #Occupation
 			dynasty = none
 			culture = scope:occupy_owner.culture
 			faith = scope:occupy_owner.faith
+			rite = scope:occupy_owner.rite
 			location = root.location
 			save_scope_as = soldier
 		}
@@ -1943,7 +1946,7 @@ travel_danger_events.6013 = { #Occupation
 				else = { remove_short_term_gold = minor_gold_value }
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = minor_stress_impact_gain
 			brave = minor_stress_impact_gain
 		}
@@ -2035,7 +2038,7 @@ travel_danger_events.6013 = { #Occupation
 				else = { remove_short_term_gold = minor_gold_value }
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_gain
 			brave = minor_stress_impact_gain
 		}
@@ -2141,7 +2144,7 @@ travel_danger_events.6013 = { #Occupation
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			craven = medium_stress_impact_gain
 			lazy = minor_stress_impact_gain
 		}
@@ -2164,7 +2167,7 @@ travel_danger_events.6013 = { #Occupation
 			CHAR_TO_ADD = scope:soldier 
 			NEW_COURT_OWNER = root 
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			brave = minor_stress_impact_gain
 			arrogant = minor_stress_impact_gain
@@ -2248,7 +2251,7 @@ travel_danger_events.6020 = { #Craig
 	cooldown = { months = 1 }
 
 	trigger = {
-		is_available_travelling_adult = yes #Unop Ensure traveling and available character
+		is_available_travelling_adult = yes
 		current_travel_plan.days_travelled >= 15
 		location = {
 			OR = {
@@ -2383,7 +2386,7 @@ travel_danger_events.6030 = { #Spoiled food
 	cooldown = { months = 6 }
 
 	trigger = {
-		is_available_travelling_adult = yes #Unop Ensure traveling and available character
+		is_available_travelling_adult = yes
 		current_travel_plan.days_travelled >= 15
 		is_adult = yes
 		current_travel_plan = {
@@ -3004,7 +3007,7 @@ travel_danger_events.6030 = { #Spoiled food
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = minor_stress_impact_gain
 			generous = minor_stress_impact_gain
 		}
@@ -3077,7 +3080,7 @@ travel_danger_events.6040 = { #Disease
 	cooldown = { months = 6 }
 
 	trigger = {
-		is_available_travelling_adult = yes #Unop Ensure traveling and available character
+		is_available_travelling_adult = yes
 		current_travel_plan.days_travelled >= 15
 		is_adult = yes
 		is_healthy = yes
@@ -3152,18 +3155,20 @@ travel_danger_events.6040 = { #Disease
 		switch = {
 			trigger = exists
 			scope:ill = {
-				contract_disease_effect = { DISEASE = ill TREATMENT_EVENT = no } #Unop: Changed to no since it's actually option B
+				contract_disease_effect = { DISEASE = ill TREATMENT_EVENT = no }
 			}
 			scope:typhus = {
-				contract_disease_effect = { DISEASE = typhus TREATMENT_EVENT = no } #Unop: Changed to no since it's actually option B
+				contract_disease_effect = { DISEASE = typhus TREATMENT_EVENT = no }
 			}
 			scope:consumption = {
-				contract_disease_effect = { DISEASE = consumption TREATMENT_EVENT = no } #Unop: Changed to no since it's actually option B
+				contract_disease_effect = { DISEASE = consumption TREATMENT_EVENT = no }
 			}
 			scope:smallpox = {
-				contract_disease_effect = { DISEASE = smallpox TREATMENT_EVENT = no } #Unop: Changed to no since it's actually option B
+				contract_disease_effect = { DISEASE = smallpox TREATMENT_EVENT = no }
 			}
 		}
+		# contract_disease_effect only sets scope:disease_type when they catch the disease
+		set_worst_disease_effect = yes
 	}
 
 	option = { #Go home
@@ -3171,7 +3176,7 @@ travel_danger_events.6040 = { #Disease
 		trigger = {
 			NOT = { current_travel_plan.next_destination_province = root.capital_province }
 		}
-		current_travel_plan = { 
+		current_travel_plan ?= { 
 			if = {
 				limit = { can_cancel = yes }
 				cancel_travel_plan = yes
@@ -3194,6 +3199,7 @@ travel_danger_events.6040 = { #Disease
 	option = { #Treatment
 		name = travel_danger_events.6040.b
 		trigger = {
+			exists = scope:disease_type # Nothing was contracted and no prior illness to treat
 			custom_tooltip = {
 				text = court_physician_not_employed_or_away_tt
 				court_physician_available_trigger = yes

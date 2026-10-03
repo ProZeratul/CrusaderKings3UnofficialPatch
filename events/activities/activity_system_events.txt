@@ -218,7 +218,7 @@ activity_system.0081 = {
 }
 
 # Intent Invalidated
-activity_system.0090 = {
+activity_system.0089 = {
 	type = activity_event
 	title = activity_system.0090.t
 	desc = activity_system.0090.desc
@@ -232,16 +232,32 @@ activity_system.0090 = {
 		animation = sadness
 	}
 
+	option = { 
+		name = activity_system.0090.a
+	}
+}
+
+# Intent Invalidated
+activity_system.0090 = {
+	type = character_event
+	hidden = yes
+
 	trigger = {
-		exists = scope:activity
+		OR = {
+			exists = involved_activity
+			exists = scope:activity
+		}
 	}
 
 	immediate = {
-		
-	}
-
-	option = { 
-		name = activity_system.0090.a
+		if = {
+			limit = { NOT = { exists = scope:activity } }
+			involved_activity = { save_scope_as = activity }
+		}
+		if = {
+			limit = { exists = scope:activity }
+			trigger_event = activity_system.0089
+		}
 	}
 }
 
@@ -332,7 +348,7 @@ activity_system.0100 = {
 
 	option = {
 		name = activity_system.0100.a
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			gregarious = medium_stress_impact_gain
 			charming = medium_stress_impact_gain
@@ -587,12 +603,12 @@ activity_system.0310 = {
 	trigger = {
 		exists = involved_activity
 		#No point in this event if you can't cancel the travel anyway
-		current_travel_plan = { can_cancel = yes }
+		current_travel_plan ?= { can_cancel = yes }
 	}
 
 	immediate = {
 		# Save scopes about the activity so they can be passed on to the follow-up event if needed
-		scope:target_activity.activity_host = { #Unop Use correct scope
+		scope:target_activity.activity_host = {
 			save_scope_as = target_activity_host
 		}
 		involved_activity = { save_scope_as = target_activity }
@@ -604,13 +620,14 @@ activity_system.0310 = {
 	option = { # Stay and participate 
 		# Reuses name from 0300
 		name = activity_system.0300.a
-		trigger = {
-			NOR = {
-				scope:war.primary_attacker = { this = root }
-				scope:war.primary_defender = { this = root }
-				is_a_faction_member = yes
-			}
-		}
+		# allow player stay
+		#trigger = {
+		#	NOR = {
+		#		scope:war.primary_attacker = { this = root }
+		#		scope:war.primary_defender = { this = root }
+		#		is_a_faction_member = yes
+		#	}
+		#}
 		custom_tooltip = activity_system.0310.a.tt
 		ai_chance = {
 			base = 0
@@ -618,18 +635,17 @@ activity_system.0310 = {
 	}
 
 	option = { # Leave and go home
-		trigger = { #Unop Check if travel plan can be cancelled
+		# Reuses name from 0300
+		name = activity_system.0300.b
+		trigger = {
 			current_travel_plan = {
 				can_cancel = yes
 			}
 		}
-		# Reuses name from 0300
-		name = activity_system.0300.b
-		custom_tooltip = { #Unop Use tooltip correctly
+		custom_tooltip = {
 			text =  activity_system.0310.b.tt
 			current_travel_plan = { cancel_travel_plan = yes }
 		}
-
 		ai_chance = {
 			base = 100
 		}
@@ -647,19 +663,50 @@ activity_system.0320 = {
 		character = scope:host
 		animation = grief
 	}
-	right_portrait = {
-		trigger = { #Unop: Nothing seems to set this scope :?
-			exists = scope:new_holder
-		}
-		character = scope:new_holder
-		animation = personality_callous 
-	}
 
 	immediate = {
 	}
 
 	option = {
 		name = activity_system.0320.a
+	}
+}
+
+# EC Activity Invalidated when host is no longer Christian/HoF
+activity_system.0321 = {
+	type = character_event 
+	title = activity_system.0321.t
+	desc = {
+		desc = activity_system.0321.desc.intro
+		first_valid = {
+			triggered_desc = {
+				trigger = { 
+					scope:host.religion != religion:christianity_religion
+				}
+				desc = activity_system.0321.desc.no_christian
+			}
+			desc = activity_system.0321.desc.no_hof
+		}
+	}
+	theme = realm
+
+	left_portrait = {
+		character = scope:host
+		animation = worry
+	}
+	right_portrait = {
+		character = scope:host
+		animation = stress
+	}
+
+	immediate = {
+	}
+
+	option = {
+		name = activity_system.0321.a
+		show_as_tooltip = {
+			return_home = yes
+		}
 	}
 }
 
@@ -726,8 +773,8 @@ activity_system.0331 = {
 		animation = personality_honorable
 	}
 	right_portrait = {
-		character = scope:new_host 
-		animation = personality_rational
+		character = scope:host 
+		animation = sick
 	}
 
 	immediate = {
@@ -742,6 +789,33 @@ activity_system.0331 = {
 		show_as_tooltip = {
 			return_home = yes
 		}
+	}
+}
+
+# Host (or necessary special guest) has isolated themself.
+activity_system.0340 = {
+	type = character_event
+	title = activity_system.0340.t 
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { this = scope:host }
+				desc = activity_system.0340.desc.host
+			}
+			desc = activity_system.0340.desc.guest
+		}
+	}
+	theme = realm
+
+	override_background = { reference = terrain } 
+
+	left_portrait = {
+		character = scope:host
+		animation = worry
+	}
+
+	option = {
+		name = activity_system.0340.a
 	}
 }
 
