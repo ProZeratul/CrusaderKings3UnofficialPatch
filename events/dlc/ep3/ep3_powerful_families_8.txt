@@ -1972,7 +1972,12 @@ ep3_powerful_families.8100 = {
 			}
 			liege = {
 				save_scope_as = liege
-				add_courtier = scope:cp_fam
+				if = { #Unop The family member may already be in the liege's court
+					limit = {
+						NOT = { scope:cp_fam = { is_courtier_of = scope:liege } }
+					}
+					add_courtier = scope:cp_fam
+				}
 			}
 		}
 	}

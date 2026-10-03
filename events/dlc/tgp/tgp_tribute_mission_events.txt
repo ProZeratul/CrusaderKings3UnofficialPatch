@@ -374,6 +374,10 @@ tribute_mission.0002 = {
 			add_character_flag = revisit_tribute_mission_0001
 			trigger_event = tribute_mission.9750
 		}
+		else_if = { #Unop The overlord may have died since the last travel invalidation check
+			limit = { var:tribute_mission_target_scope ?= { is_alive = no } }
+			tribute_mission_invalidation_effect = yes
+		}
 		else = { trigger_event = tribute_mission.0001 }
 	}
 }

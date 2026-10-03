@@ -762,8 +762,9 @@ imperial_examination_jay.0040 = {
 					}
 				}
 				imperial_examination_create_appropriate_examiner_effect = yes
+				scope:activity.activity_host = { add_courtier = scope:new_examiner } #Unop Like in imperial_examination_set_up_examiners_effect, needed to be able to join
 				scope:new_examiner = {
-					add_to_activity = involved_activity
+					add_to_activity = scope:activity #Unop Was involved_activity, which is the new examiner's (none)
 				}
 				add_to_guest_subset = {
 					name = imperial_examiners

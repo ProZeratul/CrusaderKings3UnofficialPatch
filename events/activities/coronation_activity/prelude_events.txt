@@ -263,10 +263,18 @@ scripted_effect prelude_events_0010_screw_over_guest_effect = {
 		}
 	}
 	else = {
-		scope:leader = {
-			create_faction = {
-				type = peasant_faction
-				target = scope:guest
+		scope:guest.capital_county ?= { #Unop Peasant factions can only be created by counties
+			if = {
+				limit = {
+					can_title_create_faction = {
+						type = peasant_faction
+						target = scope:guest
+					}
+				}
+				title_create_faction = {
+					type = peasant_faction
+					target = scope:guest
+				}
 			}
 		}
 	}

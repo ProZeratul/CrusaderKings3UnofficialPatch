@@ -2467,7 +2467,7 @@ request_legitimacy_interaction_effect = {
 				}
 				custom_tooltip = sp_ful_loss_due_to_tyranny
 			}
-			else_if = {
+			else = { #Unop Was else_if without a limit
 				custom_tooltip = sp_ful_loss_due_to_wicked
 			}
 		}
@@ -6088,7 +6088,7 @@ pam_available_negotiation_methods_tooltip_effect = {
 					}
 					pay_short_term_treasury = {
 						target = scope:recipient
-						gold = scope:recipient.pam_transfer_land_gold_value
+						treasury = scope:recipient.pam_transfer_land_gold_value #Unop Was gold, which pay_short_term_treasury doesn't support
 					}
 				}
 				else = {
@@ -6333,7 +6333,7 @@ pam_negotiate_land_gold_effect = {
 		}
 		pay_short_term_treasury = {
 			target = scope:recipient
-			gold = scope:recipient.pam_transfer_land_gold_value
+			treasury = scope:recipient.pam_transfer_land_gold_value #Unop Was gold, which pay_short_term_treasury doesn't support
 		}
 	}
 	else = {
@@ -7602,7 +7602,10 @@ pam_apply_ancestral_khachkar_effects = {
 	}
 	add_prestige = medium_prestige_value
 	add_piety = medium_piety_value
-	add_legitimacy = 100
+	if = { #Unop Not all characters have legitimacy
+		limit = { has_legitimacy = yes }
+		add_legitimacy = 100
+	}
 	remove_variable = pam_khachkar_ancestral_ancestor
 }
 
@@ -9922,7 +9925,7 @@ pam_incite_holy_war_effect = {
 					situation_top_has_catalyst = catalyst_major_holy_war_incited
 				}
 			}
-			trigger_situation_catalyst = catalyst_major_holy_war_incited
+			situation:the_christian_church = { trigger_situation_catalyst = catalyst_major_holy_war_incited } #Unop Needs a situation scope
 		}
 		else_if = {
 			limit = {
@@ -9935,9 +9938,9 @@ pam_incite_holy_war_effect = {
 					situation_top_has_catalyst = catalyst_holy_war_incited
 				}
 			}
-			trigger_situation_catalyst = catalyst_holy_war_incited
+			situation:the_christian_church = { trigger_situation_catalyst = catalyst_holy_war_incited } #Unop Needs a situation scope
 		}
-		else = {
+		else_if = { #Unop Was else with a limit
 			limit = {
 				any_character_situation = {
 					situation_type = the_christian_church
@@ -9946,7 +9949,7 @@ pam_incite_holy_war_effect = {
 					situation_top_has_catalyst = catalyst_minor_holy_war_incited
 				}
 			}
-			trigger_situation_catalyst = catalyst_minor_holy_war_incited
+			situation:the_christian_church = { trigger_situation_catalyst = catalyst_minor_holy_war_incited } #Unop Needs a situation scope
 		}
 	}
 }
@@ -12391,11 +12394,11 @@ consecrate_kingdom_effect = {
         }
         set_global_variable = {
             name = found_kingdom_decision
-            value = root
+            value = this #Unop Root is not always the new king, e.g. in pam_interactions_events
         }
         set_global_variable = {
             name = found_kingdom_decision_kingdom
-            value = root.primary_title
+            value = primary_title #Unop Root is not always the new king
         }
     }
 }

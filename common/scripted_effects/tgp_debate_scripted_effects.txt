@@ -87,9 +87,12 @@ set_debate_target_effect = {
         scope:activity.special_guest:movement_leader ?= { save_scope_as =  challenged_movement_leader }
     }
     scope:activity = {
-        set_variable = {
-            name = challenged_movement_leader
-            value = scope:challenged_movement_leader
+        if = { #Unop No movement leader may have been found above
+            limit = { exists = scope:challenged_movement_leader }
+            set_variable = {
+                name = challenged_movement_leader
+                value = scope:challenged_movement_leader
+            }
         }
         set_variable = {
             name = debate_contender

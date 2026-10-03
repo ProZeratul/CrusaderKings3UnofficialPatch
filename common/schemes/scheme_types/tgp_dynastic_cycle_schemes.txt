@@ -399,6 +399,10 @@
 					limit = {
 						scope:scheme.var:embezzlement_stake > 0
 						is_alive = yes
+						secret_siphoned_treasury_is_valid_trigger = { #Unop The secret is invalid if either side no longer has a treasury
+							OWNER = this
+							TARGET = scope:target
+						}
 					}
 					add_secret = {
 						type = secret_siphoned_treasury

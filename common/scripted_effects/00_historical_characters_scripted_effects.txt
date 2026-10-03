@@ -8885,7 +8885,7 @@ historical_character_finalization_effect = {
 		generate_coa = yes
 	}
 	dynasty ?= {
-		set_coa = scope:historical_character.house
+		set_coa = prev.house #Unop scope:historical_character is not saved by all callers, e.g. the heresy founder effects
 	}
 	set_variable = {
 		name = show_historical_gui

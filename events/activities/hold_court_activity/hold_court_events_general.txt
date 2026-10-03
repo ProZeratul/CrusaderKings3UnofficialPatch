@@ -5754,9 +5754,19 @@ hold_court.6000 = {
 				years = 10
 			}
 		}
-		remove_courtier_or_guest = {
-			character = scope:inspector
-			new_location = scope:6000_province
+		if = { #Unop The inspector may no longer be in the court
+			limit = {
+				scope:inspector = {
+					OR = {
+						is_courtier_of = root
+						is_foreign_court_or_pool_guest_of = root
+					}
+				}
+			}
+			remove_courtier_or_guest = {
+				character = scope:inspector
+				new_location = scope:6000_province
+			}
 		}
 		ai_chance = {
 			base = 10

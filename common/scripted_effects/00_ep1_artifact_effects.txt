@@ -176,7 +176,7 @@ steal_artifact_in_event_effect = {
 
 damage_artifact_in_battle_effect = {
 	# Save scopes for localization
-	$OWNER$ = {
+	$OWNER$ ?= { #Unop The owner may not exist, e.g. the holder of an empty holy site barony
 		save_scope_as = DAIBE_owner
 	}
 	$OPPONENT$ = { save_scope_as = DAIBE_opponent }
@@ -213,7 +213,7 @@ damage_artifact_in_battle_effect = {
 	}
 	# Send notifications to the relevant party IF the artifact was not destroyed
 	else = {
-		$OWNER$ = {
+		$OWNER$ ?= { #Unop The owner may not exist
 			# Send the toast
 			send_interface_toast = {
 				title = artifact_damaged_toast
