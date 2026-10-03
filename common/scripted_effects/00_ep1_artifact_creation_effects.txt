@@ -10064,7 +10064,32 @@ create_artifact_weapon_effect = {
 						scope:newly_created_artifact = { set_variable = replica_sassanian_sword }
 					}
 					1 = {
-						trigger = { sword_could_be_longsword_trigger = yes }
+						#trigger = { sword_could_be_longsword_trigger = yes }
+						trigger = {  #Unop: Since the scope artifact does not exists yet, we can't use sword_could_be_longsword_trigger that rely on it
+							trigger_if = {
+								limit = {
+									exists = scope:smith
+									exists = scope:smith.culture
+								}
+								scope:smith.culture = {
+									has_unit_gfx = western_unit_gfx
+									has_cultural_era_or_later = culture_era_late_medieval
+								}
+							}
+							trigger_else_if = { #If the creator is not found we use the owner. Often this would be if the creator is a dummy, which has no culture
+								limit = {
+									exists = scope:owner
+									exists = scope:owner.culture
+								}
+								scope:owner.culture = {
+									has_unit_gfx = western_unit_gfx
+									has_cultural_era_or_later = culture_era_late_medieval
+								}
+							}
+							trigger_else = {
+								always = no #We should never get here as all created artifacts should have an owner.
+							}
+						}
 						create_artifact = {
 							name = artifact_longsword_name
 							description = placeholder # Will be re-generated once decorations are added in the post-creation effects.

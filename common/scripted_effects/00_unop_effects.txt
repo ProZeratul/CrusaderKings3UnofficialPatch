@@ -10,6 +10,33 @@
 	}
 }
 
+# Need parameters:
+# EMPLOYER
+# POS
+# SLOT
+unop_get_worst_cp_holder = {
+	if = {
+		limit = {
+			$EMPLOYER$ = {
+				any_court_position_holder = {
+					type = $POS$_court_position
+					count >= $SLOT$
+				}
+			}
+		}
+		$EMPLOYER$ = {
+			ordered_court_position_holder = {
+				type = $POS$_court_position
+				order_by = {
+					value = aptitude:$POS$_court_position
+					multiply = -1
+				}
+				save_scope_as = unop_worst_char_for_cp
+			}
+		}
+	}
+}
+
 #Unop Trigger physician treatments for the employer and their court; called from the court physician's on_court_position_received hook so every appointment route works, not just the paid hire event
 unop_trigger_physician_treatments_effect = {
 	hidden_effect = {

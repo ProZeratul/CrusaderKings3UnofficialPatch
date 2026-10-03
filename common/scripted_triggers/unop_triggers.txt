@@ -56,3 +56,14 @@ unop_should_become_steppe_admin_trigger = {
 		geographical_region = world_steppe
 	}
 }
+
+# Need a CP as a flag parameter without the _court_position suffix
+unop_is_multi_slot_cp = {
+	OR = {
+		$CP$_court_position = flag:bodyguard_court_position #2
+		$CP$_court_position = flag:lady_in_waiting_court_position #2
+		$CP$_court_position = flag:garuda_court_position #2
+		#$CP$_court_position = flag:minister_bureaucrat_court_position #2 #Unop: Reminder as it's a special case on this one
+		$CP$_court_position = flag:court_artificer_court_position #3
+	}
+}
