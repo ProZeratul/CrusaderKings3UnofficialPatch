@@ -35,7 +35,6 @@ scripted_effect save_genpei_scopes_effect = {
 #Initial Event, explaining the situation
 tgp_genpei_character.1000 = {
 	type = character_event
-	#window = big_event_window #Unop: Duplicated below
 	title = tgp_genpei_character.1000.t
 	desc = tgp_genpei_character.1000.desc
  	window = big_event_window
@@ -106,7 +105,7 @@ tgp_genpei_character.1000 = {
 #After Kiyomori puts his grandson on the throne, a chance to get block leadership
 tgp_genpei_character.1010 = {
 	type = character_event
-	#window = big_event_window #Unop: Duplicated below
+	window = big_event_window
 	title = tgp_genpei_character.1010.t
 	desc = {
 		desc = tgp_genpei_character.1010.desc.intro
@@ -122,7 +121,6 @@ tgp_genpei_character.1010 = {
 			desc = tgp_genpei_character.1010.desc.notblocboss
 		}
 	}
- 	window = big_event_window
 	theme = war
 	left_portrait = {
 		character = scope:ruler
@@ -156,8 +154,7 @@ tgp_genpei_character.1010 = {
 						this != root
 						dynasty ?= dynasty:japanese_minamoto_seiwa
 						house ?= {
-							exists = house_confederation
-							house_confederation.leading_house ?= this #Unop: Use house_confederation instead of confederation to get leading_house
+							house_confederation.leading_house ?= this
 							NOT = { house_confederation = root.top_liege.house.house_confederation }
 						}
 					}
@@ -257,10 +254,9 @@ tgp_genpei_character.1010 = {
 #Starting event for Yoshinaka that sets the given circumstances/objectives/obstacles/stakes 
 tgp_genpei_character.1090 = {
 	type = character_event
-	#window = big_event_window #Unop: Duplicated below
+	window = big_event_window
 	title = tgp_genpei_character.1090.t
 	desc = tgp_genpei_character.1090.desc
- 	window = big_event_window
 	theme = war
 	override_background = bp3_hills_winter
 	left_portrait = {
@@ -394,10 +390,9 @@ scripted_effect tgp_yoshinaka_new_house_bloc_effect = {
 }
 tgp_genpei_character.1095 = {
 	type = character_event
-	#window = big_event_window #Unop: Duplicated below
+	window = big_event_window
 	title = tgp_genpei_character.1095.t
 	desc = tgp_genpei_character.1095.desc
- 	window = big_event_window
 	theme = war
 	override_background = bp3_hills_winter
 	left_portrait = {
@@ -506,10 +501,9 @@ tgp_genpei_character.1095 = {
 #Initial Event, explaining the situation
 tgp_genpei_character.1100 = {
 	type = character_event
-	#window = big_event_window #Unop: Duplicated below
+	window = big_event_window
 	title = tgp_genpei_character.1100.t
 	desc = tgp_genpei_character.1100.desc
- 	window = big_event_window
 	theme = battle
 	override_background = { reference = army_camp }
 	left_portrait = {
@@ -682,7 +676,7 @@ tgp_genpei_character.2000 = {
 				opinion = 15
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_gain
 			brave = minor_stress_impact_gain
 			arrogant = minor_stress_impact_gain
@@ -725,7 +719,7 @@ tgp_genpei_character.2000 = {
 				add_scheme_modifier = {  type = bided_my_time }
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = minor_stress_impact_gain
 			brave = minor_stress_impact_gain
 			patient = minor_stress_impact_loss
@@ -838,8 +832,7 @@ tgp_genpei_character.2010 = {
 					holder = {
 						dynasty ?= dynasty:japanese_minamoto_seiwa
 						house ?= {
-							exists = house_confederation
-							house_confederation.leading_house ?= this #Unop: Use house_confederation instead of confederation to get leading_house
+							house_confederation.leading_house ?= this
 							NOT = { house_confederation = root.top_liege.house.house_confederation }
 						}
 					}
@@ -939,7 +932,7 @@ tgp_genpei_character.2010 = {
 			}
 		}
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			patient = minor_stress_impact_gain
 			arrogant = medium_stress_impact_loss
 			ambitious = minor_stress_impact_loss
@@ -991,7 +984,7 @@ tgp_genpei_character.2010 = {
 				TITLE = scope:dummy_gender
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = medium_stress_impact_gain 
 			patient  = minor_stress_impact_loss	
 		}
@@ -1027,7 +1020,7 @@ tgp_genpei_character.2010 = {
 				TITLE = scope:dummy_gender
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = medium_stress_impact_gain 
 			patient  = minor_stress_impact_loss	
 		}
@@ -1067,7 +1060,7 @@ tgp_genpei_character.2010 = {
 				add_scheme_modifier = { type = settled_differences_modifier }
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_loss
 			patient = medium_stress_impact_loss
 		}
@@ -1137,7 +1130,7 @@ tgp_genpei_character.3000 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = minor_stress_impact_loss
 		}
 		ai_chance = {
@@ -1396,7 +1389,7 @@ tgp_genpei_character.4000 = {
 
 
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			impatient = major_stress_impact_gain
 		}
 

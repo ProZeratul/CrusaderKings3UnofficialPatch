@@ -99,11 +99,11 @@ laamp_extra_contract_schemes.0001 = {
 			}
 		}
 	}
-
+	
 	# Boost speed.
 	option = {
 		name = laamp_extra_contract_schemes.0001.b
-		reason = gives_scheme_phase_duration #Unop: Was 'gives_scheme_speed' but this does not exists
+		reason = gives_scheme_phase_duration
 
 		scope:scheme = {
 			add_scheme_modifier = { type = scheme_starter_bonus_laamp_contracts_speed_modifier }
@@ -117,7 +117,7 @@ laamp_extra_contract_schemes.0001 = {
 			}
 		}
 	}
-
+	
 	# No starting bonus.
 	option = {
 		name = laamp_extra_contract_schemes.0001.d
@@ -246,7 +246,7 @@ laamp_extra_contract_schemes.0002 = {
 						type = title_revocation_rights
 						level = 1
 					}
-				}
+				}				
 			}
 			else = {
 				save_scope_value_as = {
@@ -284,7 +284,7 @@ laamp_extra_contract_schemes.0002 = {
 	option = {
 		name = laamp_extra_contract_schemes.0002.a
 		flavor = laamp_base_contract_schemes.0000.f.contract_concluded
-		stress_impact = { arrogant = minor_stress_impact_loss }
+		stress_and_fulfillment_impact = { arrogant = minor_stress_impact_loss }
 	}
 }
 
@@ -413,7 +413,7 @@ laamp_extra_contract_schemes.0003 = {
 				target = scope:task_contract_employer
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_gain
 			humble = minor_stress_impact_loss
 			arrogant = minor_stress_impact_gain
@@ -467,11 +467,11 @@ laamp_extra_contract_schemes.0011 = {
 			}
 		}
 	}
-
+	
 	# Boost speed.
 	option = {
 		name = laamp_extra_contract_schemes.0001.b
-		reason = gives_scheme_phase_duration #Unop: Was 'gives_scheme_speed' but this does not exists
+		reason = gives_scheme_phase_duration
 
 		scope:scheme = {
 			add_scheme_modifier = { type = scheme_starter_bonus_laamp_contracts_speed_modifier }
@@ -485,7 +485,7 @@ laamp_extra_contract_schemes.0011 = {
 			}
 		}
 	}
-
+	
 	# No starting bonus.
 	option = {
 		name = laamp_extra_contract_schemes.0001.d
@@ -644,8 +644,8 @@ laamp_extra_contract_schemes.0012 = {
 				target = scope:task_contract_object
 			}
 		}
-
-		stress_impact = { arrogant = minor_stress_impact_loss }
+		
+		stress_and_fulfillment_impact = { arrogant = minor_stress_impact_loss }
 	}
 }
 
@@ -665,7 +665,7 @@ laamp_extra_contract_schemes.0013 = {
 				desc = laamp_extra_contract_schemes.0013.desc_no_lookout
 			}
 			triggered_desc = {
-				trigger = { NOT = { exists = scope:agent_infiltrator } }
+				trigger = { NOT = { exists = scope:agent_infiltrator } }				
 				desc = laamp_extra_contract_schemes.0013.desc_no_infiltrator
 			}
 			desc = laamp_extra_contract_schemes.0013.desc
@@ -776,7 +776,7 @@ laamp_extra_contract_schemes.0013 = {
 				target = root
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_gain
 			humble = minor_stress_impact_loss
 			arrogant = minor_stress_impact_gain
@@ -791,7 +791,7 @@ laamp_extra_contract_schemes.0020 = {
 
 	trigger = {
 		scope:target_character = {
-			spymaster_task_find_secrets_court_has_minor_secrets_trigger = yes
+			spymaster_task_find_secrets_court_has_minor_secrets_trigger = yes		
 		}
 	}
 
@@ -810,7 +810,7 @@ laamp_extra_contract_schemes.0020 = {
 				}
 				every_secret = {
 					limit = {
-						spymaster_task_find_secrets_suitable_minor_secret_trigger = yes
+						spymaster_task_find_secrets_suitable_minor_secret_trigger = yes	
 					}
 					add_to_temporary_list = suitable_secrets
 				}
@@ -820,7 +820,7 @@ laamp_extra_contract_schemes.0020 = {
 				limit = {
 					any_secret = {
 						spymaster_task_find_secrets_suitable_minor_secret_trigger = yes
-					}
+					}	
 				}
 				every_secret = {
 					limit = {
@@ -868,7 +868,7 @@ laamp_extra_contract_schemes.0020 = {
 					add = -3
 					secret_type = secret_crypto_religionist
 					secret_owner = {
-						secret_faith ?= { has_doctrine_parameter = sanctioned_false_conversion }
+						secret_faith ?= { main_rite = { rite_has_parameter = sanctioned_false_conversion } }
 					}
 				}
 				# Less likely to pick crypto-religionist secrets (b/c narratively they are hard to discover)
@@ -896,7 +896,7 @@ laamp_extra_contract_schemes.0020 = {
 					value = 50
 					# Even more likely to not discover this secret if the target practices Taqiya
 					if = {
-						limit = { secret_faith ?= { has_doctrine_parameter = sanctioned_false_conversion } }
+						limit = { secret_faith ?= { main_rite = { rite_has_parameter = sanctioned_false_conversion } } }
 						add = 25
 					}
 				}
@@ -935,10 +935,10 @@ laamp_extra_contract_schemes.0020 = {
 							desc = task_intrigue_good_skilled_notification_tooltip
 						}
 					}
-
+					
 					left_icon = scope:secret_holder
 					right_icon = scope:councillor
-
+					
 					scope:secret_to_reveal = {
 						reveal_to = scope:councillor_liege
 					}
@@ -962,11 +962,11 @@ laamp_extra_contract_schemes.0020 = {
 					send_interface_message = {
 						type = msg_spymaster_task_good
 						title = spymaster_task.0311.notification
-
+						
 						left_icon = scope:secret_holder
-
+						
 						desc = blank_line
-
+						
 						scope:secret_to_reveal = {
 							reveal_to = scope:councillor
 						}
@@ -998,7 +998,7 @@ laamp_extra_contract_schemes.0021 = {
 				}
 				every_secret = {
 					limit = {
-						spymaster_task_find_secrets_suitable_major_secret_trigger = yes
+						spymaster_task_find_secrets_suitable_major_secret_trigger = yes	
 					}
 					add_to_temporary_list = suitable_secrets
 				}
@@ -1008,7 +1008,7 @@ laamp_extra_contract_schemes.0021 = {
 				limit = {
 					any_secret = {
 						spymaster_task_find_secrets_suitable_major_secret_trigger = yes
-					}
+					}	
 				}
 				every_secret = {
 					limit = {
@@ -1131,7 +1131,7 @@ laamp_extra_contract_schemes.0021 = {
 							title = spymaster_task.0311.notification
 
 							left_icon = scope:secret_holder
-
+							
 							desc = blank_line
 
 							scope:secret_to_reveal = {
@@ -1181,7 +1181,7 @@ laamp_extra_contract_schemes.0022 = {
 		character = scope:character_to_hook
 		animation = boredom
 	}
-
+	
 	trigger = {
 		scope:target_character = {
 			OR = {
@@ -1252,7 +1252,7 @@ laamp_extra_contract_schemes.0022 = {
 				add = 1
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -1279,7 +1279,7 @@ laamp_extra_contract_schemes.0022 = {
 				add = 1
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = medium_stress_impact_gain
 		}
 		ai_chance = {

@@ -290,6 +290,7 @@ mpo_nomad_invasion_cb = {
 				is_landed = no
 				capital_county = {
 					any_county_situation_sub_region = {
+						situation_sub_region_has_county = prev
 						sub_region_current_phase = situation_steppe_havsarsan_zud_season
 					}
 				}
@@ -306,6 +307,7 @@ mpo_nomad_invasion_cb = {
 					NOT = {
 						capital_county = {
 							any_county_situation_sub_region = {
+								situation_sub_region_has_county = prev
 								sub_region_current_phase = situation_steppe_havsarsan_zud_season
 							}
 						}
@@ -347,6 +349,7 @@ mpo_nomad_invasion_cb = {
 						scope:attacker = {
 							capital_county = {
 								any_county_situation_sub_region = {
+									situation_sub_region_has_county = prev
 									sub_region_current_phase = situation_steppe_havsarsan_zud_season
 								}
 							}
@@ -372,6 +375,7 @@ mpo_nomad_invasion_cb = {
 									ai_boldness >= 50
 									capital_county = {
 										any_county_situation_sub_region = {
+											situation_sub_region_has_county = prev
 											OR = {
 												sub_region_current_phase = situation_steppe_white_zud_season
 												sub_region_current_phase = situation_steppe_cold_zud_season
@@ -1471,14 +1475,14 @@ mpo_nomad_invasion_cb = {
 			add_dread = minor_dread_loss
 			add_legitimacy = minor_legitimacy_loss
 			add_prestige = mongol_invasion_cb_prestige_white_peace
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				ambitious = medium_stress_impact_gain
 				arrogant = medium_stress_impact_gain
 			}
 		}
 
 		scope:defender = {
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				arrogant = medium_stress_impact_gain
 			}
 		}
@@ -1625,6 +1629,7 @@ mpo_nomad_duchy_invasion_cb = {
 					NOT = {
 						capital_county = {
 							any_county_situation_sub_region = {
+								situation_sub_region_has_county = prev
 								sub_region_current_phase = situation_steppe_havsarsan_zud_season
 							}
 						}
@@ -1662,6 +1667,7 @@ mpo_nomad_duchy_invasion_cb = {
 						scope:attacker = {
 							capital_county = {
 								any_county_situation_sub_region = {
+									situation_sub_region_has_county = prev
 									sub_region_current_phase = situation_steppe_havsarsan_zud_season
 								}
 							}
@@ -1687,6 +1693,7 @@ mpo_nomad_duchy_invasion_cb = {
 									ai_boldness >= 50
 									capital_county = {
 										any_county_situation_sub_region = {
+											situation_sub_region_has_county = prev
 											OR = {
 												sub_region_current_phase = situation_steppe_white_zud_season
 												sub_region_current_phase = situation_steppe_cold_zud_season
@@ -2505,14 +2512,14 @@ mpo_nomad_duchy_invasion_cb = {
 			add_dread = minor_dread_loss
 			add_legitimacy = minor_legitimacy_loss
 			add_prestige = mongol_invasion_cb_prestige_white_peace
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				ambitious = medium_stress_impact_gain
 				arrogant = medium_stress_impact_gain
 			}
 		}
 
 		scope:defender = {
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				arrogant = medium_stress_impact_gain
 			}
 		}
@@ -3386,10 +3393,7 @@ domination_cb = {
 			every_war_defender = {
 				custom = every_defender
 				limit = {
-					OR = {
-						government_has_flag = government_is_nomadic
-						government_has_flag = government_is_herder
-					}
+					government_has_flag = government_is_in_steppe
 				}
 				if = {
 					limit = {
@@ -3921,6 +3925,7 @@ de_jure_cb_nomadic = {
 						is_landed = no
 						capital_county = {
 							any_county_situation_sub_region = {
+								situation_sub_region_has_county = prev
 								sub_region_current_phase = situation_steppe_havsarsan_zud_season
 							}
 						}
@@ -4606,10 +4611,7 @@ mpo_great_war_of_defiance_cb = {
 			every_in_list = {
 				list = anti_gok_attackers
 				limit = {
-					OR = {
-						government_has_flag = government_is_nomadic
-						government_has_flag = government_is_herder
-					}
+					government_has_flag = government_is_in_steppe
 					is_independent_ruler = yes
 				}
 				hidden_effect = {
@@ -4937,10 +4939,10 @@ mpo_gok_onslaught_cb = {
 					trigger = {
 						scope:defender = {
 							AND = {
-								government_allows = administrative
+								government_has_mechanic = administrative
 								any_vassal = {
 									count >= 2
-									government_allows = administrative
+									government_has_mechanic = administrative
 									highest_held_title_tier >= main_administrative_tier
 								}
 							}
@@ -4959,10 +4961,10 @@ mpo_gok_onslaught_cb = {
 					trigger = {
 						scope:defender = {
 							AND = {
-								government_allows = administrative
+								government_has_mechanic = administrative
 								any_vassal = {
 									count >= 2
-									government_allows = administrative
+									government_has_mechanic = administrative
 									highest_held_title_tier >= main_administrative_tier
 								}
 							}
@@ -4979,10 +4981,10 @@ mpo_gok_onslaught_cb = {
 					trigger = {
 						scope:defender = {
 							AND = {
-								government_allows = administrative
+								government_has_mechanic = administrative
 								any_vassal = {
 									count >= 2
-									government_allows = administrative
+									government_has_mechanic = administrative
 									highest_held_title_tier >= main_administrative_tier
 								}
 							}
@@ -5049,12 +5051,12 @@ mpo_gok_onslaught_cb = {
 				limit = {
 					NOT = {
 						scope:attacker = {
-							government_allows = administrative
+							government_has_mechanic = administrative
 						}
 					}
 					any_vassal_or_below = {
 						highest_held_title_tier >= tier_kingdom
-						government_allows = administrative
+						government_has_mechanic = administrative
 					}
 				}
 				hidden_effect = {
@@ -5075,7 +5077,7 @@ mpo_gok_onslaught_cb = {
 						limit = {
 							scope:attacker = {
 								NOT = {
-									government_allows = administrative
+									government_has_mechanic = administrative
 								}
 							}
 						}
@@ -5101,7 +5103,7 @@ mpo_gok_onslaught_cb = {
 					OR = {
 						AND = {
 							NOT = {
-								government_allows = administrative
+								government_has_mechanic = administrative
 							}
 							highest_held_title_tier >= tier_duchy
 							gok_desirable_vassal_trigger = no
@@ -5146,10 +5148,10 @@ mpo_gok_onslaught_cb = {
 				limit = {
 					scope:defender = {
 						NAND = {
-							government_allows = administrative
+							government_has_mechanic = administrative
 							any_vassal = {
 								count >= 2
-								government_allows = administrative
+								government_has_mechanic = administrative
 								highest_held_title_tier >= main_administrative_tier
 							}
 						}
@@ -5275,8 +5277,7 @@ mpo_gok_onslaught_cb = {
 					limit = {
 						scope:defender = {
 							NOR = {
-								government_has_flag = government_is_nomadic
-								government_has_flag = government_is_herder
+								government_has_flag = government_is_in_steppe
 								government_has_flag = government_is_tribal
 							}
 						}
@@ -5583,7 +5584,7 @@ mpo_gok_onslaught_cb = {
 		scope:attacker = {
 			add_prestige = major_prestige_loss
 			add_legitimacy = minor_legitimacy_loss
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				ambitious = minor_stress_impact_gain
 				arrogant = minor_stress_impact_gain
 			}
@@ -5647,7 +5648,7 @@ mpo_gok_onslaught_cb = {
 				scope:attacker = {
 					add_prestige = massive_prestige_loss
 					add_legitimacy = major_legitimacy_loss
-					stress_impact = {
+					stress_and_fulfillment_impact = {
 						ambitious = medium_stress_impact_gain
 						arrogant = medium_stress_impact_gain
 					}

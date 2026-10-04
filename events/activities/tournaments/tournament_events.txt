@@ -195,6 +195,7 @@ tournament_events.0200 = { # Prestige Arrival maintenance
 		tournament_arrival_prestige_tier_effect = { TIER = duchy }
 		tournament_arrival_prestige_tier_effect = { TIER = kingdom }
 		tournament_arrival_prestige_tier_effect = { TIER = empire }
+		tournament_arrival_prestige_tier_effect = { TIER = hegemony }
 		# Save two scopes for toast
 		ordered_in_list = {
 			variable = new_prestige_arrival
@@ -208,6 +209,25 @@ tournament_events.0200 = { # Prestige Arrival maintenance
 				save_scope_as = tournament_arrival_1
 			}
 			else = { save_scope_as = tournament_arrival_2 }
+		}
+		# just don't multiply the tooltip...
+		if = {
+			limit = {
+				has_variable = prestige_arrival_hegemony
+			}
+			if = {
+				limit = { has_variable = prestige_arrival_empire }
+				change_variable = {
+					name = prestige_arrival_empire
+					add = var:prestige_arrival_hegemony
+				}
+			}
+			else = {
+				set_variable = {
+					name = prestige_arrival_empire
+					value = var:prestige_arrival_hegemony
+				}
+			}
 		}
 		# Send toast
 		send_interface_toast = {
@@ -277,6 +297,13 @@ tournament_events.0200 = { # Prestige Arrival maintenance
 							multiply = var:prestige_arrival_empire
 						}
 					}
+					if = {
+						limit = { exists = var:prestige_arrival_hegemony }
+						add = {
+							value = 200 # per Hegemon
+							multiply = var:prestige_arrival_hegemony
+						}
+					}
 				}
 			}
 		}
@@ -285,6 +312,7 @@ tournament_events.0200 = { # Prestige Arrival maintenance
 		remove_variable = prestige_arrival_duchy
 		remove_variable = prestige_arrival_kingdom
 		remove_variable = prestige_arrival_empire
+		remove_variable = prestige_arrival_hegemony
 	}
 }
 
@@ -1175,22 +1203,15 @@ scripted_effect tournament_marriage_prize_effect = {
 					create_betrothal = scope:marriage_prize
 				}
 				else = { marry = scope:marriage_prize }
-				if = { #Unop: No self-opinion
-					limit = {
-						NOT = { this = scope:host }
-					}
+				if = {
+					limit = { this != scope:host }
 					add_opinion = {
-						target = root
+						target = scope:host
 						modifier = grateful_opinion
 						opinion = 10
 					}
+					scope:host = { add_prestige = medium_prestige_gain }
 				}
-			}
-			if = {
-				limit = {
-					scope:host != scope:marriage_winner
-				}
-				scope:host = { add_prestige = medium_prestige_gain }
 			}
 		}
 	}
@@ -1206,21 +1227,16 @@ scripted_effect tournament_marriage_prize_effect = {
 					this = scope:host
 				}
 			}
-			if = { #Unop: No self-opinion
-				limit = {
-					NOT = { this = scope:host }
-				}
-				add_opinion = {
-					target = root
-					modifier = disappointed_opinion
-					opinion = -10
-				}
+			add_opinion = {
+				target = scope:marriage_winner
+				modifier = disappointed_opinion
+				opinion = -10
 			}
 		}
 		scope:host = {
 			if = {
 				limit = { is_in_list = bachelors }
-				stress_impact = {
+				stress_and_fulfillment_impact = {
 					arbitrary = minor_stress_impact_gain
 					greedy = minor_stress_impact_gain
 					arrogant = minor_stress_impact_gain
@@ -1235,7 +1251,7 @@ scripted_effect tournament_marriage_prize_effect = {
 				this != scope:host
 			}
 			add_opinion = {
-				target = root
+				target = scope:marriage_winner
 				modifier = angry_opinion
 				opinion = -20
 			}
@@ -1243,7 +1259,7 @@ scripted_effect tournament_marriage_prize_effect = {
 		scope:host = {
 			if = {
 				limit = { exists = scope:bachelor_2 }
-				stress_impact = {
+				stress_and_fulfillment_impact = {
 					just = minor_stress_impact_gain
 					generous = minor_stress_impact_gain
 					humble = minor_stress_impact_gain
@@ -1342,7 +1358,12 @@ tournament_events.0160 = {
 			}
 			trigger_if = {
 				limit = { is_clergy = yes }
-				faith = { has_doctrine_parameter = clergy_can_marry }
+				OR = {
+					rite = { rite_has_parameter = clergy_can_marry }
+					top_participant_group:the_christian_church ?= {
+						has_participant_group_parameter = clergy_can_marry
+					}
+				}
 			}
 		} 		
 	}
@@ -1507,7 +1528,7 @@ tournament_events.0160 = {
 				opinion = -20
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = minor_stress_impact_gain
 			honest = minor_stress_impact_gain
 		}
@@ -1527,7 +1548,7 @@ tournament_events.0160 = {
 			any_in_list = { list = bachelors count = 1 }
 		}
 		add_prestige = minor_prestige_gain
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = minor_stress_impact_gain
 		}
 		ai_chance = {
@@ -1626,7 +1647,7 @@ tournament_events.0161 = {
 	left_portrait = {
 		character = root
 		triggered_animation = {
-			trigger = { scope:marriage_winner ?= this }  # Unop: Change the order & added ?= as this scope can be undefined
+			trigger = { scope:marriage_winner ?= this }
 			animation = happiness
 		}
 		animation = thinking
@@ -1640,7 +1661,7 @@ tournament_events.0161 = {
 
 	immediate = {
 		show_as_tooltip = {
-			scope:marriage_winner ?= { # Unop: Change this to ?= as this scope can be undefined
+			scope:marriage_winner ?= {
 				if = {
 					limit = {
 						OR = {
@@ -1663,7 +1684,7 @@ tournament_events.0161 = {
 	option = {
 		name = tournament_events.0161.b
 		trigger = {
-			OR = { #Unop Add second check
+			OR = {
 				any_in_list = {
 					list = bachelors
 					has_opinion_modifier = {
@@ -1691,7 +1712,7 @@ tournament_events.0161 = {
 		}
 	}
 
-	option = { # Unop: We need to have an option for the people who participated in the tournament but where not winners because no other option will be available for them
+	option = { # backup option for not involved
 		name = ep2_wedding.0970.a
 		trigger = {
 			NOT = { scope:marriage_winner ?= this }
@@ -1820,7 +1841,7 @@ tournament_events.1000 = { # Select wager
 		}
 		tournament_place_wager_effect = { CONTENDER = root }
 		tournament_contest_maysir_effect = yes
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			humble = medium_stress_impact_gain
 			greedy = minor_stress_impact_gain
 			profligate = minor_stress_impact_loss
@@ -2021,17 +2042,17 @@ tournament_events.1000 = { # Select wager
 					}
 				}
 			}
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				cynical = minor_stress_impact_gain
 			}
 		}
 		if = {
 			limit = { exists = var:contest_aptitude }
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				arrogant = medium_stress_impact_gain
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = miniscule_stress_impact_gain
 			greedy = minor_stress_impact_loss
 			brave = minor_stress_impact_gain
@@ -2158,7 +2179,7 @@ tournament_events.1100 = { # Start - Alone
 		scope:pas_darmes_instigator = {
 			accolade_minimal_glory_gain_with_checks_effect = yes
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = medium_stress_impact_gain
 			craven = medium_stress_impact_gain
 		}
@@ -2192,7 +2213,7 @@ tournament_events.1100 = { # Start - Alone
 			}
 			add_scheme_modifier = { type = tournament_pas_darmes_seduce_modifier }
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			lustful = minor_stress_impact_loss
 			chaste = medium_stress_impact_gain
 		}
@@ -2214,7 +2235,7 @@ tournament_events.1100 = { # Start - Alone
 		}
 		add_prestige = medium_prestige_loss
 		custom_tooltip = tournament_pas_darmes_forbidden_tt
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			brave = medium_stress_impact_gain
 			arrogant = medium_stress_impact_gain
 			just = medium_stress_impact_gain
@@ -2332,6 +2353,7 @@ tournament_events.1101 = { # Start - Exotic
 			location = scope:activity.activity_location
 			culture = scope:exotic_origin.culture
 			faith = scope:exotic_origin.faith
+			rite = scope:exotic_origin.rite
 			dynasty = generate
 			save_scope_as = pas_darmes_instigator
 		}
@@ -2363,7 +2385,6 @@ tournament_events.1101 = { # Start - Exotic
 		}
 		scope:pas_darmes_instigator = {
 			hidden_effect = {
-				#Unop: Here was add_to_activity but output error: is_pool_guest has no localization
 				add_to_activity_without_travel = scope:activity
 			}
 		}
@@ -2377,7 +2398,7 @@ tournament_events.1101 = { # Start - Exotic
 		scope:pas_darmes_instigator = {
 			accolade_minimal_glory_gain_with_checks_effect = yes
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = medium_stress_impact_gain
 			craven = medium_stress_impact_gain
 		}
@@ -2415,7 +2436,7 @@ tournament_events.1101 = { # Start - Exotic
 			}
 		}
 		scope:pas_darmes_instigator = { move_to_pool_at = scope:exotic_origin.title_province }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = medium_stress_impact_gain
 			brave = medium_stress_impact_gain
 		}
@@ -2438,7 +2459,7 @@ tournament_events.1101 = { # Start - Exotic
 		scope:pas_darmes_instigator = {
 			accolade_minor_glory_gain_with_checks_effect = yes
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			craven = medium_stress_impact_gain
 			callous = medium_stress_impact_gain
 			lazy = medium_stress_impact_gain
@@ -2635,7 +2656,7 @@ tournament_events.1102 = { # Start - Band
 		scope:pas_darmes_2 = {
 			accolade_minimal_glory_gain_with_checks_effect = yes
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = medium_stress_impact_gain
 			craven = medium_stress_impact_gain
 		}
@@ -2664,11 +2685,11 @@ tournament_events.1102 = { # Start - Band
 		add_prestige = medium_prestige_loss
 		custom_tooltip = tournament_pas_darmes_forbidden_tt
 		scope:activity = { clear_variable_list = pas_darmes_instigators }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			brave = medium_stress_impact_gain
 			arrogant = medium_stress_impact_gain
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = medium_stress_impact_gain
 			brave = medium_stress_impact_gain
 		}
@@ -3369,7 +3390,7 @@ tournament_events.1140 = { # Host Challenge - Start
 			}
 		}
 		trigger_event = tournament_events.1141
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = medium_stress_impact_gain
 			craven = medium_stress_impact_gain
 		}
@@ -3435,7 +3456,7 @@ tournament_events.1140 = { # Host Challenge - Start
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = medium_stress_impact_gain
 			greedy = medium_stress_impact_gain
 		}
@@ -3463,7 +3484,7 @@ tournament_events.1140 = { # Host Challenge - Start
 		}
 		custom_tooltip = tournament_pas_darmes_forbidden_tt
 		scope:activity = { clear_variable_list = pas_darmes_instigators }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			brave = medium_stress_impact_gain
 			just = medium_stress_impact_gain
 			eccentric = medium_stress_impact_gain
@@ -3484,7 +3505,7 @@ tournament_events.1140 = { # Host Challenge - Start
 		scope:pas_darmes_instigator = {
 			accolade_minor_glory_gain_with_checks_effect = yes
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			craven = medium_stress_impact_gain
 			shy = medium_stress_impact_gain
 			eccentric = medium_stress_impact_gain
@@ -3611,7 +3632,6 @@ tournament_events.1141 = { # Host Challenge - Outcome
 				}
 			}
 			save_scope_as = pas_darmes_victim
-			#scope:pas_darmes_instigator = { add_personal_artifact_claim = scope:newly_created_artifact } #Unop: This will be handled in the option B
 		}
 		else = {
 			scope:pas_darmes_instigator = {
@@ -3970,7 +3990,7 @@ tournament_events.1150 = { # Keepsake Claim Challenge - Start
 			opinion = 10
 		}
 		trigger_event = tournament_events.1151
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			craven = medium_stress_impact_gain
 			arbitrary = medium_stress_impact_gain
 		}
@@ -4002,7 +4022,7 @@ tournament_events.1150 = { # Keepsake Claim Challenge - Start
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			brave = medium_stress_impact_gain
 			just = medium_stress_impact_gain
 			stubborn = medium_stress_impact_gain
@@ -4226,12 +4246,14 @@ tournament_events.1200 = {
 		#Standard checks.
 		this = scope:host
 		is_adult = yes
-		faith = {
-			NOR = {
-				has_doctrine = tenet_warmonger
-				has_doctrine = tenet_unrelenting_faith
-				trait_is_virtue = arrogant
+		AND = {
+			rite = {
+				NOR = {
+					rite_has_tenet = tenet_warmonger
+					rite_has_tenet = tenet_unrelenting_faith
+				}
 			}
+			NOT = { rite = { trait_is_virtue_rite = arrogant } }
 		}
 		OR = {
 			AND = {
@@ -4250,7 +4272,7 @@ tournament_events.1200 = {
 		base = 1
 		modifier = {
 			factor = 2
-			faith = { has_doctrine = tenet_pacifism }
+			rite = { rite_has_tenet = tenet_pacifism }
 		}
 	}
 
@@ -4334,7 +4356,7 @@ tournament_events.1200 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			craven = medium_stress_impact_gain
 			fickle = medium_stress_impact_gain
 			humble = medium_stress_impact_gain
@@ -4446,7 +4468,7 @@ tournament_events.1200 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			shy = medium_stress_impact_gain
 			arrogant = medium_stress_impact_gain
 			lazy = medium_stress_impact_gain
@@ -4480,7 +4502,7 @@ tournament_events.1200 = {
 			modifier = tournament_not_competing_opinion
 			opinion = 10
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			cynical = medium_stress_impact_gain
 			stubborn = medium_stress_impact_gain
 			arrogant = medium_stress_impact_gain
@@ -4504,7 +4526,7 @@ tournament_events.1200 = {
 			modifier = tournament_dismissed_priest_opinion
 			opinion = -10
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			zealous = medium_stress_impact_gain
 			stubborn = medium_stress_impact_gain
 			brave = medium_stress_impact_gain
@@ -4551,6 +4573,9 @@ tournament_events.1230 = {
 				has_current_phase = tournament_phase_board_game
 				has_current_phase = tournament_phase_horse_race
 			}
+			any_attending_character = {
+				culture.culture_number_of_counties > 0
+			}
 		}
 		this = scope:host
 	}
@@ -4565,19 +4590,7 @@ tournament_events.1230 = {
 
 	immediate = {
 		scope:activity = {
-			random_attending_character = {
-				limit = { #Unop: We want at least 1 county of this culture to get a faith
-					culture = {
-						culture_number_of_counties > 0
-					}
-				}
-				culture = { save_scope_as = attending_culture }
-			}
-		}
-		scope:attending_culture = {
-			random_culture_county = {
-				faith = { save_scope_as = attending_faith }
-			}
+			grab_attending_culture_faith_barony_effect = yes
 		}
 		create_character = {
 			template = tournament_foot_character
@@ -4643,7 +4656,7 @@ tournament_events.1230 = {
 					}
 				}
 			}
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				just = minor_stress_impact_gain
 			}
 		}
@@ -4676,7 +4689,7 @@ tournament_events.1230 = {
 				years = 10
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			arrogant = medium_stress_impact_gain
 		}
@@ -4752,7 +4765,7 @@ tournament_events.1230 = {
 				years = 10
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			arrogant = minor_stress_impact_gain
 		}
@@ -4801,7 +4814,7 @@ tournament_events.1230 = {
 			target = scope:battle_peasant
 			opinion = 5
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = minor_stress_impact_gain
 		}
 		ai_chance = {
@@ -4824,7 +4837,7 @@ tournament_events.1230 = {
 				death = { death_reason = death_disappearance }
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			humble = medium_stress_impact_gain
 			ambitious = medium_stress_impact_gain
 			generous = medium_stress_impact_gain
@@ -4864,7 +4877,7 @@ scripted_effect tournament_1240_prize_child_effect = {
 	if = {
 		limit = {
 			father ?= {
-				NOT = { this = root } #Unop: To ensure the father is not actual root for opinion loss just after
+				this != root
 				is_alive = yes
 				liege = root
 			}
@@ -4874,7 +4887,7 @@ scripted_effect tournament_1240_prize_child_effect = {
 	if = {
 		limit = {
 			mother ?= {
-				NOT = { this = root } #Unop: To ensure the mother is not actual root for opinion loss just after
+				this != root
 				is_alive = yes
 				liege = root
 			}
@@ -4939,7 +4952,7 @@ tournament_events.1240 = {
 				any_courtier_or_guest = {
 					house = root.house
 					tournament_1240_prize_child_trigger = yes
-					NOT = { #Unop: Added this to match what is in the immediate block 
+					NOT = {
 						any_spouse = {
 							count >= 1
 							even_if_dead = yes
@@ -5022,7 +5035,7 @@ tournament_events.1240 = {
 	option = { # First child
 		name = tournament_events.1240.a
 		scope:prize_child_1 = { tournament_1240_prize_child_effect = yes }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			compassionate = medium_stress_impact_gain
 		}
@@ -5042,7 +5055,7 @@ tournament_events.1240 = {
 		name = tournament_events.1240.b
 		trigger = { exists = scope:prize_child_2 }
 		scope:prize_child_2 = { tournament_1240_prize_child_effect = yes }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			compassionate = medium_stress_impact_gain
 		}
@@ -5062,7 +5075,7 @@ tournament_events.1240 = {
 		name = tournament_events.1240.c
 		trigger = { exists = scope:prize_child_3 }
 		scope:prize_child_3 = { tournament_1240_prize_child_effect = yes }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			compassionate = medium_stress_impact_gain
 		}
@@ -5084,7 +5097,7 @@ tournament_events.1240 = {
 			limit = { activity_is_competing_trigger = yes }
 			activity_tournament_change_contestant_score_effect = { SCORE = increase_miniscule }
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = medium_stress_impact_gain
 			arbitrary = medium_stress_impact_gain
 		}
@@ -5504,14 +5517,14 @@ tournament_events.1251 = {
 					OR = {
 						AND = {
 							is_male = yes
-							faith = {
-								NOT = { has_doctrine_parameter = adultery_male_accepted }
+							rite = {
+								NOT = { rite_has_parameter = adultery_male_accepted }
 							}
 						}
 						AND = {
 							is_female = yes
-							faith = {
-								NOT = { has_doctrine_parameter = adultery_female_accepted }
+							rite = {
+								NOT = { rite_has_parameter = adultery_female_accepted }
 							}
 						}
 					}
@@ -5553,14 +5566,14 @@ tournament_events.1251 = {
 			OR = {
 				AND = {
 					is_male = yes
-					faith = {
-						NOT = { has_doctrine_parameter = adultery_male_accepted }
+					rite = {
+						NOT = { rite_has_parameter = adultery_male_accepted }
 					}
 				}
 				AND = {
 					is_female = yes
-					faith = {
-						NOT = { has_doctrine_parameter = adultery_female_accepted }
+					rite = {
+						NOT = { rite_has_parameter = adultery_female_accepted }
 					}
 				}
 			}
@@ -5788,12 +5801,12 @@ tournament_events.1252 = {
 				scope:favor_giver_temp = { is_female = yes }
 			}
 			NOT = {
-				faith = { has_doctrine_parameter = adultery_female_accepted }
+				rite = { rite_has_parameter = adultery_female_accepted }
 			}
 		}
 		trigger_else = {
 			NOT = {
-				faith = { has_doctrine_parameter = adultery_male_accepted }
+				rite = { rite_has_parameter = adultery_male_accepted }
 			}
 		}
 	}
@@ -5911,7 +5924,7 @@ tournament_events.1252 = {
 				days = 1
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			trusting = medium_stress_impact_gain
 			calm = medium_stress_impact_gain
 		}
@@ -5927,7 +5940,7 @@ tournament_events.1252 = {
 	option = { # No
 		name = tournament_events.1252.b
 		custom_tooltip = pregnancy.3001.b.tt
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			wrathful = medium_stress_impact_gain
 			paranoid = medium_stress_impact_gain
 			vengeful = medium_stress_impact_gain
@@ -5965,7 +5978,7 @@ tournament_events.1253 = {
 		name = tournament_events.1253.a
 		trigger = { this = scope:favor_artifact.var:favor_giver }
 		custom_tooltip = reveal_illegitimate_pregnancy_to_real_father_tt
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			deceitful = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -5981,7 +5994,7 @@ tournament_events.1253 = {
 
 	option = { #Insist it is not true
 		name = tournament_events.1253.b
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -6384,7 +6397,7 @@ tournament_events.1260 = {
 		}
 		save_scope_as = admonish_duel
 		tournament_events_1260_duel_effect = yes
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = medium_stress_impact_gain
 			calm = medium_stress_impact_gain
 			patient = medium_stress_impact_gain
@@ -6412,7 +6425,7 @@ tournament_events.1260 = {
 		}
 		save_scope_as = diplomacy_duel
 		tournament_events_1260_duel_effect = yes
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = medium_stress_impact_gain
 			wrathful = medium_stress_impact_gain
 			impatient = medium_stress_impact_gain
@@ -6443,7 +6456,7 @@ tournament_events.1260 = {
 			}
 			remove_from_activity = scope:activity
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = medium_stress_impact_gain
 			calm = medium_stress_impact_gain
 			patient = medium_stress_impact_gain
@@ -6462,7 +6475,7 @@ tournament_events.1260 = {
 		name = tournament_events.1260.d
 		save_scope_as = encourage_duel
 		tournament_events_1260_duel_effect = yes
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = medium_stress_impact_gain
 			calm = medium_stress_impact_gain
 			patient = medium_stress_impact_gain
@@ -6580,7 +6593,7 @@ scripted_effect tournament_1270_versus_effect = {
 		var:contest_qualified_match_$CONTEST$ = { save_scope_as = congratulate_winner }
 	}
 	else = {
-		scope:activity = { #Unop: activity scope was missing
+		scope:activity = {
 			random_guest_subset = {
 				name = winner
 				phase = tournament_phase_$CONTEST$
@@ -6827,7 +6840,7 @@ tournament_events.1270 = {
 			modifier = tournament_congratulate_toast_opinion
 			opinion = 20
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = major_stress_impact_gain
 			callous = major_stress_impact_gain
 			shy = major_stress_impact_gain
@@ -6839,7 +6852,7 @@ tournament_events.1270 = {
 					has_relation_rival = scope:congratulate_winner
 				}
 			}
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				vengeful = major_stress_impact_gain
 			}
 		}
@@ -6877,7 +6890,7 @@ tournament_events.1270 = {
 			modifier = tournament_congratulate_opinion
 			opinion = 10
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = medium_stress_impact_gain
 			callous = medium_stress_impact_gain
 			shy = medium_stress_impact_gain
@@ -6889,7 +6902,7 @@ tournament_events.1270 = {
 					has_relation_rival = scope:congratulate_winner
 				}
 			}
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				vengeful = medium_stress_impact_gain
 			}
 		}
@@ -6921,7 +6934,7 @@ tournament_events.1270 = {
 			modifier = tournament_congratulate_vague_opinion
 			opinion = -10
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			humble = medium_stress_impact_gain
 			compassionate = medium_stress_impact_gain
 			forgiving = medium_stress_impact_gain
@@ -6955,7 +6968,7 @@ tournament_events.1270 = {
 	option = { # Walk away
 		name = tournament_events.1270.d
 		add_prestige = minor_prestige_loss
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			brave = medium_stress_impact_gain
 			gregarious = medium_stress_impact_gain
 		}
@@ -7212,7 +7225,7 @@ tournament_events.1280 = {
 			modifier = tournament_executed_workers_opinion
 			opinion = -20
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_gain
 			forgiving = medium_stress_impact_gain
 			calm = medium_stress_impact_gain
@@ -7235,10 +7248,10 @@ tournament_events.1280 = {
 		name = tournament_events.1280.b
 		if = {
 			limit = {
-				faith = {
+				rite = {
 					OR = {
-						trait_is_virtue = generous
-						trait_is_virtue = compassionate
+						trait_is_virtue_rite = generous
+						trait_is_virtue_rite = compassionate
 					}
 				}
 			}
@@ -7261,7 +7274,7 @@ tournament_events.1280 = {
 				years = 5
 			}
 		}		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			arrogant = medium_stress_impact_gain
 			callous = medium_stress_impact_gain
@@ -7288,7 +7301,7 @@ tournament_events.1280 = {
 			modifier = tournament_spared_workers_opinion
 			opinion = 10
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = medium_stress_impact_gain
 			wrathful = medium_stress_impact_gain
 			stubborn = medium_stress_impact_gain
@@ -7571,7 +7584,7 @@ tournament_events.1290 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_gain
 			forgiving = medium_stress_impact_gain
 			calm = medium_stress_impact_gain
@@ -7618,7 +7631,7 @@ tournament_events.1290 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = medium_stress_impact_gain
 			wrathful = medium_stress_impact_gain
 			stubborn = medium_stress_impact_gain
@@ -7676,7 +7689,7 @@ tournament_events.1290 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			improvident = medium_stress_impact_gain
 			generous = medium_stress_impact_gain
 			fickle = medium_stress_impact_gain
@@ -7818,7 +7831,7 @@ tournament_events.1300 = {
 			accolade_minor_glory_gain_with_checks_effect = yes
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = miniscule_stress_impact_loss
 			callous = medium_stress_impact_gain
 			humble = miniscule_stress_impact_loss
@@ -7955,7 +7968,7 @@ tournament_events.1300 = {
 			modifier = disappointed_opinion
 			opinion = -15
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			stubborn = miniscule_stress_impact_loss
 			fickle = medium_stress_impact_gain
 			arrogant = miniscule_stress_impact_loss
@@ -8029,7 +8042,7 @@ tournament_events.1300 = {
 			OPINION = 20
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = major_stress_impact_gain
 			lazy = medium_stress_impact_gain
 			content = minor_stress_impact_gain
@@ -8177,7 +8190,7 @@ tournament_events.1310 = {
 			years = 15
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = miniscule_stress_impact_loss
 			callous = medium_stress_impact_gain
 			humble = miniscule_stress_impact_loss
@@ -8270,7 +8283,7 @@ tournament_events.1310 = {
 			}
 		}		
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_gain
 			callous = miniscule_stress_impact_loss
 			humble = major_stress_impact_gain
@@ -8313,7 +8326,7 @@ tournament_events.1310 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_gain
 			callous = miniscule_stress_impact_loss
 			humble = major_stress_impact_gain
@@ -8482,7 +8495,7 @@ tournament_events.1311 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = miniscule_stress_impact_loss
 			callous = medium_stress_impact_gain
 			gregarious = miniscule_stress_impact_loss
@@ -8545,7 +8558,7 @@ tournament_events.1311 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = miniscule_stress_impact_loss
 			gregarious = miniscule_stress_impact_loss
 			humble = miniscule_stress_impact_loss
@@ -8576,7 +8589,7 @@ tournament_events.1311 = {
 
 		try_to_create_recurring_character_effect = { CHARACTER = scope:forgotten_knight }
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_gain
 			callous = miniscule_stress_impact_loss
 			sadistic = miniscule_stress_impact_loss
@@ -8644,7 +8657,7 @@ tournament_events.1312 = {
 						any_title_heir = { scope:foreign_knight_temp ?= this }
 					}
 				}
-				can_be_knight_trigger = { ARMY_OWNER = root } #Unop: To prevent this event to potentially select a non-martial gender as potential knight
+				can_be_knight_trigger = { ARMY_OWNER = root }
 			}
 		}
 		this = scope:host
@@ -8677,7 +8690,7 @@ tournament_events.1312 = {
 							any_title_heir = { this = scope:foreign_knight_temp }
 						}
 					}
-					can_be_knight_trigger = { ARMY_OWNER = root } #Unop: To prevent this event to potentially select a non-martial gender as potential knight
+					can_be_knight_trigger = { ARMY_OWNER = root }
 				}
 				weight = {
 					base = 1
@@ -8806,7 +8819,7 @@ tournament_events.1312 = {
 		}
 
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = miniscule_stress_impact_loss
 			greedy = medium_stress_impact_gain
 			content = minor_stress_impact_gain
@@ -8851,7 +8864,7 @@ tournament_events.1312 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = miniscule_stress_impact_loss
 			shy = medium_stress_impact_gain
 			humble = miniscule_stress_impact_loss
@@ -8886,7 +8899,7 @@ tournament_events.1312 = {
 			opinion = -30
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = medium_stress_impact_gain
 			shy = miniscule_stress_impact_loss
 			humble = medium_stress_impact_gain
@@ -8927,23 +8940,16 @@ tournament_events.1320 = {
 
 	trigger = {
 		is_ai = no # Just so we don't have to worry about non-player characters getting this
+		scope:activity = {
+			any_attending_character = {
+				culture.culture_number_of_counties > 0
+			}
+		}
 	}
 
 	immediate = {
 		scope:activity = {
-			random_attending_character = {
-				limit = { #Unop: We want at least 1 county of this culture to get a faith
-					culture = {
-						culture_number_of_counties > 0
-					}
-				}
-				culture = { save_scope_as = attending_culture }
-			}
-		}
-		scope:attending_culture = {
-			random_culture_county = {
-				faith = { save_scope_as = attending_faith }
-			}
+			grab_attending_culture_faith_barony_effect = yes
 		}
 		create_character = {
 			template = tournament_unusual_stranger
@@ -8992,7 +8998,7 @@ tournament_events.1320 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			paranoid = major_stress_impact_gain
 			impatient = medium_stress_impact_gain
 			trusting = miniscule_stress_impact_loss
@@ -9020,7 +9026,7 @@ tournament_events.1320 = {
 			silent_disappearance_effect = yes
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			paranoid = miniscule_stress_impact_loss
 			impatient = miniscule_stress_impact_loss
 			trusting = medium_stress_impact_gain
@@ -9120,7 +9126,7 @@ tournament_events.1321 = {
 			remove_character_flag = red_coin_origin
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			paranoid = miniscule_stress_impact_loss
 			just = miniscule_stress_impact_loss
 			generous = minor_stress_impact_loss
@@ -9159,7 +9165,7 @@ tournament_events.1321 = {
 			silent_disappearance_effect = yes
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			paranoid = minor_stress_impact_loss #Because you're not beholden to them any more
 			trusting = miniscule_stress_impact_loss #Because your faith was proven right
 			generous = minor_stress_impact_loss
@@ -9185,7 +9191,7 @@ tournament_events.1321 = {
 
 		trigger_event = tournament_events.1322
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = miniscule_stress_impact_loss
 			greedy = miniscule_stress_impact_loss
 			trusting = medium_stress_impact_gain
@@ -9231,7 +9237,7 @@ tournament_events.1322 = {
 			opinion = -80
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 		}
 
@@ -9335,7 +9341,7 @@ tournament_events.1330 = {
 			opinion = 20
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = miniscule_stress_impact_loss
 			compassionate = miniscule_stress_impact_loss
 			callous = medium_stress_impact_gain
@@ -9368,7 +9374,7 @@ tournament_events.1330 = {
 			opinion = 50
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = miniscule_stress_impact_loss
 			gregarious = miniscule_stress_impact_loss
 		}
@@ -9408,7 +9414,7 @@ tournament_events.1330 = {
 			opinion = -30
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = miniscule_stress_impact_loss
 			arbitrary = miniscule_stress_impact_loss
 			compassionate = minor_stress_impact_gain
@@ -9435,7 +9441,7 @@ tournament_events.1330 = {
 			opinion = 15
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			fickle = miniscule_stress_impact_loss
 			forgiving = miniscule_stress_impact_loss
 			vengeful = miniscule_stress_impact_gain
@@ -9498,15 +9504,15 @@ tournament_events.1331 = {
 			NOR = {
 				AND = {
 					has_trait = kinslayer_1
-					faith = { has_doctrine_parameter = kinslaying_any_dynasty_member_crime }
+					rite = { rite_has_parameter = kinslaying_any_dynasty_member_crime }
 				}
 				AND = {
 					has_trait = kinslayer_2
-					faith = { has_doctrine_parameter = kinslaying_extended_family_crime }
+					rite = { rite_has_parameter = kinslaying_extended_family_crime }
 				}
 				AND = {
 					has_trait = kinslayer_3
-					faith = { has_doctrine_parameter = kinslaying_close_kin_crime }
+					rite = { rite_has_parameter = kinslaying_close_kin_crime }
 				}
 			}
 			dread > 50
@@ -9522,7 +9528,7 @@ tournament_events.1331 = {
 			opinion = -35
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			sadistic = miniscule_stress_impact_loss
 			wrathful = miniscule_stress_impact_loss
 			brave = miniscule_stress_impact_loss
@@ -9568,7 +9574,7 @@ tournament_events.1331 = {
 			opinion = 40
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = miniscule_stress_impact_loss
 			compassionate = miniscule_stress_impact_loss
 			just = miniscule_stress_impact_loss
@@ -9593,15 +9599,15 @@ tournament_events.1331 = {
 			OR = {
 				AND = {
 					has_trait = kinslayer_1
-					faith = { has_doctrine_parameter = kinslaying_any_dynasty_member_crime }
+					rite = { rite_has_parameter = kinslaying_any_dynasty_member_crime }
 				}
 				AND = {
 					has_trait = kinslayer_2
-					faith = { has_doctrine_parameter = kinslaying_extended_family_crime }
+					rite = { rite_has_parameter = kinslaying_extended_family_crime }
 				}
 				AND = {
 					has_trait = kinslayer_3
-					faith = { has_doctrine_parameter = kinslaying_close_kin_crime }
+					rite = { rite_has_parameter = kinslaying_close_kin_crime }
 				}
 			}
 		}
@@ -9618,7 +9624,7 @@ tournament_events.1331 = {
 			opinion = -50
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = miniscule_stress_impact_loss
 			arbitrary = miniscule_stress_impact_loss
 			sadistic = miniscule_stress_impact_loss
@@ -9645,7 +9651,7 @@ tournament_events.1331 = {
 			OPINION = default_rival_opinion
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			content = medium_stress_impact_gain
 			fickle = medium_stress_impact_gain			
 			ambitious = miniscule_stress_impact_loss
@@ -9688,7 +9694,7 @@ tournament_events.1331 = {
 			opinion = 15
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			content = miniscule_stress_impact_loss
 			fickle = miniscule_stress_impact_loss			
 			ambitious = medium_stress_impact_gain
@@ -9772,7 +9778,7 @@ tournament_events.1332 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = miniscule_stress_impact_loss
 			arbitrary = miniscule_stress_impact_loss
 			content = minor_stress_impact_gain
@@ -9817,7 +9823,7 @@ tournament_events.1332 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = miniscule_stress_impact_loss
 			arbitrary = miniscule_stress_impact_loss
 			content = minor_stress_impact_gain
@@ -9855,7 +9861,7 @@ tournament_events.1332 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = miniscule_stress_impact_loss
 			impatient = miniscule_stress_impact_loss
 			generous = minor_stress_impact_gain
@@ -9885,7 +9891,7 @@ tournament_events.1332 = {
 			opinion = 40
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			content = miniscule_stress_impact_loss
 			gregarious = miniscule_stress_impact_loss
 			ambitious = medium_stress_impact_gain
@@ -9915,7 +9921,7 @@ tournament_events.1332 = {
 			OPINION = default_rival_opinion
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			stubborn = miniscule_stress_impact_loss
 			lazy = miniscule_stress_impact_loss			
 			just = miniscule_stress_impact_loss
@@ -9963,6 +9969,7 @@ tournament_events.1400 = {
 		is_ai = no
 		is_adult = yes
 		is_healthy = yes
+		is_in_guest_subset = { name = spectator }
 		NOR = {
 			has_trait = wounded
 			# you are tall enough
@@ -9999,8 +10006,8 @@ tournament_events.1400 = {
 		scope:activity = {
 			any_guest_subset_current_phase = {
 				name = spectator
-				NOT = { this = root } #Unop: This is needed for AI to not potentially self-select itself as the tall_person
-				NOT = { is_courtier_of = root } #Unop: This event would not have much sense if the tall_person is one of your courtier
+				this != root
+				NOT = { is_courtier_of = root }
 				is_ai = yes
 				is_healthy = yes
 				is_adult = yes
@@ -10092,8 +10099,8 @@ tournament_events.1400 = {
 			random_guest_subset_current_phase = {
 				name = spectator
 				limit = {
-					NOT = { this = root } #Unop: This is needed for AI to not potentially self-select itself as the tall_person
-					NOT = { is_courtier_of = root } #Unop: This event would not have much sense if the tall_person is one of your courtier
+					this != root
+					NOT = { is_courtier_of = root }
 					is_ai = yes
 					is_healthy = yes
 					is_adult = yes
@@ -10148,7 +10155,7 @@ tournament_events.1400 = {
 
 		add_prestige = minor_prestige_loss
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			wrathful = medium_stress_impact_loss
 			brave = miniscule_stress_impact_loss
 			impatient = miniscule_stress_impact_loss
@@ -10221,7 +10228,7 @@ tournament_events.1400 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			shy = medium_stress_impact_gain
 			gregarious = miniscule_stress_impact_gain
 		}
@@ -10282,7 +10289,7 @@ tournament_events.1400 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			shy = medium_stress_impact_gain
 			lazy = medium_stress_impact_gain
 			gregarious = miniscule_stress_impact_gain
@@ -10306,7 +10313,7 @@ tournament_events.1400 = {
 	option = {
 		name = tournament_events.1400.d
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			wrathful = minor_stress_impact_gain
 			arrogant = minor_stress_impact_gain
@@ -10545,7 +10552,7 @@ tournament_events.1401 = {
 			OPINION = default_rival_opinion
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = miniscule_stress_impact_loss
 			wrathful = miniscule_stress_impact_loss
 			arrogant = miniscule_stress_impact_loss
@@ -10576,7 +10583,7 @@ tournament_events.1401 = {
 			OPINION = default_friend_opinion
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			wrathful = medium_stress_impact_gain
 			arrogant = medium_stress_impact_gain
 			callous = medium_stress_impact_gain
@@ -10684,7 +10691,7 @@ tournament_events.1402 = {
 			OPINION = default_friend_opinion
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			wrathful = medium_stress_impact_gain
 			temperate = medium_stress_impact_gain
 			calm = minor_stress_impact_loss
@@ -10714,7 +10721,7 @@ tournament_events.1402 = {
 			opinion = -40
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			wrathful = minor_stress_impact_loss
 			temperate = minor_stress_impact_loss
@@ -10744,7 +10751,7 @@ tournament_events.1402 = {
 			years = 5
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			shy = minor_stress_impact_loss
 			calm = minor_stress_impact_loss
@@ -10791,53 +10798,31 @@ tournament_events.1403 = {
 				this = root
 			}
 		}
+		activity_tournament_has_prowess_contest_trigger = yes
 		scope:host = {
-			exists = cp:councillor_court_chaplain
-			cp:councillor_court_chaplain = {
+			cp:councillor_court_chaplain ?= {
 				is_ai = yes
 				is_adult = yes
 				location = root.location
-			}
-		}
-		scope:host = {
-			cp:councillor_court_chaplain ?= {
 				this != root
 			}
-		}
-		# Unop: Implement the check just above
-		scope:activity = {
-			OR = {
-				has_phase = tournament_phase_melee
-				has_phase = tournament_phase_joust
-				has_phase = tournament_phase_wrestling
-				has_phase = tournament_phase_duel
-			}
-		}
-
-		scope:host = { #Unop: Was missing the culture check for fighting clergy
-			AND = {
-				faith = {
-					NOR = {
-						has_doctrine_parameter = clergy_can_fight
-						has_doctrine_parameter = warmonger
-						has_doctrine_parameter = human_sacrifice_active
-					}
-				}
-				culture = {
-					NOT = {
-						has_cultural_parameter = culture_clergy_can_fight 
-					}
+			faith = { NOT = { has_doctrine_parameter = human_sacrifice_active } }
+			rite = {
+				NOR = {
+					rite_has_parameter = clergy_can_fight
+					rite_has_parameter = warmonger
 				}
 			}
-		} 
+			culture = { NOT = { has_cultural_parameter = culture_clergy_can_fight } }
+		}
 	}
 
 	weight_multiplier = {
 		base = 1
 		modifier = {
 			factor = 2
-			scope:host.faith = {
-				has_doctrine_parameter = pacifist_opinion_active
+			scope:host.rite = {
+				rite_has_parameter = pacifist
 			}
 		}
 	}
@@ -10856,20 +10841,14 @@ tournament_events.1403 = {
 		name = tournament_events.1403.a
 		trigger = {
 			has_trait = zealous
-			AND = { #Unop: Was missing the culture check for fighting clergy
-				faith = {
-					NOR = {
-						has_doctrine_parameter = clergy_can_fight
-						has_doctrine_parameter = warmonger
-						has_doctrine_parameter = human_sacrifice_active
-					}
-				}
-				culture = { 
-					NOT = {
-						has_cultural_parameter = culture_clergy_can_fight 
-					}
+			faith = { NOT = { has_doctrine_parameter = human_sacrifice_active } }
+			rite = {
+				NOR = {
+					rite_has_parameter = clergy_can_fight
+					rite_has_parameter = warmonger
 				}
 			}
+			culture = { NOT = { has_cultural_parameter = culture_clergy_can_fight } }
 		}
 
 		if = {
@@ -10913,7 +10892,7 @@ tournament_events.1403 = {
 			opinion = 30
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_loss
 			wrathful = miniscule_stress_impact_loss
 			honest = miniscule_stress_impact_loss
@@ -10949,7 +10928,7 @@ tournament_events.1403 = {
 			opinion = -40
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			wrathful = miniscule_stress_impact_loss
 			calm = medium_stress_impact_gain
 			cynical = miniscule_stress_impact_loss
@@ -10973,7 +10952,7 @@ tournament_events.1403 = {
 	option = {
 		name = tournament_events.1403.c
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			calm = miniscule_stress_impact_loss
 			forgiving = miniscule_stress_impact_loss
 			shy = miniscule_stress_impact_loss
@@ -11106,9 +11085,10 @@ tournament_events.1404 = {
 	option = {
 		name = tournament_events.1404.a
 		trigger = {
-			is_attracted_to_gender_of = scope:gossip_friend
+			matching_gender_and_sexuality_with_trigger = { CHARACTER = scope:gossip_friend }
+			might_cheat_on_every_partner_trigger = yes
 			scope:gossip_friend = {
-				is_attracted_to_gender_of = root
+				might_cheat_on_every_partner_trigger = yes
 			}
 		}
 
@@ -11133,7 +11113,7 @@ tournament_events.1404 = {
 
 		try_to_create_recurring_character_effect = { CHARACTER = scope:gossip_friend }
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			lustful = miniscule_stress_impact_loss
 			chaste = medium_stress_impact_gain
 			honest = miniscule_stress_impact_loss
@@ -11187,7 +11167,7 @@ tournament_events.1404 = {
 
 		try_to_create_recurring_character_effect = { CHARACTER = scope:gossip_friend }
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = miniscule_stress_impact_loss
 			shy = medium_stress_impact_gain
 			honest = miniscule_stress_impact_loss
@@ -11213,7 +11193,11 @@ tournament_events.1404 = {
 
 		if = {
 			limit = {
-				is_attracted_to_gender_of = scope:knight_1
+				matching_gender_and_sexuality_with_trigger = { CHARACTER = scope:knight_1 }
+				might_cheat_on_every_partner_trigger = yes
+				scope:knight_1 = {
+					might_cheat_on_every_partner_trigger = yes
+				}
 			}
 
 			progress_towards_lover_effect = {
@@ -11256,7 +11240,7 @@ tournament_events.1404 = {
 
 		try_to_create_recurring_character_effect = { CHARACTER = scope:knight_1 }
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			lustful = miniscule_stress_impact_loss
 			honest = miniscule_stress_impact_loss
 			gregarious = miniscule_stress_impact_loss
@@ -11279,7 +11263,11 @@ tournament_events.1404 = {
 
 		if = {
 			limit = {
-				is_attracted_to_gender_of = scope:knight_2
+				matching_gender_and_sexuality_with_trigger = { CHARACTER = scope:knight_2 }
+				might_cheat_on_every_partner_trigger = yes
+				scope:knight_2 = {
+					might_cheat_on_every_partner_trigger = yes
+				}
 			}
 
 			progress_towards_lover_effect = {
@@ -11322,7 +11310,7 @@ tournament_events.1404 = {
 
 		try_to_create_recurring_character_effect = { CHARACTER = scope:knight_2 }
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			lustful = miniscule_stress_impact_loss
 			honest = miniscule_stress_impact_loss
 			gregarious = miniscule_stress_impact_loss
@@ -11343,7 +11331,7 @@ tournament_events.1404 = {
 	option = {
 		name = tournament_events.1404.e
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = minor_stress_impact_gain
 			shy = miniscule_stress_impact_loss
 			honest = minor_stress_impact_gain
@@ -11380,7 +11368,7 @@ tournament_events.1405 = {
 
 	trigger = {
 		scope:activity = {
-			NOT = { has_current_phase = tournament_phase_ceremony } #Unop No flirting during the ceremony
+			NOT = { has_current_phase = tournament_phase_ceremony }
 			any_guest_subset_current_phase = {
 				name = spectator
 				is_ai = yes
@@ -11389,9 +11377,7 @@ tournament_events.1405 = {
 				is_attracted_to_gender_of = root
 				OR = { # Ensure they either don't have a spouse or are OK with cheating on them
 					NOT = {
-						any_spouse = {
-							exists = this
-						}
+						any_consort = {}
 					}
 					might_cheat_on_every_partner_trigger = yes
 				}
@@ -11417,9 +11403,7 @@ tournament_events.1405 = {
 					is_attracted_to_gender_of = root
 					OR = { # Ensure they either don't have a spouse or are OK with cheating on them
 						NOT = {
-							any_spouse = {
-								exists = this
-							}
+							any_consort = {}
 						}
 						might_cheat_on_every_partner_trigger = yes
 					}
@@ -11459,7 +11443,7 @@ tournament_events.1405 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			chaste = medium_stress_impact_gain
 			shy = minor_stress_impact_gain
 			gregarious = miniscule_stress_impact_loss
@@ -11488,7 +11472,7 @@ tournament_events.1405 = {
 			opinion = 50
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			chaste = minor_stress_impact_gain
 			shy = minor_stress_impact_gain
 			gregarious = miniscule_stress_impact_loss
@@ -11514,7 +11498,7 @@ tournament_events.1405 = {
 			years = 10
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = miniscule_stress_impact_loss
 			shy = miniscule_stress_impact_loss
 			arrogant = miniscule_stress_impact_loss
@@ -11599,13 +11583,13 @@ tournament_events.1406 = {
 			add_prowess_skill = 1
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_gain
 			gregarious = medium_stress_impact_gain
 			calm = minor_stress_impact_gain
 			patient = minor_stress_impact_gain
 			lazy = minor_stress_impact_gain
-			scholar = minor_stress_impact_loss
+			erudite = minor_stress_impact_loss
 			callous = minor_stress_impact_loss
 			sadistic = minor_stress_impact_loss
 		}
@@ -11634,7 +11618,7 @@ tournament_events.1406 = {
 			opinion = 50
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = miniscule_stress_impact_loss
 			gregarious = miniscule_stress_impact_loss
 			callous = medium_stress_impact_gain
@@ -11663,7 +11647,7 @@ tournament_events.1406 = {
 			OPINION = default_friend_opinion
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			calm = miniscule_stress_impact_loss
 			content = miniscule_stress_impact_loss
@@ -11712,19 +11696,19 @@ tournament_events.1407 = {
 			this != root
 			involved_activity = scope:activity
 			activity_is_competing_trigger = yes
-			save_temporary_scope_as = temp_competing_family #Unop: In triggers, scope are temporary and should be label as such (to avoid Trying to add the temporary target 'competing_family' which has the same name as a permanent target)
+			save_temporary_scope_as = temp_competing_family
 		}
 		scope:activity = {
 			any_guest_subset_current_phase = { # There is a member of the crowd who dislikes their performance
 				name = spectator
 				NOR = {
 					this = root
-					is_close_family_of = scope:temp_competing_family #Unop: use the renamed scope above
-					has_relation_lover = scope:temp_competing_family #Unop: use the renamed scope above
-					has_relation_friend = scope:temp_competing_family #Unop: use the renamed scope above
-					has_relation_best_friend = scope:temp_competing_family #Unop: use the renamed scope above
+					is_close_family_of = scope:temp_competing_family
+					has_relation_lover = scope:temp_competing_family
+					has_relation_friend = scope:temp_competing_family
+					has_relation_best_friend = scope:temp_competing_family
 					opinion = {
-						target = scope:temp_competing_family #Unop: use the renamed scope above
+						target = scope:temp_competing_family
 						value >= low_positive_opinion
 					}
 				}
@@ -11833,7 +11817,7 @@ tournament_events.1407 = {
 			opinion = -35
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			wrathful = miniscule_stress_impact_loss
 			sadistic = miniscule_stress_impact_loss
 			just = miniscule_stress_impact_loss
@@ -11944,7 +11928,7 @@ tournament_events.1407 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			wrathful = medium_stress_impact_gain
 			calm = miniscule_stress_impact_loss
 			just = miniscule_stress_impact_loss
@@ -11974,7 +11958,7 @@ tournament_events.1407 = {
 			activity_tournament_change_contestant_score_effect = { SCORE = decrease_minor }
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			wrathful = medium_stress_impact_gain
 			calm = miniscule_stress_impact_loss
 			just = medium_stress_impact_gain
@@ -12076,7 +12060,7 @@ tournament_events.1408 = {
 			years = 5
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = miniscule_stress_impact_loss
 			greedy = minor_stress_impact_gain
 		}
@@ -12195,7 +12179,7 @@ tournament_events.1408 = {
 			}
 		}
 
-		stress_impact = { #Keep this small since we're handing out stress gains in failed results
+		stress_and_fulfillment_impact = { #Keep this small since we're handing out stress gains in failed results
 			impatient = miniscule_stress_impact_loss
 			patient = minor_stress_impact_gain
 		}
@@ -12218,7 +12202,7 @@ tournament_events.1408 = {
 			years = 5
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			diligent = minor_stress_impact_gain
 			lazy = miniscule_stress_impact_loss
 		}
@@ -12342,7 +12326,7 @@ tournament_events.1409 = {
 			OPINION = default_friend_opinion
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = miniscule_stress_impact_loss
 			humble = miniscule_stress_impact_loss
 			shy = minor_stress_impact_gain
@@ -12374,7 +12358,7 @@ tournament_events.1409 = {
 			OPINION = default_rival_opinion
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = minor_stress_impact_gain
 			humble = minor_stress_impact_gain
 			shy = minor_stress_impact_gain
@@ -12401,7 +12385,7 @@ tournament_events.1409 = {
 			opinion = -15
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			shy = medium_stress_impact_loss #throwing shy a bone here
 			gregarious = minor_stress_impact_gain
 		}
@@ -12563,7 +12547,7 @@ tournament_events.1410 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			brave = miniscule_stress_impact_loss
 			craven = minor_stress_impact_gain
 			calm = minor_stress_impact_gain
@@ -12631,7 +12615,7 @@ tournament_events.1410 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			brave = minor_stress_impact_gain
 			craven = miniscule_stress_impact_loss
 			calm = miniscule_stress_impact_loss
@@ -12685,7 +12669,7 @@ tournament_events.1410 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			diligent = minor_stress_impact_gain
 			lazy = miniscule_stress_impact_loss
 			just = minor_stress_impact_gain
@@ -12864,11 +12848,11 @@ scripted_effect tournament_murder_intent_sabotage_effect = {
 	}
 	if = {
 		limit = { has_relation_rival = scope:murder_target }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 		}
 	}
-	stress_impact = {
+	stress_and_fulfillment_impact = {
 		humble = medium_stress_impact_gain
 		honest = medium_stress_impact_gain
 		compassionate = medium_stress_impact_gain
@@ -13114,7 +13098,7 @@ tournament_events.6000 = { # Setup for contest murder attempts
 		trigger = {
 			NOT = { exists = scope:murder_match }
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = medium_stress_impact_gain
 			deceitful = medium_stress_impact_gain
 			callous = medium_stress_impact_gain
@@ -13258,8 +13242,8 @@ tournament_events.6010 = {
 	override_background = {
 		reference = tavern
 		trigger = {
-			scope:murder_target.faith = {
-				NOT = { trait_is_sin = drunkard }
+			scope:murder_target.rite = {
+				NOT = { trait_is_sin_rite = drunkard }
 			}
 		}
 	}
@@ -13363,7 +13347,7 @@ tournament_events.6010 = {
 			id = tournament_events.6011
 			days = { 2 3 }
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			craven = medium_stress_impact_gain
 			just = medium_stress_impact_gain
 			forgiving = medium_stress_impact_gain
@@ -13447,7 +13431,7 @@ tournament_events.6010 = {
 			id = tournament_events.6011
 			days = { 2 3 }
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			craven = medium_stress_impact_gain
 			just = medium_stress_impact_gain
 			forgiving = medium_stress_impact_gain
@@ -13466,7 +13450,7 @@ tournament_events.6010 = {
 
 	option = { # Do nothing
 		name = tournament_events.6010.c
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			brave = medium_stress_impact_gain
 			arbitrary = medium_stress_impact_gain
 			vengeful = medium_stress_impact_gain
@@ -13734,7 +13718,7 @@ tournament_events.6011 = { # Murderer event
 				type = secret_murder
 				target = scope:murder_target
 			}
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				paranoid = medium_stress_impact_gain
 			}
 		}
@@ -13793,7 +13777,7 @@ tournament_events.6011 = { # Murderer event
 			}
 		}
 		trigger_event = tournament_events.6013
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			craven = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -13808,7 +13792,7 @@ tournament_events.6011 = { # Murderer event
 	option = { # Give up
 		name = tournament_events.6011.c
 		trigger = { exists = scope:poison_second_chance }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			brave = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -14040,7 +14024,7 @@ tournament_events.6013 = { # Second chance - Murderer event
 				type = secret_murder
 				target = scope:murder_target
 			}
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				paranoid = medium_stress_impact_gain
 			}
 		}
@@ -14089,15 +14073,15 @@ tournament_events.6014 = { # Second chance - Victim event
 	immediate = {
 		if = {
 			limit = { exists = scope:second_chance_success }
-			death = { 
+			death = {
 				death_reason = death_murder
-				killer = scope:murder_actor #Unop: The killer is needed to validate the intent
+				killer = scope:murder_actor
 			}
 		}
 		else = {
 			increase_wounds_effect = { REASON = murder }
 			attempted_murder_opinion_effect = {
-				MURDERER = scope:murder_actor #Unop: was 'root' but root is the murder_target
+				MURDERER = scope:murder_actor
 				VICTIM = scope:murder_target
 			}
 		}
@@ -14244,9 +14228,9 @@ scripted_effect tournament_win_intent_sabotage_effect = {
 	}
 	if = {
 		limit = { has_relation_rival = scope:sabotage_target }
-		stress_impact = { base = minor_stress_impact_loss }
+		stress_and_fulfillment_impact = { base = minor_stress_impact_loss }
 	}
-	stress_impact = {
+	stress_and_fulfillment_impact = {
 		humble = medium_stress_impact_gain
 		honest = medium_stress_impact_gain
 		compassionate = medium_stress_impact_gain
@@ -14574,80 +14558,53 @@ tournament_events.6051 = { # Sabotage Outcome
 						exists = scope:sabotage_disqualified
 					}
 				}
-				#Unop: Rewrite this a little, the hidden_effect was actually potentially trying to override the decision made by the player in tournament_events.6052
-				#Unop: Seeing the hidden_effect outside of the original IF make me feel that this event was reworked a little
 				scope:host = {
 					if = {
-						limit = { is_ai = yes }
-						if = {
-							limit = { this = scope:sabotage_target }
-							hidden_effect = {
-								random = {
-									chance = 75
-									opinion_modifier = {
-										who = scope:host
-										opinion_target = scope:sabotage_actor #Unop: Change from "root" just to be clear
-										multiplier = 0.33
-									}
-									save_scope_as = sabotage_disqualified
+						limit = { is_ai = yes }  # double check, should always AI unless host died during delay
+						hidden_effect = {
+							random = {
+								chance = 50
+								modifier = {
+									scope:host = scope:sabotage_target
+									add = 25
 								}
+								opinion_modifier = {
+									who = scope:host
+									opinion_target = scope:sabotage_target
+									multiplier = 0.33
+								}
+								save_scope_as = sabotage_disqualified
 							}
 						}
-						else = {
-							random_list = {
-								100 = {
-									opinion_modifier = {
-										who = scope:host
-										opinion_target = scope:sabotage_target
-									}
-									modifier = {
-										scope:host = scope:sabotage_target
-										add = 200
-									}
-									save_scope_as = sabotage_disqualified
+					}
+					else = {
+						random_list = {
+							100 = {							
+								opinion_modifier = {
+									who = scope:host
+									opinion_target = scope:sabotage_target
 								}
-								50 = {
-									opinion_modifier = {
-										who = scope:host
-										opinion_target = scope:sabotage_actor
-									}
-									reverse_add_opinion = {
-										target = scope:sabotage_target
-										modifier = tournament_tolerated_sabotage_opinion
-										opinion = -15
-									}
+								modifier = {
+									scope:host = scope:sabotage_target
+									add = 200
+								}
+								save_scope_as = sabotage_disqualified
+							}
+							50 = {
+								opinion_modifier = {
+									who = scope:host
+									opinion_target = scope:sabotage_actor
+								}
+								reverse_add_opinion = {
+									target = scope:sabotage_target
+									modifier = tournament_tolerated_sabotage_opinion
+									opinion = -15
 								}
 							}
 						}
 					}
 				}
-				#Unop: The rest of this effect have been moved into the option as the scope is defined inside a random an it mess the tooltip outcome (as the random from the immediate is garanteed)
 			}
-		}
-	}
-
-	option = {
-		name = {
-			trigger = { exists = scope:sabotage_success }
-			text = tournament_events.6051.a
-		}
-		name = {
-			trigger = { exists = scope:sabotage_disqualified }
-			text = tournament_events.6051.a.disqualified
-		}
-		name = {
-			trigger = { exists = scope:sabotage_detected }
-			text = tournament_events.6051.a.detected
-		}
-		name = {
-			trigger = {
-				NOR = {
-					exists = scope:sabotage_success
-					exists = scope:sabotage_disqualified
-					exists = scope:sabotage_detected
-				}
-			}
-			text = tournament_events.6051.a.failure
 		}
 		if = {
 			limit = { exists = scope:sabotage_disqualified }
@@ -14661,57 +14618,33 @@ tournament_events.6051 = { # Sabotage Outcome
 						}
 					}
 				}
-				#Unop Only the aptitude was removed, so the saboteur kept being matched and could reach the finals.
-				# Route by phase to the proper disqualification effect, as the sibling event tournament_events.6052 does.
-				#remove_variable = contest_aptitude
-				#add_character_flag = {
-				#	flag = disqualified_contest_flag #Unop: Use correct flag
-				#	months = 2
-				#}
-				#scope:activity = {
-				#	add_activity_log_entry = {
-				#		key = tournament_disqualified_log
-				#		score = 50
-				#		tags = { contestant removal }
-				#		character = scope:sabotage_actor
-				#		target = scope:host
-				#
-				#		# Effects
-				#		custom_description = {
-				#			text =  tournament_contest_disqualify_tt
-				#			subject = scope:sabotage_actor # DISQUALIFIED
-				#		}
-				#		scope:sabotage_actor = {
-				#			if = {
-				#				limit = { is_ai = yes }
-				#				add_opinion = {
-				#					target = scope:host
-				#					modifier = tournament_disqualified_opinion
-				#					opinion = -15
-				#				}
-				#			}
-				#		}
-				#	}
-				#}
+				remove_variable = contest_aptitude
+				add_character_flag = {
+					flag = resigned_contest_flag
+					months = 2
+				}
 				scope:activity = {
-					switch = {
-						trigger = has_current_phase
-						# Versus Contests require more specific script
-						tournament_phase_joust = {
-							tournament_contest_versus_disqualification_effect = { DISQUALIFIED = scope:sabotage_actor MATCH = scope:sabotage_target CONTEST = joust SKILL = horse }
+					add_activity_log_entry = {
+						key = tournament_disqualified_log
+						score = 50
+						tags = { contestant removal }
+						character = scope:sabotage_actor
+						target = scope:host
+
+						# Effects
+						custom_description = {
+							text =  tournament_contest_disqualify_tt
+							subject = scope:sabotage_actor # DISQUALIFIED
 						}
-						tournament_phase_wrestling = {
-							tournament_contest_versus_disqualification_effect = { DISQUALIFIED = scope:sabotage_actor MATCH = scope:sabotage_target CONTEST = wrestling SKILL = pugilism }
-						}
-						tournament_phase_duel = {
-							tournament_contest_versus_disqualification_effect = { DISQUALIFIED = scope:sabotage_actor MATCH = scope:sabotage_target CONTEST = duel SKILL = foot }
-						}
-						tournament_phase_board_game = {
-							tournament_contest_versus_disqualification_effect = { DISQUALIFIED = scope:sabotage_actor MATCH = scope:sabotage_target CONTEST = board_game SKILL = board_game }
-						}
-						# Non-Versus contests
-						fallback = {
-							tournament_contest_disqualification_effect = { DISQUALIFIED = scope:sabotage_actor }
+						scope:sabotage_actor = {
+							if = {
+								limit = { is_ai = yes }
+								add_opinion = {
+									target = scope:host
+									modifier = tournament_disqualified_opinion
+									opinion = -15
+								}
+							}
 						}
 					}
 				}
@@ -14740,6 +14673,31 @@ tournament_events.6051 = { # Sabotage Outcome
 					}
 				}
 			}
+		}
+	}
+
+	option = {
+		name = {
+			trigger = { exists = scope:sabotage_success }
+			text = tournament_events.6051.a
+		}
+		name = {
+			trigger = { exists = scope:sabotage_disqualified }
+			text = tournament_events.6051.a.disqualified
+		}
+		name = {
+			trigger = { exists = scope:sabotage_detected }
+			text = tournament_events.6051.a.detected
+		}
+		name = {
+			trigger = {
+				NOR = {
+					exists = scope:sabotage_success
+					exists = scope:sabotage_disqualified
+					exists = scope:sabotage_detected
+				}
+			}
+			text = tournament_events.6051.a.failure
 		}
 	}
 
@@ -14916,12 +14874,12 @@ tournament_events.6052 = { # Host disqualification decision
 		scope:sabotage_actor = {
 			accolade_medium_glory_loss_with_checks_effect = yes
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = medium_stress_impact_gain
 		}
 		if = {
 			limit = { this = scope:sabotage_target }
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				forgiving = medium_stress_impact_gain
 			}
 		}
@@ -14968,12 +14926,12 @@ tournament_events.6052 = { # Host disqualification decision
 				OPINION = default_friend_opinion
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = medium_stress_impact_gain
 		}
 		if = {
 			limit = { this = scope:sabotage_target }
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				vengeful = medium_stress_impact_gain
 			}
 		}
@@ -15183,14 +15141,14 @@ tournament_events.6500 = {
 			OR = {
 				AND = {
 					is_male = yes
-					faith = {
-						NOT = { has_doctrine_parameter = adultery_male_accepted }
+					rite = {
+						NOT = { rite_has_parameter = adultery_male_accepted }
 					}
 				}
 				AND = {
 					is_female = yes
-					faith = {
-						NOT = { has_doctrine_parameter = adultery_female_accepted }
+					rite = {
+						NOT = { rite_has_parameter = adultery_female_accepted }
 					}
 				}
 			}
@@ -15209,9 +15167,7 @@ tournament_events.6500 = {
 
 	trigger = {
 		#Standard checks.
-		scope:activity = {
-			NOT = { has_current_phase = tournament_phase_melee } #Unop: Implement the comment just above
-		}
+		activity_tournament_team_contest_trigger = no
 		has_activity_intent = woo_attendee_intent
 		intent_target = { is_alive = yes }
 		activity_is_valid_tournament_contestant = yes
@@ -15229,12 +15185,11 @@ tournament_events.6500 = {
 			modifier = tournament_vowed_to_lose_opinion
 			opinion = 5
 		}
-		#Unop: Set this here instead of in the after that would affect both option
 		set_variable = {
 			name = vowed_to_lose
 			value = scope:woo_target
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			stubborn = medium_stress_impact_gain
 			arrogant = medium_stress_impact_gain
 			ambitious = medium_stress_impact_gain
@@ -15257,7 +15212,7 @@ tournament_events.6500 = {
 			modifier = tournament_refused_to_lose_opinion
 			opinion = -10
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			fickle = medium_stress_impact_gain
 			humble = medium_stress_impact_gain
 			content = medium_stress_impact_gain
@@ -15274,11 +15229,6 @@ tournament_events.6500 = {
 	}
 
 	after = {
-		#Unop: Set this only if we actually accept to lose in option A
-		#set_variable = {
-		#	name = vowed_to_lose
-		#	value = scope:woo_target
-		#}
 		remove_character_flag = wear_armor
 	}
 }
@@ -15328,6 +15278,9 @@ tournament_events.6510 = {
 	trigger = {
 		#DLC check.
 		#has_ep2_dlc_trigger = yes
+		scope:activity = {
+			NOT = { has_current_phase = tournament_phase_ceremony } # prevent following events fire after activity end
+		}
 		
 		#Standard checks.
 		has_activity_intent = woo_attendee_intent
@@ -15357,7 +15310,7 @@ tournament_events.6510 = {
 			name = woo_approach
 			value = flag:dedicate
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			callous = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -15375,7 +15328,7 @@ tournament_events.6510 = {
 			name = woo_approach
 			value = flag:dismiss
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			humble = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -15393,7 +15346,7 @@ tournament_events.6510 = {
 			name = woo_approach
 			value = flag:praise
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -15411,7 +15364,7 @@ tournament_events.6510 = {
 			name = woo_approach
 			value = flag:god
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			cynical = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -15833,19 +15786,7 @@ tournament_events.6900 = {
 				}
 				50 = {
 					scope:activity = {
-						random_attending_character = {
-							limit = { #Unop: We want at least 1 county of this culture to get a faith
-								culture = {
-									culture_number_of_counties > 0
-								}
-							}
-							culture = { save_scope_as = attending_culture }
-						}
-					}
-					scope:attending_culture = {
-						random_culture_county = {
-							faith = { save_scope_as = attending_faith }
-						}
+						grab_attending_culture_faith_barony_effect = yes
 					}
 					create_character = {
 						template = tournament_horse_character
@@ -15975,7 +15916,7 @@ tournament_events.6900 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -16060,7 +16001,7 @@ tournament_events.6900 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = medium_stress_impact_gain
 			greedy = minor_stress_impact_gain
 		}
@@ -16160,7 +16101,7 @@ tournament_events.6900 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			humble = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -16184,7 +16125,7 @@ tournament_events.6900 = {
 			modifier = tournament_lancer_vassal_tyranny_opinion
 			opinion = -10
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -16199,7 +16140,7 @@ tournament_events.6900 = {
 	option = { # Give up
 		name = tournament_events.6900.e
 		scope:local_lancer = { set_employer = scope:bidder }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			humble = medium_stress_impact_gain
 			generous = medium_stress_impact_gain
 			greedy = medium_stress_impact_gain
@@ -16229,7 +16170,7 @@ tournament_events.6900 = {
 		scope:local_lancer = {
 			remove_character_flag = wear_armor
 		}
-		hidden_effect = { #Unop: To not show 50% Nothing happen twice to players...
+		hidden_effect = {
 			random_list = {
 				1 = {
 					try_to_create_recurring_character_effect = { CHARACTER = scope:local_lancer }
@@ -16279,31 +16220,19 @@ tournament_events.7000 = {
 				culture = { has_cultural_parameter = martial_custom_male_only_combatant }
 			}
 			AND = {
-				scope:host.faith = { has_doctrine_parameter = combatant_must_be_female_if_no_roco }
-				faith = { has_doctrine_parameter = combatant_must_be_female_if_no_roco }
+				scope:host.rite = { rite_has_parameter = combatant_must_be_female_if_no_roco }
+				rite = { rite_has_parameter = combatant_must_be_female_if_no_roco }
 			}
 			AND = {
-				scope:host.faith = { has_doctrine_parameter = combatant_must_be_male_if_no_roco }
-				faith = { has_doctrine_parameter = combatant_must_be_male_if_no_roco }
+				scope:host.rite = { rite_has_parameter = combatant_must_be_male_if_no_roco }
+				rite = { rite_has_parameter = combatant_must_be_male_if_no_roco }
 			}
 		}
 	}
 
 	immediate = {
 		scope:activity = {
-			random_attending_character = {
-				limit = { #Unop: We want at least 1 county of this culture to get a faith
-					culture = {
-						culture_number_of_counties > 0
-					}
-				}
-				culture = { save_scope_as = attending_culture }
-			}
-		}
-		scope:attending_culture = {
-			random_culture_county = {
-				faith = { save_scope_as = attending_faith }
-			}
+			grab_attending_culture_faith_barony_effect = yes
 		}
 		create_character = {
 			template = tournament_mulan_character
@@ -16365,7 +16294,7 @@ tournament_events.7000 = {
 			target = scope:mulan
 			opinion = 20
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			trusting = miniscule_stress_impact_loss
 			content = miniscule_stress_impact_loss
 			ambitious = minor_stress_impact_gain
@@ -16410,7 +16339,7 @@ tournament_events.7000 = {
 			target = scope:mulan
 			opinion = 40
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			trusting = miniscule_stress_impact_loss
 			content = miniscule_stress_impact_loss
 			ambitious = medium_stress_impact_gain
@@ -16440,7 +16369,7 @@ tournament_events.7000 = {
 			}
 			silent_disappearance_effect = yes
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = miniscule_stress_impact_loss
 			paranoid = miniscule_stress_impact_loss
 			content = medium_stress_impact_gain

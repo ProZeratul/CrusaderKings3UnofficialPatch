@@ -242,15 +242,8 @@ independence_faction_war = {
 				value = medium_prestige_value
 				multiply = -1
 			}
-			
-			#Unop Use the authority helpers so all rulers with an authority/bureaucracy law lose authority, not just Feudal/Tribal
-			decrease_crown_authority_effect = yes
-			decrease_tribal_authority_effect = yes
-			decrease_imperial_bureaucracy_effect = yes
-			unop_decrease_celestial_bureaucracy_effect = yes
-			unop_decrease_meritocratic_bureaucracy_effect = yes
-			unop_decrease_japanese_bureaucracy_effect = yes
-			decrease_nomadic_authority_effect = yes
+
+			change_authority_effect = { CHANGE = -1 }
 		}
 		resolve_title_and_vassal_change = scope:change
 
@@ -296,7 +289,7 @@ independence_faction_war = {
 	on_white_peace = {
 		scope:attacker = {
 			show_pow_release_message_effect = yes
-			stress_impact = {
+			stress_and_fulfillment_impact = {
  				ambitious = medium_stress_impact_gain
  				arrogant = medium_stress_impact_gain
  			}
@@ -313,7 +306,7 @@ independence_faction_war = {
 		}
 
 		scope:defender = {
-			stress_impact = {
+			stress_and_fulfillment_impact = {
  				arrogant = medium_stress_impact_gain
  			}
 
@@ -410,7 +403,7 @@ independence_faction_war = {
 
 	max_attacker_score_from_battles = 100
 	max_defender_score_from_battles = 50
-	
+
 	max_defender_score_from_occupation = 150
 	max_attacker_score_from_occupation = 150
 
@@ -448,36 +441,6 @@ liberty_faction_war = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					scope:defender = {
-						is_local_player = yes
-						government_has_flag = government_is_administrative
-					}
-				}
-				desc = liberty_war_victory_defender_desc_admin
-			}
-			triggered_desc = {
-				trigger = {
-					scope:defender = { government_has_flag = government_is_administrative }
-				}
-				desc = liberty_war_victory_desc_admin
-			}
-			triggered_desc = {
-				trigger = {
-					scope:defender = {
-						is_local_player = yes
-						government_has_flag = government_is_tribal
-					}
-				}
-				desc = liberty_war_victory_defender_desc_tribal
-			}
-			triggered_desc = {
-				trigger = {
-					scope:defender = { government_has_flag = government_is_tribal }
-				}
-				desc = liberty_war_victory_desc_tribal
-			}
-			triggered_desc = {
-				trigger = {
 					scope:defender = { is_local_player = yes }
 				}
 				desc = liberty_war_victory_defender_desc
@@ -496,45 +459,7 @@ liberty_faction_war = {
 		faction_war_end_defeat_legitimacy_effect = yes
 
 		scope:defender = {
-			switch = {
-				trigger = has_realm_law_in_group
-				celestial_bureaucracy = {
-					change_realm_law_level = {
-						law_group = celestial_bureaucracy
-						change = -1
-					}
-				}
-				imperial_bureaucracy = {
-					change_realm_law_level = {
-						law_group = imperial_bureaucracy
-						change = -1
-					}
-				}
-				japanese_bureaucracy = {
-					change_realm_law_level = {
-						law_group = japanese_bureaucracy
-						change = -1
-					}
-				}
-				meritocratic_bureaucracy = {
-					change_realm_law_level = {
-						law_group = meritocratic_bureaucracy
-						change = -1
-					}
-				}
-				crown_authority = {
-					change_realm_law_level = {
-						law_group = crown_authority
-						change = -1
-					}
-				}
-				tribal_authority = {
-					change_realm_law_level = {
-						law_group = tribal_authority
-						change = -1
-					}
-				}
-			}
+			change_authority_effect = { CHANGE = -1 }
 
 			# MERITOCRATIC EMPIRE CEREMONIAL MONARCH/REGENCY CREATION
 			tgp_create_meritocratic_ruling_regent_title_effect = yes
@@ -634,7 +559,7 @@ liberty_faction_war = {
 	on_white_peace = {
 		scope:attacker = {
 			show_pow_release_message_effect = yes
-			stress_impact = {
+			stress_and_fulfillment_impact = {
  				ambitious = medium_stress_impact_gain
  				arrogant = medium_stress_impact_gain
  			}
@@ -650,7 +575,7 @@ liberty_faction_war = {
 			}
 		}
 		scope:defender = {
-			stress_impact = {
+			stress_and_fulfillment_impact = {
  				arrogant = medium_stress_impact_gain
  			}
 			add_character_flag = {
@@ -729,7 +654,7 @@ liberty_faction_war = {
 
 	max_attacker_score_from_battles = 100
 	max_defender_score_from_battles = 50
-	
+
 	max_defender_score_from_occupation = 150
 	max_attacker_score_from_occupation = 150
 
@@ -798,7 +723,7 @@ populist_war = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					scope:defender = { government_has_flag = government_is_administrative }
+					scope:defender = { government_allows = state_faith }
 				}
 				desc = populist_war_victory_desc_admin
 			}
@@ -876,7 +801,7 @@ populist_war = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					scope:defender = { government_has_flag = government_is_administrative }
+					scope:defender = { government_allows = state_faith }
 				}
 				desc = populist_war_white_peace_desc_admin
 			}
@@ -887,7 +812,7 @@ populist_war = {
 	on_white_peace = {
 		scope:attacker = {
 			show_pow_release_message_effect = yes
-			stress_impact = {
+			stress_and_fulfillment_impact = {
  				ambitious = medium_stress_impact_gain
  				arrogant = medium_stress_impact_gain
  			}
@@ -932,7 +857,7 @@ populist_war = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					scope:defender = { government_has_flag = government_is_administrative }
+					scope:defender = { government_allows = state_faith }
 				}
 				desc = populist_war_defeat_desc_admin
 			}
@@ -1020,7 +945,7 @@ populist_war = {
 
 	max_attacker_score_from_battles = 100
 	max_defender_score_from_battles = 50
-	
+
 	max_defender_score_from_occupation = 150
 	max_attacker_score_from_occupation = 150
 
@@ -1118,14 +1043,14 @@ claimant_faction_war = {
 	on_white_peace = {
 		scope:attacker = {
 			show_pow_release_message_effect = yes
-			stress_impact = {
+			stress_and_fulfillment_impact = {
  				ambitious = medium_stress_impact_gain
  				arrogant = medium_stress_impact_gain
  			}
 		}
 
 		scope:defender = {
-			stress_impact = {
+			stress_and_fulfillment_impact = {
  				arrogant = medium_stress_impact_gain
  			}
 		}
@@ -1190,7 +1115,7 @@ claimant_faction_war = {
 
 	max_attacker_score_from_battles = 50
 	max_defender_score_from_battles = 100
-	
+
 	max_defender_score_from_occupation = 150
 	max_attacker_score_from_occupation = 150
 
@@ -1236,18 +1161,18 @@ depose_war = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					scope:defender = { 
+					scope:defender = {
 						government_has_flag = government_is_mandala
-						is_local_player = yes 
+						is_local_player = yes
 					}
 				}
 				desc = mandala_depose_war_victory_desc_defender
 			}
 			triggered_desc = {
 				trigger = {
-					scope:defender = { 
+					scope:defender = {
 						government_has_flag = government_is_mandala
-						is_local_player = no 
+						is_local_player = no
 					}
 				}
 				desc = mandala_depose_war_victory_desc
@@ -1277,7 +1202,7 @@ depose_war = {
 	}
 
 	on_victory = {
-		scope:attacker = { 
+		scope:attacker = {
 			show_pow_release_message_effect = yes
 			#EP2 Accolade glory gain from winning against higher ranked enemy
 			accolade_attacker_war_end_glory_gain_med_effect = yes
@@ -1298,7 +1223,7 @@ depose_war = {
 				}
 			}
 		}
-		
+
 		scope:defender = {
 			#Mandalas don't get deposed like everyone else ... but you lose everything that you care about
 			if = {
@@ -1324,7 +1249,7 @@ depose_war = {
 					else_if = {
 						limit = { primary_title.tier <= scope:attacker.var:target_tier}
 						depose_effect = { DEPOSER = scope:attacker }
-					}	
+					}
 				}
 			}
 
@@ -1342,7 +1267,7 @@ depose_war = {
 				remove_variable = initial_target
 				remove_variable = target_tier
 			}
-			
+
 		}
 
 		# LEGITIMACY FROM LOSING FACTION WAR
@@ -1355,8 +1280,8 @@ depose_war = {
 	on_white_peace_desc = {
 		first_valid = {
 			triggered_desc = {
-				trigger = { 
-					scope:defender = { is_local_player = yes } 
+				trigger = {
+					scope:defender = { is_local_player = yes }
 				}
 				desc = depose_war_white_peace_desc_defender
 			}
@@ -1368,13 +1293,13 @@ depose_war = {
 	on_white_peace = {
 		scope:attacker = {
 			show_pow_release_message_effect = yes
-			stress_impact = {
+			stress_and_fulfillment_impact = {
  				ambitious = medium_stress_impact_gain
  				arrogant = medium_stress_impact_gain
  			}
 		}
 		scope:defender = {
-			stress_impact = {
+			stress_and_fulfillment_impact = {
  				arrogant = medium_stress_impact_gain
  			}
 		}
@@ -1412,7 +1337,7 @@ depose_war = {
 	check_attacker_inheritance_validity = no
 
 	on_primary_attacker_death = inherit_faction
-	on_primary_defender_death = inherit
+	on_primary_defender_death = invalidate
 
 	transfer_behavior = transfer
 
@@ -1431,7 +1356,7 @@ depose_war = {
 	defender_score_from_occupation_scale = 50
 	max_attacker_score_from_battles = 100
 	max_defender_score_from_battles = 100
-	
+
 	max_defender_score_from_occupation = 150
 	max_attacker_score_from_occupation = 150
 
@@ -1494,18 +1419,18 @@ refused_liege_demand_war = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					scope:defender = { 
+					scope:defender = {
 						government_has_flag = government_is_mandala
-						is_local_player = yes 
+						is_local_player = yes
 					}
 				}
 				desc = mandala_depose_war_victory_desc_defender
 			}
 			triggered_desc = {
 				trigger = {
-					scope:defender = { 
+					scope:defender = {
 						government_has_flag = government_is_mandala
-						is_local_player = no 
+						is_local_player = no
 					}
 				}
 				desc = mandala_depose_war_victory_desc
@@ -1535,7 +1460,7 @@ refused_liege_demand_war = {
 	}
 
 	on_victory = {
-		scope:attacker = { 
+		scope:attacker = {
 			show_pow_release_message_effect = yes
 			#EP2 Accolade glory gain from winning against higher ranked enemy
 			accolade_attacker_war_end_glory_gain_med_effect = yes
@@ -1561,14 +1486,7 @@ refused_liege_demand_war = {
 					value = primary_title
 					months = 1
 				}
-				#Unop Use the authority helpers so all rulers with an authority/bureaucracy law lose authority, not just Feudal/Tribal
-				decrease_crown_authority_effect = yes
-				decrease_tribal_authority_effect = yes
-				decrease_imperial_bureaucracy_effect = yes
-				unop_decrease_celestial_bureaucracy_effect = yes
-				unop_decrease_meritocratic_bureaucracy_effect = yes
-				unop_decrease_japanese_bureaucracy_effect = yes
-				decrease_nomadic_authority_effect = yes
+				change_authority_effect = { CHANGE = -1 }
 
 				add_prestige = -500
 
@@ -1639,14 +1557,14 @@ refused_liege_demand_war = {
 	on_white_peace = {
 		scope:attacker = {
 			show_pow_release_message_effect = yes
-			stress_impact = {
+			stress_and_fulfillment_impact = {
  				ambitious = medium_stress_impact_gain
  				arrogant = medium_stress_impact_gain
  			}
 		}
 
 		scope:defender = {
-			stress_impact = {
+			stress_and_fulfillment_impact = {
  				arrogant = medium_stress_impact_gain
  			}
 		}
@@ -1705,7 +1623,7 @@ refused_liege_demand_war = {
 				}
 			}
 		}
-		
+
 		on_lost_request_revolt_war = yes
 
 		#Mandalas gain or lose piety/devotion depending on Decree
@@ -1716,10 +1634,7 @@ refused_liege_demand_war = {
 
 	check_attacker_inheritance_validity = no
 
-	on_primary_attacker_death = invalidate
-	on_primary_defender_death = inherit
-
-	transfer_behavior = transfer
+	transfer_behavior = invalidate
 
 	attacker_allies_inherit = yes
 	defender_allies_inherit = yes
@@ -1734,7 +1649,7 @@ refused_liege_demand_war = {
 
 	max_attacker_score_from_battles = 100
 	max_defender_score_from_battles = 50
-	
+
 	max_defender_score_from_occupation = 150
 	max_attacker_score_from_occupation = 150
 
@@ -1751,7 +1666,7 @@ independence_war = {
 	allow_hostages = no
 	allowed_for_character = {
 		scope:attacker = {
-			NOT = { government_allows = administrative }
+			NOT = { government_has_mechanic = administrative }
 		}
 	}
 	allowed_against_character = {
@@ -1906,7 +1821,7 @@ independence_war = {
 	on_white_peace = {
 		scope:attacker = {
 			show_pow_release_message_effect = yes
-			stress_impact = {
+			stress_and_fulfillment_impact = {
  				ambitious = medium_stress_impact_gain
  				arrogant = medium_stress_impact_gain
  			}
@@ -1924,7 +1839,7 @@ independence_war = {
 
 		scope:defender = {
 			add_prestige = minor_prestige_value
-			stress_impact = {
+			stress_and_fulfillment_impact = {
  				arrogant = medium_stress_impact_gain
  			}
 		}
@@ -2004,7 +1919,7 @@ independence_war = {
 
 	max_attacker_score_from_battles = 100
 	max_defender_score_from_battles = 50
-	
+
 	max_defender_score_from_occupation = 150
 	max_attacker_score_from_occupation = 150
 
@@ -2068,7 +1983,7 @@ nation_fracturing_faction_war = {
 
 		#EP2 Accolade glory gain from winning against higher ranked enemy
 		scope:attacker = { accolade_attacker_war_end_glory_gain_med_effect = yes }
-		
+
 		create_title_and_vassal_change = {
 			type = independency
 			save_scope_as = change
@@ -2193,7 +2108,7 @@ nation_fracturing_faction_war = {
 	on_white_peace = {
 		scope:attacker = {
 			show_pow_release_message_effect = yes
-			stress_impact = {
+			stress_and_fulfillment_impact = {
  				ambitious = medium_stress_impact_gain
  				arrogant = medium_stress_impact_gain
  			}
@@ -2210,7 +2125,7 @@ nation_fracturing_faction_war = {
 		}
 
 		scope:defender = {
-			stress_impact = {
+			stress_and_fulfillment_impact = {
  				arrogant = medium_stress_impact_gain
  			}
 
@@ -2288,7 +2203,7 @@ nation_fracturing_faction_war = {
 
 	max_attacker_score_from_battles = 100
 	max_defender_score_from_battles = 50
-	
+
 	max_defender_score_from_occupation = 150
 	max_attacker_score_from_occupation = 150
 
@@ -2361,7 +2276,7 @@ nomadic_war = {
 				}
 			}
 		}
-		
+
 		successful_nomadic_revolt_outcome_effect = {
 			FACTION_LEADER = scope:attacker
 		}
@@ -2374,7 +2289,7 @@ nomadic_war = {
 	on_white_peace = {
 		scope:attacker = {
 			show_pow_release_message_effect = yes
-			stress_impact = {
+			stress_and_fulfillment_impact = {
  				ambitious = medium_stress_impact_gain
  				arrogant = medium_stress_impact_gain
  			}
@@ -2391,7 +2306,7 @@ nomadic_war = {
 						destroy_faction = yes
 					}
 				}
-				
+
 				save_temporary_scope_as = destroyer_of_titles
 				if = {
 					limit = {
@@ -2428,7 +2343,7 @@ nomadic_war = {
 			}
 		}
 	}
-	
+
 	on_invalidated = {
 		hidden_effect = {
 			scope:attacker = {
@@ -2441,7 +2356,7 @@ nomadic_war = {
 						destroy_faction = yes
 					}
 				}
-				
+
 				save_temporary_scope_as = destroyer_of_titles
 				if = {
 					limit = {
@@ -2568,7 +2483,7 @@ nomadic_war = {
 	defender_score_from_battles_scale = 300
 	max_attacker_score_from_battles = 150
 	max_defender_score_from_battles = 150
-	
+
 	max_defender_score_from_occupation = 150
 	max_attacker_score_from_occupation = 150
 

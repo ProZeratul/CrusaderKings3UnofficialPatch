@@ -241,13 +241,14 @@ feast_tsagaan_sar_events.0001 = {
 }
 
 scripted_trigger more_likely_to_give_important_gift_trigger = {
-    exists = involved_activity.activity_host
+    # The family trigger changes scope internally, so hand it the host as a saved scope
+    involved_activity.activity_host ?= { save_temporary_scope_as = gift_host }
     OR = {
-    	is_tributary_of = involved_activity.activity_host
-		is_obedient_to = involved_activity.activity_host
-        is_vassal_or_below_of = involved_activity.activity_host
-        is_any_family_relation_or_spouse_trigger = { CHARACTER = involved_activity.activity_host }
-        has_important_relationship_with_character_trigger = { CHARACTER = involved_activity.activity_host }
+    	is_tributary_of = scope:gift_host
+		is_obedient_to = scope:gift_host
+        is_vassal_or_below_of = scope:gift_host
+        is_any_family_relation_or_spouse_trigger = { CHARACTER = scope:gift_host }
+        has_important_relationship_with_character_trigger = { CHARACTER = scope:gift_host }
     }
 }
 
@@ -626,7 +627,7 @@ feast_tsagaan_sar_events.0002 = {
             CHANCE_2 = 50
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             paranoid = minor_stress_impact_gain
         }
 
@@ -1286,16 +1287,16 @@ feast_tsagaan_sar_events.0004 = {
     option = {
         name = feast_tsagaan_sar_events.0004.a
         set_variable = {
-            name = tsagaan_sar_gift_item #Unop tsagaan_sar_gift_amount holds flags; use the correct var for artifacts
+            name = tsagaan_sar_gift_item
             value = flag:artifact
         }
-        involved_activity.activity_host = {
+        scope:host = {
             send_interface_message = {
                 title = tsagaan_sar_gift_title
                 right_icon = root
                 type = event_generic_neutral
                 scope:artifact_1 = {
-                    set_owner = prev.involved_activity.activity_host
+                    set_owner = prev
                 }
             }
         }
@@ -1319,7 +1320,7 @@ feast_tsagaan_sar_events.0004 = {
         name = feast_tsagaan_sar_events.0004.b
         trigger = { exists = scope:artifact_2 }
         set_variable = {
-            name = tsagaan_sar_gift_item #Unop tsagaan_sar_gift_amount holds flags; use the correct var for artifacts
+            name = tsagaan_sar_gift_item
             value = flag:artifact
         }
 
@@ -1329,7 +1330,7 @@ feast_tsagaan_sar_events.0004 = {
                 right_icon = root
                 type = event_generic_neutral
                 scope:artifact_2 = {
-                    set_owner = prev.involved_activity.activity_host
+                    set_owner = prev
                 }
             }
         }
@@ -1353,7 +1354,7 @@ feast_tsagaan_sar_events.0004 = {
         name = feast_tsagaan_sar_events.0004.c
         trigger = { exists = scope:artifact_3 }
         set_variable = {
-            name = tsagaan_sar_gift_item #Unop tsagaan_sar_gift_amount holds flags; use the correct var for artifacts
+            name = tsagaan_sar_gift_item
             value = flag:artifact
         }
 
@@ -1363,7 +1364,7 @@ feast_tsagaan_sar_events.0004 = {
                 right_icon = root
                 type = event_generic_neutral
                 scope:artifact_3 = {
-                    set_owner = prev.involved_activity.activity_host
+                    set_owner = prev
                 }
             }
         }
@@ -1514,7 +1515,7 @@ feast_tsagaan_sar_events.0100 = {
     # Gift something else
     option = {
         name = feast_tsagaan_sar_events.0100.a
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             generous = medium_stress_impact_loss
             greedy = medium_stress_impact_gain
         }
@@ -1592,7 +1593,7 @@ feast_tsagaan_sar_events.0100 = {
             }
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             generous = minor_stress_impact_loss
             greedy = minor_stress_impact_gain
         }
@@ -1625,7 +1626,7 @@ feast_tsagaan_sar_events.0100 = {
                 }
             }
         }
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             base = minor_stress_impact_gain
             greedy = minor_stress_impact_loss
         }
@@ -1746,7 +1747,7 @@ feast_tsagaan_sar_events.0101 = {
                         modifier = mpo_horse_ride_modifier
                         years = 3
                     }
-                    stress_impact = {
+                    stress_and_fulfillment_impact = {
                         greedy = minor_stress_impact_gain
                         generous = minor_stress_impact_loss
                         improvident = minor_stress_impact_loss
@@ -1843,7 +1844,7 @@ feast_tsagaan_sar_events.0101 = {
                 add_trait = greedy
             }
         }
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             base = minor_stress_impact_loss
             callous = medium_stress_impact_loss
             sadistic = major_stress_impact_loss
@@ -2003,7 +2004,7 @@ feast_tsagaan_sar_events.0200 = {
             complete_activity_intent = yes
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             temperate = medium_stress_impact_gain
             improvident = medium_stress_impact_loss
         }
@@ -2062,7 +2063,7 @@ feast_tsagaan_sar_events.0200 = {
             complete_activity_intent = yes
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             temperate = minor_stress_impact_gain
             improvident = minor_stress_impact_loss
         }
@@ -2121,7 +2122,7 @@ feast_tsagaan_sar_events.0200 = {
             complete_activity_intent = yes
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             temperate = miniscule_stress_impact_gain
             improvident = miniscule_stress_impact_loss
         }
@@ -2275,7 +2276,7 @@ feast_tsagaan_sar_events.0210 = {
     option = {
         name = feast_tsagaan_sar_events.0210.c
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             arrogant = medium_stress_impact_loss
         }
 
@@ -2349,7 +2350,7 @@ feast_tsagaan_sar_events.0220 = {
 
         remove_relation_rival = scope:old_rival
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             forgiving = medium_stress_impact_loss
             vengeful = medium_stress_impact_gain
         }
@@ -2372,6 +2373,7 @@ feast_tsagaan_sar_events.0220 = {
                 has_relation_potential_lover = scope:old_rival
             }
             can_set_relation_lover_trigger = { CHARACTER = scope:old_rival }
+            might_cheat_on_every_partner_trigger = yes
         }
         flavor = feast_tsagaan_sar_events.0220.b_flavor
 
@@ -2379,6 +2381,10 @@ feast_tsagaan_sar_events.0220 = {
 
         random_list = {
             50 = {
+                modifier = {
+                    add = -50
+                    scope:old_rival = { might_cheat_on_every_partner_trigger = no }
+                }
                 modifier = {
                     add = 10
                     has_relation_potential_lover = scope:old_rival
@@ -2403,15 +2409,11 @@ feast_tsagaan_sar_events.0220 = {
                         CHARACTER = scope:old_rival
                         PREGNANCY_CHANCE = pregnancy_chance
                     }
-                    if = {
-                        limit = {
-                            has_relation_potential_lover = scope:old_rival
-                        }
-                        set_relation_lover = scope:old_rival
-                    }
-                    else = {
-                        set_relation_potential_lover = scope:old_rival
-                    }
+                    progress_towards_lover_effect = {
+						REASON = lover_rival_to_lover
+						CHARACTER = scope:old_rival
+						OPINION = default_lover_opinion
+					}
                 }
             }
             50 = {
@@ -2437,7 +2439,7 @@ feast_tsagaan_sar_events.0220 = {
             }
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             lustful = medium_stress_impact_loss
             chaste = medium_stress_impact_gain
             forgiving = medium_stress_impact_loss
@@ -2483,7 +2485,7 @@ feast_tsagaan_sar_events.0220 = {
             set_relation_potential_friend = scope:old_rival
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             forgiving = medium_stress_impact_loss
             vengeful = medium_stress_impact_gain
         }
@@ -2520,7 +2522,7 @@ feast_tsagaan_sar_events.0220 = {
             }
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             forgiving = minor_stress_impact_gain
             vengeful = minor_stress_impact_loss
         }
@@ -2683,7 +2685,7 @@ feast_tsagaan_sar_events.0230 = {
             }
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             generous = minor_stress_impact_gain
             greedy = minor_stress_impact_gain
         }
@@ -2717,7 +2719,7 @@ feast_tsagaan_sar_events.0230 = {
             }
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             arrogant = medium_stress_impact_loss
             callous = minor_stress_impact_loss
             sadistic = minor_stress_impact_loss
@@ -3123,7 +3125,7 @@ feast_tsagaan_sar_events.0240 = {
             complete_activity_intent = yes
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             shy = minor_stress_impact_gain
             craven = minor_stress_impact_gain
             gregarious = minor_stress_impact_loss
@@ -3225,7 +3227,7 @@ feast_tsagaan_sar_events.0240 = {
             }
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             shy = minor_stress_impact_loss
             craven = minor_stress_impact_loss
         }
@@ -3357,7 +3359,7 @@ feast_tsagaan_sar_events.0250 = {
             days = 5
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             improvident = minor_stress_impact_loss
         }
 
@@ -3384,7 +3386,7 @@ feast_tsagaan_sar_events.0250 = {
 
         remove_short_term_gold = tiny_gold_value
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             improvident = minor_stress_impact_loss
         }
 
@@ -3410,7 +3412,7 @@ feast_tsagaan_sar_events.0250 = {
 
         custom_tooltip = feast_tsagaan_sar_events.0250.c_tt
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             ambitious = minor_stress_impact_loss
             arrogant = minor_stress_impact_loss
             craven = minor_stress_impact_gain
@@ -3570,7 +3572,7 @@ feast_tsagaan_sar_events.0251 = {
                             increase_wounds_effect = { REASON = horse_riding_accident }
                         }
                     }
-                    stress_impact = {
+                    stress_and_fulfillment_impact = {
                         compassionate = minor_stress_impact_gain
                         callous = minor_stress_impact_loss
                         sadistic = minor_stress_impact_loss
@@ -3679,7 +3681,7 @@ feast_tsagaan_sar_events.0251 = {
                             increase_wounds_effect = { REASON = horse_riding_accident }
                         }
                     }
-                    stress_impact = {
+                    stress_and_fulfillment_impact = {
                         compassionate = minor_stress_impact_gain
                         callous = minor_stress_impact_loss
                         sadistic = minor_stress_impact_loss
@@ -3952,7 +3954,7 @@ feast_tsagaan_sar_events.0252 = {
                             OPINION = -15
                         }
                     }
-                    stress_impact = {
+                    stress_and_fulfillment_impact = {
                         just = minor_stress_impact_gain
                         arbitrary = minor_stress_impact_loss
                     }
@@ -4092,7 +4094,7 @@ feast_tsagaan_sar_events.0253 = {
         # Outcome of bet
         if = {
             limit = {
-                OR = { #Unop: Fix the alternative_limit that is not valid in this context
+                OR = {
                     AND = {
                         has_character_flag = horse_race_bet_1
                         scope:rider_winner = scope:horse_rider_1
@@ -4197,7 +4199,7 @@ feast_tsagaan_sar_events.0253 = {
             add_to_court_and_entourage_effect = yes
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             arrogant = minor_stress_impact_gain
         }
 
@@ -4314,7 +4316,7 @@ feast_tsagaan_sar_events.0260 = {
             }
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             shy = minor_stress_impact_gain
             arrogant = minor_stress_impact_gain
             gregarious = minor_stress_impact_loss
@@ -4372,7 +4374,7 @@ feast_tsagaan_sar_events.0260 = {
             years = 2
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             shy = minor_stress_impact_loss
         }
 
@@ -4524,7 +4526,7 @@ feast_tsagaan_sar_events.0270 = {
             }
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             drunkard = medium_stress_impact_loss
             gregarious = minor_stress_impact_loss
             temperate = minor_stress_impact_gain
@@ -4581,7 +4583,7 @@ feast_tsagaan_sar_events.0270 = {
             }
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             base = minor_stress_impact_loss
             temperate = minor_stress_impact_loss
             paranoid = minor_stress_impact_loss
@@ -4774,7 +4776,7 @@ feast_tsagaan_sar_events.0280 = {
     option = {
         name = feast_tsagaan_sar_events.0280.d
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             base = minor_stress_impact_loss
             humble = minor_stress_impact_loss
         }
@@ -4989,7 +4991,7 @@ feast_tsagaan_sar_events.0300 = {
             target = scope:cleaner
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             compassionate = minor_stress_impact_loss
             generous = medium_stress_impact_loss
             greedy = minor_stress_impact_gain
@@ -5018,7 +5020,7 @@ feast_tsagaan_sar_events.0300 = {
         name = feast_tsagaan_sar_events.0300.b
         custom_tooltip = feast_tsagaan_sar_events.0300.b_tt
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             sadistic = minor_stress_impact_loss
             callous = medium_stress_impact_loss
             compassionate = minor_stress_impact_gain
@@ -5141,7 +5143,7 @@ feast_tsagaan_sar_events.0310 = {
             }
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             compassionate = minor_stress_impact_gain
             callous = minor_stress_impact_loss
             sadistic = minor_stress_impact_loss
@@ -5175,7 +5177,7 @@ feast_tsagaan_sar_events.0310 = {
                     left_icon = root
                     right_icon = scope:bragger
                     scope:bragger = { add_character_flag = cant_no_gift }
-                    stress_impact = {
+                    stress_and_fulfillment_impact = {
                         vengeful = medium_stress_impact_loss
                     }
                     scope:bragger = {
@@ -5200,7 +5202,7 @@ feast_tsagaan_sar_events.0310 = {
             }
         }
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             forgiving = minor_stress_impact_gain
             craven = minor_stress_impact_gain
             vengeful = minor_stress_impact_loss
@@ -5219,7 +5221,7 @@ feast_tsagaan_sar_events.0310 = {
     option = {
         name = feast_tsagaan_sar_events.0310.c
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             forgiving = minor_stress_impact_loss
             craven = minor_stress_impact_loss
             lazy = minor_stress_impact_loss
@@ -5281,7 +5283,7 @@ feast_tsagaan_sar_events.0320 = {
                 }
             }
         }
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             generous = minor_stress_impact_loss
             greedy = minor_stress_impact_gain
             compassionate = minor_stress_impact_loss
@@ -5305,7 +5307,7 @@ feast_tsagaan_sar_events.0320 = {
     option = {
         name = feast_tsagaan_sar_events.0320.b
 
-        stress_impact = {
+        stress_and_fulfillment_impact = {
             lazy = minor_stress_impact_loss
         }
 

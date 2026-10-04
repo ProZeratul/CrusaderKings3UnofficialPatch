@@ -167,7 +167,7 @@ laamp_boost_legitimacy_contract = {
 			positive = no
 			effect = {
 				save_scope_as = task_contract
-				save_scope_value_as = { name = extra_reward value = flag:no } #Unop ck3-tiger
+				save_scope_value_as = { name = extra_reward value = flag:no }
 				# Standard Penalties.
 				laamp_rewards_disburse_ordinary_currency_effect = {
 					GOLD = 0
@@ -426,7 +426,7 @@ laamp_gain_wanderer_contract = {
 			}
 			NOR = {
 				government_has_flag = government_is_theocracy
-				government_allows = administrative
+				government_has_mechanic = administrative
 			}
 		}
 	}
@@ -455,8 +455,24 @@ laamp_gain_wanderer_contract = {
 			}
 			NOR = {
 				government_has_flag = government_is_theocracy
-				government_allows = administrative
+				government_has_mechanic = administrative
 			}
+		}
+	}
+
+	valid_to_continue = {
+		# Standard triggers.
+		valid_laamp_basic_trigger = {
+			EMPLOYER = root.task_contract_employer
+			LAAMP = root.task_contract_taker
+		}
+	}
+
+	valid_to_keep = {
+		# Standard triggers.
+		valid_laamp_basic_trigger = {
+			EMPLOYER = root.task_contract_employer
+			LAAMP = root.task_contract_taker
 		}
 	}
 
@@ -566,7 +582,7 @@ laamp_find_secret_contract = {
 		}
 		valid_laamp_sensible_start_trigger = yes
 		scope:employer = {
-			is_ai = yes	
+			is_ai = yes
 			location = { #Not too far away
 				squared_distance = {
 					target = root.location
@@ -599,7 +615,7 @@ laamp_find_secret_contract = {
 			LAAMP = root
 		}
 		scope:employer = {
-			is_ai = yes	
+			is_ai = yes
 			location = { #Not too far away
 				squared_distance = {
 					target = root.location
@@ -626,18 +642,18 @@ laamp_find_secret_contract = {
 			EMPLOYER = root.task_contract_employer
 			LAAMP = root.task_contract_taker
 		}
-		scope:employer = {
+		root.task_contract_employer = { #Unop Was scope:employer, which is not set in valid_to_keep
 			OR = {
 				any_courtier_or_guest = {
 					any_secret = {
 						count > 0
-						NOT = { is_known_by = scope:employer }
+						NOT = { is_known_by = root.task_contract_employer } #Unop Was scope:employer
 					}
 				}
 				any_vassal = {
 					any_secret = {
 						count > 0
-						NOT = { is_known_by = scope:employer }
+						NOT = { is_known_by = root.task_contract_employer } #Unop Was scope:employer
 					}
 				}
 			}
@@ -796,8 +812,8 @@ laamp_eliminate_heir_contract = {
 		}
 		valid_laamp_sensible_start_trigger = yes
 		scope:employer = {
-			is_ai = yes	
-			in_diplomatic_range = root 
+			is_ai = yes
+			in_diplomatic_range = root
 			is_landed = yes
 			location = { #Not too far away
 				squared_distance = {
@@ -807,7 +823,7 @@ laamp_eliminate_heir_contract = {
 			}
 			NOR = {
 				government_has_flag = government_is_theocracy
-				government_allows = administrative
+				government_has_mechanic = administrative
 			}
 			AND = { #They have a primary heir they dislike, and another one they like
 				primary_heir ?= {
@@ -815,7 +831,7 @@ laamp_eliminate_heir_contract = {
 						target = scope:employer
 						value <= high_negative_opinion
 					}
-					age > 16 #No murderin' babies				
+					age > 16 #No murderin' babies
 				}
 				any_heir = {
 					count > 1
@@ -830,7 +846,7 @@ laamp_eliminate_heir_contract = {
 			LAAMP = root
 		}
 	}
-	
+
 	valid_to_continue = {
 		# Standard triggers.
 		valid_laamp_basic_trigger = {

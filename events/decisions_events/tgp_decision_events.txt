@@ -81,7 +81,7 @@ tgp_decision_events.0100 = {
                 trigger = {
                     var:movement_petition = flag:change_retirement_law_increase
                 }
-                desc = { #Unop: Having 2 desc under a triggered_desc will only show the first
+                desc = {
                     desc = tgp_decision_events.0100.desc_change_retirement_law_increase
                     desc = tgp_decision_events.0100.desc_change_retirement_law_outro
                 }
@@ -90,7 +90,7 @@ tgp_decision_events.0100 = {
                 trigger = {
                     var:movement_petition = flag:change_retirement_law_decrease
                 }
-                desc = { #Unop: Having 2 desc under a triggered_desc will only show the first
+                desc = {
                     desc = tgp_decision_events.0100.desc_change_retirement_law_decrease
                     desc = tgp_decision_events.0100.desc_change_retirement_law_outro
                 }
@@ -99,7 +99,7 @@ tgp_decision_events.0100 = {
                 trigger = {
                     var:movement_petition = flag:increase_budget_salary
                 }
-                desc = { #Unop: Having 2 desc under a triggered_desc will only show the first
+                desc = {
                     desc = tgp_decision_events.0100.desc_increase_budget_salary
                     desc = tgp_decision_events.0100.desc_increase_budget_outro
                 }
@@ -108,7 +108,7 @@ tgp_decision_events.0100 = {
                 trigger = {
                     var:movement_petition = flag:increase_budget_ministry
                 }
-                desc = { #Unop: Having 2 desc under a triggered_desc will only show the first
+                desc = {
                     desc = tgp_decision_events.0100.desc_increase_budget_ministry
                     desc = tgp_decision_events.0100.desc_increase_budget_outro
                 }
@@ -117,7 +117,7 @@ tgp_decision_events.0100 = {
                 trigger = {
                     var:movement_petition = flag:increase_budget_military
                 }
-                desc = { #Unop: Having 2 desc under a triggered_desc will only show the first
+                desc = {
                     desc = tgp_decision_events.0100.desc_increase_budget_military
                     desc = tgp_decision_events.0100.desc_increase_budget_outro
                 }
@@ -489,7 +489,10 @@ tgp_decision_events.0100 = {
         }
     }
     after = {
-        unop_save_movement_petition_effect = yes #Unop save missing scope:movement_petition_effect for petition types that bypass movement_petition_change_laws_decision
+        if = {
+            limit = { NOT = { exists = scope:movement_petition_effect } }
+            save_scope_value_as = { name = movement_petition_effect value = var:movement_petition }
+        }
         display_movement_petition_recipient_acceptance_effect = yes
         scope:petition_recipient = {
             trigger_event = tgp_decision_events.0101
@@ -752,9 +755,7 @@ tgp_decision_events.0102 = {
         name = tgp_decision_events.0102.b
         trigger = {
             primary_title = {
-                any_owned_title_maa_regiment = {
-                    exists = this  
-                }
+                any_owned_title_maa_regiment = {}
             }
             scope:petition_recipient = {
                 maa_regiments_max_count > maa_regiments_count
@@ -1034,6 +1035,7 @@ tgp_decision_events.0200 = {
             every_grandparent = {
                 even_if_dead = yes
                 limit = {
+                    is_grandparent_of = scope:target_child
                     can_reincarnate_trigger = yes #Unop: Sync with the other reincarnation (birth.8001)
                     sex_same_as = scope:target_child
                 }
@@ -1077,6 +1079,7 @@ tgp_decision_events.0200 = {
             #Pick a random appropriate one
             random_in_list = {
                 list = grandparents_and_great_grandparents
+                limit = { is_alive = no }
                 weight = {
                     base = 1
                     modifier = {
@@ -1084,7 +1087,7 @@ tgp_decision_events.0200 = {
                         add = 2
                     }
                     modifier = {
-                        highest_held_title_tier >= tier_county #Unop: Was is_ruler = yes but since they are dead, it don't work
+                        highest_held_title_tier >= tier_county
                         add = 4
                     }
                 }

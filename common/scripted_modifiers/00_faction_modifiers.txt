@@ -60,8 +60,8 @@ legalism_virtue_and_sin_modifier = {
 			}
 		}
 		$TARGET$ = {
-			faith = {
-				has_doctrine_parameter = legalism_reduced_faction_virtues
+			rite = {
+				rite_has_parameter = legalism_reduced_faction_virtues
 			}
 		}
 	}
@@ -90,11 +90,41 @@ legalism_virtue_and_sin_modifier = {
 			}
 		}
 		$TARGET$ = {
-			faith = {
-				has_doctrine_parameter = legalism_increased_faction_sins
+			rite = {
+				rite_has_parameter = legalism_increased_faction_sins
 			}
 		}
 
+	}
+}
+
+# PAM Purgatory: sinners are reluctant to add rebellion to the account they must answer for.
+tenet_purgatory_sin_faction_modifier = {
+	modifier = {
+		desc = "FACTION_REASON_TENET_PURGATORY_SINS"
+		add = {
+			subtract = 15
+			multiply = root.num_sinful_traits
+		}
+		rite = {
+			rite_has_parameter = tenet_purgatory_sinful_characters_less_likely_to_rebel
+		}
+	}
+}
+
+# Divine Marriage: adherents respect a liege's close-kin marriage instead of treating it as grounds for rebellion.
+tenet_divine_marriage_incestuous_liege_faction_modifier = {
+	modifier = {
+		desc = "FACTION_REASON_TENET_DIVINE_MARRIAGE_INCESTUOUS_LIEGE"
+		add = -75
+		rite = {
+			rite_has_parameter = tenet_divine_marriage_incestuous_liege_faction_reluctance
+		}
+		$TARGET$ = {
+			any_spouse = {
+				is_close_or_extended_family_of = $TARGET$
+			}
+		}
 	}
 }
 
@@ -106,19 +136,19 @@ pluralism_fundamentalism_modifier = {
 			# Base opinion multiplier from pluralism
 			if = {
 				limit = {
-					$TARGET$.faith = { has_doctrine = doctrine_pluralism_righteous }
+					$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_righteous }
 				}
 				multiply = hostility_multiplier_righteous
 			}
 			else_if = {
 				limit = {
-					$TARGET$.faith = { has_doctrine = doctrine_pluralism_pluralistic }
+					$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_pluralistic }
 				}
 				multiply = hostility_multiplier_pluralism
 			}
 			else_if = {
 				limit = {
-					$TARGET$.faith = { has_doctrine = doctrine_pluralism_fundamentalist }
+					$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_fundamentalist }
 				}
 				multiply = hostility_multiplier_fundamentalist
 			}
@@ -155,19 +185,19 @@ pluralism_fundamentalism_modifier = {
 			value = $HOSTILE_BASE_VALUE$
 			if = {
 				limit = {
-					$TARGET$.faith = { has_doctrine = doctrine_pluralism_righteous }
+					$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_righteous }
 				}
 				multiply = hostility_multiplier_righteous
 			}
 			else_if = {
 				limit = {
-					$TARGET$.faith = { has_doctrine = doctrine_pluralism_pluralistic }
+					$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_pluralistic }
 				}
 				multiply = hostility_multiplier_pluralism
 			}
 			else_if = {
 				limit = {
-					$TARGET$.faith = { has_doctrine = doctrine_pluralism_fundamentalist }
+					$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_fundamentalist }
 				}
 				multiply = hostility_multiplier_fundamentalist
 			}
@@ -204,19 +234,19 @@ pluralism_fundamentalism_modifier = {
 			value = $EVIL_BASE_VALUE$
 			if = {
 				limit = {
-					$TARGET$.faith = { has_doctrine = doctrine_pluralism_righteous }
+					$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_righteous }
 				}
 				multiply = hostility_multiplier_righteous
 			}
 			else_if = {
 				limit = {
-					$TARGET$.faith = { has_doctrine = doctrine_pluralism_pluralistic }
+					$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_pluralistic }
 				}
 				multiply = hostility_multiplier_pluralism
 			}
 			else_if = {
 				limit = {
-					$TARGET$.faith = { has_doctrine = doctrine_pluralism_fundamentalist }
+					$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_fundamentalist }
 				}
 				multiply = hostility_multiplier_fundamentalist
 			}
@@ -258,8 +288,8 @@ pluralism_fundamentalism_dual_modifier = {
 			if = {
 				limit = {
 					OR = {
-						$TARGET$.faith = { has_doctrine = doctrine_pluralism_righteous }
-						$TARGET$.diarch.faith = { has_doctrine = doctrine_pluralism_righteous }
+						$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_righteous }
+						$TARGET$.diarch.rite = { rite_has_doctrine = doctrine_pluralism_righteous }
 					}
 				}
 				multiply = hostility_multiplier_righteous
@@ -267,8 +297,8 @@ pluralism_fundamentalism_dual_modifier = {
 			else_if = {
 				limit = {
 					OR = {
-						$TARGET$.faith = { has_doctrine = doctrine_pluralism_pluralistic }
-						$TARGET$.diarch.faith = { has_doctrine = doctrine_pluralism_pluralistic }
+						$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_pluralistic }
+						$TARGET$.diarch.rite = { rite_has_doctrine = doctrine_pluralism_pluralistic }
 					}
 				}
 				multiply = hostility_multiplier_pluralism
@@ -276,8 +306,8 @@ pluralism_fundamentalism_dual_modifier = {
 			else_if = {
 				limit = {
 					OR = {
-						$TARGET$.faith = { has_doctrine = doctrine_pluralism_fundamentalist }
-						$TARGET$.diarch.faith = { has_doctrine = doctrine_pluralism_fundamentalist }
+						$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_fundamentalist }
+						$TARGET$.diarch.rite = { rite_has_doctrine = doctrine_pluralism_fundamentalist }
 					}
 				}
 				multiply = hostility_multiplier_fundamentalist
@@ -325,8 +355,8 @@ pluralism_fundamentalism_dual_modifier = {
 			if = {
 				limit = {
 					OR = {
-						$TARGET$.faith = { has_doctrine = doctrine_pluralism_righteous }
-						$TARGET$.diarch.faith = { has_doctrine = doctrine_pluralism_righteous }
+						$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_righteous }
+						$TARGET$.diarch.rite = { rite_has_doctrine = doctrine_pluralism_righteous }
 					}
 				}
 				multiply = hostility_multiplier_righteous
@@ -334,8 +364,8 @@ pluralism_fundamentalism_dual_modifier = {
 			else_if = {
 				limit = {
 					OR = {
-						$TARGET$.faith = { has_doctrine = doctrine_pluralism_pluralistic }
-						$TARGET$.diarch.faith = { has_doctrine = doctrine_pluralism_pluralistic }
+						$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_pluralistic }
+						$TARGET$.diarch.rite = { rite_has_doctrine = doctrine_pluralism_pluralistic }
 					}
 				}
 				multiply = hostility_multiplier_pluralism
@@ -343,8 +373,8 @@ pluralism_fundamentalism_dual_modifier = {
 			else_if = {
 				limit = {
 					OR = {
-						$TARGET$.faith = { has_doctrine = doctrine_pluralism_fundamentalist }
-						$TARGET$.diarch.faith = { has_doctrine = doctrine_pluralism_fundamentalist }
+						$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_fundamentalist }
+						$TARGET$.diarch.rite = { rite_has_doctrine = doctrine_pluralism_fundamentalist }
 					}
 				}
 				multiply = hostility_multiplier_fundamentalist
@@ -392,8 +422,8 @@ pluralism_fundamentalism_dual_modifier = {
 			if = {
 				limit = {
 					OR = {
-						$TARGET$.faith = { has_doctrine = doctrine_pluralism_righteous }
-						$TARGET$.diarch.faith = { has_doctrine = doctrine_pluralism_righteous }
+						$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_righteous }
+						$TARGET$.diarch.rite = { rite_has_doctrine = doctrine_pluralism_righteous }
 					}
 				}
 				multiply = hostility_multiplier_righteous
@@ -401,8 +431,8 @@ pluralism_fundamentalism_dual_modifier = {
 			else_if = {
 				limit = {
 					OR = {
-						$TARGET$.faith = { has_doctrine = doctrine_pluralism_pluralistic }
-						$TARGET$.diarch.faith = { has_doctrine = doctrine_pluralism_pluralistic }
+						$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_pluralistic }
+						$TARGET$.diarch.rite = { rite_has_doctrine = doctrine_pluralism_pluralistic }
 					}
 				}
 				multiply = hostility_multiplier_pluralism
@@ -410,8 +440,8 @@ pluralism_fundamentalism_dual_modifier = {
 			else_if = {
 				limit = {
 					OR = {
-						$TARGET$.faith = { has_doctrine = doctrine_pluralism_fundamentalist }
-						$TARGET$.diarch.faith = { has_doctrine = doctrine_pluralism_fundamentalist }
+						$TARGET$.rite = { rite_has_doctrine = doctrine_pluralism_fundamentalist }
+						$TARGET$.diarch.rite = { rite_has_doctrine = doctrine_pluralism_fundamentalist }
 					}
 				}
 				multiply = hostility_multiplier_fundamentalist
@@ -846,7 +876,7 @@ common_create_faction_blockers = {
 	modifier = {
 		add = -1000
 		$FACTION_TARGET$ = {
-			government_allows = administrative
+			government_has_mechanic = administrative
 			any_targeting_faction = { faction_is_at_war = yes }
 		}
 	}
@@ -908,6 +938,14 @@ common_faction_modifiers = {
 	legalism_virtue_and_sin_modifier = {
 		TARGET = $FACTION_TARGET$
 		SCORE_PER_TRAIT = 25
+	}
+
+	# -15 join chance per sin of the potential rebel themselves
+	tenet_purgatory_sin_faction_modifier = yes
+
+	# -75 when a Divine Marriage adherent's liege is married to close or extended family
+	tenet_divine_marriage_incestuous_liege_faction_modifier = {
+		TARGET = $FACTION_TARGET$
 	}
 
 	# -100 join chance from intimidation, -1000 join chance from terrified. This modifier doesn't apply if a faction is above the power threshold
@@ -1058,7 +1096,7 @@ common_faction_modifiers = {
 			ai_should_get_extreme_conqueror_bonuses = yes
 		}
 	}
-		
+
 	# Nomads - Obedient characters less likely to create factions
 	modifier = {
 		desc = "MPO_OBEDIENT_NOMAD"
@@ -1066,7 +1104,7 @@ common_faction_modifiers = {
 		$FACTION_TARGET$ = { government_has_flag = government_is_nomadic }
 		add = -75
 	}
-		
+
 	# Nomads - But disobedient characters are more likely to cause trouble...
 	modifier = {
 		desc = "MPO_NON_OBEDIENT_NOMAD"
@@ -1077,20 +1115,20 @@ common_faction_modifiers = {
 		$FACTION_TARGET$ = { government_has_flag = government_is_nomadic }
 		add = 75
 	}
-	
+
 	modifier = {
 		$FACTION_TARGET$ = {
-			any_memory = { 
+			any_memory = {
 				has_memory_type = nomad_showed_weakness_in_war
 			}
 		}
-		
+
 		add = {
 			value = 25
 			if = {
 				limit = {
-					$FACTION_TARGET$ = { 
-						any_memory = { 
+					$FACTION_TARGET$ = {
+						any_memory = {
 							has_memory_type = nomad_showed_weakness_in_war
 							memory_age_years < 10
 						}
@@ -1104,7 +1142,7 @@ common_faction_modifiers = {
 
 	modifier = {
 		$FACTION_TARGET$ = {
-			any_memory = { 
+			any_memory = {
 				has_memory_type = had_chaotic_kurultai_succession
 			}
 		}
@@ -1112,8 +1150,8 @@ common_faction_modifiers = {
 			value = 25
 			if = {
 				limit = {
-					$FACTION_TARGET$ = { 
-						any_memory = { 
+					$FACTION_TARGET$ = {
+						any_memory = {
 							has_memory_type = had_chaotic_kurultai_succession
 							memory_age_years < 10
 						}
@@ -1241,7 +1279,7 @@ common_faction_modifiers = {
 	modifier = {
 		add = -10000
 		years_from_game_start < 10
-		$FACTION_TARGET$.primary_title.tier = tier_empire
+		$FACTION_TARGET$.primary_title.tier >= tier_empire
 		trigger_if = {
 			limit = { exists = scope:actor }
 			NOT = { # Not used for already warring factions
@@ -1307,6 +1345,16 @@ common_faction_modifiers = {
 		desc = FACTION_REASON_DETRACTOR
 		has_variable = detractor_faction
 		var:detractor_faction ?= $FACTION_TARGET$
+	}
+	modifier = {
+		desc = "FACTION_REASON_SPIRITUAL_FULFILLMENT_DOOMED_CLERGY"
+		add = 25
+		$FACTION_TARGET$ = {
+			has_fulfillment_parameter = sp_clerical_vassals_faction_more
+		}
+		highest_held_title_tier > tier_barony
+		government_has_flag = government_is_theocracy
+		faith = $FACTION_TARGET$.faith
 	}
 }
 
@@ -1434,7 +1482,7 @@ independence_faction_modifiers = {
 				}
 			}
 		}
-		NOT = { government_allows = administrative } # Admin kings like being vassals, and don't get a boost
+		NOT = { government_has_mechanic = administrative } # Admin kings like being vassals, and don't get a boost
 		highest_held_title_tier = tier_kingdom
 	}
 
@@ -1593,14 +1641,14 @@ independence_faction_modifiers = {
 			target = $FACTION_TARGET$
 		}
 	}
-	
+
 	# Admin vassals are generally want independence a bit less than others
 	modifier = {
 		desc = "FACTION_REASON_ADMINISTRATIVE"
 		add = -25
-		government_allows = administrative
+		government_has_mechanic = administrative
 	}
-	
+
 	# Nomads want to break free from non-nomads badly
 	modifier = {
 		desc = "FACTION_REASON_NOMADIC"
@@ -1751,7 +1799,7 @@ nation_fracturing_faction_modifiers = {
 					}
 					add = {
 						if = {
-							limit = { tier = tier_empire }
+							limit = { tier >= tier_empire }
 							add = 50
 						}
 						else_if = {
@@ -1826,13 +1874,13 @@ nation_fracturing_faction_modifiers = {
 	}
 
 	modifier = {
-		$FACTION_TARGET$ = { 
-			any_memory = { 
+		$FACTION_TARGET$ = {
+			any_memory = {
 				has_memory_type = nomad_showed_weakness_in_war
 				memory_age_years < 10
 			}
 		}
-		
+
 		add = {
 			value = 125
 			add = $FACTION_TARGET$.sub_realm_size
@@ -1841,8 +1889,8 @@ nation_fracturing_faction_modifiers = {
 	}
 
 	modifier = {
-		$FACTION_TARGET$ = { 
-			any_memory = { 
+		$FACTION_TARGET$ = {
+			any_memory = {
 				has_memory_type = had_chaotic_kurultai_succession
 				memory_age_years < 10
 			}
@@ -2011,7 +2059,7 @@ nation_fracturing_faction_blockers = {
 		add = -1000
 		$FACTION_TARGET$.primary_title.tier < tier_kingdom
 	}
-	
+
 	modifier = {
 		add = -2000
 		OR = {
@@ -2022,7 +2070,7 @@ nation_fracturing_faction_blockers = {
 			has_title_law = confederation_elective_succession_law
 	  	}
 	}
-	
+
 	modifier = {
 		add = -2000
 		government_has_flag = government_is_nomadic
@@ -2133,11 +2181,11 @@ claimant_faction_modifiers = {
 		NOT = { $FACTION_CLAIMANT$ = root }
 		OR = {
 			AND = {
-				faith = { has_doctrine = doctrine_gender_female_dominated }
+				rite = { rite_has_doctrine = doctrine_gender_female_dominated }
 				$FACTION_CLAIMANT$ = { is_male = yes }
 			}
 			AND = {
-				faith = { has_doctrine = doctrine_gender_male_dominated }
+				rite = { rite_has_doctrine = doctrine_gender_male_dominated }
 				$FACTION_CLAIMANT$ = { is_female = yes }
 			}
 		}
@@ -2149,7 +2197,7 @@ claimant_faction_modifiers = {
 		add = 25
 		OR = {
 			AND = {
-				faith = { has_doctrine = doctrine_gender_female_dominated }
+				rite = { rite_has_doctrine = doctrine_gender_female_dominated }
 				$FACTION_TARGET$ = { is_male = yes }
 				$FACTION_CLAIMANT$ = {
 					is_female = yes
@@ -2157,7 +2205,7 @@ claimant_faction_modifiers = {
 				}
 			}
 			AND = {
-				faith = { has_doctrine = doctrine_gender_male_dominated }
+				rite = { rite_has_doctrine = doctrine_gender_male_dominated }
 				$FACTION_TARGET$ = { is_female = yes }
 				$FACTION_CLAIMANT$ = {
 					is_male = yes
@@ -2394,7 +2442,7 @@ claimant_faction_modifiers = {
 		NOT = { this = $FACTION_CLAIMANT$ }
 		is_extended_family_of = $FACTION_CLAIMANT$
 		NOT = { is_extended_family_of = $FACTION_TARGET$ }
-		add = 10 
+		add = 10
 		desc = FACTION_REASON_CLAIMANT_EXTENDED_FAMILY
 	}
 	# Heir
@@ -2587,7 +2635,7 @@ claimant_faction_modifiers = {
 		desc = "FACTION_REASON_PREFER_INDEPENDENCE_FACTION"
 		add = -200
 		liege = { top_liege = this }
-		NOT = { government_allows = administrative }
+		NOT = { government_has_mechanic = administrative }
 		NOT = {
 			$FACTION_TARGET$ = { is_rightful_liege_of = root }
 		}
@@ -2739,46 +2787,46 @@ claimant_faction_modifiers = {
 		add = {
 			value = 0
 			if = {
-				limit = { 
-					$FACTION_TARGET$ = { 
+				limit = {
+					$FACTION_TARGET$ = {
 						any_owned_story = {
 							type = story_cycle_harrying_of_the_north
 							var:resistance > 7
 						}
-					} 
+					}
 				}
 				add = 15
 			}
 			else_if = {
-				limit = { 
-					$FACTION_TARGET$ = { 
+				limit = {
+					$FACTION_TARGET$ = {
 						any_owned_story = {
 							type = story_cycle_harrying_of_the_north
 							var:resistance > 10
 						}
-					} 
+					}
 				}
 				add = 30
 			}
 			else_if = {
-				limit = { 
-					$FACTION_TARGET$ = { 
+				limit = {
+					$FACTION_TARGET$ = {
 						any_owned_story = {
 							type = story_cycle_harrying_of_the_north
 							var:resistance > 13
 						}
-					} 
+					}
 				}
 				add = 50
 			}
 			else_if = {
-				limit = { 
-					$FACTION_TARGET$ = { 
+				limit = {
+					$FACTION_TARGET$ = {
 						any_owned_story = {
 							type = story_cycle_harrying_of_the_north
 							var:resistance > 16
 						}
-					} 
+					}
 				}
 				add = 80
 			}
@@ -2799,46 +2847,46 @@ claimant_faction_modifiers = {
 		add = {
 			value = 0
 			if = {
-				limit = { 
-					$FACTION_TARGET$ = { 
+				limit = {
+					$FACTION_TARGET$ = {
 						any_owned_story = {
 							type = story_cycle_harrying_of_the_north
 							var:pacification > 5
 						}
-					} 
+					}
 				}
 				add = -5
 			}
 			else_if = {
-				limit = { 
-					$FACTION_TARGET$ = { 
+				limit = {
+					$FACTION_TARGET$ = {
 						any_owned_story = {
 							type = story_cycle_harrying_of_the_north
 							var:pacification > 8
 						}
-					} 
+					}
 				}
 				add = -10
 			}
 			else_if = {
-				limit = { 
-					$FACTION_TARGET$ = { 
+				limit = {
+					$FACTION_TARGET$ = {
 						any_owned_story = {
 							type = story_cycle_harrying_of_the_north
 							var:pacification > 11
 						}
-					} 
+					}
 				}
 				add = -15
 			}
 			else_if = {
-				limit = { 
-					$FACTION_TARGET$ = { 
+				limit = {
+					$FACTION_TARGET$ = {
 						any_owned_story = {
 							type = story_cycle_harrying_of_the_north
 							var:pacification > 14
 						}
-					} 
+					}
 				}
 				add = -20
 			}
@@ -2939,8 +2987,8 @@ claimant_faction_modifiers = {
 							}
 							OR = {
 								AND = {
-									root.faith = { has_doctrine = doctrine_pluralism_pluralistic }
-									faith = { has_doctrine = doctrine_pluralism_pluralistic }
+									root.rite = { rite_has_doctrine = doctrine_pluralism_pluralistic }
+									rite = { rite_has_doctrine = doctrine_pluralism_pluralistic }
 								}
 								faith = root.faith
 							}
@@ -3100,8 +3148,8 @@ admin_faction_modifiers = {
 		}
 		$FACTION_TARGET$ = {
 			has_trait = deviant
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:deviant FAITH = $FACTION_TARGET$.primary_title.state_faith GENDER_CHARACTER = $FACTION_TARGET$ }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:deviant RITE = $FACTION_TARGET$.rite GENDER_CHARACTER = $FACTION_TARGET$ }
 		}
 		add = 20
 		desc = FACTION_REASON_ADMIN_LIEGE_DEVIANT_AND_CRIMINAL
@@ -3114,8 +3162,8 @@ admin_faction_modifiers = {
 		}
 		$FACTION_TARGET$ = {
 			has_trait = incestuous
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:incestuous FAITH = $FACTION_TARGET$.primary_title.state_faith GENDER_CHARACTER = $FACTION_TARGET$ }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:incestuous RITE = $FACTION_TARGET$.rite GENDER_CHARACTER = $FACTION_TARGET$ }
 		}
 		add = 20
 		desc = FACTION_REASON_ADMIN_LIEGE_INCESTUOUS_AND_CRIMINAL
@@ -3128,8 +3176,8 @@ admin_faction_modifiers = {
 		}
 		$FACTION_TARGET$ = {
 			has_trait = sodomite
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:sodomite FAITH = top_liege.primary_title.state_faith GENDER_CHARACTER = root }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:sodomite RITE = top_liege.rite GENDER_CHARACTER = root }
 		}
 		add = 20
 		desc = FACTION_REASON_ADMIN_LIEGE_SODOMITE_AND_CRIMINAL
@@ -3142,8 +3190,8 @@ admin_faction_modifiers = {
 		}
 		$FACTION_TARGET$ = {
 			has_trait = cannibal
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:cannibal FAITH = top_liege.primary_title.state_faith GENDER_CHARACTER = root }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:cannibal RITE = top_liege.rite GENDER_CHARACTER = root }
 		}
 		add = 20
 		desc = FACTION_REASON_ADMIN_LIEGE_CANNIBAL_AND_CRIMINAL
@@ -3153,8 +3201,8 @@ admin_faction_modifiers = {
 		NOT = { has_trait = kinslayer }
 		$FACTION_TARGET$ = {
 			has_trait = kinslayer_1
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:kinslayer_1 FAITH = top_liege.primary_title.state_faith GENDER_CHARACTER = root }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:kinslayer_1 RITE = top_liege.rite GENDER_CHARACTER = root }
 		}
 		add = 20
 		desc = FACTION_REASON_ADMIN_LIEGE_KINSLAYER_1_AND_CRIMINAL
@@ -3164,8 +3212,8 @@ admin_faction_modifiers = {
 		NOT = { has_trait = kinslayer }
 		$FACTION_TARGET$ = {
 			has_trait = kinslayer_2
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:kinslayer_2 FAITH = top_liege.primary_title.state_faith GENDER_CHARACTER = root }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:kinslayer_2 RITE = top_liege.rite GENDER_CHARACTER = root }
 		}
 		add = 30
 		desc = FACTION_REASON_ADMIN_LIEGE_KINSLAYER_2_AND_CRIMINAL
@@ -3175,8 +3223,8 @@ admin_faction_modifiers = {
 		NOT = { has_trait = kinslayer }
 		$FACTION_TARGET$ = {
 			has_trait = kinslayer_3
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:kinslayer_3 FAITH = top_liege.primary_title.state_faith GENDER_CHARACTER = root }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:kinslayer_3 RITE = top_liege.rite GENDER_CHARACTER = root }
 		}
 		add = 40
 		desc = FACTION_REASON_ADMIN_LIEGE_KINSLAYER_3_AND_CRIMINAL
@@ -3189,8 +3237,8 @@ admin_faction_modifiers = {
 		}
 		$FACTION_TARGET$ = {
 			has_trait = witch
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:witch FAITH = top_liege.primary_title.state_faith GENDER_CHARACTER = root }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:witch RITE = top_liege.rite GENDER_CHARACTER = root }
 		}
 		add = 20
 		desc = FACTION_REASON_ADMIN_LIEGE_WITCH_AND_CRIMINAL
@@ -3203,8 +3251,8 @@ admin_faction_modifiers = {
 		}
 		$FACTION_TARGET$ = {
 			has_trait = adulterer
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:adulterer FAITH = top_liege.primary_title.state_faith GENDER_CHARACTER = root }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:adulterer RITE = top_liege.rite GENDER_CHARACTER = root }
 		}
 		add = 20
 		desc = FACTION_REASON_ADMIN_LIEGE_ADULTERER_AND_CRIMINAL
@@ -3214,8 +3262,8 @@ admin_faction_modifiers = {
 		NOT = { has_trait = fornicator }
 		$FACTION_TARGET$ = {
 			has_trait = fornicator
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:fornicator FAITH = top_liege.primary_title.state_faith GENDER_CHARACTER = root }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:fornicator RITE = top_liege.rite GENDER_CHARACTER = root }
 		}
 		add = 20
 		desc = FACTION_REASON_ADMIN_LIEGE_FORNICATOR_AND_CRIMINAL
@@ -3224,19 +3272,19 @@ admin_faction_modifiers = {
 
 # Modifiers specific to claimant factions in Admin realms
 admin_claimant_faction_modifiers = {
-	# State Faith
-	modifier = { # State Faith is preferred if Liege does not follow it
+	# State Rite
+	modifier = { # State Rite is preferred if Liege does not follow it
 		ep3_admin_faction_trigger = { FACTION_TARGET = $FACTION_TARGET$ } # Required for dlc context
-		NOT = { faith = $FACTION_TARGET$.faith }
-		faith = $FACTION_CLAIMANT$.faith
-		$FACTION_TARGET$.primary_title.state_faith ?= faith
+		NOT = { rite = $FACTION_TARGET$.rite }
+		rite = $FACTION_CLAIMANT$.rite
+		$FACTION_TARGET$.primary_title.state_rite ?= rite
 		add = 75
 		desc = FACTION_REASON_ADMIN_CLAIMANT_STATE_FAITH
 	}
-	modifier = { # Don't push a claimaint who doesn't follow the State Faith, especially when a zealot
+	modifier = { # Don't push a claimaint who doesn't follow the State Rite, especially when a zealot
 		ep3_admin_faction_trigger = { FACTION_TARGET = $FACTION_TARGET$ } # Required for dlc context
-		$FACTION_TARGET$.primary_title.state_faith ?= faith
-		$FACTION_CLAIMANT$.faith != faith
+		$FACTION_TARGET$.primary_title.state_rite ?= rite
+		$FACTION_CLAIMANT$.rite != rite
 		add = {
 			value = -40
 			if = {
@@ -3423,8 +3471,8 @@ admin_claimant_faction_modifiers = {
 			}
 			if = {
 				limit = {
-					$FACTION_CLAIMANT$ = { has_trait = scholar }
-					NOT = { $FACTION_TARGET$ = { has_trait = scholar } }
+					$FACTION_CLAIMANT$ = { has_trait = erudite }
+					NOT = { $FACTION_TARGET$ = { has_trait = erudite } }
 				}
 				add = 10
 			}
@@ -3536,8 +3584,8 @@ admin_claimant_faction_modifiers = {
 		ep3_admin_faction_trigger = { FACTION_TARGET = $FACTION_TARGET$ } # Required for dlc context
 		$FACTION_CLAIMANT$ = {
 			has_trait = deviant
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:deviant FAITH = $FACTION_TARGET$.primary_title.state_faith GENDER_CHARACTER = $FACTION_CLAIMANT$ }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:deviant RITE = $FACTION_TARGET$.rite GENDER_CHARACTER = $FACTION_CLAIMANT$ }
 		}
 		add = -20
 		desc = FACTION_REASON_ADMIN_CLAIMANT_DEVIANT_AND_CRIMINAL
@@ -3546,8 +3594,8 @@ admin_claimant_faction_modifiers = {
 		ep3_admin_faction_trigger = { FACTION_TARGET = $FACTION_TARGET$ } # Required for dlc context
 		$FACTION_CLAIMANT$ = {
 			has_trait = incestuous
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:deviant FAITH = $FACTION_TARGET$.primary_title.state_faith GENDER_CHARACTER = $FACTION_CLAIMANT$ }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:deviant RITE = $FACTION_TARGET$.rite GENDER_CHARACTER = $FACTION_CLAIMANT$ }
 		}
 		add = -20
 		desc = FACTION_REASON_ADMIN_CLAIMANT_INCESTUOUS_AND_CRIMINAL
@@ -3556,8 +3604,8 @@ admin_claimant_faction_modifiers = {
 		ep3_admin_faction_trigger = { FACTION_TARGET = $FACTION_TARGET$ } # Required for dlc context
 		$FACTION_CLAIMANT$ = {
 			has_trait = sodomite
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:deviant FAITH = $FACTION_TARGET$.primary_title.state_faith GENDER_CHARACTER = $FACTION_CLAIMANT$ }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:deviant RITE = $FACTION_TARGET$.rite GENDER_CHARACTER = $FACTION_CLAIMANT$ }
 		}
 		add = -20
 		desc = FACTION_REASON_ADMIN_CLAIMANT_SODOMITE_AND_CRIMINAL
@@ -3566,8 +3614,8 @@ admin_claimant_faction_modifiers = {
 		ep3_admin_faction_trigger = { FACTION_TARGET = $FACTION_TARGET$ } # Required for dlc context
 		$FACTION_CLAIMANT$ = {
 			has_trait = cannibal
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:deviant FAITH = $FACTION_TARGET$.primary_title.state_faith GENDER_CHARACTER = $FACTION_CLAIMANT$ }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:deviant RITE = $FACTION_TARGET$.rite GENDER_CHARACTER = $FACTION_CLAIMANT$ }
 		}
 		add = -20
 		desc = FACTION_REASON_ADMIN_CLAIMANT_CANNIBAL_AND_CRIMINAL
@@ -3576,8 +3624,8 @@ admin_claimant_faction_modifiers = {
 		ep3_admin_faction_trigger = { FACTION_TARGET = $FACTION_TARGET$ } # Required for dlc context
 		$FACTION_CLAIMANT$ = {
 			has_trait = kinslayer_1
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:deviant FAITH = $FACTION_TARGET$.primary_title.state_faith GENDER_CHARACTER = $FACTION_CLAIMANT$ }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:deviant RITE = $FACTION_TARGET$.rite GENDER_CHARACTER = $FACTION_CLAIMANT$ }
 		}
 		add = -10
 		desc = FACTION_REASON_ADMIN_CLAIMANT_KINSLAYER_1_AND_CRIMINAL
@@ -3586,8 +3634,8 @@ admin_claimant_faction_modifiers = {
 		ep3_admin_faction_trigger = { FACTION_TARGET = $FACTION_TARGET$ } # Required for dlc context
 		$FACTION_CLAIMANT$ = {
 			has_trait = kinslayer_2
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:deviant FAITH = $FACTION_TARGET$.primary_title.state_faith GENDER_CHARACTER = $FACTION_CLAIMANT$ }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:deviant RITE = $FACTION_TARGET$.rite GENDER_CHARACTER = $FACTION_CLAIMANT$ }
 		}
 		add = -20
 		desc = FACTION_REASON_ADMIN_CLAIMANT_KINSLAYER_2_AND_CRIMINAL
@@ -3596,8 +3644,8 @@ admin_claimant_faction_modifiers = {
 		ep3_admin_faction_trigger = { FACTION_TARGET = $FACTION_TARGET$ } # Required for dlc context
 		$FACTION_CLAIMANT$ = {
 			has_trait = kinslayer_3
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:deviant FAITH = $FACTION_TARGET$.primary_title.state_faith GENDER_CHARACTER = $FACTION_CLAIMANT$ }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:deviant RITE = $FACTION_TARGET$.rite GENDER_CHARACTER = $FACTION_CLAIMANT$ }
 		}
 		add = -30
 		desc = FACTION_REASON_ADMIN_CLAIMANT_KINSLAYER_3_AND_CRIMINAL
@@ -3606,8 +3654,8 @@ admin_claimant_faction_modifiers = {
 		ep3_admin_faction_trigger = { FACTION_TARGET = $FACTION_TARGET$ } # Required for dlc context
 		$FACTION_CLAIMANT$ = {
 			has_trait = witch
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:deviant FAITH = $FACTION_TARGET$.primary_title.state_faith GENDER_CHARACTER = $FACTION_CLAIMANT$ }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:deviant RITE = $FACTION_TARGET$.rite GENDER_CHARACTER = $FACTION_CLAIMANT$ }
 		}
 		add = -20
 		desc = FACTION_REASON_ADMIN_CLAIMANT_WITCH_AND_CRIMINAL
@@ -3616,8 +3664,8 @@ admin_claimant_faction_modifiers = {
 		ep3_admin_faction_trigger = { FACTION_TARGET = $FACTION_TARGET$ } # Required for dlc context
 		$FACTION_CLAIMANT$ = {
 			has_trait = adulterer
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:deviant FAITH = $FACTION_TARGET$.primary_title.state_faith GENDER_CHARACTER = $FACTION_CLAIMANT$ }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:deviant RITE = $FACTION_TARGET$.rite GENDER_CHARACTER = $FACTION_CLAIMANT$ }
 		}
 		add = -20
 		desc = FACTION_REASON_ADMIN_CLAIMANT_ADULTERER_AND_CRIMINAL
@@ -3626,8 +3674,8 @@ admin_claimant_faction_modifiers = {
 		ep3_admin_faction_trigger = { FACTION_TARGET = $FACTION_TARGET$ } # Required for dlc context
 		$FACTION_CLAIMANT$ = {
 			has_trait = fornicator
-			exists = top_liege.primary_title.state_faith
-			trait_is_criminal_in_faith_trigger = { TRAIT = trait:deviant FAITH = $FACTION_TARGET$.primary_title.state_faith GENDER_CHARACTER = $FACTION_CLAIMANT$ }
+			exists = top_liege.primary_title.state_rite
+			trait_is_criminal_in_rite_trigger = { TRAIT = trait:deviant RITE = $FACTION_TARGET$.rite GENDER_CHARACTER = $FACTION_CLAIMANT$ }
 		}
 		add = -20
 		desc = FACTION_REASON_ADMIN_CLAIMANT_FORNICATOR_AND_CRIMINAL
@@ -3635,7 +3683,9 @@ admin_claimant_faction_modifiers = {
 	# Born in Purple
 	modifier = { # Prefer a claimant who is born in the purple when the liege is not
 		ep3_admin_faction_trigger = { FACTION_TARGET = $FACTION_TARGET$ } # Required for dlc context
-		$FACTION_TARGET$.primary_title = title:e_byzantium
+		$FACTION_TARGET$ = {
+			is_eastern_roman_emperor_primary_title_trigger = yes
+		}
 		$FACTION_CLAIMANT$ = { has_trait = born_in_the_purple }
 		NOT = {
 			$FACTION_TARGET$ = { has_trait = born_in_the_purple }
@@ -3684,11 +3734,11 @@ ceremonial_claimant_faction_modifiers = {
 		}
 		OR = {
 			AND = {
-				faith = { has_doctrine = doctrine_gender_female_dominated }
+				rite = { rite_has_doctrine = doctrine_gender_female_dominated }
 				$FACTION_CLAIMANT$ = { is_male = yes }
 			}
 			AND = {
-				faith = { has_doctrine = doctrine_gender_male_dominated }
+				rite = { rite_has_doctrine = doctrine_gender_male_dominated }
 				$FACTION_CLAIMANT$ = { is_female = yes }
 			}
 		}
@@ -3702,7 +3752,7 @@ ceremonial_claimant_faction_modifiers = {
 		exists = $FACTION_CLAIMANT$
 		OR = {
 			AND = {
-				faith = { has_doctrine = doctrine_gender_female_dominated }
+				rite = { rite_has_doctrine = doctrine_gender_female_dominated }
 				$FACTION_TARGET$ = { is_male = yes }
 				$FACTION_CLAIMANT$ = {
 					is_female = yes
@@ -3710,7 +3760,7 @@ ceremonial_claimant_faction_modifiers = {
 				}
 			}
 			AND = {
-				faith = { has_doctrine = doctrine_gender_male_dominated }
+				rite = { rite_has_doctrine = doctrine_gender_male_dominated }
 				$FACTION_TARGET$ = { is_female = yes }
 				$FACTION_CLAIMANT$ = {
 					is_male = yes
@@ -3727,13 +3777,13 @@ ceremonial_claimant_faction_modifiers = {
 			exists = $FACTION_TARGET$
 			exists = $FACTION_CLAIMANT$
 			is_powerful_vassal = yes
-			OR = { #Unop: To fix Error: is_close_family_of trigger [ character (is_close_relative (target character)) was null ]
+			OR = {
 				is_close_family_of = $FACTION_CLAIMANT$
 				$FACTION_CLAIMANT$.primary_spouse ?= { is_close_family_of = prev }
 			}
-			NOR = { #Unop: Same as above
+			NOR = {
 				is_close_family_of = $FACTION_TARGET$
-				$FACTION_TARGET$.primary_spouse ?= { is_close_family_of = prev }
+				$FACTION_CLAIMANT$.primary_spouse ?= { is_close_family_of = prev }
 			}
 		}
 		who = root
@@ -3786,13 +3836,13 @@ ceremonial_claimant_faction_modifiers = {
 		$FACTION_CLAIMANT$ ?= {
 			NOT = { this = root }
 		}
-		save_temporary_opinion_value_as = { 
-			name = opinion_of_current_liege 
-			target = $FACTION_TARGET$ 
+		save_temporary_opinion_value_as = {
+			name = opinion_of_current_liege
+			target = $FACTION_TARGET$
 		}
-		save_temporary_opinion_value_as = { 
-			name = opinion_of_claimant 
-			target = $FACTION_CLAIMANT$ 
+		save_temporary_opinion_value_as = {
+			name = opinion_of_claimant
+			target = $FACTION_CLAIMANT$
 		}
 		scope:opinion_of_claimant > liege_opinion_value
 		scope:opinion_of_claimant > 0
@@ -4019,7 +4069,7 @@ ceremonial_claimant_faction_modifiers = {
 			NOT = { this = root }
 			is_extended_family_of = root
 		}
-		add = 10 
+		add = 10
 		desc = FACTION_REASON_CLAIMANT_EXTENDED_FAMILY
 	}
 	# Spouse
@@ -4231,7 +4281,7 @@ ceremonial_claimant_faction_modifiers = {
 		desc = "FACTION_REASON_PREFER_INDEPENDENCE_FACTION"
 		add = -200
 		liege = { top_liege = this }
-		NOT = { government_allows = administrative }
+		NOT = { government_has_mechanic = administrative }
 		NOT = {
 			$FACTION_TARGET$ ?= { is_rightful_liege_of = root }
 		}
@@ -4380,46 +4430,46 @@ ceremonial_claimant_faction_modifiers = {
 		add = {
 			value = 0
 			if = {
-				limit = { 
-					$FACTION_TARGET$ = { 
+				limit = {
+					$FACTION_TARGET$ = {
 						any_owned_story = {
 							type = story_cycle_harrying_of_the_north
 							var:resistance > 7
 						}
-					} 
+					}
 				}
 				add = 15
 			}
 			else_if = {
-				limit = { 
-					$FACTION_TARGET$ = { 
+				limit = {
+					$FACTION_TARGET$ = {
 						any_owned_story = {
 							type = story_cycle_harrying_of_the_north
 							var:resistance > 10
 						}
-					} 
+					}
 				}
 				add = 30
 			}
 			else_if = {
-				limit = { 
-					$FACTION_TARGET$ = { 
+				limit = {
+					$FACTION_TARGET$ = {
 						any_owned_story = {
 							type = story_cycle_harrying_of_the_north
 							var:resistance > 13
 						}
-					} 
+					}
 				}
 				add = 50
 			}
 			else_if = {
-				limit = { 
-					$FACTION_TARGET$ = { 
+				limit = {
+					$FACTION_TARGET$ = {
 						any_owned_story = {
 							type = story_cycle_harrying_of_the_north
 							var:resistance > 16
 						}
-					} 
+					}
 				}
 				add = 80
 			}
@@ -4440,46 +4490,46 @@ ceremonial_claimant_faction_modifiers = {
 		add = {
 			value = 0
 			if = {
-				limit = { 
-					$FACTION_TARGET$ = { 
+				limit = {
+					$FACTION_TARGET$ = {
 						any_owned_story = {
 							type = story_cycle_harrying_of_the_north
 							var:pacification > 5
 						}
-					} 
+					}
 				}
 				add = -5
 			}
 			else_if = {
-				limit = { 
-					$FACTION_TARGET$ = { 
+				limit = {
+					$FACTION_TARGET$ = {
 						any_owned_story = {
 							type = story_cycle_harrying_of_the_north
 							var:pacification > 8
 						}
-					} 
+					}
 				}
 				add = -10
 			}
 			else_if = {
-				limit = { 
-					$FACTION_TARGET$ = { 
+				limit = {
+					$FACTION_TARGET$ = {
 						any_owned_story = {
 							type = story_cycle_harrying_of_the_north
 							var:pacification > 11
 						}
-					} 
+					}
 				}
 				add = -15
 			}
 			else_if = {
-				limit = { 
-					$FACTION_TARGET$ = { 
+				limit = {
+					$FACTION_TARGET$ = {
 						any_owned_story = {
 							type = story_cycle_harrying_of_the_north
 							var:pacification > 14
 						}
-					} 
+					}
 				}
 				add = -20
 			}
@@ -4578,8 +4628,8 @@ ceremonial_claimant_faction_modifiers = {
 							}
 							OR = {
 								AND = {
-									root.faith = { has_doctrine = doctrine_pluralism_pluralistic }
-									faith = { has_doctrine = doctrine_pluralism_pluralistic }
+									root.rite = { rite_has_doctrine = doctrine_pluralism_pluralistic }
+									rite = { rite_has_doctrine = doctrine_pluralism_pluralistic }
 								}
 								faith = root.faith
 							}

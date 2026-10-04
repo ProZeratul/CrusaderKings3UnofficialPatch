@@ -85,7 +85,7 @@ imperial_examination.1000 = {
 			is_in_guest_subset = { name = entrants }
 		}
 		add_character_flag = exam_cheat_intent
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = minor_stress_impact_gain
 		}
 		ai_chance = {
@@ -211,7 +211,7 @@ imperial_examination.1002 = {
 				years = 5
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -237,7 +237,7 @@ imperial_examination.1002 = {
 				years = 5
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			deceitful = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -263,9 +263,9 @@ imperial_examination.1003 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					NOR = {
-						has_character_flag = passed_provincial_exam
-						has_character_flag = passed_metropolitan_exam
+					has_none_of_variables = {
+						name = passed_provincial_exam
+						name = passed_metropolitan_exam
 					}
 				}
 				desc = imperial_examination.1003.not_passed_exam
@@ -359,8 +359,10 @@ scripted_effect imperial_examination_fetch_other_entrant_effect = {
 	scope:activity = {
 		random_attending_character = {
 			limit = {
-				is_in_guest_subset = { name = entrants }
 				this != root
+				# The attending list can still hold guests who have already left
+				involved_activity ?= scope:activity
+				is_in_guest_subset = { name = entrants }
 			}
 			save_scope_as = other_entrant
 		}
@@ -480,7 +482,7 @@ imperial_examination.1020 = {
 	#Safe option, play it cool
 	option = {
 		name = imperial_examination.1020.b
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = miniscule_stress_impact_loss
 		}
 		ai_chance = {
@@ -594,7 +596,7 @@ imperial_examination.1040 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -620,7 +622,7 @@ imperial_examination.1040 = {
 			OR = {
 				AND = {
 					is_landed = yes
-					government_allows = administrative
+					government_has_mechanic = administrative
 				}
 				has_trait = governor
 			}
@@ -665,12 +667,12 @@ imperial_examination.1040 = {
 					title = imperial_examination.1040.d.tt.failure
 					add_prestige = minor_prestige_loss
 				}
-				stress_impact = {
+				stress_and_fulfillment_impact = {
 					base = minor_stress_impact_gain
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			shy = minor_stress_impact_gain
 		}
 		ai_chance = {
@@ -733,14 +735,14 @@ imperial_examination.1040 = {
 					left_icon = root
 					title = imperial_examination.1040.e.tt.failure
 					add_prestige = minor_prestige_loss
-					stress_impact = {
+					stress_and_fulfillment_impact = {
 						base = minor_stress_impact_gain
 					}
 				}
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			craven = medium_stress_impact_gain
 			lazy = minor_stress_impact_gain
 		}
@@ -794,7 +796,7 @@ imperial_examination.1040 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -808,7 +810,7 @@ imperial_examination.1040 = {
 	option = { # I have no time for distractions.
 		name = imperial_examination.1040.c
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			impatient = minor_stress_impact_loss
 			lazy = minor_stress_impact_loss
 		}
@@ -946,13 +948,13 @@ imperial_examination.1050 = {
 					left_icon = scope:examiner
 					add_prestige = medium_prestige_loss
 				}
-				stress_impact = {
+				stress_and_fulfillment_impact = {
 					base = medium_stress_impact_gain
 				}
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			lazy = minor_stress_impact_gain
 			impatient = minor_stress_impact_gain
 		}
@@ -1026,12 +1028,12 @@ imperial_examination.1050 = {
 					left_icon = scope:examiner
 					add_prestige = medium_prestige_loss
 				}
-				stress_impact = {
+				stress_and_fulfillment_impact = {
 					base = medium_stress_impact_gain
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = minor_stress_impact_gain
 			lazy = minor_stress_impact_gain
 			impatient = minor_stress_impact_gain
@@ -1165,7 +1167,7 @@ imperial_examination.1060 = {
 	#I will enjoy these!
 	option = {
 		name = imperial_examination.1060.d
-		stress_impact = { base = minor_stress_impact_loss }
+		stress_and_fulfillment_impact = { base = minor_stress_impact_loss }
 		ai_chance = {
 			base = 100
 		}
@@ -1250,7 +1252,7 @@ imperial_examination.1070 = {
 						has_trait = compassionate
 						has_trait = just
 						has_trait = honest
-						has_trait = scholar
+						has_trait = erudite
 					}
 				}
 				imperial_examination_adjust_advantage_variable_effect = yes
@@ -1258,11 +1260,11 @@ imperial_examination.1070 = {
 		}
 		add_piety = medium_piety_gain
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = minor_stress_impact_loss
 			just = minor_stress_impact_loss
 			honest = minor_stress_impact_loss
-			scholar = minor_stress_impact_loss
+			erudite = minor_stress_impact_loss
 			callous = medium_stress_impact_gain
 		}
 
@@ -1277,7 +1279,7 @@ imperial_examination.1070 = {
 					has_trait = compassionate
 					has_trait = just
 					has_trait = honest
-					has_trait = scholar
+					has_trait = erudite
 				}
 			}
 			modifier = {
@@ -1306,7 +1308,7 @@ imperial_examination.1070 = {
 			add_dynasty_prestige = minor_dynasty_prestige_gain
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = medium_stress_impact_gain
 			just = medium_stress_impact_gain
 		}
@@ -1329,7 +1331,7 @@ imperial_examination.1070 = {
 
 	option = { # I will defer to the examiners' judgement.
 		name = imperial_examination.1070.c
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 		}
 		ai_chance = {
@@ -1479,7 +1481,7 @@ imperial_examination.2000 = {
 	option = { # Alas, the entrant does not meet my expectations.
 		name = imperial_examination.2000.c
 		add_prestige = minor_prestige_gain
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			callous = medium_stress_impact_loss
 			ambitious = medium_stress_impact_loss
 		}
@@ -1650,7 +1652,7 @@ imperial_examination.2010 = {
 			target = scope:examiner
 			gold = tiny_gold_value
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			ambitious = medium_stress_impact_loss
 		}
@@ -1690,7 +1692,7 @@ imperial_examination.2010 = {
 			target = scope:examiner
 			gold = tiny_gold_value
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			ambitious = medium_stress_impact_loss
 		}
@@ -1710,7 +1712,7 @@ imperial_examination.2010 = {
 	option = {
 		name = imperial_examination.2010.c
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			shy = medium_stress_impact_loss
 			honest = medium_stress_impact_loss
 			diligent = medium_stress_impact_loss
@@ -1764,7 +1766,7 @@ scripted_effect sort_interesting_pool_character = {
 				trigger_if = {
 					limit = {
 						scope:host = {
-							faith = { has_doctrine = doctrine_gender_female_dominated }
+							rite = { rite_has_doctrine = doctrine_gender_female_dominated }
 						}
 					}
 					is_female = yes
@@ -1772,7 +1774,7 @@ scripted_effect sort_interesting_pool_character = {
 				trigger_else_if = {
 					limit = {
 						scope:host = {
-							faith = { has_doctrine = doctrine_gender_male_dominated }
+							rite = { rite_has_doctrine = doctrine_gender_male_dominated }
 						}
 					}
 					is_female = no
@@ -1792,7 +1794,7 @@ scripted_effect sort_interesting_pool_character = {
 				trigger_if = {
 					limit = {
 						scope:host = {
-							faith = { has_doctrine = doctrine_gender_female_dominated }
+							rite = { rite_has_doctrine = doctrine_gender_female_dominated }
 						}
 					}
 					is_female = yes
@@ -1800,7 +1802,7 @@ scripted_effect sort_interesting_pool_character = {
 				trigger_else_if = {
 					limit = {
 						scope:host = {
-							faith = { has_doctrine = doctrine_gender_male_dominated }
+							rite = { rite_has_doctrine = doctrine_gender_male_dominated }
 						}
 					}
 					is_female = no
@@ -2002,7 +2004,7 @@ imperial_examination.2030 = {
 		dynasty = {
 			add_dynasty_prestige = minor_dynasty_prestige_gain
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = medium_stress_impact_gain
 			callous = minor_stress_impact_loss
 		}
@@ -2155,7 +2157,7 @@ imperial_examination.2040 = {
 		}
 		add_treasury = scope:rumored_examiner.medium_gold_value
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_loss
 		}
 		ai_chance = {
@@ -2187,7 +2189,7 @@ imperial_examination.2040 = {
 			imperial_examination_adjust_advantage_variable_effect = yes
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = medium_stress_impact_gain
 			honest = medium_stress_impact_gain
 		}
@@ -2221,7 +2223,7 @@ imperial_examination.2040 = {
 			}
 			examination_clear_timeout_effect = yes
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = medium_stress_impact_loss
 			sadistic = medium_stress_impact_loss
 			callous = minor_stress_impact_loss
@@ -2610,8 +2612,8 @@ imperial_examination.3007 = {
 
 	option = { # Let's go!
 		name = imperial_examination.3007.a
-		custom_tooltip = { #Unop: Changed into a custom_tooltip since no effect_localization exists
-			text = imperial_examination.3007.a.success_tooltip_first #Unop: Fix yml ref
+		custom_tooltip = {
+			text = imperial_examination.3007.a.success_tooltip_first
 		}
 		ai_chance = {
 			base = 100
@@ -2741,7 +2743,7 @@ imperial_examination.3010 = {
 			target = scope:entrant
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_loss
 		}
 		ai_chance = {
@@ -2771,7 +2773,7 @@ imperial_examination.3010 = {
 		}
 		add_dread = minor_dread_gain
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = medium_stress_impact_loss
 			sadistic = medium_stress_impact_loss
 			callous = minor_stress_impact_loss
@@ -2819,9 +2821,7 @@ imperial_examination.3010 = {
 				scope:examiner = { is_imprisoned = yes }
 			}
 			imperial_examination_create_appropriate_examiner_effect = yes
-			scope:new_examiner = {
-				add_to_activity = scope:activity #Unop: We need to give the activity here (was new_examiner)
-			}
+			add_to_activity = scope:activity
 			scope:activity = {
 				add_to_guest_subset = {
 					name = imperial_examiners
@@ -2907,7 +2907,7 @@ imperial_examination.3020 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = medium_stress_impact_loss
 		}
 
@@ -2941,7 +2941,7 @@ imperial_examination.3020 = {
 			opinion = -25
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			callous = medium_stress_impact_loss
 			compassionate = medium_stress_impact_gain
 		}
@@ -2970,7 +2970,7 @@ imperial_examination.3020 = {
 			opinion = 10
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			trusting = medium_stress_impact_loss
 		}
 
@@ -3059,7 +3059,7 @@ imperial_examination.3030 = {
 		}
 		add_legitimacy = minor_legitimacy_gain
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			zealous = medium_stress_impact_loss
 			paranoid = medium_stress_impact_loss
 			trusting = medium_stress_impact_gain
@@ -3198,6 +3198,7 @@ imperial_examination.4000 = {
 					location = root.location
 					culture = root.location.culture
 					faith = root.location.faith
+					rite = root.location.rite
 					save_scope_as = exam_taker
 				}
 			}
@@ -3213,6 +3214,7 @@ imperial_examination.4000 = {
 					location = root.location
 					culture = root.location.culture
 					faith = root.location.faith
+					rite = root.location.rite
 					save_scope_as = exam_taker
 				}
 			}
@@ -3222,6 +3224,7 @@ imperial_examination.4000 = {
 					location = root.location
 					culture = root.location.culture
 					faith = root.location.faith
+					rite = root.location.rite
 					learning = { medium_skill_rating high_skill_rating }
 					save_scope_as = exam_taker
 				}
@@ -3449,7 +3452,7 @@ imperial_examination.4020 = {
 		custom_tooltip = imperial_examination.advantage.tt
 		imperial_examination_adjust_advantage_variable_effect = yes
 		set_variable = has_stayed_up_studying
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_gain
 			lazy = minor_stress_impact_gain
 			diligent = minor_stress_impact_loss
@@ -3489,7 +3492,9 @@ scripted_trigger imperial_examination_4030_can_be_lovers_trigger = {
 			can_set_relation_lover_trigger = { CHARACTER = $CHARACTER$ }
 			can_set_relation_potential_lover_trigger = { CHARACTER = $CHARACTER$ }
 		}
+		might_cheat_on_every_partner_trigger = yes
 	}
+	$CHARACTER$ = { might_cheat_on_every_partner_trigger = yes }
 }
 
 #Study with a friend
@@ -3592,7 +3597,7 @@ imperial_examination.4030 = {
 			REASON = friend_bonded_over_studies
 			OPINION = default_lover_opinion
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_gain
 			lazy = minor_stress_impact_gain
 			diligent = minor_stress_impact_loss
@@ -3617,7 +3622,7 @@ imperial_examination.4030 = {
 			REASON = lover_love_studies
 			OPINION = default_lover_opinion
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_loss
 			lustful = minor_stress_impact_loss
 			rakish = medium_stress_impact_loss
@@ -3633,7 +3638,7 @@ imperial_examination.4030 = {
 	#Let's not
 	option = {
 		name = imperial_examination.4030.c
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			lazy = minor_stress_impact_loss
 		}
@@ -3685,7 +3690,7 @@ scripted_effect imperial_examination_4040_cheat_washing_duel_effect = {
 				left_icon = root
 				right_icon = scope:examiner
 				#Nope.
-				stress_impact = { base = medium_stress_impact_gain }
+				stress_and_fulfillment_impact = { base = medium_stress_impact_gain }
 			}
 		}
 	}
@@ -3787,7 +3792,7 @@ imperial_examination.4050 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			diligent = medium_stress_impact_gain
 			shy = medium_stress_impact_gain
 			gregarious = minor_stress_impact_loss
@@ -3821,7 +3826,7 @@ imperial_examination.4050 = {
 			OPINION = default_lover_opinion
 		}
 		set_variable = has_partied_with_friend
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_loss
 			lustful = minor_stress_impact_loss
 			rakish = medium_stress_impact_loss
@@ -3841,7 +3846,7 @@ imperial_examination.4050 = {
 			modifier = tgp_resisted_alcohol_modifier
 			years = 2
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			lazy = minor_stress_impact_loss
 		}
@@ -3885,7 +3890,7 @@ scripted_effect examination_type_duel_effect = {
 				title = imperial_examination.4060.a.failure
 				left_icon = scope:promising_lowborn
 			}
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				base = major_stress_impact_gain
 			}
 		}
@@ -4074,7 +4079,7 @@ imperial_examination.4060 = {
 		}
 		change_merit = minor_merit_loss
 		add_prestige = medium_prestige_gain
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = medium_stress_impact_gain
 			just = medium_stress_impact_gain
 			deceitful = minor_stress_impact_loss
@@ -4106,14 +4111,14 @@ imperial_examination.4060 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_gain
 		}
 	}
 
 	option = { # Actually... no.
 		name = imperial_examination.4060.c
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			vengeful = minor_stress_impact_gain
 		}
 	}
@@ -4250,14 +4255,14 @@ imperial_examination.4070 = {
 							title = imperial_examination.4070.a.failure
 							left_icon = scope:examiner
 						}
-						stress_impact = {
+						stress_and_fulfillment_impact = {
 							base = major_stress_impact_gain
 						}
 					}
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = minor_stress_impact_gain
 			just = minor_stress_impact_gain
 		}
@@ -4310,7 +4315,7 @@ imperial_examination.4070 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = minor_stress_impact_gain
 		}
 		ai_chance = {
@@ -4438,7 +4443,7 @@ imperial_examination.4080 = {
 				OPINION = default_rival_opinion
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = minor_stress_impact_loss
 			craven = medium_stress_impact_gain
 		}
@@ -4492,7 +4497,7 @@ imperial_examination.4080 = {
 				OPINION = default_rival_opinion
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = minor_stress_impact_loss
 			craven = medium_stress_impact_gain
 		}
@@ -4633,7 +4638,7 @@ imperial_examination.4090 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = miniscule_stress_impact_loss
 			shy = minor_stress_impact_gain
 		}
@@ -4658,7 +4663,7 @@ imperial_examination.4090 = {
 		name = imperial_examination.4090.b
 		change_merit = medium_merit_gain
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = miniscule_stress_impact_gain
 			shy = minor_stress_impact_loss
 		}
@@ -4809,7 +4814,7 @@ imperial_examination.4100 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = medium_stress_impact_gain
 			honest = medium_stress_impact_gain
 		}
@@ -4868,7 +4873,7 @@ imperial_examination.4100 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = medium_stress_impact_gain
 			honest = medium_stress_impact_gain
 		}
@@ -4975,7 +4980,7 @@ imperial_examination.8010 = {
 	option = { # I should focus on studying.
 		name = imperial_examination.8010.a
 		gain_appropriate_lifestyle_major_xp_effect = yes
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			diligent = medium_stress_impact_loss
 		}
 		ai_chance = {
@@ -5003,7 +5008,7 @@ imperial_examination.8010 = {
 	}
 	option = { # I have to swallow this shame
 		name = imperial_examination.8010.b
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_loss
 		}
 		ai_chance = {
@@ -5220,7 +5225,7 @@ imperial_examination.9000 = {
 				trigger_event = imperial_examination.9001
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = medium_stress_impact_gain
 			generous = medium_stress_impact_gain
 			stubborn = minor_stress_impact_loss
@@ -5270,7 +5275,7 @@ imperial_examination.9000 = {
 				trigger_event = imperial_examination.9001
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 		}
 		ai_chance = {
@@ -5421,7 +5426,7 @@ imperial_examination.9001 = {
 		}
 		# Then add influence.
 		change_influence = major_influence_gain
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			forgiving = medium_stress_impact_gain
 			calm = medium_stress_impact_gain
 		}
@@ -5509,7 +5514,7 @@ imperial_examination.9001 = {
             trait = confucian_education
             value = lifestyle_confucian_education_xp_gain_medium_value
         }
-        stress_impact = {
+        stress_and_fulfillment_impact = {
         	base = medium_stress_impact_loss
         	arrogant = major_stress_impact_gain
         }
@@ -5990,7 +5995,7 @@ scripted_effect imperial_examination_caught_cheating_effect = {
 	set_variable = been_caught_cheating_longterm
 	change_merit = medium_merit_loss
 	add_prestige = major_prestige_loss
-	stress_impact = { base = massive_stress_impact_gain }
+	stress_and_fulfillment_impact = { base = massive_stress_impact_gain }
 }
 
 #Cheat-duel effect
@@ -6086,9 +6091,9 @@ imperial_examination.5000 = {
 				has_current_phase = local_examination_phase_examination
 			}
 		}
-		NOR = {
-			has_variable = had_essay_examination
-			has_variable = been_caught_cheating
+		has_none_of_variables = {
+			name = had_essay_examination
+			name = been_caught_cheating
 		}
 	}
 	immediate = {
@@ -6243,9 +6248,9 @@ imperial_examination.5050 = {
 				has_current_phase = local_examination_phase_examination
 			}
 		}
-		NOR = {
-			has_variable = had_classics_examination
-			has_variable = been_caught_cheating
+		has_none_of_variables = {
+			name = had_classics_examination
+			name = been_caught_cheating
 		}
 	}
 	immediate = {
@@ -6440,9 +6445,9 @@ imperial_examination.5100 = {
 				has_current_phase = local_examination_phase_examination
 			}
 		}
-		NOR = {
-			has_variable = had_poetry_examination
-			has_variable = been_caught_cheating
+		has_none_of_variables = {
+			name = had_poetry_examination
+			name = been_caught_cheating
 		}
 	}
 	immediate = {
@@ -6545,7 +6550,7 @@ imperial_examination.5100 = {
 		name = imperial_examination.5100.a
 		imperial_examination_exam_duel_effect = { EXAM = poetry }
 		ai_chance = {
-			base = 100 #Unop: Why was it 100other_entrant_impressive_success ? IMHO it's a bad c/p that shouldn't be here so leaving 100 as ai chance
+			base = 100
 		}
 	}
 	#Next!
@@ -6602,9 +6607,9 @@ imperial_examination.5150 = {
 			}
 			has_current_phase = imperial_examination_phase_examination
 		}
-		NOR = {
-			has_variable = had_archery_examination
-			has_variable = been_caught_cheating
+		has_none_of_variables = {
+			name = had_archery_examination
+			name = been_caught_cheating
 		}
 	}
 
@@ -6746,9 +6751,9 @@ imperial_examination.5160 = {
 			}
 			has_current_phase = imperial_examination_phase_examination
 		}
-		NOR = {
-			has_variable = had_polearm_examination
-			has_variable = been_caught_cheating
+		has_none_of_variables = {
+			name = had_polearm_examination
+			name = been_caught_cheating
 		}
 	}
 
@@ -6881,9 +6886,9 @@ imperial_examination.5170 = {
 			}
 			has_current_phase = imperial_examination_phase_examination
 		}
-		NOR = {
-			has_variable = had_riding_examination
-			has_variable = been_caught_cheating
+		has_none_of_variables = {
+			name = had_riding_examination
+			name = been_caught_cheating
 		}
 	}
 
@@ -6956,13 +6961,13 @@ imperial_examination.5170 = {
 			limit = {
 				has_trait = tourney_participant
 			}
-			custom_tooltip = { #Unop: Changed into a custom_tooltip since no effect_localization exists
-				text = horse_exam_tourney_success_first #Unop: Fix yml ref
+			custom_tooltip = {
+				text = horse_exam_tourney_success_first
 			}
 		}
 		else = {
-			custom_tooltip = { #Unop: Changed into a custom_tooltip since no effect_localization exists
-				text = horse_exam_hunter_success_first #Unop: Fix yml ref
+			custom_tooltip = {
+				text = horse_exam_hunter_success_first
 			}
 		}
 		custom_tooltip = imperial_examination.score.great_success.tt
@@ -7113,7 +7118,7 @@ imperial_examination.6000 = {
 					left_icon = root
 					right_icon = scope:examiner
 					#Nope.
-					stress_impact = {
+					stress_and_fulfillment_impact = {
 						base = medium_stress_impact_gain
 					}
 					remove_variable ?= temporary_exam_score
@@ -7327,7 +7332,7 @@ imperial_examination.5200 = {
 		# Use this flag for loc only
 		add_character_flag = safe_start
 		add_prestige = minor_prestige_loss
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			diligent = medium_stress_impact_gain
 			ambitious = medium_stress_impact_gain
 		}
@@ -7633,7 +7638,7 @@ imperial_examination.5300 = {
 		# Use this flag for loc only
 		add_character_flag = safe_start
 		add_prestige = minor_prestige_loss
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			diligent = medium_stress_impact_gain
 			ambitious = medium_stress_impact_gain
 		}
@@ -7693,6 +7698,11 @@ imperial_examination.5400 = {
 			activity_is_stewardship_focus_trigger = yes
 			has_current_phase = imperial_examination_phase_palace_examination
 		}
+	}
+
+	immediate = {
+		# The duel weights below use scope:exam_advantage_mult, as in the other examinations
+		imperial_examination_set_up_exam_advantage_scope = yes
 	}
 
 	option = {
@@ -7936,7 +7946,7 @@ imperial_examination.5400 = {
 		# Use this flag for loc only
 		add_character_flag = safe_start
 		add_prestige = minor_prestige_loss
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			diligent = medium_stress_impact_gain
 			ambitious = medium_stress_impact_gain
 		}
@@ -7988,9 +7998,9 @@ imperial_examination.5500 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					OR = {
-						has_character_flag = palace_success
-						has_character_flag = safe_start
+					has_variable = {
+						name = palace_success
+						name = safe_start
 					}
 				}
 				desc = imperial_examination.5500.t.success
@@ -8018,9 +8028,9 @@ imperial_examination.5500 = {
 					scope:activity = {
 						activity_is_martial_focus_trigger = yes
 					}
-					NOR = {
-						has_character_flag = safe_start
-						has_character_flag = failed_martial
+					has_none_of_variables = {
+						name = safe_start
+						name = failed_martial
 					}
 				}
 				desc = imperial_examination.5500.desc.success_martial
@@ -8035,9 +8045,9 @@ imperial_examination.5500 = {
 						}
 
 					}
-					NOR = {
-						has_character_flag = safe_start
-						has_character_flag = failed_classics
+					has_none_of_variables = {
+						name = safe_start
+						name = failed_classics
 					}
 				}
 				desc = imperial_examination.5500.desc.success_learning
@@ -8090,9 +8100,9 @@ imperial_examination.5500 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					OR = {
-						has_character_flag = failed_martial
-						has_character_flag = failed_classics
+					has_variable = {
+						name = failed_martial
+						name = failed_classics
 					}
 				}
 				desc = imperial_examination.5500.desc.hegemon_negative
@@ -8106,9 +8116,9 @@ imperial_examination.5500 = {
 		character = root
 		triggered_animation = {
 			trigger = {
-				OR = {
-					has_character_flag = failed_martial
-					has_character_flag = failed_classics
+				has_variable = {
+					name = failed_martial
+					name = failed_classics
 				}
 			}
 			animation = shame
@@ -8120,9 +8130,9 @@ imperial_examination.5500 = {
 		triggered_animation = {
 			trigger = {
 				root = {
-					OR = {
-						has_character_flag = failed_martial
-						has_character_flag = failed_classics
+					has_variable = {
+						name = failed_martial
+						name = failed_classics
 					}
 				}
 			}
@@ -8515,7 +8525,7 @@ imperial_examination.7002 = {
 
 	option = {
 		name = imperial_examination.7001.a
-		
+
 		if = {
 			limit = {
 				has_activity_intent = exam_assist_exam_intent
@@ -8598,7 +8608,7 @@ imperial_examination.7003 = {
 
 	option = {
 		name = imperial_examination.7001.a
-		
+
 		if = {
 			limit = {
 				has_activity_intent = exam_assist_exam_intent
@@ -8754,9 +8764,9 @@ imperial_examination.7100 = {
 		triggered_animation = {
 			trigger = {
 				scope:house_member = {
-					OR = {
-						has_character_flag = passed_palace_exam
-						has_character_flag = passed_metropolitan_exam
+					has_variable = {
+						name = passed_palace_exam
+						name = passed_metropolitan_exam
 					}
 				}
 			}
@@ -8790,9 +8800,9 @@ imperial_examination.7100 = {
 		every_in_list = {
 			list = parent_relevant_entrants
 			limit = {
-				OR = {
-					has_character_flag = passed_palace_exam
-					has_character_flag = passed_metropolitan_exam
+				has_variable = {
+					name = passed_palace_exam
+					name = passed_metropolitan_exam
 				}
 			}
 			root = {
@@ -9022,8 +9032,8 @@ imperial_examination.7100 = {
 			}
 		}
 		else = {
-			custom_tooltip = { #Unop: Changed into a custom_tooltip since no effect_localization exists
-				text = imperial_examination.7100.a.tt_first #Unop: Fix yml ref
+			custom_tooltip = {
+				text = imperial_examination.7100.a.tt_first
 			}
 		}
 		trigger_event = imperial_examination.7055
@@ -9060,8 +9070,8 @@ imperial_examination.7100 = {
 			}
 		}
 		else = {
-			custom_tooltip = { #Unop: Changed into a custom_tooltip since no effect_localization exists
-				text = imperial_examination.7100.b.tt_first #Unop: Fix yml ref
+			custom_tooltip = {
+				text = imperial_examination.7100.b.tt_first
 			}
 		}
 		trigger_event = imperial_examination.7050
@@ -9088,8 +9098,8 @@ imperial_examination.7100 = {
 			}
 		}
 		else = {
-			custom_tooltip = { #Unop: Changed into a custom_tooltip since no effect_localization exists
-				text = imperial_examination.7100.c.tt_first #Unop: Fix yml ref
+			custom_tooltip = {
+				text = imperial_examination.7100.c.tt_first
 			}
 		}
 		trigger_event = imperial_examination.7060
@@ -9097,7 +9107,7 @@ imperial_examination.7100 = {
 
 	option = { # Opt out
 		name = imperial_examination.7100.d
-		stress_impact = { base = minor_stress_impact_loss }
+		stress_and_fulfillment_impact = { base = minor_stress_impact_loss }
 	}
 
 	after = {
@@ -9191,7 +9201,7 @@ imperial_examination.7050 = {
 				text = demand_retake_exam_effect
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			diligent = minor_stress_impact_loss
 		}
 	}
@@ -9202,7 +9212,7 @@ imperial_examination.7050 = {
 			value = minor_influence_gain
 			multiply = relevant_family_members_metropolitan_value
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = medium_stress_impact_gain
 			ambitious = medium_stress_impact_loss
 			arrogant = minor_stress_impact_loss
@@ -9223,7 +9233,7 @@ imperial_examination.7050 = {
 				var:num_exam_family_entrants = 1
 			}
 			scope:metropolitan_entrant = {
-				stress_impact = {
+				stress_and_fulfillment_impact = {
 					base = medium_stress_impact_loss
 				}
 			}
@@ -9236,11 +9246,11 @@ imperial_examination.7050 = {
 					NOT = { has_character_flag = passed_palace_exam }
 				}
 				custom = custom.every_passing_family_member
-				stress_impact = {
+				stress_and_fulfillment_impact = {
 					base = medium_stress_impact_loss
 				}
 			}
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				compassionate = minor_stress_impact_loss
 				trusting = minor_stress_impact_loss
 			}
@@ -9295,7 +9305,7 @@ imperial_examination.7055 = {
 			multiply = relevant_family_members_palace_value
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = medium_stress_impact_gain
 			ambitious = medium_stress_impact_loss
 			arrogant = minor_stress_impact_loss
@@ -9310,7 +9320,7 @@ imperial_examination.7055 = {
 				multiply = relevant_family_members_palace_value
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = medium_stress_impact_loss
 		}
 	}
@@ -9392,7 +9402,7 @@ imperial_examination.7060 = {
 				text = demand_retake_exam_effect
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			diligent = minor_stress_impact_loss
 		}
 	}
@@ -9444,7 +9454,7 @@ imperial_examination.7060 = {
 			}
 			add_intrigue_lifestyle_perk_points = 2
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			schemer = medium_stress_impact_loss
 			honest = medium_stress_impact_gain
 		}
@@ -9453,7 +9463,7 @@ imperial_examination.7060 = {
 	option = { # Failed entrant - For shame!
 		name = imperial_examination.7060.d
 		add_piety = minor_piety_gain
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			zealous = medium_stress_impact_loss
 			diligent = minor_stress_impact_loss
 		}

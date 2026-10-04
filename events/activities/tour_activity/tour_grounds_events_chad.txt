@@ -23,8 +23,8 @@
 scripted_trigger has_multiple_consorts_trigger = {
 	any_consort = {
 		count > 2
-		is_available_ai_adult = yes 
-		NOT = { this = root } #Unop: Our char can be the consort of the visited vassal
+		is_available_ai_adult = yes
+		this != root
 	}
 }
 
@@ -195,7 +195,7 @@ tour_grounds_events.6000 = {
 		trigger_if = {
 			limit = {
 				NOT = { is_incestuous_trigger = yes }
-				trait_is_criminal_in_faith_trigger = { TRAIT = trait:incestuous FAITH = root.faith GENDER_CHARACTER = root }
+				trait_is_criminal_in_rite_trigger = { TRAIT = trait:incestuous RITE = root.rite GENDER_CHARACTER = root }
 			}
 			NOT = { is_close_or_extended_family_of = scope:stop_host_scope }
 		}
@@ -232,8 +232,8 @@ tour_grounds_events.6000 = {
 		scope:stop_host_scope = {
 			# if stop host has 3 consorts, we save them all. otherwise, just the one
 			random_consort = {
-				limit = { 
-					NOT = { this = root } #Unop: The vassal can be our consort
+				limit = {
+					this != root
 				}
 				save_scope_as = orgy_consort_1
 				add_character_flag = is_naked
@@ -242,21 +242,17 @@ tour_grounds_events.6000 = {
 				limit = { has_multiple_consorts_trigger = yes }
 				random_consort = {
 					limit = {
-						NOR = { 
-							this = scope:orgy_consort_1
-							this = root #Unop: The vassal can be our consort
-						}
+						this != scope:orgy_consort_1
+						this != root
 					}
 					save_scope_as = orgy_consort_2
 					add_character_flag = is_naked
 				}
 				random_consort = {
 					limit = {
-						NOR = {
-							this = scope:orgy_consort_1
-							this = scope:orgy_consort_2
-							this = root #Unop: The vassal can be our consort
-						}
+						this != scope:orgy_consort_1
+						this != scope:orgy_consort_2
+						this != root
 					}  
 					save_scope_as = orgy_consort_3
 					add_character_flag = is_naked
@@ -291,7 +287,7 @@ tour_grounds_events.6000 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			shy = medium_stress_impact_gain
 			temperate = medium_stress_impact_gain
 			chaste = major_stress_impact_gain
@@ -328,7 +324,7 @@ tour_grounds_events.6000 = {
 	option = { # Refuse sexy time
 		name = tour_grounds_events.6000.c
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			deviant = major_stress_impact_gain
 			lustful = major_stress_impact_gain
 			chaste = minor_stress_impact_loss
@@ -565,7 +561,7 @@ tour_grounds_events.6100 = {
 
 		add_piety = miniscule_piety_gain
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			zealous = minor_stress_impact_loss
 			cynical = medium_stress_impact_gain
@@ -615,7 +611,7 @@ tour_grounds_events.6100 = {
 
 		add_piety = miniscule_piety_gain
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			zealous = minor_stress_impact_loss
 			cynical = medium_stress_impact_gain
@@ -666,7 +662,7 @@ tour_grounds_events.6100 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			cynical = major_stress_impact_gain
 		}
 	}
@@ -761,7 +757,7 @@ tour_grounds_events.6100 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			zealous = medium_stress_impact_gain
 			fickle = miniscule_stress_impact_loss
 		}
@@ -1644,24 +1640,24 @@ tour_grounds_events.6200 = {
 		location.county = {
 			any_county_province = {
 				OR = {
-					trigger_if = {
-						limit = { has_building_or_higher = pastures_01 }
+					AND = {
+						has_building_or_higher = pastures_01
 						root.capital_province = { has_building_or_higher = pastures_01 }
 					}
-					trigger_if = {
-						limit = { has_building_or_higher = orchards_01 }
+					AND = {
+						has_building_or_higher = orchards_01
 						root.capital_province = { has_building_or_higher = orchards_01 }
 					}
-					trigger_if = {
-						limit = { has_building_or_higher = cereal_fields_01 }
+					AND = {
+						has_building_or_higher = cereal_fields_01
 						root.capital_province = { has_building_or_higher = cereal_fields_01 }
 					}
-					trigger_if = {
-						limit = { has_building_or_higher = hill_farms_01 }
+					AND = {
+						has_building_or_higher = hill_farms_01
 						root.capital_province = { has_building_or_higher = hill_farms_01 }
 					}
-					trigger_if = {
-						limit = { has_building_or_higher = plantations_01 }
+					AND = {
+						has_building_or_higher = plantations_01
 						root.capital_province = { has_building_or_higher = plantations_01 }
 					}
 				}
@@ -1743,7 +1739,7 @@ tour_grounds_events.6200 = {
 			increase_tour_success_effect = { POINTS = 1 }
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = minor_stress_impact_loss
 			diligent = minor_stress_impact_loss
 			content = minor_stress_impact_gain
@@ -1789,7 +1785,7 @@ tour_grounds_events.6200 = {
 			add_stewardship_lifestyle_xp = major_lifestyle_xp
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			lazy = minor_stress_impact_gain
 			diligent = minor_stress_impact_loss
 		}
@@ -1832,7 +1828,7 @@ tour_grounds_events.6200 = {
 			increase_tour_success_effect = { POINTS = 1 }
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = minor_stress_impact_loss
 			humble = minor_stress_impact_loss
 			calm = miniscule_stress_impact_loss
@@ -2003,6 +1999,7 @@ tour_grounds_events.6202 = {
 			template = child_thief_character
 			culture = scope:stop_host_scope.culture
 			faith = scope:stop_host_scope.faith
+			rite = scope:stop_host_scope.rite
 			location = root.location
 			save_scope_as = tiny_thief
 		}
@@ -2040,7 +2037,7 @@ tour_grounds_events.6202 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			diligent = minor_stress_impact_gain
 		}
 
@@ -2102,7 +2099,7 @@ tour_grounds_events.6202 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			lazy = minor_stress_impact_gain
 			humble = minor_stress_impact_gain
 		}
@@ -2147,7 +2144,7 @@ tour_grounds_events.6202 = {
 			increase_tour_success_effect = { POINTS = 1 }
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			forgiving = medium_stress_impact_loss
 			calm = minor_stress_impact_loss
@@ -2211,7 +2208,7 @@ tour_grounds_events.6203 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			disloyal = minor_stress_impact_gain
 		}
@@ -2544,7 +2541,7 @@ tour_grounds_events.6205 = {
 			modifier = whipped_me_opinion
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			sadistic = minor_stress_impact_loss
 			wrathful = minor_stress_impact_loss
 			compassionate = minor_stress_impact_gain
@@ -2580,7 +2577,7 @@ tour_grounds_events.6205 = {
 			target = scope:stop_host_scope
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain 
 			forgiving = medium_stress_impact_loss
 			greedy = major_stress_impact_gain
@@ -2778,7 +2775,7 @@ tour_grounds_events.6300 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			craven = medium_stress_impact_gain
 		}
 
@@ -2849,7 +2846,7 @@ tour_grounds_events.6300 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			craven = minor_stress_impact_loss
 		}
 
