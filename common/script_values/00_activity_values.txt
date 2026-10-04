@@ -781,38 +781,38 @@ standard_activity_base_cost = {
 		limit = { # Root is a character
 			exists = root.primary_title
 		}
-	multiply = {
+		multiply = {
 			value = root.primary_title.tier
-		subtract = 1
-		min = 1
-	}
-	if = {
-		limit = {
+			subtract = 1
+			min = 1
+		}
+		if = {
+			limit = {
 				root = {
-			government_has_flag = government_is_tribal
+					government_has_flag = government_is_tribal
 				}
+			}
+			multiply = 0.5
 		}
-		multiply = 0.5
-	}
-	if = {
-		limit = {
+		if = {
+			limit = {
 				root.primary_title.tier > tier_duchy
+			}
+			add = 50
 		}
-		add = 50
-	}
-	if = {
-		limit = {
-			is_ai = yes
-			has_game_rule = hard_difficulty
+		if = {
+			limit = {
+				is_ai = yes
+				has_game_rule = hard_difficulty
+			}
+			multiply = 0.5
 		}
-		multiply = 0.5
-	}
-	else_if = {
-		limit = {
-			is_ai = yes
-			has_game_rule = very_hard_difficulty
-		}
-		multiply = 0.25
+		else_if = {
+			limit = {
+				is_ai = yes
+				has_game_rule = very_hard_difficulty
+			}
+			multiply = 0.25
 		}
 	}
 	else_if = { # Root is an activity
@@ -1668,7 +1668,7 @@ activity_cost_scale_by_tier = {
 		add = {
 			value = activity_host.primary_title.tier
 			subtract = 1
-	min = 1
+			min = 1
 		}
 	}
 }

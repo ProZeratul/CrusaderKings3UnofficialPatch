@@ -642,37 +642,37 @@ yearly.0002 = {
 				random_in_list = {
 					list = unop_potential_councillor
 					limit = { NOT = { is_in_list = blacklisted_councillor } }
-				weight = {
-					base = 10
+					weight = {
+						base = 10
 
-					modifier = {
-						factor = 2
-						has_trait = lustful
+						modifier = {
+							factor = 2
+							has_trait = lustful
+						}
+						modifier = {
+							factor = 2
+							is_married = no
+						}
 					}
-					modifier = {
-						factor = 2
-						is_married = no
-					}
+					save_scope_as = councillor
 				}
-				save_scope_as = councillor
-			}
 				#Re-Pick a child
 				random_in_list = {
 					list = unop_potential_child
-			limit = {
+					limit = {
 						NOT = { this = scope:councillor }
 						can_set_relation_lover_trigger = { CHARACTER = scope:councillor }
 						is_attracted_to_gender_of = scope:councillor
 						scope:councillor = { is_attracted_to_gender_of = prev }
-			}
-			weight = {
-				base = 10
+					}
+					weight = {
+						base = 10
 
-				modifier = {
-					factor = 2
-					has_trait = lustful
-				}
-			}
+						modifier = {
+							factor = 2
+							has_trait = lustful
+						}
+					}
 			save_scope_as = child
 				}
 			}

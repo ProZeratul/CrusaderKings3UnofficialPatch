@@ -136,39 +136,39 @@ action_can_ransom = {
 					}
 				}
 			}
-		every_prisoner = {
-			limit = {
-				OR = {
-					AND = {
-						OR = {
-							is_pool_guest = yes
-							is_ruler = yes
-						}
-						gold > 10
-					}
-					AND = {
-						is_ruler = no
-						liege ?= {
+			every_prisoner = {
+				limit = {
+					OR = {
+						AND = {
+							OR = {
+								is_pool_guest = yes
+								is_ruler = yes
+							}
 							gold > 10
 						}
+						AND = {
+							is_ruler = no
+							liege ?= {
+								gold > 10
+							}
+						}
 					}
-				}
-				NOT = { is_at_war_with = root }
-				root = {
-					is_character_interaction_potentially_accepted = {
-						recipient = prev
-						interaction = ransom_interaction
+					NOT = { is_at_war_with = root }
+					root = {
+						is_character_interaction_potentially_accepted = {
+							recipient = prev
+							interaction = ransom_interaction
+						}
 					}
+					# Can't ransom to self
+					NOT = { liege ?= root }
 				}
-				# Can't ransom to self
-				NOT = { liege ?= root }
+				try_create_important_action = {
+					important_action_type = action_can_ransom
+					actor = root
+					recipient = this
+				}
 			}
-			try_create_important_action = {
-				important_action_type = action_can_ransom
-				actor = root
-				recipient = this
-			}
-		}
 		}
 	}
 		

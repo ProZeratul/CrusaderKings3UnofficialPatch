@@ -879,23 +879,23 @@ unite_the_western_slavs_decision_effects = {
 	}
 	#hidden_effect = { #Unop Unhide these effects
 		hidden_effect = { #Unop Keep drift hidden
-		every_duchy = {
-			limit = {
-				title_capital_county.title_province ?= {
-					geographical_region = custom_west_slavia
-				}
-				kingdom ?= {
-					NOR = {
-						this = title:k_poland
-						this = title:k_pomerania
-						this = title:k_bohemia
-						this = title:k_moravia
-						this = title:k_sorbia
+			every_duchy = {
+				limit = {
+					title_capital_county.title_province ?= {
+						geographical_region = custom_west_slavia
+					}
+					kingdom ?= {
+						NOR = {
+							this = title:k_poland
+							this = title:k_pomerania
+							this = title:k_bohemia
+							this = title:k_moravia
+							this = title:k_sorbia
+						}
 					}
 				}
+				set_de_jure_liege_title = title:k_sorbia
 			}
-			set_de_jure_liege_title = title:k_sorbia
-		}
 		}
 		scope:western_slav_uniter = {
 			#If king-tier, give them the West-Slavia title
@@ -923,13 +923,13 @@ unite_the_western_slavs_decision_effects = {
 				custom_tooltip = unite_the_western_slavs_decision_titles_empire_tt
 			}
 			hidden_effect = {
-			# Drift kingdoms to empire
-			every_in_list = {
-				list = west_slavic_kingdoms
-				set_de_jure_liege_title = scope:western_slav_uniter.primary_title
+				# Drift kingdoms to empire
+				every_in_list = {
+					list = west_slavic_kingdoms
+					set_de_jure_liege_title = scope:western_slav_uniter.primary_title
+				}
 			}
 		}
-	}
 	#}
 }
 
