@@ -227,7 +227,7 @@ fp1_other_decisions.0003 = {
 	}
 	right_portrait = {
 		character = scope:unlucky_guest
-		animation = dead #Unop: Since the char is dead, use the new animation
+		animation = dead
 	}
 	override_background = { reference = temple }
 
@@ -252,11 +252,8 @@ fp1_other_decisions.0003 = {
 		involved_activity = { save_scope_as = activity }
 		# Get the party (audibly) started.
 		play_music_cue = "mx_cue_banquet"
-		
-		if = { #Unop: Since the HoF can change between this event (as the death of a spiritual HoF will re-roll it instantly) and all the sub-events, we need to keep track of the sacrificed HoF 
-			limit = { exists = scope:blotter.faith.religious_head }
-			scope:blotter.faith.religious_head = { save_scope_as = blotter_hof }
-		}
+
+		scope:blotter.faith.religious_head ?= { save_scope_as = blotter_hof }
 
 		# Is it somebody specific's death day?
 		if = {
@@ -362,8 +359,7 @@ fp1_other_decisions.0003 = {
 			}
 			every_in_list = {
 				variable = gf_guests_rejecting_invite_list
-				# TIT-25457
-				remove_from_list = happified_character_subjects_list #Unop: Was happified_title_subjects_list but we need the character list
+				remove_from_list = happified_character_subjects_list
 			}
 		}
 		# Set up var:gf_faith for custom loc to work; not used in strictly every permutation, but doesn't really need an if gate on it.
@@ -385,13 +381,11 @@ fp1_other_decisions.0003 = {
 						add_piety = var:gf_piety_value
 						remove_variable = gf_piety_value
 					}
-				}
-				## Big RIP, scope:unlucky_guest.
-				activity_host = { #Unop: Fix scope (as we are in a add_activity_log_entry but we need the host scope)
+					## Big RIP, scope:unlucky_guest.
 					if = {
 						limit = { exists = scope:unlucky_guest }
 						# Sort opinions and kinslaying.
-						add_kinslayer_trait_or_nothing_effect = { VICTIM = scope:unlucky_guest}
+						add_kinslayer_trait_or_nothing_effect = { VICTIM = scope:unlucky_guest }
 						execute_opinion_effect = {
 							VICTIM = scope:unlucky_guest
 							EXECUTIONER = scope:blotter
@@ -406,10 +400,7 @@ fp1_other_decisions.0003 = {
 						}
 						## And are you actually humsac'ing your *OWN* HoF?
 						if = {
-							limit = { #Unop: Use the new scopes to ensure the sacrificed HoF was your HoF
-								exists = scope:blotter_hof
-								scope:blotter_hof = scope:unlucky_guest 
-							}	
+							limit = { scope:blotter_hof ?= scope:unlucky_guest } #Unop: Use the saved HoF, as a spiritual HoF is re-rolled instantly on death
 							# Inform players that they're an abysmal, abysmal faith adherent.
 							every_player = {
 								limit = {
@@ -419,52 +410,50 @@ fp1_other_decisions.0003 = {
 								trigger_event = fp1_other_decisions.0023
 							}
 							# Update scope:blotter's HumSac'd HoFs kill tally manually, since we're not going through the usual effect.
-							scope:blotter = { #Unop: This wasn't scoped to the activity host (since we are in the activity scope)
-								add_to_variable_list = {
-									name = humsacd_hofs
-									target = scope:unlucky_guest.faith
-								}
-								# And tell scope:blotter they dun goofed.
-								trigger_event = {
-									id = fp1_other_decisions.0024
-									# We give it a day's delay, since they _might_ have taken a conversion option in the event itself, in which case the follow-up event is invalid.
-									days = 1
-								}
+							add_to_variable_list = {
+								name = humsacd_hofs
+								target = scope:unlucky_guest.faith
+							}
+							# And tell scope:blotter they dun goofed.
+							trigger_event = {
+								id = fp1_other_decisions.0024
+								# We give it a day's delay, since they _might_ have taken a conversion option in the event itself, in which case the follow-up event is invalid.
+								days = 1
 							}
 						}
-						# How exactly do they die?
-						scope:unlucky_guest = {
-							# Cannibalist Germanic pagans will hang them, then eat them.
-							trigger_event = fp1_other_decisions.1000
-							if = {
-								limit = { sacrifice_method_hang_n_fang_trigger = yes }
-								death = {
-									killer = scope:blotter
-									death_reason = death_ritually_hung_then_eaten
-								}
+					}
+					# How exactly do they die?
+					scope:unlucky_guest ?= {
+						# Cannibalist Germanic pagans will hang them, then eat them.
+						trigger_event = fp1_other_decisions.1000
+						if = {
+							limit = { sacrifice_method_hang_n_fang_trigger = yes }
+							death = {
+								killer = scope:blotter
+								death_reason = death_ritually_hung_then_eaten
 							}
-							# All other Germanic pagans will hang them.
-							else_if = {
-								limit = { sacrifice_method_eat_em_trigger = yes }
-								death = {
-									killer = scope:blotter
-									death_reason = death_ritually_eaten
-								}
+						}
+						# All other Germanic pagans will hang them.
+						else_if = {
+							limit = { sacrifice_method_eat_em_trigger = yes }
+							death = {
+								killer = scope:blotter
+								death_reason = death_ritually_eaten
 							}
-							# All other cannibals will just eat them.
-							else_if = {
-								limit = { sacrifice_method_hang_em_trigger = yes }
-								death = {
-									killer = scope:blotter
-									death_reason = death_ritually_hung
-								}
+						}
+						# All other cannibals will just eat them.
+						else_if = {
+							limit = { sacrifice_method_hang_em_trigger = yes }
+							death = {
+								killer = scope:blotter
+								death_reason = death_ritually_hung
 							}
-							# Fallback deaths go here; variants should be added above this point.
-							else = {
-								death = {
-									killer = scope:blotter
-									death_reason = death_sacrificed_to_gods
-								}
+						}
+						# Fallback deaths go here; variants should be added above this point.
+						else = {
+							death = {
+								killer = scope:blotter
+								death_reason = death_sacrificed_to_gods
 							}
 						}
 					}
@@ -608,7 +597,7 @@ fp1_other_decisions.0003 = {
 			}
 			hidden_effect = {
 				every_in_list = {
-					list = happified_character_subjects_list #Unop: Was happified_title_subjects_list (but we want the character list)
+					list = happified_character_subjects_list
 					limit = {
 						# Filter out lowborns.
 						exists = dynasty
@@ -629,10 +618,8 @@ fp1_other_decisions.0003 = {
 		name = fp1_other_decisions.0003.a
 		# Only available if you follow the scope:gf_faith & have priests to impress at all.
 		trigger = {
-			faith = {
-				this = scope:gf_faith
-				has_doctrine = doctrine_theocracy_temporal
-			}
+			faith = scope:gf_faith
+			rite = { rite_has_doctrine = doctrine_theocracy_temporal }
 		}
 
 		scope:activity = {
@@ -645,7 +632,7 @@ fp1_other_decisions.0003 = {
 					# Your commitment to ritual earns you opinion with the priestly classes.
 					if = {
 						limit = {
-							any_learning_councillor = { exists = this }
+							any_learning_councillor = {}
 						}
 						every_learning_councillor = {
 							add_opinion = {
@@ -677,7 +664,7 @@ fp1_other_decisions.0003 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			zealous = major_stress_impact_loss
 			cynical = major_stress_impact_gain
 		}
@@ -730,7 +717,7 @@ fp1_other_decisions.0003 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = medium_stress_impact_loss
 			humble = medium_stress_impact_gain
 		}
@@ -776,7 +763,7 @@ fp1_other_decisions.0003 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			humble = major_stress_impact_loss
 			arrogant = major_stress_impact_gain
 		}
@@ -819,7 +806,7 @@ fp1_other_decisions.0003 = {
 		}
 
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = major_stress_impact_loss
 			humble = major_stress_impact_gain
 		}
@@ -867,7 +854,7 @@ fp1_other_decisions.0003 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			humble = major_stress_impact_loss
 			arrogant = major_stress_impact_gain
 		}
@@ -967,32 +954,7 @@ fp1_other_decisions.0003 = {
 						# Converting outside of your religious family, you're a heathen.
 						else_if = {
 							limit = {
-								OR = {
-									AND = {
-										scope:old_faith.religion = { is_in_family = rf_eastern }
-										NOT = {
-											scope:gf_faith.religion = { is_in_family = rf_eastern }
-										}
-									}
-									AND = { #Unop Add rf_sinitic
-										scope:old_faith.religion = { is_in_family = rf_sinitic }
-										NOT = {
-											scope:gf_faith.religion = { is_in_family = rf_sinitic }
-										}
-									}
-									AND = {
-										scope:old_faith.religion = { is_in_family = rf_pagan }
-										NOT = {
-											scope:gf_faith.religion = { is_in_family = rf_pagan }
-										}
-									}
-									AND = {
-										scope:old_faith.religion = { is_in_family = rf_abrahamic }
-										NOT = {
-											scope:gf_faith.religion = { is_in_family = rf_abrahamic }
-										}
-									}
-								}
+								scope:old_faith = { faith_is_in_same_rf = { FAITH = scope:gf_faith } }
 							}
 							give_nickname = nick_the_heathen
 						}
@@ -1003,7 +965,7 @@ fp1_other_decisions.0003 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			trusting = medium_stress_impact_loss
 			cynical = major_stress_impact_loss
 			paranoid = medium_stress_impact_gain
@@ -1114,7 +1076,7 @@ fp1_other_decisions.0011 = {
 		# Get some opinion with scope:blotter for turning up.
 		show_as_tooltip = { gruesome_festivals_blotter_opinion_gain_of_guests_effect = yes }
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			forgiving = minor_stress_impact_loss
 			gregarious = medium_stress_impact_loss
 			vengeful = minor_stress_impact_gain
@@ -1154,7 +1116,7 @@ fp1_other_decisions.0011 = {
 		custom_tooltip = fp1_other_decisions.0011.b.tt
 		gruesome_festivals_turn_down_invitation_effect = yes
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			vengeful = minor_stress_impact_loss
 			shy = medium_stress_impact_loss
 			forgiving = minor_stress_impact_gain
@@ -1195,7 +1157,7 @@ fp1_other_decisions.0011 = {
 		# Get some opinion with scope:blotter for turning up.
 		show_as_tooltip = { gruesome_festivals_blotter_opinion_gain_of_guests_effect = yes }
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			forgiving = minor_stress_impact_loss
 			gregarious = medium_stress_impact_loss
 			sadistic = medium_stress_impact_loss
@@ -1247,7 +1209,7 @@ fp1_other_decisions.0011 = {
 		# Get some opinion with scope:blotter for turning up.
 		show_as_tooltip = { gruesome_festivals_blotter_opinion_gain_of_guests_effect = yes }
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			forgiving = minor_stress_impact_loss
 			gregarious = medium_stress_impact_loss
 			compassionate = medium_stress_impact_loss
@@ -1300,7 +1262,7 @@ fp1_other_decisions.0011 = {
 		custom_tooltip = fp1_other_decisions.0011.e.tt
 		gruesome_festivals_turn_down_invitation_effect = yes
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			vengeful = minor_stress_impact_loss
 			shy = medium_stress_impact_loss
 			forgiving = minor_stress_impact_gain
@@ -1419,6 +1381,7 @@ fp1_other_decisions.0012 = {
 					NOT = { exists = scope:decliner_1 }
 				}
 				save_scope_as = decliner_1
+				add_to_list = decliners_list
 			}
 			else_if = {
 				limit = {
@@ -1428,6 +1391,7 @@ fp1_other_decisions.0012 = {
 					}
 				}
 				save_scope_as = decliner_2
+				add_to_list = decliners_list
 			}
 			else_if = {
 				limit = {
@@ -1438,6 +1402,7 @@ fp1_other_decisions.0012 = {
 					}
 				}
 				save_scope_as = decliner_3
+				add_to_list = decliners_list
 			}
 			else_if = {
 				limit = {
@@ -1449,6 +1414,7 @@ fp1_other_decisions.0012 = {
 					}
 				}
 				save_scope_as = decliner_4
+				add_to_list = decliners_list
 			}
 			else_if = {
 				limit = {
@@ -1461,25 +1427,8 @@ fp1_other_decisions.0012 = {
 					}
 				}
 				save_scope_as = decliner_5
+				add_to_list = decliners_list
 			}
-		}
-		# Add them to a list for easy general management if there's more than one.
-		scope:decliner_1 = { add_to_list = decliners_list }
-		if = {
-			limit = { exists = scope:decliner_2 }
-			scope:decliner_2 = { add_to_list = decliners_list } #Unop: Fix decliner_2 not being added
-		}
-		if = {
-			limit = { exists = scope:decliner_3 }
-			scope:decliner_3 = { add_to_list = decliners_list } #Unop: Fix decliner_3 not being added
-		}
-		if = {
-			limit = { exists = scope:decliner_4 }
-			scope:decliner_4 = { add_to_list = decliners_list } #Unop: Fix decliner_4 not being added
-		}
-		if = {
-			limit = { exists = scope:decliner_5 }
-			scope:decliner_5 = { add_to_list = decliners_list } #Unop: Fix decliner_5 not being added
 		}
 		# Clean up the variable list.
 		gruesome_sacrifices_clean_up_declining_guests_effect = yes
@@ -1512,7 +1461,7 @@ fp1_other_decisions.0012 = {
 			OPINION = -30
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			forgiving = minor_stress_impact_loss
 			vengeful = minor_stress_impact_gain
 		}
@@ -1583,7 +1532,7 @@ fp1_other_decisions.0012 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			forgiving = major_stress_impact_loss
 			vengeful = major_stress_impact_gain
 		}
@@ -1622,7 +1571,7 @@ fp1_other_decisions.0012 = {
 		# But it was still a slight.
 		add_prestige = minor_prestige_loss
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			forgiving = medium_stress_impact_loss
 			vengeful = medium_stress_impact_gain
 		}
@@ -1692,7 +1641,7 @@ fp1_other_decisions.0021 = {
 	}
 	right_portrait = {
 		character = scope:sacrificed_hof
-		animation = dead #Unop: Since the char is dead, use the new animation
+		animation = dead
 	}
 	override_background = { reference = throne_room }
 
@@ -1763,7 +1712,7 @@ fp1_other_decisions.0022 = {
 	}
 	right_portrait = {
 		character = scope:sacrificed_hof
-		animation = dead #Unop: Since the char is dead, use the new animation
+		animation = dead
 	}
 	override_background = { reference = throne_room }
 
@@ -1842,7 +1791,7 @@ scripted_effect gruesome_festivals_own_faith_martyred_own_hof_effect = {
 	add_character_modifier = { modifier = ultimate_blasphemer_modifier }
 	if = {
 		limit = {
-			faith = { has_doctrine_parameter = excommunication_active }
+			rite = { rite_has_parameter = excommunication_active }
 		}
 		# Add excommunication directly, since no one specific requested this.
 		add_excommunication_actual_effect = yes
@@ -1858,7 +1807,7 @@ fp1_other_decisions.0023 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					scope:unlucky_guest.faith = { has_doctrine_parameter = excommunication_active }
+					scope:unlucky_guest.rite = { rite_has_parameter = excommunication_active }
 				}
 				desc = fp1_other_decisions.0023.desc.has_excommunication
 			}
@@ -1873,7 +1822,7 @@ fp1_other_decisions.0023 = {
 	}
 	right_portrait = {
 		character = scope:unlucky_guest
-		animation = dead #Unop: Since the char is dead, use the new animation
+		animation = dead
 	}
 	override_background = { reference = throne_room }
 
@@ -1925,7 +1874,7 @@ fp1_other_decisions.0024 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					scope:unlucky_guest.faith = { has_doctrine_parameter = excommunication_active }
+					scope:unlucky_guest.rite = { rite_has_parameter = excommunication_active }
 				}
 				desc = fp1_other_decisions.0024.desc.has_excommunication
 			}
@@ -1940,7 +1889,7 @@ fp1_other_decisions.0024 = {
 	}
 	right_portrait = {
 		character = scope:unlucky_guest
-		animation = fear
+		animation = dead
 	}
 	override_background = { reference = throne_room }
 
@@ -1952,6 +1901,7 @@ fp1_other_decisions.0024 = {
 	immediate = {
 		gruesome_festivals_martyred_a_hof_effect = { SACRIFICED_HOF = scope:unlucky_guest }
 		gruesome_festivals_own_faith_martyred_own_hof_effect = yes
+		change_spiritual_fulfillment = massive_spiritual_fulfillment_loss
 	}
 
 	# _What have I done?!_
@@ -2159,7 +2109,7 @@ fp1_other_decisions.0101 = {
 		custom_tooltip = fp1_other_decisions.0101.a.tt
 		trigger_event = fp1_other_decisions.0111
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			humble = medium_stress_impact_loss
 			arrogant = medium_stress_impact_gain
 		}
@@ -2195,7 +2145,7 @@ fp1_other_decisions.0101 = {
 		custom_tooltip = fp1_other_decisions.0101.b.tt
 		trigger_event = fp1_other_decisions.0111
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = minor_stress_impact_loss
 			vengeful = medium_stress_impact_loss
 			humble = minor_stress_impact_gain
@@ -2241,7 +2191,7 @@ fp1_other_decisions.0101 = {
 		custom_tooltip = fp1_other_decisions.0101.c.tt
 		trigger_event = fp1_other_decisions.0111
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = major_stress_impact_loss
 			humble = major_stress_impact_gain
 		}
@@ -2314,6 +2264,7 @@ scripted_effect fp1_apply_stele_effects = {
 			gender_female_chance = 50
 			dynasty = none
 			faith = $LOCATION$.faith
+			rite = $LOCATION$.rite
 			culture = $LOCATION$.culture
 			location = $LOCATION$.title_province
 			save_scope_as = carver

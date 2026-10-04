@@ -37,7 +37,7 @@ scripted_trigger prelude_events_0001_appropriate_guest = {
 		is_in_guest_subset = { name = detractor }
 	}
 }
-	
+
 prelude_events.0001 = {
 	type = activity_event
 	title = prelude_events.0001.t
@@ -52,9 +52,9 @@ prelude_events.0001 = {
 		animation = admiration
 	}
 	lower_left_portrait = scope:regent
-	
+
 	cooldown = { years = 10 }
-	
+
 	trigger = {
 		has_active_diarchy = yes
 		diarchy_swing <= 50
@@ -72,7 +72,7 @@ prelude_events.0001 = {
 					this = root.diarch
 				}
 			}
-			any_attending_character = { 
+			any_attending_character = {
 				prelude_events_0001_appropriate_guest = yes
 			}
 		}
@@ -114,7 +114,7 @@ prelude_events.0001 = {
 			}
 		}
 	}
-	
+
 	option = { # I don't even have to speak myself!
 		name = prelude_events.0001.a
 		trigger = {
@@ -124,7 +124,7 @@ prelude_events.0001 = {
 			modifier = silent_coronation_modifier
 			years = 1
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			shy = major_stress_impact_loss
 		}
 		ai_chance = {
@@ -135,7 +135,7 @@ prelude_events.0001 = {
 			}
 		}
 	}
-	
+
 	option = { # Damn right
 		name = prelude_events.0001.b
 		custom_tooltip = prelude_events.0001.b.tt.supporter
@@ -154,7 +154,7 @@ prelude_events.0001 = {
 				target = scope:guest
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_loss
 			generous = medium_stress_impact_gain
 			shy = medium_stress_impact_gain
@@ -174,7 +174,7 @@ prelude_events.0001 = {
 			}
 		}
 	}
-	
+
 	option = { # Give me prestige pls
 		name = prelude_events.0001.c
 		custom_tooltip = {
@@ -184,7 +184,7 @@ prelude_events.0001 = {
 				multiply = number_of_supporters
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = medium_stress_impact_loss
 			shy = major_stress_impact_gain
 			greedy = major_stress_impact_gain
@@ -236,13 +236,11 @@ scripted_effect prelude_events_0010_screw_over_guest_effect = {
 	if = {
 		limit = {
 			any_targeting_faction = {
-				exists = this #Unop: Was exists = yes but it will ALWAYS return true !
 				NOT = { exists = faction_war }
 			}
 		}
 		random_targeting_faction = {
 			limit = {
-				exists = this #Unop: Was exists = yes but it will ALWAYS return true !
 				NOT = { exists = faction_war }
 			}
 			faction_leader ?= { save_scope_as = leader }
@@ -265,15 +263,23 @@ scripted_effect prelude_events_0010_screw_over_guest_effect = {
 		}
 	}
 	else = {
-		scope:leader = {
-			create_faction = {
-				type = peasant_faction
-				target = scope:guest
+		scope:guest.capital_county ?= { #Unop Peasant factions can only be created by counties
+			if = {
+				limit = {
+					can_title_create_faction = {
+						type = peasant_faction
+						target = scope:guest
+					}
+				}
+				title_create_faction = {
+					type = peasant_faction
+					target = scope:guest
+				}
 			}
 		}
 	}
 }
-	
+
 prelude_events.0010 = {
 	type = activity_event
 	title = prelude_events.0010.t
@@ -306,9 +312,9 @@ prelude_events.0010 = {
 		}
 		character = scope:leader
 	}
-	
+
 	cooldown = { years = 10 }
-	
+
 	trigger = {
 		has_active_diarchy = yes
 		# Not a thing for Co-Rulerships
@@ -325,7 +331,7 @@ prelude_events.0010 = {
 					this = root.diarch
 				}
 			}
-			any_attending_character = { 
+			any_attending_character = {
 				prelude_events_0010_appropriate_guest = yes
 				count >= 2
 			}
@@ -344,7 +350,6 @@ prelude_events.0010 = {
 					modifier = {
 						add = 5
 						any_targeting_faction = {
-							exists = this #Unop: Was exists = yes but it will ALWAYS return true !
 							NOT = { exists = faction_war }
 						}
 					}
@@ -378,12 +383,16 @@ prelude_events.0010 = {
 				template = peasant_faction_leader_template
 				gender_female_chance = root_faith_dominant_gender_adjusted_female_chance
 				faith = scope:guest.capital_county.faith
+				rite = scope:guest.capital_county.rite
 				culture = scope:guest.capital_county.culture
 				save_scope_as = leader
 			}
+			scope:leader = {
+				set_character_rite = scope:guest.capital_county.rite
+			}
 		}
 	}
-	
+
 	option = { # They're plotting, PLOTTING!!!
 		name = prelude_events.0010.a
 		trigger = {
@@ -393,7 +402,7 @@ prelude_events.0010 = {
 			SWING = major_sop_swing_liege_gain
 			LIEGE = root
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			paranoid = major_stress_impact_loss
 		}
 		ai_chance = {
@@ -404,7 +413,7 @@ prelude_events.0010 = {
 			}
 		}
 	}
-	
+
 	option = { # This is my moment
 		name = prelude_events.0010.b
 		trigger = {
@@ -416,7 +425,7 @@ prelude_events.0010 = {
 			prelude_events_0010_screw_over_guest_effect = yes
 		}
 		coronation_weaken_detractors_opinion_effect = yes
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			deceitful = major_stress_impact_loss
 			vengeful = medium_stress_impact_loss
 			callous = medium_stress_impact_loss
@@ -442,7 +451,7 @@ prelude_events.0010 = {
 			}
 		}
 	}
-	
+
 	option = { # Infiltrate their court
 		name = prelude_events.0010.c
 		trigger = {
@@ -482,7 +491,7 @@ prelude_events.0010 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			deceitful = major_stress_impact_loss
 			vengeful = medium_stress_impact_loss
 			callous = medium_stress_impact_loss
@@ -508,7 +517,7 @@ prelude_events.0010 = {
 			}
 		}
 	}
-	
+
 	option = { # Bribe the guy
 		name = prelude_events.0010.d
 		pay_short_term_gold = {
@@ -528,7 +537,7 @@ prelude_events.0010 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			callous = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -542,7 +551,7 @@ prelude_events.0010 = {
 			}
 		}
 	}
-	
+
 	option = { # I don't care enough
 		name = prelude_events.0010.e
 		trigger = {
@@ -554,7 +563,7 @@ prelude_events.0010 = {
 			SWING = medium_sop_swing_diarch_gain
 			LIEGE = root
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -633,7 +642,7 @@ scripted_effect prelude_events_0020_weaken_faction_effect = {
 			add_dread = medium_dread_gain
 			if = {
 				limit = {
-					government_allows = administrative
+					government_has_flag = government_has_influence
 					top_liege = scope:activity.activity_host
 				}
 				change_influence = minor_influence_gain
@@ -701,13 +710,12 @@ prelude_events.0020 = {
 		animation = scheme
 		camera = camera_event_right_pointing_right_scheme
 	}
-	
+
 	cooldown = { years = 5 }
-	
+
 	trigger = {
 		has_activity_intent = coronation_weaken_detractors
 		any_targeting_faction = {
-			exists = this #Unop: Was exists = yes but it will ALWAYS return true !
 			NOT = { exists = faction_war }
 			any_faction_member = {
 				is_participant_in_activity = root.involved_activity
@@ -721,11 +729,11 @@ prelude_events.0020 = {
 			}
 		}
 	}
-	
+
 	weight_multiplier = {
 		base = 1
 		modifier = {
-			any_targeting_faction = { target_of_powerful_faction_trigger = yes } #Unop: Fix wrong scope used
+			any_targeting_faction = { target_of_powerful_faction_trigger = yes }
 			factor = 2
 		}
 	}
@@ -733,7 +741,6 @@ prelude_events.0020 = {
 	immediate = {
 		ordered_targeting_faction = { # We grab the most pressing faction
 			limit = {
-				exists = this #Unop: Was exists = yes but it will ALWAYS return true !
 				NOT = { exists = faction_war }
 				any_faction_member = {
 					is_participant_in_activity = root.involved_activity
@@ -777,7 +784,7 @@ prelude_events.0020 = {
 			}
 		}
 	}
-	
+
 	option = { # Tell them to drop it
 		name = prelude_events.0020.a
 		trigger = {
@@ -790,7 +797,7 @@ prelude_events.0020 = {
 		add_internal_flag = special
 		prelude_events_0020_weaken_faction_effect = yes
 		coronation_weaken_detractors_opinion_effect = yes
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = major_stress_impact_loss
 			craven = medium_stress_impact_gain
 		}
@@ -810,7 +817,7 @@ prelude_events.0020 = {
 			}
 		}
 	}
-	
+
 	option = { # _Try_ to tell them to drop it
 		name = prelude_events.0020.b
 		trigger = {
@@ -849,7 +856,7 @@ prelude_events.0020 = {
 					left_icon = root
 					if = {
 						limit = {
-							government_allows = administrative
+							government_has_flag = government_has_influence
 							top_liege = scope:activity.activity_host
 						}
 						change_influence = minor_influence_loss
@@ -860,7 +867,7 @@ prelude_events.0020 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			deceitful = major_stress_impact_loss
 			vengeful = medium_stress_impact_loss
 			callous = medium_stress_impact_loss
@@ -886,7 +893,7 @@ prelude_events.0020 = {
 			}
 		}
 	}
-	
+
 	option = { # Bribe the guy
 		name = prelude_events.0020.c
 		trigger = {
@@ -945,8 +952,8 @@ prelude_events.0020 = {
 		else = {
 			add_dread = medium_dread_gain
 		}
-		
-		stress_impact = {
+
+		stress_and_fulfillment_impact = {
 			deceitful = major_stress_impact_loss
 			vengeful = medium_stress_impact_loss
 			callous = medium_stress_impact_loss
@@ -972,11 +979,11 @@ prelude_events.0020 = {
 			}
 		}
 	}
-	
+
 	option = { # Whatever, man
 		name = prelude_events.0020.d
 		scope:faction = { add_faction_discontent = 5 }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			callous = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -1008,7 +1015,7 @@ scripted_trigger prelude_events_0030_appropriate_guest = {
 		has_relation_crush = root
 	}
 }
-	
+
 prelude_events.0030 = {
 	type = activity_event
 	title = prelude_events.0030.t
@@ -1037,18 +1044,18 @@ prelude_events.0030 = {
 		}
 		animation = admiration
 	}
-	
+
 	cooldown = { years = 5 }
-	
+
 	trigger = {
 		this != involved_activity.activity_host
 		involved_activity = {
-			any_attending_character = { 
+			any_attending_character = {
 				prelude_events_0030_appropriate_guest = yes
 			}
 		}
 	}
-	
+
 	weight_multiplier = {
 		base = 1
 		modifier = {
@@ -1063,13 +1070,13 @@ prelude_events.0030 = {
 			}
 			add = 1
 		}
-	}	
+	}
 
 	immediate = {
 		involved_activity = {
 			save_scope_as = activity
 			activity_host ?= { save_scope_as = host }
-			random_attending_character = { 
+			random_attending_character = {
 				limit = {
 					prelude_events_0030_appropriate_guest = yes
 				}
@@ -1088,7 +1095,7 @@ prelude_events.0030 = {
 			}
 		}
 	}
-	
+
 	option = { # Sneak out
 		name = prelude_events.0030.a
 		trigger = {
@@ -1103,7 +1110,7 @@ prelude_events.0030 = {
 			CHARACTER = scope:guest
 			OPINION = 15
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			lustful = major_stress_impact_loss
 			rakish = major_stress_impact_loss
 			shy = major_stress_impact_gain
@@ -1123,7 +1130,7 @@ prelude_events.0030 = {
 			}
 		}
 	}
-	
+
 	option = { # Ask for a favor
 		name = prelude_events.0030.b
 		reason = hook
@@ -1138,7 +1145,7 @@ prelude_events.0030 = {
 				gold = medium_gold_value
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_loss
 			generous = medium_stress_impact_gain
 			shy = medium_stress_impact_gain
@@ -1158,7 +1165,7 @@ prelude_events.0030 = {
 			}
 		}
 	}
-	
+
 	option = { # Ask for a favor -- give them a hook on you
 		name = prelude_events.0030.c
 		trigger = {
@@ -1184,7 +1191,7 @@ prelude_events.0030 = {
 				gold = medium_gold_value
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_loss
 			generous = medium_stress_impact_gain
 			shy = medium_stress_impact_gain
@@ -1204,7 +1211,7 @@ prelude_events.0030 = {
 			}
 		}
 	}
-	
+
 	option = { # Let's pregame
 		name = prelude_events.0030.d
 		trigger = {
@@ -1266,7 +1273,7 @@ prelude_events.0030 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			lifestyle_reveler = medium_stress_loss
 			gregarious = medium_stress_loss
 			drunkard = medium_stress_loss
@@ -1288,10 +1295,10 @@ prelude_events.0030 = {
 			}
 		}
 	}
-	
+
 	option = { # Nice to see you!
 		name = prelude_events.0030.e
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_loss
 			paranoid = medium_stress_impact_loss
 			shy = major_stress_impact_loss
@@ -1330,7 +1337,7 @@ scripted_trigger prelude_events_0040_appropriate_guest = {
 		}
 	}
 }
-	
+
 prelude_events.0040 = {
 	type = activity_event
 	title = prelude_events.0040.t
@@ -1348,18 +1355,18 @@ prelude_events.0040 = {
 		character = scope:guest
 		animation = schadenfreude
 	}
-	
+
 	cooldown = { years = 5 }
-	
+
 	trigger = {
 		this != involved_activity.activity_host
 		involved_activity = {
-			any_attending_character = { 
+			any_attending_character = {
 				prelude_events_0040_appropriate_guest = yes
 			}
 		}
 	}
-	
+
 	weight_multiplier = {
 		base = 1
 		modifier = {
@@ -1370,12 +1377,12 @@ prelude_events.0040 = {
 			}
 			add = 1
 		}
-	}	
+	}
 
 	immediate = {
 		involved_activity = {
 			activity_host ?= { save_scope_as = host }
-			random_attending_character = { 
+			random_attending_character = {
 				limit = { prelude_events_0040_appropriate_guest = yes }
 				weight = {
 					base = 1
@@ -1388,7 +1395,7 @@ prelude_events.0040 = {
 			}
 		}
 	}
-	
+
 	option = { # If you have a scheme against them, massive success chance
 		name = prelude_events.0040.a
 		trigger = {
@@ -1407,7 +1414,7 @@ prelude_events.0040 = {
 				type = massive_extra_success_chance_modifier
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			lazy = medium_stress_impact_gain
 			compassionate = medium_stress_impact_gain
@@ -1425,7 +1432,7 @@ prelude_events.0040 = {
 			}
 		}
 	}
-	
+
 	option = { # Insult them lol
 		name = prelude_events.0040.b
 		if = {
@@ -1481,7 +1488,7 @@ prelude_events.0040 = {
 				opinion = -25
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			vengeful = medium_stress_impact_loss
 			wrathful = medium_stress_impact_loss
 			callous = medium_stress_impact_loss
@@ -1493,9 +1500,9 @@ prelude_events.0040 = {
 			base = 100
 			modifier = {
 				OR = {
-					has_trait = vengeful 
-					has_trait = wrathful 
-					has_trait = callous 
+					has_trait = vengeful
+					has_trait = wrathful
+					has_trait = callous
 				}
 				factor = 2
 			}
@@ -1509,7 +1516,7 @@ prelude_events.0040 = {
 			}
 		}
 	}
-	
+
 	option = { # Eavesdrop
 		name = prelude_events.0040.c
 		trigger = {
@@ -1547,7 +1554,7 @@ prelude_events.0040 = {
 		else = {
 			add_intrigue_lifestyle_xp = medium_lifestyle_xp
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_loss
 			generous = medium_stress_impact_gain
 			shy = medium_stress_impact_gain
@@ -1567,12 +1574,12 @@ prelude_events.0040 = {
 			}
 		}
 	}
-	
+
 	option = { # Let's not argue tonight
 		name = prelude_events.0040.d
 		if = {
 			limit = {
-				government_allows = administrative
+				government_has_flag = government_has_influence
 				top_liege = scope:activity.activity_host
 			}
 			change_influence = minor_influence_gain
@@ -1589,7 +1596,7 @@ prelude_events.0040 = {
 				opinion = 5
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_loss
 			generous = medium_stress_impact_gain
 			shy = medium_stress_impact_gain
@@ -1624,7 +1631,7 @@ scripted_trigger prelude_events_0050_family_member = {
 		value >= 25
 	}
 }
-	
+
 prelude_events.0050 = {
 	type = activity_event
 	title = prelude_events.0050.t
@@ -1652,13 +1659,13 @@ prelude_events.0050 = {
 		character = scope:guest
 		animation = admiration
 	}
-	
+
 	cooldown = { years = 5 }
-	
+
 	trigger = {
 		this != involved_activity.activity_host
 		involved_activity = {
-			any_attending_character = { 
+			any_attending_character = {
 				prelude_events_0050_family_member = yes
 			}
 		}
@@ -1683,7 +1690,7 @@ prelude_events.0050 = {
 			}
 		}
 	}
-	
+
 	option = { # Go away
 		name = prelude_events.0050.a
 		trigger = {
@@ -1697,7 +1704,7 @@ prelude_events.0050 = {
 				opinion = -15
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = major_stress_impact_loss
 		}
 		ai_chance = {
@@ -1708,11 +1715,11 @@ prelude_events.0050 = {
 			}
 		}
 	}
-	
+
 	option = { # Let's talk about family
 		name = prelude_events.0050.b
 		add_diplomacy_lifestyle_xp = major_lifestyle_experience
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = medium_stress_impact_loss
 			arrogant = medium_stress_impact_gain
 			callous = medium_stress_impact_gain
@@ -1732,7 +1739,7 @@ prelude_events.0050 = {
 			}
 		}
 	}
-	
+
 	option = { # Discuss the new ruler
 		name = prelude_events.0050.c
 		trigger = {
@@ -1768,7 +1775,7 @@ prelude_events.0050 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_loss
 			generous = medium_stress_impact_gain
 			shy = medium_stress_impact_gain
@@ -1788,7 +1795,7 @@ prelude_events.0050 = {
 			}
 		}
 	}
-	
+
 	option = { # Discuss the new ruler - it's your family's spouse!
 		name = prelude_events.0050.d
 		trigger = {
@@ -1802,7 +1809,7 @@ prelude_events.0050 = {
 			scope:guest = { add_random_skill_point_effect = yes }
 			scope:host = { add_random_skill_point_effect = yes }
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			humble = medium_stress_impact_gain
 			shy = medium_stress_impact_gain
 			ambitious = major_stress_impact_loss
@@ -1846,9 +1853,9 @@ prelude_events.0060 = {
 		character = scope:host
 		animation = thinking
 	}
-	
+
 	cooldown = { years = 5 }
-	
+
 	trigger = {
 		has_activity_intent = coronation_advocate_domain
 		capital_county = {
@@ -1869,7 +1876,7 @@ prelude_events.0060 = {
 		}
 		capital_province = { save_scope_as = province }
 	}
-	
+
 	option = { # This is the time to lick some boots
 		name = prelude_events.0060.a
 		trigger = {
@@ -1904,7 +1911,7 @@ prelude_events.0060 = {
 		}
 		if = {
 			limit = {
-				government_allows = administrative
+				government_has_flag = government_has_influence
 				top_liege = scope:activity.activity_host
 			}
 			change_influence = medium_influence_gain
@@ -1912,7 +1919,7 @@ prelude_events.0060 = {
 		else = {
 			add_prestige = medium_prestige_gain
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = major_stress_impact_loss
 			content = major_stress_impact_gain
 		}
@@ -1928,7 +1935,7 @@ prelude_events.0060 = {
 			}
 		}
 	}
-	
+
 	option = { # Ask for help
 		name = prelude_events.0060.b
 		if = { # You get a cool thing
@@ -1969,7 +1976,7 @@ prelude_events.0060 = {
 		else = {
 			if = {
 				limit = {
-					government_allows = administrative
+					government_has_flag = government_has_influence
 					top_liege = scope:activity.activity_host
 				}
 				change_influence = major_influence_loss
@@ -1978,7 +1985,7 @@ prelude_events.0060 = {
 				add_prestige = major_prestige_loss
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			diligent = medium_stress_impact_loss
 			greedy = major_stress_impact_gain
 			paranoid = major_stress_impact_gain
@@ -1998,7 +2005,7 @@ prelude_events.0060 = {
 			}
 		}
 	}
-	
+
 	option = { # Ask for funding
 		name = prelude_events.0060.c
 		duel = {
@@ -2045,7 +2052,7 @@ prelude_events.0060 = {
 					right_icon = scope:host
 					if = {
 						limit = {
-							government_allows = administrative
+							government_has_flag = government_has_influence
 							top_liege = scope:activity.activity_host
 						}
 						change_influence = medium_influence_loss
@@ -2072,7 +2079,7 @@ prelude_events.0060 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_loss
 			generous = medium_stress_impact_gain
 			shy = medium_stress_impact_gain
@@ -2094,7 +2101,7 @@ prelude_events.0060 = {
 			}
 		}
 	}
-	
+
 	option = { # Let's just focus on you
 		name = prelude_events.0060.d
 		trigger = {
@@ -2127,9 +2134,9 @@ prelude_events.0060 = {
 				opinion = 20
 			}
 		}
-		
+
 		add_prestige = minor_prestige_gain
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			loyal = major_stress_impact_loss
 			content = medium_stress_impact_loss
 			deceitful = major_stress_impact_gain
@@ -2161,7 +2168,7 @@ prelude_events.0060 = {
 prelude_events.0070 = {
 	type = activity_event
 	title = prelude_events.0070.t
-	desc = {	
+	desc = {
 		desc = prelude_events.0070.desc.intro
 		first_valid = {
 			triggered_desc = {
@@ -2224,9 +2231,9 @@ prelude_events.0070 = {
 		character = scope:host
 		animation = personality_bold
 	}
-	
+
 	cooldown = { years = 5 }
-	
+
 	trigger = {
 		involved_activity.activity_host = {
 			is_ai = yes # Do not mess with Players' councils behind their back 
@@ -2255,7 +2262,7 @@ prelude_events.0070 = {
 		is_councillor = no
 		is_ai = no # To avoid AI changing councillors too often/weirdly
 	}
-	
+
 	weight_multiplier = {
 		base = 1
 		modifier = {
@@ -2267,7 +2274,7 @@ prelude_events.0070 = {
 	immediate = {
 		involved_activity.activity_host = { save_scope_as = host }
 	}
-	
+
 	option = { # Try to avoid this
 		name = prelude_events.0070.a
 		flavor = prelude_events.0070.a.flavor
@@ -2279,7 +2286,7 @@ prelude_events.0070 = {
 			modifier = bp4_lazy_realm_focus_modifier
 			years = 10
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			lazy = medium_stress_impact_loss
 			ambitious = major_stress_impact_gain
 		}
@@ -2287,7 +2294,7 @@ prelude_events.0070 = {
 			base = 100
 		}
 	}
-	
+
 	option = { # Sure thing
 		name = prelude_events.0070.b
 		scope:host = {
@@ -2298,7 +2305,7 @@ prelude_events.0070 = {
 				years = council_position_locked_value
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = medium_stress_impact_loss
 			diligent = major_stress_impact_loss
 			lazy = major_stress_impact_gain
@@ -2307,7 +2314,7 @@ prelude_events.0070 = {
 			base = 100
 		}
 	}
-	
+
 	option = { # No thank you
 		name = prelude_events.0070.c
 		trigger = {
@@ -2320,7 +2327,7 @@ prelude_events.0070 = {
 				opinion = -15
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			diligent = major_stress_impact_gain
 			ambitious = major_stress_impact_gain
 		}
@@ -2368,11 +2375,11 @@ scripted_trigger prelude_events_0080_appropriate_courtier = {
 	has_any_high_skill_rating = yes
 	NOT = { has_court_position = court_physician_court_position }
 }
-	
+
 prelude_events.0080 = {
 	type = activity_event
 	title = prelude_events.0080.t
-	desc = {	
+	desc = {
 		desc = prelude_events.0080.desc.intro
 		first_valid = {
 			triggered_desc = {
@@ -2404,18 +2411,18 @@ prelude_events.0080 = {
 		character = scope:guest
 		animation = personality_honorable
 	}
-	
+
 	cooldown = { years = 5 }
-	
+
 	trigger = {
 		is_ruler = yes
-		involved_activity = {
-			any_attending_character = { 
+		involved_activity ?= {
+			any_attending_character = {
 				prelude_events_0080_appropriate_guest = yes
 			}
 		}
 	}
-	
+
 	weight_multiplier = {
 		base = 1
 		modifier = {
@@ -2472,7 +2479,7 @@ prelude_events.0080 = {
 		}
 		assign_appropriate_court_position_effect = { CANDIDATE = scope:courtier }
 	}
-	
+
 	option = { # A spy!!!!
 		name = prelude_events.0080.aa
 		trigger = { has_trait = paranoid }
@@ -2496,25 +2503,25 @@ prelude_events.0080 = {
 				REASON = rival_rejected_courtier_paranoid
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			paranoid = medium_stress_impact_loss
 		}
 		ai_chance = {
 			base = 100 # Paranoid AI can only choose this
 		}
 	}
-	
+
 	option = { # Appoint them
 		name = prelude_events.0080.a
 		trigger = {
 			scope:courtier = { has_any_court_position_flag_trigger = yes }
 		}
 		add_courtier = scope:courtier
-		unop_distribute_determined_court_position_effect = { #Unop: To have the tooltip display the aptitude and the cost of the CP
+		distribute_determined_court_position_effect = {
 			CANDIDATE = scope:courtier
 			EMPLOYER = root
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			paranoid = major_stress_impact_gain
 		}
 		ai_chance = {
@@ -2525,11 +2532,11 @@ prelude_events.0080 = {
 			}
 		}
 	}
-	
+
 	option = { # Sure, they can stay
 		name = prelude_events.0080.b
 		add_courtier = scope:courtier
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			paranoid = major_stress_impact_gain
 		}
 		ai_chance = {
@@ -2540,7 +2547,7 @@ prelude_events.0080 = {
 			}
 		}
 	}
-	
+
 	option = { # You're such a good guy
 		name = prelude_events.0080.c
 		if = {
@@ -2566,7 +2573,7 @@ prelude_events.0080 = {
 		}
 		else = { add_prestige = minor_prestige_gain }
 		add_diplomacy_lifestyle_xp = medium_lifestyle_xp
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = medium_stress_impact_loss
 			paranoid = major_stress_impact_gain
 		}
@@ -2601,11 +2608,11 @@ scripted_trigger prelude_events_0090_appropriate_guest = {
 		}
 	}
 }
-	
+
 prelude_events.0090 = {
 	type = activity_event
 	title = prelude_events.0090.t
-	desc = {	
+	desc = {
 		desc = prelude_events.0090.desc.intro
 		first_valid = {
 			triggered_desc = {
@@ -2613,7 +2620,7 @@ prelude_events.0090 = {
 				desc = prelude_events.0090.desc.blood_brother
 			}
 			triggered_desc = {
-				trigger = {	
+				trigger = {
 					opinion = {
 						target = scope:guest
 						value < 0
@@ -2647,18 +2654,18 @@ prelude_events.0090 = {
 		animation = standing_horse
 		camera = camera_event_standing_with_horse_right
 	}
-	
+
 	cooldown = { years = 1 }
-	
+
 	trigger = {
 		government_has_flag = government_is_nomadic
 		involved_activity = {
-			any_attending_character = { 
+			any_attending_character = {
 				prelude_events_0090_appropriate_guest = yes
 			}
 		}
 	}
-	
+
 	weight_multiplier = {
 		base = 1
 		modifier = {
@@ -2709,7 +2716,7 @@ prelude_events.0090 = {
 			}
 		}
 	}
-	
+
 	option = { # BESTIEEEEEEEEE
 		name = prelude_events.0090.aa
 		reason = blood_brother
@@ -2722,7 +2729,7 @@ prelude_events.0090 = {
             VALUE = flag:positive_major
             CHAR = root
         }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_loss
 		}
 		ai_chance = {
@@ -2733,7 +2740,7 @@ prelude_events.0090 = {
 			}
 		}
 	}
-	
+
 	option = { # Tell them to f off
 		name = prelude_events.0090.a
 		reason = opinion_negative
@@ -2759,7 +2766,7 @@ prelude_events.0090 = {
 			limit = { has_relation_rival = scope:guest }
 			add_stress = major_stress_impact_loss
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			callous = medium_stress_impact_loss
 		}
 		ai_chance = {
@@ -2773,7 +2780,7 @@ prelude_events.0090 = {
 			}
 		}
 	}
-	
+
 	option = { # Accept their Herd
 		name = prelude_events.0090.b
 		scope:guest = {
@@ -2783,7 +2790,7 @@ prelude_events.0090 = {
 			}
 			add_prestige = medium_prestige_gain
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = major_stress_impact_loss
 			generous = medium_stress_impact_gain
 			callous = medium_stress_impact_gain
@@ -2803,7 +2810,7 @@ prelude_events.0090 = {
 			}
 		}
 	}
-	
+
 	option = { # I'm just happy to have you here
 		name = prelude_events.0090.c
 		if = {
@@ -2838,7 +2845,7 @@ prelude_events.0090 = {
 			}
 		}
 		coronation_move_towards_supporter_effect = { CHARACTER = scope:guest }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = medium_stress_impact_loss
 			callous = major_stress_impact_gain
 		}
@@ -2874,7 +2881,7 @@ scripted_trigger prelude_events_0100_appropriate_vassal = {
 		government_has_flag = government_is_herder
 	}
 }
-	
+
 prelude_events.0100 = {
 	type = activity_event
 	title = prelude_events.0100.t
@@ -2894,14 +2901,14 @@ prelude_events.0100 = {
 		character = scope:vassal
 		animation = beg
 	}
-	
+
 	cooldown = { years = 1 }
-	
+
 	trigger = {
 		has_activity_intent = coronation_embrace_supporters
 		NOT = { has_character_modifier = coronation_vassal_building_modifier }
 		involved_activity = {
-			any_attending_character = { 
+			any_attending_character = {
 				prelude_events_0100_appropriate_vassal = yes
 			}
 		}
@@ -2918,7 +2925,7 @@ prelude_events.0100 = {
 						is_target_in_variable_list = {
 							name = major_supporter
 							target = prev
-						}	
+						}
 					}
 				}
 				alternative_limit = {
@@ -2962,7 +2969,7 @@ prelude_events.0100 = {
 		}
 		custom_tooltip = happened_because_intent_tt
 	}
-	
+
 	option = { # Sure buddy
 		name = prelude_events.0100.a
 		add_character_modifier = coronation_vassal_building_modifier # Forever
@@ -2982,7 +2989,7 @@ prelude_events.0100 = {
 				}
 			}
 		}
-		
+
 		custom_tooltip = {
 			text = coronation_tt_positive_medium
 			scope:activity = { activity_special_type_progression_medium = yes }
@@ -2991,7 +2998,7 @@ prelude_events.0100 = {
             VALUE = flag:positive_medium
             CHAR = root
         }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			callous = medium_stress_impact_loss
 		}
 		ai_chance = {
@@ -3004,7 +3011,7 @@ prelude_events.0100 = {
 			}
 		}
 	}
-	
+
 	option = { # You can build it yourself
 		name = prelude_events.0100.b
 		pay_short_term_gold = {
@@ -3048,7 +3055,7 @@ prelude_events.0100 = {
         }
 		coronation_move_towards_supporter_effect = { CHARACTER = scope:vassal }
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = major_stress_impact_loss
 			generous = medium_stress_impact_gain
 			callous = medium_stress_impact_gain
@@ -3068,7 +3075,7 @@ prelude_events.0100 = {
 			}
 		}
 	}
-	
+
 	option = { # I'd rather focus on _me_
 		name = prelude_events.0100.c
 		add_stewardship_lifestyle_xp = major_lifestyle_xp
@@ -3082,7 +3089,7 @@ prelude_events.0100 = {
 				add_trait = architect
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = medium_stress_impact_loss
 			callous = major_stress_impact_gain
 		}
@@ -3125,7 +3132,7 @@ scripted_trigger prelude_events_0110_appropriate_guest = {
 		}
 	}
 }
-	
+
 prelude_events.0110 = {
 	type = activity_event
 	title = prelude_events.0110.t
@@ -3152,13 +3159,13 @@ prelude_events.0110 = {
 		animation = debating
 		camera = camera_event_right_pointing_right
 	}
-	
+
 	cooldown = { years = 1 }
-	
+
 	trigger = {
 		has_activity_intent = coronation_impress_attendees
 		involved_activity = {
-			any_attending_character = { 
+			any_attending_character = {
 				prelude_events_0110_appropriate_guest = yes
 			}
 		}
@@ -3199,7 +3206,7 @@ prelude_events.0110 = {
 			}
 		}
 	}
-	
+
 	option = { # If they have a different language, learn it
 		name = prelude_events.0110.a
 		add_internal_flag = special
@@ -3255,9 +3262,9 @@ prelude_events.0110 = {
 				target = scope:guest
 				opinion = 20
 			}
-			
+
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			callous = major_stress_impact_gain
 		}
 		ai_chance = {
@@ -3268,7 +3275,7 @@ prelude_events.0110 = {
 			}
 		}
 	}
-	
+
 	option = { # Sure, man
 		name = prelude_events.0110.b
 		culture = {
@@ -3278,7 +3285,7 @@ prelude_events.0110 = {
 				desc = cultural_acceptance_gain_coronation_impress_attendees
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_loss
 			callous = medium_stress_impact_gain
 		}
@@ -3291,13 +3298,13 @@ prelude_events.0110 = {
 			modifier = {
 				OR = {
 					has_trait = callous
-					has_trait = arrogant 
+					has_trait = arrogant
 				}
 				factor = 0
 			}
 		}
 	}
-	
+
 	option = { # I care more about myself
 		name = prelude_events.0110.c
 		custom_tooltip = {
@@ -3308,7 +3315,7 @@ prelude_events.0110 = {
             VALUE = flag:positive_medium
             CHAR = root
         }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			callous = medium_stress_impact_loss
 			compassionate = medium_stress_impact_gain
 		}
@@ -3350,7 +3357,7 @@ scripted_trigger prelude_events_0120_appropriate_artifact = {
 	}
 	artifact_can_be_gift_advance_trigger = yes
 }
-	
+
 prelude_events.0120 = {
 	type = activity_event
 	title = prelude_events.0120.t
@@ -3361,7 +3368,7 @@ prelude_events.0120 = {
 		animation = happiness
 	}
 	center_portrait = {
-		character = scope:servant 
+		character = scope:servant
 		animation = obsequious_bow
 		camera = camera_event_right_pointing_right
 	}
@@ -3379,19 +3386,19 @@ prelude_events.0120 = {
 		target = scope:my_artifact
 		trigger = { exists = scope:my_artifact }
 	}
-	
+
 	cooldown = { years = 1 }
-	
+
 	trigger = {
 		has_activity_intent = coronation_exalt_crown
 		involved_activity = {
-			any_attending_character = { 
+			any_attending_character = {
 				prelude_events_0120_appropriate_guest = yes
 			}
 		}
 	}
-	
-	weight_multiplier = {	
+
+	weight_multiplier = {
 		base = 1
 		modifier = {
 			NOT = {
@@ -3443,6 +3450,7 @@ prelude_events.0120 = {
 			template = antiquarian_court_position_template
 			gender_female_chance = 50
 			faith = scope:guest.faith
+			rite = scope:guest.rite
 			culture = scope:guest.culture
 			save_scope_as = servant
 		}
@@ -3461,7 +3469,7 @@ prelude_events.0120 = {
 			}
 		}
 	}
-	
+
 	option = { # Let's exchange gifts
 		name = prelude_events.0120.aa
 		trigger = {
@@ -3502,7 +3510,7 @@ prelude_events.0120 = {
 				opinion = 15
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = medium_stress_impact_loss
 			gregarious = medium_stress_impact_loss
 			callous = medium_stress_impact_gain
@@ -3526,7 +3534,7 @@ prelude_events.0120 = {
 			}
 		}
 	}
-	
+
 	option = { # Is this how much you value my love?
 		name = prelude_events.0120.a
 		trigger = {
@@ -3550,7 +3558,7 @@ prelude_events.0120 = {
 			set_owner = root
 			set_artifact_description = coronation_gift_artifact_desc
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_loss
 			content = medium_stress_impact_gain
 			generous = major_stress_impact_gain
@@ -3573,7 +3581,7 @@ prelude_events.0120 = {
 			}
 		}
 	}
-	
+
 	option = { # Thank you bestie
 		name = prelude_events.0120.b
 		scope:guest_artifact = {
@@ -3583,7 +3591,7 @@ prelude_events.0120 = {
 		scope:guest = {
 			if = {
 				limit = {
-					government_allows = administrative
+					government_has_flag = government_has_influence
 					top_liege = scope:activity.activity_host
 				}
 				change_influence = medium_influence_gain
@@ -3597,7 +3605,7 @@ prelude_events.0120 = {
 				opinion = 10
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = medium_stress_impact_gain
 			callous = medium_stress_impact_gain
 		}
@@ -3616,7 +3624,7 @@ prelude_events.0120 = {
 			}
 		}
 	}
-	
+
 	option = { # Let's show it off to our guests!
 		name = prelude_events.0120.c
 		custom_tooltip = {
@@ -3627,7 +3635,7 @@ prelude_events.0120 = {
             VALUE = flag:positive_tiny
             CHAR = root
         }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = medium_stress_impact_loss
 			callous = major_stress_impact_gain
 		}
@@ -3643,7 +3651,7 @@ prelude_events.0120 = {
 			}
 		}
 	}
-	
+
 	after = {
 		hidden_effect = {
 			if = {
@@ -3662,7 +3670,7 @@ scripted_trigger prelude_events_0130_appropriate_artifact = {
 		rarity = common
 	}
 }
-	
+
 prelude_events.0130 = {
 	type = activity_event
 	title = prelude_events.0130.t
@@ -3690,9 +3698,9 @@ prelude_events.0130 = {
 		position = lower_left_portrait
 		target = scope:my_artifact
 	}
-	
+
 	cooldown = { years = 1 }
-	
+
 	trigger = {
 		has_activity_intent = coronation_exalt_crown
 		coronation_living_officiator_trigger = yes
@@ -3723,7 +3731,7 @@ prelude_events.0130 = {
 			save_scope_as = my_artifact
 		}
 	}
-	
+
 	option = { # Please improve my artifact
 		name = prelude_events.0130.a
 		scope:my_artifact = {
@@ -3734,7 +3742,7 @@ prelude_events.0130 = {
 			}
 			set_artifact_description = coronation_blessed_artifact_desc
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			cynical = major_stress_impact_gain
 			zealous = medium_stress_impact_loss
 		}
@@ -3750,7 +3758,7 @@ prelude_events.0130 = {
 			}
 		}
 	}
-	
+
 	option = { # Let me show it to the world
 		name = prelude_events.0130.b
 		scope:my_artifact = {
@@ -3760,7 +3768,7 @@ prelude_events.0130 = {
 			}
 			set_artifact_description = coronation_blessed_artifact_desc
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			cynical = medium_stress_impact_gain
 			arrogant = medium_stress_impact_loss
 		}
@@ -3776,7 +3784,7 @@ prelude_events.0130 = {
 			}
 		}
 	}
-	
+
 	option = { # Just bless this coronation
 		name = prelude_events.0130.c
 		every_vassal_or_below = {
@@ -3809,7 +3817,7 @@ prelude_events.0130 = {
         	    CHAR = root
         	}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = medium_stress_impact_loss
 			zealous = major_stress_impact_gain
 		}
@@ -3864,9 +3872,9 @@ prelude_events.0140 = {
 		animation = survey
 		camera = camera_event_right_pointing_left
 	}
-	
+
 	cooldown = { years = 1 }
-	
+
 	trigger = {
 		involved_activity = {
 			any_attending_character = {
@@ -3874,7 +3882,7 @@ prelude_events.0140 = {
 			}
 		}
 	}
-	
+
 	weight_multiplier = {
 		base = 1
 		modifier = {
@@ -3910,7 +3918,7 @@ prelude_events.0140 = {
 			}
 		}
 	}
-	
+
 	option = { # That idiot
 		name = prelude_events.0140.a
 		trigger = { has_activity_intent = coronation_disrupt_loyalists }
@@ -3925,7 +3933,7 @@ prelude_events.0140 = {
 							name = major_detractor
 							target = root
 						}
-					}	
+					}
 				}
 			}
 			custom_tooltip = {
@@ -3937,8 +3945,8 @@ prelude_events.0140 = {
         	    CHAR = root
         	}
 		}
-		
-		stress_impact = {
+
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_loss # You love this
 			callous = medium_stress_impact_loss
 		}
@@ -3959,7 +3967,7 @@ prelude_events.0140 = {
 			}
 		}
 	}
-	
+
 	option = { # Shower them in compliments
 		name = prelude_events.0140.b
 		if = {
@@ -3993,7 +4001,7 @@ prelude_events.0140 = {
 							name = major_supporter
 							target = root
 						}
-					}	
+					}
 				}
 			}
 			custom_tooltip = {
@@ -4026,19 +4034,15 @@ prelude_events.0140 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			shy = medium_stress_impact_gain
 			callous = major_stress_impact_gain
-			deceitful = medium_stress_impact_loss
 			gregarious = medium_stress_impact_loss
 		}
 		ai_chance = {
 			base = 100
 			modifier = {
-				OR = {
-					has_trait = deceitful
-					has_trait = gregarious
-				}
+				has_trait = gregarious
 				factor = 2
 			}
 			modifier = {
@@ -4053,7 +4057,7 @@ prelude_events.0140 = {
 			}
 		}
 	}
-	
+
 	option = { # I love diplomacy
 		name = prelude_events.0140.c
 		if = {
@@ -4063,7 +4067,7 @@ prelude_events.0140 = {
 		else = {
 			if = {
 				limit = {
-					government_allows = administrative
+					government_has_flag = government_has_influence
 					top_liege = scope:activity.activity_host
 				}
 				change_influence = medium_influence_gain
@@ -4072,7 +4076,7 @@ prelude_events.0140 = {
 				add_prestige = medium_prestige_gain
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			diplomat = major_stress_impact_loss
 			arrogant = medium_stress_impact_loss
 			callous = medium_stress_impact_gain
@@ -4162,9 +4166,9 @@ prelude_events.0150 = {
 		animation = debating
 		camera = camera_event_right_pointing_right
 	}
-	
+
 	cooldown = { years = 1 }
-	
+
 	trigger = {
 		involved_activity.activity_host = { # Host likes you
 			opinion = {
@@ -4178,7 +4182,7 @@ prelude_events.0150 = {
 			}
 		}
 	}
-	
+
 	weight_multiplier = {
 		base = 1
 		modifier = {
@@ -4219,30 +4223,17 @@ prelude_events.0150 = {
 			}
 		}
 	}
-	
+
 	option = { # I want to know them in the biblical sense
 		name = prelude_events.0150.aa
 		add_internal_flag = special
 		trigger = {
-			#might_cheat_on_every_partner_trigger = yes
-			#scope:guest = {
-			#	is_attracted_to_gender_of = root
-			#	OR = {
-			#		AND = {
-			#			is_married = no
-			#			NOT = {
-			#				has_trait = chaste
-			#				has_trait = celibate
-			#			}
-			#		}
-			#		might_cheat_on_every_partner_trigger = yes
-			#	}
-			#}
-			#is_attracted_to_gender_of = scope:guest
-
-			#Unop: Commented everything above to use my in-house trigger (fix root cheated on a partner that they wouldn't have log)
-			unop_is_sexually_compatible_with_character = { CHARACTER = scope:guest DENY_CHASTE = flag:no }
-			scope:guest = { unop_is_sexually_compatible_with_character = { CHARACTER = root DENY_CHASTE = flag:no } }
+			might_cheat_on_every_partner_trigger = yes
+			scope:guest = {
+				is_attracted_to_gender_of = root
+				might_cheat_on_every_partner_trigger = yes
+			}
+			is_attracted_to_gender_of = scope:guest
 		}
 		had_sex_with_effect = {
 			CHARACTER = scope:guest
@@ -4275,7 +4266,7 @@ prelude_events.0150 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			rakish = major_stress_impact_loss
 			lustful = major_stress_impact_loss
 			seducer = major_stress_impact_loss
@@ -4292,7 +4283,7 @@ prelude_events.0150 = {
 			}
 		}
 	}
-	
+
 	option = { # They seem cool
 		name = prelude_events.0150.a
 		if = {
@@ -4321,7 +4312,7 @@ prelude_events.0150 = {
 				opinion = 20
 			}
 		}
-		
+
 		scope:host = {
 			add_opinion = {
 				target = root
@@ -4329,7 +4320,7 @@ prelude_events.0150 = {
 				opinion = 15
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = major_stress_impact_loss
 			shy = medium_stress_impact_gain
 			callous = medium_stress_impact_gain
@@ -4349,7 +4340,7 @@ prelude_events.0150 = {
 			}
 		}
 	}
-	
+
 	option = { # I want to talk with _you_
 		name = prelude_events.0150.b
 		if = {
@@ -4379,8 +4370,8 @@ prelude_events.0150 = {
 				opinion = 20
 			}
 		}
-		
-		stress_impact = {
+
+		stress_and_fulfillment_impact = {
 			arrogant = medium_stress_impact_loss
 			gregarious = medium_stress_impact_loss
 			shy = medium_stress_impact_gain
@@ -4404,7 +4395,7 @@ prelude_events.0150 = {
 			}
 		}
 	}
-	
+
 	option = { # Whatever
 		name = prelude_events.0150.c
 		if = {
@@ -4414,7 +4405,7 @@ prelude_events.0150 = {
 		else = {
 			if = {
 				limit = {
-					government_allows = administrative
+					government_has_flag = government_has_influence
 					top_liege = scope:activity.activity_host
 				}
 				change_influence = medium_influence_gain
@@ -4475,9 +4466,9 @@ prelude_events.0160 = {
 		}
 		animation = ecstasy
 	}
-	
+
 	cooldown = { years = 1 }
-	
+
 	trigger = {
 		involved_activity = {
 			any_attending_character = {
@@ -4515,13 +4506,17 @@ prelude_events.0160 = {
 				if = {
 					limit = {
 						any_held_title = {
+							title_tier > barony
+							is_landless_type_title = no
 							root = {
 								NOT = { has_claim_on = prev }
 							}
 						}
 					}
 					ordered_held_title = {
+						title_tier > barony
 						limit = {
+							is_landless_type_title = no
 							root = {
 								NOT = { has_claim_on = prev }
 							}
@@ -4533,7 +4528,7 @@ prelude_events.0160 = {
 			}
 		}
 	}
-	
+
 	option = { # We are the BEST dynasty in the world
 		name = prelude_events.0160.aa
 		trigger = { prestige_level >= 4 }
@@ -4550,7 +4545,7 @@ prelude_events.0160 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = major_stress_impact_loss
 			gregarious = major_stress_impact_loss
 			callous = major_stress_impact_gain
@@ -4574,7 +4569,7 @@ prelude_events.0160 = {
 			}
 		}
 	}
-	
+
 	option = { # You are a disgrace to our dynasty
 		name = prelude_events.0160.a
 		trigger = {
@@ -4620,7 +4615,7 @@ prelude_events.0160 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			callous = major_stress_impact_loss
 			arrogant = medium_stress_impact_loss
 			ambitious = medium_stress_impact_loss
@@ -4646,11 +4641,11 @@ prelude_events.0160 = {
 			}
 		}
 	}
-	
+
 	option = { # We are so cool cousin
 		name = prelude_events.0160.b
 		trigger = {
-			has_legitimacy = yes 
+			has_legitimacy = yes
 		}
 		if = {
 			limit = {
@@ -4659,7 +4654,7 @@ prelude_events.0160 = {
 			scope:guest = { add_legitimacy = medium_legitimacy_gain }
 		}
 		add_legitimacy = medium_legitimacy_gain
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = medium_stress_impact_loss
 			callous = medium_stress_impact_gain
 		}
@@ -4678,7 +4673,7 @@ prelude_events.0160 = {
 			}
 		}
 	}
-	
+
 	option = { # Let's focus on the coronation
 		name = prelude_events.0160.c
 		scope:host = {
@@ -4702,7 +4697,7 @@ prelude_events.0160 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			shy = medium_stress_impact_loss
 			humble = medium_stress_impact_loss
 			arrogant = major_stress_impact_gain
@@ -4772,9 +4767,9 @@ prelude_events.0170 = {
 		animation = debating
 	}
 	lower_right_portrait = scope:supporter
-	
+
 	cooldown = { years = 1 }
-	
+
 	trigger = {
 		involved_activity = {
 			any_attending_character = {
@@ -4860,10 +4855,10 @@ prelude_events.0170 = {
 					days = 20
 				}
 			}
-			
+
 		}
 	}
-	
+
 	option = { # Try to convert them
 		name = prelude_events.0170.aa
 		trigger = {
@@ -4907,7 +4902,7 @@ prelude_events.0170 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			theologian = major_stress_impact_loss
 			zealous = major_stress_impact_loss
 			arrogant = medium_stress_impact_loss
@@ -4929,7 +4924,7 @@ prelude_events.0170 = {
 			}
 		}
 	}
-	
+
 	option = { # Have a rad theological debate
 		name = prelude_events.0170.a
 		duel = {
@@ -4980,7 +4975,7 @@ prelude_events.0170 = {
 					left_icon = root
 					if = {
 						limit = {
-							government_allows = administrative
+							government_has_flag = government_has_influence
 							top_liege = scope:activity.activity_host
 						}
 						change_influence = minor_influence_loss
@@ -4991,8 +4986,8 @@ prelude_events.0170 = {
 				}
 			}
 		}
-		
-		stress_impact = {
+
+		stress_and_fulfillment_impact = {
 			theologian = major_stress_impact_loss
 			zealous = medium_stress_impact_loss
 			arrogant = medium_stress_impact_loss
@@ -5014,7 +5009,7 @@ prelude_events.0170 = {
 			}
 		}
 	}
-	
+
 	option = { # Tell me more of this god
 		name = prelude_events.0170.b
 		custom_tooltip = cheaper_to_convert_to_guest_faith_tt
@@ -5037,7 +5032,7 @@ prelude_events.0170 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gregarious = medium_stress_impact_loss
 			callous = medium_stress_impact_gain
 		}
@@ -5056,7 +5051,7 @@ prelude_events.0170 = {
 			}
 		}
 	}
-	
+
 	option = { # Let's just focus on something else
 		name = {
 			trigger = {
@@ -5154,7 +5149,7 @@ prelude_events.0170 = {
 		else = {
 			add_prestige = minor_prestige_gain
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			zealous = major_stress_impact_gain
 			theologian = major_stress_impact_gain
@@ -5198,9 +5193,9 @@ prelude_events.0180 = {
 		character = root
 		animation = prayer
 	}
-	
+
 	cooldown = { years = 1 }
-	
+
 	trigger = {
 		NOT = { has_trait = cynical }
 		faith = root.location.faith # There's a chapel of your faith here
@@ -5209,7 +5204,7 @@ prelude_events.0180 = {
 			faith.religion = religion:hinduism_religion
 		}
 	}
-	
+
 	weight_multiplier = {
 		base = 1
 		modifier = {
@@ -5226,7 +5221,7 @@ prelude_events.0180 = {
 			save_scope_as = activity
 		}
 	}
-	
+
 	option = { # Pray for a successful reign
 		name = prelude_events.0180.a
 		if = {
@@ -5252,7 +5247,7 @@ prelude_events.0180 = {
 							name = major_supporter
 							target = root
 						}
-					}	
+					}
 				}
 			}
 			add_piety = medium_piety_gain
@@ -5300,9 +5295,9 @@ prelude_events.0180 = {
         		    CHAR = root
         		}
 			}
-			
+
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = medium_stress_impact_loss
 		}
 		ai_chance = {
@@ -5341,9 +5336,9 @@ prelude_events.0180 = {
 							intrigue >= very_high_skill_rating
 						}
 					}
-					
+
 				}
-				
+
 			}
 		}
 	}
@@ -5400,7 +5395,7 @@ prelude_events.0180 = {
         	    CHAR = root
         	}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			vengeful = medium_stress_impact_loss
 			sadistic = minor_stress_impact_loss
 		}
@@ -5438,14 +5433,14 @@ prelude_events.0180 = {
 			}
 		}
 	}
-	
+
 	option = { # Pray for good health
 		name = prelude_events.0180.c
 		add_character_modifier = {
 			modifier = coronation_good_health_modifier
 			years = 15
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			paranoid = medium_stress_impact_loss
 			content = medium_stress_impact_loss
 		}
@@ -5460,14 +5455,14 @@ prelude_events.0180 = {
 			}
 		}
 	}
-	
+
 	option = { # Pray for Wealth
 		name = prelude_events.0180.d
 		add_character_modifier = {
 			modifier = coronation_wealth_modifier
 			years = 15
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_loss
 			avaricious = medium_stress_impact_loss
 		}
@@ -5519,7 +5514,7 @@ scripted_effect create_coronation_artifact_effect = {
 		}
 		10 = {
 			create_artifact_book_effect = {
-				OWNER = scope:councillor 
+				OWNER = scope:councillor
 				CREATOR = scope:antiquarian
 				SET_SUBJECT = flag:no
 				SET_TOPIC = flag:no
@@ -5547,7 +5542,7 @@ prelude_events.0190 = {
 		}
 		desc = prelude_events.0190.desc.outro
 	}
-		
+
 	theme = coronation_activity
 	override_background = { reference = relaxing_room }
 	center_portrait = {
@@ -5567,11 +5562,11 @@ prelude_events.0190 = {
 		position = lower_left_portrait
 	}
 	cooldown = { years = 1 }
-	
+
 	trigger = {
 		any_councillor = { prelude_events_0190_appropriate_councillor = yes }
 	}
-	
+
 	weight_multiplier = {
 		base = 1
 		modifier = {
@@ -5606,6 +5601,7 @@ prelude_events.0190 = {
 				location = scope:councillor.location
 				template = great_antiquarian_court_position_template
 				faith = scope:councillor.faith
+				rite = scope:councillor.rite
 				culture = scope:councillor.culture
 				save_scope_as = antiquarian
 			}
@@ -5616,13 +5612,14 @@ prelude_events.0190 = {
 			}
 		}
 	}
-	
+
 	option = { # Thank you man
 		name = prelude_events.0190.a
+		add_prestige = medium_prestige_gain
 		scope:newly_created_artifact = {
 			set_owner = root
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_loss
 		}
 		ai_chance = {
@@ -5633,7 +5630,7 @@ prelude_events.0190 = {
 			}
 		}
 	}
-	
+
 	option = { # Cry together
 		name = prelude_events.0190.b
 		if = {
@@ -5661,7 +5658,10 @@ prelude_events.0190 = {
 				reason = lover_bestie_coronation_vespers
 			}
 		}
-		stress_impact = {
+		scope:newly_created_artifact = {
+			set_owner = root
+		}
+		stress_and_fulfillment_impact = {
 			gregarious = major_stress_impact_loss
 			content = medium_stress_impact_loss
 		}
@@ -5676,18 +5676,21 @@ prelude_events.0190 = {
 			}
 		}
 	}
-	
+
 	option = { # I feel calmer now
 		name = prelude_events.0190.c
 		custom_tooltip = {
 			text = coronation_tt_positive_tiny
 			scope:activity = { activity_special_type_progression_tiny = yes }
 		}
+		scope:newly_created_artifact = {
+			set_owner = root
+		}
 		coronation_add_magnificence_log_effect = {
             VALUE = flag:positive_tiny
             CHAR = root
         }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = major_stress_impact_loss
 		}
 		ai_chance = {

@@ -36,7 +36,8 @@ ep3_powerful_families.8000 = {
 	cooldown = { years = 10 }
 
 	trigger = {
-		government_allows = administrative
+		government_has_mechanic = administrative
+		government_allows = noble_families
 		house ?= {
 			is_powerful_family = yes
 		}
@@ -131,7 +132,7 @@ ep3_powerful_families.8000 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = minor_stress_impact_gain
 			content = minor_stress_impact_gain
 		}
@@ -225,7 +226,7 @@ ep3_powerful_families.8000 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = minor_stress_impact_gain
 			content = minor_stress_impact_gain
 		}
@@ -248,7 +249,7 @@ ep3_powerful_families.8000 = {
 				OPINION = default_friend_opinion
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = medium_stress_impact_gain
 			deceitful = minor_stress_impact_gain
 		}
@@ -310,7 +311,8 @@ ep3_powerful_families.8010 = {
 	cooldown = { years = 10 }
 
 	trigger = {
-		government_allows = administrative
+		government_has_mechanic = administrative
+		government_allows = noble_families
 		house ?= {
 			is_powerful_family = yes
 		}
@@ -380,7 +382,7 @@ ep3_powerful_families.8010 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = minor_stress_impact_gain
 			callous = minor_stress_impact_gain
 			greedy = minor_stress_impact_gain
@@ -422,7 +424,7 @@ ep3_powerful_families.8010 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = minor_stress_impact_gain
 			callous = minor_stress_impact_gain
 			craven = minor_stress_impact_gain
@@ -477,7 +479,7 @@ ep3_powerful_families.8010 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = medium_stress_impact_gain
 			just = medium_stress_impact_gain
 			compassionate = medium_stress_impact_gain
@@ -501,7 +503,7 @@ ep3_powerful_families.8010 = {
 				remove_character_flag = ep3_pf_8010
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_gain
 			compassionate = minor_stress_impact_gain
 			brave = minor_stress_impact_gain
@@ -554,7 +556,7 @@ ep3_powerful_families.8012 = {
 				ep3_pf_8010_b_accept_effect = yes
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			paranoid = minor_stress_impact_gain
 			greedy = minor_stress_impact_gain
 			ambitious = minor_stress_impact_gain
@@ -581,7 +583,7 @@ ep3_powerful_families.8012 = {
 				change_influence = minor_influence_gain
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = minor_stress_impact_gain
 			gregarious = minor_stress_impact_gain
 			craven = minor_stress_impact_gain
@@ -616,7 +618,8 @@ ep3_powerful_families.8020 = {
 
 	trigger = {
 		has_ep3_dlc_trigger = yes
-		government_allows = administrative
+		government_has_mechanic = administrative
+		government_allows = noble_families
 		house ?= {
 			is_powerful_family = yes
 		}
@@ -681,7 +684,7 @@ ep3_powerful_families.8020 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = minor_stress_impact_gain
 			compassionate = minor_stress_impact_gain
 			gregarious = minor_stress_impact_gain
@@ -716,9 +719,12 @@ ep3_powerful_families.8020 = {
 					left_icon = root
 					right_icon = scope:new_family
 					scope:new_family = {
-						set_relation_friend = {
-							target = root
-							reason = friend_aided_my_family
+						if = {
+							limit = { NOT = { has_relation_friend = root } }
+							set_relation_friend = {
+								target = root
+								reason = friend_aided_my_family
+							}
 						}
 					}
 					change_influence = medium_influence_loss
@@ -741,7 +747,7 @@ ep3_powerful_families.8020 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = minor_stress_impact_gain
 			callous = minor_stress_impact_gain
 			sadistic = minor_stress_impact_gain
@@ -765,7 +771,7 @@ ep3_powerful_families.8020 = {
 	# I don't care
 	option = {
 		name = ep3_powerful_families.8020.c
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_gain
 			gregarious = minor_stress_impact_gain
 			lazy = minor_stress_impact_loss
@@ -800,7 +806,8 @@ ep3_powerful_families.8030 = {
 	cooldown = { years = 15 }
 
 	trigger = {
-		government_allows = administrative
+		government_has_mechanic = administrative
+		government_allows = noble_families
 		house ?= {
 			is_powerful_family = yes
 		}
@@ -882,7 +889,7 @@ ep3_powerful_families.8030 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			content = minor_stress_impact_gain
 			honest = minor_stress_impact_gain
 			just = minor_stress_impact_gain
@@ -902,7 +909,7 @@ ep3_powerful_families.8030 = {
 	option = {
 		name = ep3_powerful_families.8030.b
 		change_influence = minor_influence_gain
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_gain
 			vengeful = minor_stress_impact_gain
 			callous = minor_stress_impact_gain
@@ -942,7 +949,8 @@ ep3_powerful_families.8040 = {
 	cooldown = { years = 15 }
 
 	trigger = {
-		government_allows = administrative
+		government_has_mechanic = administrative
+		government_allows = noble_families
 		is_available = yes
 		house ?= {
 			is_powerful_family = yes
@@ -1017,7 +1025,7 @@ ep3_powerful_families.8040 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_gain
 			shy = minor_stress_impact_gain
 			vengeful = minor_stress_impact_gain
@@ -1083,7 +1091,7 @@ ep3_powerful_families.8040 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = minor_stress_impact_gain
 			gregarious = minor_stress_impact_gain
 			content = minor_stress_impact_gain
@@ -1103,7 +1111,7 @@ ep3_powerful_families.8040 = {
 	# Keep a low profile
 	option = {
 		name = ep3_powerful_families.8040.c
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_gain
 			gregarious = minor_stress_impact_gain
 		}
@@ -1137,7 +1145,8 @@ ep3_powerful_families.8060 = {
 	cooldown = { years = 15 }
 
 	trigger = {
-		government_allows = administrative
+		government_has_mechanic = administrative
+		government_allows = noble_families
 		is_available = yes
 		house ?= {
 			is_powerful_family = yes
@@ -1251,7 +1260,7 @@ ep3_powerful_families.8060 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			content = minor_stress_impact_gain
 			honest = minor_stress_impact_gain
 			compassionate = minor_stress_impact_gain
@@ -1276,7 +1285,7 @@ ep3_powerful_families.8060 = {
 		name = ep3_powerful_families.8060.b
 		remove_short_term_gold = minor_gold_value
 		change_influence = minor_influence_gain
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = minor_stress_impact_gain
 			gregarious = minor_stress_impact_gain
 			content = minor_stress_impact_gain
@@ -1300,7 +1309,7 @@ ep3_powerful_families.8060 = {
 	# Nah nah nah
 	option = {
 		name = ep3_powerful_families.8060.c
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_gain
 			gregarious = minor_stress_impact_gain
 		}
@@ -1337,7 +1346,8 @@ ep3_powerful_families.8070 = {
 	cooldown = { years = 15 }
 
 	trigger = {
-		government_allows = administrative
+		government_has_mechanic = administrative
+		government_allows = noble_families
 		is_available = yes
 		house ?= {
 			is_powerful_family = yes
@@ -1360,11 +1370,11 @@ ep3_powerful_families.8070 = {
 						is_domicile_type = estate
 						domicile_location.county = root.domicile.domicile_location.county
 					}
-					save_temporary_scope_as = house_head_temp #Unop Save to use instead of prev
+					save_temporary_scope_as = house_head_temp
 					OR = {
 						has_relation_rival = root
 						root = {
-							house_has_feud_relation_with_trigger = { TARGET = scope:house_head_temp } #Unop Use saved scope since prev changes in the trigger
+							house_has_feud_relation_with_trigger = { TARGET = scope:house_head_temp }
 						}
 					}
 				}
@@ -1394,11 +1404,11 @@ ep3_powerful_families.8070 = {
 							is_domicile_type = estate
 							domicile_location.county = root.domicile.domicile_location.county
 						}
-						save_temporary_scope_as = house_head_temp #Unop Save to use instead of prev
+						save_temporary_scope_as = house_head_temp
 						OR = {
 							has_relation_rival = root
 							root = {
-								house_has_feud_relation_with_trigger = { TARGET = scope:house_head_temp } #Unop Use saved scope since prev changes in the trigger
+								house_has_feud_relation_with_trigger = { TARGET = scope:house_head_temp }
 							}
 						}
 					}
@@ -1473,7 +1483,7 @@ ep3_powerful_families.8070 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			content = minor_stress_impact_gain
 			gregarious = minor_stress_impact_gain
 			forgiving = minor_stress_impact_gain
@@ -1562,7 +1572,7 @@ ep3_powerful_families.8070 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			vengeful = medium_stress_impact_gain
 			callous = minor_stress_impact_gain
 			sadistic = minor_stress_impact_gain
@@ -1587,7 +1597,7 @@ ep3_powerful_families.8070 = {
 	# Just let the kid do as the kid do
 	option = {
 		name = ep3_powerful_families.8070.c
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			content = minor_stress_impact_loss
 			ambitious = minor_stress_impact_gain
 			gregarious = minor_stress_impact_gain
@@ -1621,7 +1631,8 @@ ep3_powerful_families.8080 = {
 	cooldown = { years = 15 }
 
 	trigger = {
-		government_allows = administrative
+		government_has_mechanic = administrative
+		government_allows = noble_families
 		house ?= {
 			OR = {
 				is_powerful_family = yes
@@ -1685,7 +1696,7 @@ ep3_powerful_families.8080 = {
 		}
 		change_influence = minor_influence_gain
 		add_prestige = medium_prestige_gain
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			content = minor_stress_impact_gain
 			gregarious = minor_stress_impact_gain
 			forgiving = minor_stress_impact_gain
@@ -1712,7 +1723,7 @@ ep3_powerful_families.8080 = {
 			CHARACTER = scope:other_family
 			OPINION = default_friend_opinion
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_gain
 			vengeful = minor_stress_impact_gain
 		}
@@ -1769,7 +1780,8 @@ ep3_powerful_families.8090 = {
 	cooldown = { years = 15 }
 
 	trigger = {
-		government_allows = administrative
+		government_has_mechanic = administrative
+		government_allows = noble_families
 		house ?= {
 			is_powerful_family = yes
 		}
@@ -1847,7 +1859,7 @@ ep3_powerful_families.8090 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			content = minor_stress_impact_gain
 			compassionate = minor_stress_impact_gain
 			forgiving = minor_stress_impact_gain
@@ -1873,7 +1885,7 @@ ep3_powerful_families.8090 = {
 		scope:other_family = {
 			change_influence = medium_influence_gain
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_gain
 			vengeful = minor_stress_impact_gain
 		}
@@ -1928,7 +1940,8 @@ ep3_powerful_families.8100 = {
 	cooldown = { years = 15 }
 
 	trigger = {
-		government_allows = administrative
+		government_has_mechanic = administrative
+		government_allows = noble_families
 		house ?= {
 			is_powerful_family = yes
 		}
@@ -1959,7 +1972,12 @@ ep3_powerful_families.8100 = {
 			}
 			liege = {
 				save_scope_as = liege
-				add_courtier = scope:cp_fam
+				if = { #Unop The family member may already be in the liege's court
+					limit = {
+						NOT = { scope:cp_fam = { is_courtier_of = scope:liege } }
+					}
+					add_courtier = scope:cp_fam
+				}
 			}
 		}
 	}
@@ -2003,7 +2021,7 @@ ep3_powerful_families.8100 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			content = minor_stress_impact_gain
 			shy = minor_stress_impact_gain
 		}
@@ -2025,7 +2043,7 @@ ep3_powerful_families.8100 = {
 		}
 
 		change_influence = minor_influence_gain
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_gain
 			gregarious = minor_stress_impact_gain
 		}

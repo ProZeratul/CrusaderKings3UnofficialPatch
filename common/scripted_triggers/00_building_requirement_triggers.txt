@@ -60,6 +60,46 @@ building_requirement_herder_holding_in_county = {
 	}
 }
 
+holding_is_tribal = {
+	OR = {
+		has_holding_type = tribal_holding
+		has_holding_type = nomad_holding
+		has_holding_type = herder_holding
+	}
+}
+
+holding_is_nomad = {
+	OR = {
+		has_holding_type = nomad_holding
+		has_holding_type = herder_holding
+	}
+}
+
+holding_is_castle = {
+	OR = {
+		has_holding_type = castle_holding
+		has_holding_type = temple_citadel_holding
+	}
+}
+holding_is_church = {
+	OR = {
+		has_holding_type = church_holding
+		has_holding_type = temple_citadel_holding
+	}
+}
+holding_is_city = {
+	has_holding_type = city_holding
+}
+
+holding_is_feudalized = {
+	OR = {
+		has_holding_type = castle_holding
+		has_holding_type = city_holding
+		has_holding_type = church_holding
+		has_holding_type = temple_citadel_holding
+	}
+}
+
 ######################################################################
 # Holding Level
 ######################################################################
@@ -584,13 +624,7 @@ barony_cannot_construct_holding = {
 			terrain = desert
 			terrain = desert_mountains
 		}
-		# Unop: From the 1.13.2 changelog: 
-		# ---
-		# Fixed a previous change to the holding triggers which prevented you from constructing holdings in most baronies with desert or desert mountain terrain in the areas in and surrounding the Sahara.
-		# Only the corridors across the Sahara will remain empty.
-		# ---
-		# Unop: But they prevented building in all baronies except if they have another terrain type than desert & desert mountain
-		# Unop: So I've changed this to prevent building ONLY in province flagged as Corridor inside definition.csv (in map_data)
+		# the corridors
 		trigger_if = {
 			limit = { geographical_region = world_africa_sahara }
 			OR = {
@@ -910,7 +944,7 @@ religious_special_building_exclusion_trigger = { # checks if any special buildin
 
 building_monastic_schools_holding_level_requirement_trigger = {
 	trigger_if = {
-		limit = { scope:holder.faith = { has_doctrine_parameter = monastic_schools_allowed_in_every_holding_type } }
+		limit = { scope:holder.rite = { rite_has_parameter = monastic_schools_allowed_in_every_holding_type } }
 		OR = {
 			has_building_or_higher = castle_$LEVEL$
 			has_building_or_higher = city_$LEVEL$
@@ -954,7 +988,6 @@ building_spice_plantation_requirement_terrain = {
 		geographical_region = world_asia_sulawesi_maluku
 		geographical_region = world_asia_indonesia 
 		geographical_region = world_india
-		geographical_region = world_burma
 	}
 	OR = {
 		terrain = jungle
@@ -979,7 +1012,7 @@ building_breweries_requirement = {
 		}
 		OR = {
 			faith = faith:catholic
-			faith = { has_doctrine_parameter = allows_brewery }
+			rite = { rite_has_parameter = allows_brewery }
 		}
 	}
 	trigger_else = {

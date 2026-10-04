@@ -145,7 +145,7 @@ yearly_saharan.0001 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = minor_stress_impact_gain
 			greedy = minor_stress_impact_loss
 		}
@@ -190,7 +190,7 @@ yearly_saharan.0001 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = minor_stress_impact_gain
 			zealous = minor_stress_impact_loss
 		}
@@ -221,46 +221,24 @@ yearly_saharan.0001 = {
 		#If you share the same faith as the province, this act is a pious protection of the spirituality of your people. Unless you're pluralist.
 		if = {
 			limit = {
-				root.faith = scope:target_county.faith
-				NOR = {
-					root.faith = { has_doctrine = doctrine_pluralism_pluralistic }
-					#Not syncretised with Eastern Family.
-					AND = {
-						root.faith = { has_doctrine = tenet_eastern_syncretism }
-						scope:source_county.faith.religion = { is_in_family = rf_eastern }
-					}
-					#Unop Not syncretised with Sinitic Family.
-					AND = {
-						root.faith = { has_doctrine = tenet_sinitic_syncretism }
-						scope:source_county.faith.religion = { is_in_family = rf_sinitic }
-					}
-					#Not syncretised with Christianity.
-					AND = {
-						root.faith = { has_doctrine_parameter = christian_syncretic_actor_opinion_active }
-						scope:source_county.faith = { religion_tag = christianity_religion }
-					}
-					#Not syncretised with Islam.
-					AND = {
-						root.faith = { has_doctrine_parameter = islamic_syncretic_actor_opinion_active }
-						scope:source_county.faith = { religion_tag = islam_religion }
-					}
-					#Not syncretised with Judaism.
-					AND = {
-						root.faith = { has_doctrine_parameter = jewish_syncretic_actor_opinion_active }
-						scope:source_county.faith = { religion_tag = judaism_religion }
+				faith = scope:target_county.faith
+				rite = {
+					NOR = {
+						rite_has_doctrine = doctrine_pluralism_pluralistic
+						rite_is_syncretic_with = { RITE = scope:source_county.rite } #Unop location is for characters, a county has a rite directly
 					}
 				}
 			}
 			#Piety scales depending on how monistic you are.
 			if = {
 				limit = {
-					root.faith = { has_doctrine = doctrine_pluralism_righteous }
+					root.rite = { rite_has_doctrine = doctrine_pluralism_righteous }
 				}
 				add_piety = minor_piety_value
 			}
 			if = {
 				limit = {
-					root.faith = { has_doctrine = doctrine_pluralism_fundamentalist }
+					root.rite = { rite_has_doctrine = doctrine_pluralism_fundamentalist }
 				}
 				add_piety = medium_piety_value
 			}
@@ -297,7 +275,7 @@ yearly_saharan.0001 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = medium_stress_impact_gain
 			zealous = medium_stress_impact_loss
 		}
@@ -452,7 +430,7 @@ yearly_saharan.0003 = {
 			}
 		}
 
-		stress_impact = { generous = medium_stress_impact_gain }
+		stress_and_fulfillment_impact = { generous = medium_stress_impact_gain }
 		ai_chance = {
 			base = 100
 			ai_value_modifier = {
@@ -529,7 +507,7 @@ yearly_saharan.0004 = {
 			}
 		}
 
-		stress_impact = { lazy = minor_stress_impact_gain }
+		stress_and_fulfillment_impact = { lazy = minor_stress_impact_gain }
 		ai_chance = {
 			base = 100
 			ai_value_modifier = {
@@ -551,7 +529,7 @@ yearly_saharan.0004 = {
 		#Gold please!
 		add_treasury_or_gold = medium_treasury_or_gold_value
 
-		stress_impact = { generous = miniscule_stress_impact_gain }
+		stress_and_fulfillment_impact = { generous = miniscule_stress_impact_gain }
 		ai_chance = {
 			base = 100
 			ai_value_modifier = { ai_greed = 0.50 }
@@ -571,7 +549,7 @@ yearly_saharan.0004 = {
 		#Stonks of gold please!
 		add_treasury_or_gold = major_treasury_or_gold_value
 
-		stress_impact = { generous = miniscule_stress_impact_gain }
+		stress_and_fulfillment_impact = { generous = miniscule_stress_impact_gain }
 		ai_chance = {
 			base = 100
 			ai_value_modifier = { ai_greed = 0.75	}
@@ -633,7 +611,7 @@ yearly_saharan.0005 = {
 			}
 		}
 
-		stress_impact = { cynical = miniscule_stress_impact_gain }
+		stress_and_fulfillment_impact = { cynical = miniscule_stress_impact_gain }
 		ai_chance = {
 			#The AI should always take this option, if it's available.
 			base = 100
@@ -679,7 +657,7 @@ yearly_saharan.0005 = {
 			set_county_faith = scope:target_county_old_faith
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			forgiving = minor_stress_impact_gain
 			cynical = minor_stress_impact_gain
 			compassionate = medium_stress_impact_gain
@@ -845,6 +823,7 @@ yearly_saharan.0021 = {
 				location = scope:target_county.title_province
 				template = saharan_clan_leader_character
 				faith = scope:target_county.faith
+				rite = scope:target_county.rite
 				culture = culture:zaghawa
 				save_scope_as = nomad_leader
 			}
@@ -856,6 +835,7 @@ yearly_saharan.0021 = {
 				location = scope:target_county.title_province
 				template = saharan_clan_leader_character
 				faith = scope:target_county.faith
+				rite = scope:target_county.rite
 				culture = culture:butr
 				save_scope_as = nomad_leader
 			}
@@ -918,7 +898,7 @@ yearly_saharan.0021 = {
 			else = { set_county_culture = culture:butr }
 		}
 
-		stress_impact = { arrogant = minor_stress_impact_gain }
+		stress_and_fulfillment_impact = { arrogant = minor_stress_impact_gain }
 		ai_chance = {
 			base = 100
 			ai_value_modifier = {
@@ -949,7 +929,7 @@ yearly_saharan.0021 = {
 			else = { set_county_culture = culture:butr }
 		}
 
-		stress_impact = { arrogant = miniscule_stress_impact_gain }
+		stress_and_fulfillment_impact = { arrogant = miniscule_stress_impact_gain }
 		ai_chance = {
 			#The AI should never take this option: if they're small enough not to get Option A, they shouldn't wipe themselves out, and if they're large enough to receive it, they should pick that instead.
 			base = 0
@@ -980,7 +960,7 @@ yearly_saharan.0021 = {
 		}
 		hidden_effect = { set_relation_potential_friend = scope:nomad_leader }
 
-		stress_impact = { shy = medium_stress_impact_gain }
+		stress_and_fulfillment_impact = { shy = medium_stress_impact_gain }
 		ai_chance = {
 			base = 100
 			ai_value_modifier = {
@@ -1112,7 +1092,7 @@ yearly_saharan.0031 = {
 
 		#Has a state faith that allows for this.
 		faith = {
-			NOT = { has_doctrine_parameter = pacifist_opinion_active }
+			NOT = { has_doctrine_parameter = pacifist }
 		}
 
 		#Has at least one domain county in the Sahel.
@@ -1240,7 +1220,7 @@ yearly_saharan.0031 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			sadistic = medium_stress_impact_loss
 			generous = medium_stress_impact_gain
 			compassionate = major_stress_impact_gain
@@ -1286,7 +1266,7 @@ yearly_saharan.0031 = {
 		#The clamp down negatively affects your realm.
 		scope:slave_raider_county = { change_county_control = medium_county_control_loss }
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = minor_stress_impact_loss
 			compassionate = major_stress_impact_loss
 			just = major_stress_impact_loss
@@ -1377,7 +1357,7 @@ yearly_saharan.0031 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			lazy = minor_stress_impact_loss
 			sadistic = minor_stress_impact_gain
 			generous = minor_stress_impact_gain
@@ -1602,7 +1582,7 @@ yearly_saharan.0032 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			vengeful = medium_stress_impact_loss
 			compassionate = major_stress_impact_loss
 			just = major_stress_impact_loss
@@ -1659,7 +1639,7 @@ yearly_saharan.0032 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			callous = minor_stress_impact_loss
 			greedy = minor_stress_impact_loss
 			sadistic = major_stress_impact_loss
@@ -1713,7 +1693,7 @@ yearly_saharan.0032 = {
 		#And the county suffers damage.
 		scope:raided_county = { change_county_control = massive_county_control_loss }
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 		}
 		ai_chance = {
 			base = 100

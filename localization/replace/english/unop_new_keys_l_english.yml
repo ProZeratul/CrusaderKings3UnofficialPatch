@@ -33,6 +33,12 @@
  I_AM_NOT_AI_TRIGGER:0 "You are not an AI"
  THEY_ARE_AI_TRIGGER:0 "They are an AI"
  THEY_ARE_NOT_AI_TRIGGER:0 "They are not an AI"
+ employer_equal: "[CHARACTER.GetShortUIName|U] is a [courtier|E] of [TARGET_CHARACTER.GetShortUIName]"
+ employer_equal_first: "You are a [courtier|E] of [TARGET_CHARACTER.GetShortUIName]"
+ employer_equal_third: "[CHARACTER.GetShortUIName|U] is a [courtier|E] of [TARGET_CHARACTER.GetShortUIName]"
+ employer_not_equal: "[CHARACTER.GetShortUIName|U] is #bold not#! a [courtier|E] of [TARGET_CHARACTER.GetShortUIName]"
+ employer_not_equal_first: "You are #bold not#! a [courtier|E] of [TARGET_CHARACTER.GetShortUIName]"
+ employer_not_equal_third: "[CHARACTER.GetShortUIName|U] is #bold not#! a [courtier|E] of [TARGET_CHARACTER.GetShortUIName]"
 
  MOD_ATTRITION_PREFIX:0 "@attrition_icon!"
  MOD_ATTRITION_RAID_PREFIX:0 "@attrition_icon_raid!"
@@ -41,10 +47,6 @@
 
  feature_animal_skull_type_fox:1 "$feature_animal_hide_type_fox$"
  feature_animal_skull_type_hare:1 "$feature_animal_hide_type_hare$"
-
- death_trampled_by_horse:0 "was trampled to death by horses"
-
- LACKS_OVERLAPPING_CULTRAD_TRADITION_CITY_KEEPERS_NOT:0 "Incompatible with $tradition_city_keepers_name$ [tradition|E]"
 
  WOMENMEN_ARE_ALLOWED_TO_BE_WARRIORS_IN_MARTIAL_CUSTOM:0 "The [martial_custom|E] of [TARGET_CHARACTER.GetCulture.GetName] [culture|E] allows [TARGET_CHARACTER.GetWomenMen] to be combatants"
  WOMENMEN_ARE_NOT_ALLOWED_TO_BE_WARRIORS_IN_MARTIAL_CUSTOM:0 "The [martial_custom|E] of [TARGET_CHARACTER.GetCulture.GetName] [culture|E] does #bold not#! allow [TARGET_CHARACTER.GetWomenMen] to be combatants"
@@ -57,16 +59,10 @@
 
  char_interaction.0080.desc_ward_self:0 "I would be happy for you to educate me — a noble upbringing for a noble spirit!"
 
- TBC_OPINION_HUMILIATION_TRAIT_FICKLE:0 "[GetTrait('fickle').GetName(recipient.Self)] approves of $TBC_OPINION_HUMILIATION$: $VALUE|=+0$"
-
- activity_hunt_province_desc_legendary_sighting:0 "#P +++ Legendary [ROOT.Province.GetTitle.GetDeJureLiege.Custom('GetLegendaryColor')|UV] [ROOT.Province.GetTitle.GetDeJureLiege.Custom('GetAnimalType')|UV] Sighting#!\n"
  UNOP_IS_NOT_THE_SPOUSE_OF_CHARACTER_COURT_POSITION:0 "Is #bold not#! [hiring_liege.GetShortUINamePossessive] [spouse|E]"
 
  every_participant_that_can_eat_the_beast:0 "Every participant that can eat the beast"
  every_participant_that_cannot_eat_the_beast:0 "Every participant that cannot eat the beast"
-
- ACTIVITY_GUEST_OPTIONS_TOURNAMENT_PRIZES_VERY_GOOD:0 "$tournament_prizes_very_good$: $VALUE|=+0$"
- ACTIVITY_GUEST_OPTIONS_TOURNAMENT_PRIZES_SPLENDID:0 "$tournament_prizes_splendid$: $VALUE|=+0$"
 
  #activity_hunt_province_desc_standard:1 "You hold a $hunt_type_standard$ in [ROOT.Province.GetName]"
  #activity_hunt_province_desc_falconry:1 "You hold a $hunt_type_falconry$ in [ROOT.Province.GetName]"
@@ -76,20 +72,14 @@
  unop_playdate_invalid_independent_count:0 "When [independent|E], you must be a [duke|E] or higher"
 
 # Unop: I don't have the motivation to find title, so just take the trait name...
- learn_commander_trait.14.t:0 "$trait_open_terrain_expert$"
  learn_commander_trait.15.t:0 "$trait_rough_terrain_expert$"
  learn_commander_trait.16.t:0 "$trait_forest_fighter$"
  learn_commander_trait.17.t:0 "$trait_cautious_leader$"
  learn_commander_trait.18.t:0 "$trait_organizer$"
 
- #Unop: Missing text for modifier
- parent_managing_county_modifier:0 "Parent Handling County"
- parent_managing_county_modifier_desc:0 "This character has a parent who keeps a close eye on this county."
-
  hunt.4900.a.befriend:0 "#EMP That#! is how you tame a [ROOT.Char.Custom('GetAnimalType')]."
 
  # For change_legend_quality_effect when reaching 100 or 0 so the tooltip is not empty
- maximum_legend_quality_discount_reach_tt:0 "The discount towards upgrading your [legend|E] #difficulty_easy increases#! to the maximum"
  minimum_legend_quality_discount_reach_tt:0 "The discount towards upgrading your [legend|E] #difficulty_hard decreased#! to the minum"
 
  secrets.0124.b.tt.conditional_refused:0 "[secret_owner.GetTitledFirstName] may revolt"
@@ -111,51 +101,26 @@
  court.3031.c.tt:0 "Every [reference_county.GetCountyData.GetCulture.GetName] [realm|E] [county|E] ([THIS.ScriptValue('unop_court3031_number_of_counties_of_culture')|V0])"
 
 # 1.13 new issues
- raid_insight_courtyard:0 "Courtyard Insights"
- raid_insight_courtyard_desc:0 "$raid_insight_shared$\nCourtyard [estate_building|E] Cost: #P -25%#!"
- raid_insight_market:0 "Market Insights"
- raid_insight_market_desc:0 "$raid_insight_shared$\nMarket [estate_building|E] Cost: #P -25%#!"
- court_position_unyielding_defender_trait:0 "[GetTrait('unyielding_defender').GetName( ROOT.Char )]"
- court_position_disloyal_trait:0 "[GetTrait('disloyal').GetName( ROOT.Char )]"
  FACTION_REASON_ADMIN_BORN_IN_PURPLE:0 "[claimant|E] was [GetTrait('born_in_the_purple').GetName( GetNullCharacter )]: $VALUE|+0=$"
 
- leg_demand_fealty_cb: "$DEMAND_FEALTY_CB_NAME$"
-
- scheme_agent_aptitude.trait.lifestyle_hunter:0 "[GetTrait('lifestyle_hunter').GetName( GetNullCharacter )]"
- scheme_agent_aptitude.trait.lifestyle_traveler:0 "[GetTrait('lifestyle_traveler').GetName( GetNullCharacter )]"
- scheme_agent_aptitude.trait.lifestyle_mystic:0 "[GetTrait('lifestyle_mystic').GetName( GetNullCharacter )]"
- scheme_agent_aptitude.trait.lifestyle_herbalist:0 "[GetTrait('lifestyle_herbalist').GetName( GetNullCharacter )]"
- scheme_agent_aptitude.trait.lifestyle_physician:0 "[GetTrait('lifestyle_physician').GetName( GetNullCharacter )]"
  EVENT_WINDOW_OPTION_AVAILABLE_SKILLED_AGENT:0 "This option is available because you have an [agent|E] with certain [skills|E]"
  EVENT_WINDOW_OPTION_AVAILABLE_HAVE_JESTER:0 "This option is available because you have a [GetCourtPositionType('court_jester_court_position').GetName()] [court_position|E]"
  EVENT_WINDOW_OPTION_AVAILABLE_HAVE_SENESCHAL:0 "This option is available because you have a [GetCourtPositionType('seneschal_court_position').GetName()] [court_position|E]"
  EVENT_WINDOW_OPTION_AVAILABLE_HAVE_TUTOR:0 "This option is available because you have a [GetCourtPositionType('court_tutor_court_position').GetName()] [court_position|E]"
  EVENT_WINDOW_OPTION_AVAILABLE_HAVE_EXECUTIONER:0 "This option is available because you have a [GetCourtPositionType('executioner_court_position').GetName()] [court_position|E]"
 
- TARGET_FAMILY_IS_DOMINANT: "Target [house|E] is a [dominant_family|E]: $VALUE|=+0$"
-
  unop.7004:0 "Name is changed to $c_new_england$"
 
  # Brewmaster
- court_brewmaster_aptitude_tooltip: "[candidate.GetHerHisMy|U] [aptitude|E] is [candidate.GetCourtPositionAptitude( GetCourtPositionType( 'court_brewmaster_court_position' ) )]"
- court_brewmaster_old_holder_aptitude_tooltip: "[candidate.GetHerHisMy|U] [aptitude|E] is [candidate.GetCourtPositionAptitude( GetCourtPositionType( 'court_brewmaster_court_position' ) )] #weak ([old_holder.GetFirstName] [old_holder.GetCourtPositionAptitude( GetCourtPositionType( 'court_brewmaster_court_position' ) )])#!"
  court_brewmaster_salary_tooltip: "[GetCourtPositionType( 'court_brewmaster_court_position' ).GetName()] has a monthly salary of [gold_i][SCOPE.ScriptValue('minor_court_position_salary')|2]"
 
  # Charioteer
- charioteer_aptitude_tooltip: "[candidate.GetHerHisMy|U] [aptitude|E] is [candidate.GetCourtPositionAptitude( GetCourtPositionType( 'charioteer_court_position' ) )]"
- charioteer_old_holder_aptitude_tooltip: "[candidate.GetHerHisMy|U] [aptitude|E] is [candidate.GetCourtPositionAptitude( GetCourtPositionType( 'charioteer_court_position' ) )] #weak ([old_holder.GetFirstName] [old_holder.GetCourtPositionAptitude( GetCourtPositionType( 'charioteer_court_position' ) )])#!"
  charioteer_salary_tooltip: "[GetCourtPositionType( 'charioteer_court_position' ).GetName()] has a monthly salary of [gold_i][SCOPE.ScriptValue('minor_court_position_salary')|2]"
  unop_unlock_charioteer_training_task:0 "You need the [GetDomicileBuilding('stable_chariot_04').GetName] in your [estate|E]"
 
  TOP_LIEGE_EQUAL_THIRD:0 "[CHARACTER.GetShortUIName|U] is [TARGET_CHARACTER.GetShortUINamePossessive] [top_liege|E]"
  TOP_LIEGE_EQUAL_THIRD_NOT:0 "[CHARACTER.GetShortUIName|U] is #bold not#! [TARGET_CHARACTER.GetShortUINamePossessive] [top_liege|E]"
 
- scheme_agent_aptitude.trait.giant: "[GetTrait('giant').GetName( GetNullCharacter )]"
- scheme_agent_aptitude.trait.vengeful: "[GetTrait('vengeful').GetName( GetNullCharacter )]"
- scheme_agent_aptitude.trait.journaller: "[GetTrait('journaller').GetName( GetNullCharacter )]"
- scheme_agent_aptitude.trait.profligate: "[GetTrait('profligate').GetName( GetNullCharacter )]"
-
- unop_mass_evict_guests: "$stress_threshold.2341.a.reclusive.list_guest$"
  unop_mass_evict_guests_and_courtiers: "$custom.every_guest_and_unimportant_courtier$ leaves"
 
  north_african_religion_adherent_plural: "Amazighs"
@@ -165,19 +130,9 @@
  watermills_windmills_cities_name: "[GetCultureTradition('tradition_city_keepers').GetName]"
  not_available_because_intent_tt:0 "This option is not available because of your [THIS.Char.GetInvolvedActivityIntent.GetName] [intent|e]"
 
- #Unop: Added this to show when you resign instead of showing that you got knocked out
- locale_window_status_resign:0 "resigned from the"
- locale_window_status_discalified:0 "got disqualified from the"
-
- SCHEME_TRAIT_BRAVE: "[GetTrait('brave').GetName( owner.Self )]: $VALUE|+0=$"
- HAS_CALLOUS_TRAIT: "[GetTrait('callous').GetName( GetNullCharacter )] [trait|E]: $VALUE|=+0=$"
-
  contact_list_request_interaction.request_feast_cooldown: "Cannot request another #color_white [GetActivityType( 'activity_feast' ).GetName]#! until [GetCurrentDateWithDiff( GetVarTimeRemaining( actor.MakeScope, 'laamp_recently_requested_feast') )|V]"
   # Added the TARGET_CHARACTER
  TOP_LIEGE_EQUAL_FIRST_NOT:1 "You are #bold not#! the [top_liege|E] of [TARGET_CHARACTER.GetShortUIName]"
-
- camp_party_honorary_guest:0 "$honorary_guest_desc$"
- camp_party_honorary_guest_desc:0 "$honorary_guest_desc$"
 
  #Unop: For GetCourtPositionSubject brewmaster
  court_position_subject_brewing: "brewing"
@@ -195,34 +150,13 @@
  unop_offer_concubine_opinion:0 "Received Concubine"
  unop_offer_courtier_opinion:0 "Received Courtier"
 
- ALREADY_OFFERED_CONCUBINE_WARNING:0 "@warning_icon! #X You have already offered a [concubine|E] to [recipient.GetShortUIName], sending another one will #underline override#! the existing [opinion|E] modifier!#!"
- ALREADY_OFFERED_COURTIER_WARNING:0 "@warning_icon! #X You have already offered a [courtier|E] to [recipient.GetShortUIName], sending another one will #underline override#! the existing [opinion|E] modifier!#!"
-
- yeke_jarquchi_improve_court_task_tt: "@aptitude:4:color_green![aptitude|E] of other [court_positions|E]: #p +[SCOPE.ScriptValue('yeke_jarquchi_improve_court_value')|0]#!"
- khlon_glan_improve_court_task_tt: "@aptitude:4:color_green![aptitude|E] of other [court_positions|E]: #p +[SCOPE.ScriptValue('khlon_glan_improve_court_value')|0]#!"
- khlon_glan_improve_court_aptitude_desc: "[GetCourtPositionType('khlon_glan_court_position').GetName()] Organizing Court"
-
- unop_zealous_nomad_cannot_convert: "You have #bold both#! [GetTrait('zealous').GetName( actor )] and [GetTrait('nomadic_philosophy').GetName( actor )] traits"
-
- court_position_engineered_for_destruction_modifier: "[GetPerk('engineered_for_destruction_perk').GetName( GetNullCharacter )]"
- # Don't judge, I'm no poet
- ll_cs_s1p1_rational: "Your intellect is"
- ll_cs_s2p2_rational: "polish every word you speak until it gleams"
-
  unop_already_two_caravanserai_in_county: "There are already 2 $building_type_caravanserai_01$ in the county"
  unop_no_second_caravanserai: "You need the [GetCultureTradition('tradition_caravaneers').GetName] [culture_tradition|E] to build another $building_type_caravanserai_01$ in the county"
 
  # Saw this raw text appear in a saved game file without finding anything in base game files. Maybe hardcoded ?
  VASSAL_CONTRIBUTION_AT_WAR_WITH_LIEGE:0 "$IS_AT_WAR_WITH_LIEGE$"
 
- agent_dread_yurt_01_domicile_building_with_value:0 "$agent_dread_yurt_01_domicile_building$ : $VALUE|+0$"
 
- unop_msg_offer_courtier_accepted_tt: "[secondary_actor.GetTitledFirstName] is now [recipient.GetTitledFirstNamePossessive] courtier"
- unop_msg_demand_courtier_accepted_tt: "[secondary_actor.GetTitledFirstName] is now your courtier"
-
- has_court_tutor_domicile_building: "Has [GetDomicileBuilding('family_yurt_03').GetName]"
-
- rites_of_passage_trigger_astrologer: "Your [GetCourtPositionType('court_astrologer_court_position').GetName()] is available"
 
  # Not really a new key, but changed it to harmonized it with unite_the_slavs_decision_titles_tt to display the new empire title so: of your [primary_title|E] > of the [unop_west_slavia.GetName] (in case we don't have an empire yet)
  unite_the_western_slavs_decision_titles_empire_tt_2:2 "Every West Slavic [kingdom|E] [title|E] will have their territories become [de_jure|E] of the [unop_west_slavia.GetName]"
@@ -232,25 +166,18 @@
  # Taken from invite_to_activity_flavor_fallback to have a text for the chariot_race, should improve this
  unop_invite_to_activity_flavor_chariot_race:0 "I am soon holding a [GetActivityType('activity_chariot_race').GetName], and hereby invite you to attend."
 
- obedience_value_loyal_soldiers:0 "From [traditions|E]"
  # Mostly a copy of special_contract_march_border_trigger
  unop_special_contract_march_border_trigger:0 "[unop_vassal.GetName] border a foreign [realm|E]"
 
  unop_join_war_interaction_recipient_suzerain_no_defensive_war: "Your [suzerain|E] [recipient.GetUIName] has no defensive wars"
 
  # New modifier similar to prepare_travels_modifier, but added to the travel owner so that it scales properly
- unop_prepare_travels_character_modifier: "$prepare_travels_modifier$"
- unop_prepare_travels_character_modifier_desc: "$prepare_travels_modifier_desc$"
- unop_prepare_travels_character_modifier_scale_desc: "$prepare_travels_modifier_scale_desc$"
 
  # Those keys are missing
  tributary_modify_vassal_contract_unnecessary_hook_usage_vassal_favor:0 "You cannot use a [hook|E] on contract already in favor of the [tributary|E], current changes in favor of [TARGET_CHARACTER.GetShortUIName]: $VALUE|V0$"
  tributary_modify_vassal_contract_unnecessary_hook_usage_equal:0 "You cannot use a [hook|E] on contract that is fair to the [tributary|E]"
 
- has_relation_potential_rival_trigger:0 "[TARGET_CHARACTER.GetShortUIName] is marked as a potential rival for [CHARACTER.GetShortUIName]"
-
  activity_coronation_predicted_cost:0 "The cost of a [GetActivityType( 'activity_coronation' ).GetNameNoTooltip] is primarily affected by the [activity_options|E] you select."
- activity_local_examination_predicted_cost:0 "The cost of a [GetActivityType( 'activity_local_examination' ).GetNameNoTooltip] is primarily affected by the [activity_options|E] you select."
  activity_imperial_examination_predicted_cost:0 "The cost of a [GetActivityType( 'activity_imperial_examination' ).GetNameNoTooltip] is primarily affected by the [activity_options|E] you select."
  #Exists but as action_join_tributary_war_combined_group_label
  action_join_tributary_warcombined_group_label:0 "$action_join_tributary_war_combined_group_label$"
@@ -258,15 +185,9 @@
  strong_test_hook: "Strong Test Hook"
  perpetual_test_hook: "Perpetual Test Hook"
 
- hold_court.8120.b.tt_sinitic:0 "[THIS.Char.GetFaith.GetName] has the $tenet_sinitic_syncretism_name$ [core_tenet|E]"
-  
- unop_is_nomadic: "$game_concept_nomadic_government$: $VALUE|+0=$"
 
  EXPAND_POWER_BASE_SUCCESS_DESC: "$expand_power_base_effect_tt$"
  
- # Redo what was done for court_poet_court_position_desc & court_poet_celestial_desc
- court_poet_skald_desc:1 "The $court_poet_skald$ is a connoisseur of words and verse, providing their Liege and all at court with entertainment, intellectual stimulation, and emotional experiences."
-
  # All new AUH region laamp returning adventurer outro (might need changes !)
  ep3_laamp_decision_event.1000.desc_outro_regional_world_asia_east_returned_01: "\n\nThe seasons have been very distinct unlike a desert region, with a colourful explosion from one season to the next, though both winter and summer are not the best times to be travelling here."
  ep3_laamp_decision_event.1000.desc_outro_regional_world_asia_east_returned_02: "\n\nSummers can be sweltering and humid with sweat dripping off you like a sticky waterfall, while the winters define the word cold."
@@ -288,20 +209,6 @@
  #Unop ep3_hof_ask_for_influence_interaction failure tooltip uses the NOT_ form because the trigger contains an inner NOT
  NOT_HOF_INTERACTION_HAS_HOUSE_MODIFIER:0 "$HOF_INTERACTION_HAS_HOUSE_MODIFIER$"
 
- # Both below does not exists (for shamanism_religion that is referencing them)
- witchgodname_paganism:0 "$witchgodname_paganism_the_shadow$"
- witchgodname_paganism_possessive:0 "$witchgodname_paganism_the_shadow_possessive$"
- 
- # Did not exists
- domicile_building_parameter_domicile_increased_wet_nurse_aptitude_1: "[GetCourtPositionType('wet_nurse_court_position').GetName()] [aptitude|E]: #P +[EmptyScope.ScriptValue('domicile_increased_wet_nurse_aptitude_1_value')|0]#!"
- domicile_building_parameter_domicile_increased_wet_nurse_aptitude_2: "[GetCourtPositionType('wet_nurse_court_position').GetName()] [aptitude|E]: #P +[EmptyScope.ScriptValue('domicile_increased_wet_nurse_aptitude_2_value')|0]#!"
- domicile_building_parameter_domicile_increased_wet_nurse_aptitude_3: "[GetCourtPositionType('wet_nurse_court_position').GetName()] [aptitude|E]: #P +[EmptyScope.ScriptValue('domicile_increased_wet_nurse_aptitude_3_value')|0]#!"
- domicile_building_parameter_domicile_increased_wet_nurse_aptitude_4: "[GetCourtPositionType('wet_nurse_court_position').GetName()] [aptitude|E]: #P +[EmptyScope.ScriptValue('domicile_increased_wet_nurse_aptitude_4_value')|0]#!"
- domicile_building_parameter_domicile_increased_wet_nurse_aptitude_5: "[GetCourtPositionType('wet_nurse_court_position').GetName()] [aptitude|E]: #P +[EmptyScope.ScriptValue('domicile_increased_wet_nurse_aptitude_5_value')|0]#!"
- domicile_building_parameter_domicile_increased_wet_nurse_aptitude_6: "[GetCourtPositionType('wet_nurse_court_position').GetName()] [aptitude|E]: #P +[EmptyScope.ScriptValue('domicile_increased_wet_nurse_aptitude_6_value')|0]#!"
-
- offended_sinitic_modifier:0 "$offended_eastern_modifier$"
- offended_sinitic_modifier_desc:0 "$offended_eastern_modifier_desc$"
  # Neutral wording for non-mandala tributaries (vanilla .0010.desc is mandala-only "Devaraja")
  tgp_east_asia_interaction_events.0010.desc.unop_non_mandala:0 "I serve another suzerain now. One that will show us the true way.\n\nAll hail [leaving_tributary.GetSuzerain.GetName]!"
  # This region doesn't have a name in game currently, but as we want to highligth the region to the player we need to link it and have a proper name
@@ -324,5 +231,5 @@
  unop_camp_party_drinks_abundant_invalid:0 "You need a [camp_building|E] that provides abundant drinks"
  domicile_building_parameter_unop_camp_unlocks_camp_party_abundant_drink_option:0 "Unlocks the abundant drink option for the [GetActivityType('activity_camp_party').GetName] [activity|E]"
 
- # Cap on strongarming skill gains from the storyteller in ep3_laamp_decision_event.1031
- unop_1031_skill_gain_capped_tt:0 "You have learned all you can from storytellers"
+ # Based on FACTION_CANT_JOIN_AT_WAR
+ unop_faction_not_at_war_tt:0 "The [faction|E] is not at [war|E]"

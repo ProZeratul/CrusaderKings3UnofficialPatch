@@ -774,6 +774,7 @@ conqueror.1100 = {
 				location = root.location
 				culture = scope:generous_vassal.culture
 				faith = scope:generous_vassal.faith
+				rite = scope:generous_vassal.rite
 				gender_female_chance = root_soldier_female_chance
 				save_scope_as = maa_leader
 			}
@@ -1140,9 +1141,10 @@ conqueror.1300 = {
 					location = scope:peasant_barony.title_province
 					culture = scope:peasant_barony.title_province.culture
 					faith = scope:peasant_barony.title_province.faith
+					rite = scope:peasant_barony.title_province.rite
 					gender_female_chance = root_soldier_female_chance
 					save_scope_as = portrait_peasant
-					after_creation = { #Unop Set created flag
+					after_creation = {
 						add_character_flag = created
 					}
 				}
@@ -1262,7 +1264,7 @@ conqueror.1300 = {
 	}
 	after = {
 		scope:portrait_peasant = {
-			silent_disappearance_ai_if_created_effect = yes #Unop Only kill them if they are created
+			silent_disappearance_ai_if_created_effect = yes
 		}
 	}
 }

@@ -567,7 +567,7 @@ spouse.0009 = {
 				any_relation = { type = lover this = scope:friend_in_common }
 			}
 			custom_tooltip = spouse.0009.has_lover_tooltip
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				base = medium_stress_gain
 			}
 		}
@@ -963,7 +963,7 @@ spouse.2001 = {
 
 	option = {
 		name = spouse.2001.a
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_loss
 		}
 	}
@@ -1552,7 +1552,7 @@ spouse.2012 = {
 		}
 		if = {
 			limit = { NOT = { has_trait = deceitful } }
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				base = minor_stress_gain
 			}
 		}
@@ -1615,6 +1615,7 @@ scripted_trigger spouse_2014_base_agent_trigger = {
 }
 
 scripted_trigger spouse_2014_base_scheme_trigger = {
+	is_type_secret = yes
 	NOR = {
 		scheme_owner = root
 		is_scheme_agent_exposed = scope:agent_check
@@ -1679,7 +1680,7 @@ spouse.2014 = {
 		save_scope_as = first_spouse
 		primary_spouse = {
 			save_scope_as = spouse
-			save_scope_as = spouse_check #Unop: For spouse_2014_base_agent_trigger to work properly
+			save_temporary_scope_as = spouse_check
 
 			if = {
 				limit = {
@@ -1771,7 +1772,7 @@ spouse.2014 = {
 								expose_scheme_agent = scope:agent
 							}
 						}
-						else = { #Unop: If the scheme was not discovered, expose it and the agent
+						else = {
 							expose_scheme = yes
 							expose_scheme_agent = scope:agent
 						}
@@ -1828,7 +1829,7 @@ spouse.2015 = {
 					expose_scheme_agent = scope:agent
 				}
 			}
-			else = { #Unop: If the scheme was not discovered, expose it and the agent
+			else = {
 				expose_scheme = yes
 				expose_scheme_agent = scope:agent
 			}
@@ -1970,7 +1971,7 @@ spouse.3001 = {
 
 	option = {
 		name = spouse.3001.a
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_gain
 		}
 	}
@@ -2673,7 +2674,7 @@ spouse.3013 = {
 			target = scope:agent
 			modifier = spouse_caused_suspicion_opinion
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_gain
 		}
 	}

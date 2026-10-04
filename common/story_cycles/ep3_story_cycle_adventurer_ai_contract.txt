@@ -4,11 +4,14 @@
 	on_setup = {
 		story_owner = {
 			save_scope_as = adventurer
-			domicile.domicile_location.kingdom = { save_scope_as = kingdom }
+			domicile.domicile_location.kingdom ?= { save_scope_as = kingdom }
 		}
-		set_variable = { # Save location's de jure kingdom
-			name = active_kingdom
-			value = scope:kingdom
+		if = {
+			limit = { exists = scope:kingdom }
+			set_variable = { # Save location's de jure kingdom
+				name = active_kingdom
+				value = scope:kingdom
+			}
 		}
 		set_variable = { # Track contracts to attempt in this realm
 			name = remaining_contract_counter
@@ -142,7 +145,8 @@
 										has_trait = arrogant
 										has_trait = greedy
 										culture = { has_cultural_parameter = unlock_voluntary_laampdom }
-										faith = { has_doctrine_parameter = unlock_voluntary_laampdom_faith }
+										rite = { rite_has_parameter = unlock_voluntary_laampdom_faith }
+										has_personal_tenet_flag = unlock_voluntary_laampdom_faith
 										has_trait = nomadic_philosophy
 										AND = {
 											has_character_modifier = ep3_lust_for_land_modifier

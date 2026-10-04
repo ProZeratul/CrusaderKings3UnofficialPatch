@@ -232,6 +232,7 @@ ep3_emperor_yearly.3000 = {
 				location = root.location
 				culture = culture:norse
 				faith = root.faith
+				rite = root.rite
 				dynasty = none
 				save_scope_as = varangian_leader
 			}
@@ -247,6 +248,7 @@ ep3_emperor_yearly.3000 = {
 				location = root.location
 				culture = culture:anglo_saxon
 				faith = root.faith
+				rite = root.rite
 				dynasty = none
 				save_scope_as = varangian_leader
 			}
@@ -574,7 +576,7 @@ ep3_emperor_yearly.3000 = {
 			}
 		}
 		
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			craven = medium_stress_impact_gain
 			paranoid = medium_stress_impact_gain
 			generous = medium_stress_impact_gain
@@ -835,7 +837,7 @@ ep3_emperor_yearly.3000 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			craven = medium_stress_impact_gain
 			paranoid = medium_stress_impact_gain
 			generous = minor_stress_impact_gain
@@ -1089,7 +1091,7 @@ ep3_emperor_yearly.3000 = {
 		#Apply randomized_malus
 		ep3_palace_looting_random_malus_effect = yes
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = miniscule_stress_impact_loss
 			paranoid = minor_stress_impact_loss
 			greedy = medium_stress_impact_gain
@@ -1266,6 +1268,12 @@ ep3_emperor_yearly.3011 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
+					NOT = { exists = scope:invading_commander }
+				}
+				desc = ep3_emperor_yearly.3011.no_commander
+			}
+			triggered_desc = {
+				trigger = {
 					scope:invader = {
 						this = scope:invading_commander
 					}
@@ -1334,14 +1342,14 @@ ep3_emperor_yearly.3011 = {
 			if = {
 				limit = {
 					any_knight = {
-						is_in_army = yes
-						this != scope:invading_commander
+						knight_army ?= scope:army
+						NOT = { scope:invading_commander ?= this }
 					}
 				}
 				random_knight = {
 					limit = {
-						is_in_army = yes
-						this != scope:invading_commander
+						knight_army ?= scope:army
+						NOT = { scope:invading_commander ?= this }
 					}
 					save_scope_as = knight_1
 				}
@@ -1349,20 +1357,16 @@ ep3_emperor_yearly.3011 = {
 			if = {
 				limit = {
 					any_knight = {
-						is_in_army = yes
-						NOR = {
-							this = scope:knight_1
-							this = scope:invading_commander
-						}
+						knight_army ?= scope:army
+						this != scope:knight_1
+						NOT = { scope:invading_commander ?= this }
 					}
 				}
 				random_knight = {
 					limit = {
-						is_in_army = yes
-						NOR = {
-							this = scope:knight_1
-							this = scope:invading_commander
-						}
+						knight_army ?= scope:army
+						this != scope:knight_1
+						NOT = { scope:invading_commander ?= this }
 					}
 					save_scope_as = knight_2
 				}
@@ -1370,22 +1374,18 @@ ep3_emperor_yearly.3011 = {
 			if = {
 				limit = {
 					any_knight = {
-						is_in_army = yes
-						NOR = {
-							this = scope:knight_1
-							this = scope:knight_2
-							this = scope:invading_commander
-						}
+						knight_army ?= scope:army
+						this != scope:knight_1
+						this != scope:knight_2
+						NOT = { scope:invading_commander ?= this }
 					}
 				}
 				random_knight = {
 					limit = {
-						is_in_army = yes
-						NOR = {
-							this = scope:knight_1
-							this = scope:knight_2
-							this = scope:invading_commander
-						}
+						knight_army ?= scope:army
+						this != scope:knight_1
+						this != scope:knight_2
+						NOT = { scope:invading_commander ?= this }
 					}
 					save_scope_as = knight_3
 				}
@@ -1393,24 +1393,20 @@ ep3_emperor_yearly.3011 = {
 			if = {
 				limit = {
 					any_knight = {
-						is_in_army = yes
-						NOR = {
-							this = scope:knight_1
-							this = scope:knight_2
-							this = scope:knight_3
-							this = scope:invading_commander
-						}
+						knight_army ?= scope:army
+						this != scope:knight_1
+						this != scope:knight_2
+						this != scope:knight_3
+						NOT = { scope:invading_commander ?= this }
 					}
 				}
 				random_knight = {
 					limit = {
-						is_in_army = yes
-						NOR = {
-							this = scope:knight_1
-							this = scope:knight_2
-							this = scope:knight_3
-							this = scope:invading_commander
-						}
+						knight_army ?= scope:army
+						this != scope:knight_1
+						this != scope:knight_2
+						this != scope:knight_3
+						NOT = { scope:invading_commander ?= this }
 					}
 					save_scope_as = knight_4
 				}
@@ -1418,30 +1414,35 @@ ep3_emperor_yearly.3011 = {
 			if = {
 				limit = {
 					any_knight = {
-						is_in_army = yes
-						NOR = {
-							this = scope:knight_1
-							this = scope:knight_2
-							this = scope:knight_3
-							this = scope:knight_4
-							this = scope:invading_commander
-						}
+						knight_army ?= scope:army
+						this != scope:knight_1
+						this != scope:knight_2
+						this != scope:knight_3
+						this != scope:knight_4
+						NOT = { scope:invading_commander ?= this }
 					}
 				}
 				random_knight = {
 					limit = {
-						is_in_army = yes
-						NOR = {
-							this = scope:knight_1
-							this = scope:knight_2
-							this = scope:knight_3
-							this = scope:knight_4
-							this = scope:invading_commander
-						}
+						knight_army ?= scope:army
+						this != scope:knight_1
+						this != scope:knight_2
+						this != scope:knight_3
+						this != scope:knight_4
+						NOT = { scope:invading_commander ?= this }
 					}
 					save_scope_as = knight_5
 				}
 			}
+		}
+		if = {
+			limit = {
+				exists = scope:invading_commander
+			}
+			scope:invading_commander = { save_scope_as = duel_target_char }
+		}
+		else = {
+			scope:invader = { save_scope_as = duel_target_char }
 		}
 	}
 	#Use the greek fire ships
@@ -1455,13 +1456,18 @@ ep3_emperor_yearly.3011 = {
 		scope:city_defender = {
 			duel = {
 				skill = martial
-				target = scope:invading_commander
+				target = scope:duel_target_char
 				35 = { #Your fleet ruins the enemy
 					desc = ep3_emperor_yearly.3011.a.success
 					compare_modifier = {
 						value = scope:duel_value
 						multiplier = 3.5
 						min = -34
+					}
+					# No commander
+					modifier = {
+						scope:invader = scope:duel_target_char
+						add = 20
 					}
 					modifier = {
 						has_trait = forder
@@ -1486,7 +1492,7 @@ ep3_emperor_yearly.3011 = {
 						add = 10
 					}
 					modifier = {
-						scope:invading_commander = {
+						scope:invading_commander ?= {
 							has_trait = reckless
 						}
 						add = 10
@@ -1504,7 +1510,7 @@ ep3_emperor_yearly.3011 = {
 						add = 10
 					}
 					modifier = {
-						scope:invading_commander = {
+						scope:invading_commander ?= {
 							has_trait = aggressive_attacker
 						}
 						add = 10
@@ -1585,13 +1591,13 @@ ep3_emperor_yearly.3011 = {
 						add = 20
 					}
 					modifier = {
-						scope:invading_commander = {
+						scope:invading_commander ?= {
 							has_trait = reckless
 						}
 						add = 20
 					}
 					modifier = {
-						scope:invading_commander = {
+						scope:invading_commander ?= {
 							has_trait = aggressive_attacker
 						}
 						add = 10
@@ -1663,19 +1669,19 @@ ep3_emperor_yearly.3011 = {
 						min = -14
 					}
 					modifier = {
-						scope:invading_commander = {
+						scope:invading_commander ?= {
 							has_trait = forder
 						}
 						add = 40
 					}
 					modifier = {
-						scope:invading_commander = {
+						scope:invading_commander ?= {
 							has_trait = organizer
 						}
 						add = 20
 					}
 					modifier = {
-						scope:invading_commander = {
+						scope:invading_commander ?= {
 							has_trait = cautious_leader
 						}
 						add = 20
@@ -1703,7 +1709,7 @@ ep3_emperor_yearly.3011 = {
 			}
 		}
 		trigger_event = ep3_emperor_yearly.3012
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = medium_stress_impact_gain
 			cautious_leader = medium_stress_impact_gain
 			patient = minor_stress_impact_gain
@@ -1722,7 +1728,7 @@ ep3_emperor_yearly.3011 = {
 			}
 			modifier = {
 				add = 20
-				scope:invading_commander = {
+				scope:invading_commander ?= {
 					martial <= high_skill_rating
 				}
 			}
@@ -1770,7 +1776,7 @@ ep3_emperor_yearly.3011 = {
 		else = {
 			add_prestige = miniscule_prestige_loss
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			vengeful = medium_stress_impact_gain
 			wrathful = medium_stress_impact_gain
 			sadistic = miniscule_stress_impact_gain
@@ -1791,7 +1797,7 @@ ep3_emperor_yearly.3011 = {
 			}
 			modifier = {
 				add = 20
-				scope:invading_commander = {
+				scope:invading_commander ?= {
 					martial > very_high_skill_rating
 				}
 			}
@@ -1857,7 +1863,7 @@ ep3_emperor_yearly.3012 = {
 		container = "foreground_shader_vfx_container"
 	}
 	right_portrait = {
-		character = scope:invading_commander
+		character = scope:duel_target_char
 		triggered_animation = {
 			trigger = {
 				root = { has_character_flag = successful_greek_fire_attack }
@@ -1904,7 +1910,8 @@ ep3_emperor_yearly.3012 = {
 		}
 
 		if = {
-			limit = { has_character_flag = successful_greek_fire_attack
+			limit = {
+				has_character_flag = successful_greek_fire_attack
 			}
 			ep3_greek_fire_success_effect = yes
 		}
@@ -1925,7 +1932,7 @@ ep3_emperor_yearly.3012 = {
 			limit = {
 				has_character_flag = successful_greek_fire_attack
 			}
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				sadistic = medium_stress_impact_loss
 				paranoid = minor_stress_impact_loss
 				vengeful = medium_stress_impact_loss
@@ -1935,7 +1942,8 @@ ep3_emperor_yearly.3012 = {
 	}
 	after = {
 		if = {
-			limit = { has_character_flag = successful_greek_fire_attack
+			limit = {
+				has_character_flag = successful_greek_fire_attack
 			}
 			remove_character_flag = successful_greek_fire_attack
 		}

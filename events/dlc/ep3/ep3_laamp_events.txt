@@ -68,6 +68,7 @@ scripted_trigger ep3_laamp_conquest_title_trigger = {
 ep3_laamps.0001 = {
 	type = character_event
 	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/splash_icons/splash_laamp.dds"
 	title = {
 		desc = {
 			first_valid = {
@@ -207,6 +208,17 @@ ep3_laamps.0002 = {
 
 	immediate = {
 		save_scope_as = adventurer
+		# destroy any title you keep - you should not bring them to laamp!
+		if = {
+			limit = {
+				is_landed = no
+				NOT = { has_variable = deposed_primary_title }
+			}
+			every_held_title = {
+				limit = { is_landless_type_title = no }
+				prev = { destroy_title = prev }
+			}
+		}
 		# AI chance
 		if = {
 			limit = {
@@ -299,6 +311,7 @@ ep3_laamps.0003 = {
 ep3_laamps.0004 = {
 	type = character_event
 	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/splash_icons/splash_laamp.dds"
 	title = {
 		desc = {
 			first_valid = {
@@ -370,7 +383,7 @@ ep3_laamps.0004 = {
 			}
 		}
 	}
-	
+
 	option = {
 		name = ep3_laamps.0001.a
 		create_landless_adventurer_title_tooltip_effect = yes
@@ -405,6 +418,7 @@ ep3_laamps.0004 = {
 ep3_laamps.0005 = {
 	type = character_event
 	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/splash_icons/splash_laamp.dds"
 	title = {
 		desc = {
 			first_valid = {
@@ -469,7 +483,7 @@ ep3_laamps.0005 = {
 		}
 		scope:conquered.current_heir = { save_scope_as = heir }
 	}
-	
+
 	option = {
 		name = ep3_laamps.0001.a
 		show_as_tooltip = { depose = yes } # depose not actually used as it is immediate gameover
@@ -560,6 +574,7 @@ scripted_trigger ep3_laamp_inheritor_title_trigger = {
 ep3_laamps.0010 = {
 	type = character_event
 	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/splash_icons/splash_laamp.dds"
 	title = ep3_laamps.0010.t
 	desc = {
 		first_valid = {
@@ -774,6 +789,7 @@ ep3_laamps.0012 = {
 ep3_laamps.0020 = {
 	type = character_event
 	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/splash_icons/splash_laamp.dds"
 	title = ep3_laamps.0020.t
 	desc = ep3_laamps.0020.desc
 	theme = realm
@@ -876,7 +892,7 @@ ep3_laamps.0020 = {
 		hidden_effect = {
 			if = {
 				limit = {
-					government_allows = administrative
+					government_has_mechanic = administrative
 				}
 				force_step_down_landed_titles = yes
 			}
@@ -891,7 +907,7 @@ ep3_laamps.0020 = {
 		hidden_effect = {
 			if = {
 				limit = {
-					government_allows = administrative
+					government_has_mechanic = administrative
 				}
 				force_step_down_landed_titles = yes
 			}
@@ -908,7 +924,7 @@ ep3_laamps.0020 = {
 		hidden_effect = {
 			if = {
 				limit = {
-					government_allows = administrative
+					government_has_mechanic = administrative
 				}
 				force_step_down_landed_titles = yes
 			}
@@ -922,7 +938,7 @@ ep3_laamps.0020 = {
 		hidden_effect = {
 			if = {
 				limit = {
-					government_allows = administrative
+					government_has_mechanic = administrative
 				}
 				force_step_down_landed_titles = yes
 			}
@@ -944,7 +960,7 @@ ep3_laamps.0021 = {
 	on_trigger_fail = {
 		if = {
 			limit = {
-				government_allows = administrative
+				government_has_mechanic = administrative
 			}
 			force_step_down_landed_titles = yes
 		}
@@ -1026,7 +1042,7 @@ ep3_laamps.0021 = {
 				}
 				if = {
 					limit = {
-						government_allows = administrative
+						government_has_mechanic = administrative
 					}
 					force_step_down_landed_titles = yes
 				}
@@ -1069,6 +1085,7 @@ ep3_laamps.0022 = {
 ep3_laamps.0030 = {
 	type = character_event
 	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/splash_icons/splash_laamp.dds"
 	title = ep3_laamps.0030.t
 	desc = {
 		desc = ep3_laamps.0030.desc
@@ -1111,6 +1128,7 @@ ep3_laamps.0030 = {
 				OR = {
 					is_landless_type_title = no
 					is_nomad_title = yes
+					has_clerical_region = yes
 				}
 			}
 			add_to_list = target_titles
@@ -1202,6 +1220,7 @@ scripted_trigger ep3_laamp_revoked_title_trigger = {
 ep3_laamps.0040 = {
 	type = character_event
 	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/splash_icons/splash_laamp.dds"
 	title = ep3_laamps.0040.t
 	desc = {
 		first_valid = {
@@ -1377,8 +1396,12 @@ scripted_trigger ep3_laamp_runaway_child_trigger = {
 	save_temporary_scope_as = runaway_temp
 	# Less important kids as rank increases
 	liege ?= {
-		primary_title = { 
+		primary_title = {
 			trigger_if = {
+				limit = { tier = tier_hegemony }
+				place_in_line_of_succession = { target = scope:runaway_temp value < 8 }
+			}
+			trigger_else_if = {
 				limit = { tier = tier_empire }
 				place_in_line_of_succession = { target = scope:runaway_temp value < 6 }
 			}
@@ -1410,7 +1433,7 @@ ep3_laamps.0050 = {
 
 	trigger = {
 		has_ep3_dlc_trigger = yes
-		is_landed_or_landless_administrative = yes
+		is_landed_or_landless_administrative_or_theocratic = yes
 		any_close_family_member = { ep3_laamp_runaway_child_trigger = yes }
 		OR = {
 			is_ai = no
@@ -1462,7 +1485,7 @@ ep3_laamps.0050 = {
 			save_scope_as = adventurer
 		}
 	}
- 	
+
 	option = { # Encourage
 		name = ep3_laamps.0050.a
 		trigger = { is_ai = no }
@@ -1476,10 +1499,10 @@ ep3_laamps.0050 = {
 		}
 		add_internal_flag = special
 		set_player_character = scope:potential_laamp
-		scope:potential_laamp = { 
-			create_landless_adventurer_title_tooltip_effect = yes 
+		scope:potential_laamp = {
+			create_landless_adventurer_title_tooltip_effect = yes
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = medium_stress_impact_gain
 			craven = minor_stress_impact_gain
 		}
@@ -1502,7 +1525,7 @@ ep3_laamps.0050 = {
 			name = runaway_laamp_encourager
 			value = scope:potential_laamp
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = medium_stress_impact_gain
 			craven = minor_stress_impact_gain
 		}
@@ -1564,7 +1587,7 @@ ep3_laamps.0050 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			brave = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -1604,7 +1627,7 @@ ep3_laamps.0051 = {
 		}
 		add_prestige = minor_prestige_loss
 	}
- 	
+
 	option = {
 		name = ep3_laamps.0051.a
 	}
@@ -1688,7 +1711,7 @@ ep3_laamps.0100 = {
 		purchase_land_interaction_effect = yes
 		scope:recipient = { trigger_event = ep3_laamps.0101 }
 	}
- 	
+
 	option = {
 		name = ep3_laamps.0100.a
 		if = { # Vassal obligations
@@ -1698,10 +1721,12 @@ ep3_laamps.0100 = {
 		}
 	}
 
-	#Unop Finally, courtiers are sometimes going walk about, so make sure they're all in the right spot.
 	after = {
 		hidden_effect = {
-			every_courtier = { set_location_to_default = yes }
+			every_courtier = {
+				limit = { is_in_army = no }
+				set_location_to_default = yes
+			}
 			every_prisoner = { set_location_to_default = yes }
 		}
 	}
@@ -1750,7 +1775,7 @@ ep3_laamps.0101 = {
 			}
 		}
 	}
- 	
+
 	option = {
 		name = ep3_laamps.0101.a
 		trigger = { scope:new_liege ?= scope:recipient }
@@ -1784,6 +1809,20 @@ ep3_laamps.0102 = {
 
 	option = {
 		name = ep3_laamps.0102.a
+	}
+}
+
+ep3_laamps.0103 = {
+	type = character_event
+	hidden = yes
+
+	trigger = {
+		has_ep3_dlc_trigger = yes
+		is_landed = yes
+	}
+
+	immediate = {
+		change_government = faith.faith_theocratic_goverment_type
 	}
 }
 
@@ -1834,7 +1873,7 @@ ep3_laamps.0200 = {
 		}
 		scope:actor = { custom_tooltip = adventurer_invasion_supporter_victory_tt }
 	}
- 	
+
 	option = {
 		name = ep3_laamps.0200.a
 	}
@@ -1849,7 +1888,7 @@ ep3_laamps.0201 = {
 	trigger = {
 		has_ep3_dlc_trigger = yes
 	}
- 	
+
 	option = {
 		name = ep3_laamps.0201.a
 	}
@@ -1906,7 +1945,7 @@ ep3_laamps.0300 = {
 		negotiate_settlement_interaction_effect = yes
 		scope:recipient = { trigger_event = ep3_laamps.0301 }
 	}
- 	
+
 	option = {
 		name = ep3_laamps.0300.a
 	}
@@ -1955,7 +1994,7 @@ ep3_laamps.0301 = {
 			}
 		}
 	}
- 	
+
 	option = {
 		name = ep3_laamps.0301.a
 		trigger = { scope:new_liege ?= scope:actor }
@@ -2035,12 +2074,12 @@ ep3_laamps.0401 = {
 		seize_realm_scheme_success_effect = yes
 	}
 
-	option = { 
+	option = {
 		name = ep3_laamps.0401.a
 	}
 
 	after = {
-		
+
 	}
 }
 
@@ -2139,7 +2178,7 @@ ep3_laamps.0402 = {
 				exists = scope:death
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_gain
 			ambitious = medium_stress_impact_gain
 			arrogant = minor_stress_impact_gain
@@ -2155,7 +2194,7 @@ ep3_laamps.0402 = {
 	option = {
 		name = ep3_laamps.0402.b
 		trigger = { exists = scope:imprison }
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_gain
 			ambitious = medium_stress_impact_gain
 			arrogant = minor_stress_impact_gain
@@ -2339,7 +2378,7 @@ scripted_trigger grantable_close_family_trigger = {
 	is_imprisoned = no
 	trigger_if = {
 		limit = { is_clergy = yes }
-		faith = { has_doctrine_parameter = theocracy_temple_ownership }
+		rite = { rite_has_parameter = theocracy_temple_ownership }
 	}
 	NOR = {
 		has_trait = incapable
@@ -2362,7 +2401,7 @@ scripted_trigger grantable_claimant_trigger = {
 	is_imprisoned = no
 	trigger_if = {
 		limit = { is_clergy = yes }
-		faith = { has_doctrine_parameter = theocracy_temple_ownership }
+		rite = { rite_has_parameter = theocracy_temple_ownership }
 	}
 	NOR = {
 		has_trait = incapable
@@ -2787,7 +2826,7 @@ ep3_laamps.0800 = { # Player adventurer has gained a landed title
 			scope:alt_3 ?= { save_scope_as = portrait_scope }
 		}
 	}
- 	
+
 	option = { # Become Landed
 		name = ep3_laamps.0800.a
 		if = {
@@ -2884,6 +2923,7 @@ ep3_laamps.0800 = { # Player adventurer has gained a landed title
 					template = laamp_inheritor_template
 					culture = scope:new_capital.culture
 					faith = scope:new_capital.faith
+					rite = scope:new_capital.rite
 					dynasty = generate
 					location = scope:new_capital.title_province
 					after_creation = { save_scope_as = land_grantee }
@@ -3063,6 +3103,7 @@ scripted_effect ep3_laamps_1001_generate_diplomacy_char_effect = {
 		dynasty = none
 		culture = root.location.culture
 		faith = root.location.faith
+		rite = root.location.rite
 		location = root.location
 		save_scope_as = diplomacy_1
 		diplomacy = {
@@ -3096,6 +3137,7 @@ scripted_effect ep3_laamps_1001_generate_diplomacy_char_effect = {
 		dynasty = none
 		culture = root.location.culture
 		faith = root.location.faith
+		rite = root.location.rite
 		location = root.location
 		save_scope_as = diplomacy_2
 		diplomacy = {
@@ -3131,6 +3173,7 @@ scripted_effect ep3_laamps_1001_generate_martial_char_effect = {
 		dynasty = none
 		culture = root.location.culture
 		faith = root.location.faith
+		rite = root.location.rite
 		location = root.location
 		save_scope_as = martial_1
 		diplomacy = {
@@ -3164,6 +3207,7 @@ scripted_effect ep3_laamps_1001_generate_martial_char_effect = {
 		dynasty = none
 		culture = root.location.culture
 		faith = root.location.faith
+		rite = root.location.rite
 		location = root.location
 		save_scope_as = martial_2
 		diplomacy = {
@@ -3199,6 +3243,7 @@ scripted_effect ep3_laamps_1001_generate_stewardship_char_effect = {
 		dynasty = none
 		culture = root.location.culture
 		faith = root.location.faith
+		rite = root.location.rite
 		location = root.location
 		save_scope_as = stewardship_1
 		diplomacy = {
@@ -3232,6 +3277,7 @@ scripted_effect ep3_laamps_1001_generate_stewardship_char_effect = {
 		dynasty = none
 		culture = root.location.culture
 		faith = root.location.faith
+		rite = root.location.rite
 		location = root.location
 		save_scope_as = stewardship_2
 		diplomacy = {
@@ -3267,6 +3313,7 @@ scripted_effect ep3_laamps_1001_generate_intrigue_char_effect = {
 		dynasty = none
 		culture = root.location.culture
 		faith = root.location.faith
+		rite = root.location.rite
 		location = root.location
 		save_scope_as = intrigue_1
 		diplomacy = {
@@ -3300,6 +3347,7 @@ scripted_effect ep3_laamps_1001_generate_intrigue_char_effect = {
 		dynasty = none
 		culture = root.location.culture
 		faith = root.location.faith
+		rite = root.location.rite
 		location = root.location
 		save_scope_as = intrigue_2
 		diplomacy = {
@@ -3335,6 +3383,7 @@ scripted_effect ep3_laamps_1001_generate_learning_char_effect = {
 		dynasty = none
 		culture = root.location.culture
 		faith = root.location.faith
+		rite = root.location.rite
 		location = root.location
 		save_scope_as = learning_1
 		diplomacy = {
@@ -3368,6 +3417,7 @@ scripted_effect ep3_laamps_1001_generate_learning_char_effect = {
 		dynasty = none
 		culture = root.location.culture
 		faith = root.location.faith
+		rite = root.location.rite
 		location = root.location
 		save_scope_as = learning_2
 		diplomacy = {
@@ -3403,6 +3453,7 @@ scripted_effect ep3_laamps_1001_generate_prowess_char_effect = {
 		dynasty = none
 		culture = root.location.culture
 		faith = root.location.faith
+		rite = root.location.rite
 		location = root.location
 		save_scope_as = prowess_1
 		diplomacy = {
@@ -3436,6 +3487,7 @@ scripted_effect ep3_laamps_1001_generate_prowess_char_effect = {
 		dynasty = none
 		culture = root.location.culture
 		faith = root.location.faith
+		rite = root.location.rite
 		location = root.location
 		save_scope_as = prowess_2
 		diplomacy = {
@@ -3500,9 +3552,9 @@ scripted_effect ep3_laamps_1001_add_courtiers_effect = {
 }
 
 scripted_trigger ep3_laamps_1001_basic_trigger = {
-	NOR = {
-		has_character_flag = special_laamp_char
-		has_character_flag = got_starting_courtiers
+	has_none_of_variables = {
+		name = special_laamp_char
+		name = got_starting_courtiers
 	}
 	# In case you become a laamp then immediately become landed again.
 	has_government = landless_adventurer_government
@@ -3630,7 +3682,7 @@ ep3_laamps.1001 = {
 			}
 		}
 	}
-	
+
 	# Martial.
 	option = {
 		name = ep3_laamps.1001.b
@@ -3673,7 +3725,7 @@ ep3_laamps.1001 = {
 			}
 		}
 	}
-	
+
 	# Stewardship.
 	option = {
 		name = ep3_laamps.1001.c
@@ -3704,7 +3756,7 @@ ep3_laamps.1001 = {
 			}
 		}
 	}
-	
+
 	# Intrigue.
 	option = {
 		name = ep3_laamps.1001.d
@@ -3735,7 +3787,7 @@ ep3_laamps.1001 = {
 			}
 		}
 	}
-	
+
 	# Learning.
 	option = {
 		name = ep3_laamps.1001.e
@@ -3766,7 +3818,7 @@ ep3_laamps.1001 = {
 			}
 		}
 	}
-	
+
 	# Prowess.
 	option = {
 		name = ep3_laamps.1001.f
@@ -3812,7 +3864,7 @@ ep3_laamps.1001 = {
 			}
 		}
 	}
-	
+
 	# Larry Loner of the Clan McNoMates.
 	option = {
 		name = ep3_laamps.1001.g
@@ -3987,7 +4039,7 @@ ep3_laamps.1011 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			just = major_stress_impact_loss
 			arbitrary = major_stress_impact_gain
 		}
@@ -3996,7 +4048,7 @@ ep3_laamps.1011 = {
 			ai_value_modifier = { ai_honor = 2 }
 		}
 	}
-	
+
 	# One-way + weak hook.
 	option = {
 		name = ep3_laamps.1011.b
@@ -4033,7 +4085,7 @@ ep3_laamps.1021 = {
 	immediate = {
 		if = {
 			limit = {
-				domicile = { 
+				domicile = {
 					OR = {
 						has_domicile_building = supply_tent_reserve_provisions
 						has_domicile_construction = supply_tent_reserve_provisions
@@ -4045,7 +4097,7 @@ ep3_laamps.1021 = {
 		}
 		if = {
 			limit = {
-				domicile = { 
+				domicile = {
 					OR = {
 						has_domicile_building = supply_tent_reserve_water
 						has_domicile_construction = supply_tent_reserve_water
@@ -4317,7 +4369,7 @@ ep3_laamps.1021 = {
 ##################################################
 
 # Poach for food
-ep3_laamps.5000 = { 
+ep3_laamps.5000 = {
 	type = character_event
 	title = ep3_laamps.5000.t
 	desc = {
@@ -4327,7 +4379,7 @@ ep3_laamps.5000 = {
 				trigger = {
 					domicile = {
 						provisions < provisions_privation_threshold_low
-					}	
+					}
 				}
 				desc = ep3_laamps.5000.provisionslow
 			}
@@ -4348,13 +4400,13 @@ ep3_laamps.5000 = {
 		character = scope:local_lord
 	}
 	cooldown = { years = 10 }
-	
+
 	trigger = {
 		#Standard checks
 		has_ep3_dlc_trigger = yes
 		has_government = landless_adventurer_government
 		is_available = yes
-		
+
 		#Ensure we have a hunter
 		any_courtier = {
 			can_be_combatant_based_on_gender_trigger = { ARMY_OWNER = root }
@@ -4366,7 +4418,7 @@ ep3_laamps.5000 = {
 
 		is_vegetarian_trigger = no
 	}
-	
+
 	weight_multiplier = {
 		base = 1
 		modifier = {
@@ -4388,7 +4440,7 @@ ep3_laamps.5000 = {
 			}
 		}
 	}
-	
+
 	immediate = {
 		random_courtier = {
 			limit = {
@@ -4404,9 +4456,9 @@ ep3_laamps.5000 = {
 			save_scope_as = location
 		}
 	}
-	
+
 	#Petition them for rights to hunt
-	option = { 
+	option = {
 		name = ep3_laamps.5000.a
 
 		flavor = ep3_laamps.5000.a.tt
@@ -4486,7 +4538,7 @@ ep3_laamps.5000 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = miniscule_stress_impact_loss
 			deceitful = medium_stress_impact_gain
 		}
@@ -4494,13 +4546,13 @@ ep3_laamps.5000 = {
 		ai_chance = {
 			base = 100
 			ai_value_modifier = {
-				ai_boldness = 0.5 
+				ai_boldness = 0.5
 			}
 		}
 	}
-	
+
 	#Risk it for the biscuit
-	option = { 
+	option = {
 		name = ep3_laamps.5000.b
 
 		scope:hunter = {
@@ -4577,7 +4629,7 @@ ep3_laamps.5000 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = medium_stress_impact_gain
 			deceitful = miniscule_stress_impact_loss
 		}
@@ -4589,9 +4641,9 @@ ep3_laamps.5000 = {
 			}
 		}
 	}
-	
+
 	#Forage for berries n stuff
-	option = { 
+	option = {
 		name = ep3_laamps.5000.c
 
 		random_list = {
@@ -4640,7 +4692,7 @@ ep3_laamps.5000 = {
 }
 
 # Meet a wandering priest
-ep3_laamps.5005 = { 
+ep3_laamps.5005 = {
 	type = character_event
 	title = ep3_laamps.5005.t
 	desc = {
@@ -4666,28 +4718,28 @@ ep3_laamps.5005 = {
 		animation = obsequious_bow
 	}
 	cooldown = { years = 10 }
-	
+
 	trigger = {
 		#Standard checks
 		has_ep3_dlc_trigger = yes
 		has_government = landless_adventurer_government
-		is_available_allow_travelling = yes #Unop Ensure availability
+		is_available_allow_travelling = yes
 		is_location_valid_for_travel_event_on_land = yes
 		#Ensure we're in a place that's held by someone
 		exists = location.county.holder
 	}
-	
+
 	weight_multiplier = {
 		base = 1
 		modifier = {
 			factor = 3
 			OR = {
-				faith = { has_doctrine = tenet_mendicant_preachers } 
-				location.county.holder.faith = { has_doctrine = tenet_mendicant_preachers } 
+				rite = { rite_has_tenet = tenet_mendicant_preachers }
+				location.county.holder.rite = { rite_has_tenet = tenet_mendicant_preachers }
 			}
 		}
 	}
-	
+
 	immediate = {
 		create_character = {
 			template = mendicant_mystic_character
@@ -4696,6 +4748,7 @@ ep3_laamps.5005 = {
 			location = root.location
 			culture = root.location.county.culture
 			faith = root.location.county.faith
+			rite = root.location.county.rite
 			save_scope_as = priest
 			after_creation = {
 				add_character_flag = created
@@ -4712,9 +4765,9 @@ ep3_laamps.5005 = {
 			scope:priest = { assign_random_nickname_effect = yes }
 		}
 	}
-	
+
 	#Ask him to join your followers
-	option = { 
+	option = {
 		name = ep3_laamps.5005.a
 
 		duel = {
@@ -4778,7 +4831,7 @@ ep3_laamps.5005 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = miniscule_stress_impact_loss
 			callous = medium_stress_impact_gain
 		}
@@ -4786,13 +4839,13 @@ ep3_laamps.5005 = {
 		ai_chance = {
 			base = 100
 			ai_value_modifier = {
-				ai_boldness = 0.5 
+				ai_boldness = 0.5
 			}
 		}
 	}
-	
+
 	#Invite him to sit and stay a night
-	option = { 
+	option = {
 		name = ep3_laamps.5005.b
 
 		if = {
@@ -4826,7 +4879,7 @@ ep3_laamps.5005 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			paranoid = minor_stress_impact_gain
 			trusting = miniscule_stress_impact_loss
 		}
@@ -4838,9 +4891,9 @@ ep3_laamps.5005 = {
 			}
 		}
 	}
-	
+
 	#Turn him away
-	option = { 
+	option = {
 		name = ep3_laamps.5005.c
 
 		trigger = {
@@ -4875,7 +4928,7 @@ ep3_laamps.5005 = {
 	}
 
 	#Turn him away, since he's a heretic
-	option = { 
+	option = {
 		name = ep3_laamps.5005.d
 
 		trigger = {
@@ -4905,7 +4958,7 @@ ep3_laamps.5005 = {
 }
 
 # The rough life begins to hurt
-ep3_laamps.5010 = { 
+ep3_laamps.5010 = {
 	type = character_event
 	title = ep3_laamps.5010.t
 	desc = ep3_laamps.5010.desc
@@ -4919,16 +4972,16 @@ ep3_laamps.5010 = {
 		animation = pain
 	}
 	cooldown = { years = 10 }
-	
+
 	trigger = {
 		#Standard checks
 		has_ep3_dlc_trigger = yes
 		has_government = landless_adventurer_government
 		age < 65 #Just for loc tonality
-		is_available_allow_travelling = yes #Unop Ensure availability
+		is_available_allow_travelling = yes
 		is_location_valid_for_travel_event_on_land = yes
 		any_courtier = {
-			is_available_allow_travelling = yes #Unop Ensure availability
+			is_available_allow_travelling = yes
 			is_valid_active_event_recurrer_trigger = { LIEGE = ROOT }
 			is_adult = yes # is an adult
 			age < 65 # but not too old, so wincing in pain isn't just from being real old
@@ -4938,11 +4991,11 @@ ep3_laamps.5010 = {
 			has_ongoing_domicile_construction = no
 		}
 	}
-	
+
 	immediate = {
 		random_courtier = {
 			limit = {
-				is_available_allow_travelling = yes #Unop Ensure availability
+			is_available_allow_travelling = yes
 				is_valid_active_event_recurrer_trigger = { LIEGE = ROOT }
 				is_adult = yes # is an adult
 				age < 65 # but not too old, so wincing in pain isn't just from being real old
@@ -4989,9 +5042,9 @@ ep3_laamps.5010 = {
 			}
 		}
 	}
-	
+
 	#Buy some beds at an inn for the night
-	option = { 
+	option = {
 		name = ep3_laamps.5010.a
 
 		remove_short_term_gold = minor_gold_value
@@ -5012,9 +5065,9 @@ ep3_laamps.5010 = {
 				modifier = ep3_rested_and_refreshed_modifier
 				years = 5
 			}
-		}		
+		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_loss
 			generous = miniscule_stress_impact_loss
 			greedy = medium_stress_impact_gain
@@ -5025,13 +5078,13 @@ ep3_laamps.5010 = {
 		ai_chance = {
 			base = 100
 			ai_value_modifier = {
-				ai_compassion = 1 
+				ai_compassion = 1
 			}
 		}
 	}
-	
+
 	#Build a Pavilion upgrade at a discount
-	option = { 
+	option = {
 		name = ep3_laamps.5010.b
 		trigger = {
 			NOT = {
@@ -5058,7 +5111,7 @@ ep3_laamps.5010 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = miniscule_stress_impact_loss
 			content = minor_stress_impact_gain
 		}
@@ -5070,9 +5123,9 @@ ep3_laamps.5010 = {
 			}
 		}
 	}
-	
+
 	#Soldier on
-	option = { 
+	option = {
 		name = ep3_laamps.5010.c
 
 		random_list = {
@@ -5124,7 +5177,7 @@ ep3_laamps.5010 = {
 					type = event_toast_effect_bad
 					title = ep3_laamps.5010.c.failure
 					left_icon = root
-					right_icon = scope:follower #Unop: Was scope:hunter that do not exists here
+					right_icon = scope:follower
 
 					add_stress = minor_stress_gain
 					add_character_modifier = {
@@ -5145,7 +5198,7 @@ ep3_laamps.5010 = {
 }
 
 # Offer a life to hardened fighters
-ep3_laamps.5015 = { 
+ep3_laamps.5015 = {
 	type = character_event
 	title = ep3_laamps.5015.t
 	desc = ep3_laamps.5015.desc
@@ -5163,12 +5216,12 @@ ep3_laamps.5015 = {
 		position = lower_center_portrait
 	}
 	cooldown = { years = 35 }
-	
+
 	trigger = {
 		#Standard checks
 		has_ep3_dlc_trigger = yes
 		has_government = landless_adventurer_government
-		is_available_allow_travelling = yes #Unop Ensure availability
+		is_available_allow_travelling = yes
 		is_location_valid_for_travel_event_on_land = yes
 	}
 
@@ -5221,6 +5274,7 @@ ep3_laamps.5015 = {
 				location = root.location
 				culture = location.culture
 				faith = location.faith
+				rite = location.rite
 				gender_female_chance = root_soldier_female_chance
 				dynasty = none
 				save_scope_as = knight
@@ -5260,7 +5314,7 @@ ep3_laamps.5015 = {
 	}
 
 	#Rob him
-	option = { 
+	option = {
 		name = ep3_laamps.5015.a
 
 		trigger = {
@@ -5316,7 +5370,7 @@ ep3_laamps.5015 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = miniscule_stress_impact_loss
 			compassionate = medium_stress_impact_gain
 			just = medium_stress_impact_gain
@@ -5332,7 +5386,7 @@ ep3_laamps.5015 = {
 	}
 
 	#Bring 'em all
-	option = { 
+	option = {
 		name = ep3_laamps.5015.b
 
 		trigger = {
@@ -5352,7 +5406,7 @@ ep3_laamps.5015 = {
 
 		remove_short_term_gold = { 10 30 }
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = miniscule_stress_impact_loss
 			greedy = medium_stress_impact_gain
 			compassionate = miniscule_stress_impact_loss
@@ -5362,13 +5416,13 @@ ep3_laamps.5015 = {
 		ai_chance = {
 			base = 100
 			ai_value_modifier = {
-				ai_compassion = 1 
+				ai_compassion = 1
 			}
 		}
 	}
-	
+
 	#Hire the fella as a knight
-	option = { 
+	option = {
 		name = ep3_laamps.5015.c
 
 		add_courtier = scope:knight
@@ -5376,7 +5430,7 @@ ep3_laamps.5015 = {
 			set_knight_status = force
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = miniscule_stress_impact_loss
 			paranoid = minor_stress_impact_gain
 		}
@@ -5388,9 +5442,9 @@ ep3_laamps.5015 = {
 			}
 		}
 	}
-	
+
 	#Offer them a place to rest, but only that
-	option = { 
+	option = {
 		name = ep3_laamps.5015.d
 
 		domicile = {
@@ -5411,7 +5465,7 @@ ep3_laamps.5015 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = miniscule_stress_impact_loss
 			generous = minor_stress_impact_gain
 		}
@@ -5431,7 +5485,7 @@ ep3_laamps.5015 = {
 }
 
 # Learn new local recipes
-ep3_laamps.5020 = { 
+ep3_laamps.5020 = {
 	type = character_event
 	title = ep3_laamps.5020.t
 	desc = ep3_laamps.5020.desc
@@ -5445,12 +5499,12 @@ ep3_laamps.5020 = {
 		animation = personality_compassionate
 	}
 	cooldown = { years = 10 }
-	
+
 	trigger = {
 		#Standard checks
 		has_ep3_dlc_trigger = yes
 		has_government = landless_adventurer_government
-		is_available_allow_travelling = yes #Unop Ensure availability
+		is_available_allow_travelling = yes
 		is_location_valid_for_travel_event_on_land = yes
 		culture != location.culture
 		any_courtier = {
@@ -5503,7 +5557,7 @@ ep3_laamps.5020 = {
 	}
 
 	#Suggest a *special* new addition
-	option = { 
+	option = {
 		name = ep3_laamps.5020.a
 
 		trigger = {
@@ -5545,7 +5599,7 @@ ep3_laamps.5020 = {
 			years = 10
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_loss
 		}
 
@@ -5558,7 +5612,7 @@ ep3_laamps.5020 = {
 	}
 
 	#Suggest fusion cuisine
-	option = { 
+	option = {
 		name = ep3_laamps.5020.b
 
 		trigger = {
@@ -5597,7 +5651,7 @@ ep3_laamps.5020 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			gluttonous = medium_stress_impact_loss
 			inappetetic = medium_stress_impact_gain
@@ -5612,7 +5666,7 @@ ep3_laamps.5020 = {
 	}
 
 	#Try some of this local cuisine
-	option = { 
+	option = {
 		name = ep3_laamps.5020.c
 
 		random_list = {
@@ -5661,7 +5715,7 @@ ep3_laamps.5020 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			gluttonous = minor_stress_impact_loss
 			arrogant = minor_stress_impact_gain
 			humble = miniscule_stress_impact_loss
@@ -5671,13 +5725,13 @@ ep3_laamps.5020 = {
 		ai_chance = {
 			base = 100
 			ai_value_modifier = {
-				ai_compassion = 1 
+				ai_compassion = 1
 			}
 		}
 	}
-	
+
 	#Refuse to try it
-	option = { 
+	option = {
 		name = ep3_laamps.5020.d
 
 		random = {
@@ -5691,11 +5745,11 @@ ep3_laamps.5020 = {
 				title = ep3_laamps.5020.d.tt
 				left_icon = root
 
-				give_nickname = nick_the_narrow_minded 
+				give_nickname = nick_the_narrow_minded
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = miniscule_stress_impact_loss
 			paranoid = minor_stress_impact_gain
 		}
@@ -5722,7 +5776,7 @@ scripted_trigger 5025_can_spawn_contract_trigger = {
 }
 
 # What is your purpose?
-ep3_laamps.5025 = { 
+ep3_laamps.5025 = {
 	type = character_event
 	title = ep3_laamps.5025.t
 	desc = ep3_laamps.5025.desc
@@ -5732,12 +5786,12 @@ ep3_laamps.5025 = {
 		animation = thinking
 	}
 	cooldown = { years = 30 }
-	
+
 	trigger = {
 		#Standard checks
 		has_ep3_dlc_trigger = yes
 		has_government = landless_adventurer_government
-		is_available_allow_travelling = yes #Unop Ensure availability
+		is_available_allow_travelling = yes
 	}
 
 	immediate = {
@@ -5758,7 +5812,7 @@ ep3_laamps.5025 = {
 						save_temporary_scope_as = vassal_check
 						5025_can_spawn_contract_trigger = { LAAMP = root EMPLOYER = scope:vassal_check }
 					}
-					add_to_temporary_list = potential_contract_employers 
+					add_to_temporary_list = potential_contract_employers
 				}
 			}
 			#Can we _actually_ spawn two contracts?
@@ -5766,7 +5820,7 @@ ep3_laamps.5025 = {
 				limit = {
 					any_in_list = {
 						list = potential_contract_employers
-						count >= 2 
+						count >= 2
 					}
 				}
 				save_scope_as = spawn_task_contract_option_available
@@ -5775,7 +5829,7 @@ ep3_laamps.5025 = {
 	}
 
 	#I wanna be landed!
-	option = { 
+	option = {
 		name = ep3_laamps.5025.a
 
 		add_character_modifier = {
@@ -5783,7 +5837,7 @@ ep3_laamps.5025 = {
 			years = 35
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = miniscule_stress_impact_loss
 			ambitious = minor_stress_impact_loss
 			humble = medium_stress_impact_gain
@@ -5802,7 +5856,7 @@ ep3_laamps.5025 = {
 	}
 
 	#I like being landless :)
-	option = { 
+	option = {
 		name = ep3_laamps.5025.b
 		flavor = ep3_laamps.5025.b.flavor
 
@@ -5850,7 +5904,7 @@ ep3_laamps.5025 = {
 			add_prestige = medium_prestige_gain
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = medium_stress_impact_gain
 			humble = minor_stress_impact_loss
 		}
@@ -5862,9 +5916,9 @@ ep3_laamps.5025 = {
 			}
 		}
 	}
-	
+
 	#It's best to keep options open
-	option = { 
+	option = {
 		name = ep3_laamps.5025.c
 
 		flavor = ep3_laamps.5025.c.flavor
@@ -5882,7 +5936,7 @@ ep3_laamps.5025 = {
 					title = ep3_laamps.5025.c.toast
 					left_icon = root
 
-					add_trait = flexible_leader 
+					add_trait = flexible_leader
 				}
 			}
 		}
@@ -5894,7 +5948,7 @@ ep3_laamps.5025 = {
 			change_provisions = medium_provisions_gain
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			fickle = medium_stress_impact_loss
 			stubborn = medium_stress_impact_gain
 		}
@@ -5909,7 +5963,7 @@ ep3_laamps.5025 = {
 }
 
 # Local tavern owner disrespects you
-ep3_laamps.5030 = { 
+ep3_laamps.5030 = {
 	type = character_event
 	title = ep3_laamps.5030.t
 	desc = ep3_laamps.5030.desc
@@ -5929,7 +5983,7 @@ ep3_laamps.5030 = {
 		#Standard checks
 		has_ep3_dlc_trigger = yes
 		has_government = landless_adventurer_government
-		is_available_allow_travelling = yes #Unop Ensure availability
+		is_available_allow_travelling = yes
 		is_location_valid_for_travel_event_on_land = yes
 	}
 
@@ -5974,13 +6028,14 @@ ep3_laamps.5030 = {
 				location = root.location
 				culture = location.culture
 				faith = location.faith
+				rite = location.rite
 				gender_female_chance = {
 					if = {
-						limit = { root.faith = { has_doctrine = doctrine_gender_male_dominated } }
+						limit = { root.rite = { rite_has_doctrine = doctrine_gender_male_dominated } }
 						add = 100
 					}
 					else_if = {
-						limit = { root.faith = { has_doctrine = doctrine_gender_female_dominated } }
+						limit = { root.rite = { rite_has_doctrine = doctrine_gender_female_dominated } }
 						add = 0
 					}
 					else = {
@@ -5997,7 +6052,7 @@ ep3_laamps.5030 = {
 	}
 
 	#Ah, forget about it, give me a drink
-	option = { 
+	option = {
 		name = ep3_laamps.5030.a
 
 		trigger = {
@@ -6011,7 +6066,7 @@ ep3_laamps.5030 = {
 			years = 3
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = major_stress_impact_loss
 		}
 
@@ -6024,10 +6079,10 @@ ep3_laamps.5030 = {
 	}
 
 	#Don't you know who I am?
-	option = { 
+	option = {
 		name = ep3_laamps.5030.b
 
-		trigger = {		
+		trigger = {
 			dynasty = {
 				dynasty_prestige_level >= medium_dynasty_prestige_level
 			}
@@ -6055,7 +6110,7 @@ ep3_laamps.5030 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_loss
 			arrogant = minor_stress_impact_loss
 			humble = medium_stress_impact_gain
@@ -6070,7 +6125,7 @@ ep3_laamps.5030 = {
 	}
 
 	#Threaten them
-	option = { 
+	option = {
 		name = ep3_laamps.5030.c
 
 		add_internal_flag = dangerous
@@ -6182,7 +6237,7 @@ ep3_laamps.5030 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = miniscule_stress_impact_loss
 			paranoid = minor_stress_impact_gain
 		}
@@ -6196,7 +6251,7 @@ ep3_laamps.5030 = {
 	}
 
 	#Try to barter
-	option = { 
+	option = {
 		name = ep3_laamps.5030.d
 
 		duel = {
@@ -6245,16 +6300,16 @@ ep3_laamps.5030 = {
 		ai_chance = {
 			base = 100
 			ai_value_modifier = {
-				ai_compassion = 1 
+				ai_compassion = 1
 			}
 		}
 	}
 
 	#Take the insult
-	option = { 
+	option = {
 		name = tournament_events.0161.c
-		
-		stress_impact = {
+
+		stress_and_fulfillment_impact = {
 			base = minor_stress_gain
 			arrogant = minor_stress_impact_gain
 		}
@@ -6262,11 +6317,11 @@ ep3_laamps.5030 = {
 		ai_chance = {
 			base = 100
 			ai_value_modifier = {
-				ai_compassion = 1 
+				ai_compassion = 1
 			}
 		}
 	}
-	
+
 	after = {
 		scope:innkeeper = {
 			silent_disappearance_ai_if_created_effect = yes
@@ -6281,7 +6336,7 @@ ep3_laamps.5035 = {
 	desc = ep3_laamps.5035.desc
 	theme = landless_adventurer
 	override_background = {
-		reference = terrain 
+		reference = terrain
 	}
 	left_portrait = {
 		character = root
@@ -6312,7 +6367,7 @@ ep3_laamps.5035 = {
 		#Standard checks
 		has_ep3_dlc_trigger = yes
 		has_government = landless_adventurer_government
-		is_available_allow_travelling = yes #Unop Ensure availability
+		is_available_allow_travelling = yes
 		is_location_valid_for_travel_event_on_land = yes
 	}
 
@@ -6335,7 +6390,6 @@ ep3_laamps.5035 = {
 		location = {
 			save_scope_as = location
 		}
-		#Unop ck3-tiger save scope:guide before referencing it in artifact_can_be_gift_to_trigger below
 		if = {
 			limit = {
 				any_pool_character = {
@@ -6363,6 +6417,7 @@ ep3_laamps.5035 = {
 				location = root.location
 				culture = location.culture
 				faith = location.faith
+				rite = location.rite
 				gender_female_chance = 50
 				dynasty = none
 				save_scope_as = guide
@@ -6422,10 +6477,36 @@ ep3_laamps.5035 = {
 				set_max_durability = 25
 			}
 		}
+		if = { #Grab a random, inexpensive artifact if you have it
+			limit = {
+				any_character_artifact = {
+					NOT = {
+						has_artifact_modifier = artifact_guide_map_modifier
+					}
+					artifact_can_be_gift_to_trigger = { RECIPIENT = scope:guide }
+				}
+			}
+			random_character_artifact = {
+				limit = {
+					NOT = {
+						has_artifact_modifier = artifact_guide_map_modifier
+					}
+					artifact_can_be_gift_to_trigger = { RECIPIENT = scope:guide }
+				}
+				weight = {
+					base = 1
+					modifier = {
+						rarity = common
+						add = 2
+					}
+				}
+				save_scope_as = random_artifact
+			}
+		}
 	}
 
 	#Recruit them permanently
-	option = { 
+	option = {
 		name = ep3_laamps.5035.a
 
 		pay_short_term_gold = {
@@ -6441,7 +6522,7 @@ ep3_laamps.5035 = {
 			CANDIDATE = scope:guide
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			trusting = minor_stress_impact_loss
 			paranoid = minor_stress_impact_gain
 		}
@@ -6455,7 +6536,7 @@ ep3_laamps.5035 = {
 	}
 
 	#Buy maps off them
-	option = { 
+	option = {
 		name = ep3_laamps.5035.b
 
 		pay_short_term_gold = {
@@ -6467,7 +6548,7 @@ ep3_laamps.5035 = {
 			set_owner = root
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			trusting = minor_stress_impact_gain
 			paranoid = minor_stress_impact_loss
 		}
@@ -6481,7 +6562,7 @@ ep3_laamps.5035 = {
 	}
 
 	#Trust their guidance
-	option = { 
+	option = {
 		name = ep3_laamps.5035.c
 
 		pay_short_term_gold = {
@@ -6536,7 +6617,7 @@ ep3_laamps.5035 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = miniscule_stress_impact_loss
 			paranoid = minor_stress_impact_gain
 		}
@@ -6550,7 +6631,7 @@ ep3_laamps.5035 = {
 	}
 
 	#Reject them
-	option = { 
+	option = {
 		name = ep3_laamps.5035.d
 
 		flavor = ep3_laamps.5035.d.tt
@@ -6571,7 +6652,7 @@ ep3_laamps.5035 = {
 		ai_chance = {
 			base = 100
 			ai_value_modifier = {
-				ai_greed = 1 
+				ai_greed = 1
 			}
 		}
 	}
@@ -6595,7 +6676,7 @@ ep3_laamps.5040 = {
 		#Standard checks
 		has_ep3_dlc_trigger = yes
 		has_government = landless_adventurer_government
-		is_available_allow_travelling = yes #Unop Ensure availability
+		is_available_allow_travelling = yes
 		is_location_valid_for_travel_event_on_land = yes
 	}
 
@@ -6630,6 +6711,7 @@ ep3_laamps.5040 = {
 				location = root.location
 				culture = location.culture
 				faith = location.faith
+				rite = location.rite
 				dynasty = none
 				save_scope_as = merchant
 				after_creation = {
@@ -6644,7 +6726,7 @@ ep3_laamps.5040 = {
 	}
 
 	#Go searching in the ruins
-	option = { 
+	option = {
 		name = ep3_laamps.5040.a
 
 		random_list = {
@@ -6661,7 +6743,7 @@ ep3_laamps.5040 = {
 					title = ep3_laamps.5040.a.bigsuccess
 					left_icon = root
 					right_icon = scope:newly_created_artifact
-					custom_tooltip = ep3_laamps.5040.a.bigsuccess.tt	
+					custom_tooltip = ep3_laamps.5040.a.bigsuccess.tt
 				}
 			}
 			64 = { #You discover a small trinket
@@ -6692,7 +6774,7 @@ ep3_laamps.5040 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			trusting = miniscule_stress_impact_loss
 			paranoid = minor_stress_impact_gain
 			brave = miniscule_stress_impact_loss
@@ -6708,7 +6790,7 @@ ep3_laamps.5040 = {
 	}
 
 	#Buy supplies
-	option = { 
+	option = {
 		name = ep3_laamps.5040.b
 
 		domicile = {
@@ -6717,7 +6799,7 @@ ep3_laamps.5040 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = minor_stress_impact_gain
 			generous = minor_stress_impact_loss
 		}
@@ -6757,7 +6839,7 @@ ep3_laamps.5045 = {
 		#Standard checks
 		has_ep3_dlc_trigger = yes
 		has_government = landless_adventurer_government
-		is_available_allow_travelling = yes #Unop Ensure availability
+		is_available_allow_travelling = yes
 		is_location_valid_for_travel_event_on_land = yes
 		location.barony.holder ?= {
 			is_available_ai_adult = yes
@@ -6794,7 +6876,7 @@ ep3_laamps.5045 = {
 					save_temporary_scope_as = vassal_check
 					5025_can_spawn_contract_trigger = { LAAMP = root EMPLOYER = scope:vassal_check }
 				}
-				add_to_temporary_list = potential_contract_employers 
+				add_to_temporary_list = potential_contract_employers
 			}
 		}
 		#Can we _actually_ spawn two contracts?
@@ -6802,7 +6884,7 @@ ep3_laamps.5045 = {
 			limit = {
 				any_in_list = {
 					list = potential_contract_employers
-					count >= 2 
+					count >= 2
 				}
 			}
 			save_scope_as = spawn_task_contract_option_available
@@ -6921,7 +7003,7 @@ ep3_laamps.5045 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = miniscule_stress_impact_loss
 			content = minor_stress_impact_gain
 			diligent = miniscule_stress_impact_loss
@@ -6937,7 +7019,7 @@ ep3_laamps.5045 = {
 	}
 
 	#Ask for gold
-	option = { 
+	option = {
 		name = ep3_laamps.5045.b
 
 		add_gold = { 5 20 }
@@ -6949,7 +7031,7 @@ ep3_laamps.5045 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = miniscule_stress_impact_loss
 		}
 
@@ -6962,7 +7044,7 @@ ep3_laamps.5045 = {
 	}
 
 	#Ask for provisions
-	option = { 
+	option = {
 		name = ep3_laamps.5045.c
 
 		domicile = {
@@ -6978,7 +7060,7 @@ ep3_laamps.5045 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_gain
 			content = miniscule_stress_impact_loss
 			greedy = miniscule_stress_impact_loss
@@ -6993,7 +7075,7 @@ ep3_laamps.5045 = {
 	}
 
 	#Ask for work
-	option = { 
+	option = {
 		name = ep3_laamps.5045.d
 		trigger = { exists = scope:spawn_task_contract_option_available }
 		reverse_add_opinion = {
@@ -7007,7 +7089,7 @@ ep3_laamps.5045 = {
 			SPAWN_CONTRACTS = 2
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = miniscule_stress_impact_loss
 			content = minor_stress_impact_gain
 			brave = miniscule_stress_impact_loss
@@ -7070,7 +7152,7 @@ ep3_laamps.5999 = {
 					is_alive = yes
 				}
 				save_scope_as = harald
-			}		
+			}
 		}
 		character:364 = {
 			if = {
@@ -7078,16 +7160,16 @@ ep3_laamps.5999 = {
 					is_alive = yes
 				}
 				save_scope_as = flanders #I can't be bothered spelling Boujewijingjn ok
-			}		
+			}
 		}
 		character:114 = {
-			save_scope_as = edward			
+			save_scope_as = edward
 		}
 		location = {
 			save_scope_as = location
 		}
 	}
- 	
+
 	option = { #Let's wait and see
 		name = ep3_laamps.5999.a
 
@@ -7096,7 +7178,7 @@ ep3_laamps.5999 = {
 			years = 5
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = miniscule_stress_impact_loss
 		}
 
@@ -7116,7 +7198,7 @@ ep3_laamps.5999 = {
 			SPAWN_CONTRACTS = 1
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_gain
 		}
 
@@ -7183,7 +7265,7 @@ ep3_laamps.6000 = {
 			save_scope_as = ely
 		}
 	}
- 	
+
 	option = { #Set sail at once!
 		name = {
 			text = ep3_laamps.6000.a.dead
@@ -7216,7 +7298,7 @@ ep3_laamps.6000 = {
 			travel_with_domicile = yes
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_loss
 		}
 
@@ -7240,7 +7322,7 @@ ep3_laamps.6000 = {
 			modifier = demanded_eviction_opinion
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_gain
 		}
 
@@ -7267,10 +7349,10 @@ ep3_laamps.6001 = {
 	}
 	lower_center_portrait = scope:brother
 	override_effect_2d = {
-		reference = fog	
+		reference = fog
 	}
 	override_effect_2d = {
-		reference = fog	
+		reference = fog
 	}
 
 	trigger = {
@@ -7305,7 +7387,7 @@ ep3_laamps.6001 = {
 				culture = culture:norman
 				faith = faith:catholic
 				save_scope_as = frederick
-			}			
+			}
 		}
 		hidden_effect = { #Finally, kill Oslac
 			scope:brother = {
@@ -7316,7 +7398,7 @@ ep3_laamps.6001 = {
 			}
 		}
 	}
- 	
+
 	option = { #Initiate the duel
 		name = ep3_laamps.6001.a
 
@@ -7333,7 +7415,7 @@ ep3_laamps.6001 = {
 			INVALIDATION_EVENT = fp1_yearly.2002 #Re-use this, though SHOULD never invalidate
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			vengeful = minor_stress_impact_loss
 		}
 
@@ -7386,7 +7468,7 @@ ep3_laamps.6001 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			wrathful = minor_stress_impact_gain
 		}
 
@@ -7435,6 +7517,7 @@ ep3_laamps.6003 = {
 	}
 
 	immediate = {
+		add_trait = the_wake
 		if = { #If Frederick's brother still exists, Nemesis'em
 			limit = {
 				character:172 = {
@@ -7449,7 +7532,7 @@ ep3_laamps.6003 = {
 			}
 		}
 	}
- 	
+
 	option = { #Swear vengeance
 		name = ep3_laamps.6003.a
 
@@ -7458,7 +7541,7 @@ ep3_laamps.6003 = {
 			value = 15
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_loss
 		}
 
@@ -7566,6 +7649,7 @@ ep3_laamps.6005 = {
 			template = wetlands_commander_character
 			culture = root.culture
 			faith = root.faith
+			rite = root.rite
 			save_scope_as = wetlands_commander
 		}
 
@@ -7592,7 +7676,7 @@ ep3_laamps.6005 = {
 			change_provisions = minor_provisions_gain
 		}
 	}
- 	
+
 	option = { #Raid to acquire wealth
 		name = ep3_laamps.6005.a
 
@@ -7704,11 +7788,13 @@ ep3_laamps.6010 = {
 
 		ai_chance = {
 			base = 100
-		}		
+		}
 	}
 
 	option = { #...no.
 		name = ep3_laamps.6010.b
+
+		custom_tooltip = ep3_laamps.6000.b.tt
 
 		reverse_add_opinion = {
 			target = scope:powerful_vassal
@@ -7755,7 +7841,7 @@ ep3_laamps.6015 = {
 			}
 		}
 	}
- 	
+
 	option = { #You have my support
 		name = ep3_laamps.6015.a
 
@@ -7847,7 +7933,7 @@ ep3_laamps.6016 = {
 	desc = {
 		first_valid = {
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					scope:powerful_vassal = {
 						has_character_flag = annoyed_flag
 					}
@@ -7855,7 +7941,7 @@ ep3_laamps.6016 = {
 				desc = ep3_laamps.6016.frustrated
 			}
 			triggered_desc = {
-				trigger = { 
+				trigger = {
 					scope:powerful_vassal = {
 						has_character_flag = happy_flag
 					}
@@ -7929,6 +8015,7 @@ ep3_laamps.6016 = {
 ep3_laamps.6020 = {
 	type = character_event
 	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/splash_icons/splash_laamp.dds"
 	title = ep3_laamps.6020.t
 	desc = ep3_laamps.6020.desc
 	theme = realm
@@ -7955,19 +8042,38 @@ ep3_laamps.6020 = {
 			}
 		}
 	}
- 	
+
 	option = { #Oh lort here we go
 		name = ep3_laamps.6020.a
 
 		every_in_list = {
 			list = aethelings
 			custom = every_aetheling
-			every_sub_realm_county = { #Unop: Changed from every_realm_county since it should only affect counties of aethelings
+			every_sub_realm_county = {
 				custom = every_county
 				change_county_control = 25
 				add_county_modifier = {
 					modifier = ep3_harried_modifier
 					years = 15
+				}
+			}
+
+			hidden_effect = {
+				send_interface_message = {
+					title = harrying_of_the_north_tt
+					left_icon = scope:william
+
+					custom_tooltip = harrying_of_the_north_started
+					show_as_tooltip = {
+						every_sub_realm_county = {
+							custom = every_county
+							change_county_control = 25
+							add_county_modifier = {
+								modifier = ep3_harried_modifier
+								years = 15
+							}
+						}
+					}
 				}
 			}
 		}
@@ -7995,6 +8101,7 @@ ep3_laamps.6020 = {
 ep3_laamps.6021 = {
 	type = character_event
 	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/splash_icons/splash_laamp.dds"
 	title = ep3_laamps.6020.t
 	desc = ep3_laamps.6021.desc
 	theme = realm
@@ -8021,7 +8128,7 @@ ep3_laamps.6021 = {
 			}
 		}
 	}
- 	
+
 	option = { #Oh lort here we go
 		name = ep3_laamps.6020.a
 
@@ -8093,7 +8200,7 @@ ep3_laamps.7000 = {
 			save_scope_as = heir
 		}
 	}
- 	
+
 	option = { #I'll go to Scotland
 		name = ep3_laamps.7000.a
 
@@ -8104,6 +8211,7 @@ ep3_laamps.7000 = {
 				add_claim_on_loss = no
 			}
 			every_held_title = {
+				title_tier >= county
 				change_title_holder_include_vassals = {
 					holder = scope:heir
 					change = scope:change
@@ -8129,7 +8237,7 @@ ep3_laamps.7000 = {
 			return_trip = no # One way
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_loss
 		}
 
@@ -8152,6 +8260,7 @@ ep3_laamps.7000 = {
 				add_claim_on_loss = no
 			}
 			every_held_title = {
+				title_tier >= county
 				change_title_holder_include_vassals = {
 					holder = scope:heir
 					change = scope:change
@@ -8177,7 +8286,7 @@ ep3_laamps.7000 = {
 			return_trip = no # One way
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_loss
 		}
 
@@ -8195,7 +8304,7 @@ ep3_laamps.7000 = {
 
 		add_prestige = major_prestige_gain
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_gain
 		}
 
@@ -8229,11 +8338,11 @@ ep3_laamps.7001 = {
 	trigger = {
 		has_ep3_dlc_trigger = yes
 		has_government = landless_adventurer_government
-		character:90028 = {
-			exists = this
+		character:90028 ?= {
+			is_alive = yes
 		}
-		character:161266 = {
-			exists = this
+		character:161266 ?= {
+			is_alive = yes
 		}
 	}
 
@@ -8247,7 +8356,7 @@ ep3_laamps.7001 = {
 		}
 		ep3_harrying_widget_setup_effect = yes
 	}
- 	
+
 	option = { #Of course, come on in!
 		name = ep3_laamps.7001.a
 
@@ -8255,7 +8364,7 @@ ep3_laamps.7001 = {
 
 		ep3_increase_resistance_effect = { AMOUNT = harrying_medium_increase_value }
 
-		hidden_effect = { #Unop: So it's not displayed an empty 100% chance of nothing
+		hidden_effect = {
 			random = {
 				chance = {
 					value = 5
@@ -8271,7 +8380,7 @@ ep3_laamps.7001 = {
 			}
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_loss
 			gregarious = minor_stress_impact_loss
 		}
@@ -8294,7 +8403,7 @@ ep3_laamps.7001 = {
 			opinion = -20
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = minor_stress_impact_gain
 			callous = minor_stress_impact_loss
 		}
@@ -8346,23 +8455,21 @@ ep3_laamps.7002 = {
 
 	trigger = {
 		has_ep3_dlc_trigger = yes
-		character:90028 = {
-			exists = this
+		character:90028 ?= {
+			is_alive = yes
 		}
-		character:161266 = {
-			exists = this
+		character:161266 ?= {
+			is_alive = yes
 			location = root.location
 		}
 		title:e_byzantium = {
-			exists = this
+			exists = holder
 		}
 		title:k_england = {
-			exists = this
+			exists = holder
 		}
-		title:c_zichia.holder = {
-			NOT = {
-				this = title:e_byzantium.holder
-			}
+		title:c_zichia.holder ?= {
+			this != title:e_byzantium.holder
 		}
 	}
 
@@ -8385,7 +8492,7 @@ ep3_laamps.7002 = {
 
 		ep3_laamps_7002_ai_siward_leaves_effect = yes
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = minor_stress_impact_loss
 		}
 
@@ -8531,7 +8638,7 @@ ep3_laamps.7003 = {
 			return_trip = no # One way
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_loss
 		}
 
@@ -8728,20 +8835,9 @@ ep3_laamps.7004 = {
 	}
 
 	immediate = {
-		if = {
-			limit = {
-				scope:zichia.holder.top_liege = {
-					government_has_flag = government_is_herder 
-				}
-			}
-			scope:zichia.holder.suzerain = {
-				save_scope_as = title_holder
-			}
-		}
-		else = {
-			scope:zichia.holder.top_liege = {
-				save_scope_as = title_holder
-			}
+		scope:zichia.holder.top_liege = {
+			save_scope_as = title_holder
+			save_scope_as = government_giver
 		}
 		hidden_effect = {
 			add_unpressed_claim = title:c_zichia
@@ -8814,74 +8910,11 @@ ep3_laamps.7004 = {
 				modifier = ep3_ennobled_adventurer_modifier_1
 				years = 10
 			}
-			scope:target.holder ?= {
-				save_scope_as = new_liege #Unop: So we actually become a vassal of the holder.
-				switch = {
-					trigger = government_has_flag
-					government_is_nomadic = {
-						root = { change_government = nomad_government }
-					}
-					government_is_herder = {
-						root = { change_government = nomad_government }
-					}
-					government_is_administrative = {
-						root = { change_government = administrative_government }
-					}
-					government_is_clan = {
-						root = { change_government = clan_government }
-					}
-					government_is_tribal = {
-						root = { change_government = tribal_government }
-					}
-					government_is_feudal = { #Unop: To not break if one day there is more gov
-						root = { change_government = feudal_government }
-					}
-				}
-			}
+			assign_new_government_effect = yes
 		}
 
 		hidden_effect = {
-			## Nomad.
-			if = {
-				limit = {
-					OR = {
-						government_has_flag = government_is_nomadic
-						scope:new_liege ?= { government_has_flag = government_is_nomadic }
-						scope:new_liege ?= { government_has_flag = government_is_herder }
-						scope:old_government ?= flag:nomad
-						scope:new_capital.title_province = { #Unop ck3-tiger
-							OR = {
-								has_holding_type = nomad_holding
-								has_holding_type = herder_holding
-							}
-						}
-					}
-				}
-				change_government = nomad_government
-			}
-			## Administrative.
-			else_if = {
-				limit = {
-					scope:new_liege ?= { government_has_flag = government_is_administrative }
-				}
-				change_government = administrative_government
-			}
-			## Clan.
-			else_if = {
-				limit = {
-					scope:new_liege ?= { government_has_flag = government_is_clan }
-				}
-				change_government = clan_government
-			}
-			## Tribal.
-			else_if = {
-				limit = {
-					scope:new_liege ?= { government_has_flag = government_is_tribal }
-				}
-				change_government = tribal_government
-			}
-			## Else feudal.
-			else = { change_government = feudal_government }
+			assign_new_government_effect = yes
 		}
 
 		scope:zichia = {
@@ -8892,7 +8925,7 @@ ep3_laamps.7004 = {
 			set_color_from_title = title:k_england
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_loss
 			greedy = minor_stress_impact_gain #Unop: Changed to minor since purchase_land_interaction_effect is already applying a minor stress effect (so in the end it's the same as before)
 		}
@@ -8911,7 +8944,7 @@ ep3_laamps.7004 = {
 			target_title = title:c_zichia
 		}
 
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_loss
 			greedy = minor_stress_impact_loss
 			craven = medium_stress_impact_gain
@@ -8948,6 +8981,7 @@ ep3_laamps.9971 = {
 				location = root.location
 				culture = root.location.culture
 				faith = root.location.faith
+				rite = root.location.rite
 				gender_female_chance = 50
 			}
 			create_character = {
@@ -8955,6 +8989,7 @@ ep3_laamps.9971 = {
 				location = root.location
 				culture = root.location.culture
 				faith = root.location.faith
+				rite = root.location.rite
 				gender_female_chance = 50
 			}
 			create_character = {
@@ -8962,6 +8997,7 @@ ep3_laamps.9971 = {
 				location = root.location
 				culture = root.location.culture
 				faith = root.location.faith
+				rite = root.location.rite
 				gender_female_chance = 50
 			}
 			create_character = {
@@ -8969,6 +9005,7 @@ ep3_laamps.9971 = {
 				location = root.location
 				culture = root.location.culture
 				faith = root.location.faith
+				rite = root.location.rite
 				gender_female_chance = 50
 			}
 			create_character = {
@@ -8976,6 +9013,7 @@ ep3_laamps.9971 = {
 				location = root.location
 				culture = root.location.culture
 				faith = root.location.faith
+				rite = root.location.rite
 				gender_female_chance = 50
 			}
 			create_character = {
@@ -8983,6 +9021,7 @@ ep3_laamps.9971 = {
 				location = root.location
 				culture = root.location.culture
 				faith = root.location.faith
+				rite = root.location.rite
 				gender_female_chance = 50
 			}
 		}
@@ -9031,7 +9070,7 @@ ep3_laamps.9981 = {
 		}
 		# And fire us again in a bit.
 		if = {
-			limit = { 
+			limit = {
 				var:contract_passive_spawn_tally < 2
 			}
 			trigger_event = {

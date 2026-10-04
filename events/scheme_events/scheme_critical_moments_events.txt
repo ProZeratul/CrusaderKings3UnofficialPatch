@@ -18,7 +18,7 @@ namespace = scheme_critical_moments
 # 1081 - 1090	Learn Language
 # 1091 - 1100	Abduct Regent
 # 1101 - 1110	Claim Throne
-# 1111 - 1120	Steal Back Artefact
+# 1111 - 1120	Steal Back Artifact
 # 1121 - 1130	Convert to Witchcraft
 # 1131 - 1140   Slander
 # 1141 - 1150   Promote
@@ -104,13 +104,13 @@ scripted_effect roll_scheme_success_or_failure_effect = {
 		if = {
 			limit = { exists = scope:scheme_successful }
 			mandala_trickster_increment_successful_schemes_effect = yes
-			#Unop Pre-determine success type here to avoid potentially incorrect tooltip in $SUCCESS_EVENT$
+			# Pre-determine success type here to avoid potentially incorrect tooltip in $SUCCESS_EVENT$
 			random_list = {
 				67 = {
-					save_scope_value_as = { name = unop_success_type value = flag:success_standard }
+					save_scope_value_as = { name = scheme_success_type value = flag:success_standard }
 				}
 				33 = {
-					save_scope_value_as = { name = unop_success_type value = flag:success_critical }
+					save_scope_value_as = { name = scheme_success_type value = flag:success_critical }
 				}
 			}
 			trigger_event = $SUCCESS_EVENT$
@@ -371,7 +371,7 @@ scheme_critical_moments.0001 = {
 						scheme_success_chance >= 50
 						# You're landless and have a so-so shot.
 						AND = {
-							scheme_owner = { is_ruler = no } #Unop ck3-tiger Use correct scope
+							scheme_owner = { is_ruler = no }
 							scope:scheme.scheme_success_chance >= 20
 						}
 						# Or you've run out of potential.
@@ -472,8 +472,8 @@ scheme_critical_moments.0001 = {
 			# Let's go again.
 			## Hack fix for murder.
 			if = {
-				limit = { scheme_type = murder } #Unop Use correct scheme type
-				root = { remove_character_flag = currently_in_scheme_preparations } #Unop Use correct scope
+				limit = { scheme_type = murder }
+				root = { remove_character_flag = currently_in_scheme_preparations }
 				roll_critical_moment_options_06_agent_types_effect = {
 					# Success results event.
 					OUTPUT_EVENT = scheme_critical_moments.1001
@@ -498,9 +498,9 @@ scheme_critical_moments.0001 = {
 				}
 			}
 			## Hack fix for seduction.
-			if = {
+			else_if = {
 				limit = { scheme_type = seduce }
-				root = { remove_character_flag = currently_in_scheme_preparations } #Unop use correct scope
+				root = { remove_character_flag = currently_in_scheme_preparations }
 				roll_critical_moment_options_07_agent_types_effect = {
 					# Success results event.
 					OUTPUT_EVENT = scheme_critical_moments.1011
@@ -704,9 +704,9 @@ scheme_critical_moments.0002 = {
 	}
 
 	trigger = {
-		NOR = {
-			has_character_flag = currently_in_scheme_preparations
-			has_character_flag = currently_in_scheme_reminder
+		has_none_of_variables = {
+			name = currently_in_scheme_preparations
+			name = currently_in_scheme_reminder
 		}
 	}
 
@@ -1621,12 +1621,12 @@ scheme_critical_moments.1101 = {
 }
 
 ##################################################
-# Steal Back Artefact Results
+# Steal Back Artifact Results
 # (shifted here) by Ewan Cowhig Croft
 # 1111 - 1120
 ##################################################
 
-#	Results event for the Steal Back Artefact scheme.
+#	Results event for the Steal Back Artifact scheme.
 scheme_critical_moments.1111 = {
 	hidden = yes
 
@@ -1926,7 +1926,7 @@ scheme_critical_moments.1133 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			ambitious = minor_stress_impact_gain
 			deceitful = minor_stress_impact_gain
@@ -2548,10 +2548,7 @@ scheme_critical_moments.1174 = {
 		}
 		custom_tooltip = {
 			text = status_challenged_success_tt
-			house = { #Unop: I guess the empty if is a leftover ?
-				#if = {
-
-				#}
+			house = {
 				add_to_variable_list = {
 					name = status_challenged_by
 					target = scope:owner
@@ -2805,14 +2802,6 @@ scheme_critical_moments.1202 = {
 		scope:target.holder = {
 			remove_treasury = scope:scheme.var:embezzlement_stake_initial
 		}
-	}
-
-	option = {
-		name = scheme_critical_moments.1202.b
-	}
-
-	after = {
-		custom_tooltip = celestial_siphon_treasury_interaction.total_value
 		if = {
 			limit = {
 				NOT = { exists = scope:scheme_discovered }
@@ -2843,6 +2832,51 @@ scheme_critical_moments.1202 = {
 				}
 			}
 		}
+	}
+
+	option = {
+		name = scheme_critical_moments.1202.b
+		if = {
+			limit = {
+				NOT = { exists = scope:scheme_discovered }
+			}
+			add_secret = {
+				type = secret_siphoned_treasury
+				target = scope:target.holder
+			}
+			random_secret = {
+				limit = {
+					secret_type = secret_siphoned_treasury
+					secret_target = scope:target.holder
+				}
+				set_variable = {
+					name = embezzlement_stake
+					value = scope:scheme.var:embezzlement_stake
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:target.holder != scope:owner
+			}
+			scope:target.holder = {
+				add_opinion = {
+					target = scope:owner
+					modifier = siphoned_treasury_crime
+				}
+			}
+		}
+	}
+
+	option = {
+		name = scheme_critical_moments.1202.c
+		trigger = {
+			scope:scheme.scheme_secrecy = 100
+		}
+	}
+
+	after = {
+		custom_tooltip = celestial_siphon_treasury_interaction.total_value
 		scope:scheme = {
 			end_scheme = yes
 		}
@@ -3140,7 +3174,7 @@ scheme_critical_moments.1213 = {
 			limit = { exists = scope:scheme_discovered }
 			show_as_tooltip = { result_discovered_attempted_disbelieve_mandala_effect = yes }
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			ambitious = minor_stress_impact_gain
 			deceitful = minor_stress_impact_gain
@@ -3374,7 +3408,7 @@ scheme_critical_moments.1223 = {
 	}
 	lower_right_portrait = scope:target
 	immediate = {
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			ambitious = minor_stress_impact_gain
 			deceitful = minor_stress_impact_gain
@@ -3710,7 +3744,7 @@ scheme_critical_moments.1226 = {
 					value = scope:owner
 				}
 			}
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				honest = medium_stress_impact_gain
 				just = minor_stress_impact_gain
 			}
@@ -4133,7 +4167,7 @@ scheme_critical_moments.1243 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			ambitious = minor_stress_impact_gain
 			deceitful = minor_stress_impact_gain
@@ -4281,7 +4315,7 @@ scheme_critical_moments.1253 = {
 		animation = disappointed
 	}
 	immediate = {
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			ambitious = minor_stress_impact_gain
 			deceitful = minor_stress_impact_gain
@@ -4896,141 +4930,6 @@ scheme_critical_moments.2841 = {
 # 2901 - 2910
 ##################################################
 
-# Realistically, not every government type below would be valid for the scheme, but all government types have been included for completeness and mod support
-scripted_effect save_target_government_as_variable_effect = {
-	switch = {
-		trigger = has_government
-		feudal_government = {
-			scope:scheme.scheme_owner = {
-				save_scope_value_as = {
-					name = old_government_type
-					value = flag:feudal
-				}
-			}
-		}
-		republic_government = {
-			scope:scheme.scheme_owner = {
-				save_scope_value_as = {
-					name = old_government_type
-					value = flag:republic
-				}
-			}
-		}
-		theocracy_government = {
-			scope:scheme.scheme_owner = {
-				save_scope_value_as = {
-					name = old_government_type
-					value = flag:theocracy
-				}
-			}
-		}
-		clan_government = {
-			scope:scheme.scheme_owner = {
-				save_scope_value_as = {
-					name = old_government_type
-					value = flag:clan
-				}
-			}
-		}
-		tribal_government = {
-			scope:scheme.scheme_owner = {
-				save_scope_value_as = {
-					name = old_government_type
-					value = flag:tribal
-				}
-			}
-		}
-		wanua_government = {
-			scope:scheme.scheme_owner = {
-				save_scope_value_as = {
-					name = old_government_type
-					value = flag:wanua
-				}
-			}
-		}
-		holy_order_government = {
-			scope:scheme.scheme_owner = {
-				save_scope_value_as = {
-					name = old_government_type
-					value = flag:holy_order
-				}
-			}
-		}
-		administrative_government = {
-			scope:scheme.scheme_owner = {
-				save_scope_value_as = {
-					name = old_government_type
-					value = flag:administrative
-				}
-			}
-		}
-		nomad_government = {
-			scope:scheme.scheme_owner = {
-				save_scope_value_as = {
-					name = old_government_type
-					value = flag:nomad
-				}
-			}
-		}
-		herder_government = {
-			scope:scheme.scheme_owner = {
-				save_scope_value_as = {
-					name = old_government_type
-					value = flag:herder
-				}
-			}
-		}
-		celestial_government = {
-			scope:scheme.scheme_owner = {
-				save_scope_value_as = {
-					name = old_government_type
-					value = flag:celestial
-				}
-			}
-		}
-		mandala_government = {
-			scope:scheme.scheme_owner = {
-				save_scope_value_as = {
-					name = old_government_type
-					value = flag:mandala
-				}
-			}
-		}
-		steppe_admin_government = {
-			scope:scheme.scheme_owner = {
-				save_scope_value_as = {
-					name = old_government_type
-					value = flag:steppe_admin
-				}
-			}
-		}
-		meritocratic_government = {
-			scope:scheme.scheme_owner = {
-				save_scope_value_as = {
-					name = old_government_type
-					value = flag:meritocratic
-				}
-			}
-		}
-		japan_feudal_government = {
-			scope:scheme.scheme_owner = {
-				save_scope_value_as = {
-					name = old_government_type
-					value = flag:japan_feudal
-				}
-			}
-		}
-		japan_administrative_government = {
-			scope:scheme.scheme_owner = {
-				save_scope_value_as = {
-					name = old_government_type
-					value = flag:japan_administrative
-				}
-			}
-		}
-	}
-}
-
 #	Results event.
 scheme_critical_moments.2901 = {
 	hidden = yes
@@ -5097,7 +4996,7 @@ scheme_critical_moments.2901 = {
 				if = {
 					limit = { exists = scope:scheme_successful }
 					scope:scheme.scheme_target_character = {
-						save_target_government_as_variable_effect = yes # we need this here to build the "Has Happened" tooltip in the following event properly
+						save_old_government_effect = yes
 					}
 					trigger_event = ep3_laamps.0401
 				}
@@ -5232,7 +5131,7 @@ scheme_critical_moments.2923 = {
 
 	option = {
 		name = ep3_laamps.0402.a
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_gain
 			ambitious = medium_stress_impact_gain
 			arrogant = minor_stress_impact_gain
@@ -5540,7 +5439,7 @@ scheme_critical_moments.4001 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					scope:target = { has_title = title:e_byzantium }
+					scope:target = { is_roman_emperor_trigger = yes }
 				}
 				desc = scheme_critical_moments.4001.desc.byzantium
 			}
@@ -5737,7 +5636,7 @@ scheme_critical_moments.4012 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					scope:target = { has_title = title:e_byzantium }
+					scope:target = { is_roman_emperor_trigger = yes }
 				}
 				desc = scheme_critical_moments.4012.desc.byzantium
 			}
@@ -6036,7 +5935,7 @@ scheme_critical_moments.8003 = {
 				custom_tooltip = scheme_critical_moments.8003.tt.failed
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			ambitious = minor_stress_impact_gain
 			deceitful = minor_stress_impact_gain
@@ -6229,7 +6128,7 @@ scheme_critical_moments.8013 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			ambitious = minor_stress_impact_gain
 			deceitful = minor_stress_impact_gain
@@ -6558,7 +6457,7 @@ scheme_critical_moments.8023 = {
 	lower_right_portrait = scope:owner.top_liege
 
 	immediate = {
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			ambitious = minor_stress_impact_gain
 			deceitful = minor_stress_impact_gain
@@ -6627,20 +6526,29 @@ scripted_effect raid_maiming_assignment_effect = {
 					trigger = {
 						NOT = { has_trait = blind }
 					}
-					add_character_flag = raid_maiming_blind
+					set_variable = {
+						name = raid_estate_success_victim
+						value = trait:blind
+					}
 				}
 				10 = {
 					trigger = {
 						NOT = { has_trait = disfigured }
 					}
-					add_character_flag = raid_maiming_disfigured
+					set_variable = {
+						name = raid_estate_success_victim
+						value = trait:disfigured
+					}
 				}
 				10 = {
 					trigger = {
 						is_male = yes
 						NOT = { has_trait = eunuch }
 					}
-					add_character_flag = raid_maiming_eunuch
+					set_variable = {
+						name = raid_estate_success_victim
+						value = trait:eunuch_1
+					}
 				}
 			}
 		}
@@ -6664,7 +6572,6 @@ scheme_critical_moments.8031 = {
 					save_scope_as = scheme_permission
 				}
 				#DISCOVERY ROLL
-				#Unop Calculate discovery chance as 100 - secrecy
 				save_scope_value_as = {
 					name = discovery_chance
 					value = {
@@ -6673,7 +6580,7 @@ scheme_critical_moments.8031 = {
 					}
 				}
 				random = {
-					chance = scope:discovery_chance #Unop Use correct discovery chance
+					chance = scope:discovery_chance
 					save_scope_value_as = {
 						name = scheme_discovered
 						value = yes
@@ -6727,7 +6634,7 @@ scheme_critical_moments.8031 = {
 									limit = { exists = scope:scheme_maim }
 									NOR = {
 										has_trait = blind
-										is_eunuch_trigger = yes #Unop: Was has_trait = eunuch_1
+										is_eunuch_trigger = yes
 										has_trait = disfigured
 									}
 								}
@@ -6853,7 +6760,6 @@ scheme_critical_moments.8031 = {
 										has_domicile_building_or_higher = vineyard_01
 										has_domicile_building_or_higher = olive_01
 										has_domicile_building_or_higher = silk_01
-										#Unop Add missing domicile buildings
 										has_domicile_building_or_higher = market_01
 										has_domicile_building_or_higher = courtyard_01
 									}
@@ -7240,7 +7146,6 @@ scripted_effect raid_estate_success_effect = {
 				flag:olive = { ep3_raid_insight_effect = { TYPE = olive } }
 				flag:silk = { ep3_raid_insight_effect = { TYPE = silk } }
 				flag:tea = { ep3_raid_insight_effect = { TYPE = tea } }
-				#Unop Add missing domicile buildings
 				flag:market = { ep3_raid_insight_effect = { TYPE = market } }
 				flag:courtyard = { ep3_raid_insight_effect = { TYPE = courtyard } }
 			}
@@ -7312,7 +7217,15 @@ scripted_effect raid_estate_success_public_effect = {
 				random_list = {
 					10 = {
 						trigger = {
-							NOT = { has_trait = blind }
+							trigger_if = {
+								limit = {
+									has_variable = raid_estate_success_victim
+								}
+								var:raid_estate_success_victim = trait:blind
+							}
+							trigger_else = {
+								NOT = { has_trait = blind }
+							}
 						}
 						hidden_effect = {
 							if = {
@@ -7320,20 +7233,36 @@ scripted_effect raid_estate_success_public_effect = {
 								remove_trait = one_eyed
 							}
 						}
-						add_trait = blind
+						add_trait_force_tooltip = blind
 					}
 					10 = {
 						trigger = {
-							NOT = { has_trait = disfigured }
+							trigger_if = {
+								limit = {
+									has_variable = raid_estate_success_victim
+								}
+								var:raid_estate_success_victim = trait:disfigured
+							}
+							trigger_else = {
+								NOT = { has_trait = disfigured }
+							}
 						}
-						add_trait = disfigured
+						add_trait_force_tooltip = disfigured
 					}
 					10 = {
 						trigger = {
-							is_male = yes
-							NOT = { has_trait = eunuch }
+							trigger_if = {
+								limit = {
+									has_variable = raid_estate_success_victim
+								}
+								var:raid_estate_success_victim = trait:eunuch_1
+							}
+							trigger_else = {
+								is_male = yes
+								NOT = { has_trait = eunuch }
+							}
 						}
-						add_trait = eunuch_1
+						add_eunuch_trait_effect = yes
 					}
 				}
 			}
@@ -7532,9 +7461,7 @@ scheme_critical_moments.8999 = {
 		scope:scheme_maim = {
 			every_in_list = {
 				list = target_victims
-				remove_character_flag = raid_maiming_eunuch
-				remove_character_flag = raid_maiming_blind
-				remove_character_flag = raid_maiming_disfigured
+				remove_variable = raid_estate_success_victim
 			}
 		}
 	}
@@ -7627,7 +7554,7 @@ scheme_critical_moments.8033 = {
 		play_music_cue = "mx_cue_murder"
 		scope:target = { trigger_event = scheme_critical_moments.8034 } # Trigger the response event for the target
 		raid_estate_failure_effect = yes
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			ambitious = minor_stress_impact_gain
 			deceitful = minor_stress_impact_gain
@@ -7880,7 +7807,7 @@ scheme_critical_moments.8035 = {
 		name = scheme_critical_moments.8035.a
 		custom_tooltip = scheme_critical_moments.8035.a.tt
 		save_scope_as = scheme_kill
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			forgiving = medium_stress_impact_gain
 			compassionate = medium_stress_impact_gain
 			just = medium_stress_impact_gain
@@ -7903,7 +7830,7 @@ scheme_critical_moments.8035 = {
 		name = scheme_critical_moments.8035.b
 		custom_tooltip = scheme_critical_moments.8035.b.tt
 		save_scope_as = scheme_maim
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			forgiving = medium_stress_impact_gain
 			compassionate = medium_stress_impact_gain
 			just = medium_stress_impact_gain
@@ -7970,6 +7897,13 @@ scripted_effect teach_governor_track_effect = {
 	else_if = {
 		limit = { has_trait_xp = { trait = governor value >= 25 } }
 		save_scope_value_as = { name = $NAME$_track value = 1 }
+	}
+	else_if = { # Emperors get a number assignment even if they don't have the governor trait
+		limit = {
+			NOT = { has_trait = governor }
+			primary_title.tier = tier_hegemony
+		}
+		save_scope_value_as = { name = $NAME$_track value = 3 }
 	}
 	else_if = { # Emperors get a number assignment even if they don't have the governor trait
 		limit = {
@@ -8198,7 +8132,7 @@ scheme_critical_moments.8043 = {
 			}
 			else = { trigger_event = scheme_critical_moments.8044 }
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			diligent = minor_stress_impact_gain
 			stubborn = minor_stress_impact_gain
@@ -8280,7 +8214,7 @@ scheme_critical_moments.8045 = {
 
 	immediate = {
 		show_as_tooltip = {
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				arrogant = minor_stress_impact_gain
 				lazy = medium_stress_impact_gain
 			}
@@ -8454,7 +8388,7 @@ scheme_critical_moments.8053 = {
 			# Trigger the response event for the target
 			trigger_event = scheme_critical_moments.8054
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			ambitious = minor_stress_impact_gain
 			impatient = minor_stress_impact_gain
@@ -8645,7 +8579,7 @@ scheme_critical_moments.8062 = {
 	}
 
 	immediate = {
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			base = minor_stress_impact_gain
 			ambitious = minor_stress_impact_gain
 			paranoid = minor_stress_impact_gain
@@ -8855,7 +8789,7 @@ scheme_critical_moments.8068 = {
 					add = -3
 					secret_type = secret_crypto_religionist
 					secret_owner = {
-						secret_faith ?= { has_doctrine_parameter = sanctioned_false_conversion }
+						secret_faith ?= { main_rite = { rite_has_parameter = sanctioned_false_conversion } }
 					}
 				}
 				# Less likely to pick crypto-religionist secrets (b/c narratively they are hard to discover)
@@ -8883,7 +8817,7 @@ scheme_critical_moments.8068 = {
 					value = 50
 					# Even more likely to not discover this secret if the target practices Taqiya
 					if = {
-						limit = { secret_faith ?= { has_doctrine_parameter = sanctioned_false_conversion } }
+						limit = { secret_faith ?= { main_rite = { rite_has_parameter = sanctioned_false_conversion } } }
 						add = 25
 					}
 				}
@@ -9241,7 +9175,7 @@ scheme_critical_moments.8070 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -9321,7 +9255,7 @@ scheme_critical_moments.8070 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -9464,7 +9398,7 @@ scheme_critical_moments.8071 = {
 				add = 1
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = medium_stress_impact_gain
 		}
 		ai_chance = {
@@ -9531,7 +9465,7 @@ scheme_critical_moments.8071 = {
 				add = 1
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			honest = medium_stress_impact_gain
 		}
 		ai_chance = {

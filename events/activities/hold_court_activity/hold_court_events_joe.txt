@@ -119,9 +119,9 @@ hold_court.8290 = {
 	}
 
 	trigger = {
-		NOR = {
-			has_character_flag = has_had_county_request_event
-			has_character_flag = has_had_government_request_event
+		has_none_of_variables = {
+			name = has_had_county_request_event
+			name = has_had_government_request_event
 		}
 		culture = {
 			has_innovation = innovation_development_02
@@ -210,7 +210,7 @@ hold_court.8290 = {
 				years = 20
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			callous = minor_stress_impact_gain
 			arrogant = minor_stress_impact_gain
 		}
@@ -232,7 +232,7 @@ hold_court.8290 = {
 			}
 		}
 		hold_court_8290_grant_effect = yes
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = minor_stress_impact_gain
 			arrogant = miniscule_stress_impact_gain
 		}
@@ -256,7 +256,7 @@ hold_court.8290 = {
 				opinion = -15
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			generous = minor_stress_impact_gain
 		}
 		ai_chance = {
@@ -378,9 +378,9 @@ hold_court.8300 = {
 	}
 
 	trigger = {
-		NOR = {
-			has_character_flag = has_had_county_request_event
-			has_character_flag = has_had_government_request_event
+		has_none_of_variables = {
+			name = has_had_county_request_event
+			name = has_had_government_request_event
 		}
 		# Must have a culture that is likely to grant a city charter
 		culture = {
@@ -531,7 +531,7 @@ hold_court.8300 = {
 				opinion = 15
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			callous = minor_stress_impact_gain
 			arrogant = minor_stress_impact_gain
 		}
@@ -578,7 +578,7 @@ hold_court.8300 = {
 				opinion = 15
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = minor_stress_impact_gain
 			just = minor_stress_impact_gain
 		}
@@ -605,7 +605,7 @@ hold_court.8300 = {
 				opinion = 15
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = minor_stress_impact_gain
 			diligent = minor_stress_impact_gain
 		}
@@ -888,7 +888,7 @@ hold_court.8310 = {
 				value = 15
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			compassionate = minor_stress_impact_gain
 			just = minor_stress_impact_gain
 			patient = minor_stress_impact_gain
@@ -914,7 +914,7 @@ hold_court.8310 = {
 				value = 10
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = minor_stress_impact_gain
 			arrogant = minor_stress_impact_gain
 		}
@@ -971,7 +971,7 @@ hold_court.8310 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arrogant = minor_stress_impact_gain
 			lazy = minor_stress_impact_gain
 		}
@@ -986,7 +986,7 @@ hold_court.8310 = {
 
 	option = { # Do nothing
 		name = hold_court.8310.d
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			ambitious = minor_stress_impact_gain
 			callous = minor_stress_impact_gain
 			impatient = minor_stress_impact_gain
@@ -1049,8 +1049,8 @@ scripted_trigger hold_court_8320_vassal_trigger = {
 				has_trait = cynical
 				has_trait = greedy
 			}
-			faith = {
-				NOT = { has_doctrine = doctrine_theocracy_lay_clergy }
+			rite = {
+				NOT = { rite_has_doctrine = doctrine_theocracy_lay_clergy }
 			}
 			save_temporary_scope_as = dead_temp
 		}
@@ -1075,7 +1075,7 @@ hold_court.8320 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					scope:probate_vassal.faith = { has_doctrine = tenet_monasticism }
+					scope:probate_vassal.faith = { faith_has_monasticism_trigger = yes }
 				}
 				desc = hold_court.8320.monk
 			}
@@ -1085,7 +1085,7 @@ hold_court.8320 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					scope:probate_vassal.faith = { has_doctrine = tenet_monasticism }
+					scope:probate_vassal.faith = { faith_has_monasticism_trigger = yes }
 				}
 				desc = hold_court.8320.monk_2
 			}
@@ -1137,7 +1137,7 @@ hold_court.8320 = {
 		# Court weightings.
 		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_administrative }
 		modifier = {
-			faith = { has_doctrine = tenet_monasticism }
+			faith = { faith_has_monasticism_trigger = yes }
 			factor = 2
 		}
 	}
@@ -1206,13 +1206,14 @@ hold_court.8320 = {
 		}
 		if = {
 			limit = {
-				scope:probate_vassal.faith = { has_doctrine = tenet_monasticism }
+				scope:probate_vassal.faith = { faith_has_monasticism_trigger = yes }
 			}
 			create_character = {
 				template = monk_character_template
 				dynasty = none
 				location = root.location
 				faith = scope:probate_county.faith
+				rite = scope:probate_county.rite
 				culture = scope:probate_county.culture
 				trait = ambitious
 				save_scope_as = probate_priest
@@ -1224,6 +1225,7 @@ hold_court.8320 = {
 				dynasty = none
 				location = root.location
 				faith = scope:probate_county.faith
+				rite = scope:probate_county.rite
 				culture = scope:probate_county.culture
 				trait = ambitious
 				save_scope_as = probate_priest
@@ -1302,14 +1304,14 @@ hold_court.8320 = {
 		}
 		if = {
 			limit = { faith = scope:probate_county.faith }
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				cynical = minor_stress_impact_gain
 				callous = minor_stress_impact_gain
 				greedy = minor_stress_impact_gain
 			}
 		}
 		else = {
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				zealous = minor_stress_impact_gain
 				callous = minor_stress_impact_gain
 				greedy = minor_stress_impact_gain
@@ -1336,7 +1338,7 @@ hold_court.8320 = {
 			opinion = -10
 			target = scope:probate_vassal
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = minor_stress_impact_gain
 			fickle = minor_stress_impact_gain
 		}
@@ -1388,7 +1390,7 @@ hold_court.8320 = {
 		}
 		if = {
 			limit = { faith = scope:probate_county.faith }
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				compassionate = minor_stress_impact_gain
 				generous = minor_stress_impact_gain
 				just = minor_stress_impact_gain
@@ -1398,7 +1400,7 @@ hold_court.8320 = {
 			}
 		}
 		else = {
-			stress_impact = {
+			stress_and_fulfillment_impact = {
 				compassionate = minor_stress_impact_gain
 				generous = minor_stress_impact_gain
 				just = minor_stress_impact_gain
@@ -1434,7 +1436,7 @@ hold_court.8320 = {
 				opinion = -10
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			greedy = minor_stress_impact_gain
 			zealous = minor_stress_impact_gain
 		}
@@ -1608,27 +1610,27 @@ scripted_effect hold_court_8330_stress_effect = {
 			trigger = has_vassal_stance
 			# Effect for agreeing with this stance
 			courtly = {
-				stress_impact = {
+				stress_and_fulfillment_impact = {
 					humble = minor_stress_impact_gain
 				}
 			}
 			glory_hound = {
-				stress_impact = {
+				stress_and_fulfillment_impact = {
 					craven = minor_stress_impact_gain
 				}
 			}
 			parochial = {
-				stress_impact = {
+				stress_and_fulfillment_impact = {
 					fickle = minor_stress_impact_gain
 				}
 			}
 			zealot = {
-				stress_impact = {
+				stress_and_fulfillment_impact = {
 					cynical = minor_stress_impact_gain
 				}
 			}
 			minority = {
-				stress_impact = {
+				stress_and_fulfillment_impact = {
 					arrogant = minor_stress_impact_gain
 				}
 			}
@@ -1803,7 +1805,7 @@ hold_court.8330 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = {
 			arbitrary = minor_stress_impact_gain
 			lazy = minor_stress_impact_gain
 		}
@@ -1908,6 +1910,7 @@ scripted_effect hold_court_8340_create_seeker_effect = {
 	create_character = {
 		culture = scope:birthplace.culture
 		faith = scope:birthplace.faith
+		rite = scope:birthplace.rite
 		dynasty = none
 		template = $TYPE$_court_position_holder_template
 		save_scope_as = candidate
@@ -2005,7 +2008,7 @@ hold_court.8340 = {
 					save_scope_as = stewardship
 					hold_court_8340_create_seeker_effect = { TYPE = stewardship }
 				}
-				0 = { #Unop: 0.25 is not allowed as a value so make it 0
+				0 = {
 					modifier = {
 						OR = {
 							can_employ_court_position_type = chief_eunuch_court_position
