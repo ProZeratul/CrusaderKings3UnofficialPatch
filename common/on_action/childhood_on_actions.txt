@@ -936,7 +936,12 @@ on_ward_arrive_at_home = {
 					desc = ward_returned_home_desc_guardian
 					left_icon = scope:ward
 					right_icon = scope:guardian
-					scope:ward = { return_to_court = yes }
+					scope:ward = {
+						if = { #Unop The ward may no longer be a courtier, e.g. if they became a ruler
+							limit = { is_courtier = yes }
+							return_to_court = yes
+						}
+					}
 				}
 			}
 		}
@@ -948,7 +953,12 @@ on_ward_arrive_at_home = {
 					title = ward_returned_home_title
 					desc = ward_returned_home_desc
 					left_icon = scope:ward
-					scope:ward = { return_to_court = yes }
+					scope:ward = {
+						if = { #Unop The ward may no longer be a courtier, e.g. if they became a ruler
+							limit = { is_courtier = yes }
+							return_to_court = yes
+						}
+					}
 				}
 			}
 		}

@@ -2266,6 +2266,7 @@ imperial_examination.2040 = {
 			imperial_examination_create_appropriate_examiner_effect = yes
 			if = {
 				limit = { exists = scope:activity }
+				add_courtier = scope:new_examiner #Unop Like in imperial_examination_set_up_examiners_effect, needed to be able to join
 				scope:new_examiner = { add_to_activity = scope:activity }
 				scope:activity = {
 					add_to_guest_subset = {
@@ -2821,7 +2822,9 @@ imperial_examination.3010 = {
 				scope:examiner = { is_imprisoned = yes }
 			}
 			imperial_examination_create_appropriate_examiner_effect = yes
-			add_to_activity = scope:activity
+			#add_to_activity = scope:activity #Unop The new examiner should join, not the host
+			add_courtier = scope:new_examiner
+			scope:new_examiner = { add_to_activity = scope:activity }
 			scope:activity = {
 				add_to_guest_subset = {
 					name = imperial_examiners
