@@ -913,7 +913,7 @@ unite_the_western_slavs_decision_effects = {
 					}
 				}
 				resolve_title_and_vassal_change = scope:title_change
-				set_primary_title_to = title:e_west_slavia				
+				set_primary_title_to = title:e_west_slavia #Unop: Ensure this is now our primary title
 				title:e_west_slavia = { save_scope_as = unop_west_slavia } #For localisation
 				
 				# Inform players of the de jure drift
@@ -922,8 +922,8 @@ unite_the_western_slavs_decision_effects = {
 			else = {
 				custom_tooltip = unite_the_western_slavs_decision_titles_empire_tt
 			}
-			hidden_effect = {
-				# Drift kingdoms to empire
+			# Drift kingdoms to empire
+			hidden_effect = { #Unop Keep drift hidden
 				every_in_list = {
 					list = west_slavic_kingdoms
 					set_de_jure_liege_title = scope:western_slav_uniter.primary_title

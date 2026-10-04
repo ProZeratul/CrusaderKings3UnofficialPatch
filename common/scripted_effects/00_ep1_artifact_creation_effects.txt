@@ -183,7 +183,7 @@ get_artifact_quality_effect = {
 							else_if = {
 								limit = { ep1_character_had_or_has_inspiration_type_trigger = { TYPE = alchemy } }
 								value = alchemy_inspiration_average_skill_value
-							} 
+							}
 							else_if = {
 								limit = { ep1_character_had_or_has_inspiration_type_trigger = { TYPE = bow } }
 								value = weapon_inspiration_average_skill_value #Unop: As there is no "bow_inspiration_average_skill_value", use the weapon one
@@ -10064,24 +10064,26 @@ create_artifact_weapon_effect = {
 						scope:newly_created_artifact = { set_variable = replica_sassanian_sword }
 					}
 					1 = {
-						trigger = {
-							trigger_if = { #Unop: Since the artifact does not exists yet, we can't use artifact_should_use_gfx_type_trigger
+						#trigger = { sword_could_be_longsword_trigger = yes }
+						trigger = {  #Unop: Since the scope artifact does not exists yet, we can't use sword_could_be_longsword_trigger that rely on it
+							trigger_if = {
 								limit = {
 									exists = scope:smith
 									exists = scope:smith.culture
 								}
-								scope:smith = { artifact_use_iranian_building_visuals_trigger = yes }
+								scope:smith.culture = {
+									has_unit_gfx = western_unit_gfx
+									has_cultural_era_or_later = culture_era_late_medieval
+								}
 							}
 							trigger_else_if = { #If the creator is not found we use the owner. Often this would be if the creator is a dummy, which has no culture
 								limit = {
 									exists = scope:owner
 									exists = scope:owner.culture
 								}
-								scope:owner = {
-									culture = {
-										has_unit_gfx = western_unit_gfx
-										has_cultural_era_or_later = culture_era_late_medieval
-									}
+								scope:owner.culture = {
+									has_unit_gfx = western_unit_gfx
+									has_cultural_era_or_later = culture_era_late_medieval
 								}
 							}
 							trigger_else = {
