@@ -6,13 +6,13 @@ This mod focuses purely on fixing issues. It does not add new content, change th
 
 [h2]Fixes[/h2]
 
-The mod has been actively developed since 2022 and now contains [b]thousands of fixes[/b] spanning almost every part of the game. To give a sense of the scope:
+The mod has been actively developed since 2022 and contains [b]hundreds of fixes[/b] spanning almost every part of the game. To give a sense of the scope:
 [list]
-[*] [b]3,300+[/b] in-code [u]#Unop[/u] change markers across [b]400+[/b] modified files
-[*] [b]280+[/b] merged pull requests and [b]100+[/b] closed issues on GitHub
+[*] [b]1,300+[/b] in-code [u]#Unop[/u] change markers across [b]360+[/b] modified files
+[*] [b]390+[/b] merged pull requests and [b]220+[/b] closed issues on GitHub
 [/list]
 
-Over the years, Paradox has adopted a number of Unop fixes into the base game, and we drop them from the mod when they do. Even so, a much larger number of issues remain unaddressed in vanilla, and new ones appear with each CK3 update - so the mod is still very much relevant.
+Over the years, Paradox has adopted many Unop fixes into the base game, and we drop them from the mod when they do. [b]CK3 1.20[/b] adopted most of them at once: the number of [u]#Unop[/u] markers dropped from about [b]3,900[/b] to about [b]1,350[/b], and the number of modified files from about [b]550[/b] to about [b]360[/b]. Even so, many issues remain unaddressed in vanilla, and new ones appear with each CK3 update - so the mod is still very much relevant.
 
 A complete and up-to-date list of changes is maintained externally:
 [list]
@@ -22,11 +22,11 @@ A complete and up-to-date list of changes is maintained externally:
 
 [h3]Highlights[/h3]
 
-A few examples:
+A few examples of fixes that are not (yet) in the base game:
 [list]
-[*] [b]"Summon Wealthy Visitors" decision[/b] ([url=https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/183]#183[/url]) - major rework. The merchant is now sent to the host's [i]domicile[/i] and no longer chases them around the map; they cannot be pruned, die, change court, or be selected as a ruler mid-journey; the development-level check for origin cities is lowered so options other than Constantinople actually appear; and the Artifact Materials reward correctly enables [i]Commission Artifact[/i] instead of disabling it.
-[*] [b]Grand Wedding lockout[/b] - a long-standing vanilla bug introduced in 1.9.2 that could permanently prevent the player from performing a [i]Grand Wedding[/i].
-[*] [b]Hold Court[/b] - 60+ fixes across the activity's event chains: incorrect scopes, options not applying their effects, missing or wrong tooltips, duplicate event entries, and many smaller correctness issues.
+[*] [b]AI and influence costs[/b] ([url=https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/509]#509[/url]) - the AI never takes decisions that cost influence. Unop lets the AI take them, while still requiring and spending the influence.
+[*] [b]Top-tier authority laws[/b] ([url=https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/681]#681[/url]) - the AI never passed the highest crown authority and bureaucracy laws, as they had no AI weights.
+[*] [b]Random Harm game rule[/b] ([url=https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/484]#484[/url], [url=https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/pull/506]#506[/url]) - the rule now actually controls how often harm events happen.
 [/list]
 
 [h2]Installation[/h2]
@@ -60,13 +60,11 @@ This is a Steam-side issue we can't do anything about. If the steps above don't 
 
 [h2]Compatibility[/h2]
 
-The current version is compatible with [b]CK3 1.19[/b]. Older CK3 versions are supported by older mod versions; see the [url=https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/releases]Releases page[/url].
+The current version is compatible with [b]CK3 1.20[/b]. Older CK3 versions are supported by older mod versions; see the [url=https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/releases]Releases page[/url].
 
 [b]The mod must be loaded at the very top of your mod list.[/b] Because Unop fixes issues by overriding vanilla files, it conflicts with any other mod that edits the same files. Loading Unop first tells the game engine to give it lower priority - any other mod that touches the same file wins, while Unop's fixes still apply everywhere else.
 
 With the above load order, Unop is compatible with practically every other mod. If another mod replaces a file Unop also edits, you lose Unop's fixes for that file, but you avoid breaking the other mod's content.
-
-One exception: if another mod overrides [u]common/court_positions/types/00_mandala_court_positions.txt[/u] without the Unop fix of the [u]khlon_glan_court_position[/u] aptitude, the game will crash. In that case, please ask the other mod's author to incorporate the fix.
 
 The mod works with all DLCs and is save-game compatible.
 
