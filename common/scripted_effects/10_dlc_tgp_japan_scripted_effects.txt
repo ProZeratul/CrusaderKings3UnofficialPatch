@@ -3885,9 +3885,17 @@ tgp_renounce_estate_effect = {
 			}
 			if = {
 				limit = { is_governor = no }
+				#Unop only the estate goes to the estate heir, other titles go to their own heirs below (as the tooltip shows)
+				#every_held_title = {
+				#	limit = { tier > tier_barony }
+				#	change_title_holder_include_vassals = {
+				#		holder = scope:new_player
+				#		change = scope:title_change
+				#	}
+				#}
 				every_held_title = {
-					limit = { tier > tier_barony }
-					change_title_holder_include_vassals = {
+					limit = { is_noble_family_title = yes }
+					change_title_holder = {
 						holder = scope:new_player
 						change = scope:title_change
 					}
@@ -3958,19 +3966,33 @@ tgp_renounce_estate_effect = {
 						}
 					}
 				}
-				create_title_and_vassal_change = {
-					type = appointment
-					save_scope_as = title_change
-					add_claim_on_loss = no
-				}
-				every_held_title = {
-					limit = { tier > tier_barony }
-					change_title_holder_include_vassals = {
-						holder = scope:heir_temp
-						change = scope:title_change
+				#Unop step down from ministries and then from landed titles, each title goes to its own heir
+				#create_title_and_vassal_change = {
+				#	type = appointment
+				#	save_scope_as = title_change
+				#	add_claim_on_loss = no
+				#}
+				#every_held_title = {
+				#	limit = { tier > tier_barony }
+				#	change_title_holder_include_vassals = {
+				#		holder = scope:heir_temp
+				#		change = scope:title_change
+				#	}
+				#}
+				#resolve_title_and_vassal_change = scope:title_change
+				if = {
+					limit = {
+						tgp_is_any_minister = yes
 					}
+					liege = { save_scope_as = councillor_liege } # Needed for the effect
+					fired_minister_position_effect = yes
 				}
-				resolve_title_and_vassal_change = scope:title_change
+				if = {
+					limit = {
+						is_landed = yes
+					}
+					force_step_down_landed_titles = yes
+				}
 				every_in_list = {
 					list = equipped
 					limit = { artifact_owner = { can_equip_artifact = prev } }
