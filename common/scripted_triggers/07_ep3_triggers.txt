@@ -1357,7 +1357,13 @@ ep3_raid_insight_trigger = {
 	scope:owner = {
 		NOT = { has_character_modifier = raid_insight_$TYPE$ }
 	}
-	scope:target_domicile = { has_domicile_building_or_higher = $TYPE$_01 }
+	#scope:target_domicile = { has_domicile_building_or_higher = $TYPE$_01 } #Unop: Also accept the Chinese estate & Japanese manor buildings that use the same raid_insight_$TYPE$ modifier
+	scope:target_domicile = {
+		OR = {
+			has_domicile_building_or_higher = $TYPE$_01
+			unop_has_raid_insight_equivalent_building_trigger = { TYPE = $TYPE$ }
+		}
+	}
 }
 
 ep3_adventurer_ai_valid_war_target_trigger = {
