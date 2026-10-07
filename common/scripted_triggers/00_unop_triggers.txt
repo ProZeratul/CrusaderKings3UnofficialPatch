@@ -881,3 +881,146 @@ unop_can_have_vassal_succession_rights_contract = { #Unop: Taken from succession
 #		is_concubine = yes
 #	}
 #}
+
+
+#Unop: Domicile buildings other than the Western estate $TYPE$_01 whose cost uses the same raid_insight_$TYPE$ modifier
+#(Chinese estate & Japanese manor). Used by ep3_raid_insight_trigger, in a domicile scope
+unop_has_raid_insight_equivalent_building_trigger = {
+	OR = {
+		AND = {
+			flag:$TYPE$ = flag:living_quarters
+			OR = {
+				has_domicile_building_or_higher = east_asian_estate_living_quarters_01
+				has_domicile_building_or_higher = japanese_guest_house_01
+				has_domicile_building_or_higher = japanese_rock_garden_01
+			}
+		}
+		AND = {
+			flag:$TYPE$ = flag:trophy_room
+			OR = {
+				has_domicile_building_or_higher = east_asian_estate_commander_study_01
+				has_domicile_building_or_higher = japanese_manor_trophy_room_01
+			}
+		}
+		AND = {
+			flag:$TYPE$ = flag:office
+			OR = {
+				has_domicile_building_or_higher = east_asian_estate_office_01
+				has_domicile_building_or_higher = japanese_manor_office_01
+			}
+		}
+		AND = {
+			flag:$TYPE$ = flag:servants_quarters
+			OR = {
+				has_domicile_building_or_higher = east_asian_estate_servants_quarters_01
+				has_domicile_building_or_higher = japanese_manor_servants_quarters_01
+			}
+		}
+		AND = {
+			flag:$TYPE$ = flag:library
+			OR = {
+				has_domicile_building_or_higher = east_asian_estate_library_01
+				has_domicile_building_or_higher = japanese_manor_poetry_library_01
+				has_domicile_building_or_higher = japanese_manor_library_confucian_01
+			}
+		}
+		AND = {
+			flag:$TYPE$ = flag:bath
+			has_domicile_building_or_higher = east_asian_estate_bath_01
+		}
+		AND = {
+			flag:$TYPE$ = flag:guest_room
+			has_domicile_building_or_higher = east_asian_estate_guest_room_01
+		}
+		AND = {
+			flag:$TYPE$ = flag:wine_cellar
+			has_domicile_building_or_higher = east_asian_estate_wine_cellar_01
+		}
+		AND = {
+			flag:$TYPE$ = flag:courtyard
+			has_domicile_building_or_higher = east_asian_estate_courtyard_01
+		}
+		AND = {
+			flag:$TYPE$ = flag:prison
+			has_domicile_building_or_higher = east_asian_estate_prison_01
+		}
+		AND = {
+			flag:$TYPE$ = flag:reception_hall
+			has_domicile_building_or_higher = east_asian_estate_reception_hall_01
+		}
+		AND = {
+			flag:$TYPE$ = flag:cabinet_of_curiosities
+			has_domicile_building_or_higher = east_asian_estate_cabinet_of_curiosities_01
+		}
+		AND = {
+			flag:$TYPE$ = flag:barracks
+			has_domicile_building_or_higher = east_asian_estate_barracks_01
+		}
+		AND = {
+			flag:$TYPE$ = flag:watchtower
+			OR = {
+				has_domicile_building_or_higher = east_asian_estate_watchtower_01
+				has_domicile_building_or_higher = japanese_watch_house_01
+			}
+		}
+		AND = {
+			flag:$TYPE$ = flag:garden
+			OR = {
+				has_domicile_building_or_higher = east_asian_estate_garden_01
+				has_domicile_building_or_higher = japanese_garden_01
+			}
+		}
+		AND = {
+			flag:$TYPE$ = flag:stable
+			OR = {
+				has_domicile_building_or_higher = east_asian_estate_stable_01
+				has_domicile_building_or_higher = japanese_stables_01
+			}
+		}
+		AND = {
+			flag:$TYPE$ = flag:workshop
+			OR = {
+				has_domicile_building_or_higher = east_asian_estate_workshop_01
+				has_domicile_building_or_higher = japanese_workshop_01
+			}
+		}
+		AND = {
+			flag:$TYPE$ = flag:storage
+			has_domicile_building_or_higher = east_asian_estate_storage_01
+		}
+		AND = {
+			flag:$TYPE$ = flag:market
+			has_domicile_building_or_higher = east_asian_estate_market_01
+		}
+		AND = {
+			flag:$TYPE$ = flag:grazing_land
+			OR = {
+				has_domicile_building_or_higher = east_asian_estate_grazing_land_01
+				has_domicile_building_or_higher = japanese_horse_pastures_01
+			}
+		}
+		AND = {
+			flag:$TYPE$ = flag:grain_field
+			OR = {
+				has_domicile_building_or_higher = japanese_fields_01
+				has_domicile_building_or_higher = japanese_granary_01
+				has_domicile_building_or_higher = japanese_rice_broker_01
+				has_domicile_building_or_higher = japanese_tenant_farmers_01
+			}
+		}
+		AND = {
+			flag:$TYPE$ = flag:tea
+			OR = {
+				has_domicile_building_or_higher = east_asian_estate_tea_01
+				has_domicile_building_or_higher = japanese_tea_plantation_01
+				has_domicile_building_or_higher = japanese_matcha_factory_01
+				has_domicile_building_or_higher = japanese_medicine_house_01
+				has_domicile_building_or_higher = japanese_roastery_01
+			}
+		}
+		AND = {
+			flag:$TYPE$ = flag:silk
+			has_domicile_building_or_higher = east_asian_estate_silk_01
+		}
+	}
+}
