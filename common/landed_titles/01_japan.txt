@@ -1615,11 +1615,15 @@ k_chrysanthemum_throne = {
 				trigger = {
 					exists = scope:target
 					scope:liege ?= scope:target
+					root = { tgp_is_ceremonial_liege_trigger = yes } #Unop Only if actually a ceremonial liege, e.g. not if independent
 				}
 				desc = japan_personal_relation_ceremonial_liege_same
 			}
 			triggered_desc = {
-				trigger = { exists = scope:liege }
+				trigger = { #Unop Only if actually a ceremonial liege, e.g. not if independent
+					exists = scope:liege
+					root = { tgp_is_ceremonial_liege_trigger = yes }
+				}
 				desc = japan_personal_relation_ceremonial_liege_other
 			}
 		}
