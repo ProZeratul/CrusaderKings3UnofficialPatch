@@ -393,6 +393,26 @@ on_title_gain = {
 		}
 		pam_offer_great_schism_stance_effect = yes
 
+		#Unop Herders who gain a duchy or higher title become Nomads, same as stray player Herders in yearly_playable_pulse
+		if = {
+			limit = {
+				government_has_flag = government_is_herder
+				scope:title.tier >= tier_duchy
+			}
+			every_held_title = {
+				limit = {
+					tier = tier_county
+					title_province = {
+						has_holding_type = herder_holding
+					}
+				}
+				title_province = {
+					set_holding_type = nomad_holding
+				}
+			}
+			change_government = nomad_government
+		}
+
 		######################
 		# COUNTY-TIER TITLES #
 		######################
