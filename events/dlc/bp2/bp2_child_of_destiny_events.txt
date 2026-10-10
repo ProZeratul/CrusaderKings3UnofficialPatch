@@ -47,6 +47,15 @@ destiny_child.0001 = {
 				}
 				save_temporary_scope_as = child_destiny
 			}
+			any_relation = { #Unop Also allow wards
+				type = ward
+				age < 14
+				age > 9
+				NOR = { #Allowed to be physically weak, but not an idiot
+					has_trait = intellect_bad
+					has_trait = dull
+				}
+			}
 		}
 	}
 
@@ -74,8 +83,33 @@ destiny_child.0001 = {
 				save_scope_as = destiny_child
 			}
 		}
-		else = {
+		#else = { #Unop Also allow wards
+		else_if = {
+			limit = {
+				any_child = {
+					age < 14
+					age > 9
+					NOR = {
+						has_trait = intellect_bad
+						has_trait = dull
+					}
+				}
+			}
 			random_child = {
+				limit = {
+					age < 14
+					age > 9
+					NOR = {
+						has_trait = intellect_bad
+						has_trait = dull
+					}
+				}
+				save_scope_as = destiny_child
+			}
+		}
+		else = { #Unop Also allow wards
+			random_relation = {
+				type = ward
 				limit = {
 					age < 14
 					age > 9
