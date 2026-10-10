@@ -3727,6 +3727,9 @@ on_game_start_after_lobby = {
 			if = {
 				limit = { has_game_rule = struggle_persia_toggle_off }
 				end_struggle = yes
+				#Unop Clear the dissolution block set at game start, same as the struggle endings
+				title:e_arabia = { remove_variable = struggle_block_dissolution_faction }
+				title:d_sunni = { remove_variable = struggle_block_dissolution_faction }
 			}
 		}
 		situation:the_great_steppe ?= {
