@@ -186,7 +186,7 @@ realm_maintenance.1001 = {
 	 
 	immediate = {
 		if = {
-			limit = { always = no }
+			limit = { scope:transfer_type = flag:conquest } #Unop Plain conquest transfers otherwise fall through to the error toast
 			send_new_liege_toast_effect = { TRANSFER_TYPE = conquest }
 		}
 		else_if = {
