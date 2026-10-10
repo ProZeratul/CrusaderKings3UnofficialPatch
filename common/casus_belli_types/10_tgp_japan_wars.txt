@@ -616,7 +616,8 @@ japan_soryo_conquest_county_landless_cb = {
 		add = frankokratia_leader_protection_value #Set back to 0. Declaring war on the frankokratia leader can really ruin the whole thing
 		if = {
 			limit = {
-				current_military_strength < 400
+				scope:attacker.current_military_strength < 400 #Unop Add missing scope:attacker
+				#current_military_strength < 400
 			}
 			multiply = 0
 		}
@@ -1989,6 +1990,11 @@ japan_refused_ritsuryo_cb = {
 
 		#Mandalas gain or lose piety/devotion depending on Decree
 		mandala_war_victory_effects = yes
+		#Unop Remove variables set on declaration
+		scope:attacker = {
+			remove_variable = initial_target
+			remove_variable = target_tier
+		}
 	}
 
 	on_white_peace_desc = {
@@ -2027,6 +2033,11 @@ japan_refused_ritsuryo_cb = {
 			}
 		}
 		on_white_peace_request_revolt_war = yes
+		#Unop Remove variables set on declaration
+		scope:attacker = {
+			remove_variable = initial_target
+			remove_variable = target_tier
+		}
 	}
 
 	on_defeat_desc = {
@@ -2075,6 +2086,19 @@ japan_refused_ritsuryo_cb = {
 
 		#Mandalas gain or lose piety/devotion depending on Decree
 		mandala_war_defeat_effects = yes
+		#Unop Remove variables set on declaration
+		scope:attacker = {
+			remove_variable = initial_target
+			remove_variable = target_tier
+		}
+	}
+
+	#Unop Remove variables set on declaration
+	on_invalidated = {
+		scope:attacker = {
+			remove_variable = initial_target
+			remove_variable = target_tier
+		}
 	}
 
 	on_invalidated_desc = msg_invalidate_war_title
