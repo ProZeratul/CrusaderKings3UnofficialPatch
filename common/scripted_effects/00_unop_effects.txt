@@ -56,3 +56,78 @@ unop_trigger_physician_treatments_effect = {
 		}
 	}
 }
+
+unop_generate_yurt_paiza_char = {
+	if = {
+		limit = { has_domicile_building_or_higher = char_trade_yurt_01 }
+		switch = {
+			trigger = has_domicile_parameter
+			nomad_yurt_paiza_char_gain_lvl_1 = {
+				create_character = {
+					location = root.location
+					culture = scope:merchant_origin.county.culture
+					faith = scope:merchant_origin.county.faith
+					rite = scope:merchant_origin.county.rite
+					gender_female_chance = 50
+					template = peasant_character
+					after_creation = {
+						add_trait = lifestyle_traveler
+					}
+					save_scope_as = yurt_merchant_char
+				}
+			}
+			nomad_yurt_paiza_char_gain_lvl_2 = {
+				create_character = {
+					location = root.location
+					culture = scope:merchant_origin.county.culture
+					faith = scope:merchant_origin.county.faith
+					rite = scope:merchant_origin.county.rite
+					gender_female_chance = 50
+					template = merchant_template
+					after_creation = {
+						add_trait = lifestyle_traveler
+					}
+					save_scope_as = yurt_merchant_char
+				}
+			}
+			nomad_yurt_paiza_char_gain_lvl_3 = {
+				create_character = {
+					location = root.location
+					culture = scope:merchant_origin.county.culture
+					faith = scope:merchant_origin.county.faith
+					rite = scope:merchant_origin.county.rite
+					gender_female_chance = 50
+					template = merchant_template
+					after_creation = {
+						add_random_skill_point_effect = yes
+						add_random_skill_point_effect = yes
+						add_random_skill_point_effect = yes
+						add_random_skill_point_effect = yes
+						add_random_skill_point_effect = yes
+						add_random_skill_point_effect = yes
+						random_list = {
+							1 = { add_trait = avaricious }
+							1 = { add_trait = diplomat }
+							1 = { add_trait = overseer }
+						}
+						add_trait = lifestyle_traveler
+					}
+					save_scope_as = yurt_merchant_char
+				}
+			}
+		}
+		root = {
+			hidden_effect = {
+				add_courtier = scope:yurt_merchant_char
+			}
+		}
+	}
+}
+
+unop_clear_merchant = {
+	remove_variable = paiza_gold_invested
+	remove_variable = requested_merchant_goods
+	remove_variable = merchant_employer
+	remove_variable = merchant_origin
+	silent_disappear_ai_if_not_hired = yes
+}

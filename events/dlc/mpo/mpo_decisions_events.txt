@@ -3846,6 +3846,17 @@ mpo_decisions_events.2141 = { #mpo_call_for_merchants_smol_decision initial even
 		scope:paiza_merchant = {
 			set_location = root.domicile.domicile_location
 		}
+
+		if = { #Unop: Implement missing effect from "Allure of the Steppe" building
+			limit = {
+				domicile ?= {
+					has_domicile_building_or_higher = char_trade_yurt_01
+				}
+			}
+			domicile ?= {
+				unop_generate_yurt_paiza_char = yes
+			}
+		}
 	}
 
 	option = { #ask for an artifact material
@@ -3956,6 +3967,15 @@ mpo_decisions_events.2141 = { #mpo_call_for_merchants_smol_decision initial even
 			base = 50
 		}
 	}
+
+	after = { #Unop: Add a tooltip notif so we know someone joined our court
+		if = {
+			limit = {
+				domicile = { has_domicile_building_or_higher = char_trade_yurt_01 }
+			}
+			show_as_tooltip = { add_courtier = scope:yurt_merchant_char }
+		}
+	}
 }
 
 mpo_decisions_events.0100 = { #mpo_call_for_merchants_decision initial event
@@ -3998,6 +4018,17 @@ mpo_decisions_events.0100 = { #mpo_call_for_merchants_decision initial event
 	immediate = {
 		scope:paiza_merchant = {
 			set_location = root.domicile.domicile_location
+		}
+
+		if = { #Unop: Implement missing effect from "Allure of the Steppe" building
+			limit = {
+				domicile ?= {
+					has_domicile_building_or_higher = char_trade_yurt_01
+				}
+			}
+			domicile ?= {
+				unop_generate_yurt_paiza_char = yes
+			}
 		}
 	}
 
@@ -4161,6 +4192,15 @@ mpo_decisions_events.0100 = { #mpo_call_for_merchants_decision initial event
 			base = 50
 		}
 	}
+
+	after = { #Unop: Add a tooltip notif so we know someone joined our court
+		if = {
+			limit = {
+				domicile = { has_domicile_building_or_higher = char_trade_yurt_01 }
+			}
+			show_as_tooltip = { add_courtier = scope:yurt_merchant_char }
+		}
+	}
 }
 
 mpo_decisions_events.0101 = { #the merchant is back
@@ -4280,7 +4320,7 @@ mpo_decisions_events.0101 = { #the merchant is back
 						nomad_yurt_paiza_herd_gain_lvl_2 = {
 							change_herd = {
 								value = root.var:trade_gold_value
-								multiply = 0.05
+								multiply = 0.1 #Unop: Per tooltip this should be 10% increase (domicile_building_parameter_nomad_yurt_paiza_herd_gain_lvl_2)
 							}
 						}
 						nomad_yurt_paiza_herd_gain_lvl_3 = {
@@ -4489,6 +4529,7 @@ mpo_decisions_events.0101 = { #the merchant is back
 				gold = root.var:trade_gold_value
 			}
 			remove_variable = merchant_var
+			unop_clear_merchant = yes #Unop: Remove variables & dispose the merchant if AI generated
 		}	
 	}
 }
