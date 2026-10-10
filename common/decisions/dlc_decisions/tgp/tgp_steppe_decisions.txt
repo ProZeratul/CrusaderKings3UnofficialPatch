@@ -155,16 +155,18 @@
 				years = 30
 			}
 		}
-		give_noble_family_title = {
-			name = noble_family_name
-			tier = county
-			article = DEFAULT_TITLE_NAME_ARTICLE
-			government = steppe_admin_government
-			save_scope_as = new_title
-		}
-		scope:new_title = {
-			set_coa = holder.house
-		}
+		#Unop Use create_noble_family_effect, which ensures the holder is a house head (or forms a cadet branch)
+		create_noble_family_effect = { GOVERNMENT_GIVER = this }
+		#give_noble_family_title = {
+		#	name = noble_family_name
+		#	tier = county
+		#	article = DEFAULT_TITLE_NAME_ARTICLE
+		#	government = steppe_admin_government
+		#	save_scope_as = new_title
+		#}
+		#scope:new_title = {
+		#	set_coa = holder.house
+		#}
 		hidden_effect = {
 			switch = {
 				trigger = has_character_flag
