@@ -3966,7 +3966,7 @@ tgp_renounce_estate_effect = {
 						}
 					}
 				}
-				#Unop step down from ministries and then from landed titles, each title goes to its own heir
+				#Unop step down from ministries and landed titles below, after the player has switched, each title goes to its own heir
 				#create_title_and_vassal_change = {
 				#	type = appointment
 				#	save_scope_as = title_change
@@ -3980,19 +3980,6 @@ tgp_renounce_estate_effect = {
 				#	}
 				#}
 				#resolve_title_and_vassal_change = scope:title_change
-				if = {
-					limit = {
-						tgp_is_any_minister = yes
-					}
-					liege = { save_scope_as = councillor_liege } # Needed for the effect
-					fired_minister_position_effect = yes
-				}
-				if = {
-					limit = {
-						is_landed = yes
-					}
-					force_step_down_landed_titles = yes
-				}
 				every_in_list = {
 					list = equipped
 					limit = { artifact_owner = { can_equip_artifact = prev } }
@@ -4013,6 +4000,22 @@ tgp_renounce_estate_effect = {
 		if = {
 			limit = { exists = scope:new_human_player_character }
 			set_player_character = scope:new_human_player_character
+		}
+		#Unop step down only after the player has switched, otherwise losing the last titles to non-dynasty heirs causes a game over
+		hidden_effect = {
+			if = {
+				limit = {
+					tgp_is_any_minister = yes
+				}
+				liege = { save_scope_as = councillor_liege } # Needed for the effect
+				fired_minister_position_effect = yes
+			}
+			if = {
+				limit = {
+					is_landed = yes
+				}
+				force_step_down_landed_titles = yes
+			}
 		}
 		progress_towards_friend_effect = {
 			REASON = friend_retired_from_governorship
