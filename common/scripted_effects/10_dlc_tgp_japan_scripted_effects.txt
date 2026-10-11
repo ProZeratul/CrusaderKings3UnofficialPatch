@@ -3878,6 +3878,30 @@ tgp_renounce_estate_effect = {
 					value = prev.court_grandeur_current
 				}
 			}
+			#Unop step down from ministries and landed titles first, each title goes to its own heir (as the tooltip shows)
+			# While the estate is still held, the player keeps a title, and the estate heir stays a valid lower-tier appointment candidate
+			if = {
+				limit = {
+					any_held_title = { is_noble_family_title = no }
+				}
+				save_scope_value_as = {
+					name = unop_retired_was_ruler
+					value = flag:yes
+				}
+			}
+			if = {
+				limit = {
+					tgp_is_any_minister = yes
+				}
+				liege = { save_scope_as = councillor_liege } # Needed for the effect
+				fired_minister_position_effect = yes
+			}
+			if = {
+				limit = {
+					is_landed = yes
+				}
+				force_step_down_landed_titles = yes
+			}
 			create_title_and_vassal_change = {
 				type = granted
 				save_scope_as = title_change
@@ -3885,7 +3909,7 @@ tgp_renounce_estate_effect = {
 			}
 			if = {
 				limit = { is_governor = no }
-				#Unop only the estate goes to the estate heir, other titles go to their own heirs below (as the tooltip shows)
+				#Unop only the estate goes to the estate heir, other titles went to their own heirs above (as the tooltip shows)
 				#every_held_title = {
 				#	limit = { tier > tier_barony }
 				#	change_title_holder_include_vassals = {
@@ -3949,24 +3973,25 @@ tgp_renounce_estate_effect = {
 			}
 			resolve_title_and_vassal_change = scope:title_change
 			if = {
-				limit = { is_ruler = yes }
-				primary_title.current_heir = { save_scope_as = heir_temp }
-				# now handle title succession
-				every_character_artifact = {
-					limit = { var:artifact_succession_title.holder ?= scope:retired }
-					if = {
-						limit = { is_equipped = yes }
-						add_to_list = equipped
-					}
-					set_owner = {
-						target = scope:heir_temp
-						history = {
-							type = inherited
-							recipient = scope:heir_temp
-						}
-					}
-				}
-				#Unop step down from ministries and landed titles below, after the player has switched, each title goes to its own heir
+				#Unop the other titles are already gone, their artifacts followed them via on_title_gain
+				#limit = { is_ruler = yes }
+				#primary_title.current_heir = { save_scope_as = heir_temp }
+				## now handle title succession
+				#every_character_artifact = {
+				#	limit = { var:artifact_succession_title.holder ?= scope:retired }
+				#	if = {
+				#		limit = { is_equipped = yes }
+				#		add_to_list = equipped
+				#	}
+				#	set_owner = {
+				#		target = scope:heir_temp
+				#		history = {
+				#			type = inherited
+				#			recipient = scope:heir_temp
+				#		}
+				#	}
+				#}
+				limit = { exists = scope:unop_retired_was_ruler }
 				#create_title_and_vassal_change = {
 				#	type = appointment
 				#	save_scope_as = title_change
@@ -4000,22 +4025,6 @@ tgp_renounce_estate_effect = {
 		if = {
 			limit = { exists = scope:new_human_player_character }
 			set_player_character = scope:new_human_player_character
-		}
-		#Unop step down only after the player has switched, otherwise losing the last titles to non-dynasty heirs causes a game over
-		hidden_effect = {
-			if = {
-				limit = {
-					tgp_is_any_minister = yes
-				}
-				liege = { save_scope_as = councillor_liege } # Needed for the effect
-				fired_minister_position_effect = yes
-			}
-			if = {
-				limit = {
-					is_landed = yes
-				}
-				force_step_down_landed_titles = yes
-			}
 		}
 		progress_towards_friend_effect = {
 			REASON = friend_retired_from_governorship
