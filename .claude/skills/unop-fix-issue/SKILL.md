@@ -39,11 +39,11 @@ This skill runs **autonomously**, without asking for approval. Any human gates b
 
 ### 1. Load Context
 
-Read the shared file for the investigation findings, classification, and any prior fix/review cycles.
+Read the shared file for the investigation findings, classification, and any prior fix/review cycles. Read the analyzer's repro comment on the issue (marked `<!-- unop-repro -->`) if there is one.
 
 **Re-fix due to review.** If a `## Review N` section is present, read the most recent one and treat its `High` and `Medium` findings as the work list for this attempt — every one must be addressed before you consider the fix ready. `Low` findings are optional. Earlier `## Fix N` sections show what was already tried.
 
-**Re-fix due to PR feedback.** If the fix has a linked PR and there is feedback after your last `**<identity>:**` comment (especially any addressing `@<identity>`), read its conversation and review comments — `gh pr view <PR> --comments`, plus inline comments via `gh api repos/ProZeratul/CrusaderKings3UnofficialPatch/pulls/<PR>/comments`. Take into account any **feedback from the maintainers** but **vet each against the code**; if you disagree, say so in the `## Fix N` rather than silently complying.
+**Re-fix due to PR feedback.** If the fix has a linked PR and there is feedback after your last `**<identity>:**` comment (especially any addressing `@<identity>`), read its conversation and review comments — `gh pr view <PR> --comments`, plus inline comments via `gh api repos/ProZeratul/CrusaderKings3UnofficialPatch/pulls/<PR>/comments`. Take into account any **feedback from the maintainers** but **vet each against the code**; if you disagree, say so in the `## Fix N` rather than silently complying. If the feedback only asks for a test script, write and post it (step 3.4) without changing the fix; the `## Fix N` then just says `**Approach:** test script only`.
 
 Re-read the relevant Unop and vanilla files to refresh the context before formulating the fix.
 
@@ -84,10 +84,12 @@ Following the project `CLAUDE.md` "General", "Style", and "Opening PRs" guidelin
    - If new errors appear in newly-added vanilla files, fix or ignore them in the same PR.
    - **invoke the `tiger` skill to handle tiger error reports.
 
-4. **Commit fix files scoped by path.** Stage explicitly (`git add -- <path>`, never `git add -A`) **and** commit with a pathspec: `git commit -m "<summary>" -- <path...>`. Before committing, run `git diff --cached --name-only` and confirm only the fix files are listed. Commit message: short imperative summary.
+4. **Write the test script** following `testing.md`. Start from the issue's repro comment, re-verify it, and adapt it to what the fix changed.
 
-5. **Open or update the PR:**
-   - **First fix attempt**: open a draft PR whose description contains a `Fixes #<N>` line and a **concise** description of the fix prefixed with `**<identity>:**`. The `Fixes #<N>` line auto-links the issue, which already contains the analysis comment and labels. This description **is** your first-fix comment — don't also post a separate PR comment.
+5. **Commit fix files scoped by path.** Stage explicitly (`git add -- <path>`, never `git add -A`) **and** commit with a pathspec: `git commit -m "<summary>" -- <path...>`. Before committing, run `git diff --cached --name-only` and confirm only the fix files are listed. Commit message: short imperative summary.
+
+6. **Open or update the PR:**
+   - **First fix attempt**: open a draft PR whose description contains a `Fixes #<N>` line and a **concise** description of the fix prefixed with `**<identity>:**`. The `Fixes #<N>` line auto-links the issue, which already contains the analysis comment and labels. This description **is** your first-fix comment — apart from the test script, don't also post a separate PR comment.
 
      ```shell
      gh pr create --draft --title "<title>" --body "$(cat <<'EOF'
@@ -98,7 +100,9 @@ Following the project `CLAUDE.md` "General", "Style", and "Opening PRs" guidelin
      )"
      ```
 
-   - **Re-fix attempt**: push to the existing branch — the PR updates automatically. Then post a **concise** `**<identity>:**` PR comment explaining what changed (`gh pr comment <PR>`, resolving `<PR>` with `gh pr view --json number -q .number` on the checked-out branch); if the re-fix addressed PR feedback, reply to those comments directly.
+     Then post the test script as a separate PR comment, using the posting snippet in `testing.md`.
+
+   - **Re-fix attempt**: push to the existing branch — the PR updates automatically. Then post a **concise** `**<identity>:**` PR comment explaining what changed (`gh pr comment <PR>`, resolving `<PR>` with `gh pr view --json number -q .number` on the checked-out branch); if the re-fix addressed PR feedback, reply to those comments directly. If the fix changed what should be tested, or the PR has no test script comment, update or post it using the posting snippet in `testing.md`.
 
 ### 4. Append to the Shared File
 
@@ -116,6 +120,8 @@ Append a `## Fix N` section to the shared file (N = 1 for the first attempt, 2 f
 
 **Key assumption:** <the single behavioral assumption the fix depends on, and its corroboration — or "test in-game" if unconfirmed>
 
+**Test:** posted | updated | unchanged
+
 **Commit:** <commit message>
 
 **PR:** <PR URL> | existing PR updated
@@ -127,13 +133,17 @@ When done, report to the user:
 
 - Approach applied and why; on a re-fix, which review findings it resolved.
 - Files changed, commit, PR link.
-- Ask the user to manually verify the fix in-game and run in observer mode to check `error.log` for errors related to the fix.
+- Ask the user to verify the fix in-game following the PR's test script comment, and to check `error.log`.
 
 ## Reference
 
 ### Examples
 
 `examples.md` contains past investigations, one section per issue. Read the relevant section when its situation comes up.
+
+### Testing
+
+`testing.md` describes how to write the test script.
 
 ## Usage Examples
 

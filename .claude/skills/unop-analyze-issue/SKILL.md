@@ -87,6 +87,8 @@ For each candidate file:
 * **Map the pattern class.** Identify the category the buggy object belongs to — the object group or family, event chain, or set of analogous systems. Enumerate its members and check each for the same bug. Where a comparable member does **not** exhibit the bug, work out *how* it avoids it — that comparison usually reveals the right altitude for the fix.
 * **Verify against the decisive evidence.** Reading a condition isn't checking it — confirm the actual mechanism, which may live upstream (e.g. how the object is created) rather than in its own definition. A contradiction is a lead to trace, not something to wave away.
 
+* **Work out the repro.** Infer the in-game setup and steps that reach the bug, following `../unop-fix-issue/testing.md`. Verify every character ID, title, effect and event ID you name.
+
 Specifically look for:
 
 - Does the bug reproduce in the current vanilla file? → leans **vanilla**.
@@ -198,13 +200,15 @@ gh issue edit <N> --add-label "confirmed,vanilla,common,confidence:high"
 
 If this is a re-analysis, post a **very concise** follow-up comment stating what changed compared to the previous one.
 
+**Repro comment.** If **confirmed**, also post the repro as a separate comment, using the template and posting snippet in `../unop-fix-issue/testing.md`. On a re-analysis, this updates the existing repro comment. Skip it if you can't infer a repro.
+
 ### 7. Report Summary
 
 When done, report to the user:
 
 - Issue number and title.
 - Classification applied (status / origin / area / confidence).
-- Action taken: comment posted, labels applied, and findings written to the shared file.
+- Action taken: comments posted (including the repro), labels applied, and findings written to the shared file.
 - Anything that may need a human decision: `duplicate`/`wontfix` candidates, a missing area label, or multiple distinct bugs.
 
 ## Reference
