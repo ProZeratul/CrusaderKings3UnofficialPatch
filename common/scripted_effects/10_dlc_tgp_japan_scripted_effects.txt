@@ -3973,25 +3973,28 @@ tgp_renounce_estate_effect = {
 			}
 			resolve_title_and_vassal_change = scope:title_change
 			if = {
-				#Unop the other titles are already gone, their artifacts followed them via on_title_gain
+				#Unop the other titles are already gone at this point, check if there were any before the step-down above
 				#limit = { is_ruler = yes }
-				#primary_title.current_heir = { save_scope_as = heir_temp }
-				## now handle title succession
-				#every_character_artifact = {
-				#	limit = { var:artifact_succession_title.holder ?= scope:retired }
-				#	if = {
-				#		limit = { is_equipped = yes }
-				#		add_to_list = equipped
-				#	}
-				#	set_owner = {
-				#		target = scope:heir_temp
-				#		history = {
-				#			type = inherited
-				#			recipient = scope:heir_temp
-				#		}
-				#	}
-				#}
 				limit = { exists = scope:unop_retired_was_ruler }
+				#Unop null-safe, as there's no primary title any more
+				#primary_title.current_heir = { save_scope_as = heir_temp }
+				primary_title ?= { current_heir ?= { save_scope_as = heir_temp } }
+				# now handle title succession
+				every_character_artifact = {
+					limit = { var:artifact_succession_title.holder ?= scope:retired }
+					if = {
+						limit = { is_equipped = yes }
+						add_to_list = equipped
+					}
+					set_owner = {
+						target = scope:heir_temp
+						history = {
+							type = inherited
+							recipient = scope:heir_temp
+						}
+					}
+				}
+				#Unop the other titles already went to their own heirs in the step-down above
 				#create_title_and_vassal_change = {
 				#	type = appointment
 				#	save_scope_as = title_change
