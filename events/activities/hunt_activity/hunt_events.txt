@@ -6830,6 +6830,20 @@ hunt.1032 = {
 		NOT = {
 			has_character_modifier = modifier_hunt_hunting_trophy
 		}
+		exists = scope:activity
+		scope:activity = { has_variable = animal_type }
+ 		
+ 		NOR = {
+			exists = scope:activity.var:hunt_1005 # Animal not found in 4018
+			exists = scope:activity.var:hunt_4017 # Found animal in 4018
+			exists = scope:activity.var:hunt_4019 # Found another animal in 4018 
+		}
+	}
+
+	on_trigger_fail = {
+		debug_log = "UNOP: hunt.1032 failed to trigger"
+		unop_log_hunt_activity_effect = yes
+		debug_log_scopes = yes
 	}
 
 	weight_multiplier = {
@@ -6961,10 +6975,18 @@ hunt.1032 = {
 	}
 
 	after = {
-		scope:activity = {
-			every_attending_character = {
-				limit = { is_ai = no }
-				trigger_event = hunt.1200
+		if = {
+			limit = {
+				OR = {
+					exists = scope:bow_group
+					exists = scope:bow_fled
+				}
+			}
+			scope:activity = {
+				every_attending_character = {
+					limit = { is_ai = no }
+					trigger_event = hunt.1200
+				}
 			}
 		}
 	}
@@ -7035,6 +7057,11 @@ hunt.1033 = {
 		hunt_story_trigger = { STORY = ambush }
 		NOT = {
 			has_character_modifier = modifier_hunt_hunting_trophy
+		}
+		NOR = { 
+			exists = scope:activity.var:hunt_4017 # Found animal in 4018
+			exists = scope:activity.var:hunt_4019 # Found another animal in 4018
+			exists = scope:activity.var:hunt_1005 # Animal not found in 4018
 		}
 	}
 
@@ -9471,6 +9498,7 @@ hunt.1200 = {
 			NOR = {
 				scope:host ?= this
 				scope:hunt_participant ?= this
+				scope:hunt_summary_scope ?= this
 			}
 		}
 	}
@@ -9482,20 +9510,50 @@ hunt.1200 = {
 				scope:hunt_summary_scope ?= this
 				scope:animal_slayer ?= this
 				exists = scope:bow_success
+				exists = scope:bow_critical
+				exists = scope:bow_group
 			}
 		}
 	}
 	cooldown = { weeks = 1 }
 
 	immediate = {
+		#if = {
+		#	limit = {
+		#		hunt_animal_type_herbivore_trigger = { VAR = scope:activity.var:animal_type }
+		#	}
+		#	play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_beast_struggle"
+		#}
+		#else = { play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_beast_roar" }
+		#play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_arrow_impact_hit"
+
+		#Unop: Play a sound if we are not the main slayer (because it's played in the effect) Note: Only one play_sound_effect will play when multiple are present
 		if = {
-			limit = {
-				hunt_animal_type_herbivore_trigger = { VAR = scope:activity.var:animal_type }
+			limit = { NOT = { root = scope:animal_slayer } }
+			if = { # Kill the animal
+				limit = { exists = scope:bow_success }
+				play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_arrow_impact_hit"
 			}
-			play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_beast_struggle"
+			else_if = { # Miss the shot & the animal hurted someone while fleeing
+				limit = { exists = scope:bow_failure }
+				play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_arrow_impact_miss"
+			}
+			else_if = { # Miss the shot
+				limit = { exists = scope:bow_critical }
+				play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_arrow_flyby"
+			}
+			else_if = { # Group shot
+				limit = { exists = scope:bow_group }
+				play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_arrow_impact_hit"
+			}
 		}
-		else = { play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_beast_roar" }
-		play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_arrow_impact_hit"
+		else_if = {
+			limit = { exists = scope:bow_group } # In group shot "root" is the animal slayer
+			play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_arrow_impact_hit"
+		}
+
+
+
 		hunt_save_outcome_summary_scope_effect = yes
 		show_as_tooltip = {
 			scope:animal_slayer = {
@@ -9529,7 +9587,13 @@ hunt.1200 = {
 					if = {
 						limit = { exists = scope:injury_target }
 						scope:injury_target = {
-							hunt_wound_apply_effect = { SEVERE = no }
+							if = { # Big animal injure big
+								limit = { hunt_animal_type_dangerous_trigger = { VAR = scope:activity.var:animal_type } }
+								hunt_wound_apply_effect = { SEVERE = yes }
+							}
+							else = { # Smol animal injure smol
+								hunt_wound_apply_effect = { SEVERE = no }
+							}
 						}
 					}
 				}
@@ -9813,6 +9877,24 @@ hunt.1201 = {
 	}
 
 	immediate = {
+		if = { #Unop: Add this activity entry to have the correct wound to appear in the journal
+			limit = { exists = scope:melee_failure }
+			scope:activity = {
+				add_activity_log_entry = {
+					key = hunt_melee_wounded_log
+					score = 75
+					tags = { kill }
+					character = scope:injury_target
+
+					# Effect
+					scope:injury_target = {
+						hunt_wound_tooltip_effect = yes
+					}
+				}
+			}
+		}
+
+
 		if = {
 			limit = {
 				hunt_animal_type_herbivore_trigger = { VAR = scope:activity.var:animal_type }
@@ -10214,6 +10296,7 @@ hunt.1202 = {
 				scope:host ?= this
 				scope:hunt_summary_scope ?= this
 				scope:animal_slayer ?= this
+				exists = scope:group_success #Unop: Commented this to hide if nobody got hurt
 			}
 		}
 	}
@@ -10227,6 +10310,23 @@ hunt.1202 = {
 	}
 
 	immediate = {
+		if = { #Unop: Add this activity entry to have the correct wound to appear in the journal
+			limit = { exists = scope:group_failure }
+			scope:activity = {
+				add_activity_log_entry = {
+					key = hunt_melee_group_wounded_log
+					score = 75
+					tags = { kill }
+					character = scope:injury_target
+
+					# Effect
+					scope:injury_target = {
+						hunt_wound_tooltip_effect = yes
+					}
+				}
+			}
+		}
+		
 		if = {
 			limit = {
 				hunt_animal_type_herbivore_trigger = { VAR = scope:activity.var:animal_type }
@@ -11102,7 +11202,22 @@ hunt.2510 = {
 		# Must still be looking for animal if already started
 		trigger_if = {
 			limit = { has_character_flag = had_mystical_animal_story }
-			any_owned_story = { type = story_cycle_hunt_mystical_animal }
+			any_owned_story = {
+				story_type = story_cycle_hunt_mystical_animal
+				save_temporary_scope_as = temp_unop_story
+			}
+		}
+		#Unop: There is actually a valid location for a legendary sighting
+		trigger_if = {
+			limit = { NOT = { exists = scope:temp_unop_story } }
+			any_sub_realm_county = {
+				any_county_province = {
+					OR = {
+						unop_could_perform_standard_legendary_hunt = yes
+						unop_could_perform_dangerous_legendary_hunt = yes
+					}
+				}
+			}
 		}
 	}
 
@@ -11178,6 +11293,7 @@ hunt.2510 = {
 			}
 			else = {
 				save_scope_as = big_local_game
+				save_scope_as = unop_from_a_hunt_hunt_2510
 				random_list = {
 					2 = {
 						hunt_activity_standard_game_effect = { PROVINCE = scope:sighting_province HUNTER = root }
@@ -12255,10 +12371,11 @@ hunt.3020 = {
 							send_interface_toast = {
 								title = hunt.3020.b.failure
 								left_icon = root
+								hunt_activity_success_change_effect = { CHANGE = decrease_medium } #Unop: Harmonized with the other options, no reason to give twice the increase
 							}
+							#hunt_activity_success_change_effect = { CHANGE = increase_medium } #Unop: See just above
 						}
 					}
-					hunt_activity_success_change_effect = { CHANGE = increase_medium }
 				}
 			}
 		}
@@ -12466,7 +12583,8 @@ hunt.4001 = {
 	trigger = {		
 		OR = {
 			hunt_story_trigger = { STORY = stealth }
-			exists = scope:activity.var:hunt_4019
+			#exists = scope:activity.var:hunt_4019 
+			NOT = { exists = scope:activity.var:hunt_4019 } #Unop: Found another animal in 4018
 		}
 		NOT = {
 			has_character_modifier = modifier_hunt_hunting_trophy
@@ -13420,6 +13538,11 @@ hunt.4004 = {
 				scope:host ?= this
 			}
 		}
+	}
+	artifact = { #Unop: To display the artifact in the event-window
+		target = scope:newly_created_artifact
+		position = lower_right_portrait
+		trigger = { exists = scope:newly_created_artifact }
 	}
 
 	immediate = {
@@ -14737,6 +14860,7 @@ hunt.4007 = {
 				value = root.var:animal_type
 				years = 5
 			}
+			scope:activity = { set_variable = captive_animal } #Unop: TODO COMMENT
 			add_character_modifier = {
 				modifier = hunt_captive_beast_modifier
 				years = 5
@@ -15337,6 +15461,10 @@ hunt.4900 = {
 		name = {
 			trigger = { exists = scope:rampant_flee }
 			text = hunt.4900.a.flee
+		}
+		name = { #Unop: To not have a text about killing the beast when you capture it
+			trigger = { exists = scope:rampant_befriend }
+			text = hunt.4900.a.befriend
 		}
 		trigger = { is_alive = yes }
 		if = {
@@ -18093,7 +18221,7 @@ hunt.4013 = {
 					}
 				}
 				root = {
-					custom_tooltip = hunt.2000.b.tt
+					#custom_tooltip = hunt.2000.b.tt #Unop: Moved down TODO: Recheck in-game how it looks
 					stress_and_fulfillment_impact = {
 						ambitious = minor_stress_impact_gain
 						lifestyle_hunter = minor_stress_impact_gain
@@ -18104,6 +18232,7 @@ hunt.4013 = {
 			}
 		}
 		trigger_event = hunt.9002
+		custom_tooltip = hunt.2000.b.tt #Unop: Moved here from just above
 		add_character_flag = disabled_hunt_sightings_flag
 		ai_chance = {
 			base = 25
@@ -20181,7 +20310,7 @@ hunt.4018 = {
 							show_chance = no
 							custom_tooltip = hunt_fails_tt
 							scope:activity = {
-								set_variable = hunt_4013
+								set_variable = hunt_1005 #Unop: This was messing the end event since this is not our first encounter with the beast
 								set_variable = {
 									name = hunt_success
 									value = flag:no
@@ -20223,6 +20352,7 @@ hunt.4018 = {
 								name = hunt_success
 								value = flag:no
 							}
+							progress_activity_phase_after = { days = 1 } #Unop: Add this line to force-skip the "hunt_outcome_end_events" and go directly to the conclustion
 						}
 					}
 					else = {
@@ -20270,7 +20400,7 @@ hunt.4019 = {
 	trigger = {
 		scope:activity = {
 			has_activity_option = { category = special_type option = hunt_type_legendary }
-			exists = var:hunt_4019
+			exists = var:hunt_4019 #Unop: Found another animal in 4018
 			NOT = { exists = var:hunt_4013 } # Not first Legendary hunt
 		}
 		NOT = {
@@ -20958,7 +21088,7 @@ scripted_trigger hunt_5002_courtier_interested_in_flowers = {
 	is_ai = yes
 }
 
-hunt.5002 = {
+hunt.5002 = { #Someone in your hunting party gets the urge to pick herbs and flowers
 	type = activity_event
 	title = hunt.5001.t
 	desc = {
@@ -22211,19 +22341,20 @@ hunt.5003 = {
 							}
 						}
 					}
-					#But alas, you're not completely alone and might've been spotted!
-					if = {
-						limit = {
-							OR = {
-								has_secret_relation_lover = scope:hunt_participant 
-								any_secret = {
-									type = secret_lover
-									secret_target = { this = scope:hunt_participant }
-								}
-							}
-						}
-						custom_tooltip = hunt.5003.b.tt
-					}
+					#Unop: Move this down
+					##But alas, you're not completely alone and might've been spotted!
+					#if = {
+					#	limit = {
+					#		OR = {
+					#			has_secret_relation_lover = scope:hunt_participant 
+					#			any_secret = {
+					#				type = secret_lover
+					#				secret_target = { this = scope:hunt_participant }
+					#			}
+					#		}
+					#	}
+					#	custom_tooltip = hunt.5003.b.tt
+					#}
 					stress_and_fulfillment_impact = {
 						base = medium_stress_impact_loss
 						callous = minor_stress_impact_gain
@@ -22414,9 +22545,18 @@ hunt.5003 = {
 		}
 	}
 
+	#But alas, you're not completely alone and might've been spotted!
 	after = {
 		if = {
-			limit = { has_relation_lover = scope:hunt_participant }
+			limit = { 
+				OR = {
+					has_secret_relation_lover = scope:hunt_participant 
+					any_secret = {
+						type = secret_lover
+						secret_target = { this = scope:hunt_participant }
+					}
+				}
+			}
 			custom_tooltip = hunt.5003.b.tt
 			hidden_effect = {
 				random = {
@@ -22503,7 +22643,11 @@ hunt.5010 = {
 						limit = { has_royal_court = yes }
 						hunt_no_skull_effect = yes
 					}
-					else = { custom_tooltip = hunt_no_antlers_tt }
+					else = {
+						custom_tooltip = hunt_no_antlers_tt
+						#Unop: Since the are no "hunt_no_antlers_effect" => Re-use the skull; I know this is now useless, keeping this as reminder
+						hunt_no_skull_effect = yes
+					}
 					if = {
 						limit = { employs_court_position = master_of_hunt_court_position }
 						court_position:master_of_hunt_court_position = {
@@ -22607,6 +22751,7 @@ hunt.5010 = {
 					set_variable = {
 						name = tame_animal_type
 						value = scope:activity.var:animal_type
+						years = 10 #Unop: To match the hunt_tame_deer_modifier duration
 					}
 					add_character_modifier = {
 						modifier = hunt_tame_deer_modifier
@@ -26538,6 +26683,7 @@ hunt.7300 = {
 								has_trait = arrogant
 								hunt_dharmic_pacificist_trigger = no
 								exists = scope:befriend_target
+								exists = scope:befriend_approach
 								scope:befriend_approach = flag:suck_up
 							}
 							AND = {
@@ -26545,6 +26691,7 @@ hunt.7300 = {
 								ai_sociability > medium_positive_compassion # sociability doesn't exist
 								hunt_dharmic_pacificist_trigger = no
 								exists = scope:befriend_target
+								exists = scope:befriend_approach
 								scope:befriend_approach = flag:hunter
 							}
 							AND = {
@@ -26554,6 +26701,7 @@ hunt.7300 = {
 									value >= 25
 								}
 								exists = scope:befriend_target
+								exists = scope:befriend_approach
 								scope:befriend_approach = flag:mentor
 							}
 						}
@@ -28000,6 +28148,7 @@ scripted_effect hunt_activity_master_hunt_scope_effect = {
 	}
 }
 
+# Hunting end success
 hunt.9001 = {
 	type = activity_event
 	title = hunt.9001.t
@@ -28462,6 +28611,8 @@ hunt.9001 = {
 	theme = hunt_activity
 
 	immediate = {
+		hunt_outcome_scope_effect = yes
+
 		play_sound_effect = "event:/DLC/EP2/SFX/Events/Grand_Activities/Hunts/ConstructionKits/ep2_event_grand_hunt_ck_dogs_bark"
 		if = {
 			limit = { this = scope:host }
@@ -28506,6 +28657,22 @@ hunt.9001 = {
 		hunt_trophy_recipient_scope_effect = yes
 		# Special legend stuff
 		disburse_hunt_legend_seeds = yes
+		if = {
+			limit = { NOT = { exists = scope:trophy_recipient } }
+			#debug_log = "Unop: hunt.9001: trophy_recipient is undefined"
+			scope:activity = {
+				random_attending_character = {
+					limit = {
+						is_alive = yes
+						NOT = { scope:animal_slayer ?= this }
+						NOT = { this = root }
+					}
+					save_scope_as = trophy_recipient
+				}
+			}
+			#debug_log = "Unop: hunt.9001: trophy_recipient fallback to a random attending char"
+			#debug_log_scopes = yes
+		}
 	}
 
 	option = { # Nothing
@@ -28711,9 +28878,19 @@ hunt.9001 = {
 				add_prestige = hunt_prestige_guest_gain_value
 			}
 		}
+		if = { # Fallback for Fawning Doe etc.
+			limit = { exists = scope:activity }
+			scope:activity = {
+				set_variable = {
+					name = hunt_invalidated
+					value = flag:hunt_finished
+				}
+			}			
+		}
 	}
 }
 
+# Hunting end fail
 hunt.9002 = {
 	type = activity_event
 	title = hunt.9002.t
@@ -28894,6 +29071,8 @@ hunt.9002 = {
 	}
 
 	immediate = {
+		hunt_outcome_scope_effect = yes
+
 		if = {
 			limit = { this = scope:host }
 			if = {

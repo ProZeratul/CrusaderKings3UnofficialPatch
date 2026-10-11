@@ -470,7 +470,7 @@ hunt_mystical_animal.1006 = {
 #Down the rabbit hole
 #by Linnéa Thimrén
 hunt_mystical_animal.1007 = {
-	type = character_event
+	type = activity_event
 	title = hunt_mystical_animal.1001.t
 	desc = hunt_mystical_animal.1007.desc
 	theme = hunting
@@ -581,6 +581,11 @@ hunt_mystical_animal.1007 = {
 		custom_tooltip = hunt_mystical_animal.1003.b.tt
 		scope:story = {
 			hidden_effect = { end_story = yes }
+		}
+		scope:activity = {
+			activity_location.county = {
+				hunt_remove_sighting_effect = yes
+			}
 		}
 		random_list = {
 			80 = {
@@ -806,8 +811,9 @@ hunt_mystical_animal.9001 = {
 				has_activity_type = activity_hunt
 				has_activity_option = { category = special_type option = hunt_type_legendary }
 				NOR = {
-					exists = var:hunt_4013
-					exists = var:hunt_4019
+					exists = var:hunt_4013 #Unop: Since 4018 was setting it but it conflict with the same variable that meant that it was your first legendary hunt
+					exists = var:hunt_4019 #Unop: Found another animal in 4018
+					exists = var:hunt_1005 #Unop: Animal not found in 4018
 				}
 			}
 		}
