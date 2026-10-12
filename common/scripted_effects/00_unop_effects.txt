@@ -57,14 +57,16 @@ unop_trigger_physician_treatments_effect = {
 	}
 }
 
+#Unop: Implement the "Allure of the Steppe" (char_trade_yurt) arrival courtier: nomad_yurt_paiza_char_gain_arrival_lvl_N
+#In the paiza employer (character) scope, needs scope:merchant_origin. Call it once per merchant arrival (mpo_decisions_events.2140)
 unop_generate_yurt_paiza_char = {
-	if = {
-		limit = { has_domicile_building_or_higher = char_trade_yurt_01 }
+	save_scope_as = unop_yurt_char_employer
+	domicile ?= {
 		switch = {
 			trigger = has_domicile_parameter
-			nomad_yurt_paiza_char_gain_lvl_1 = {
+			nomad_yurt_paiza_char_gain_arrival_lvl_1 = {
 				create_character = {
-					location = root.location
+					location = scope:unop_yurt_char_employer.location
 					culture = scope:merchant_origin.county.culture
 					faith = scope:merchant_origin.county.faith
 					rite = scope:merchant_origin.county.rite
@@ -76,9 +78,9 @@ unop_generate_yurt_paiza_char = {
 					save_scope_as = yurt_merchant_char
 				}
 			}
-			nomad_yurt_paiza_char_gain_lvl_2 = {
+			nomad_yurt_paiza_char_gain_arrival_lvl_2 = {
 				create_character = {
-					location = root.location
+					location = scope:unop_yurt_char_employer.location
 					culture = scope:merchant_origin.county.culture
 					faith = scope:merchant_origin.county.faith
 					rite = scope:merchant_origin.county.rite
@@ -90,9 +92,9 @@ unop_generate_yurt_paiza_char = {
 					save_scope_as = yurt_merchant_char
 				}
 			}
-			nomad_yurt_paiza_char_gain_lvl_3 = {
+			nomad_yurt_paiza_char_gain_arrival_lvl_3 = {
 				create_character = {
-					location = root.location
+					location = scope:unop_yurt_char_employer.location
 					culture = scope:merchant_origin.county.culture
 					faith = scope:merchant_origin.county.faith
 					rite = scope:merchant_origin.county.rite
@@ -116,11 +118,10 @@ unop_generate_yurt_paiza_char = {
 				}
 			}
 		}
-		root = {
-			hidden_effect = {
-				add_courtier = scope:yurt_merchant_char
-			}
-		}
+	}
+	if = {
+		limit = { exists = scope:yurt_merchant_char }
+		hidden_effect = { add_courtier = scope:yurt_merchant_char }
 	}
 }
 

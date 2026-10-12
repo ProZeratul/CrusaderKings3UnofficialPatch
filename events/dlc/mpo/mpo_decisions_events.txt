@@ -3655,6 +3655,7 @@ mpo_decisions_events.2140 = {
 						set_location = domicile.domicile_location
 					}
 				}
+				unop_generate_yurt_paiza_char = yes #Unop: Implement the missing arrival courtier from the "Allure of the Steppe" building. Done here as this runs once per arrival (.2141 & .0100 are re-triggered by .2138)
 				if = {
 					limit = {
 						has_character_flag = established_paiza_system
@@ -3846,17 +3847,6 @@ mpo_decisions_events.2141 = { #mpo_call_for_merchants_smol_decision initial even
 		scope:paiza_merchant = {
 			set_location = root.domicile.domicile_location
 		}
-
-		if = { #Unop: Implement missing effect from "Allure of the Steppe" building
-			limit = {
-				domicile ?= {
-					has_domicile_building_or_higher = char_trade_yurt_01
-				}
-			}
-			domicile ?= {
-				unop_generate_yurt_paiza_char = yes
-			}
-		}
 	}
 
 	option = { #ask for an artifact material
@@ -3970,9 +3960,7 @@ mpo_decisions_events.2141 = { #mpo_call_for_merchants_smol_decision initial even
 
 	after = { #Unop: Add a tooltip notif so we know someone joined our court
 		if = {
-			limit = {
-				domicile = { has_domicile_building_or_higher = char_trade_yurt_01 }
-			}
+			limit = { exists = scope:yurt_merchant_char } #Unop: Created on arrival in .2140
 			show_as_tooltip = { add_courtier = scope:yurt_merchant_char }
 		}
 	}
@@ -4018,17 +4006,6 @@ mpo_decisions_events.0100 = { #mpo_call_for_merchants_decision initial event
 	immediate = {
 		scope:paiza_merchant = {
 			set_location = root.domicile.domicile_location
-		}
-
-		if = { #Unop: Implement missing effect from "Allure of the Steppe" building
-			limit = {
-				domicile ?= {
-					has_domicile_building_or_higher = char_trade_yurt_01
-				}
-			}
-			domicile ?= {
-				unop_generate_yurt_paiza_char = yes
-			}
 		}
 	}
 
@@ -4195,9 +4172,7 @@ mpo_decisions_events.0100 = { #mpo_call_for_merchants_decision initial event
 
 	after = { #Unop: Add a tooltip notif so we know someone joined our court
 		if = {
-			limit = {
-				domicile = { has_domicile_building_or_higher = char_trade_yurt_01 }
-			}
+			limit = { exists = scope:yurt_merchant_char } #Unop: Created on arrival in .2140
 			show_as_tooltip = { add_courtier = scope:yurt_merchant_char }
 		}
 	}
