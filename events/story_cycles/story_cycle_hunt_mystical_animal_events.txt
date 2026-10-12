@@ -381,6 +381,7 @@ hunt_mystical_animal.1005 = {
 					exists = var:hunt_4013
 					exists = var:hunt_4017
 					exists = var:hunt_4019
+					exists = var:hunt_1005 #Unop: Animal not found in 4018
 				}
 			}
 		}
@@ -478,6 +479,18 @@ hunt_mystical_animal.1007 = {
 	left_portrait = root
 
 	trigger = {
+		trigger_if = { #Unop: Its outcomes (9001 & 1005) only fire in an unresolved legendary hunt, otherwise the story stays locked with killing_animal
+			limit = { exists = scope:activity }
+			scope:activity = {
+				has_activity_option = { category = special_type option = hunt_type_legendary } # 9001 & 1005 require a legendary hunt
+				NOR = {
+					exists = var:hunt_4013
+					exists = var:hunt_4017
+					exists = var:hunt_4019
+					exists = var:hunt_1005
+				}
+			}
+		}
 		any_owned_story = {
 			type = story_cycle_hunt_mystical_animal
 			NOT = { exists = var:had_event_hunt_mystical_animal_1007 }
@@ -579,13 +592,9 @@ hunt_mystical_animal.1007 = {
 	option = { #Nah
 		name = hunt_mystical_animal.1007.b
 		custom_tooltip = hunt_mystical_animal.1003.b.tt
+		scope:story.var:legendary_county ?= { hunt_remove_sighting_effect = yes } #Unop: The story ends, so remove its legendary sighting (not the hunt's county, which can be another sighting)
 		scope:story = {
 			hidden_effect = { end_story = yes }
-		}
-		scope:activity = {
-			activity_location.county = {
-				hunt_remove_sighting_effect = yes
-			}
 		}
 		random_list = {
 			80 = {
@@ -811,8 +820,9 @@ hunt_mystical_animal.9001 = {
 				has_activity_type = activity_hunt
 				has_activity_option = { category = special_type option = hunt_type_legendary }
 				NOR = {
-					exists = var:hunt_4013 #Unop: Since 4018 was setting it but it conflict with the same variable that meant that it was your first legendary hunt
-					exists = var:hunt_4019 #Unop: Found another animal in 4018
+					exists = var:hunt_4013 # First legendary hunt
+					exists = var:hunt_4017 #Unop: Animal found in 4018, same list as 1005
+					exists = var:hunt_4019 # Found another animal in 4018
 					exists = var:hunt_1005 #Unop: Animal not found in 4018
 				}
 			}
