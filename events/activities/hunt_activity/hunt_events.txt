@@ -17776,7 +17776,8 @@ hunt.4012 = {
 			exists = scope:activity.var:hunt_outcome_random
 		}
 		trigger_else = {
-			NOT = { exists = scope:activity.var:hunt_outcome_random }
+			#NOT = { exists = scope:activity.var:hunt_outcome_random } #Unop: Set by the same random pulse right before this event fires, so it always failed on regular hunts
+			exists = scope:activity.var:unop_hunt_4012_window # Set at hunt start for 10 days: first random pulse only, never the day-21 outcome pool
 		}
 	}
 

@@ -11,12 +11,14 @@ hunt_start_events = {
 		hunt.0510 # Legendary
 		hunt.0530 # Falconry
 	}
-	#Unop: So we can have someone doing a standard hunt sighting a legendary beast in the wild just like before (hunt.4012)
-	#Unop: Todo: By fixing this, it will open a brand new branch of things that are not tested yet, so for now I don't enable it
-	#Unop: Once uncommented, remove the effect from hunt_random_pulse
-	#effect = { # Used to ensure a certain progress has been made before some events to fire
-	#	involved_activity = { set_variable = hunt_outcome_random }
-	#}
+	effect = { #Unop: Window for hunt.4012 on regular hunts (first random pulse, day 7), set before any pulse so its trigger doesn't race the pulse's own effect (hunt_outcome_random)
+		involved_activity = {
+			set_variable = {
+				name = unop_hunt_4012_window
+				days = 10
+			}
+		}
+	}
 }
 
 # 2. Random Flavor
