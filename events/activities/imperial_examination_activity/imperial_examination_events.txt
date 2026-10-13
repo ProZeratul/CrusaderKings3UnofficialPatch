@@ -1763,23 +1763,7 @@ scripted_effect sort_interesting_pool_character = {
 				is_lowborn = yes
 				province = scope:activity.activity_location
 				is_available_healthy_ai_adult = yes
-				trigger_if = {
-					limit = {
-						scope:host = {
-							rite = { rite_has_doctrine = doctrine_gender_female_dominated }
-						}
-					}
-					is_female = yes
-				}
-				trigger_else_if = {
-					limit = {
-						scope:host = {
-							rite = { rite_has_doctrine = doctrine_gender_male_dominated }
-						}
-					}
-					is_female = no
-				}
-				trigger_else = { always = yes }
+				scope:host.rite = { rite_has_dominant_ruling_gender = prev }
 				NOR = {
 					is_participant_in_activity = scope:activity
 					has_trait = devoted
@@ -1791,23 +1775,7 @@ scripted_effect sort_interesting_pool_character = {
 			limit = {
 				is_lowborn = yes
 				is_available_healthy_ai_adult = yes
-				trigger_if = {
-					limit = {
-						scope:host = {
-							rite = { rite_has_doctrine = doctrine_gender_female_dominated }
-						}
-					}
-					is_female = yes
-				}
-				trigger_else_if = {
-					limit = {
-						scope:host = {
-							rite = { rite_has_doctrine = doctrine_gender_male_dominated }
-						}
-					}
-					is_female = no
-				}
-				trigger_else = { always = yes }
+				scope:host.rite = { rite_has_dominant_ruling_gender = prev }
 				NOR = {
 					is_participant_in_activity = scope:activity
 					has_trait = devoted

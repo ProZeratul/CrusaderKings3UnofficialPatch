@@ -1613,15 +1613,6 @@ harm_candidacy_interaction = {
 	# Interaction frequency determined by code, do not set frequency
 	ai_will_do = {
 		base = 0
-		# ai_potential is not evaluated on the code-driven path, so keep its gating here as hard-no guards.
-		modifier = {
-			factor = 0
-			scope:actor = { influence <= major_influence_value }
-		}
-		modifier = {
-			factor = 0
-			scope:actor = { ai_honor > 25 }
-		}
 		modifier = {
 			scope:actor = {
 				has_relation_rival = scope:secondary_recipient
@@ -1679,6 +1670,15 @@ harm_candidacy_interaction = {
 				}
 			}
 			factor = 0
+		}
+		# ai_potential is not evaluated on the code-driven path, so keep its gating here as hard-no guards.
+		modifier = {
+			factor = 0
+			scope:actor = { influence <= major_influence_value }
+		}
+		modifier = {
+			factor = 0
+			scope:actor = { ai_honor > 25 }
 		}
 	}
 }

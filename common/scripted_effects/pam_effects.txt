@@ -54,6 +54,7 @@
 #pam_declare_rite_heresy_effect
 #pam_secure_pilgrim_routes_effect
 #request_white_peace_interaction_effect
+#pam_enforce_requested_white_peace_effect
 #request_victory_interaction_effect
 #request_enforce_succession_interaction_effect
 #pam_enforce_title_succession_effect
@@ -1047,6 +1048,114 @@ pam_faith_grant_forbidden_personal_tenet_secrets_effect = {
 				NOT = { any_secret = { type = secret_forbidden_personal_tenet } }
 			}
 			on_personal_tenet_gain_secret_gain_effect = yes
+		}
+	}
+}
+
+pam_personal_tenet_status_change_fulfillment_effect = {
+	if = {
+		limit = { has_personal_tenet = $TENET$ }
+		if = {
+			limit = {
+				rite = {
+					has_tenet_status = {
+						tenet = $TENET$
+						status = prohibited
+					}
+				}
+			}
+			change_spiritual_fulfillment = major_spiritual_fulfillment_loss
+		}
+		else_if = {
+			limit = {
+				rite = {
+					has_tenet_status = {
+						tenet = $TENET$
+						status = permitted
+					}
+				}
+			}
+			change_spiritual_fulfillment = major_spiritual_fulfillment_value
+		}
+	}
+}
+
+pam_personal_tenet_made_core_fulfillment_effect = {
+	if = {
+		limit = {
+			has_personal_tenet = $TENET$
+			OR = {
+				rite = $RITE$
+				AND = {
+					$RITE$.faith.main_rite = $RITE$
+					rite = {
+						NOT = { rite_has_tenet = $TENET$ }
+					}
+				}
+			}
+			rite = {
+				has_tenet_status = {
+					tenet = $TENET$
+					status = core
+				}
+			}
+		}
+		change_spiritual_fulfillment = major_spiritual_fulfillment_value
+	}
+}
+
+pam_personal_tenet_lost_core_fulfillment_effect = {
+	if = {
+		limit = {
+			has_personal_tenet = $TENET$
+			OR = {
+				rite = $RITE$
+				$RITE$.faith.main_rite = $RITE$
+			}
+			rite = {
+				NOT = {
+					has_tenet_status = {
+						tenet = $TENET$
+						status = core
+					}
+				}
+			}
+		}
+		$TENET$ = { save_temporary_scope_as = tenet }
+		change_spiritual_fulfillment = {
+			value = gain_personal_tenet_sf_change
+			subtract = massive_spiritual_fulfillment_value
+		}
+	}
+}
+
+pam_personal_tenet_rite_update_fulfillment_effect = {
+	save_temporary_scope_as = pam_personal_tenet_holder
+	every_in_list = {
+		list = changed_tenet_status
+		save_temporary_scope_as = pam_status_changed_tenet
+		scope:pam_personal_tenet_holder = {
+			pam_personal_tenet_status_change_fulfillment_effect = { TENET = scope:pam_status_changed_tenet }
+		}
+	}
+	every_in_list = {
+		list = added_tenets
+		save_temporary_scope_as = pam_status_changed_tenet
+		scope:pam_personal_tenet_holder = {
+			pam_personal_tenet_made_core_fulfillment_effect = {
+				TENET = scope:pam_status_changed_tenet
+				RITE = root
+			}
+		}
+	}
+	every_in_list = {
+		list = removed_tenets
+		save_temporary_scope_as = pam_status_changed_tenet
+		scope:pam_personal_tenet_holder = {
+			pam_personal_tenet_lost_core_fulfillment_effect = {
+				TENET = scope:pam_status_changed_tenet
+				RITE = root
+			}
 		}
 	}
 }
@@ -4985,6 +5094,12 @@ pam_buy_ecclesiastical_title_interaction_effect = {
 	scope:new_holder = {
 		if = {
 			limit = {
+				any_held_title = { has_variable = adventurer_creation_reason }
+			}
+			destroy_laamp_effect = { ADVENTURER = scope:new_holder }
+		}
+		if = {
+			limit = {
 				NOT = { government_has_flag = government_is_ecclesiastical }
 			}
 			change_government = ecclesiastical_government
@@ -6835,7 +6950,9 @@ cathedral_great_project_funded_started_event_sender_effect = {
 				limit = {
 					this != scope:owner
 					this != scope:founder
+					NOT = { is_in_list = cathedral_started_event_contributors }
 				}
+				add_to_list = cathedral_started_event_contributors
 				save_scope_as = contributor
 				trigger_event = pam_great_projects_events.0005
 			}
@@ -6875,7 +6992,9 @@ cathedral_great_project_completed_event_sender_effect = {
 					this != scope:owner
 					this != scope:founder
 					NOT = { this ?= scope:founder_heir }
+					NOT = { is_in_list = cathedral_completed_event_contributors }
 				}
+				add_to_list = cathedral_completed_event_contributors
 				save_scope_as = contributor
 				trigger_event = pam_great_projects_events.0020
 			}
@@ -6960,6 +7079,7 @@ pam_create_new_ecclesiastical_title_interaction_effect = {
 								set_capital_county = scope:clerical_region_anchor_county
 								set_landless_title = yes
 								set_no_automatic_claims = yes
+								set_always_follows_primary_heir = yes
 								set_definitive_form = yes
 								change_title_holder = {
 									holder = scope:new_ecclesiastical_holder
@@ -7187,6 +7307,67 @@ pam_bull_notify_faith_rulers_effect = {
 	}
 }
 
+# Chalcedonian saints carry over to Catholic and Orthodox when the Great Schism splits the church.
+pam_copy_chalcedonian_saints_to_schism_faiths_effect = {
+	faith:christian_faith = {
+		every_saint = {
+			save_temporary_scope_as = chalcedonian_saint
+			faith:catholic = {
+				if = {
+					limit = { NOT = { has_saint_character = scope:chalcedonian_saint } }
+					add_saint = { character = scope:chalcedonian_saint }
+				}
+			}
+			faith:orthodox = {
+				if = {
+					limit = { NOT = { has_saint_character = scope:chalcedonian_saint } }
+					add_saint = { character = scope:chalcedonian_saint }
+				}
+			}
+		}
+	}
+}
+
+# Holy sites added before the Great Schism go to whichever church holds their clerical region
+pam_copy_chalcedonian_added_holy_sites_to_schism_faiths_effect = {
+	faith:christian_faith = {
+		every_holy_site = {
+			limit = {
+				NOR = {
+					this = holy_site:jerusalem
+					this = holy_site:rome
+					this = holy_site:constantinople
+					this = holy_site:santiago
+					this = holy_site:antioch
+					this = holy_site:alexandria
+					this = holy_site:cologne
+					this = holy_site:kent
+				}
+			}
+			save_temporary_scope_as = chalcedonian_added_holy_site
+			holy_site_county.clerical_region_title.holder ?= {
+				if = {
+					limit = {
+						OR = {
+							faith = faith:catholic
+							faith = faith:orthodox
+						}
+						faith = {
+							list_size:holy_site < religion.holy_sites_max
+							NOT = { is_faith_holy_site = scope:chalcedonian_added_holy_site }
+						}
+					}
+					faith = {
+						add_holy_site = { target = scope:chalcedonian_added_holy_site }
+						# on_faith_holy_site_added only records the kingdom when the site has a single faith
+						record_dynamic_holy_site_kingdom_effect = { BARONY = scope:chalcedonian_added_holy_site.holy_site_barony }
+					}
+				}
+			}
+		}
+	}
+}
+
 pam_apply_great_schism_creation_effect = {
 	if = {
 		limit = { NOT = { has_global_variable = pam_great_schism_happened } }
@@ -7230,23 +7411,32 @@ pam_apply_great_schism_creation_effect = {
 		}
 		rite:insular_celtic = {
 			set_can_convert_to_rite = yes
-			set_parent_faith = {
-				target = faith:catholic
-				main = no
+			if = {
+				limit = { faith = faith:christian_faith }
+				set_parent_faith = {
+					target = faith:catholic
+					main = no
+				}
 			}
 		}
 		rite:mozarabic_church = {
 			set_can_convert_to_rite = yes
-			set_parent_faith = {
-				target = faith:catholic
-				main = no
+			if = {
+				limit = { faith = faith:christian_faith }
+				set_parent_faith = {
+					target = faith:catholic
+					main = no
+				}
 			}
 		}
 		rite:ambrosian_rite = {
 			set_can_convert_to_rite = yes
-			set_parent_faith = {
-				target = faith:catholic
-				main = no
+			if = {
+				limit = { faith = faith:christian_faith }
+				set_parent_faith = {
+					target = faith:catholic
+					main = no
+				}
 			}
 		}
 		rite:byzantine_rite = {
@@ -7259,32 +7449,44 @@ pam_apply_great_schism_creation_effect = {
 		}
 		rite:georgian_rite = {
 			set_can_convert_to_rite = yes
-			set_parent_faith = {
-				target = faith:orthodox
-				main = no
+			if = {
+				limit = { faith = faith:christian_faith }
+				set_parent_faith = {
+					target = faith:orthodox
+					main = no
+				}
 			}
 		}
 		rite:slavic_rite = {
 			set_can_convert_to_rite = yes
-			set_parent_faith = {
-				target = faith:orthodox
-				main = no
+			if = {
+				limit = { faith = faith:christian_faith }
+				set_parent_faith = {
+					target = faith:orthodox
+					main = no
+				}
 			}
 		}
 		rite:carolingian_christianity = {
 			set_can_convert_to_rite = no
 			set_rite_enabled = no
-			set_parent_faith = {
-				target = faith:catholic
-				main = no
+			if = {
+				limit = { faith = faith:christian_faith }
+				set_parent_faith = {
+					target = faith:catholic
+					main = no
+				}
 			}
 		}
 		rite:beneventan_rite = {
 			set_can_convert_to_rite = no
 			set_rite_enabled = no
-			set_parent_faith = {
-				target = faith:catholic
-				main = no
+			if = {
+				limit = { faith = faith:christian_faith }
+				set_parent_faith = {
+					target = faith:catholic
+					main = no
+				}
 			}
 		}
 		struggle:iberian_struggle ?= {
@@ -7296,6 +7498,10 @@ pam_apply_great_schism_creation_effect = {
 		faith:catholic = { set_religious_head_title = title:k_papal_state }
 	}
 	hidden_effect = {
+		if = {
+			limit = { exists = situation:the_christian_church }
+			the_christian_church_set_main_power_faith_effect = yes
+		}
 		situation:the_christian_church ?= {
 			every_situation_participant = {
 				limit = {
@@ -7327,6 +7533,12 @@ pam_apply_great_schism_creation_effect = {
 					}
 					set_character_faith = scope:schism_competitor_faith
 				}
+			}
+		}
+		title:k_papal_state.holder ?= {
+			if = {
+				limit = { NOT = { faith = faith:catholic } }
+				set_character_faith = faith:catholic
 			}
 		}
 		faith:christian_faith = {
@@ -7372,11 +7584,9 @@ pam_apply_great_schism_creation_effect = {
 		faith:christian_faith = { remove_doctrine = special_doctrine_has_clerical_electors }
 		# Catholicism starts with a College so AI clergy do not spam the Pope to fill vacancies
 		faith:catholic = { pam_seed_cardinals_effect = yes }
-		if = {
-			limit = { exists = situation:the_christian_church }
-			the_christian_church_set_main_power_faith_effect = yes
-			the_christian_church_recalculate_participant_groups_effect = yes
-		}
+		pam_copy_chalcedonian_saints_to_schism_faiths_effect = yes
+		pam_copy_chalcedonian_added_holy_sites_to_schism_faiths_effect = yes
+		the_christian_church_mass_recalculate_participant_groups_effect = yes
 	}
 }
 
@@ -7785,6 +7995,7 @@ pam_split_ecclesiastical_title_outcome_effect = {
 			set_capital_county = scope:secular_ruler.capital_county
 			set_landless_title = yes
 			set_no_automatic_claims = yes
+			set_always_follows_primary_heir = yes
 
 			change_title_holder = {
 				holder = scope:new_ecclesiastical_holder
@@ -8676,7 +8887,23 @@ pam_tenet_popularity_situation_concord_start_effect = {
 # Without this, clerical courts fill from generic pool templates and feel secular
 pam_seed_monk_courtiers_effect = {
 	if = {
-		limit = { pam_court_wants_monk_courtiers_trigger = yes }
+		limit = {
+			OR = {
+				pam_court_wants_monk_courtiers_trigger = yes
+				# Without regional clergy to draw on, a clerical court's own clergy are its only Clerical Appointment candidates
+				AND = {
+					has_pam_dlc_trigger = yes
+					is_ruler = yes
+					highest_held_title_tier >= tier_county
+					NOT = { religion = religion:christianity_religion }
+					pam_government_is_religious_playable_trigger = yes
+					primary_title = {
+						is_mercenary_company = no
+						is_holy_order = no
+					}
+				}
+			}
+		}
 		save_temporary_scope_as = monk_employer
 		while = {
 			count = 4 # Hard bound matching the highest quota; the limit below is what actually ends the loop
@@ -8691,6 +8918,7 @@ pam_seed_monk_courtiers_effect = {
 			}
 			random_list = {
 				50 = {
+					trigger = { faith = { faith_has_monasticism_trigger = yes } }
 					create_character = { # No location: create_character rejects location and employer together
 						employer = scope:monk_employer
 						template = pam_monk_courtier_template
@@ -10978,6 +11206,60 @@ request_white_peace_interaction_effect = {
 			save_scope_as = war #release_prisoners_of_war_effect resolves the war through scope:war
 		}
 	}
+	scope:puppet_or_actor = {
+		if = {
+			limit = {
+				scope:donate_faith = yes
+			}
+			pay_treasury_or_gold = {
+				target = scope:recipient
+				value = major_gold_value
+			}
+		}
+		if = {
+			limit = {
+				scope:offer_piety = yes
+			}
+			add_piety = major_piety_loss
+			scope:recipient = {
+				add_piety = major_piety_gain
+			}
+		}
+		if = {
+			limit = {
+				scope:offer_hook = yes
+			}
+			scope:recipient = {
+				add_hook = {
+					type = favor_hook
+					target = scope:puppet_or_actor
+				}
+			}
+		}
+		pam_offer_pilgrimage_effect = {
+			ACTOR = scope:puppet_or_actor
+			CLERIC = scope:recipient
+		}
+	}
+	if = {
+		limit = { scope:secondary_recipient = { is_ai = no } }
+		custom_tooltip = request_white_peace_player_opponent_tt
+		scope:secondary_recipient = { trigger_event = pam_interactions_events.0084 }
+	}
+	else = {
+		pam_enforce_requested_white_peace_effect = yes
+		scope:secondary_recipient = {
+			add_opinion = {
+				target = scope:recipient
+				modifier = pam_enforced_white_peace_opinion
+			}
+			trigger_event = pam_interactions_events.0080
+		}
+	}
+}
+
+# Needs scope:white_peace_war from request_white_peace_interaction_effect
+pam_enforce_requested_white_peace_effect = {
 	scope:white_peace_war = {
 		casus_belli = {
 			primary_attacker = {
@@ -11043,16 +11325,6 @@ request_white_peace_interaction_effect = {
 			}
 		}
 	}
-	scope:secondary_recipient = {
-		if = {
-			limit = { is_ai = yes }
-			add_opinion = {
-				target = scope:recipient
-				modifier = pam_enforced_white_peace_opinion
-			}
-		}
-		trigger_event = pam_interactions_events.0080
-	}
 	if = {
 		limit = {
 			situation:the_christian_church ?= {
@@ -11064,39 +11336,6 @@ request_white_peace_interaction_effect = {
 		}
 	}
 	scope:puppet_or_actor = {
-		if = {
-			limit = {
-				scope:donate_faith = yes
-			}
-			pay_treasury_or_gold = {
-				target = scope:recipient
-				value = major_gold_value
-			}
-		}
-		if = {
-			limit = {
-				scope:offer_piety = yes
-			}
-			add_piety = major_piety_loss
-			scope:recipient = {
-				add_piety = major_piety_gain
-			}
-		}
-		if = {
-			limit = {
-				scope:offer_hook = yes
-			}
-			scope:recipient = {
-				add_hook = {
-					type = favor_hook
-					target = scope:puppet_or_actor
-				}
-			}
-		}
-		pam_offer_pilgrimage_effect = {
-			ACTOR = scope:puppet_or_actor
-			CLERIC = scope:recipient
-		}
 		send_interface_toast = {
 			type = event_toast_effect_neutral
 			title = request_white_peace_interaction_toast_title
@@ -11836,26 +12075,6 @@ pam_convert_court_to_rite_effect = {
 	}
 }
 
-# PAM - Faith counterpart of pam_convert_court_to_rite_effect: converts a ruler's court still on $OLD_FAITH$ to $FAITH$
-pam_convert_court_to_faith_effect = {
-	every_courtier_or_guest = {
-		limit = {
-			is_physically_able_ai = yes
-			faith = $OLD_FAITH$
-			NOT = { has_character_flag = ai_will_not_convert }
-		}
-		set_character_faith = $FAITH$
-	}
-	every_courtier_away = {
-		limit = {
-			is_physically_able_ai = yes
-			faith = $OLD_FAITH$
-			NOT = { has_character_flag = ai_will_not_convert }
-		}
-		set_character_faith = $FAITH$
-	}
-}
-
 # PAM Great Schism: shows $TT$, and $VALUE$ goes up when positive (zero still shows the tooltip)
 # Progress only goes up, and we do nothing once the schism has happened or been prevented
 pam_change_great_schism_progress_effect = {
@@ -12223,17 +12442,29 @@ pam_epidemic_spiritual_fulfillment_loss_effect = {
 }
 
 # PAM Epidemics: expects scope:epidemic, shown in epidemic arrival events
+# A large realm gets one of these for every outbreak in it, so we only charge each character once per cooldown
 pam_epidemic_arrival_spiritual_fulfillment_loss_effect = {
 	if = {
-		limit = { scope:epidemic = { outbreak_intensity = apocalyptic } }
-		pam_epidemic_spiritual_fulfillment_loss_effect = { AMOUNT = massive_spiritual_fulfillment_loss }
-	}
-	else_if = {
-		limit = { scope:epidemic = { outbreak_intensity = major } }
-		pam_epidemic_spiritual_fulfillment_loss_effect = { AMOUNT = major_spiritual_fulfillment_loss }
-	}
-	else = {
-		pam_epidemic_spiritual_fulfillment_loss_effect = { AMOUNT = medium_spiritual_fulfillment_loss }
+		limit = {
+			NOT = { has_character_flag = pam_epidemic_arrival_fulfillment_loss_cooldown }
+		}
+		hidden_effect = {
+			add_character_flag = {
+				flag = pam_epidemic_arrival_fulfillment_loss_cooldown
+				years = 3
+			}
+		}
+		if = {
+			limit = { scope:epidemic = { outbreak_intensity = apocalyptic } }
+			pam_epidemic_spiritual_fulfillment_loss_effect = { AMOUNT = massive_spiritual_fulfillment_loss }
+		}
+		else_if = {
+			limit = { scope:epidemic = { outbreak_intensity = major } }
+			pam_epidemic_spiritual_fulfillment_loss_effect = { AMOUNT = major_spiritual_fulfillment_loss }
+		}
+		else = {
+			pam_epidemic_spiritual_fulfillment_loss_effect = { AMOUNT = medium_spiritual_fulfillment_loss }
+		}
 	}
 }
 
@@ -13188,6 +13419,7 @@ ecclesiastical_de_jure_shifting_effect = {
 							random = {
 								chance = 10
 								set_county_faith = $DE_JURE_MASTER$.faith
+								set_county_rite = $DE_JURE_MASTER$.rite
 							}
 						}
 					}
@@ -13326,6 +13558,8 @@ pam_cardinal_vacancy_on_death_effect = {
 							this != scope:head_of_faith
 							pam_can_hold_cardinalate_trigger = yes
 							pam_pope_is_head_of_faith_or_rite_trigger = yes
+							pam_ai_cardinal_candidate_is_immersive_trigger = yes
+							pam_is_antipope_trigger = no
 						}
 					}
 					order_by = holder.piety_level
@@ -13355,6 +13589,8 @@ pam_cardinal_vacancy_on_death_effect = {
 							this != scope:head_of_faith
 							pam_can_hold_cardinalate_trigger = yes
 							pam_pope_is_head_of_faith_or_rite_trigger = yes
+							pam_ai_cardinal_candidate_is_immersive_trigger = yes
+							pam_is_antipope_trigger = no
 						}
 					}
 					order_by = holder.piety_level
