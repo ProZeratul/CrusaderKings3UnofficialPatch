@@ -1611,7 +1611,14 @@ hasan_evangelize_province_trigger = {
 			# Faith is different from Hasan's
 			custom_tooltip = {
 				text = zealous_missionary_start_decision_other_faith_location
+				NOT = { character:41702 ?= root }
 				this = root.faith
+			}
+			# Hasan's own story only needs a different rite, so Ismaili counties stay valid
+			custom_tooltip = {
+				text = hasan_evangelize_other_rite_location_tt
+				character:41702 ?= root
+				scope:county.rite = root.rite
 			}
 			# County is not held by it's Faith's Religious Head
 			custom_tooltip = {
@@ -1865,7 +1872,7 @@ laamp_as_mercenary_payout_trigger = {
 				scope:merc_temp = { is_attacker_in_war = scope:war_temp }
 			}
 			trigger_else = {
-				scope:merc_temp = { is_defender_in_war = scope:war_temp } #Unop should check defender, not attacker, when employer is a defender
+				scope:merc_temp = { is_defender_in_war = scope:war_temp }
 			}
 		}
 		NOT = { is_leader_in_war = scope:war_temp }

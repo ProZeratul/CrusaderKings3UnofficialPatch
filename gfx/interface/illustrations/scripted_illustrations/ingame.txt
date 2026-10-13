@@ -12337,10 +12337,7 @@ character_religion_interior = {
 
 	texture = { # indian temple
 		trigger = { 
-			OR = {
-				culture = { has_graphical_india_culture_group_trigger = yes }
-				culture = { has_graphical_east_asia_culture_group_trigger = yes }
-			}
+			culture = { has_graphical_india_culture_group_trigger = yes }
 			OR = {
 				religion = religion:buddhism_religion
 				broadly_dharmic_trigger = yes 
@@ -12351,10 +12348,7 @@ character_religion_interior = {
 
 	environment = { # indian temple
 		trigger = { 
-			OR = {
-				culture = { has_graphical_india_culture_group_trigger = yes } #Unop Use correct scope
-				culture = { has_graphical_east_asia_culture_group_trigger = yes }
-			}
+			culture = { has_graphical_india_culture_group_trigger = yes }
 			OR = {
 				religion = religion:buddhism_religion
 				broadly_dharmic_trigger = yes 
@@ -12425,6 +12419,16 @@ character_religion_interior = {
 	environment = { # TGP
 		trigger = { religion = religion:confucianism_religion }
 		reference = "environment_tgp_holysite_asia"
+	}
+
+	texture = {
+		trigger = { religion_uses_east_asian_temple_trigger = yes }
+		reference = "event_scenes/tgp_temple_asia.dds"
+	}
+
+	environment = {
+		trigger = { religion_uses_east_asian_temple_trigger = yes }
+		reference = "environment_tgp_temple_asia"
 	}
 
 	# TGP - Broadly Dharmic Asian Religions

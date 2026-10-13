@@ -1481,6 +1481,7 @@ pilgrimage.1110 = {
 					scope:heathen_raider = {
 						hidden_effect = { set_character_faith_with_conversion = root.faith }
 						set_character_faith = root.faith
+						set_character_rite = root.rite
 					}
 					add_to_entourage_court_and_activity_effect = { 
 						CHAR_TO_ADD = scope:heathen_raider 
@@ -4478,6 +4479,7 @@ pilgrimage.2021 = {
 					root.faith != this.faith
 				}
 				set_character_faith = root.faith
+				set_character_rite = root.rite
 			}
 		}
 		stress_and_fulfillment_impact = {
@@ -4525,6 +4527,7 @@ pilgrimage.2021 = {
 					root.faith != this.faith
 				}
 				set_character_faith = root.faith
+				set_character_rite = root.rite
 			}
 			add_trait = flagellant
 			increase_wounds_no_death_effect = { REASON = flagellant }
@@ -5143,12 +5146,15 @@ pilgrimage.2050 = {
 				scope:third_pilgrim = { add_to_court_and_entourage_effect = yes }
 				scope:first_pilgrim = {
 					set_character_faith = root.faith
+					set_character_rite = root.rite
 				}
 				scope:second_pilgrim = {
 					set_character_faith = root.faith
+					set_character_rite = root.rite
 				}
 				scope:third_pilgrim = {
 					set_character_faith = root.faith
+					set_character_rite = root.rite
 				}
 			}
 			#Failure
@@ -7166,7 +7172,10 @@ pilgrimage.3003 = {
 	}
 	immediate = {
 		wayfarer_storyteller_fame_effect = { VALUE = roaming_reward_fame_small }
-		scope:naked_preacher = { set_character_faith = root.faith }
+		scope:naked_preacher = {
+			set_character_faith = root.faith
+			set_character_rite = root.rite
+		}
 		add_learning_lifestyle_xp = major_lifestyle_xp
 		add_piety = medium_piety_gain
 	}
@@ -8790,7 +8799,6 @@ pilgrimage.6007 = {
 	right_portrait = {
 		character = scope:6007_healer
 		animation = admiration
-		outfit_tags = { monk_outfit }
 	}
 	cooldown = { years = 10 }
 	trigger = {

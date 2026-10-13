@@ -571,6 +571,13 @@ heresy_historical.0050 = {
 		}
 		if = {
 			limit = {
+				scope:heresy_faith = faith:adoptionist
+				faith:adoptionist = { has_variable = block_conversion_till_nebulous_circumstances }
+			}
+			faith:adoptionist = { remove_variable = block_conversion_till_nebulous_circumstances }
+		}
+		if = {
+			limit = {
 				scope:heresy_faith = { pam_heresy_faith_is_pre_declaration_trigger = yes }
 				exists = scope:new_rite
 			}
@@ -807,58 +814,35 @@ heresy_historical.0011 = {
 				}
 
 				if = {
-					limit = { var:c3_spread_remaining_converts > 0 }
-					trigger_event = {
-						id = heresy_historical.0011
-						days = { 5 12 }
-					}
-				}
-				else = {
+					limit = { var:c3_spread_remaining_converts <= 0 }
 					remove_variable = c3_spread_remaining_converts
 				}
 			}
-
-			every_player = {
+			# Before declaration the spread owner is a rite, so we fire this faith event from the root instead
+			if = {
 				limit = {
-					faith = scope:origin_faith
-					NOR = {
-						this = scope:convert_ruler
-						this = scope:founder
-					}
-					capital_county ?= {
-						squared_distance = {
-							target = scope:convert_ruler.capital_county
-							value <= squared_distance_medium
+					scope:c3_spread_owner = { has_variable = c3_spread_remaining_converts }
+				}
+				trigger_event = {
+					id = heresy_historical.0011
+					days = { 5 12 }
+				}
+			}
+
+			if = {
+				limit = {
+					trigger_if = {
+						limit = {
+							scope:heresy_faith = { pam_heresy_faith_is_pre_declaration_trigger = yes }
+							exists = scope:new_rite
 						}
+						scope:convert_ruler ?= { rite = scope:new_rite }
+					}
+					trigger_else = {
+						scope:convert_ruler ?= { faith = scope:heresy_faith }
 					}
 				}
-				if = {
-					limit = { exists = scope:new_rite }
-					send_interface_message = {
-						type = msg_pam_heresy_spread
-						title = heresy_historical.spread.title
-						left_icon = scope:convert_ruler
-						right_icon = scope:new_rite
-						show_as_tooltip = {
-							scope:convert_ruler = {
-								set_character_rite = scope:new_rite
-							}
-						}
-					}
-				}
-				else = {
-					send_interface_message = {
-						type = msg_pam_heresy_spread
-						title = heresy_historical.spread.title
-						left_icon = scope:convert_ruler
-						right_icon = scope:founder
-						show_as_tooltip = {
-							scope:convert_ruler = {
-								set_character_faith = scope:heresy_faith
-							}
-						}
-					}
-				}
+				pam_heresy_send_spread_message_effect = { TITLE = heresy_historical.spread.title }
 			}
 		}
 		else = {

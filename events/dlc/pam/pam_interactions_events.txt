@@ -4724,6 +4724,149 @@ pam_interactions_events.0083 = {
 	}
 }
 
+# Request White Peace: letter to a player opponent, who may comply or defy
+pam_interactions_events.0084 = {
+	type = letter_event
+	opening = pam_interactions_events.0080.opening
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:white_peace_war = {
+						casus_belli = { primary_defender = root }
+					}
+				}
+				desc = pam_interactions_events.0084.defender
+			}
+			desc = pam_interactions_events.0084
+		}
+	}
+	sender = scope:recipient
+
+	trigger = {
+		exists = scope:white_peace_war
+		scope:puppet_or_actor = { is_at_war_with = root }
+	}
+
+	option = {
+		name = pam_interactions_events.0084.a
+		# The war can end before the letter is answered
+		if = {
+			limit = {
+				exists = scope:white_peace_war
+				scope:puppet_or_actor = { is_at_war_with = root }
+			}
+			custom_tooltip = pam_interactions_events.0084.a.tt
+			hidden_effect = { pam_enforce_requested_white_peace_effect = yes }
+			add_piety = minor_piety_gain
+		}
+		ai_chance = { base = 100 }
+	}
+
+	option = {
+		name = pam_interactions_events.0084.b
+		trigger = {
+			exists = scope:white_peace_war
+			scope:puppet_or_actor = { is_at_war_with = root }
+		}
+		add_piety = medium_piety_loss
+		add_character_modifier = {
+			modifier = pam_defied_church_peace_modifier
+			years = 10
+		}
+		scope:recipient = {
+			add_opinion = {
+				target = root
+				modifier = pam_defied_church_peace_opinion
+			}
+		}
+		hidden_effect = {
+			set_variable = {
+				name = pam_defied_church_peace_cleric
+				value = scope:recipient
+				years = 10
+			}
+			save_scope_as = defier
+			scope:recipient = {
+				trigger_event = {
+					id = pam_interactions_events.0085
+					days = { 30 90 }
+				}
+			}
+			scope:puppet_or_actor = {
+				send_interface_toast = {
+					type = event_toast_effect_bad
+					title = pam_white_peace_defied_toast
+					custom_tooltip = pam_white_peace_defied_toast_desc
+					left_icon = root
+					right_icon = scope:recipient
+				}
+			}
+			scope:recipient = {
+				send_interface_toast = {
+					type = event_toast_effect_neutral
+					title = pam_white_peace_defied_toast
+					custom_tooltip = pam_white_peace_defied_toast_desc
+					left_icon = root
+					right_icon = scope:puppet_or_actor
+				}
+			}
+			if = {
+				limit = {
+					scope:is_puppet_action ?= yes
+					scope:actor != scope:recipient
+				}
+				scope:actor = {
+					send_interface_toast = {
+						type = event_toast_effect_neutral
+						title = pam_white_peace_defied_toast
+						custom_tooltip = pam_white_peace_defied_toast_desc
+						left_icon = root
+						right_icon = scope:recipient
+					}
+				}
+			}
+		}
+		ai_chance = { base = 0 }
+	}
+}
+
+# Request White Peace: the defied cleric may excommunicate the defier
+pam_interactions_events.0085 = {
+	hidden = yes
+
+	trigger = {
+		is_ai = yes
+		scope:defier ?= {
+			is_alive = yes
+			var:pam_defied_church_peace_cleric ?= root
+		}
+		is_character_interaction_valid = {
+			recipient = scope:defier
+			interaction = excommunicate_interaction
+		}
+	}
+
+	immediate = {
+		random = {
+			chance = {
+				value = 25
+				add = {
+					value = ai_vengefulness
+					multiply = 0.25
+				}
+				min = 5
+			}
+			run_interaction = {
+				interaction = excommunicate_interaction
+				actor = root
+				recipient = scope:defier
+				execute_threshold = accept
+			}
+		}
+	}
+}
+
 #Consecrate kingdom letter event
 pam_interactions_events.0090 = {
 	type = letter_event
