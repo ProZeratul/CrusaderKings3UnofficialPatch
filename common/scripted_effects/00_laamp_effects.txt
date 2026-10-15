@@ -420,7 +420,16 @@ laamp_rewards_disburse_ordinary_currency_effect = {
 			value = {
 				value = $GOLD$
 				if = {
-					limit = { $EXTRA_REWARD$ = flag:yes }
+					#limit = { $EXTRA_REWARD$ = flag:yes } #Unop: Also apply the Juicy Rumors bonus to criminal contracts that never set EXTRA_REWARD
+					limit = {
+						OR = {
+							$EXTRA_REWARD$ = flag:yes
+							AND = {
+								scope:task_contract = { is_criminal = yes }
+								scope:taker.domicile ?= { has_domicile_parameter = camp_improved_criminal_contract_rewards }
+							}
+						}
+					}
 					multiply = task_contract_extra_reward_multiplier_value
 				}
 				round = yes
@@ -524,7 +533,17 @@ laamp_rewards_disburse_ordinary_currency_effect = {
 				value = {
 					value = $PRESTIGE$
 					if = {
-						limit = { $EXTRA_REWARD$ = flag:yes }
+						#limit = { $EXTRA_REWARD$ = flag:yes } #Unop: Also apply the Juicy Rumors bonus to criminal contracts that never set EXTRA_REWARD
+						limit = {
+							OR = {
+								$EXTRA_REWARD$ = flag:yes
+								AND = {
+									$PRESTIGE$ > 0
+									scope:task_contract = { is_criminal = yes }
+									domicile ?= { has_domicile_parameter = camp_improved_criminal_contract_rewards }
+								}
+							}
+						}
 						multiply = task_contract_extra_reward_multiplier_value
 					}
 					round = yes
@@ -538,7 +557,17 @@ laamp_rewards_disburse_ordinary_currency_effect = {
 				value = {
 					value = $PIETY$
 					if = {
-						limit = { $EXTRA_REWARD$ = flag:yes }
+						#limit = { $EXTRA_REWARD$ = flag:yes } #Unop: Also apply the Juicy Rumors bonus to criminal contracts that never set EXTRA_REWARD
+						limit = {
+							OR = {
+								$EXTRA_REWARD$ = flag:yes
+								AND = {
+									$PIETY$ > 0
+									scope:task_contract = { is_criminal = yes }
+									domicile ?= { has_domicile_parameter = camp_improved_criminal_contract_rewards }
+								}
+							}
+						}
 						multiply = task_contract_extra_reward_multiplier_value
 					}
 					round = yes
@@ -556,7 +585,17 @@ laamp_rewards_disburse_ordinary_currency_effect = {
 					value = {
 						value = $PROVISIONS$
 						if = {
-							limit = { $EXTRA_REWARD$ = flag:yes }
+							#limit = { $EXTRA_REWARD$ = flag:yes } #Unop: Also apply the Juicy Rumors bonus to criminal contracts that never set EXTRA_REWARD
+							limit = {
+								OR = {
+									$EXTRA_REWARD$ = flag:yes
+									AND = {
+										$PROVISIONS$ > 0
+										scope:task_contract = { is_criminal = yes }
+										has_domicile_parameter = camp_improved_criminal_contract_rewards
+									}
+								}
+							}
 							multiply = task_contract_extra_reward_multiplier_value
 						}
 						round = yes
