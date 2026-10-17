@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Drive a running CK3 window: screenshots, clicks, keys, console commands, run files, logs.
-# Backends: macOS (screencapture, cliclick, osascript) and Linux X11 (xdotool, ImageMagick).
+# Backends: macOS (screencapture, cliclick, osascript) and Linux X11 (xdotool, ImageMagick, xclick.py).
 # Coordinates for `click` are pixels in the 1400px-wide screenshot produced by `shot`.
 set -euo pipefail
 
@@ -42,16 +42,20 @@ if [ "$OS" = Darwin ]; then
   launch_bin() { open -a "$BIN/ck3.app"; }
 elif [ "$OS" = Linux ]; then
   [ "${XDG_SESSION_TYPE:-x11}" = x11 ] || die "only X11 sessions are supported"
-  winid() { xdotool search --name '^Crusader Kings III$' | head -1; }
-  activate() { xdotool windowactivate --sync "$(winid)"; sleep 0.5; }
-  # client-area origin and size in pixels (matches import -window and mousemove --window)
-  geometry() {
-    eval "$(xdotool getwindowgeometry --shell "$(winid)")"
-    echo "$X $Y $WIDTH $HEIGHT"
+  # match the window class, not the title
+  winid() {
+    local w
+    w=$(xdotool search --onlyvisible --class '^ck3$' | head -1)
+    [ -n "$w" ] || die "CK3 window not found"
+    echo "$w"
   }
-  capture() { import -window "$(winid)" "$1"; }
+  # input is sent to the window directly (synthetic events)
+  activate() { WID=$(winid); }
+  # origin 0 0: click coordinates are window-relative
+  geometry() { xwininfo -id "$WID" | awk '/^ *Width/ {w=$NF} /^ *Height/ {h=$NF} END {print 0, 0, w, h}'; }
+  capture() { import -window "$WID" "$1"; }
   resize() { convert "$1" -resize "${SMALL}x" "$2"; }
-  click_abs() { xdotool mousemove "$1" "$2" click 1; }
+  click_abs() { python3 -I "$(dirname "$0")/xclick.py" "$WID" "$1" "$2"; }
   keyname() {
     case $1 in
       console) echo "${CK3_CONSOLE_KEY:-grave}" ;; # key below Esc
@@ -61,8 +65,8 @@ elif [ "$OS" = Linux ]; then
       *) die "unknown key: $1" ;;
     esac
   }
-  press() { xdotool key "$(keyname "$1")"; }
-  typetext() { xdotool type --delay 12 -- "$1"; }
+  press() { xdotool key --window "$WID" "$(keyname "$1")"; }
+  typetext() { xdotool type --window "$WID" --delay 12 -- "$1"; }
   launch_bin() { (cd "$BIN" && nohup ./ck3 > /dev/null 2>&1 &); }
 else
   die "unsupported OS: $OS"
