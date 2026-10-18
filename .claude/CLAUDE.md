@@ -59,8 +59,11 @@ All relevant directories are in [@../.env](../.env):
 
 ### Style
 
-- **Mark every change.** Put a `#Unop <description>` (preferred) or `#Unop: <description>` (acceptable) comment on the first changed line.
-- **Comment out, don't delete.** Comment out unneeded vanilla code rather than removing it, with an `#Unop` comment on the first deleted line. Comment out only the replaced/removed lines, not unchanged surrounding ones.
+- **Mark every change.** Put a `#Unop <description>` (preferred) or `#Unop: <description>` (acceptable) comment on the changed line, or on the first line of a larger block that Unop adds.
+- **Comment sparingly.** Keep comments concise; the `#Unop` marker is usually enough.
+- **Comment out, don't delete.** Comment out vanilla code that is removed entirely rather than deleting it, with an `#Unop` comment on the first removed line. Comment out only the removed lines, not unchanged surrounding ones. Vanilla code that Unop code replaces can be replaced in place.
+- **Use ASCII only.** Don't use non-ASCII characters (arrows, long dashes, ellipses, etc.) in comments or prose.
+- **No AI attributions.** Never add Claude or Claude Code attributions (e.g. `Co-Authored-By` trailers or "Generated with Claude Code") to commit messages, PR descriptions, issues, or comments.
 
 ### Ignoring Tiger Errors
 

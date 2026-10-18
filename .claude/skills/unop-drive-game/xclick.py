@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 # Send a synthetic motion + left click to an X window at window-relative x, y (no pointer move, no focus change).
+# With a 4th argument "hover", send only the motion.
 import ctypes, sys, time
 
 wid, x, y = int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3])
+hover = len(sys.argv) > 4 and sys.argv[4] == "hover"
 X = ctypes.cdll.LoadLibrary("libX11.so.6")
 X.XOpenDisplay.restype = ctypes.c_void_p
 X.XDefaultRootWindow.restype = ctypes.c_ulong
@@ -34,6 +36,8 @@ def send(etype, button=0, state=0):
     X.XSendEvent(d, wid, 1, masks[etype], ctypes.byref(e))
     X.XFlush(d)
 
-send(MotionNotify); time.sleep(0.1)
-send(ButtonPress, 1); time.sleep(0.05)
-send(ButtonRelease, 1, 1 << 8)
+send(MotionNotify)
+if not hover:
+    time.sleep(0.4)  # unfocused, the game renders slowly; let it register the hover first
+    send(ButtonPress, 1); time.sleep(0.05)
+    send(ButtonRelease, 1, 1 << 8)
