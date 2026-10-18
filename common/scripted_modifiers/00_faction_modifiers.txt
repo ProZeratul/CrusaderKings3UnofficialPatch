@@ -4255,36 +4255,37 @@ ceremonial_claimant_faction_modifiers = {
 		was_preferred_heir = $FACTION_TARGET$
 	}
 
-	# All else being equal, the AI might support a claimant over their current liege just to get better feudal obligations.
-	modifier = {
-		desc = "FACTION_REASON_BETTER_CROWN_AUTHORITY"
-		add = 10
-		$FACTION_TARGET$ ?= { has_realm_law = crown_authority_1 }
-		$FACTION_CLAIMANT$ ?= { has_realm_law = crown_authority_0 }
-	}
-	modifier = {
-		desc = "FACTION_REASON_BETTER_CROWN_AUTHORITY"
-		add = 15
-		$FACTION_TARGET$ ?= { has_realm_law = crown_authority_2 }
-		$FACTION_CLAIMANT$ ?= {
-			OR = {
-				has_realm_law = crown_authority_0
-				has_realm_law = crown_authority_1
-			}
-		}
-	}
-	modifier = {
-		desc = "FACTION_REASON_BETTER_CROWN_AUTHORITY"
-		add = 15
-		$FACTION_TARGET$ ?= { has_realm_law = crown_authority_3 }
-		$FACTION_CLAIMANT$ ?= {
-			OR = {
-				has_realm_law = crown_authority_0
-				has_realm_law = crown_authority_1
-				has_realm_law = crown_authority_2
-			}
-		}
-	}
+	# Unop: Nobody is using the crown authority in that kind of gov (ceremonial ones)
+	## All else being equal, the AI might support a claimant over their current liege just to get better feudal obligations.
+	#modifier = {
+	#	desc = "FACTION_REASON_BETTER_CROWN_AUTHORITY"
+	#	add = 10
+	#	$FACTION_TARGET$ ?= { has_realm_law = crown_authority_1 }
+	#	$FACTION_CLAIMANT$ ?= { has_realm_law = crown_authority_0 }
+	#}
+	#modifier = {
+	#	desc = "FACTION_REASON_BETTER_CROWN_AUTHORITY"
+	#	add = 15
+	#	$FACTION_TARGET$ ?= { has_realm_law = crown_authority_2 }
+	#	$FACTION_CLAIMANT$ ?= {
+	#		OR = {
+	#			has_realm_law = crown_authority_0
+	#			has_realm_law = crown_authority_1
+	#		}
+	#	}
+	#}
+	#modifier = {
+	#	desc = "FACTION_REASON_BETTER_CROWN_AUTHORITY"
+	#	add = 15
+	#	$FACTION_TARGET$ ?= { has_realm_law = crown_authority_3 }
+	#	$FACTION_CLAIMANT$ ?= {
+	#		OR = {
+	#			has_realm_law = crown_authority_0
+	#			has_realm_law = crown_authority_1
+	#			has_realm_law = crown_authority_2
+	#		}
+	#	}
+	#}
 
 	# More likely to create a claimant faction against a Ruler below their CGLevel
 	modifier = {
