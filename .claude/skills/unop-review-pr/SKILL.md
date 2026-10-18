@@ -56,6 +56,8 @@ gh pr checkout <PR>
 gh pr diff <PR>
 ```
 
+If the branch conflicts with `main` (`git merge-tree --write-tree origin/main HEAD` fails), report it as a `High` finding: rebase onto `main`.
+
 ### 3. Review
 
 A PR may bundle several distinct changes; apply the checks below to each on its own merits. The output stays a single findings list and one verdict — don't split it into per-change sections.
