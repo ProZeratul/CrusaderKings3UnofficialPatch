@@ -2664,7 +2664,7 @@ grand_campaign_contribution_effect = {
         }
         # if war exists, pull everyone in
         else = {
-			var:grand_campaign_war = { save_scope_as = grand_campaign_war } #Unop Set the war scope used by grand_campaign_update_war_participants_effect
+			scope:great_project.var:grand_campaign_war ?= { save_scope_as = grand_campaign_war } #Unop Set the war scope used by grand_campaign_update_war_participants_effect
 			grand_campaign_update_war_participants_effect = yes
             scope:contributor = {
                 trigger_event = tgp_china_ministry.0004
@@ -2912,36 +2912,36 @@ fill_external_east_asian_estate_building_effect = {
 		trigger = has_domicile_building_or_higher
 		east_asian_estate_main_05 = {
 			while = {
-				count = 10 #Unop Bound the loop so that failing adds (e.g. during an ongoing construction) cannot spin to the iteration cap
-				limit = { free_external_domicile_building_slots >= 2 }
+				count = 10 #Unop Bound the loop in case no external building can be added
+				limit = { free_external_domicile_building_slots >= 2 has_ongoing_domicile_construction = no } #Unop Stop during an ongoing construction, as adds fail then
 				add_random_external_east_asian_estate_building = yes
 			}
 		}
 		east_asian_estate_main_04 = {
 			while = {
-				count = 10 #Unop Bound the loop so that failing adds (e.g. during an ongoing construction) cannot spin to the iteration cap
-				limit = { free_external_domicile_building_slots >= 3 }
+				count = 10 #Unop Bound the loop in case no external building can be added
+				limit = { free_external_domicile_building_slots >= 3 has_ongoing_domicile_construction = no } #Unop Stop during an ongoing construction, as adds fail then
 				add_random_external_east_asian_estate_building = yes
 			}
 		}
 		east_asian_estate_main_03 = {
 			while = {
-				count = 10 #Unop Bound the loop so that failing adds (e.g. during an ongoing construction) cannot spin to the iteration cap
-				limit = { free_external_domicile_building_slots >= 4 }
+				count = 10 #Unop Bound the loop in case no external building can be added
+				limit = { free_external_domicile_building_slots >= 4 has_ongoing_domicile_construction = no } #Unop Stop during an ongoing construction, as adds fail then
 				add_random_external_east_asian_estate_building = yes
 			}
 		}
 		east_asian_estate_main_02 = {
 			while = {
-				count = 10 #Unop Bound the loop so that failing adds (e.g. during an ongoing construction) cannot spin to the iteration cap
-				limit = { free_external_domicile_building_slots >= 5 }
+				count = 10 #Unop Bound the loop in case no external building can be added
+				limit = { free_external_domicile_building_slots >= 5 has_ongoing_domicile_construction = no } #Unop Stop during an ongoing construction, as adds fail then
 				add_random_external_east_asian_estate_building = yes
 			}
 		}
 		east_asian_estate_main_01 = {
 			while = {
-				count = 10 #Unop Bound the loop so that failing adds (e.g. during an ongoing construction) cannot spin to the iteration cap
-				limit = { free_external_domicile_building_slots >= 6 }
+				count = 10 #Unop Bound the loop in case no external building can be added
+				limit = { free_external_domicile_building_slots >= 6 has_ongoing_domicile_construction = no } #Unop Stop during an ongoing construction, as adds fail then
 				add_random_external_east_asian_estate_building = yes
 			}
 		}
