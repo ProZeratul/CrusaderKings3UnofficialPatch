@@ -88,11 +88,14 @@
 		liege = {
 			top_liege = this
 			NOT = { government_has_flag = government_is_theocracy }
-			custom_tooltip = {
-				text = nation_fracturing_faction.can_character_create_ui.blocked_by_struggle
-				# We could use a parameter but this is just infinitely more performant.
-				NOT = {
-					any_held_title = { has_variable = struggle_block_dissolution_faction }
+			trigger_if = { #Unop The struggle never runs when disabled by game rule, but the block is never cleared then
+				limit = { NOT = { has_game_rule = struggle_persia_toggle_off } }
+				custom_tooltip = {
+					text = nation_fracturing_faction.can_character_create_ui.blocked_by_struggle
+					# We could use a parameter but this is just infinitely more performant.
+					NOT = {
+						any_held_title = { has_variable = struggle_block_dissolution_faction }
+					}
 				}
 			}
 		}
@@ -155,11 +158,14 @@
 		liege = {
 			top_liege = this
 			NOT = { government_has_flag = government_is_theocracy }
-			custom_tooltip = {
-				text = nation_fracturing_faction.can_character_create_ui.blocked_by_struggle
-				# We could use a parameter but this is just infinitely more performant.
-				NOT = {
-					any_held_title = { has_variable = struggle_block_dissolution_faction }
+			trigger_if = { #Unop The struggle never runs when disabled by game rule, but the block is never cleared then
+				limit = { NOT = { has_game_rule = struggle_persia_toggle_off } }
+				custom_tooltip = {
+					text = nation_fracturing_faction.can_character_create_ui.blocked_by_struggle
+					# We could use a parameter but this is just infinitely more performant.
+					NOT = {
+						any_held_title = { has_variable = struggle_block_dissolution_faction }
+					}
 				}
 			}
 		}
