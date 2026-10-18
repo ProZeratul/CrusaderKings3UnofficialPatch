@@ -4330,7 +4330,7 @@ convert_on_reform_interaction = {
 
 	# Every adherent of the old faith receives this on reform, and anyone failing is_shown is skipped
 	is_shown = {
-		scope:actor.faith != scope:recipient.faith
+		scope:actor.rite != scope:recipient.rite #Unop Reforming creates a rite in the same faith, so compare rites, not faiths
 	}
 
 	cooldown_against_recipient = { years = 5 }
