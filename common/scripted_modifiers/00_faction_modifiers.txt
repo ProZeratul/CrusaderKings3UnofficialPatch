@@ -4235,7 +4235,7 @@ ceremonial_claimant_faction_modifiers = {
 		liege = { top_liege = this }
 		NOT = { government_has_mechanic = administrative }
 		NOT = {
-			$FACTION_TARGET$ ?= { is_rightful_liege_of = root }
+			$FACTION_TARGET$.top_liege ?= { is_rightful_liege_of = root } #Unop: Check the actual liege, not the ceremonial liege
 		}
 	}
 
@@ -4533,9 +4533,9 @@ ceremonial_claimant_faction_modifiers = {
 			}
 			joined_faction = { save_temporary_scope_as = joined_faction_temp }
 		}
-		$FACTION_TARGET$ ?= {
+		$FACTION_TARGET$.top_liege ?= { #Unop: Ceremonial claimant factions target the top liege, not the ceremonial liege
 			any_targeting_faction = {
-		  		faction_type = claimant_faction
+		  		faction_type = ceremonial_claimant_faction #Unop: Was claimant_faction
 
 				# Exists another claimant faction
 				trigger_if = {
