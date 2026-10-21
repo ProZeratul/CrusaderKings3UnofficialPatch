@@ -225,7 +225,14 @@ murder_scheme_maintenance.1 = {
 					}
 				}
 				#Scope:target has caused internal strife in the realm
-				character_hates_scope_due_to_strife_modifier = { TARGET = this }
+				#character_hates_scope_due_to_strife_modifier = { TARGET = this } #Unop: The candidate checked its opinion of itself, check root instead
+				modifier = { #Unop: Root hates the candidate due to strife
+					add = strife_opinion # Strife caused by the candidate (this), not root
+					save_temporary_scope_as = the_murder_target
+					root = {
+						character_hates_scope_due_to_strife_guts_trigger = { TARGET = scope:the_murder_target }
+					}
+				}
 				modifier = { # Family Feud
 					add = 50
 					save_temporary_scope_as = the_murder_target
