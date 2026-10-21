@@ -1052,15 +1052,15 @@
 									desc = activity_cost_scale_by_era_desc 
 								}
 							}
-							if = {
-								limit = {
-									has_perk = journey_planner_perk
-								}
-								multiply = {
-									value = voyager_journey_planner_value
-									desc = journey_planner_perk_name
-								}
-							}
+							#if = { #Unop: Journey Planner should not reduce the Scrap Parchments saving
+							#	limit = {
+							#		has_perk = journey_planner_perk
+							#	}
+							#	multiply = {
+							#		value = voyager_journey_planner_value
+							#		desc = journey_planner_perk_name
+							#	}
+							#}
 						}
 					}
 					gold = {
@@ -1081,15 +1081,15 @@
 									desc = activity_cost_scale_by_era_desc 
 								}
 							}
-							if = {
-								limit = {
-									has_perk = journey_planner_perk
-								}
-								multiply = {
-									value = voyager_journey_planner_value
-									desc = journey_planner_perk_name
-								}
-							}
+							#if = { #Unop: Journey Planner should not reduce the Scrap Parchments saving
+							#	limit = {
+							#		has_perk = journey_planner_perk
+							#	}
+							#	multiply = {
+							#		value = voyager_journey_planner_value
+							#		desc = journey_planner_perk_name
+							#	}
+							#}
 						}
 					}
 				}
@@ -1166,6 +1166,15 @@
 									desc = journey_planner_perk_name
 								}
 							}
+							if = { #Unop: Apply Block Printing Study Materials discount
+								limit = {
+									culture ?= { has_cultural_parameter = block_printing_university_bonuses }
+								}
+								multiply = {
+									value = 0.5
+									desc = innovation_block_printing
+								}
+							}
 						}
 					}
 					gold = {
@@ -1194,6 +1203,15 @@
 								multiply = {
 									value = voyager_journey_planner_value
 									desc = journey_planner_perk_name
+								}
+							}
+							if = { #Unop: Apply Block Printing Study Materials discount
+								limit = {
+									culture ?= { has_cultural_parameter = block_printing_university_bonuses }
+								}
+								multiply = {
+									value = 0.5
+									desc = innovation_block_printing
 								}
 							}
 						}
@@ -1242,6 +1260,15 @@
 									desc = journey_planner_perk_name
 								}
 							}
+							if = { #Unop: Apply Block Printing Study Materials discount
+								limit = {
+									culture ?= { has_cultural_parameter = block_printing_university_bonuses }
+								}
+								multiply = {
+									value = 0.5
+									desc = innovation_block_printing
+								}
+							}
 						}
 					}
 					gold = {
@@ -1270,6 +1297,15 @@
 								multiply = {
 									value = voyager_journey_planner_value
 									desc = journey_planner_perk_name
+								}
+							}
+							if = { #Unop: Apply Block Printing Study Materials discount
+								limit = {
+									culture ?= { has_cultural_parameter = block_printing_university_bonuses }
+								}
+								multiply = {
+									value = 0.5
+									desc = innovation_block_printing
 								}
 							}
 						}
