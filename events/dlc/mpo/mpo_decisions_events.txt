@@ -3655,7 +3655,7 @@ mpo_decisions_events.2140 = {
 						set_location = domicile.domicile_location
 					}
 				}
-				unop_generate_yurt_paiza_char = yes #Unop: Implement the missing arrival courtier from the "Allure of the Steppe" building. Done here as this runs once per arrival (.2141 & .0100 are re-triggered by .2138)
+				unop_generate_yurt_paiza_char_effect = yes #Unop: Create the missing arrival courtier from the "Allure of the Steppe" building. Done here as this runs once per arrival (.2141 & .0100 are re-triggered by .2138)
 				if = {
 					limit = {
 						has_character_flag = established_paiza_system
@@ -3960,7 +3960,10 @@ mpo_decisions_events.2141 = { #mpo_call_for_merchants_smol_decision initial even
 
 	after = { #Unop: Add a tooltip notif so we know someone joined our court
 		if = {
-			limit = { exists = scope:yurt_merchant_char } #Unop: Created on arrival in .2140
+			limit = { #Unop: Created on arrival in .2140; skip the re-fire after the .2138 herd exchange
+				exists = scope:yurt_merchant_char
+				NOT = { has_character_flag = had_herd_trade }
+			}
 			show_as_tooltip = { add_courtier = scope:yurt_merchant_char }
 		}
 	}
@@ -4172,7 +4175,10 @@ mpo_decisions_events.0100 = { #mpo_call_for_merchants_decision initial event
 
 	after = { #Unop: Add a tooltip notif so we know someone joined our court
 		if = {
-			limit = { exists = scope:yurt_merchant_char } #Unop: Created on arrival in .2140
+			limit = { #Unop: Created on arrival in .2140; skip the re-fire after the .2138 herd exchange
+				exists = scope:yurt_merchant_char
+				NOT = { has_character_flag = had_herd_trade }
+			}
 			show_as_tooltip = { add_courtier = scope:yurt_merchant_char }
 		}
 	}
@@ -4504,7 +4510,7 @@ mpo_decisions_events.0101 = { #the merchant is back
 				gold = root.var:trade_gold_value
 			}
 			remove_variable = merchant_var
-			unop_clear_merchant = yes #Unop: Remove variables & dispose the merchant if AI generated
+			unop_clear_merchant_effect = yes #Unop: Remove variables & dispose the merchant if AI generated
 		}	
 	}
 }
