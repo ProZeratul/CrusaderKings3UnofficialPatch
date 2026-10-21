@@ -1690,7 +1690,10 @@ ep3_governor_yearly.3010 = {
 					modifier = {
 						NOT = {
 							house = {
-								is_powerful_family = yes
+								OR = { #Unop: Include dominant families
+									is_powerful_family = yes
+									is_dominant_family = yes
+								}
 							}
 						}
 						add = 25

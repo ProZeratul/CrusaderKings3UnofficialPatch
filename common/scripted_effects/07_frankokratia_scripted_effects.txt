@@ -4107,7 +4107,12 @@ ep3_frankokratia_form_byzantine_kingdoms_effect = {
 					}
 					OR = {
 						is_powerful_vassal_of = title:e_byzantium.holder
-						house ?= { is_powerful_family = yes }
+						house ?= {
+							OR = { #Unop: Include dominant families
+								is_powerful_family = yes
+								is_dominant_family = yes
+							}
+						}
 						#Let's just always let Nikaea do this, they special
 						capital_county = {
 							kingdom = title:k_nikaea
@@ -4210,7 +4215,12 @@ ep3_frankokratia_form_byzantine_kingdoms_effect = {
 					highest_held_title_tier >= tier_duchy
 					OR = {
 						is_powerful_vassal_of = title:e_byzantium.holder
-						house ?= { is_powerful_family = yes }
+						house ?= {
+							OR = { #Unop: Include dominant families
+								is_powerful_family = yes
+								is_dominant_family = yes
+							}
+						}
 						#If people in e_byz are weak, make sure nikaea is still created
 						AND = {
 							NOT = {
@@ -4225,7 +4235,12 @@ ep3_frankokratia_form_byzantine_kingdoms_effect = {
 										}
 									}
 									OR = {
-										house = { is_powerful_family = yes }
+										house = {
+											OR = { #Unop: Include dominant families
+												is_powerful_family = yes
+												is_dominant_family = yes
+											}
+										}
 										is_powerful_vassal_of = title:e_byzantium.holder
 									}
 								}
@@ -4267,7 +4282,12 @@ ep3_frankokratia_form_byzantine_kingdoms_effect = {
 					highest_held_title_tier >= tier_duchy
 					OR = {
 						is_powerful_vassal_of = title:e_byzantium.holder
-						house = { is_powerful_family = yes }
+						house = {
+							OR = { #Unop: Include dominant families
+								is_powerful_family = yes
+								is_dominant_family = yes
+							}
+						}
 						#If people in e_byz are weak, make sure nikaea is still created
 						AND = {
 							NOT = {
@@ -4282,7 +4302,12 @@ ep3_frankokratia_form_byzantine_kingdoms_effect = {
 										}
 									}
 									OR = {
-										house = { is_powerful_family = yes }
+										house = {
+											OR = { #Unop: Include dominant families
+												is_powerful_family = yes
+												is_dominant_family = yes
+											}
+										}
 										is_powerful_vassal_of = title:e_byzantium.holder
 									}
 								}
@@ -4331,7 +4356,12 @@ ep3_frankokratia_form_byzantine_kingdoms_effect = {
 					highest_held_title_tier >= tier_duchy
 					OR = {
 						is_powerful_vassal_of = title:e_byzantium.holder
-						house = { is_powerful_family = yes }
+						house = {
+							OR = { #Unop: Include dominant families
+								is_powerful_family = yes
+								is_dominant_family = yes
+							}
+						}
 						#If people in e_byz are weak, make sure nikaea is still created
 						AND = {
 							NOT = {
@@ -4346,7 +4376,12 @@ ep3_frankokratia_form_byzantine_kingdoms_effect = {
 										}
 									}
 									OR = {
-										house = { is_powerful_family = yes }
+										house = {
+											OR = { #Unop: Include dominant families
+												is_powerful_family = yes
+												is_dominant_family = yes
+											}
+										}
 										is_powerful_vassal_of = title:e_byzantium.holder
 									}
 								}

@@ -1468,7 +1468,12 @@ admin_vassal_modify_vassal_contract_interaction = {
 		# Members of a powerful family are more likely to get accepted
 		modifier = {
 			scope:puppet_or_actor = {
-				house ?= { is_powerful_family = yes }
+				house ?= {
+					OR = { #Unop: Include dominant families
+						is_powerful_family = yes
+						is_dominant_family = yes
+					}
+				}
 				NOT = { house ?= scope:recipient.house }
 			}
 			add = 50

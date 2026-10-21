@@ -7582,8 +7582,16 @@ scheme_critical_moments.8032 = {
 			limit = {
 				is_ai = no
 				exists = scope:scheme_permission
-				house ?= { is_powerful_family = no }
-				scope:target.house ?= { is_powerful_family = yes }
+				house ?= {
+					is_powerful_family = no
+					is_dominant_family = no #Unop: Include dominant families
+				}
+				scope:target.house ?= {
+					OR = { #Unop: Include dominant families
+						is_powerful_family = yes
+						is_dominant_family = yes
+					}
+				}
 			}
 			add_achievement_global_variable_effect = {
 				VARIABLE = achieved_i_got_a_permit_achievement

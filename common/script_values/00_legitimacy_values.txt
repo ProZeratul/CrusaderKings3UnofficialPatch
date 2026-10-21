@@ -986,7 +986,10 @@ base_legitimacy_admin_value = {
 			any_ally = {
 				house ?= {
 					house_head = prev
-					is_powerful_family = yes
+					OR = { #Unop: Include dominant families
+						is_powerful_family = yes
+						is_dominant_family = yes
+					}
 				}
 				top_liege = prev.top_liege
 			}
@@ -995,7 +998,10 @@ base_legitimacy_admin_value = {
 			limit = {
 				house ?= {
 					house_head = prev
-					is_powerful_family = yes
+					OR = { #Unop: Include dominant families
+						is_powerful_family = yes
+						is_dominant_family = yes
+					}
 				}
 				top_liege = prev.top_liege
 			}

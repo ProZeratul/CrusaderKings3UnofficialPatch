@@ -6928,7 +6928,12 @@ scripted_trigger ep3_frankokratia_events_0110_potential_king_trigger = {
 					limit = {
 						government_allows = noble_families
 					}
-					house ?= { is_powerful_family = yes }
+					house ?= {
+						OR = { #Unop: Include dominant families
+							is_powerful_family = yes
+							is_dominant_family = yes
+						}
+					}
 				}
 				#Let's just always let Nikaea do this, they special
 				capital_county = {

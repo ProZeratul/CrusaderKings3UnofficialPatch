@@ -3955,8 +3955,16 @@ request_council_interaction = {
 			add = 75
 		}
 		modifier = {
-			scope:actor.house ?= { is_powerful_family = yes }
-			scope:target.councillor.house ?= { is_powerful_family = no }
+			scope:actor.house ?= {
+				OR = { #Unop: Include dominant families
+					is_powerful_family = yes
+					is_dominant_family = yes
+				}
+			}
+			scope:target.councillor.house ?= {
+				is_powerful_family = no
+				is_dominant_family = no #Unop: Include dominant families
+			}
 			desc = AI_POWERFUL_FAMILY
 			add = 100
 		}

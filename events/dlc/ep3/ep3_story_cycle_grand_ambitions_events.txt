@@ -2508,7 +2508,12 @@ grand_ambitions.0170 = {
 				primary_title.tier >= tier_duchy
 				this = house.house_head
 				this != root
-				house = { is_powerful_family = yes }
+				house = {
+					OR = { #Unop: Include dominant families
+						is_powerful_family = yes
+						is_dominant_family = yes
+					}
+				}
 			}
 		}
 	}
@@ -4158,7 +4163,10 @@ grand_ambitions.0500 = {
 		trigger = { # Do you still meet the criteria for this story cycle?
 			house = {
 				house_head ?= root
-				is_powerful_family = yes
+				OR = { #Unop: Include dominant families
+					is_powerful_family = yes
+					is_dominant_family = yes
+				}
 			}
 			top_liege != this
 			highest_held_title_tier <= tier_kingdom
