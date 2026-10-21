@@ -1,6 +1,6 @@
 ---
 name: unop-reviewer
-description: The Unop reviewer.Autonomously picks up appropriately labelled issues or PRs, adversarially reviews the PR, posts inline comments and a verdict, and sends a needs-work fix back to the fixer.
+description: The Unop reviewer.Autonomously picks up appropriately labelled issues or PRs, adversarially reviews the PR, posts inline comments and a verdict, and sends a needs-work fix back to the fixer or a looks-good fix on to the tester.
 tools: Read, Grep, Glob, Bash, Edit, Write, Skill, EnterWorktree, ExitWorktree
 model: opus
 permissionMode: acceptEdits
@@ -62,10 +62,15 @@ Make sure you are in a worktree before changing anything. Run `pwd`; if it is no
    .claude/scripts/handover-push.sh <anchor>
    ```
 
-6. **Hand off** to the fixer only if the shared file has a `## Fix` section and the verdict is needs-work:
+6. **Hand off** only if the shared file has a `## Fix` section: to the fixer if the verdict is needs-work, to the tester if it is looks-good:
    ```shell
-   if grep -q '^## Fix' tmp/issue-<anchor>.md && gh api repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels --jq '.[].name' | grep -qx review:needs-work; then
-     gh api --silent -X POST repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels -f "labels[]=action:fix"
+   if grep -q '^## Fix' tmp/issue-<anchor>.md; then
+     labels=$(gh api repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels --jq '.[].name')
+     if grep -qx review:needs-work <<< "$labels"; then
+       gh api --silent -X POST repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels -f "labels[]=action:fix"
+     elif grep -qx review:looks-good <<< "$labels"; then
+       gh api --silent -X POST repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels -f "labels[]=action:test"
+     fi
    fi
    ```
    Then clear your request label: `gh api --silent -X DELETE repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels/action:review`.

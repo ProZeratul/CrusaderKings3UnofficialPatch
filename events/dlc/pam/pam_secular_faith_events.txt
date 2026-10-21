@@ -4158,13 +4158,13 @@ pam_secular_faith_events.0030 = {
 
 	option = { # Stop them
 		name = pam_secular_faith_events.0030.b
-		if = {
-			limit = {
-				NOT = {
-					has_trait = reclusive
+		scope:would_be_anchorite = {
+			if = {
+				limit = {
+					NOT = { has_trait = reclusive }
 				}
+				add_trait = reclusive
 			}
-			add_trait = reclusive
 		}
 		reverse_add_opinion = {
 			target = scope:would_be_anchorite

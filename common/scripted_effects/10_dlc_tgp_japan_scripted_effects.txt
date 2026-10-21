@@ -43,7 +43,7 @@
 			create_dynasty = { save_scope_as = new_dynasty }
 		}
 		house = {
-			set_house_name = japanese_dynasty_name
+			set_house_name_from_dynasty = prev.dynasty #Unop: We need to get the char
 			save_scope_as = new_house
 		}
 	}
@@ -217,31 +217,36 @@ fill_external_japanese_manor_building_effect = {
 		trigger = has_domicile_building_or_higher
 		japanese_manor_main_05 = {
 			while = {
-				limit = { free_external_domicile_building_slots >= 1 }
+				count = 10 #Unop Bound the loop in case no external building can be added
+				limit = { free_external_domicile_building_slots >= 1 has_ongoing_domicile_construction = no } #Unop Stop during an ongoing construction, as adds fail then
 				add_random_external_japanese_manor_building = yes
 			}
 		}
 		japanese_manor_main_04 = {
 			while = {
-				limit = { free_external_domicile_building_slots >= 2 }
+				count = 10 #Unop Bound the loop in case no external building can be added
+				limit = { free_external_domicile_building_slots >= 2 has_ongoing_domicile_construction = no } #Unop Stop during an ongoing construction, as adds fail then
 				add_random_external_japanese_manor_building = yes
 			}
 		}
 		japanese_manor_main_03 = {
 			while = {
-				limit = { free_external_domicile_building_slots >= 3 }
+				count = 10 #Unop Bound the loop in case no external building can be added
+				limit = { free_external_domicile_building_slots >= 3 has_ongoing_domicile_construction = no } #Unop Stop during an ongoing construction, as adds fail then
 				add_random_external_japanese_manor_building = yes
 			}
 		}
 		japanese_manor_main_02 = {
 			while = {
-				limit = { free_external_domicile_building_slots >= 4 }
+				count = 10 #Unop Bound the loop in case no external building can be added
+				limit = { free_external_domicile_building_slots >= 4 has_ongoing_domicile_construction = no } #Unop Stop during an ongoing construction, as adds fail then
 				add_random_external_japanese_manor_building = yes
 			}
 		}
 		japanese_manor_main_01 = {
 			while = {
-				limit = { free_external_domicile_building_slots >= 5 }
+				count = 10 #Unop Bound the loop in case no external building can be added
+				limit = { free_external_domicile_building_slots >= 5 has_ongoing_domicile_construction = no } #Unop Stop during an ongoing construction, as adds fail then
 				add_random_external_japanese_manor_building = yes
 			}
 		}
@@ -2568,8 +2573,8 @@ tgp_japan_schoolhouse_education_boost_effect = {
 				japanese_schoolhouse_02 = { scope:student = { education_point_add_general_effect = { VALUE = 2 } } }
 				japanese_schoolhouse_03 = { scope:student = { education_point_add_general_effect = { VALUE = 3 } } }
 				japanese_schoolhouse_04 = { scope:student = { education_point_add_general_effect = { VALUE = 4 } } }
-				japanese_schoolhouse_04 = { scope:student = { education_point_add_general_effect = { VALUE = 5 } } }
-				japanese_schoolhouse_04 = { scope:student = { education_point_add_general_effect = { VALUE = 6 } } }
+				japanese_schoolhouse_05 = { scope:student = { education_point_add_general_effect = { VALUE = 5 } } } #Unop: Was japanese_schoolhouse_04
+				japanese_schoolhouse_06 = { scope:student = { education_point_add_general_effect = { VALUE = 6 } } } #Unop: Was japanese_schoolhouse_04
 			}
 		}
 	}
@@ -3986,6 +3991,31 @@ tgp_renounce_estate_effect = {
 			if = {
 				limit = { NOT = { house_head = scope:new_player } }
 				set_house_head = scope:new_player
+			}
+		}
+		#Unop Also hand over the treasury/gold, otherwise the heir inherits everything except the wealth
+		if = {
+			limit = {
+				trigger_if = {
+					limit = { has_treasury = yes }
+					treasury > 0
+				}
+				trigger_else = {
+					gold > 0
+				}
+			}
+			pay_treasury_or_gold = {
+				target = scope:new_player
+				value = {
+					value = 0
+					if = {
+						limit = { has_treasury = yes }
+						add = treasury
+					}
+					else = {
+						add = gold
+					}
+				}
 			}
 		}
 		if = {

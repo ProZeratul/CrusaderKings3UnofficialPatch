@@ -2,6 +2,8 @@
 
 How to write the bug **repro** and the fix **test script**. The maintainers know the console and debug tools. The value is the right *sequence*: which character, which actions, which exact commands, in what order. Don't explain the tools.
 
+Test scripts are run as written, on `main` and on the PR branch, so every step must be executable and every expected result checkable.
+
 ## Scope
 
 - **One spot-check, about 10 minutes.** For a fix that touches several places, test the most representative one and list the rest under `Not covered`.
@@ -22,6 +24,19 @@ AI behavior over time, game start, and rare random outcomes are still testable. 
 - **Observer mode**, plus the log or `error.log` line to check.
 - **Temporary `debug_log`** (e.g. `debug_log = "..."` or `debug_log_scopes = yes`) at a named spot in a named file, plus the `game.log` line that proves the fix.
 - **Temporary code tweaks** that make a random outcome likely, e.g. raising a `weight`, `chance` or `random` value. Give the file, the block and the new value, and tell the tester to revert it after.
+
+## Common Mistakes
+
+- **`play <id>` doesn't take historical IDs.** Switch characters with `effect set_player_character = character:<id>`.
+- **Playing a landless character is Game Over.** Don't make the tester play someone who holds only a special title (e.g. a Japanese or Chinese emperor). Play a landed character and look at the other one, e.g. their liege.
+- **Generic scopes pick existing state.** `random_character_war`, `random_courtier` etc. may pick something the bookmark character already has, e.g. William's Norman Conquest in 1066. Narrow them (`limit = { using_cb = depose_war }`), or pick a character with no such state.
+- **`debug_log` writes to `debug.log`**, not `game.log`.
+- **Observer mode is rarely needed.** Game-start effects run whoever is played; any character works.
+- **Console lines over 255 chars** are truncated and run partially. Give longer setups as an effect file (a fenced block run with `run <file>`), not as one console line.
+- **Characters created by the setup have no ID.** Keep the creation and every later use in one effect file via `save_scope_as`, or reach them through a relation to the player.
+- **Transient or visual-only feedback.** Toasts disappear in seconds, and screen checks are slow for the tester. Prefer an expectation that can be checked in a log: a `debug_log` line from an effect that tests the trait, title, variable or government, or `error.log` content.
+- **Expectations that need interpretation.** State the exact text, value or log line, not "works correctly".
+- **Missing prerequisites.** Name the DLC, game rule or bookmark the setup depends on.
 
 ## Verification
 

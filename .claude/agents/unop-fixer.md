@@ -61,6 +61,7 @@ Make sure you are in a worktree before changing anything. Run `pwd`; if it is no
    ```
 
 5. **Hand off** to the reviewer: `gh issue edit <N> --add-label action:review --remove-label action:fix`.
+   - If the skill reported **not reproduced**, hand back to the analyzer instead: `gh issue edit <N> --add-label action:analyze --remove-label action:fix`.
 
 6. **Unlock**: `gh issue edit <N> --remove-label locked`.
 
