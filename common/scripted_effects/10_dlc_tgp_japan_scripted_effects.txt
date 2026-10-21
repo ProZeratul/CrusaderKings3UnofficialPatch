@@ -217,31 +217,36 @@ fill_external_japanese_manor_building_effect = {
 		trigger = has_domicile_building_or_higher
 		japanese_manor_main_05 = {
 			while = {
-				limit = { free_external_domicile_building_slots >= 1 }
+				count = 10 #Unop Bound the loop in case no external building can be added
+				limit = { free_external_domicile_building_slots >= 1 has_ongoing_domicile_construction = no } #Unop Stop during an ongoing construction, as adds fail then
 				add_random_external_japanese_manor_building = yes
 			}
 		}
 		japanese_manor_main_04 = {
 			while = {
-				limit = { free_external_domicile_building_slots >= 2 }
+				count = 10 #Unop Bound the loop in case no external building can be added
+				limit = { free_external_domicile_building_slots >= 2 has_ongoing_domicile_construction = no } #Unop Stop during an ongoing construction, as adds fail then
 				add_random_external_japanese_manor_building = yes
 			}
 		}
 		japanese_manor_main_03 = {
 			while = {
-				limit = { free_external_domicile_building_slots >= 3 }
+				count = 10 #Unop Bound the loop in case no external building can be added
+				limit = { free_external_domicile_building_slots >= 3 has_ongoing_domicile_construction = no } #Unop Stop during an ongoing construction, as adds fail then
 				add_random_external_japanese_manor_building = yes
 			}
 		}
 		japanese_manor_main_02 = {
 			while = {
-				limit = { free_external_domicile_building_slots >= 4 }
+				count = 10 #Unop Bound the loop in case no external building can be added
+				limit = { free_external_domicile_building_slots >= 4 has_ongoing_domicile_construction = no } #Unop Stop during an ongoing construction, as adds fail then
 				add_random_external_japanese_manor_building = yes
 			}
 		}
 		japanese_manor_main_01 = {
 			while = {
-				limit = { free_external_domicile_building_slots >= 5 }
+				count = 10 #Unop Bound the loop in case no external building can be added
+				limit = { free_external_domicile_building_slots >= 5 has_ongoing_domicile_construction = no } #Unop Stop during an ongoing construction, as adds fail then
 				add_random_external_japanese_manor_building = yes
 			}
 		}
