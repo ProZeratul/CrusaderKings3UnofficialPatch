@@ -215,6 +215,9 @@ travel_events.0060 = {
 		current_travel_plan = {
 			random_in_list = {
 				variable = knights_to_train
+				limit = { #Unop: Ensure the knight didn't die in the meantime
+					is_alive = yes
+				}
 				save_temporary_scope_as = selected_knight
 				random_list = {
 					10 = {
@@ -909,7 +912,10 @@ travel_events.1005 = { #Storm washes artifact overboard
 		is_playable_character = yes
 
 		is_travelling = yes
-		has_any_artifact = yes
+		#has_any_artifact = yes
+		any_character_artifact = { #Unop: Because you don't travel with your court artifacts
+			ep1_artifact_is_court_artifact_trigger = no
+		}
 
 		location = {
 			has_sea_danger_type = { TRAVEL = root.current_travel_plan }
@@ -931,6 +937,9 @@ travel_events.1005 = { #Storm washes artifact overboard
 		}
 
 		random_character_artifact = {
+			limit = { #Unop: Because you don't travel with your court artifacts
+				ep1_artifact_is_court_artifact_trigger = no
+			}
 			save_scope_as = overboard_artifact
 		}
 		traveler_danger_xp_effect = {
@@ -2708,6 +2717,7 @@ travel_events.4050 = {
 			}
 			scope:friendly_child = {
 				set_character_faith = root.faith
+				set_character_rite = root.rite
 			}
 			add_piety = minor_piety_gain
 			stress_and_fulfillment_impact = {

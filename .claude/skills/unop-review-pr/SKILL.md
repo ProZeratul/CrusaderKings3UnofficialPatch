@@ -56,6 +56,8 @@ gh pr checkout <PR>
 gh pr diff <PR>
 ```
 
+If the branch conflicts with `main` (`git merge-tree --write-tree origin/main HEAD` fails), report it as a `High` finding: rebase onto `main`.
+
 ### 3. Review
 
 A PR may bundle several distinct changes; apply the checks below to each on its own merits. The output stays a single findings list and one verdict — don't split it into per-change sections.
@@ -84,6 +86,7 @@ For each changed file, check:
 - **Tiger is clean.** Re-run `make tiger` yourself — don't trust the fix's claim that it passes. Any error or warning the fix introduced or left unaddressed is a finding. Don't invoke the `tiger` skill or fix anything; that's for the next fix cycle.
 - **Tiger suppressions.** If the fix added entries to `ck3-tiger.conf` (`# False positives` / `# Ignored`), challenge each one: warnings should be fixed, not suppressed, unless tiger is proven wrong. A warning suppressed that should have been fixed is a finding.
 - **Vanilla file commits.** If a new vanilla file was added, was it added in a separate commit without modifications?
+- **Test script.** Does the PR have a test script comment (marked `<!-- unop-test -->`) that follows `../unop-fix-issue/testing.md`? Re-check every character ID, title, effect and event ID it names against the files and logs. Does the setup actually reach the bug state, and do the steps exercise the *changed* code, not a direct `event` call that bypasses a fixed trigger? A missing or unusable script is `Medium`, since it blocks verification. Minor inaccuracies are `Low`.
 
 ### 4. Rate Findings
 

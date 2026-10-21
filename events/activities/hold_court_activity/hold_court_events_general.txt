@@ -530,11 +530,36 @@ scripted_trigger hold_court_1011_valid_neighbour_trigger = {
 }
 
 scripted_trigger hold_court_1011_valid_neighbour_claimant_trigger = {
+	prev.holder = { save_temporary_scope_as = defender }
+	save_temporary_scope_as = claimant_check
 	is_ruler = no
 	is_adult = yes
 	basic_is_available_ai = yes
 	has_court_event_flag = no
 	NOT = { is_courtier_of = root }
+	# don't fire for unusable claim.
+	OR = {
+		is_weak_claimant_due_to_gender_trigger = { RITE = root.rite CHARACTER = scope:defender }
+		scope:defender = {
+			OR = {
+				is_incapable = yes
+				is_adult = no
+			}
+		}
+		NOT = { is_weak_claimant_due_to_gender_trigger = { RITE = root.rite CHARACTER = scope:claimant_check } }
+	}
+	trigger_if = {
+		limit = {
+			scope:defender.culture = { has_cultural_parameter = physical_disfigurement_blocks_inheritance }
+		}
+		scope:claimant_check = {
+			valid_for_byz_succession_trigger = yes
+			is_eunuch_trigger = no
+			NOT = {
+				has_trait = celibate
+			}
+		}
+	}
 }
 
 # Claimant asks for your help in pushing their claim RIGHT NOW!!!
@@ -6590,6 +6615,7 @@ hold_court.6050 = {
 			}
 			scope:6050_tomb.county = {
 				set_county_faith = root.faith
+				set_county_rite = root.rite
 			}
 		}
 		scope:6050_tomb.county = {
@@ -17902,16 +17928,7 @@ hold_court.8100 = {
 				trigger = {
 					scope:ward = {
 						is_landed_or_landless_administrative_or_theocratic = yes
-						OR = {
-							AND = {
-								is_female = yes
-								rite = { rite_has_doctrine = doctrine_gender_male_dominated }
-							}
-							AND = {
-								is_female = no
-								rite = { rite_has_doctrine = doctrine_gender_female_dominated }
-							}
-						}
+						rite = { rite_has_dominant_ruling_gender = prev }
 					}
 				}
 				desc = hold_court.8100.desc.interest_marriage

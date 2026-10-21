@@ -570,6 +570,17 @@ travel_events.3010 = {
         is_playable_character = yes
 		has_alive_pet_trigger = yes #your pet rock cannot follow something into the forest
 		is_location_valid_for_travel_event_on_land = yes
+
+		#Unop: Need to ensure the travel leader exists or at least someone that is not one_legged as used in the immediate block
+		OR = {
+			exists = current_travel_plan.travel_leader
+			current_travel_plan = {
+				any_entourage_character = {
+					NOT = { this = ROOT }
+					NOT = { has_trait = one_legged }
+				}
+			}
+		}
     }
 	
     immediate = {
