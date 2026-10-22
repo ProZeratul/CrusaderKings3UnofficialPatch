@@ -873,7 +873,10 @@ add_virtuous_trait_effect = {
         }
         save_scope_as = virtuous_trait
     }
-    add_trait_force_tooltip = scope:virtuous_trait
+	if = { #Unop Guard against an empty virtue pool
+		limit = { exists = scope:virtuous_trait }
+		add_trait_force_tooltip = scope:virtuous_trait
+	}
 }
 
 replace_sinful_trait_effect = {
