@@ -4537,6 +4537,10 @@ ceremonial_claimant_faction_modifiers = {
 		$FACTION_TARGET$.top_liege ?= { #Unop: Ceremonial claimant factions target the top liege, not the ceremonial liege
 			any_targeting_faction = {
 		  		faction_type = ceremonial_claimant_faction #Unop: Was claimant_faction
+				trigger_if = { #Unop: Don't count the faction being joined
+					limit = { exists = scope:faction }
+					this != scope:faction
+				}
 
 				# Exists another claimant faction
 				trigger_if = {
