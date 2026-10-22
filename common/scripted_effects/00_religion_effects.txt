@@ -843,6 +843,7 @@ add_virtuous_trait_effect = {
 	save_scope_as = trait_changer
 	random_trait = {
         limit = {
+			has_trait_category = personality #Unop Only grant personality virtues
         	save_temporary_scope_as = temp_trait
 			scope:trait_changer.rite = {
                 trait_is_virtue_rite = prev
@@ -853,7 +854,7 @@ add_virtuous_trait_effect = {
 				}
 				any_opposite_trait = {
 					scope:trait_changer = {
-						has_trait = scope:temp_trait
+						has_trait = prev #Unop Check the opposite trait, not the candidate
 					}
 				}
 			}
