@@ -1749,7 +1749,10 @@ religious_decision.0211 = {
 					20 = {
 						trigger = {
 							scope:at_home = no
-							num_sinful_traits > 0
+							any_character_trait = { #Unop Only personality sins are replaced
+								has_trait_category = personality
+								root.rite = { trait_is_sin_rite = prev }
+							}
 						}
 
 						# Greater chance when meditating in one of these terrains.
