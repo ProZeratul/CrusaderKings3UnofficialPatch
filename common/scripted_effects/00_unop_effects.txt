@@ -56,3 +56,29 @@ unop_trigger_physician_treatments_effect = {
 		}
 	}
 }
+
+#Unop Governors with no valid appointment candidate pass their titles to the top liege, not to the engine's default fallback (child, parent, etc.)
+unop_update_governor_fallback_succession_effect = {
+	if = {
+		limit = {
+			is_governor = yes
+			OR = {
+				has_character_flag = unop_governor_fallback_succession
+				NOR = { # Don't overwrite a fallback set elsewhere, e.g. a church succession promise
+					exists = fallback_succession_title
+					exists = fallback_succession_character
+				}
+			}
+		}
+		set_fallback_succession_title = top_liege.primary_title
+		add_character_flag = unop_governor_fallback_succession
+	}
+	else_if = {
+		limit = {
+			is_governor = no
+			has_character_flag = unop_governor_fallback_succession
+		}
+		clear_fallback_succession = yes
+		remove_character_flag = unop_governor_fallback_succession
+	}
+}
