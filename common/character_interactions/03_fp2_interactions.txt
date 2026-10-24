@@ -3446,7 +3446,7 @@ contract_assistance_interaction = {
 		# Can only contract one war at a time
 		custom_tooltip = {
 			text = contract_assistance_war_already_contracted_tt
-			scope:actor = { NOT = { has_variable = owed_contract_assistance_war } }
+			scope:actor = { NOT = { var:owed_contract_assistance_war ?= { is_participant = scope:actor } } } #Unop Ignore stale variable if no longer in that war
 		}
 
 		# Adventurers can't join wars in places they're exiled from.
@@ -4082,7 +4082,7 @@ request_contract_assistance_interaction = {
 		custom_tooltip = {
 			text = contract_assistance_war_already_contracted_tt
 			scope:recipient = {
-				NOT = { has_variable = owed_contract_assistance_war }
+				NOT = { var:owed_contract_assistance_war ?= { is_participant = scope:recipient } } #Unop Ignore stale variable if no longer in that war
 			}
 		}
 	}
