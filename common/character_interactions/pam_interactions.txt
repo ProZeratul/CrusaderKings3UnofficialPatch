@@ -4337,7 +4337,12 @@ convert_on_reform_interaction = {
 
 	on_accept = {
 		scope:recipient = {
+			faith = { save_temporary_scope_as = unop_old_faith } #Unop Saved before the rite change moves them into the new faith
 			set_character_rite = scope:actor.rite
+			unop_convert_old_faith_domain_counties_effect = { #Unop The domain joins the reformed faith along with its ruler
+				OLD_FAITH = scope:unop_old_faith
+				RITE = scope:actor.rite
+			}
 		}
 	}
 

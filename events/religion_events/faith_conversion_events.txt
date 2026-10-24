@@ -81,6 +81,15 @@ faith_conversion.0006 = {
 
 	immediate = {
 		capital_county = { set_county_rite = root.rite }
+		if = { #Unop A reform moves the reformer's whole domain into the new faith, not just the capital
+			limit = {
+				scope:old_faith = { has_doctrine_parameter = unreformed }
+			}
+			unop_convert_old_faith_domain_counties_effect = {
+				OLD_FAITH = scope:old_faith
+				RITE = root.rite
+			}
+		}
 	}
 }
 
