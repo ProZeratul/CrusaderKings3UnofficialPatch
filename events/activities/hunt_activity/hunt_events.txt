@@ -17648,7 +17648,10 @@ hunt.4012 = {
 			exists = scope:activity.var:hunt_outcome_random
 		}
 		trigger_else = {
-			NOT = { exists = scope:activity.var:hunt_outcome_random }
+			OR = { #Unop the first pulse's effect sets hunt_outcome_random before this fires
+				NOT = { exists = scope:activity.var:hunt_outcome_random }
+				exists = scope:activity.var:unop_hunt_first_pulse
+			}
 		}
 	}
 

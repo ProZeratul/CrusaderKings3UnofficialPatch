@@ -66,7 +66,7 @@ elif [ "$OS" = Linux ]; then
   activate() { WID=$(winid); }
   # origin 0 0: click coordinates are window-relative
   geometry() { xwininfo -id "$WID" | awk '/^ *Width/ {w=$NF} /^ *Height/ {h=$NF} END {print 0, 0, w, h}'; }
-  capture() { import -window "$WID" "$1"; }
+  capture() { import -window "$WID" -depth 8 -define png:compression-level=1 "$1"; }
   resize() { convert "$1" -resize "${SMALL}x" "$2"; }
   # crop <in> <out> <x> <y> <w> <h>, region in 1400px coordinates
   crop() {
@@ -163,13 +163,13 @@ cmd_wait() {
   case ${1:-} in
     game)
       # needs a `mark` before starting or loading the game
-      local i
-      for ((i = 0; i < 300; i++)); do
+      local i timeout=${2:-300}
+      for ((i = 0; i < timeout; i++)); do
         cmd_new debug | grep "Setting idler 'In Game'" > /dev/null && { sleep 3; echo "in game"; return 0; }
         sleep 1
       done
-      die "game not loaded after 300 s" ;;
-    *) die "wait game" ;;
+      die "game not loaded after $timeout s; take a shot: if it shows the main menu, the clicks were lost" ;;
+    *) die "wait game [<seconds>]" ;;
   esac
 }
 
@@ -192,7 +192,7 @@ cmd_start() {
   cmd_shot start_bookmark 1090 35 290 345 > /dev/null
   echo "bookmark: $SHOTS/start_bookmark_crop.png"
   cmd_click 1235 704   # Start
-  cmd_wait game
+  cmd_wait game 120    # loading takes 20-55 s
 }
 
 cmd_shot() {
@@ -207,6 +207,7 @@ cmd_shot() {
     resize "$SHOTS/$name.png" "$SHOTS/${name}_small.png"
     echo "$SHOTS/${name}_small.png"
   fi
+  rm -f "$SHOTS/$name.png"  # full-size captures are 6-16 MB each
 }
 
 cmd_click() {

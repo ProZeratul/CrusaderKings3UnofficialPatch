@@ -719,7 +719,10 @@ char_interaction.0111 = {
 	}
 
 	immediate = {
-		change_to_administrative_effect = yes
+		if = { #Unop Don't convert barons to administrative, same as ep3_vassal_will_become_admin
+			limit = { highest_held_title_tier > tier_barony }
+			change_to_administrative_effect = yes
+		}
 	}
 
 	option = {

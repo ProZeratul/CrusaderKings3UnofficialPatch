@@ -3844,8 +3844,9 @@ artifact.4090 = { #Embed a relic in pommel by Daniel Moore
 	trigger = {
 		any_character_artifact = {
 			artifact_slot_type = primary_armament
-			NOT = {
+			NOR = { #Unop: Now with another condition
 				has_variable = added_relic
+				is_holy_relic_for = artifact_owner.faith
 			}
 		}
 
@@ -3889,8 +3890,9 @@ artifact.4090 = { #Embed a relic in pommel by Daniel Moore
 		random_character_artifact = {
 			limit = {
 				artifact_slot_type = primary_armament
-				NOT = {
+				NOR = { #Unop: Also add the variable check seen in the trigger
 					is_holy_relic_for = artifact_owner.faith
+					has_variable = added_relic
 				}
 			}
 			save_scope_as = this_artifact
