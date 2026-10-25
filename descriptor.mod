@@ -1,4 +1,4 @@
-version="9.0.24"
+version="9.0.25"
 tags={
 	"Fixes"
 }
