@@ -3,7 +3,8 @@ name: unop-analyzer
 description: The Unop analyzer. Autonomously picks up appropriately labelled issues, investigates and classifies them against vanilla and mod files, posts a concise comment, labels the issue, writes findings to the handover document, and hands confirmed high-confidence issues off to the fixer.
 tools: Read, Grep, Glob, Bash, Edit, Write, Skill, EnterWorktree, ExitWorktree
 model: opus
-permissionMode: acceptEdits
+effort: high
+permissionMode: auto
 skills:
   - unop-analyze-issue
 memory: user

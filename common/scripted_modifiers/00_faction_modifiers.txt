@@ -4236,7 +4236,7 @@ ceremonial_claimant_faction_modifiers = {
 		liege = { top_liege = this }
 		NOT = { government_has_mechanic = administrative }
 		NOT = {
-			$FACTION_TARGET$ ?= { is_rightful_liege_of = root }
+			$FACTION_TARGET$.top_liege ?= { is_rightful_liege_of = root } #Unop: Check the actual liege, not the ceremonial liege
 		}
 	}
 
@@ -4256,36 +4256,37 @@ ceremonial_claimant_faction_modifiers = {
 		was_preferred_heir = $FACTION_TARGET$
 	}
 
-	# All else being equal, the AI might support a claimant over their current liege just to get better feudal obligations.
-	modifier = {
-		desc = "FACTION_REASON_BETTER_CROWN_AUTHORITY"
-		add = 10
-		$FACTION_TARGET$ ?= { has_realm_law = crown_authority_1 }
-		$FACTION_CLAIMANT$ ?= { has_realm_law = crown_authority_0 }
-	}
-	modifier = {
-		desc = "FACTION_REASON_BETTER_CROWN_AUTHORITY"
-		add = 15
-		$FACTION_TARGET$ ?= { has_realm_law = crown_authority_2 }
-		$FACTION_CLAIMANT$ ?= {
-			OR = {
-				has_realm_law = crown_authority_0
-				has_realm_law = crown_authority_1
-			}
-		}
-	}
-	modifier = {
-		desc = "FACTION_REASON_BETTER_CROWN_AUTHORITY"
-		add = 15
-		$FACTION_TARGET$ ?= { has_realm_law = crown_authority_3 }
-		$FACTION_CLAIMANT$ ?= {
-			OR = {
-				has_realm_law = crown_authority_0
-				has_realm_law = crown_authority_1
-				has_realm_law = crown_authority_2
-			}
-		}
-	}
+	#Unop: The claimant never becomes root's liege, and ceremonial lieges don't use crown authority
+	## All else being equal, the AI might support a claimant over their current liege just to get better feudal obligations.
+	#modifier = {
+	#	desc = "FACTION_REASON_BETTER_CROWN_AUTHORITY"
+	#	add = 10
+	#	$FACTION_TARGET$ ?= { has_realm_law = crown_authority_1 }
+	#	$FACTION_CLAIMANT$ ?= { has_realm_law = crown_authority_0 }
+	#}
+	#modifier = {
+	#	desc = "FACTION_REASON_BETTER_CROWN_AUTHORITY"
+	#	add = 15
+	#	$FACTION_TARGET$ ?= { has_realm_law = crown_authority_2 }
+	#	$FACTION_CLAIMANT$ ?= {
+	#		OR = {
+	#			has_realm_law = crown_authority_0
+	#			has_realm_law = crown_authority_1
+	#		}
+	#	}
+	#}
+	#modifier = {
+	#	desc = "FACTION_REASON_BETTER_CROWN_AUTHORITY"
+	#	add = 15
+	#	$FACTION_TARGET$ ?= { has_realm_law = crown_authority_3 }
+	#	$FACTION_CLAIMANT$ ?= {
+	#		OR = {
+	#			has_realm_law = crown_authority_0
+	#			has_realm_law = crown_authority_1
+	#			has_realm_law = crown_authority_2
+	#		}
+	#	}
+	#}
 
 	# More likely to create a claimant faction against a Ruler below their CGLevel
 	modifier = {
@@ -4534,9 +4535,13 @@ ceremonial_claimant_faction_modifiers = {
 			}
 			joined_faction = { save_temporary_scope_as = joined_faction_temp }
 		}
-		$FACTION_TARGET$ ?= {
+		$FACTION_TARGET$.top_liege ?= { #Unop: Ceremonial claimant factions target the top liege, not the ceremonial liege
 			any_targeting_faction = {
-		  		faction_type = claimant_faction
+		  		faction_type = ceremonial_claimant_faction #Unop: Was claimant_faction
+				trigger_if = { #Unop: Don't count the faction being joined
+					limit = { exists = scope:faction }
+					this != scope:faction
+				}
 
 				# Exists another claimant faction
 				trigger_if = {

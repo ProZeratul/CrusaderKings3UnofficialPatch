@@ -22,12 +22,13 @@ In order of preference:
 AI behavior over time, game start, and rare random outcomes are still testable. Say how:
 
 - **Observer mode**, plus the log or `error.log` line to check.
-- **Temporary `debug_log`** (e.g. `debug_log = "..."` or `debug_log_scopes = yes`) at a named spot in a named file, plus the `game.log` line that proves the fix.
+- **Temporary `debug_log`** (e.g. `debug_log = "..."` or `debug_log_scopes = yes`) at a named spot in a named file, plus the `debug.log` line that proves the fix.
 - **Temporary code tweaks** that make a random outcome likely, e.g. raising a `weight`, `chance` or `random` value. Give the file, the block and the new value, and tell the tester to revert it after.
 
 ## Common Mistakes
 
 - **`play <id>` doesn't take historical IDs.** Switch characters with `effect set_player_character = character:<id>`.
+- **Don't pick William of Normandy (`140`) in 1066.** He starts at war, commanding an army, which blocks activities (e.g. hunts), travel and some interactions.
 - **Playing a landless character is Game Over.** Don't make the tester play someone who holds only a special title (e.g. a Japanese or Chinese emperor). Play a landed character and look at the other one, e.g. their liege.
 - **Generic scopes pick existing state.** `random_character_war`, `random_courtier` etc. may pick something the bookmark character already has, e.g. William's Norman Conquest in 1066. Narrow them (`limit = { using_cb = depose_war }`), or pick a character with no such state.
 - **`debug_log` writes to `debug.log`**, not `game.log`.

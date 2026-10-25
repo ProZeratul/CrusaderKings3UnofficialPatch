@@ -123,6 +123,9 @@
  
  # Add the cooldown since UNOP is adding one to this one (see ep3_laamp_decision_event.1050)
  ep3_laamp_decision_event.1050.a.cooldown.tt: "The training grounds are busy catering to a scheduled practice — return on [GetCurrentDateWithDiff( GetVarTimeRemaining( THIS.Char.MakeScope, '1051_has_trained_recently') )]"
+
+ # Add the color style to the decision
+ domicile_building_parameter_nomad_yurt_paiza_char_gain_lvl_1: "A foreign [character|E] will join your [court|E] upon voyage completion from #V $mpo_call_for_merchants$#! [decision|E]"
  # Missing n after the backslash: \Tea > \nTea, and [japanese_manor_building|E] > [domicile_building|E] since the Western & Chinese tea plantations also use it
  raid_insight_tea_desc: "$raid_insight_shared$\nTea [domicile_building|E] Cost: #P -25%#!"
  # Fix duplicate "" at the start
@@ -140,3 +143,12 @@
  frankokratia_latin_kingdom_memory_desc: "I established a potent [GetTitleByKey('e_latin_empire').GetAdjective] dominion over the [ROOT.Var('swapped_kingdom').Title.GetName]"
  frankokratia_latin_kingdom_memory_desc_second_perspective: "You established a potent [GetTitleByKey('e_latin_empire').GetAdjective] dominion over the [ROOT.Var('swapped_kingdom').Title.GetName]"
  frankokratia_latin_kingdom_memory_desc_third_perspective: "[owner.GetFirstName] established a potent [GetTitleByKey('e_latin_empire').GetAdjective] dominion over the [ROOT.Var('swapped_kingdom').Title.GetName]"
+ # The University Visit is no longer locked behind Wards & Wardens, always show the Study Materials cost reduction
+ culture_parameter_block_printing_university_bonuses: "$culture_parameter_block_printing_university_bonuses_text$"
+
+ #Unop: $VARIABLE$ is not supplied by the engine and displays as VARIABLE, drop it
+ has_variable_trigger:1 "Has the required variable"
+ has_global_variable_trigger:1 "Has the required global variable"
+
+ # List the contracts that Juicy Rumors actually boosts, instead of all Criminal Contracts
+ domicile_building_parameter_camp_improved_criminal_contract_rewards: "$laamp_base_0041_contract$, $laamp_base_1041_contract$, $laamp_base_5031_contract$, $laamp_base_4041_contract$ and $laamp_treasure_map_contract$ [task_contract|E] Rewards: #P +50%#!"
