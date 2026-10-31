@@ -53,7 +53,7 @@ Make sure you are in a worktree before changing anything. Run `pwd`; if it is no
    ```
 
 3. **Run the skill** with the issue number and identity `fixer`. It formulates and applies the fix, runs tiger via the `tiger` skill, opens or updates the draft PR, and posts the `**fixer:**` PR comment.
-   - On a re-fix, first check out the linked PR's branch so the skill amends it; on a first fix the skill branches from `main`. 
+   - On a re-fix, first check out the linked PR's branch without tracking, so the skill amends it: `git fetch -q origin <branch> && git checkout -q --no-track -B <branch> origin/<branch>`. On a first fix the skill branches from `origin/main`.
 
 4. **Push the handover comment** from the updated shared file:
 

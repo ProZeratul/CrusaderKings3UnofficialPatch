@@ -7,8 +7,8 @@ N="${1:?usage: handover-push.sh <issue-number>}"
 REPO="ProZeratul/CrusaderKings3UnofficialPatch"
 FILE="tmp/issue-$N.md"
 
-id=$(gh api --paginate "repos/$REPO/issues/$N/comments" \
-  --jq '.[] | select(.body | contains("<!-- unop-handover -->")) | .id' | head -n1)
+# only a handover comment by a trusted author counts (.claude/trusted-authors)
+id=$("$(dirname "$0")/marker-comment.sh" "$N" unop-handover)
 
 body=$(mktemp)
 trap 'rm -f "$body"' EXIT

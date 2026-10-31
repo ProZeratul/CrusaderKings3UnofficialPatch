@@ -19,6 +19,9 @@ OS=$(uname)
 
 die() { echo "ck3.sh: $*" >&2; exit 2; }
 
+# Claude Code's sandbox makes the CK3 user dir read-only and hides the display, so fail early with a hint.
+[ -w "$CK3_USER_DIR" ] || die "can't write $CK3_USER_DIR, probably running inside the Claude Code sandbox; use '$0 <command>', with nothing else in the Bash call."
+
 # --- platform primitives ---------------------------------------------------
 
 if [ "$OS" = Darwin ]; then

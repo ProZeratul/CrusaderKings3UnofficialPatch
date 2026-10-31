@@ -7,8 +7,8 @@ N="${1:?usage: handover-pull.sh <issue-number>}"
 REPO="ProZeratul/CrusaderKings3UnofficialPatch"
 FILE="tmp/issue-$N.md"
 
-id=$(gh api --paginate "repos/$REPO/issues/$N/comments" \
-  --jq '.[] | select(.body | contains("<!-- unop-handover -->")) | .id' | head -n1)
+# only a handover comment by a trusted author counts (.claude/trusted-authors)
+id=$("$(dirname "$0")/marker-comment.sh" "$N" unop-handover)
 
 if [ -n "$id" ]; then
   # strip the marker line, the <details><summary> opener, and the closing </details>
