@@ -1548,6 +1548,42 @@ imperial_examination_gather_stray_entrants_effect = {
 				add_to_list = entourage_entrants
 			}
 		}
+		#Unop Also add the commanded family of a guest who joined without travel (e.g. a minister at the capital exam)
+		if = {
+			limit = {
+				has_character_flag = command_to_attend_flag
+			}
+			every_close_or_extended_family_member = {
+				limit = {
+					is_ai = yes
+					is_landed = no
+					top_liege = root.top_liege
+					location = scope:activity.activity_location
+					trigger_if = {
+						limit = {
+							scope:activity = {
+								has_activity_type = activity_imperial_examination
+							}
+						}
+						NOT = { has_character_flag = passed_palace_exam }
+					}
+					trigger_else = {
+						NOR = {
+							has_character_flag = passed_provincial_exam
+							has_character_flag = passed_metropolitan_exam
+						}
+					}
+					NOR = {
+						has_trait = devoted
+						has_trait = eunuch
+					}
+					tgp_gender_can_be_exam_entrant_trigger = yes
+					is_available = yes
+					is_adult = yes
+				}
+				add_to_list = entourage_entrants
+			}
+		}
 		every_in_list = {
 			list = entourage_entrants
 			if = {
