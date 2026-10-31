@@ -674,6 +674,7 @@ court_position_grant_effect = { # Give position, and revoke old holder's if they
 	}
 	else_if = {
 		limit = {
+			$EMPLOYER$ = { NOT = { can_employ_court_position_type = $POS$_court_position } } #Unop Don't replace a holder of a multi-slot position with a free slot
 			$EMPLOYER$.court_position:$POS$_court_position ?= { has_court_position = $POS$_court_position }
 		}
 		$EMPLOYER$.court_position:$POS$_court_position = { save_scope_as = old_holder }
