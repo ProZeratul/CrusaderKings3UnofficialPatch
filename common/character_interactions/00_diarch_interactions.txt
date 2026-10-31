@@ -6512,7 +6512,7 @@ swing_scales_currency_interaction = {
 		is_shown = {
 			# Filter out for the liege in vizierates - they can mulct the vizier, so we don't give them the chance to spend that gold back.
 			interaction_actor_is_liege_with_vizierate_trigger = no
-			NOT = { religious_head_or_challenger ?= scope:recipient }
+			NOT = { scope:actor.religious_head_or_challenger ?= scope:recipient } #Unop: Missing actor scope
 		}
 		is_valid = {
 			diarch_swing_scales_valid_shared_hof_trigger = yes
