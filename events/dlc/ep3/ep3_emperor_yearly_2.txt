@@ -6671,7 +6671,10 @@ ep3_emperor_yearly.2340 = {
 			}
 			any_vassal = {
 				house ?= {
-					is_powerful_family = yes
+					OR = { #Unop: Include dominant families
+						is_powerful_family = yes
+						is_dominant_family = yes
+					}
 				}
 				rite = top_liege.primary_title.state_rite
 				is_available_ai_adult = yes
@@ -6697,7 +6700,10 @@ ep3_emperor_yearly.2340 = {
 			random_vassal = {
 				limit = {
 					house ?= {
-						is_powerful_family = yes
+						OR = { #Unop: Include dominant families
+							is_powerful_family = yes
+							is_dominant_family = yes
+						}
 					}
 					rite = root.primary_title.state_rite
 					is_available_ai_adult = yes
@@ -6724,7 +6730,10 @@ ep3_emperor_yearly.2340 = {
 						}
 						modifier = {
 							house ?= {
-								is_powerful_family = yes
+								OR = { #Unop: Include dominant families
+									is_powerful_family = yes
+									is_dominant_family = yes
+								}
 							}
 							add = 25
 						}
@@ -6873,6 +6882,7 @@ ep3_emperor_yearly.2400 = {
 		government_has_mechanic = administrative
 		house ?= {
 			is_powerful_family = no
+			is_dominant_family = no #Unop: Include dominant families
 		}
 		NOT = {
 			#cooldown

@@ -332,10 +332,14 @@ house_bloc_desire_to_join_modifiers = {
 		exists = scope:inviter_temp.house
 		exists = scope:joiner_temp.house
 		scope:inviter_temp.house = {
-			is_powerful_family = yes
+			OR = { #Unop: Include dominant families
+				is_powerful_family = yes
+				is_dominant_family = yes
+			}
 		}
 		scope:joiner_temp.house = {
 			is_powerful_family = no
+			is_dominant_family = no #Unop: Exclude dominant families
 		}
 		add = {
 			value = 50
@@ -348,9 +352,13 @@ house_bloc_desire_to_join_modifiers = {
 		exists = scope:joiner_temp.house
 		scope:inviter_temp.house = {
 			is_powerful_family = no
+			is_dominant_family = no #Unop: Include dominant families
 		}
 		scope:joiner_temp.house = {
-			is_powerful_family = yes
+			OR = { #Unop: Include dominant families
+				is_powerful_family = yes
+				is_dominant_family = yes
+			}
 		}
 		add = {
 			value = -25
