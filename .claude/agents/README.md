@@ -223,7 +223,7 @@ The repo owner sets this up once, for all operators, so that nothing the pipelin
 
 Always launch through `.claude/scripts/pipeline.sh`, which adds `--permission-mode auto --settings .claude/pipeline-settings.json`. A plain `claude` session, or a plain `claude agents` view, uses your interactive settings and identity instead.
 
-Launch from a main checkout on an up-to-date `main`. The agents run its scripts and trust the authors in its `.claude/trusted-authors`, and the worktree agents start from its last commit.
+Launch from a main checkout on an up-to-date `main`. The agents run its scripts and trust the authors in its `.claude/trusted-authors`, and the worktree agents start from its last commit. To test pipeline changes, you can launch from their branch instead; `pipeline.sh` then warns that `.claude/` differs from `origin/main`, and fixers leave their worktrees behind (see below).
 
 - **Pipeline:** `.claude/scripts/pipeline.sh dispatch`, then type `/loop 20m dispatch`.
 - **One agent in the background:** `.claude/scripts/pipeline.sh run unop-analyzer "Process issue 712"` (or `"Process PR 740"`).
@@ -234,6 +234,7 @@ Launch from a main checkout on an up-to-date `main`. The agents run its scripts 
 - `claude agents` lists running sessions; `claude logs <id>`, `claude attach <id>` and `claude stop <id>` follow, open and stop one.
 - The dispatcher logs each decision to `tmp/dispatch.log`. Create `tmp/dispatch-paused` to pause it; delete the file to resume.
 - The dispatcher stops agents that run longer than 1 hour (2 for the tester) and labels their item `needs-human`.
+- Agents remove their worktrees when they finish. A fixer can't when its worktree's `.claude/` differs from `origin/main` (when you launched from another branch): the sandbox keeps `.claude/` read-only, so switching to the fix branch leaves the old files behind as changes. Claude Code also leaves `worktree-agent-*` branches behind. To remove all of them, run `.claude/scripts/cleanup.sh`. It keeps the worktrees of running agents (Claude Code locks them), worktrees with changes outside `.claude/`, and fix branches that aren't pushed, and prints what it removed and kept.
 
 ## Handling `needs-human`
 

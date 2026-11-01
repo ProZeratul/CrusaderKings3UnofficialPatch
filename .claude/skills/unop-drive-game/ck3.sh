@@ -180,6 +180,8 @@ cmd_exit() {
   fi
   rm -f "$PIDFILE"
   restore_mod
+  # delete the effect files that run copied (the sandbox can't)
+  [ ! -d "$CK3_USER_DIR/run" ] || find "$CK3_USER_DIR/run" -maxdepth 1 -type f -name 'claude_*' -delete
   grep '^path=' "$MOD"
 }
 

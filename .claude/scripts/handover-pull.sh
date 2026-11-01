@@ -9,7 +9,7 @@ FILE="tmp/issue-$N.md"
 mkdir -p tmp   # a fresh agent worktree has no tmp/ (it's ignored)
 
 # only a handover comment by a trusted author counts (.claude/trusted-authors)
-id=$("$(dirname "$0")/marker-comment.sh" "$N" unop-handover)
+id=$("$(dirname "$0")/marker-get.sh" "$N" unop-handover)
 
 if [ -n "$id" ]; then
   # strip the marker line, the <details><summary> opener, and the closing </details>

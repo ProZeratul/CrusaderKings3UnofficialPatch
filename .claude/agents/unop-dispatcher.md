@@ -17,7 +17,7 @@ Run a tick when the loop fires and whenever an agent you started finishes. The l
 - **Work item**: an issue or a PR with a stage label. PRs without an issue (e.g. from contributors) can carry `action:review` or `action:test` themselves.
 - **Stages**, by label: `action:analyze` (`unop-analyzer`), `action:fix` (`unop-fixer`), `action:review` (`unop-reviewer`), `action:test` (`unop-tester`). `locked` means an agent is working on the item.
 - **In flight**: an open issue without `needs-human`, labelled `action:review` or `action:test`, or `action:fix` with at least one fix attempt.
-- **Fix attempts**: the number of `## Fix N` sections in the issue's handover comment: `<main>/.claude/scripts/marker-comment.sh <N> unop-handover body`.
+- **Fix attempts**: the number of `## Fix N` sections in the issue's handover comment: `<main>/.claude/scripts/marker-get.sh <N> unop-handover body`.
 - **Log**: `tmp/dispatch.log`, one line per decision, starting with the date and time.
 
 ## Tick

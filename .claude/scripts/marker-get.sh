@@ -4,7 +4,7 @@
 # there is none. The marker must come first: trusted comments may quote untrusted text further down.
 set -euo pipefail
 
-usage="usage: marker-comment.sh <issue-or-pr> <marker> [id|body]"
+usage="usage: marker-get.sh <issue-or-pr> <marker> [id|body]"
 N="${1:?$usage}"
 MARKER="${2:?$usage}"
 FIELD="${3:-id}"

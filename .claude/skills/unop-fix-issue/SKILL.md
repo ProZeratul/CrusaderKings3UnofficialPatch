@@ -39,11 +39,11 @@ This skill runs **autonomously**, without asking for approval. Any human gates b
 
 ### 1. Load Context
 
-Read the shared file for the investigation findings, classification, and any prior fix/review cycles. Read the repro comment on the issue (marked `<!-- unop-repro -->`) if there is one: `<main>/.claude/scripts/marker-comment.sh <N> unop-repro body`.
+Read the shared file for the investigation findings, classification, and any prior fix/review cycles. Read the repro comment on the issue (marked `<!-- unop-repro -->`) if there is one: `<main>/.claude/scripts/marker-get.sh <N> unop-repro body`.
 
 **Re-fix due to review.** If a `## Review N` section is present, read the most recent one and treat its `High` and `Medium` findings as the work list for this attempt — every one must be addressed before you consider the fix ready. `Low` findings are optional. Earlier `## Fix N` sections show what was already tried.
 
-**Re-fix due to a failed test.** If the most recent section is a `## Test N` with result `Failed`, read it and the result comment on the PR (`<main>/.claude/scripts/marker-comment.sh <PR> unop-test-result body`). On `Failed (fix)`, the fix doesn't work in-game: treat the observations as the work list. On `Failed (script)`, the test script doesn't reach the changed code or doesn't tell `main` and the fix apart: rewrite the test script (step 3.4); change the fix only if the observations show it's wrong too.
+**Re-fix due to a failed test.** If the most recent section is a `## Test N` with result `Failed`, read it and the result comment on the PR (`<main>/.claude/scripts/marker-get.sh <PR> unop-test-result body`). On `Failed (fix)`, the fix doesn't work in-game: treat the observations as the work list. On `Failed (script)`, the test script doesn't reach the changed code or doesn't tell `main` and the fix apart: rewrite the test script (step 3.4); change the fix only if the observations show it's wrong too.
 
 **Bug not reproduced.** If you see a report that `main` already shows the expected result, check whether the script is at fault: does it reach the changed code, and does `main` really lack the fix? If so, rewrite the script. If the script is right, the bug doesn't reproduce: don't change the fix or the script. Append a `## Fix N` with `**Approach:** not reproduced` and the reasoning, post a concise `**<identity>:**` PR comment, and report **not reproduced**.
 
@@ -113,9 +113,9 @@ Following the project `CLAUDE.md` "General", "Style", and "Opening PRs" guidelin
      )"
      ```
 
-     Then post the test script as a separate PR comment, using the posting snippet in `testing.md`.
+     Then post the test script as a separate PR comment, as the **Posting** section of `testing.md` says.
 
-   - **Re-fix attempt**: the push updates the PR automatically. Then post a **concise** `**<identity>:**` PR comment explaining what changed (`gh pr comment <PR>`, resolving `<PR>` with `gh pr view <branch> --json number -q .number`); if the re-fix addressed PR feedback, reply to those comments directly. If the fix changed what should be tested, or the PR has no test script comment, update or post it using the posting snippet in `testing.md`.
+   - **Re-fix attempt**: the push updates the PR automatically. Then post a **concise** `**<identity>:**` PR comment explaining what changed (`gh pr comment <PR>`, resolving `<PR>` with `gh pr view <branch> --json number -q .number`); if the re-fix addressed PR feedback, answer each point in that comment, naming its file and line for inline comments. If the fix changed what should be tested, or the PR has no test script comment, update or post it as the **Posting** section of `testing.md` says.
 
 ### 4. Append to the Shared File
 

@@ -27,6 +27,10 @@ cd "$root"
 
 git worktree prune
 
+git fetch -q origin main || echo "pipeline.sh: warning: can't fetch origin/main" >&2
+git diff --quiet HEAD origin/main -- .claude \
+  || echo "pipeline.sh: warning: .claude/ differs from origin/main; agents may leave their worktrees behind" >&2
+
 opts=(--permission-mode auto --settings "$root/.claude/pipeline-settings.json")
 
 case "${1:-}" in

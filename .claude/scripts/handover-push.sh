@@ -4,11 +4,8 @@
 set -euo pipefail
 
 N="${1:?usage: handover-push.sh <issue-number>}"
-REPO="ProZeratul/CrusaderKings3UnofficialPatch"
+[[ "$N" =~ ^[0-9]+$ ]] || { echo "usage: handover-push.sh <issue-number>" >&2; exit 2; }
 FILE="tmp/issue-$N.md"
-
-# only a handover comment by a trusted author counts (.claude/trusted-authors)
-id=$("$(dirname "$0")/marker-comment.sh" "$N" unop-handover)
 
 body=$(mktemp)
 trap 'rm -f "$body"' EXIT
@@ -20,8 +17,5 @@ trap 'rm -f "$body"' EXIT
   echo '</details>'
 } > "$body"
 
-if [ -n "$id" ]; then
-  gh api --silent -X PATCH "repos/$REPO/issues/comments/$id" -F body=@"$body"
-else
-  gh api --silent -X POST "repos/$REPO/issues/$N/comments" -F body=@"$body"
-fi
+# edits only a handover comment by a trusted author (.claude/trusted-authors)
+"$(dirname "$0")/marker-post.sh" "$N" unop-handover "$body"

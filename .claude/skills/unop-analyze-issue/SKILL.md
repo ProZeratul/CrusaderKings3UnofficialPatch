@@ -201,7 +201,7 @@ gh issue edit <N> --add-label "confirmed,vanilla,common,confidence:high"
 
 If this is a re-analysis, post a **very concise** follow-up comment stating what changed compared to the previous one.
 
-**Repro comment.** If **confirmed**, also post the repro as a separate comment, using the template and posting snippet in `../unop-fix-issue/testing.md`. On a re-analysis, this updates the existing repro comment. Skip it if you can't infer a repro.
+**Repro comment.** If **confirmed**, also post the repro as a separate comment, using the template in `../unop-fix-issue/testing.md` and posting it as its **Posting** section says. On a re-analysis, this updates the existing repro comment. Skip it if you can't infer a repro.
 
 ### 7. Report Summary
 
