@@ -22,21 +22,194 @@ The agents run unattended and read text anyone can write: Steam comments, issue 
 
 ## One-Time Setup
 
-Outside the repo, per operator:
+Each operator (a maintainer who runs the pipeline on their machine) does this once, outside the repo. The commands are for Debian-based Linux (Debian, Ubuntu, Mint).
 
-1. **Sandbox prerequisites** (Linux): `bubblewrap` and `socat`. On Ubuntu 24.04+, check that `sysctl kernel.apparmor_restrict_unprivileged_userns` is `0`, or add an AppArmor profile for `bwrap`.
-2. **User settings** (`~/.claude/settings.json`):
-   - No broad allow rules such as `Bash(*)`. Any allow rule loaded by the pipeline bypasses the classifier, including rules in this repo's `.claude/settings.local.json`.
-   - Exclude the game driver from the sandbox, by the absolute path of your main checkout: `"sandbox": { "excludedCommands": ["<repo>/.claude/skills/unop-drive-game/ck3.sh *"] }`. Don't use a wildcard path: it would also match a `ck3.sh` from a PR worktree.
-3. **GitHub identity.** The pipeline acts on GitHub as a GitHub App, never as the operator:
-   - Create a GitHub App under your account with repository permissions Issues, Pull requests and Contents (read and write) and nothing else, no webhook, installable on any account. Have the repo owner install it on this repository only.
-   - Store its private key outside any repo, mode `600`.
-   - Create `~/.config/unop-app/app.env` with `CLIENT_ID=`, `KEY_FILE=` and `INSTALLATION_ID=`. `.claude/scripts/app-token.py info` prints the installation ID and the bot user.
-   - Create `~/.config/unop-app/gitconfig` with the bot as `user.name` and `user.email`, `credential.helper` reset and then set to `!gh auth git-credential`, `url.https://github.com/.insteadOf` for each SSH form of your GitHub remotes (`git@github.com:` and any `~/.ssh/config` host alias), and `unop.branchPrefix` set to your name for fix branches (`<prefix>-fix-<slug>`).
-   - Add `bot <slug>[bot]` to `.claude/trusted-authors`.
+### 1. Install the sandbox tools
 
-   In pipeline sessions, a `SessionStart` hook exports `GH_TOKEN=$(app-token.py token)`, so every Bash command gets a valid App token (one hour, this repository only, renewed on demand). `gh` uses it directly, and git pushes over HTTPS through `gh`, authored by the bot. The sandbox hides `~/.ssh` and `~/.config/gh`.
-4. **Repo owner:** an active `main` ruleset with "Restrict deletions", "Block force pushes" and "Require a pull request before merging" (1 approval).
+Claude Code sandboxes Bash commands with bubblewrap and routes their network traffic through a proxy reached via socat:
+
+```shell
+sudo apt-get install bubblewrap socat
+```
+
+Some Debian distros may block the unprivileged user namespaces bubblewrap needs. Check:
+
+```shell
+sysctl kernel.apparmor_restrict_unprivileged_userns
+```
+
+If it prints `1`, allow them for `bwrap` only, with an AppArmor profile:
+
+```shell
+sudo tee /etc/apparmor.d/bwrap <<'EOF'
+abi <abi/4.0>,
+include <tunables/global>
+
+profile bwrap /usr/bin/bwrap flags=(unconfined) {
+  userns,
+  include if exists <local/bwrap>
+}
+EOF
+sudo apparmor_parser -r /etc/apparmor.d/bwrap
+```
+
+Then `bwrap --ro-bind / / true && echo ok` should print `ok`. In Claude Code, `/sandbox` shows whether the sandbox is active.
+
+### 2. Install the token script's dependencies
+
+`.claude/scripts/app-token.py` signs GitHub App tokens with PyJWT:
+
+```shell
+sudo apt-get install python3-jwt python3-cryptography
+```
+
+### 3. Install ck3-tiger and the `tiger` skill
+
+The fixer and reviewer lint with [ck3-tiger](https://github.com/amtep/tiger), which must be on your `PATH`:
+
+```shell
+gh release download -R amtep/tiger -p 'ck3-tiger-linux-*.tar.gz' -D /tmp
+mkdir -p ~/bin
+tar -xzf /tmp/ck3-tiger-linux-*.tar.gz -C ~/bin --strip-components=1 --wildcards '*/ck3-tiger'
+ck3-tiger --version
+```
+
+The fixer also uses the `tiger` skill to fix or ignore tiger warnings. It lives in the private [pharaox/ck3](https://github.com/pharaox/ck3) repo; ask pharaox for access, then clone it and link the skill into your user skills:
+
+```shell
+git clone git@github.com:pharaox/ck3.git <path>/ck3
+mkdir -p ~/.claude/skills
+ln -s <path>/ck3/.claude/skills/tiger ~/.claude/skills/tiger
+```
+
+A `git pull` in the clone updates the skill.
+
+### 4. Adjust your Claude Code settings
+
+The game must be installed at the paths in `.env` (Steam's default). Allow the agents to read the game files, the game's user directory (logs, `.info` files) and the `tiger` skill, and to use the skill. Put these rules in `~/.claude/settings.json` if you work on several CK3 mods, or in this repo's `.claude/settings.local.json` if Unop is your only one. Pipeline sessions load both files.
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Read(~/.steam/steam/steamapps/common/Crusader Kings III/**)",
+      "Read(~/.steam/debian-installation/steamapps/common/Crusader Kings III/**)",
+      "Read(~/.local/share/Paradox Interactive/Crusader Kings III/**)",
+      "Read(<path>/ck3/.claude/skills/tiger/**)",
+      "Skill(tiger)",
+      "Skill(tiger:*)"
+    ]
+  }
+}
+```
+
+In `~/.claude/settings.json`:
+
+- **Remove broad allow rules** such as `Bash(*)`, `Bash(*:*)` or a bare `WebFetch`. Any allow rule the pipeline loads skips the auto mode classifier, and that includes rules in this repo's `.claude/settings.local.json`.
+- **Keep `Edit` and write rules out of it.** User settings apply to pipeline sessions too, so an `Edit` rule for your other mods would let an agent change them without review. Put such rules in the `.claude/settings.local.json` of the projects that need them.
+- **Exclude the game driver from the sandbox,** so the tester can start and stop the game. Use the absolute path of your main checkout, never a wildcard path, which would also match a `ck3.sh` from a PR:
+
+  ```json
+  {
+    "sandbox": {
+      "excludedCommands": [
+        "/home/<you>/<path>/CrusaderKings3UnofficialPatch/.claude/skills/unop-drive-game/ck3.sh *"
+      ]
+    }
+  }
+  ```
+
+### 5. Create a GitHub App
+
+The pipeline acts on GitHub as a GitHub App. Its tokens last an hour and reach this repository only, and you can revoke it at any time.
+
+1. On GitHub, open **Settings > Developer settings > GitHub Apps > New GitHub App**:
+   - **GitHub App name:** e.g. `<you>-agents`. Its bot user will be `<you>-agents[bot]`.
+   - **Homepage URL:** `https://github.com/ProZeratul/CrusaderKings3UnofficialPatch`.
+   - **Webhook:** uncheck **Active**.
+   - **Repository permissions:** **Contents**, **Issues** and **Pull requests** set to **Read and write**. Leave everything else at **No access** (**Metadata** stays read-only).
+   - **Where can this GitHub App be installed?** **Any account**.
+2. Click **Create GitHub App**. On the App's page, note the **Client ID**, then click **Generate a private key**.
+3. Move the downloaded key to `~/.config/<you>-agents`, readable only by you:
+
+   ```shell
+   mkdir -p -m 700 ~/.config/<you>-agents
+   mv <downloads>/<you>-agents.*.private-key.pem ~/.config/<you>-agents/key.pem
+   chmod 600 ~/.config/<you>-agents/key.pem
+   ```
+
+4. Ask the repo owner to install the App from `https://github.com/apps/<you>-agents/installations/new`, choosing **Only select repositories** and **CrusaderKings3UnofficialPatch**.
+
+### 6. Configure the pipeline identity
+
+Create `~/.config/unop-app/app.env`, first without the installation ID:
+
+```shell
+mkdir -p -m 700 ~/.config/unop-app
+```
+
+```ini
+# GitHub App the Unop pipeline acts as (read by .claude/scripts/app-token.py)
+CLIENT_ID=<Client ID from step 5>
+INSTALLATION_ID=<from app-token.py info, see below>
+KEY_FILE=~/.config/<you>-agents/key.pem
+```
+
+Once the App is installed, look up the installation ID and the bot's user ID, and fill in `INSTALLATION_ID`:
+
+```shell
+.claude/scripts/app-token.py info
+# app: <you>-agents (id ..., owner <you>)
+# installation: <installation ID> on ProZeratul (selected)
+# bot: <you>-agents[bot] (user id <bot ID>, email <bot ID>+<you>-agents[bot]@users.noreply.github.com)
+```
+
+Create `~/.config/unop-app/gitconfig`, which pipeline sessions include on top of your own git config:
+
+```ini
+# Git settings for Unop pipeline sessions, included via pipeline-settings.json.
+[user]
+	name = <you>-agents[bot]
+	email = <bot ID>+<you>-agents[bot]@users.noreply.github.com
+[credential]
+	# Drop your own credential helpers, then use the App token via gh.
+	helper =
+	helper = !gh auth git-credential
+[url "https://github.com/"]
+	# Push over HTTPS with the App token instead of your SSH key.
+	# Add a line for each SSH host alias you use for GitHub in ~/.ssh/config.
+	insteadOf = git@github.com:
+[unop]
+	# Prefix for fix branches: <prefix>-fix-<slug>
+	branchPrefix = <you>
+```
+
+Check that a token can be minted:
+
+```shell
+.claude/scripts/app-token.py token > /dev/null && echo ok
+```
+
+Finally, add the bot to `.claude/trusted-authors` in a PR, so that other agents accept its marker comments:
+
+```
+bot <you>-agents[bot]
+```
+
+In pipeline sessions, a `SessionStart` hook exports `GH_TOKEN=$(app-token.py token)`, so every Bash command gets a valid token, renewed when it's close to expiry. `gh` uses it directly, and git pushes over HTTPS through `gh`, as the bot. The sandbox hides `~/.ssh` and `~/.config/gh`, so your own keys and token are out of reach.
+
+## Recommended Repo Setup
+
+The repo owner sets this up once, for all operators, so that nothing the pipeline does reaches `main` without a human approval:
+
+- **Protect `main`.** In **Settings > Rules > Rulesets**, an active branch ruleset (`MainBranchProtection`) with:
+  - **Enforcement status:** Active, with an empty bypass list.
+  - **Target branches:** the default branch.
+  - **Restrict deletions** and **Block force pushes**.
+  - **Require a pull request before merging**, with **Required approvals** set to 1 and **Dismiss stale pull request approvals when new commits are pushed**, so an approval doesn't carry over to commits the fixer pushes later.
+- **Keep auto-merge off** (**Settings > General > Allow auto-merge**), so no agent can queue a merge.
+- **Give write access only to maintainers.** Contributors work from forks; the agents can't push to fork branches.
+- **Install each operator's GitHub App on this repository only**, with the permissions in step 5 of the setup above.
 
 ## Launching
 

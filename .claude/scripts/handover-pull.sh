@@ -6,6 +6,7 @@ set -euo pipefail
 N="${1:?usage: handover-pull.sh <issue-number>}"
 REPO="ProZeratul/CrusaderKings3UnofficialPatch"
 FILE="tmp/issue-$N.md"
+mkdir -p tmp   # a fresh agent worktree has no tmp/ (it's ignored)
 
 # only a handover comment by a trusted author counts (.claude/trusted-authors)
 id=$("$(dirname "$0")/marker-comment.sh" "$N" unop-handover)

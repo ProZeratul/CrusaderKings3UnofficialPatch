@@ -94,7 +94,7 @@ Check all commands or IDs used:
 Keep one current comment per marker: edit it if it exists, post it otherwise. `<N>` is the issue (repro) or the PR (test script). `<file>` holds the comment, starting with the marker line.
 
 ```shell
-id=$(.claude/scripts/marker-comment.sh <N> <marker>)
+id=$(<main>/.claude/scripts/marker-comment.sh <N> <marker>)
 if [ -n "$id" ]; then
   gh api --silent -X PATCH repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/comments/$id -F body=@<file>
 else

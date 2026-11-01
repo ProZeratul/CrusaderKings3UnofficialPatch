@@ -48,7 +48,7 @@ Pick the least-recently updated. If none, report "nothing to test" and stop.
 3. **Pull the handover comment** into the shared file; if there is none, proceed without it.
 
    ```shell
-   .claude/scripts/handover-pull.sh <anchor>
+   <main>/.claude/scripts/handover-pull.sh <anchor>
    ```
 
 4. **Run the `unop-test-pr` skill** with the PR, the anchor, and identity `tester`. It runs the test script on `main` and on the PR branch, posts the result comment on the PR, and applies the `test:*` label to the anchor.
@@ -58,7 +58,7 @@ Pick the least-recently updated. If none, report "nothing to test" and stop.
 5. **Push the handover comment** from the updated shared file.
 
    ```shell
-   .claude/scripts/handover-push.sh <anchor>
+   <main>/.claude/scripts/handover-push.sh <anchor>
    ```
 
 6. **Hand off** to the fixer only if the test failed:

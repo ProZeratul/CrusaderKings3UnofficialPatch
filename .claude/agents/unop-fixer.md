@@ -49,7 +49,7 @@ Make sure you are in a worktree before changing anything. Run `pwd`; if it is no
 2. **Pull the handover comment** into the shared file. There should always be one (the analyzer wrote it); if there isn't, proceed without it.
 
    ```shell
-   .claude/scripts/handover-pull.sh <N>
+   <main>/.claude/scripts/handover-pull.sh <N>
    ```
 
 3. **Run the skill** with the issue number and identity `fixer`. It formulates and applies the fix, runs tiger via the `tiger` skill, opens or updates the draft PR, and posts the `**fixer:**` PR comment.
@@ -58,7 +58,7 @@ Make sure you are in a worktree before changing anything. Run `pwd`; if it is no
 4. **Push the handover comment** from the updated shared file:
 
    ```shell
-   .claude/scripts/handover-push.sh <N>
+   <main>/.claude/scripts/handover-push.sh <N>
    ```
 
 5. **Hand off** to the reviewer: `gh issue edit <N> --add-label action:review --remove-label action:fix`.

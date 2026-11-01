@@ -58,6 +58,7 @@ All relevant directories are in [@../.env](../.env):
 - **Avoid incidental edits.** Avoid unrelated changes, e.g. to whitespace.
 - **Update memory with the file tools.** The sandbox blocks shell writes under `~/.claude`, so edit memory files with Edit or Write, not `sed` or redirects.
 - **Keep Bash calls simple in agent worktrees.** Worktree isolation refuses commands it can't verify: process substitution `<(...)`, `source`, `sed` or `awk` with variables, `git -C` or `cd` to computed paths. Run one plain command per call, with literal paths.
+- **Run repo scripts from the main checkout.** `<main>` is the main checkout, the parent of `git rev-parse --path-format=absolute --git-common-dir`, written out in full. Run `.claude/scripts/*` as `<main>/.claude/scripts/*`, so that in an agent worktree they never come from the branch checked out there.
 
 ### Untrusted Input
 
