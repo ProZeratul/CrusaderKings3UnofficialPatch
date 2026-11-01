@@ -13,7 +13,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/scripts/app-token.py env >> \"$CLAUDE_ENV_FILE\""
+            "command": "\"$(git -C \"$CLAUDE_PROJECT_DIR\" rev-parse --path-format=absolute --git-common-dir)/../.claude/scripts/app-token.py\" env >> \"$CLAUDE_ENV_FILE\""
           },
           {
             "type": "command",
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/scripts/app-token.py refresh"
+            "command": "\"$(git -C \"$CLAUDE_PROJECT_DIR\" rev-parse --path-format=absolute --git-common-dir)/../.claude/scripts/app-token.py\" refresh"
           }
         ]
       }
@@ -106,6 +106,8 @@
   },
   "permissions": {
     "deny": [
+      "WebFetch",
+      "WebSearch",
       "Read(~/.claude/.credentials.json)",
       "Read(~/.git-credentials)",
       "Read(~/.config/unop-app/app.env)",
@@ -122,9 +124,14 @@
       "Edit(//**/.claude/skills/**)",
       "Edit(//**/.claude/*.json)",
       "Edit(//**/.claude/trusted-authors)",
+      "Edit(~/.claude/agent-memory/**)",
+      "Edit(~/.claude/projects/**)",
       "Bash(gh api *merge*)",
       "Bash(gh api *APPROVE*)",
       "Bash(gh api *state=closed*)",
+      "Bash(gh api graphql*)",
+      "Bash(gh release *)",
+      "Bash(gh api *release*)",
       "Bash(gh auth *)",
       "Bash(gh gist *)",
       "Bash(gh ssh-key *)",

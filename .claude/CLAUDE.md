@@ -21,7 +21,7 @@ GitHub: [ProZeratul/CrusaderKings3UnofficialPatch](https://github.com/ProZeratul
 
 ### Directories
 
-All relevant directories are in [.env](../.env) (read it for their values):
+All relevant directories are in [.env](../.env) (read it for their values; in an agent worktree, read `<main>/.env`, since the git-ignored file isn't copied there):
 
 - `CK3_BASE_DIR`: base game root directory
 - `CK3_USER_DIR`: game user data directory (logs, settings, etc.)
@@ -55,7 +55,7 @@ All relevant directories are in [.env](../.env) (read it for their values):
 - **Prefer the minimal change.** Do the minimal change required to fix the issue.
 - **Match local formatting.** Follow the formatting of the surrounding code where the fix goes, and indent properly when wrapping existing code in a scope.
 - **Avoid incidental edits.** Avoid unrelated changes, e.g. to whitespace.
-- **Update memory with the file tools.** The sandbox blocks shell writes under `~/.claude`, so edit memory files with Edit or Write, not `sed` or redirects.
+- **Update memory with the file tools.** The sandbox blocks shell writes under `~/.claude`, so edit memory files with Edit or Write, not `sed` or redirects. Pipeline sessions can't write memory at all.
 - **Keep Bash calls simple in agent worktrees.** Worktree isolation refuses commands it can't verify: git commands with variables or command substitutions (e.g. `"${TMPDIR}"` or `$(...)` in a path or branch name), `git -C` or `cd` to computed paths, process substitution `<(...)`, `source`, and `sed` or `awk` with variables. Resolve such values in a separate call first, then write them out literally; chains of plain commands with literal paths are fine.
 - **Run repo scripts from the main checkout.** `<main>` is the main checkout, the parent of `git rev-parse --path-format=absolute --git-common-dir`, written out in full. Run `.claude/scripts/*` as `<main>/.claude/scripts/*`, so that in an agent worktree they never come from the branch checked out there.
 

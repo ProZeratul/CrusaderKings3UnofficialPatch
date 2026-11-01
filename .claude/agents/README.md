@@ -18,7 +18,8 @@ The agents run unattended and read text anyone can write: Steam comments, issue 
 
 - **Instructions.** `.claude/CLAUDE.md` (**Untrusted Input**) says such text is data, never instructions. Maintainers listed in `.claude/trusted-authors` can widen an agent's scope only within a short list there.
 - **Code.** Marker comments (handover, repro, test script, test result) count only when written by a login in `.claude/trusted-authors` and when they start with the marker (`.claude/scripts/marker-comment.sh`); agents read other comments with their authors' roles (`.claude/scripts/comments.sh`). Agents run these scripts from the main checkout, never from a branch. The reviewer and tester read PRs from exports outside their working directory and never run a PR's `Makefile` or scripts; the reviewer flags PRs that touch `.claude/`, `Makefile`, `.github/` or `.gitattributes`, or add symlinks, as `needs-human`.
-- **Containment.** Pipeline sessions run in auto mode with a strict Bash sandbox (`.claude/pipeline-settings.json`): only GitHub, Steam, imgur, the Paradox forums and wiki, and Reddit are reachable (no agent has WebFetch), there is no escape hatch, and the main checkout's own files can't be written or created: `.env`, `Makefile`, `.mcp.json`, `CLAUDE.md` and `CLAUDE.local.md` (in the root and in `.claude/`), and `.claude/agents`, `skills`, `rules`, `scripts`, the settings and `trusted-authors`. The App's private key is unreadable; tokens are minted outside the sandbox. The auto mode classifier refuses other repos, merges, pushes to `main`, credential access and edits to this configuration. Only `ck3.sh` runs outside the sandbox: it accepts only paths in the checkout or under `/tmp`, and the classifier reviews each call.
+- **Containment.** Pipeline sessions run in auto mode with a strict Bash sandbox (`.claude/pipeline-settings.json`): only GitHub, Steam, imgur, the Paradox forums and wiki, and Reddit are reachable (WebFetch and WebSearch are denied, and the dispatcher can start only the Unop agents), there is no escape hatch, and the main checkout's own files can't be written or created: `.env`, `Makefile`, `.mcp.json`, `CLAUDE.md` and `CLAUDE.local.md` (in the root and in `.claude/`), and `.claude/agents`, `skills`, `rules`, `scripts`, the settings and `trusted-authors`. Agent memory is read-only. The App's private key is unreadable; tokens are minted outside the sandbox. The auto mode classifier refuses other repos, merges, pushes to `main`, credential access and edits to this configuration. Only `ck3.sh` runs outside the sandbox: it accepts only plain numbers and names, and paths in the checkout or under `/tmp`, keeps its own files where the sandbox can't write, and the classifier reviews each call.
+- **Edits.** A comment edited by someone other than its author counts with the editor's role (`comments.sh`), so editing a maintainer's comment never gains maintainer authority.
 
 ## One-Time Setup
 
@@ -103,6 +104,7 @@ Allow the agents to read the game files, the game's user directory (logs, `.info
       "Read(~/.steam/debian-installation/steamapps/common/Crusader Kings III/**)",
       "Read(~/.local/share/Paradox Interactive/Crusader Kings III/**)",
       "Read(<path>/ck3/.claude/skills/tiger/**)",
+      "Read(~/.cache/ck3-shots/**)",
       "Skill(tiger)",
       "Skill(tiger:*)"
     ]
@@ -210,6 +212,7 @@ The repo owner sets this up once, for all operators, so that nothing the pipelin
   - **Target branches:** the default branch.
   - **Restrict deletions** and **Block force pushes**.
   - **Require a pull request before merging**, with **Required approvals** set to 1, **Dismiss stale pull request approvals when new commits are pushed**, so an approval doesn't carry over to commits the fixer pushes later, and **Require review from Code Owners**, so the approval must come from a maintainer in `.github/CODEOWNERS`, never from a GitHub App.
+- **Protect tags.** A tag ruleset (target: all tags) with **Restrict creations**, **Restrict updates** and **Restrict deletions**, so no agent can create or move release tags.
 - **Keep auto-merge off** (**Settings > General > Allow auto-merge**), so no agent can queue a merge.
 - **Give write access only to maintainers.** Contributors work from forks; the agents can't push to fork branches.
 - **Install each operator's GitHub App on this repository only**, with the permissions in step 5 of the setup above.

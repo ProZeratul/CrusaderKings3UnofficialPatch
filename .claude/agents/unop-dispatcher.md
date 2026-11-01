@@ -1,7 +1,7 @@
 ---
 name: unop-dispatcher
 description: The Unop dispatcher. Runs as the main session (`.claude/scripts/pipeline.sh dispatch`, then `/loop 20m dispatch`) and keeps the pipeline moving by starting the other Unop agents on labelled work, furthest stage first.
-tools: Bash, Read, Write, Agent, TaskStop, Skill, CronCreate, CronList, CronDelete, ScheduleWakeup
+tools: Bash, Read, Write, Agent(unop-analyzer, unop-fixer, unop-reviewer, unop-tester, unop-steam-importer), TaskStop, Skill, CronCreate, CronList, CronDelete, ScheduleWakeup
 model: sonnet
 effort: low
 color: purple

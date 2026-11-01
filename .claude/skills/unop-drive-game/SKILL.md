@@ -21,7 +21,7 @@ All interaction goes through [ck3.sh](ck3.sh) (macOS and Linux X11; Linux clicks
 
 ## Helper
 
-Run `<base>/ck3.sh <command>`, where `<base>` is this skill's base directory as an absolute path. Make each call exactly that, with every argument written out: no `cd`, variables, `export`, pipes, redirects or `&&` around it. Only that form matches the sandbox exclusion; anything else runs sandboxed, where the game can't start or be driven. Screenshots go to `${TMPDIR:-/tmp}/ck3-shots`, or to `CK3_SHOT_DIR` if set.
+Run `<base>/ck3.sh <command>`, where `<base>` is this skill's base directory as an absolute path. Make each call exactly that, with every argument written out: no `cd`, variables, `export`, pipes, redirects or `&&` around it. Only that form matches the sandbox exclusion; anything else runs sandboxed, where the game can't start or be driven. Screenshots go to `~/.cache/ck3-shots`, which the sandbox can read but not write. Numeric arguments must be plain numbers, and `run` files and `--mod` directories must be in the repo or under `/tmp`.
 
 | Command | Effect |
 |---|---|

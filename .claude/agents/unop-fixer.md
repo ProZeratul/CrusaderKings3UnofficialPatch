@@ -61,7 +61,7 @@ Make sure you are in a worktree before changing anything. Run `pwd`; if it is no
      git diff --summary origin/main...origin/<branch>
      ```
 
-     If it touches `.claude/`, `Makefile`, `.github/`, `.gitattributes`, or a `CLAUDE.md` or `CLAUDE.local.md` in any directory, or the summary shows `mode 120000` (a symlink), don't check it out. Post a short `**fixer:**` comment on the issue naming the files, add `needs-human` to the issue, unlock (step 6), and release the worktree (section 4).
+     If it touches `Makefile`, `.github/`, `.gitattributes`, `.mcp.json`, or a `.claude/`, `CLAUDE.md` or `CLAUDE.local.md` in any directory, or the summary shows `mode 120000` (a symlink), don't check it out. Post a short `**fixer:**` comment on the issue naming the files, add `needs-human` to the issue, unlock (step 6), and release the worktree (section 4).
 
      Otherwise check it out without tracking, so the skill amends it: `git checkout -q --no-track -B <branch> origin/<branch>`. On a first fix the skill branches from `origin/main`.
 
