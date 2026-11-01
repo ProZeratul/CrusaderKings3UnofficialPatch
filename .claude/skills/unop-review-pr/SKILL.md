@@ -158,6 +158,8 @@ gh api --silent -X POST repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<a
 gh api --silent -X DELETE repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels/review:looks-good
 ```
 
+A `DELETE` of a label the anchor doesn't have returns 404; ignore it.
+
 ### 7. Report Summary
 
 Remove the PR export and ref: `rm -rf <export> && git update-ref -d refs/remotes/pr/<PR>`.
