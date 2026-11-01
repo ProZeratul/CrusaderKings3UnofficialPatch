@@ -33,7 +33,7 @@ Run `<base>/ck3.sh <command>`, where `<base>` is this skill's base directory as 
 | `click <x> <y>` | Click at pixel coordinates **of the 1400px screenshot** |
 | `hover <x> <y>` | Move the pointer there without clicking, e.g. to show a tooltip |
 | `key <key>...` | Press keys: `console`, `space`, `enter`, `esc`, `tab`, `up`, `down`, `f10`, `1`-`5` |
-| `cmd <line>` | Type a console line and press Enter; refuses lines over 255 chars |
+| `cmd "<line>"` | Type a console line and press Enter; refuses lines over 255 chars. Quote the line: unquoted, a ` = ` in it runs the call inside the sandbox, where it fails |
 | `run <file>` | Copy an effect file to `run/claude_<timestamp>_<name>` (UTF-8 BOM) and execute it |
 | `mark` | Remember the current length of `error.log` and `debug.log` |
 | `new [error\|debug]` | Print log lines added since the last `mark` |

@@ -251,8 +251,8 @@ Could you confirm whether it still reproduces with only vanilla + Unop?
 ### gh Snippets
 
 ```shell
-# Search for possible duplicates (open + closed)
-gh search issues "<keywords>" --repo ProZeratul/CrusaderKings3UnofficialPatch --state all
+# Search for possible duplicates (open + closed issues and PRs)
+gh search issues "<keywords>" --repo ProZeratul/CrusaderKings3UnofficialPatch --include-prs
 ```
 
 ## Usage Examples
