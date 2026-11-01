@@ -1,6 +1,7 @@
 ---
 name: unop-dispatcher
-description: The Unop dispatcher. Runs as the main session (`claude --agent unop-dispatcher`, then `/loop 20m dispatch`) and keeps the pipeline moving by starting the other Unop agents on labelled work, furthest stage first.
+description: The Unop dispatcher. Runs as the main session (`.claude/scripts/pipeline.sh dispatch`, then `/loop 20m dispatch`) and keeps the pipeline moving by starting the other Unop agents on labelled work, furthest stage first.
+tools: Bash, Read, Write, Agent(unop-analyzer, unop-fixer, unop-reviewer, unop-tester, unop-steam-importer), TaskStop, Skill, CronCreate, CronList, CronDelete, ScheduleWakeup
 model: sonnet
 effort: low
 color: purple
@@ -16,7 +17,7 @@ Run a tick when the loop fires and whenever an agent you started finishes. The l
 - **Work item**: an issue or a PR with a stage label. PRs without an issue (e.g. from contributors) can carry `action:review` or `action:test` themselves.
 - **Stages**, by label: `action:analyze` (`unop-analyzer`), `action:fix` (`unop-fixer`), `action:review` (`unop-reviewer`), `action:test` (`unop-tester`). `locked` means an agent is working on the item.
 - **In flight**: an open issue without `needs-human`, labelled `action:review` or `action:test`, or `action:fix` with at least one fix attempt.
-- **Fix attempts**: the number of `## Fix N` sections in the issue's handover comment (marked `<!-- unop-handover -->`).
+- **Fix attempts**: the number of `## Fix N` sections in the issue's handover comment: `<main>/.claude/scripts/marker-get.sh <N> unop-handover body`.
 - **Log**: `tmp/dispatch.log`, one line per decision, starting with the date and time.
 
 ## Tick
@@ -24,7 +25,7 @@ Run a tick when the loop fires and whenever an agent you started finishes. The l
 1. **Pause.** If `tmp/dispatch-paused` exists, log `paused` and stop.
 
 2. **Watch the running agents.** For each agent you started that is still running:
-   - If it has run longer than 1 hour (2 hours for the tester), stop it (`TaskStop`), remove `locked` from its item, label the item `needs-human`, and log it. If it was a tester, also run `.claude/skills/unop-drive-game/ck3.sh exit`, which only kills a game a tester launched.
+   - If it has run longer than 1 hour (2 hours for the tester), stop it (`TaskStop`), remove `locked` from its item, label the item `needs-human`, and log it. If it was a tester, also run `<repo root>/.claude/skills/unop-drive-game/ck3.sh exit` with the repo root written out as an absolute path and nothing else in the call, so it runs outside the sandbox. It only kills a game a tester launched.
    - Agents run in the background and can't ask for input; a permission denial comes back to them as an error. So a long run means a stuck agent, not one waiting for an answer.
 
    Also look for **stale locks**: an item with `locked` that no agent of yours is working on and that wasn't updated for 2 hours. Remove `locked` and log it (the agent that set it died, e.g. when the session restarted).
@@ -58,10 +59,10 @@ When an agent finishes or you stop it, log its one-line outcome (e.g. `test:pass
   for w in .claude/worktrees/agent-*; do [ -d "$w" ] && git worktree remove "$w" 2>/dev/null && git branch -D "worktree-${w##*/}"; done
   ```
 
-- While no tester is running, the testers' throwaway worktrees:
+- While no tester is running, the testers' throwaway exports:
 
   ```shell
-  git worktree list --porcelain | sed -n 's/^worktree \(.*\/unop-test-[0-9]*-\(base\|head\)\)$/\1/p' | while read -r w; do git worktree remove --force "$w"; done
+  rm -rf "${TMPDIR:-/tmp}"/unop-test-*-base "${TMPDIR:-/tmp}"/unop-test-*-head
   ```
 
 ## Guidelines

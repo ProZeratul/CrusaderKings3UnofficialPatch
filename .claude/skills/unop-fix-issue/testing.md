@@ -91,14 +91,4 @@ Check all commands or IDs used:
 
 ## Posting
 
-Keep one current comment per marker: edit it if it exists, post it otherwise. `<N>` is the issue (repro) or the PR (test script). `<file>` holds the comment, starting with the marker line.
-
-```shell
-id=$(gh api --paginate repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<N>/comments \
-  --jq '.[] | select(.body | contains("<!-- <marker> -->")) | .id' | head -n1)
-if [ -n "$id" ]; then
-  gh api --silent -X PATCH repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/comments/$id -F body=@<file>
-else
-  gh api --silent -X POST repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<N>/comments -F body=@<file>
-fi
-```
+Keep one current comment per marker: `<main>/.claude/scripts/marker-post.sh <N> <marker> <file>` edits the trusted one if it exists and posts it otherwise. `<N>` is the issue (repro) or the PR (test script). `<file>` holds the comment, starting with the marker line.

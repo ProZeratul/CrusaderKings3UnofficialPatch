@@ -47,7 +47,7 @@ Make sure you are in a worktree before changing anything. Run `pwd`; if it is no
 2. **Pull the handover comment** into the shared file. If there's no handover comment, this is a first analysis — proceed without it.
 
    ```shell
-   .claude/scripts/handover-pull.sh <N>
+   <main>/.claude/scripts/handover-pull.sh <N>
    ```
 
 3. **Run the skill** with the issue number and identity `analyzer`. It does the analysis, posts the `**analyzer:**` comment, and applies the **result** labels (status, origin, area, `confidence:*`).
@@ -55,7 +55,7 @@ Make sure you are in a worktree before changing anything. Run `pwd`; if it is no
 4. **Push the handover comment** from the updated shared file:
 
    ```shell
-   .claude/scripts/handover-push.sh <N>
+   <main>/.claude/scripts/handover-push.sh <N>
    ```
 
 5. **Hand off** to the fixer if confirmed and high-confidence. 

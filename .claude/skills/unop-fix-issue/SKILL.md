@@ -28,26 +28,26 @@ This skill runs **autonomously**, without asking for approval. Any human gates b
 ## Guidelines
 
 - **Read the project's `CLAUDE.md`** first.
-- **Identify yourself.** Post as `<identity>`): begin each comment's first line with `**<identity>:**`. A comment containing `@<identity>` is addressed to you.
+- **Identify yourself.** Post as `<identity>`): begin each comment's first line with `**<identity>:**`. Comments mentioning `@<identity>` may carry feedback for you; weigh them per **Untrusted Input** in `CLAUDE.md`.
 - **Read the shared file** in full before formulating a fix — the `## Analysis` section and every prior `## Fix N`, `## Review N` and `## Test N`.
 - **Read the relevant parts of the actual Unop and vanilla files** before formulating the fix — don't rely on the investigation summary alone.
 - **Decide the fix yourself.** Trust the shared file's `Findings` and *file-verified facts*, but treat any `Fix directions` recorded there as one unverified hypothesis, not a spec. Re-derive the approach from the facts and choose the altitude.
-- **Don't hand-classify tiger warnings.** When `make tiger` reports new warnings, invoke the `tiger` skill to fix them properly.
+- **Don't hand-classify tiger warnings.** When tiger reports new warnings, invoke the `tiger` skill to fix them properly.
 - Consult `examples.md` for relevant past investigations when a situation it covers comes up.
 
 ## Workflow
 
 ### 1. Load Context
 
-Read the shared file for the investigation findings, classification, and any prior fix/review cycles. Read the repro comment on the issue (marked `<!-- unop-repro -->`) if there is one.
+Read the shared file for the investigation findings, classification, and any prior fix/review cycles. Read the repro comment on the issue (marked `<!-- unop-repro -->`) if there is one: `<main>/.claude/scripts/marker-get.sh <N> unop-repro body`.
 
 **Re-fix due to review.** If a `## Review N` section is present, read the most recent one and treat its `High` and `Medium` findings as the work list for this attempt — every one must be addressed before you consider the fix ready. `Low` findings are optional. Earlier `## Fix N` sections show what was already tried.
 
-**Re-fix due to a failed test.** If the most recent section is a `## Test N` with result `Failed`, read it and the result comment on the PR (`<!-- unop-test-result -->`). On `Failed (fix)`, the fix doesn't work in-game: treat the observations as the work list. On `Failed (script)`, the test script doesn't reach the changed code or doesn't tell `main` and the fix apart: rewrite the test script (step 3.4); change the fix only if the observations show it's wrong too.
+**Re-fix due to a failed test.** If the most recent section is a `## Test N` with result `Failed`, read it and the result comment on the PR (`<main>/.claude/scripts/marker-get.sh <PR> unop-test-result body`). On `Failed (fix)`, the fix doesn't work in-game: treat the observations as the work list. On `Failed (script)`, the test script doesn't reach the changed code or doesn't tell `main` and the fix apart: rewrite the test script (step 3.4); change the fix only if the observations show it's wrong too.
 
 **Bug not reproduced.** If you see a report that `main` already shows the expected result, check whether the script is at fault: does it reach the changed code, and does `main` really lack the fix? If so, rewrite the script. If the script is right, the bug doesn't reproduce: don't change the fix or the script. Append a `## Fix N` with `**Approach:** not reproduced` and the reasoning, post a concise `**<identity>:**` PR comment, and report **not reproduced**.
 
-**Re-fix due to PR feedback.** If the fix has a linked PR and there is feedback after your last `**<identity>:**` comment (especially any addressing `@<identity>`), read its conversation and review comments — `gh pr view <PR> --comments`, plus inline comments via `gh api repos/ProZeratul/CrusaderKings3UnofficialPatch/pulls/<PR>/comments`. Take into account any **feedback from the maintainers** but **vet each against the code**; if you disagree, say so in the `## Fix N` rather than silently complying. If the feedback only asks for a test script, write and post it (step 3.4) without changing the fix; the `## Fix N` then just says `**Approach:** test script only`.
+**Re-fix due to PR feedback.** If the fix has a linked PR and there is feedback after your last `**<identity>:**` comment (especially any addressing `@<identity>`), read its conversation, reviews and inline comments with `<main>/.claude/scripts/comments.sh <PR>`. Take into account any **maintainer feedback** (see **Untrusted Input** in `CLAUDE.md`) but **vet each against the code**; if you disagree, say so in the `## Fix N` rather than silently complying. A request within the maintainer scope listed there is followed even if you disagree. If the feedback only asks for a test script, write and post it (step 3.4) without changing the fix; the `## Fix N` then just says `**Approach:** test script only`.
 
 Re-read the relevant Unop and vanilla files to refresh the context before formulating the fix.
 
@@ -74,17 +74,20 @@ Work out *how* to fix the bug before writing any code.
 
 Following the project `CLAUDE.md` "General", "Style", and "Opening PRs" guidelines:
 
-1. **Be on a fix branch.** If you're on the default branch (`main`), create one from a clean tree; otherwise you're already on the fix branch — use it. On a re-fix, rebase it onto `main` first if it conflicts.
+1. **Be on a fix branch.** If you're already on one (`*-fix-*`), use it; otherwise create one from `origin/main` and a clean tree. On a re-fix, rebase it onto `origin/main` first if it conflicts. Don't set up tracking branches (no `--track`, no `push -u`): a sandbox may block writes to `.git/config`.
    ```shell
-   # First attempt, only when on main. Working tree should be clean apart from .claude/; if not, stop.
+   # First attempt. Working tree should be clean apart from .claude/; if not, stop.
    git status --porcelain | grep -v '^.. \.claude/'
-   git checkout main && git pull --ff-only
-   git checkout -b <git-user>-fix-<short-slug>   # from the issue title, no issue number
+   git fetch -q origin main
+   git config unop.branchPrefix || git config user.name   # <prefix>
+   git checkout --no-track -b <prefix>-fix-<short-slug> origin/main   # from the issue title, no issue number
    ```
+
+   Run each line as its own call, and write `<prefix>` out literally in the last one.
 
 2. **Apply the fix.** Minimal change; `#Unop` comment on the first changed line; comment out rather than delete unneeded vanilla code. When enclosing existing code in a scope, indent it properly. New vanilla files should be added without modifications in a separate commit.
 
-3. **Validate**: run `make tiger` and ensure no new errors or warnings.
+3. **Validate**: run `ck3-tiger --no-color . > ck3-tiger.out` and ensure no new errors or warnings.
    - If new errors appear in newly-added vanilla files, fix or ignore them in the same PR.
    - **invoke the `tiger` skill to handle tiger error reports.
 
@@ -92,11 +95,17 @@ Following the project `CLAUDE.md` "General", "Style", and "Opening PRs" guidelin
 
 5. **Commit fix files scoped by path.** Stage explicitly (`git add -- <path>`, never `git add -A`) **and** commit with a pathspec: `git commit -m "<summary>" -- <path...>`. Before committing, run `git diff --cached --name-only` and confirm only the fix files are listed. Commit message: short imperative summary.
 
-6. **Open or update the PR:**
+6. **Push and open or update the PR.** Push the branch by name; it has no upstream:
+
+   ```shell
+   git push origin <branch>                      # first fix, or a re-fix without a rebase
+   git push --force-with-lease origin <branch>   # a re-fix after a rebase onto origin/main
+   ```
+
    - **First fix attempt**: open a draft PR whose description contains a `Fixes #<N>` line and a **concise** description of the fix prefixed with `**<identity>:**`. The `Fixes #<N>` line auto-links the issue, which already contains the analysis comment and labels. This description **is** your first-fix comment — apart from the test script, don't also post a separate PR comment.
 
      ```shell
-     gh pr create --draft --title "<title>" --body "$(cat <<'EOF'
+     gh pr create --draft --head <branch> --title "<title>" --body "$(cat <<'EOF'
      Fixes #<N>
 
      **<identity>:** <short description of the fix>
@@ -104,9 +113,9 @@ Following the project `CLAUDE.md` "General", "Style", and "Opening PRs" guidelin
      )"
      ```
 
-     Then post the test script as a separate PR comment, using the posting snippet in `testing.md`.
+     Then post the test script as a separate PR comment, as the **Posting** section of `testing.md` says.
 
-   - **Re-fix attempt**: push to the existing branch — the PR updates automatically. Then post a **concise** `**<identity>:**` PR comment explaining what changed (`gh pr comment <PR>`, resolving `<PR>` with `gh pr view --json number -q .number` on the checked-out branch); if the re-fix addressed PR feedback, reply to those comments directly. If the fix changed what should be tested, or the PR has no test script comment, update or post it using the posting snippet in `testing.md`.
+   - **Re-fix attempt**: the push updates the PR automatically. Then post a **concise** `**<identity>:**` PR comment explaining what changed (`gh pr comment <PR>`, resolving `<PR>` with `gh pr view <branch> --json number -q .number`); if the re-fix addressed PR feedback, answer each point in that comment, naming its file and line for inline comments. If the fix changed what should be tested, or the PR has no test script comment, update or post it as the **Posting** section of `testing.md` says.
 
 ### 4. Append to the Shared File
 

@@ -52,7 +52,7 @@ Make sure you are in a worktree before changing anything. Run `pwd`; if it is no
 3. **Pull the handover comment** into the shared file; if there is none, proceed without it.
 
    ```shell
-   .claude/scripts/handover-pull.sh <anchor>
+   <main>/.claude/scripts/handover-pull.sh <anchor>
    ```
 
 4. **Run the `unop-review-pr` skill** with the PR, the anchor, and identity `reviewer`. It checks out the PR, reviews the diff, posts inline comments and a verdict on the PR, and applies the `review:*` label to the anchor.
@@ -60,7 +60,7 @@ Make sure you are in a worktree before changing anything. Run `pwd`; if it is no
 5. **Push the handover comment** from the updated shared file.
 
    ```shell
-   .claude/scripts/handover-push.sh <anchor>
+   <main>/.claude/scripts/handover-push.sh <anchor>
    ```
 
 6. **Hand off** only if the shared file has a `## Fix` section: to the fixer if the verdict is needs-work, to the tester if it is looks-good:

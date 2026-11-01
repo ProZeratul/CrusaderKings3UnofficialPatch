@@ -28,7 +28,7 @@ This skill runs **autonomously**, without asking for approval. Any human gates b
 - Steam exposes two fetch surfaces, both read-only:
   - **Main page**: a JSON render endpoint returns paginated comments. See **Fetching URLs**.
   - **Suggestions thread**: a normal HTML page paginated by `?ctp=N`. See **Fetching URLs**.
-- `WebFetch` summarizes by default, so prompts must explicitly demand verbatim, structured output. For the JSON endpoint, `curl` via `Bash` is more reliable.
+- Fetch with `curl` via `Bash`, not `WebFetch`.
 
 ## Arguments
 
@@ -264,11 +264,11 @@ Same `commentthread_comment` block structure as the main page.
 
 ### Fetching Images
 
-`WebFetch` cannot reach `imgur.com`. Use `curl` instead:
+Use `curl`, with files in `$TMPDIR`:
 
-1. Fetch the album/post page: `curl -sS -L -A "Mozilla/5.0" "<imgur-url>" -o /tmp/album.html`.
-2. Extract image URLs: `grep -oE 'i\.imgur\.com/[A-Za-z0-9]+\.(jpg|jpeg|png|gif)' /tmp/album.html | sort -u`. The `og:image` meta tag is also reliable for single-image albums.
-3. Download each image: `curl -sS -L -A "Mozilla/5.0" "https://<image-url>" -o /tmp/img.jpeg`.
+1. Fetch the album/post page: `curl -sS -L -A "Mozilla/5.0" "<imgur-url>" -o "$TMPDIR/album.html"`.
+2. Extract image URLs: `grep -oE 'i\.imgur\.com/[A-Za-z0-9]+\.(jpg|jpeg|png|gif)' "$TMPDIR/album.html" | sort -u`. The `og:image` meta tag is also reliable for single-image albums.
+3. Download each image: `curl -sS -L -A "Mozilla/5.0" "https://<image-url>" -o "$TMPDIR/img.jpeg"`.
 4. Use the `Read` tool on the temp file to view the image.
 5. Attach the original imgur URL in the issue body; don't try to re-host.
 
