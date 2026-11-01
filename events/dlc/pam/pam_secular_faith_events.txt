@@ -2457,7 +2457,10 @@ pam_secular_faith_events.0018 = {
 			add_courtier = scope:pious_child
 		}
 		scope:pious_child = {
-			change_spiritual_fulfillment = massive_spiritual_fulfillment_value
+			if = {
+				limit = { is_playable_character = yes }	#Unop: change_spiritual_fulfillment errors on non-playable characters
+				change_spiritual_fulfillment = massive_spiritual_fulfillment_value
+			}
 			add_stress = major_stress_loss
 			add_trait = devoted
 			add_opinion = {
