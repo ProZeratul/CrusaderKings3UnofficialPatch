@@ -42,10 +42,11 @@ This skill runs **autonomously**, without asking for approval. Any human gates b
 
 ### 1. Fetch the Issue
 
-Read the issue and all its comments:
+Read the issue, its labels, and all its comments, each with its author's trust role:
 
 ```shell
-gh issue view <N> --comments
+gh issue view <N> --json title,labels,state
+<main>/.claude/scripts/comments.sh <N>
 ```
 
 Note any existing labels — they may already encode prior triage. Note any linked PRs.

@@ -55,13 +55,16 @@ If there's no test script, skip to step 5 with verdict `Failed` and reason "no t
 ```shell
 B=$(gh pr view <PR> --json headRefName -q .headRefName)
 git fetch origin main "$B"
-git merge-tree --write-tree origin/main "origin/$B" > /dev/null  # fails on a conflict
+git merge-tree --write-tree origin/main "origin/$B" > /dev/null && echo "no conflict"
 BASE=${TMPDIR:-/tmp}/unop-test-<anchor>-base
 HEAD=${TMPDIR:-/tmp}/unop-test-<anchor>-head
 rm -rf "$BASE" "$HEAD" && mkdir -p "$BASE" "$HEAD"
 git archive origin/main | tar -x -C "$BASE"
 git archive "origin/$B" | tar -x -C "$HEAD"
+find "$HEAD" -type l -print -delete   # the game would follow symlinks, e.g. to secrets
 ```
+
+Check that the `merge-tree` line printed `no conflict` before going on.
 
 If the branch conflicts with `main`, don't test it: clean up (step 7) and report **needs rebase**, without posting or labelling anything.
 

@@ -2,31 +2,33 @@
 """Installation tokens for the GitHub App the Unop pipeline acts as.
 
 Usage:
-  app-token.py token  print an installation token (cached, renewed when close to expiry)
-  app-token.py env    print shell exports that give each Bash command a fresh token
-                      (the pipeline's SessionStart hook appends them to $CLAUDE_ENV_FILE)
-  app-token.py info   print the App slug, its installations, and the bot user (for setup)
+  app-token.py refresh  renew the cached token if it's missing or close to expiry
+  app-token.py env      print shell exports that give each Bash command the cached token
+  app-token.py token    refresh, then print the token (for setup checks)
+  app-token.py info     print the App slug, its installations, and the bot user (for setup)
 
 Config: ~/.config/unop-app/app.env, KEY=VALUE lines:
   CLIENT_ID=<App client ID>
   INSTALLATION_ID=<installation on the Unop repo; see "info">
-  KEY_FILE=<path to the App's private key .pem>
+  KEY_FILE=<path to the App's private key .pem, e.g. ~/.config/unop-app/key.pem>
 """
 import json
 import os
 import shlex
 import sys
+import tempfile
 import time
 import urllib.parse
 import urllib.request
-from datetime import datetime
 
 
 API = "https://api.github.com"
 REPO = "CrusaderKings3UnofficialPatch"
 APP_DIR = os.path.expanduser("~/.config/unop-app")
-CACHE = os.path.join(os.environ.get("TMPDIR", "/tmp"), f"unop-app-token-{os.getuid()}.json")
-MARGIN = 10 * 60  # renew tokens with less than 10 minutes left (they last 1 hour)
+# outside the sandbox's writable paths, so sandboxed commands can read the token but not plant one
+CACHE_DIR = os.path.expanduser("~/.cache/unop-app")
+CACHE = os.path.join(CACHE_DIR, "token")
+MAX_AGE = 50 * 60  # tokens last 1 hour; renew after 50 minutes
 
 
 def config():
@@ -65,14 +67,17 @@ def app_jwt(cfg):
     return jwt.encode({"iat": now - 60, "exp": now + 540, "iss": cfg["CLIENT_ID"]}, key, algorithm="RS256")
 
 
-def token():
+def fresh():
     try:
-        with open(CACHE) as f:
-            cached = json.load(f)
-        if cached["expires"] - time.time() > MARGIN:
-            return cached["token"]
-    except (OSError, ValueError, KeyError):
-        pass
+        st = os.stat(CACHE)
+    except OSError:
+        return False
+    return st.st_uid == os.getuid() and time.time() - st.st_mtime < MAX_AGE
+
+
+def refresh():
+    if fresh():
+        return
     cfg = config()
     resp = request(
         "POST",
@@ -80,18 +85,17 @@ def token():
         app_jwt(cfg),
         {"repositories": [REPO]},
     )
-    expires = datetime.fromisoformat(resp["expires_at"].replace("Z", "+00:00")).timestamp()
-    fd = os.open(CACHE + ".new", os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    os.makedirs(CACHE_DIR, mode=0o700, exist_ok=True)
+    # a unique temp file per process, so concurrent renewals don't collide; the rename is atomic
+    fd, tmp = tempfile.mkstemp(dir=CACHE_DIR)
     with os.fdopen(fd, "w") as f:
-        json.dump({"token": resp["token"], "expires": expires}, f)
-    os.replace(CACHE + ".new", CACHE)
-    return resp["token"]
-
+        f.write(resp["token"])
+    os.replace(tmp, CACHE)
 
 
 def env():
     print(f"export GH_CONFIG_DIR={shlex.quote(APP_DIR)}")
-    print(f'export GH_TOKEN="$({shlex.quote(os.path.abspath(__file__))} token)"')
+    print(f'export GH_TOKEN="$(cat {shlex.quote(CACHE)})"')
 
 
 def info():
@@ -109,10 +113,14 @@ def info():
 
 def main():
     args = sys.argv[1:]
-    if args == ["token"]:
-        print(token())
+    if args == ["refresh"]:
+        refresh()
     elif args == ["env"]:
         env()
+    elif args == ["token"]:
+        refresh()
+        with open(CACHE) as f:
+            print(f.read())
     elif args == ["info"]:
         info()
     else:

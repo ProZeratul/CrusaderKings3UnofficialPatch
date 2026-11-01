@@ -19,6 +19,14 @@ OS=$(uname)
 
 die() { echo "ck3.sh: $*" >&2; exit 2; }
 
+# This script runs outside the sandbox, so only accept paths in this checkout or under /tmp
+# (where $TMPDIR is), resolved without symlinks, and in plain characters.
+safe_path() {
+  local p=$1
+  [[ "$p" =~ ^[[:alnum:]_./\ -]+$ ]] || die "unsupported characters in path: $p"
+  case "$p" in "$ROOT"/*|/tmp/*) ;; *) die "path outside $ROOT and /tmp: $p" ;; esac
+}
+
 # Claude Code's sandbox makes the CK3 user dir read-only and hides the display, so fail early with a hint.
 [ -w "$CK3_USER_DIR" ] || die "can't write $CK3_USER_DIR, probably running inside the Claude Code sandbox; use '$0 <command>', with nothing else in the Bash call."
 
@@ -105,10 +113,15 @@ fi
 # Point the Unop descriptor at another checkout (e.g. a PR worktree); the original is kept in $MOD_ORIG.
 set_mod() {
   local dir
-  dir=$(cd "$1" && pwd) || die "no such directory: $1"
+  dir=$(cd "$1" && pwd -P) || die "no such directory: $1"
+  safe_path "$dir"
   [ -f "$dir/descriptor.mod" ] || die "not a Unop checkout (no descriptor.mod): $dir"
   [ -f "$MOD_ORIG" ] || cp "$MOD" "$MOD_ORIG"
-  sed "s|^path=.*|path=\"$dir\"|" "$MOD_ORIG" > "$MOD"
+  local line
+  while IFS= read -r line || [ -n "$line" ]; do
+    case "$line" in path=*) line="path=\"$dir\"" ;; esac
+    printf '%s\n' "$line"
+  done < "$MOD_ORIG" > "$MOD"
 }
 
 restore_mod() { if [ -f "$MOD_ORIG" ]; then cp "$MOD_ORIG" "$MOD"; rm "$MOD_ORIG"; fi; }
@@ -200,6 +213,7 @@ cmd_start() {
 
 cmd_shot() {
   local name=${1:?shot <name> [<x> <y> <w> <h>]}
+  [[ "$name" =~ ^[A-Za-z0-9_-]+$ ]] || die "shot name must be letters, digits, _ or -: $name"
   activate
   capture "$SHOTS/$name.png"
   if [ $# -ge 5 ]; then
@@ -237,6 +251,9 @@ cmd_cmd() {
 
 cmd_run() {
   local src=${1:?run <effect file>} name
+  [ -f "$src" ] && [ ! -L "$src" ] || die "not a regular file: $src"
+  src=$(cd "$(dirname "$src")" && pwd -P)/$(basename "$src")
+  safe_path "$src"
   name="claude_$(date +%Y%m%d_%H%M%S)_$(basename "$src")"
   mkdir -p "$CK3_USER_DIR/run"
   { printf '\xef\xbb\xbf'; cat "$src"; } > "$CK3_USER_DIR/run/$name"

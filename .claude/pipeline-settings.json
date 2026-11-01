@@ -21,6 +21,17 @@
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/scripts/app-token.py refresh"
+          }
+        ]
+      }
     ]
   },
   "sandbox": {
@@ -53,6 +64,23 @@
       "denyRead": [
         "~/.ssh",
         "~/.config/gh"
+      ],
+      "denyWrite": [
+        "../.env",
+        "../.mcp.json",
+        "../CLAUDE.md",
+        "../CLAUDE.local.md",
+        "../Makefile",
+        "CLAUDE.md",
+        "CLAUDE.local.md",
+        "agents",
+        "rules",
+        "scripts",
+        "skills",
+        "settings.json",
+        "settings.local.json",
+        "pipeline-settings.json",
+        "trusted-authors"
       ]
     },
     "credentials": {
@@ -64,6 +92,14 @@
         {
           "path": "~/.git-credentials",
           "mode": "deny"
+        },
+        {
+          "path": "~/.config/unop-app/app.env",
+          "mode": "deny"
+        },
+        {
+          "path": "~/.config/unop-app/key.pem",
+          "mode": "deny"
         }
       ]
     }
@@ -72,6 +108,23 @@
     "deny": [
       "Read(~/.claude/.credentials.json)",
       "Read(~/.git-credentials)",
+      "Read(~/.config/unop-app/app.env)",
+      "Read(~/.config/unop-app/key.pem)",
+      "Read(//**/*.pem)",
+      "Edit(//**/.env)",
+      "Edit(//**/.mcp.json)",
+      "Edit(//**/Makefile)",
+      "Edit(//**/CLAUDE.md)",
+      "Edit(//**/CLAUDE.local.md)",
+      "Edit(//**/.claude/agents/**)",
+      "Edit(//**/.claude/rules/**)",
+      "Edit(//**/.claude/scripts/**)",
+      "Edit(//**/.claude/skills/**)",
+      "Edit(//**/.claude/*.json)",
+      "Edit(//**/.claude/trusted-authors)",
+      "Bash(gh api *merge*)",
+      "Bash(gh api *APPROVE*)",
+      "Bash(gh api *state=closed*)",
       "Bash(gh auth *)",
       "Bash(gh gist *)",
       "Bash(gh ssh-key *)",
@@ -89,7 +142,12 @@
       "Bash(git push -f *)",
       "Bash(git push origin main*)",
       "Bash(git push * origin main*)",
-      "Bash(git push * HEAD:main*)"
+      "Bash(git push * HEAD:main*)",
+      "Bash(git push *:main*)",
+      "Bash(git push *refs/heads/main*)",
+      "Bash(git push * +*)",
+      "Bash(make)",
+      "Bash(make *)"
     ]
   },
   "autoMode": {
@@ -110,7 +168,8 @@
       "Merging, approving or closing issues or pull requests, or pushing to the main branch.",
       "Creating gists, SSH or GPG keys, deploy keys, secrets, or changing GitHub authentication.",
       "Reading, printing or sending credential files, private keys or tokens (e.g. ~/.claude/.credentials.json, ~/.ssh, ~/.config/gh, *.pem, GH_TOKEN).",
-      "Editing the repository's own configuration: CLAUDE.md, .claude/agents, .claude/skills, .claude/scripts, .claude/*.json settings, .claude/trusted-authors, the Makefile or .github/. (Editing mod files inside agent worktrees under .claude/worktrees/ is legitimate.)"
+      "Editing the repository's own configuration: .env, .claude/agents, .claude/skills, .claude/rules, .claude/scripts, .claude/*.json settings, .claude/trusted-authors, the Makefile or .github/. (Editing mod files inside agent worktrees under .claude/worktrees/ is legitimate.)",
+      "Creating or editing a CLAUDE.md or CLAUDE.local.md file anywhere: Claude Code loads them as instructions."
     ],
     "classifyAllShell": true
   }
