@@ -3,8 +3,10 @@
 # Backends: macOS (screencapture, cliclick, osascript) and Linux X11 (xdotool, ImageMagick, xclick.py).
 # Coordinates for `click` are pixels in the 1400px-wide screenshot produced by `shot`.
 set -euo pipefail
+# TODO: macOS is untested since the sandbox hardening; test and tune it before using.
 
-ROOT=$(git -C "$(dirname "$0")" rev-parse --show-toplevel)
+# The checkout this script is in
+ROOT=$(cd "$(dirname "$0")/../../.." && pwd -P)
 set -a; . "$ROOT/.env"; set +a
 BIN="$CK3_BASE_DIR/../binaries"
 # Not under $TMPDIR: this script runs outside the sandbox, so its files must live where the sandbox
@@ -16,23 +18,25 @@ DEBUG_LOG="$CK3_USER_DIR/logs/debug.log"
 MOD="$CK3_USER_DIR/mod/CrusaderKings3UnofficialPatch.mod"
 MOD_ORIG="$CK3_USER_DIR/mod/.CrusaderKings3UnofficialPatch.mod.orig"  # saved by launch --mod
 PIDFILE="$CK3_USER_DIR/.claude-ck3.pid"  # the game started by launch; exit kills only this one
-mkdir -p -m 700 "$SHOTS"
 OS=$(uname)
 
 die() { echo "ck3.sh: $*" >&2; exit 2; }
 
-# This script runs outside the sandbox, so only accept paths in this checkout or under /tmp
-# (where $TMPDIR is), resolved without symlinks, and in plain characters.
+# Only accept paths in this checkout or under /tmp, resolved without symlinks, and in plain characters.
 safe_path() {
   local p=$1
   [[ "$p" =~ ^[[:alnum:]_./\ -]+$ ]] || die "unsupported characters in path: $p"
   case "$p" in "$ROOT"/*|/tmp/*) ;; *) die "path outside $ROOT and /tmp: $p" ;; esac
 }
+
 # Numbers only: bash arithmetic evaluates a value like a[$(cmd)], which would run cmd.
-num() { local v; for v in "$@"; do [[ "$v" =~ ^[0-9]{1,5}$ ]] || die "not a number: $v"; done; }
+# No leading zeros, which arithmetic reads as octal.
+num() { local v; for v in "$@"; do [[ "$v" =~ ^(0|[1-9][0-9]{0,4})$ ]] || die "not a number: $v"; done; }
 
 # Claude Code's sandbox makes the CK3 user dir read-only and hides the display, so fail early with a hint.
 [ -w "$CK3_USER_DIR" ] || die "can't write $CK3_USER_DIR, probably running inside the Claude Code sandbox; use '$0 <command>', with nothing else in the Bash call."
+
+mkdir -p -m 700 "$SHOTS"
 
 # --- platform primitives ---------------------------------------------------
 
@@ -260,8 +264,11 @@ cmd_cmd() {
 cmd_run() {
   local src=${1:?run <effect file>} name real
   # Open first, then check the file that was actually opened, so it can't be swapped for a
-  # symlink between the check and the copy.
+  # symlink between the check and the copy. Check for a regular file first, so a FIFO can't block the open.
+  [ -f "$src" ] || die "not a regular file: $src"
   exec 3< "$src" || die "can't open: $src"
+  # TODO: on macOS this resolves only the directory, so a symlink as the last component passes;
+  # compare the device and inode of /dev/fd/3 and the resolved path there (stat -L -f %d:%i).
   if [ "$OS" = Linux ]; then real=$(readlink /proc/self/fd/3); else real=$(cd "$(dirname "$src")" && pwd -P)/$(basename "$src"); fi
   [ -f "$real" ] || die "not a regular file: $src"
   safe_path "$real"

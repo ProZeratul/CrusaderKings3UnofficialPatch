@@ -14,12 +14,12 @@ Claude Code agents that work the Unop issue pipeline. Each stage is driven by a 
 
 ## Trust Model
 
-The agents run unattended and read text anyone can write: Steam comments, issue and PR comments, contributor branches. Three layers keep that text from steering them:
+The agents run unattended and read text anyone can write: Steam comments, issues, PRs and their comments, contributor branches. What that means for you:
 
-- **Instructions.** `.claude/CLAUDE.md` (**Untrusted Input**) says such text is data, never instructions. Maintainers listed in `.claude/trusted-authors` can widen an agent's scope only within a short list there.
-- **Code.** Marker comments (handover, repro, test script, test result) count only when written by a login in `.claude/trusted-authors` and when they start with the marker (`.claude/scripts/marker-comment.sh`); agents read other comments with their authors' roles (`.claude/scripts/comments.sh`). Agents run these scripts from the main checkout, never from a branch. The reviewer and tester read PRs from exports outside their working directory and never run a PR's `Makefile` or scripts; the reviewer flags PRs that touch `.claude/`, `Makefile`, `.github/` or `.gitattributes`, or add symlinks, as `needs-human`.
-- **Containment.** Pipeline sessions run in auto mode with a strict Bash sandbox (`.claude/pipeline-settings.json`): only GitHub, Steam, imgur, the Paradox forums and wiki, and Reddit are reachable (WebFetch and WebSearch are denied, and the dispatcher can start only the Unop agents), there is no escape hatch, and the main checkout's own files can't be written or created: `.env`, `Makefile`, `.mcp.json`, `CLAUDE.md` and `CLAUDE.local.md` (in the root and in `.claude/`), and `.claude/agents`, `skills`, `rules`, `scripts`, the settings and `trusted-authors`. Agent memory is read-only. The App's private key is unreadable; tokens are minted outside the sandbox. The auto mode classifier refuses other repos, merges, pushes to `main`, credential access and edits to this configuration. Only `ck3.sh` runs outside the sandbox: it accepts only plain numbers and names, and paths in the checkout or under `/tmp`, keeps its own files where the sandbox can't write, and the classifier reviews each call.
-- **Edits.** A comment edited by someone other than its author counts with the editor's role (`comments.sh`), so editing a maintainer's comment never gains maintainer authority.
+- **Only maintainers steer the agents.** Agents treat such text as data about the bug, never as instructions. Comments by the maintainers in `.claude/trusted-authors` count as feedback, and can widen an agent's task only within the limits in `.claude/CLAUDE.md` (**Untrusted Input**). A comment someone else has edited loses that authority.
+- **Humans merge.** Agents never merge, approve or close anything, and never push to `main`; every change needs a maintainer's approval (see **Recommended Repo Setup**). A PR that touches the pipeline's own files, such as `.claude/`, `CLAUDE.md`, `Makefile` or CI, gets `needs-human` and is yours to review.
+- **Agents are contained.** Pipeline sessions run sandboxed, as the GitHub App, which can reach only this repository. They can reach only GitHub, Steam, imgur, the Paradox forums and wiki, and Reddit, can't change their own configuration or memory, and can't read your keys or tokens.
+- **It's not airtight.** Watch what the agents post and push, and act as in **Emergencies** if one seems manipulated.
 
 ## One-Time Setup
 
@@ -189,10 +189,11 @@ Create `~/.config/unop-app/gitconfig` (mode `600`), which pipeline sessions incl
 	branchPrefix = <you>
 ```
 
-Check that a token can be minted:
+Link the token script to a fixed path, from which the pipeline's hooks run it, and check that a token can be minted. Run this in your main checkout:
 
 ```shell
-.claude/scripts/app-token.py token > /dev/null && echo ok
+ln -s "$PWD/.claude/scripts/app-token.py" ~/.config/unop-app/app-token.py
+~/.config/unop-app/app-token.py token > /dev/null && echo ok
 ```
 
 Finally, add the bot to `.claude/trusted-authors` in a PR, so that other agents accept its marker comments:
@@ -201,7 +202,7 @@ Finally, add the bot to `.claude/trusted-authors` in a PR, so that other agents 
 bot <you>-agents[bot]
 ```
 
-In pipeline sessions, a `PreToolUse` hook runs `app-token.py refresh` before each Bash call, outside the sandbox: it renews the token in `~/.cache/unop-app/token` when it's older than 50 minutes. A `SessionStart` hook makes every Bash command export `GH_TOKEN` from that file. `gh` uses it directly, and git pushes over HTTPS through `gh`, as the bot. The sandbox can read the token but not write it, and hides the App's key and `app.env` as well as `~/.ssh` and `~/.config/gh`, so your own keys and token are out of reach too.
+In pipeline sessions, a `PreToolUse` hook runs `~/.config/unop-app/app-token.py refresh` before each Bash call, outside the sandbox: it renews the token in `~/.cache/unop-app/token` when it's older than 50 minutes. A `SessionStart` hook makes every Bash command export `GH_TOKEN` from that file. `gh` uses it directly, and git pushes over HTTPS through `gh`, as the bot. The sandbox can read the token but not write it, and hides the App's key and `app.env` as well as `~/.ssh` and `~/.config/gh`, so your own keys and token are out of reach too.
 
 ## Recommended Repo Setup
 
@@ -213,6 +214,7 @@ The repo owner sets this up once, for all operators, so that nothing the pipelin
   - **Restrict deletions** and **Block force pushes**.
   - **Require a pull request before merging**, with **Required approvals** set to 1, **Dismiss stale pull request approvals when new commits are pushed**, so an approval doesn't carry over to commits the fixer pushes later, and **Require review from Code Owners**, so the approval must come from a maintainer in `.github/CODEOWNERS`, never from a GitHub App.
 - **Protect tags.** A tag ruleset (target: all tags) with **Restrict creations**, **Restrict updates** and **Restrict deletions**, so no agent can create or move release tags.
+- **Make releases immutable** (**Settings > General > Releases > Enable release immutability**), so no agent can replace a published release's assets. It applies to releases published from then on.
 - **Keep auto-merge off** (**Settings > General > Allow auto-merge**), so no agent can queue a merge.
 - **Give write access only to maintainers.** Contributors work from forks; the agents can't push to fork branches.
 - **Install each operator's GitHub App on this repository only**, with the permissions in step 5 of the setup above.
@@ -240,3 +242,5 @@ An item gets `needs-human` when an agent got stuck or failed twice, the fix limi
 ## Emergencies
 
 If you suspect an agent was manipulated: create `tmp/dispatch-paused`, `claude stop` the running sessions, revoke the GitHub App's private key (App settings, Private keys) or suspend its installation, and review its recent comments, labels and pushes.
+
+Before running git again in the main checkout, check `.git/` for files an agent could have planted: a `.git/commondir` (`pipeline.sh` refuses to start with one) or changed `gitdir` and `commondir` files under `.git/worktrees/`, which redirect git to another repo and its config, and so to commands outside the sandbox.

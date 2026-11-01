@@ -10,9 +10,23 @@ set -euo pipefail
 
 usage() { sed -n '2,8s/^# \{0,1\}//p' "$0" >&2; exit 2; }
 
-root=$(git -C "$(dirname "$0")" rev-parse --show-toplevel)
+die() { echo "pipeline.sh: $*" >&2; exit 1; }
+
+root=$(cd "$(dirname "$0")/../.." && pwd -P)
 cd "$root"
-[ -f ~/.config/unop-app/app.env ] && [ -f ~/.config/unop-app/gitconfig ] || { echo "pipeline.sh: set up ~/.config/unop-app first" >&2; exit 1; }
+
+[ -f ~/.config/unop-app/app.env ] && [ -f ~/.config/unop-app/gitconfig ] || die "set up ~/.config/unop-app first"
+
+# The hooks run the token script from this fixed path, outside the sandbox.
+[ "$(readlink -f ~/.config/unop-app/app-token.py)" = "$root/.claude/scripts/app-token.py" ] \
+  || die "link ~/.config/unop-app/app-token.py to $root/.claude/scripts/app-token.py first"
+
+# A main checkout has no .git/commondir; one would redirect git to another repo and its config.
+[ -d .git ] && [ ! -e .git/commondir ] \
+  || die "$root/.git is not a plain git directory or has a commondir file"
+
+git worktree prune
+
 opts=(--permission-mode auto --settings "$root/.claude/pipeline-settings.json")
 
 case "${1:-}" in
