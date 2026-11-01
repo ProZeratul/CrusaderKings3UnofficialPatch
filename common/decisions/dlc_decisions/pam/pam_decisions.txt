@@ -354,7 +354,7 @@ pam_establish_theocratic_dynasty_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
 	}
-	sort_order = 200
+	#sort_order = 200 #Unop: Duplicate, sort_order = 110 below applies
 	decision_group_type = major
 	desc = pam_establish_theocratic_dynasty_decision_desc
 	selection_tooltip = pam_establish_theocratic_dynasty_decision_desc_tooltip
@@ -3515,11 +3515,11 @@ pam_declare_rite_heresy_decision = {
 				}
 				else_if = {
 					limit = {
-						scope:heresy_rite.main_rite.head_of_rite ?= {
+						scope:heresy_rite.faith.main_rite.head_of_rite ?= { #Unop: main_rite needs a faith, not a rite
 							NOT = { has_trait = heresiarch }
 						}
 					}
-					scope:heresy_rite.main_rite.head_of_rite = { add_trait = heresiarch }
+					scope:heresy_rite.faith.main_rite.head_of_rite = { add_trait = heresiarch } #Unop: main_rite needs a faith, not a rite
 				}
 				if = {
 					limit = {

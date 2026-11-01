@@ -7685,7 +7685,7 @@ clerical_hesitation_claim_interaction_value = {
 			OR = {
 				character_considered_wicked_trigger = { RITE = scope:cleric.rite }
 				scope:cleric = {
-					has_relation_rival = scope:actor
+					has_relation_rival = scope:puppet_or_actor #Unop: Was scope:actor, which is not set when called from consecrate_kingdom_player_cleric_effect
 				}
 				tyranny > medium_tyranny
 				has_trait = excommunicated
@@ -7700,7 +7700,7 @@ clerical_hesitation_claim_interaction_value = {
 				scope:cleric = {
 					is_ai = yes
 					opinion = {
-						target = scope:actor
+						target = scope:puppet_or_actor #Unop: Was scope:actor, which is not set when called from consecrate_kingdom_player_cleric_effect
 						value <= -50
 					}
 				}
@@ -7939,12 +7939,12 @@ clerical_hesitation_from_potential_defender_value = {
 			if = {
 				limit = { 
 					scope:owner = { is_independent_ruler = no }
-					scope:actor = { is_independent_ruler = no }
-					scope:owner.top_liege = scope:actor.top_liege
+					scope:puppet_or_actor = { is_independent_ruler = no } #Unop: Was scope:actor, which is not set when called from consecrate_kingdom_player_cleric_effect
+					scope:owner.top_liege = scope:puppet_or_actor.top_liege #Unop: Was scope:actor, which is not set when called from consecrate_kingdom_player_cleric_effect
 					NOR = {
-						scope:actor.liege = scope:owner.liege
-						scope:owner.liege = scope:actor
-						scope:actor.top_liege = scope:owner
+						scope:puppet_or_actor.liege = scope:owner.liege #Unop: Was scope:actor, which is not set when called from consecrate_kingdom_player_cleric_effect
+						scope:owner.liege = scope:puppet_or_actor #Unop: Was scope:actor, which is not set when called from consecrate_kingdom_player_cleric_effect
+						scope:puppet_or_actor.top_liege = scope:owner #Unop: Was scope:actor, which is not set when called from consecrate_kingdom_player_cleric_effect
 					}
 				}
 				scope:owner.liege = { add = clerical_hesitation_sub_value }
@@ -7953,7 +7953,7 @@ clerical_hesitation_from_potential_defender_value = {
 			else_if = {
 				limit = {
 					scope:owner = { is_independent_ruler = no }
-					NOT = { scope:actor.top_liege = scope:owner.top_liege }
+					NOT = { scope:puppet_or_actor.top_liege = scope:owner.top_liege } #Unop: Was scope:actor, which is not set when called from consecrate_kingdom_player_cleric_effect
 				}
 				scope:owner.top_liege = { add = clerical_hesitation_sub_value }
 			}
@@ -7972,7 +7972,7 @@ clerical_hesitation_from_potential_defender_value = {
 							exists = holder
 							NOR = {
 								holder = scope:cleric
-								holder = scope:actor
+								holder = scope:puppet_or_actor #Unop: Was scope:actor, which is not set when called from consecrate_kingdom_player_cleric_effect
 							}
 						}
 					}
@@ -7984,7 +7984,7 @@ clerical_hesitation_from_potential_defender_value = {
 							de_jure_liege.holder = {
 								OR = {
 									is_independent_ruler = yes
-									top_liege = scope:actor.top_liege
+									top_liege = scope:puppet_or_actor.top_liege #Unop: Was scope:actor, which is not set when called from consecrate_kingdom_player_cleric_effect
 								}
 							}
 						}
@@ -9308,6 +9308,7 @@ mend_schism_hof_support_requirement_value = {
 					}
 				}
 			}
+			add = 1 #Unop: This SV is undefined but since add = 1 was missing, it was doing nothing.
 		}
 	}
 }

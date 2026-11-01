@@ -2717,7 +2717,7 @@ pam_theocratic_ruler_events.0014 = {
 		else = {
 			random_held_title = {
 				limit = {
-					tier = county
+					tier = tier_county #Unop: Was county
 					any_neighboring_county = {
 						pam_theocratic_ruler_0014_neighbour_county_trigger = yes
 					}
@@ -2736,12 +2736,13 @@ pam_theocratic_ruler_events.0014 = {
 				random_rite_tenet = {
 					status = core
 					limit = {
-						NOT = { root = { has_personal_tenet = this } }
+						save_temporary_scope_as = unop_candidate_tenet #Unop: For has_tenet_status below
+						NOT = { root = { has_personal_tenet = prev } } #Unop: Was this, which is root here
 						NOT = {
 							root = {
 								rite = {
 									has_tenet_status = {
-										tenet = this
+										tenet = scope:unop_candidate_tenet #Unop: Was this, which is the rite here
 										status = core
 									}
 								}
@@ -2758,12 +2759,13 @@ pam_theocratic_ruler_events.0014 = {
 						status = core
 						limit = {
 							this != scope:offered_tenet_a
-							NOT = { root = { has_personal_tenet = this } }
+							save_temporary_scope_as = unop_candidate_tenet #Unop: For has_tenet_status below
+							NOT = { root = { has_personal_tenet = prev } } #Unop: Was this, which is root here
 							NOT = {
 								root = {
 									rite = {
 										has_tenet_status = {
-											tenet = this
+											tenet = scope:unop_candidate_tenet #Unop: Was this, which is the rite here
 											status = core
 										}
 									}

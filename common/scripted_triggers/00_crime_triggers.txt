@@ -47,18 +47,18 @@ is_incestuous_trigger = {
 
 is_kinslaying_crime_in_rite_trigger = {
 	trigger_if = {
-		limit = { $RITE$ = { has_doctrine_parameter = kinslaying_any_dynasty_member_crime } }
+		limit = { $RITE$ = { rite_has_parameter = kinslaying_any_dynasty_member_crime } } #Unop: has_doctrine_parameter is a faith trigger
 		OR = {
 			is_close_or_extended_family_of = $CHARACTER$
 			dynasty = $CHARACTER$.dynasty
 		}
 	}
 	trigger_else_if = {
-		limit = { $RITE$ = { has_doctrine_parameter = kinslaying_extended_family_crime } }
+		limit = { $RITE$ = { rite_has_parameter = kinslaying_extended_family_crime } } #Unop: has_doctrine_parameter is a faith trigger
 		is_close_or_extended_family_of = $CHARACTER$
 	}
 	trigger_else_if = {
-		limit = { $RITE$ = { has_doctrine_parameter = kinslaying_close_kin_crime } }
+		limit = { $RITE$ = { rite_has_parameter = kinslaying_close_kin_crime } } #Unop: has_doctrine_parameter is a faith trigger
 		is_close_family_of = $CHARACTER$
 	}
 	trigger_else = {
@@ -72,7 +72,7 @@ is_kinslayer = {
 		any_secret = {
 			type = secret_murder
 			secret_target = { save_temporary_scope_as = victim }
-			murdering_character_is_kinslaying_in_my_or_same_dynasty_lieges_rite_trigger = { CHARACTER = scope:victim }
+			secret_owner = { murdering_character_is_kinslaying_in_my_or_same_dynasty_lieges_rite_trigger = { CHARACTER = scope:victim } } #Unop: The trigger needs the murderer, not the secret
 		}
 	}
 }

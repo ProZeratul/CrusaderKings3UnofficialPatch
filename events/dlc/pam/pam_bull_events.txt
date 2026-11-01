@@ -262,11 +262,11 @@ pam_bull_events.0003 = {
 				}
 				else_if = {
 					limit = {
-						scope:heresy_rite.main_rite.head_of_rite ?= {
+						scope:heresy_rite.faith.main_rite.head_of_rite ?= { #Unop: main_rite needs a faith, not a rite
 							NOT = { has_trait = heresiarch }
 						}
 					}
-					scope:heresy_rite.main_rite.head_of_rite = { add_trait = heresiarch }
+					scope:heresy_rite.faith.main_rite.head_of_rite = { add_trait = heresiarch } #Unop: main_rite needs a faith, not a rite
 				}
 				if = {
 					limit = {

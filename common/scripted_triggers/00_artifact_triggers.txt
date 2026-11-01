@@ -30,22 +30,25 @@ artifact_value_trigger = {
 # also allowing the matching personal syncretism effect.
 # EXPECTS: character scope, as used by artifact template can_equip/can_benefit.
 christian_artifact_access_trigger = {
+	save_temporary_scope_as = unop_artifact_access_character #Unop: Root is not the character in e.g. relic war CBs
 	OR = {
-		christianity_or_syncretic_with_christianity_trigger = { CHARACTER = root }
+		christianity_or_syncretic_with_christianity_trigger = { CHARACTER = scope:unop_artifact_access_character } #Unop: Was root
 		has_personal_tenet_flag = can_use_christian_artifacts
 	}
 }
 
 islamic_artifact_access_trigger = {
+	save_temporary_scope_as = unop_artifact_access_character #Unop: Root is not the character in e.g. relic war CBs
 	OR = {
-		islam_or_syncretic_with_islam_trigger = { CHARACTER = root }
+		islam_or_syncretic_with_islam_trigger = { CHARACTER = scope:unop_artifact_access_character } #Unop: Was root
 		has_personal_tenet_flag = can_use_islamic_artifacts
 	}
 }
 
 jewish_artifact_access_trigger = {
+	save_temporary_scope_as = unop_artifact_access_character #Unop: Root is not the character in e.g. relic war CBs
 	OR = {
-		judaism_or_syncretic_with_judaism_trigger = { CHARACTER = root }
+		judaism_or_syncretic_with_judaism_trigger = { CHARACTER = scope:unop_artifact_access_character } #Unop: Was root
 		has_personal_tenet_flag = can_use_jewish_artifacts
 	}
 }
