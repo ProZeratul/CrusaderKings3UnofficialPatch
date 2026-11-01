@@ -131,3 +131,15 @@ unop_clear_merchant_effect = {
 	remove_variable = merchant_origin
 	silent_disappear_ai_if_not_hired = yes
 }
+
+#Unop Converts every county in a ruler's domain still in $OLD_FAITH$ to $RITE$, e.g. after a pagan reform moved the ruler into a new faith
+unop_convert_old_faith_domain_counties_effect = {
+	every_held_title = {
+		limit = {
+			tier = tier_county
+			faith = $OLD_FAITH$
+		}
+		set_county_faith = $RITE$.faith
+		set_county_rite = $RITE$
+	}
+}
