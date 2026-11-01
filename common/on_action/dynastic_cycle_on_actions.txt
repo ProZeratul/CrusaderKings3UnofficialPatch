@@ -158,7 +158,7 @@ dynastic_cycle_yearly_pulse = {
 					every_character_situation = {
 						limit = {
 							any_great_project = {
-								var:situation = prev
+								var:situation ?= prev #Unop: Not every great project has a situation variable
 								great_project_owner = scope:hegemon
 								NOT = { great_project_construction_phase_is = completed }
 							}
