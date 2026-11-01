@@ -1993,9 +1993,9 @@ holy_site_adoptable_by_character_trigger = {
 			AND = {
 				OR = {
 					religion = $CHARACTER$.faith.religion
-					$CHARACTER$.faith = {
-						faith_is_syncretic_with = {
-							FAITH = scope:compare_faith
+					$CHARACTER$.rite = { #Unop: Check the rite, the faith only sees its main rite
+						rite_is_syncretic_with = {
+							RITE = scope:compare_faith.main_rite
 						}
 					}
 				}

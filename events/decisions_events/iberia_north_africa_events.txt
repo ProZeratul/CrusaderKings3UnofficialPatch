@@ -694,8 +694,10 @@ iberia_north_africa.0121 = {
 			OR = {
 				is_ai = no
 				faith = {
-					has_doctrine_parameter = islamic_syncretic_actor
-					religion = religion:islam_religion
+					OR = { #Unop: Was an implicit AND, but a Muslim faith never has islamic_syncretic_actor
+						prev.rite = { rite_has_parameter = islamic_syncretic_actor } #Unop: Check the rite, the faith only sees its main rite
+						religion = religion:islam_religion
+					}
 				}
 			}
 		}
@@ -712,8 +714,10 @@ iberia_north_africa.0121 = {
 		if = {
 			limit = {
 				faith = {
-					has_doctrine_parameter = islamic_syncretic_actor
-					religion = religion:islam_religion
+					OR = { #Unop: Was an implicit AND, but a Muslim faith never has islamic_syncretic_actor
+						prev.rite = { rite_has_parameter = islamic_syncretic_actor } #Unop: Check the rite, the faith only sees its main rite
+						religion = religion:islam_religion
+					}
 				}
 			}
 			stress_and_fulfillment_impact = {
