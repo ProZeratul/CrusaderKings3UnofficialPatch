@@ -45,9 +45,9 @@ embrace_tengriism_decision = {
 				add = major_piety_value
 				if = { # Cost increases if you're reverting to pagan
 					limit = {
-						faith = {
+						rite = { #Unop: Check rite, not faith (main rite only)
 							NOT = {
-								has_doctrine_parameter = unreformed
+								rite_has_parameter = unreformed #Unop: Rite check
 							}
 						}
 					}
@@ -128,8 +128,8 @@ proselytize_to_your_people_decision = {
 						domicile.domicile_faith = {
 							NOT = { has_doctrine_parameter = unreformed }
 						}
-						faith = {
-							has_doctrine_parameter = unreformed
+						rite = { #Unop: Check rite, not faith (main rite only)
+							rite_has_parameter = unreformed #Unop: Rite check
 						}
 					}
 					multiply = 4

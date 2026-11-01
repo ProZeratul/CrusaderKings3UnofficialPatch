@@ -5563,7 +5563,7 @@ pam_mass_rite_conversion = {
 			}
 			trigger_if = { # Unreformed faiths are always fair game, organized ones only during the Conversion phase
 				limit = {
-					NOT = { faith = { has_doctrine_parameter = unreformed } }
+					NOT = { rite = { rite_has_parameter = unreformed } } #Unop: Check rite, not faith (main rite only)
 				}
 				trigger_if = {
 					limit = {

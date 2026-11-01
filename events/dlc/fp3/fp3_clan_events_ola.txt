@@ -99,8 +99,8 @@ fp3_clan.8000 = { # Usury against Unity
 			concerned_character_trigger = yes
 		}
 
-		faith = {
-			NOT = { has_doctrine_parameter = unreformed }
+		rite = { #Unop: Check rite, not faith (main rite only)
+			NOT = { rite_has_parameter = unreformed } #Unop: Rite check
 		}
 	}
 
@@ -341,8 +341,8 @@ fp3_clan.8001 = { #Clan Quarrel
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					faith = { 
-						NOT = { has_doctrine_parameter = unreformed }
+					rite = { #Unop: Check rite, not faith (main rite only)
+						NOT = { rite_has_parameter = unreformed } #Unop: Rite check
 					}
 					OR = {
 						scope:bickerer_1 = { 

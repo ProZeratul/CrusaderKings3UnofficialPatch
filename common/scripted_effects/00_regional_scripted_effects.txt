@@ -640,8 +640,8 @@ select_scapegoat_faith_effect = {
 						# Jewish faiths shouldn't blame themselves
 						NOT = { root.faith.religion = religion:judaism_religion }
 						# Account for Syncretics and the like
-						root.faith = {
-							NOT = { has_doctrine_parameter = jewish_syncretic_actor }
+						root.rite = { #Unop: Check rite, not faith (main rite only)
+							NOT = { rite_has_parameter = jewish_syncretic_actor } #Unop: Rite check
 						}
 					}
 					religion:judaism_religion = {
@@ -673,8 +673,8 @@ select_scapegoat_faith_effect = {
 							}
 						}
 						NOT = { root.faith.religion = religion:islam_religion }
-						root.faith = {
-							NOT = { has_doctrine_parameter = islamic_syncretic_actor }
+						root.rite = { #Unop: Check rite, not faith (main rite only)
+							NOT = { rite_has_parameter = islamic_syncretic_actor } #Unop: Rite check
 						}
 					}
 					religion:islam_religion = {
@@ -699,8 +699,8 @@ select_scapegoat_faith_effect = {
 							}
 						}
 						NOT = { root.faith.religion = religion:christianity_religion }
-						root.faith = {
-							NOT = { has_doctrine_parameter = christian_syncretic_actor }
+						root.rite = { #Unop: Check rite, not faith (main rite only)
+							NOT = { rite_has_parameter = christian_syncretic_actor } #Unop: Rite check
 						}
 					}
 					religion:christianity_religion = {

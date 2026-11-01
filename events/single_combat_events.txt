@@ -705,8 +705,8 @@ scripted_effect select_special_tier_move_effect = {
 			trigger = {
 				NOT = { exists = local_var:combat_move_wrath_of_highgod_flag }
 				has_trait = zealous
-				faith = {
-					NOT = { has_doctrine_parameter = holy_wars_forbidden }
+				rite = { #Unop: Check rite, not faith (main rite only)
+					NOT = { rite_has_parameter = holy_wars_forbidden } #Unop: Rite check
 				}
 				# Block special moves twice in a row.
 				NOR = {
@@ -2246,10 +2246,10 @@ scripted_effect finalise_combat_results_effect = {
 					OR = {
 						faith = {
 							OR = {
-								has_doctrine_parameter = conquest_cb_enabled
-								has_doctrine_parameter = invasion_cb_enabled
+								#has_doctrine_parameter = conquest_cb_enabled #Unop: Moved to the rite check below
+								#has_doctrine_parameter = invasion_cb_enabled
 								has_doctrine_parameter = great_holy_wars_active_if_reformed
-								has_doctrine_parameter = cheaper_holy_wars_active
+								#has_doctrine_parameter = cheaper_holy_wars_active
 								has_doctrine_parameter = great_holy_wars_active
 							}
 						}
@@ -2257,6 +2257,9 @@ scripted_effect finalise_combat_results_effect = {
 							OR = {
 								rite_has_parameter = warmonger
 								rite_has_parameter = clergy_can_fight
+								rite_has_parameter = conquest_cb_enabled #Unop: Moved from the faith check above, the faith only sees its main rite
+								rite_has_parameter = invasion_cb_enabled #Unop: Moved from the faith check above
+								rite_has_parameter = cheaper_holy_wars_active #Unop: Moved from the faith check above
 							}
 						}
 					}

@@ -24,7 +24,7 @@ namespace = yearly_saharan
 
 scripted_trigger valid_faiths_scripted_trigger = {
 	faith = {
-		has_doctrine_parameter = unreformed
+		prev.rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 		OR = {
 			religion_tag = west_african_religion
 			religion_tag = west_african_bori_religion
@@ -58,7 +58,7 @@ scripted_trigger neighbouring_proselytising_trader_province_scripted_trigger = {
 	faith = {
 		NOR = {
 			religion = { is_in_family = rf_pagan }
-			has_doctrine_parameter = unreformed
+			prev.rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 		}
 	}
 }
@@ -308,7 +308,7 @@ yearly_saharan.0002 = {
 			faith = {
 				NOR = {
 					religion = { is_in_family = rf_pagan }
-					has_doctrine_parameter = unreformed
+					prev.rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 				}
 			}
 		}
@@ -1092,8 +1092,8 @@ yearly_saharan.0031 = {
 		NOT = { has_character_flag = had_event_yearly_saharan_0031 }
 
 		#Has a state faith that allows for this.
-		faith = {
-			NOT = { has_doctrine_parameter = pacifist }
+		rite = { #Unop: Check rite, not faith (main rite only)
+			NOT = { rite_has_parameter = pacifist } #Unop: Rite check
 		}
 
 		#Has at least one domain county in the Sahel.

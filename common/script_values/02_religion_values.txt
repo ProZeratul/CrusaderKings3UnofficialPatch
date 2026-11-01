@@ -3484,8 +3484,8 @@ faith_conversion_cost_mult = {
 		if = {
 			limit = {
 				scope:character = {
-					faith = {
-						NOT = { has_doctrine_parameter = unreformed }
+					rite = { #Unop: Check rite, not faith (main rite only)
+						NOT = { rite_has_parameter = unreformed } #Unop: Rite check
 					}
 				}
 			}
@@ -3611,7 +3611,7 @@ faith_conversion_cost_mult = {
 			scope:new_faith = {
 				NOT = { has_doctrine_parameter = unreformed }
 			}
-			scope:character.faith = { has_doctrine_parameter = unreformed }
+			scope:character.rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 		}
 		multiply = {
 			value = 1
@@ -3710,8 +3710,8 @@ faith_conversion_cost_mult = {
 					NOT = { has_doctrine_parameter = unreformed }
 				}
 				scope:character = {
-					faith = {
-						has_doctrine_parameter = unreformed
+					rite = { #Unop: Check rite, not faith (main rite only)
+						rite_has_parameter = unreformed #Unop: Rite check
 					}
 				}
 			}
@@ -3750,8 +3750,8 @@ faith_conversion_cost_mult = {
 					NOT = { has_doctrine_parameter = unreformed }
 				}
 				scope:character = {
-					faith = {
-						has_doctrine_parameter = unreformed
+					rite = { #Unop: Check rite, not faith (main rite only)
+						rite_has_parameter = unreformed #Unop: Rite check
 					}
 				}
 			}
@@ -3790,8 +3790,8 @@ faith_conversion_cost_mult = {
 					NOT = { has_doctrine_parameter = unreformed }
 				}
 				scope:character = {
-					faith = {
-						has_doctrine_parameter = unreformed
+					rite = { #Unop: Check rite, not faith (main rite only)
+						rite_has_parameter = unreformed #Unop: Rite check
 					}
 				}
 			}

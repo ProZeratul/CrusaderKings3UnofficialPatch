@@ -114,7 +114,7 @@ convert_to_feudalism_liege_converted_decision = {
 		custom_description = {
 			text = faith_is_reformed
 			subject = root
-			faith = { NOT = { has_doctrine_parameter = unreformed } }
+			rite = { NOT = { rite_has_parameter = unreformed } } #Unop: Check rite, not faith (main rite only)
 		}
 		trigger_if = {
 			limit = { government_has_flag = government_is_wanua }
@@ -396,7 +396,7 @@ convert_whole_realm_to_feudalism_decision = {
 		custom_description = {
 			text = faith_is_reformed
 			subject = root
-			faith = { NOT = { has_doctrine_parameter = unreformed } }
+			rite = { NOT = { rite_has_parameter = unreformed } } #Unop: Check rite, not faith (main rite only)
 		}
 		prestige_level >= 2
 		capital_province.county = {
@@ -693,7 +693,7 @@ declare_bloodline_holy_decision = {
 	is_shown = {
 		highest_held_title_tier >= 3 #Dukes and higher.
 		is_lowborn = no
-		faith ?= { NOT = { has_doctrine_parameter = unreformed } }
+		rite ?= { NOT = { rite_has_parameter = unreformed } } #Unop: Check rite, not faith (main rite only)
 		is_landless_adventurer = no
 		OR = {  #Either headless faith, religious head himself, or in good relations with other religious head.
 			root.faith ?= { has_doctrine = doctrine_no_head }
@@ -749,7 +749,7 @@ declare_bloodline_holy_decision = {
 		custom_description = {
 			text = faith_is_reformed
 			subject = root
-			faith = { NOT = { has_doctrine_parameter = unreformed } }
+			rite = { NOT = { rite_has_parameter = unreformed } } #Unop: Check rite, not faith (main rite only)
 		}
 		custom_description = {
 			text = "consecrate_bloodline_holy_site"

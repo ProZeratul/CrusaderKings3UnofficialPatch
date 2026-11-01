@@ -48,11 +48,11 @@ scripted_trigger gruesome_festivals_available_impressable_clergy = {
 	government_has_flag = government_is_theocracy
 }
 
-scripted_trigger dislikes_humsac_trigger = {
+scripted_trigger dislikes_humsac_trigger = { #Unop: Check rite, not faith (main rite only)
 	NOR = {
-		has_doctrine_parameter = flower_war_cb_active
-		has_doctrine_parameter = human_sacrifice_active
-		has_doctrine_parameter = gruesome_festivals_active
+		rite_has_parameter = flower_war_cb_active #Unop: Rite check
+		rite_has_parameter = human_sacrifice_active #Unop: Rite check
+		rite_has_parameter = gruesome_festivals_active #Unop: Rite check
 	}
 }
 
@@ -523,20 +523,20 @@ fp1_other_decisions.0003 = {
 						## Grabbing all sub-realm characters who dislike HumSac.
 						every_courtier_or_guest = {
 							limit = {
-								faith = { dislikes_humsac_trigger = yes }
+								rite = { dislikes_humsac_trigger = yes } #Unop: Check rite, not faith (main rite only)
 							}
 							add_to_list = unhappified_character_subjects_list
 						}
 						every_vassal_or_below = {
 							limit = {
-								faith = { dislikes_humsac_trigger = yes }
+								rite = { dislikes_humsac_trigger = yes } #Unop: Check rite, not faith (main rite only)
 							}
 							add_to_list = unhappified_character_subjects_list
 						}
 						## Then all sub-realm counties.
 						every_sub_realm_county = {
 							limit = {
-								faith = { dislikes_humsac_trigger = yes }
+								rite = { dislikes_humsac_trigger = yes } #Unop: Check rite, not faith (main rite only)
 							}
 							add_to_list = unhappified_title_subjects_list
 						}
@@ -1627,7 +1627,7 @@ fp1_other_decisions.0021 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					faith = { has_doctrine_parameter = holy_wars_forbidden }
+					rite = { rite_has_parameter = holy_wars_forbidden } #Unop: Check rite, not faith (main rite only)
 				}
 				desc = fp1_other_decisions.0021.desc.disallows_holy_wars
 			}
@@ -1674,7 +1674,7 @@ fp1_other_decisions.0021 = {
 		if = {
 			limit = {
 				NOT = {
-					scope:sacrificed_hof.faith = { has_doctrine_parameter = holy_wars_forbidden }
+					scope:sacrificed_hof.rite = { rite_has_parameter = holy_wars_forbidden } #Unop: Check rite, not faith (main rite only)
 				}
 			}
 			custom_tooltip = fp1_other_decisions.0021.cheaper_holy_wars.tt
@@ -1698,7 +1698,7 @@ fp1_other_decisions.0022 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					scope:sacrificed_hof.faith = { has_doctrine_parameter = holy_wars_forbidden }
+					scope:sacrificed_hof.rite = { rite_has_parameter = holy_wars_forbidden } #Unop: Check rite, not faith (main rite only)
 				}
 				desc = fp1_other_decisions.0022.desc.disallows_holy_wars
 			}
@@ -1744,14 +1744,14 @@ fp1_other_decisions.0022 = {
 	option = {
 		name = {
 			trigger = {
-				scope:sacrificed_hof.faith = { has_doctrine_parameter = holy_wars_forbidden }
+				scope:sacrificed_hof.rite = { rite_has_parameter = holy_wars_forbidden } #Unop: Check rite, not faith (main rite only)
 			}
 			text = fp1_other_decisions.0022.a.pacifists
 		}
 		name = {
 			trigger = {
 				NOT = {
-					scope:sacrificed_hof.faith = { has_doctrine_parameter = holy_wars_forbidden }
+					scope:sacrificed_hof.rite = { rite_has_parameter = holy_wars_forbidden } #Unop: Check rite, not faith (main rite only)
 				}
 				has_trait = craven
 			}
@@ -1760,7 +1760,7 @@ fp1_other_decisions.0022 = {
 		name = {
 			trigger = {
 				NOR = {
-					scope:sacrificed_hof.faith = { has_doctrine_parameter = holy_wars_forbidden }
+					scope:sacrificed_hof.rite = { rite_has_parameter = holy_wars_forbidden } #Unop: Check rite, not faith (main rite only)
 					has_trait = craven
 				}
 			}
@@ -1771,7 +1771,7 @@ fp1_other_decisions.0022 = {
 		if = {
 			limit = {
 				NOT = {
-					scope:sacrificed_hof.faith = { has_doctrine_parameter = holy_wars_forbidden }
+					scope:sacrificed_hof.rite = { rite_has_parameter = holy_wars_forbidden } #Unop: Check rite, not faith (main rite only)
 				}
 			}
 			custom_tooltip = fp1_other_decisions.0021.cheaper_holy_wars.tt

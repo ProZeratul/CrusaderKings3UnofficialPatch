@@ -444,7 +444,7 @@ scripted_trigger hc_7020_valid_same_faith_friend = {
 }
 scripted_trigger hc_7020_valid_threat = {
 	# You see them as a threat to your religion
-	NOT = { faith = { has_doctrine_parameter = unreformed } }
+	NOT = { rite = { rite_has_parameter = unreformed } } #Unop: Check rite, not faith (main rite only)
 	religion != root.religion
 	faith = {
 		faith_hostility_level = {
@@ -542,7 +542,7 @@ hold_court.7020 = {
 	trigger = {
 		is_ai = no # AI reformation should always follow the rules
 		piety_level >= medium_piety_level
-		faith = { has_doctrine_parameter = unreformed }
+		rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 		any_sub_realm_barony = {
 			is_holy_site_of = root.faith
 			holder.faith ?= root.faith

@@ -935,9 +935,9 @@ faction_demand.1001 = {
 				
 				# May not convert to an unreformed faith from a reformed one.
 				NAND = {
-					scope:peasant_leader.faith = { has_doctrine_parameter = unreformed }
-					faith = {
-						NOT = { has_doctrine_parameter = unreformed }
+					scope:peasant_leader.rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
+					rite = { #Unop: Check rite, not faith (main rite only)
+						NOT = { rite_has_parameter = unreformed } #Unop: Rite check
 					}
 				}
 

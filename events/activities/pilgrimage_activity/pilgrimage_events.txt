@@ -813,11 +813,11 @@ pilgrimage.1100 = {
 	option = { # Sacrifice
 		name = pilgrimage.1100.c
 		trigger = {
-			faith = {
+			rite = { #Unop: Check rite, not faith (main rite only)
 				OR = {
-					has_doctrine = unreformed_faith_doctrine
-					has_doctrine_parameter = gruesome_festivals_active
-					has_doctrine_parameter = human_sacrifice_active
+					rite_has_doctrine = unreformed_faith_doctrine #Unop: Rite check
+					rite_has_parameter = gruesome_festivals_active #Unop: Rite check
+					rite_has_parameter = human_sacrifice_active #Unop: Rite check
 				}
 			}
 			exists = scope:sacrifice_pilgrim

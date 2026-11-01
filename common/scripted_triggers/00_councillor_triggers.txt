@@ -1104,8 +1104,8 @@ task_conversion_valid_county_trigger = {
 		trigger_if = {
 			limit = {
 				scope:councillor_liege = {
-					faith = {
-						has_doctrine_parameter = unreformed
+					rite = { #Unop: Check rite, not faith (main rite only)
+						rite_has_parameter = unreformed #Unop: Rite check
 					}
 				}
 			}
@@ -1115,7 +1115,7 @@ task_conversion_valid_county_trigger = {
 					vassal_is_valid_and_follows_directive_trigger = { VASSAL = this LIEGE = liege }
 				}
 				scope:councillor_liege = { ai_zeal >= 50 }
-				scope:county_check.faith = { has_doctrine_parameter = unreformed }
+				scope:county_check.rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 				scope:county_check = { # Always convert holy sites
 					any_county_province = {
 						barony = {
@@ -1274,7 +1274,7 @@ task_conversion_valid_county_trigger = {
 					vassal_is_valid_and_follows_directive_trigger = { VASSAL = this LIEGE = liege }
 				}
 				scope:councillor_liege = { ai_zeal >= 50 }
-				scope:county_check.faith = { has_doctrine_parameter = unreformed }
+				scope:county_check.rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 				scope:councillor_liege.faith = {
 					any_holy_site_barony = {
 						kingdom = scope:county_check.kingdom

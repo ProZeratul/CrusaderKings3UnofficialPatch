@@ -1654,7 +1654,7 @@ pam_court_scene_resident_subordinate_trigger = {
 }
 
 pam_clergy_interactions_faith_trigger = {
-	faith = { NOT = { has_doctrine_parameter = unreformed } }
+	rite = { NOT = { rite_has_parameter = unreformed } } #Unop: Check rite, not faith (main rite only)
 	OR = {
 		#Has a theocratic head of faith
 		faith = { has_doctrine_parameter = spiritual_head_of_faith }
@@ -2211,7 +2211,7 @@ pam_neighboring_unreformed_pagan_raid_you_catalyst_trigger = {
 		religion = {
 			is_in_family = rf_pagan
 		}
-		faith = { has_doctrine_parameter = unreformed }
+		rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 		any_neighboring_and_across_water_realm_owner = {
 			this = scope:county.holder.top_liege
 		}
@@ -2918,13 +2918,13 @@ pam_ai_meaningful_sinitic_presence_trigger = {
 pam_ai_meaningful_unreformed_presence_trigger = {
 	OR = {
 		any_vassal = {
-			faith ?= { has_doctrine_parameter = unreformed }
+			rite ?= { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 		}
 		any_sub_realm_county = {
-			faith ?= { has_doctrine_parameter = unreformed }
+			rite ?= { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 		}
 		any_neighboring_and_across_water_realm_owner = {
-			faith ?= { has_doctrine_parameter = unreformed }
+			rite ?= { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 		}
 	}
 }
@@ -4592,10 +4592,10 @@ actor_incite_holy_war_shown_trigger = {
 		government_has_flag = government_is_ecclesiastical
 		this = religious_head_or_challenger
 	}
-	faith = {
+	rite = { #Unop: Check rite, not faith (main rite only)
 		NOR = {
-			has_doctrine_parameter = holy_wars_forbidden
-			has_doctrine_parameter = unreformed
+			rite_has_parameter = holy_wars_forbidden #Unop: Rite check
+			rite_has_parameter = unreformed #Unop: Rite check
 		}
 	}
 }

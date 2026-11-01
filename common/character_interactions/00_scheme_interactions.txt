@@ -3187,8 +3187,8 @@ study_faith_interaction = {
 		is_valid = {
 			custom_tooltip = {
 				text = can_only_be_learned_in_person_tt
-				scope:recipient.faith = {
-					NOT = { has_doctrine_parameter = can_only_be_learned_in_person }
+				scope:recipient.rite = { #Unop: Check rite, not faith (main rite only)
+					NOT = { rite_has_parameter = can_only_be_learned_in_person } #Unop: Rite check
 				}
 			}
 		}

@@ -338,8 +338,8 @@ common_cb_piety_cost_multiplier_core = {
 	# Faith Doctrine Piety Discounts
 	if = {
 		limit = {
-			scope:attacker.faith = {
-				has_doctrine_parameter = divine_destiny_holy_war_cost_reduction
+			scope:attacker.rite = { #Unop: Check rite, not faith (main rite only)
+				rite_has_parameter = divine_destiny_holy_war_cost_reduction #Unop: Rite check
 			}
 		}
 		multiply = {

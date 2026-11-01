@@ -2190,8 +2190,8 @@ roman_restoration.0130 = {
 			# Current Pope is sacrificed
 			triggered_desc = {
 				trigger = {
-					root.faith = {
-						has_doctrine_parameter = human_sacrifice_active
+					root.rite = { #Unop: Check rite, not faith (main rite only)
+						rite_has_parameter = human_sacrifice_active #Unop: Rite check
 					}
 				}
 				desc = roman_restoration.0130.desc.pope.sacrificed
@@ -2510,8 +2510,8 @@ roman_restoration.0132 = {
 		# The abandoned Pope now meets the same end as an AI Pope would.
 		if = {
 			limit = {
-				scope:scoped_destroyer.faith = {
-					has_doctrine_parameter = human_sacrifice_active
+				scope:scoped_destroyer.rite = { #Unop: Check rite, not faith (main rite only)
+					rite_has_parameter = human_sacrifice_active #Unop: Rite check
 				}
 			}
 			death = {

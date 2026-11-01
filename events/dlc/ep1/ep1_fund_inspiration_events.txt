@@ -3326,7 +3326,7 @@ fund_inspiration.0041 = {
 		hidden_effect = {
 			random_list = {
 				33 = {
-					trigger = {	NOT = { faith = { has_doctrine_parameter = pacifist } } }
+					trigger = {	NOT = { rite = { rite_has_parameter = pacifist } } } #Unop: Check rite, not faith (main rite only)
 					modifier = {
 						has_trait = lifestyle_hunter
 						factor = 4 # 66% chance if hunter, 33% chance otherwise
@@ -3339,7 +3339,7 @@ fund_inspiration.0041 = {
 					}
 				}
 				33 = {
-					trigger = {	NOT = { faith = { has_doctrine_parameter = pacifist } } }
+					trigger = {	NOT = { rite = { rite_has_parameter = pacifist } } } #Unop: Check rite, not faith (main rite only)
 					scope:inspiration_owner = {
 						set_variable = {
 							name = artifact_tapestry_scene
@@ -10141,8 +10141,8 @@ fund_inspiration.2002 = {
 			}
 			modifier = {
 				add = 25
-				faith = {
- 					has_doctrine_parameter = pacifist
+				rite = { #Unop: Check rite, not faith (main rite only)
+ 					rite_has_parameter = pacifist #Unop: Rite check
  				}
 			}
 		}

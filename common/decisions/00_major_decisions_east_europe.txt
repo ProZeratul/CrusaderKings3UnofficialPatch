@@ -1233,7 +1233,7 @@ found_kingdom_of_livonia_decision = {
 				OR = {
 					#Is a Crusader founding the Kingdom
 					root.faith ?= {
-						NOT = { has_doctrine_parameter = unreformed }
+						NOT = { root.rite = { rite_has_parameter = unreformed } } #Unop: Check rite, not faith (main rite only)
 						NOT = { religion_tag = baltic_religion }
 					}
 					#Considers themselves to be a "Balt"

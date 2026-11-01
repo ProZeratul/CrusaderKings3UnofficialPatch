@@ -4949,7 +4949,7 @@ scripted_trigger nomad_events_0250_valid_priest = {
 		NOR = {
 			this = root.faith
 			this = root.location.county.faith
-			has_doctrine_parameter = unreformed
+			prev.rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 			this = faith:rabbinic_faith
 		}
 	}
@@ -5000,12 +5000,12 @@ nomad_events.0250 = {
 			factor = 2
 		}
 		modifier = {
-			faith = { has_doctrine_parameter = unreformed }
+			rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 			current_year > 1065
 			factor = 2
 		}
 		modifier = {
-			faith = { has_doctrine_parameter = unreformed }
+			rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 			current_year > 1150
 			factor = 2
 		}
@@ -5039,7 +5039,7 @@ nomad_events.0250 = {
 				any_neighboring_top_liege_realm_owner = {
 					NOR = {
 						faith = root.faith
-						faith = { has_doctrine_parameter = unreformed }
+						rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 					}
 				}
 			}
@@ -5047,7 +5047,7 @@ nomad_events.0250 = {
 				limit = {
 					NOR = {
 						faith = root.faith
-						faith = { has_doctrine_parameter = unreformed }
+						rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 					}
 				}
 				save_scope_as = neighboring_ruler
@@ -5294,8 +5294,8 @@ nomad_events.0250 = {
 			}
 			modifier = {
 				highest_held_title_tier >= tier_kingdom
-				faith = {
-					has_doctrine_parameter = unreformed
+				rite = { #Unop: Check rite, not faith (main rite only)
+					rite_has_parameter = unreformed #Unop: Rite check
 				}
 				factor = 4
 			}
@@ -5308,12 +5308,12 @@ nomad_events.0250 = {
 				factor = 2
 			}
 			modifier = {
-				scope:priest.faith = { has_doctrine_parameter = unreformed }
+				scope:priest.rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 				factor = 0
 			}
 			modifier = { # Non-steppe regions are stickier and convert less freely
-				faith = {
-					NOT = { has_doctrine_parameter = unreformed }
+				rite = { #Unop: Check rite, not faith (main rite only)
+					NOT = { rite_has_parameter = unreformed } #Unop: Rite check
 				}
 				any_character_situation = {
 					OR = {
@@ -5441,8 +5441,8 @@ scripted_trigger nomad_events_0260_ruler_trigger = {
 		culture = root.capital_county.culture
 		faith = root.faith
 		faith = root.capital_county.faith
-		faith = {
-			has_doctrine_parameter = unreformed
+		rite = { #Unop: Check rite, not faith (main rite only)
+			rite_has_parameter = unreformed #Unop: Rite check
 		}
 	}
 	highest_held_title_tier >= tier_kingdom
@@ -5496,25 +5496,25 @@ nomad_events.0260 = {
 	weight_multiplier = {
 		base = 1
 		modifier = { # Tier instead of Dominance because people outside of the Steppe don't care for that
-			faith = { has_doctrine_parameter = unreformed }
+			rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 			highest_held_title_tier >= tier_kingdom
 			factor = 3
 		}
 		modifier = {
-			faith = { has_doctrine_parameter = unreformed }
+			rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 			current_year > 1065
 			factor = 2
 		}
 		modifier = {
-			faith = { has_doctrine_parameter = unreformed }
+			rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 			current_year > 1150
 			factor = 2
 		}
 		modifier = {
 			is_ai = yes
 			NOT = {
-				faith = {
-					has_doctrine_parameter = unreformed
+				rite = { #Unop: Check rite, not faith (main rite only)
+					rite_has_parameter = unreformed #Unop: Rite check
 				}
 			}
 			factor = 0.1
@@ -5619,8 +5619,8 @@ nomad_events.0260 = {
 			}
 			modifier = {
 				highest_held_title_tier >= tier_kingdom
-				faith = {
-					has_doctrine_parameter = unreformed
+				rite = { #Unop: Check rite, not faith (main rite only)
+					rite_has_parameter = unreformed #Unop: Rite check
 				}
 				factor = 4
 			}
@@ -5649,8 +5649,8 @@ nomad_events.0260 = {
 				factor = 0
 			}
 			modifier = { # Non-steppe regions are stickier and convert less freely
-				faith = {
-					NOT = { has_doctrine_parameter = unreformed }
+				rite = { #Unop: Check rite, not faith (main rite only)
+					NOT = { rite_has_parameter = unreformed } #Unop: Rite check
 				}
 				any_character_situation = {
 					OR = {

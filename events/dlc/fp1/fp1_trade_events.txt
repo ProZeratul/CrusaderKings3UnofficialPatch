@@ -2297,7 +2297,7 @@ fp1_trade_events.1171 = {
 		root.var:fp1_prime_trade_deal = { is_available_adult_or_is_commanding = yes }
 		# Must be of a disorganised faith and separate religion.
 		faith = {
-			has_doctrine_parameter = unreformed
+			prev.rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 			NOT = { religion = root.var:fp1_prime_trade_deal.religion }
 		}
 		# Either root must be unmarried, or they can't have syncretic folk traditions (and so respect for their marriage).

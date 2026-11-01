@@ -7,11 +7,11 @@
 				count = all
 			}
 		}
-		faith = {
+		rite = { #Unop: Check rite, not faith (main rite only)
 			NOR = {
-				has_doctrine_parameter = unreformed # Unreformed Pagans cannot Holy War
+				rite_has_parameter = unreformed # Unreformed Pagans cannot Holy War #Unop: Rite check
 				AND = {
-					has_doctrine_parameter = holy_wars_forbidden # Pacifists cannot Holy War
+					rite_has_parameter = holy_wars_forbidden # Pacifists cannot Holy War #Unop: Rite check
 					NOT = { prev = { has_character_flag = bonus_major_holy_war } } #...unless they got the legend bonus
 				}
 			}
@@ -33,8 +33,8 @@ religious_disorganised = {
 				count = all
 			}
 		}
-		faith = {
-			NOT = { has_doctrine_parameter = holy_wars_forbidden }	# Pacifists cannot Holy War
+		rite = { #Unop: Check rite, not faith (main rite only)
+			NOT = { rite_has_parameter = holy_wars_forbidden }	# Pacifists cannot Holy War #Unop: Rite check
 		}
 		herders_and_tributary_constraints = yes
 		pam_personal_pacifism_offensive_war_ban_trigger = yes

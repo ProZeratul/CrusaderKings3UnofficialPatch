@@ -18,9 +18,9 @@
 
 	# Already defined in 00_casus_belli_groups.txt
 	allowed_for_character = {
-		scope:attacker.faith = {
-			NOT = { has_doctrine_parameter = unreformed }
-			NOT = { has_doctrine_parameter = holy_wars_forbidden }
+		scope:attacker.rite = { #Unop: Check rite, not faith (main rite only)
+			NOT = { rite_has_parameter = unreformed } #Unop: Rite check
+			NOT = { rite_has_parameter = holy_wars_forbidden } #Unop: Rite check
 		}
 		NOR = {
 			government_has_flag = government_is_landless_adventurer
@@ -382,8 +382,8 @@
 					add = religious_cb_piety_gain_county
 					if = {
 						limit = {
-							scope:attacker.faith = {
-								has_doctrine_parameter = bonus_holy_war_piety_active
+							scope:attacker.rite = { #Unop: Check rite, not faith (main rite only)
+								rite_has_parameter = bonus_holy_war_piety_active #Unop: Rite check
 							}
 						}
 						multiply = 1.5
@@ -510,8 +510,8 @@
 					add = religious_cb_piety_gain_county
 					if = {
 						limit = {
-							scope:defender.faith = {
-								has_doctrine_parameter = bonus_holy_war_piety_active
+							scope:defender.rite = { #Unop: Check rite, not faith (main rite only)
+								rite_has_parameter = bonus_holy_war_piety_active #Unop: Rite check
 							}
 						}
 						multiply = 1.5
@@ -598,10 +598,10 @@ religious_war = {
 
 	# Additional requirements to the defines in 00_casus_belli_groups.txt
 	allowed_for_character = {
-		scope:attacker.faith = {
+		scope:attacker.rite = { #Unop: Check rite, not faith (main rite only)
 			NOR = { 
-				has_doctrine_parameter = unreformed
-				has_doctrine_parameter = holy_wars_forbidden
+				rite_has_parameter = unreformed #Unop: Rite check
+				rite_has_parameter = holy_wars_forbidden #Unop: Rite check
 			}
 		}
 		NOR = { 
@@ -980,8 +980,8 @@ religious_war = {
 					add = religious_cb_piety_gain_duchy
 					if = {
 						limit = {
-							scope:attacker.faith = {
-								has_doctrine_parameter = bonus_holy_war_piety_active
+							scope:attacker.rite = { #Unop: Check rite, not faith (main rite only)
+								rite_has_parameter = bonus_holy_war_piety_active #Unop: Rite check
 							}
 						}
 						multiply = 1.5
@@ -1100,8 +1100,8 @@ religious_war = {
 					add = religious_cb_piety_gain_duchy
 					if = {
 						limit = {
-							scope:defender.faith = {
-								has_doctrine_parameter = bonus_holy_war_piety_active
+							scope:defender.rite = { #Unop: Check rite, not faith (main rite only)
+								rite_has_parameter = bonus_holy_war_piety_active #Unop: Rite check
 							}
 						}
 						multiply = 1.5
@@ -1238,8 +1238,8 @@ major_religious_war = {
 
 	# Additional requirements to the defines in 00_casus_belli_groups.txt
 	allowed_for_character = {
-		scope:attacker.faith = {
-			NOT = { has_doctrine_parameter = unreformed }
+		scope:attacker.rite = { #Unop: Check rite, not faith (main rite only)
+			NOT = { rite_has_parameter = unreformed } #Unop: Rite check
 		}
 		NOR = { 
 			government_has_flag = government_is_nomadic
@@ -1626,8 +1626,8 @@ major_religious_war = {
 					add = religious_cb_piety_gain_kingdom
 					if = {
 						limit = {
-							scope:attacker.faith = {
-								has_doctrine_parameter = bonus_holy_war_piety_active
+							scope:attacker.rite = { #Unop: Check rite, not faith (main rite only)
+								rite_has_parameter = bonus_holy_war_piety_active #Unop: Rite check
 							}
 						}
 						multiply = 1.5
@@ -1747,8 +1747,8 @@ major_religious_war = {
 					add = religious_cb_piety_gain_kingdom
 					if = {
 						limit = {
-							scope:defender.faith = {
-								has_doctrine_parameter = bonus_holy_war_piety_active
+							scope:defender.rite = { #Unop: Check rite, not faith (main rite only)
+								rite_has_parameter = bonus_holy_war_piety_active #Unop: Rite check
 							}
 						}
 						multiply = 1.5
@@ -2199,7 +2199,7 @@ flowery_war_cb = {
 	allow_hostages = no
 	
 	allowed_for_character = {
-		faith = { has_doctrine_parameter = flower_war_cb_active }
+		rite = { rite_has_parameter = flower_war_cb_active } #Unop: Check rite, not faith (main rite only)
 		NOT = {	#Must not have any leftover sacrificial prisoners/easy ability to get any.
 			any_prisoner = { has_character_modifier = designated_human_sacrifice_modifier }
 		}
@@ -2235,11 +2235,11 @@ flowery_war_cb = {
 	should_invalidate = {
 		OR = {
 			AND = {	#A formal flowery war only invalidates if neither side is an interested participant.
-				scope:attacker.faith = {
-					NOT = { has_doctrine_parameter = human_sacrifice_active }
+				scope:attacker.rite = { #Unop: Check rite, not faith (main rite only)
+					NOT = { rite_has_parameter = human_sacrifice_active } #Unop: Rite check
 				}
-				scope:defender.faith = {
-					NOT = { has_doctrine_parameter = human_sacrifice_active }
+				scope:defender.rite = { #Unop: Check rite, not faith (main rite only)
+					NOT = { rite_has_parameter = human_sacrifice_active } #Unop: Rite check
 				}
 			}
 			scope:attacker = {
@@ -2286,7 +2286,7 @@ flowery_war_cb = {
 		scope:attacker = {
 			if = {	#If the attacker enjoys human sacrifice, then this was sacred.
 				limit = {
-					faith = { has_doctrine_parameter = human_sacrifice_active }
+					rite = { rite_has_parameter = human_sacrifice_active } #Unop: Check rite, not faith (main rite only)
 				}
 				add_piety = {
 					value = scope:defender.tier_scaled_piety_value
@@ -2318,7 +2318,7 @@ flowery_war_cb = {
 		scope:attacker = {	#If the attacker has the appropriate tenet, grab some suitable courtiers from the defender.
 			if = {
 				limit = {
-					faith = { has_doctrine_parameter = human_sacrifice_active }
+					rite = { rite_has_parameter = human_sacrifice_active } #Unop: Check rite, not faith (main rite only)
 				}
 				custom_tooltip = flowery_war_cb_prisoners.tt_attacker
 				hidden_effect = {
@@ -2665,7 +2665,7 @@ flowery_war_cb = {
 		scope:attacker = {	#Piety loss for the attacker if appropriate, otherwise prestige loss.
 			if = {
 				limit = {
-					faith = { has_doctrine_parameter = human_sacrifice_active }
+					rite = { rite_has_parameter = human_sacrifice_active } #Unop: Check rite, not faith (main rite only)
 				}
 				add_piety = religious_cb_piety_white_peace
 			}
@@ -2721,7 +2721,7 @@ flowery_war_cb = {
 				limit = {
 					faith = {
 						this = scope:defender.faith
-						has_doctrine_parameter = human_sacrifice_active
+						prev.rite = { rite_has_parameter = human_sacrifice_active } #Unop: Check rite, not faith (main rite only)
 					}
 				}
 				add_piety = {
@@ -2741,7 +2741,7 @@ flowery_war_cb = {
 				limit = {
 					faith = {
 						this = scope:attacker.faith
-						has_doctrine_parameter = human_sacrifice_active
+						prev.rite = { rite_has_parameter = human_sacrifice_active } #Unop: Check rite, not faith (main rite only)
 					}
 				}
 				add_piety = {
@@ -2757,7 +2757,7 @@ flowery_war_cb = {
 		scope:defender = {	#If the defender has the appropriate tenet, and doesn't already have sacrificial victims, grab some suitable courtiers from the attacker.
 			if = {
 				limit = {
-					faith = { has_doctrine_parameter = human_sacrifice_active }
+					rite = { rite_has_parameter = human_sacrifice_active } #Unop: Check rite, not faith (main rite only)
 					NOT = {	#Must not have any leftover sacrificial prisoners, lest the defender get borked sacrifice-accounting events.
 						any_prisoner = { has_character_modifier = designated_human_sacrifice_modifier }
 					}

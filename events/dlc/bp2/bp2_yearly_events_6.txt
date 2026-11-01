@@ -4900,12 +4900,12 @@ bp2_yearly.6060 = {
 		}
 		#if your faith is organized, the advanced faith must be organized too
 		OR = {
-			faith = {
-				has_doctrine_parameter = unreformed
+			rite = { #Unop: Check rite, not faith (main rite only)
+				rite_has_parameter = unreformed #Unop: Rite check
 			}
 			AND = {
-				faith = {
-					NOT = { has_doctrine_parameter = unreformed }
+				rite = { #Unop: Check rite, not faith (main rite only)
+					NOT = { rite_has_parameter = unreformed } #Unop: Rite check
 				}
 				var:advanced_culture_faith = {
 					NOT = { has_doctrine_parameter = unreformed }

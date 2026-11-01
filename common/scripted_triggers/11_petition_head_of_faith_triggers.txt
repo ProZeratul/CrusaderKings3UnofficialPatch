@@ -106,7 +106,7 @@ petition_head_of_faith_excommunication_option_available_trigger = {
 	highest_held_title_tier >= tier_kingdom
 	custom_description = {
 		text = HOF_INTERACTION_UNREFORMED_FAITH
-		NOT = { faith = { has_doctrine_parameter = unreformed } }
+		NOT = { rite = { rite_has_parameter = unreformed } } #Unop: Check rite, not faith (main rite only)
 	}
 }
 
@@ -193,7 +193,7 @@ petition_head_of_faith_excommunication_target_eligible_trigger = {
 petition_head_of_faith_request_excommunication_still_valid_trigger = {
 	custom_description = {
 		text = HOF_INTERACTION_UNREFORMED_FAITH
-		NOT = { faith = { has_doctrine_parameter = unreformed } }
+		NOT = { rite = { rite_has_parameter = unreformed } } #Unop: Check rite, not faith (main rite only)
 	}
 	var:petition_head_of_faith_target_character ?= {
 		is_alive = yes

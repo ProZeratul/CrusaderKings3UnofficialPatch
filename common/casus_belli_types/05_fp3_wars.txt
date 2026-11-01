@@ -607,11 +607,11 @@ fp3_turkic_invasion_cb = {
 				}
 				if = {
 					limit = {
-						faith = { has_doctrine_parameter = unreformed }
+						rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 						NOT = { has_trait = zealous }
-						capital_county.faith ?= {
+						capital_county.rite ?= { #Unop: Check rite, not faith (main rite only)
 							NOT = {
-								has_doctrine_parameter = unreformed
+								rite_has_parameter = unreformed #Unop: Rite check
 							}
 						}
 					}

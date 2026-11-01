@@ -888,10 +888,10 @@ cultural_festival.9020 = {
 	cooldown = { years = 5 }
 
 	trigger = {
-		NOT = { root.faith = { has_doctrine_parameter = human_sacrifice_active } }
+		NOT = { root.rite = { rite_has_parameter = human_sacrifice_active } } #Unop: Check rite, not faith (main rite only)
 		location = {
 			county ?= {
-				faith = { has_doctrine_parameter = human_sacrifice_active }
+				rite = { rite_has_parameter = human_sacrifice_active } #Unop: Check rite, not faith (main rite only)
 			}
 		}
 	}

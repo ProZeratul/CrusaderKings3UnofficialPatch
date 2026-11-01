@@ -255,8 +255,8 @@ british_isles.1011 = {
 		name = british_isles.1011.b
 		trigger = {
 			# Must be following a reformed faith.
-			faith = {
-				NOT = { has_doctrine_parameter = unreformed }
+			rite = { #Unop: Check rite, not faith (main rite only)
+				NOT = { rite_has_parameter = unreformed } #Unop: Rite check
 			}
 			# And be able to accept them as a friend.
 			can_set_relation_friend_trigger = { CHARACTER = scope:ntd_recipient }

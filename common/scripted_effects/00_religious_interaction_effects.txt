@@ -1565,10 +1565,10 @@ sun_trial_survival_effect = {
 humsacd_a_hof_effect = {
 	if = {
 		limit = {
-			$SACRIFICER$.faith = { has_doctrine_parameter = human_sacrifice_active }
+			$SACRIFICER$.rite = { rite_has_parameter = human_sacrifice_active } #Unop: Check rite, not faith (main rite only)
 			$SACRIFICED_HOF$.faith = {
 				religious_head = $SACRIFICED_HOF$
-				NOT = { has_doctrine_parameter = human_sacrifice_active }
+				NOT = { $SACRIFICED_HOF$.rite = { rite_has_parameter = human_sacrifice_active } } #Unop: Check rite, not faith (main rite only)
 			}
 		}
 		$SACRIFICER$ = {

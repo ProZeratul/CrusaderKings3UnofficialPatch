@@ -935,11 +935,11 @@ scripted_trigger tribute_mission_1000_eligible_for_monk_trigger = {
 	scope:overlord_scope = {
 		government_has_flag = government_is_mandala
 		NOR = {
-			faith = { has_doctrine_parameter = unreformed }
+			rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 			faith = scope:tributary_scope.faith
 		}
 	}
-	scope:tributary_scope.faith = { has_doctrine_parameter = unreformed }
+	scope:tributary_scope.rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 }
 
 scripted_effect tribute_mission_1000_set_monk_reward_effect = {

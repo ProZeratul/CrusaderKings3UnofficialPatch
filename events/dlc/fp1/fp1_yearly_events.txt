@@ -12579,7 +12579,7 @@ scripted_trigger fp1_0692_valid_convertable_knight_trigger = {
 	# & share scope:raider's faith, which isn't reformed.
 	faith = {
 		this = scope:raider.faith
-		has_doctrine_parameter = unreformed
+		prev.rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 	}
 	# Shouldn't have anything that might block them from converting.
 	NOR = {
@@ -12922,8 +12922,8 @@ fp1_yearly.0692 = {
 		# DLC check.
 		has_fp1_dlc_trigger = yes
 		# We only want to convert to reformed faiths.
-		scope:county.faith = {
-			NOT = { has_doctrine_parameter = unreformed }
+		scope:county.rite = { #Unop: Check rite, not faith (main rite only)
+			NOT = { rite_has_parameter = unreformed } #Unop: Rite check
 		}
 		# Check various prerequisites with scope:raider.
 		scope:raider = {
@@ -12997,7 +12997,7 @@ scripted_trigger valid_germanic_faith_trigger = {
 
 scripted_trigger valid_non_germanic_reformed_faith_trigger = {
 	NOR = {
-		faith = { has_doctrine_parameter = unreformed }
+		rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 		religion = religion:germanic_religion
 	}
 }
@@ -14975,7 +14975,7 @@ scripted_trigger fp1_funeral_longship_likes_duels = {
 	}
 	# Faith must not consider this a bad thing.
 	faith = {
-		NOT = { has_doctrine_parameter = holy_wars_forbidden } #Unop: Note: Is a reference to tenet_pacifism & tenet_dharmic_pacifism
+		NOT = { prev.rite = { rite_has_parameter = holy_wars_forbidden } } #Unop: Note: Is a reference to tenet_pacifism & tenet_dharmic_pacifism. Check rite, not faith (main rite only)
 		NOT = { trait_is_sin = trait:lifestyle_blademaster } #Unop: Future proof this
 	}
 }

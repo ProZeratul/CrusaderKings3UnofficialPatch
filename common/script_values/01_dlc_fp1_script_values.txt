@@ -146,11 +146,11 @@ gruesome_festival_regular_animal_piety_value = {
 		# HumSac faiths still aren't happy.
 		if = {
 			limit = {
-				faith = {
+				rite = { #Unop: Check rite, not faith (main rite only)
 					OR = {
-						has_doctrine_parameter = flower_war_cb_active
-						has_doctrine_parameter = human_sacrifice_active
-						has_doctrine_parameter = gruesome_festivals_active
+						rite_has_parameter = flower_war_cb_active #Unop: Rite check
+						rite_has_parameter = human_sacrifice_active #Unop: Rite check
+						rite_has_parameter = gruesome_festivals_active #Unop: Rite check
 					}
 				}
 			}
@@ -172,11 +172,11 @@ gruesome_festival_magnificent_animal_piety_value = {
 		# HumSac faiths still aren't happy.
 		if = {
 			limit = {
-				faith = {
+				rite = { #Unop: Check rite, not faith (main rite only)
 					OR = {
-						has_doctrine_parameter = flower_war_cb_active
-						has_doctrine_parameter = human_sacrifice_active
-						has_doctrine_parameter = gruesome_festivals_active
+						rite_has_parameter = flower_war_cb_active #Unop: Rite check
+						rite_has_parameter = human_sacrifice_active #Unop: Rite check
+						rite_has_parameter = gruesome_festivals_active #Unop: Rite check
 					}
 				}
 			}
@@ -198,11 +198,11 @@ gruesome_festival_regular_human_piety_value = {
 		# HumSac faiths still aren't happy.
 		if = {
 			limit = {
-				faith = {
+				rite = { #Unop: Check rite, not faith (main rite only)
 					OR = {
-						has_doctrine_parameter = flower_war_cb_active
-						has_doctrine_parameter = human_sacrifice_active
-						has_doctrine_parameter = gruesome_festivals_active
+						rite_has_parameter = flower_war_cb_active #Unop: Rite check
+						rite_has_parameter = human_sacrifice_active #Unop: Rite check
+						rite_has_parameter = gruesome_festivals_active #Unop: Rite check
 					}
 				}
 			}
@@ -224,11 +224,11 @@ gruesome_festival_magnificent_human_piety_value = {
 		# HumSac faiths still aren't happy.
 		if = {
 			limit = {
-				faith = {
+				rite = { #Unop: Check rite, not faith (main rite only)
 					OR = {
-						has_doctrine_parameter = flower_war_cb_active
-						has_doctrine_parameter = human_sacrifice_active
-						has_doctrine_parameter = gruesome_festivals_active
+						rite_has_parameter = flower_war_cb_active #Unop: Rite check
+						rite_has_parameter = human_sacrifice_active #Unop: Rite check
+						rite_has_parameter = gruesome_festivals_active #Unop: Rite check
 					}
 				}
 			}
@@ -479,7 +479,7 @@ scandinavian_adventurer_priority_value = {
 	#Weight down heavily for pacifist faith.
 	if = {
 		limit = {
-			faith = { has_doctrine_parameter = pacifist }
+			rite = { rite_has_parameter = pacifist } #Unop: Check rite, not faith (main rite only)
 		}
 		add = -30
 	}

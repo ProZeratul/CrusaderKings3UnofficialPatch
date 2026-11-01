@@ -17,13 +17,13 @@ activity_gruesome_festival = {
 			has_fp1_dlc_trigger = yes
 			# Following a valid faith, or simply has an appropriate county.
 			OR = {
-				faith = { has_doctrine_parameter = gruesome_festivals_active }
+				rite = { rite_has_parameter = gruesome_festivals_active } #Unop: Check rite, not faith (main rite only)
 				# Early-out for people who couldn't take the decision anyway.
 				AND = {
 					highest_held_title_tier >= tier_duchy
 					any_sub_realm_county = {
 						count >= 1
-						faith = { has_doctrine_parameter = gruesome_festivals_active }
+						rite = { rite_has_parameter = gruesome_festivals_active } #Unop: Check rite, not faith (main rite only)
 					}
 				}
 			}
@@ -44,13 +44,13 @@ activity_gruesome_festival = {
 			custom_tooltip = {
 				text = gf_valid_county_faith
 				any_sub_realm_county = {
-					faith = { has_doctrine_parameter = gruesome_festivals_active }
+					rite = { rite_has_parameter = gruesome_festivals_active } #Unop: Check rite, not faith (main rite only)
 				}
 			}
 			# Suitable rank required.
 			trigger_if = {
 				limit = {
-					faith = { has_doctrine_parameter = gruesome_festivals_active }
+					rite = { rite_has_parameter = gruesome_festivals_active } #Unop: Check rite, not faith (main rite only)
 				}
 				custom_tooltip = {
 					text = gf_suitable_rank_valid
@@ -181,7 +181,7 @@ activity_gruesome_festival = {
 	max_province_icons = 5
 
 	is_location_valid = {
-		faith = { has_doctrine_parameter = gruesome_festivals_active }
+		rite = { rite_has_parameter = gruesome_festivals_active } #Unop: Check rite, not faith (main rite only)
 	}
 
 	cost = {
@@ -243,7 +243,7 @@ activity_gruesome_festival = {
 		## If not of the faith, you don't want to do it at all outside of extenuating circumstances.
 		if = {
 			limit = {
-				faith = { has_doctrine_parameter = gruesome_festivals_active }
+				rite = { rite_has_parameter = gruesome_festivals_active } #Unop: Check rite, not faith (main rite only)
 			}
 			add = -100
 		}
@@ -252,7 +252,7 @@ activity_gruesome_festival = {
 		if = {
 			limit = {
 				NOT = {
-					faith = { has_doctrine_parameter = gruesome_festivals_active }
+					rite = { rite_has_parameter = gruesome_festivals_active } #Unop: Check rite, not faith (main rite only)
 				}
 				has_trait = sadistic
 			}
@@ -262,11 +262,11 @@ activity_gruesome_festival = {
 		if = {
 			limit = {
 				NOT = {
-					faith = { has_doctrine_parameter = gruesome_festivals_active }
+					rite = { rite_has_parameter = gruesome_festivals_active } #Unop: Check rite, not faith (main rite only)
 				}
 				any_sub_realm_county = {
 					percent >= 0.75
-					faith = { has_doctrine_parameter = gruesome_festivals_active }
+					rite = { rite_has_parameter = gruesome_festivals_active } #Unop: Check rite, not faith (main rite only)
 				}
 			}
 			add = 25
@@ -275,7 +275,7 @@ activity_gruesome_festival = {
 		# Zealous.
 		if = {
 			limit = {
-				faith = { has_doctrine_parameter = gruesome_festivals_active }
+				rite = { rite_has_parameter = gruesome_festivals_active } #Unop: Check rite, not faith (main rite only)
 				has_trait = zealous
 			}
 			add = 100
@@ -283,7 +283,7 @@ activity_gruesome_festival = {
 		# Cynical.
 		if = {
 			limit = {
-				faith = { has_doctrine_parameter = gruesome_festivals_active }
+				rite = { rite_has_parameter = gruesome_festivals_active } #Unop: Check rite, not faith (main rite only)
 				has_trait = cynical
 			}
 			add = -25
@@ -291,14 +291,14 @@ activity_gruesome_festival = {
 		# You're richer.
 		if = {
 			limit = {
-				faith = { has_doctrine_parameter = gruesome_festivals_active }
+				rite = { rite_has_parameter = gruesome_festivals_active } #Unop: Check rite, not faith (main rite only)
 				short_term_gold >= massive_gold_value
 			}
 			add = 50
 		}
 		if = {
 			limit = {
-				faith = { has_doctrine_parameter = gruesome_festivals_active }
+				rite = { rite_has_parameter = gruesome_festivals_active } #Unop: Check rite, not faith (main rite only)
 				short_term_gold >= monumental_gold_value
 			}
 			add = 50
@@ -467,7 +467,7 @@ activity_gruesome_festival = {
 			gruesome_festival_sacrifice_animals_genuine = {
 				default = yes
 				is_shown = {
-					faith = { has_doctrine_parameter = gruesome_festivals_active }
+					rite = { rite_has_parameter = gruesome_festivals_active } #Unop: Check rite, not faith (main rite only)
 				}
 
 				on_start = {
@@ -485,11 +485,11 @@ activity_gruesome_festival = {
 							# HumSac faiths still aren't happy.
 							if = {
 								limit = {
-									faith = {
+									rite = { #Unop: Check rite, not faith (main rite only)
 										OR = {
-											has_doctrine_parameter = flower_war_cb_active
-											has_doctrine_parameter = human_sacrifice_active
-											has_doctrine_parameter = gruesome_festivals_active
+											rite_has_parameter = flower_war_cb_active #Unop: Rite check
+											rite_has_parameter = human_sacrifice_active #Unop: Rite check
+											rite_has_parameter = gruesome_festivals_active #Unop: Rite check
 										}
 									}
 								}
@@ -523,7 +523,7 @@ activity_gruesome_festival = {
 						is_ai = no
 						short_term_gold >= gruesome_festival_option_medium
 					}
-					faith = { has_doctrine_parameter = gruesome_festivals_active }
+					rite = { rite_has_parameter = gruesome_festivals_active } #Unop: Check rite, not faith (main rite only)
 				}
 				cost = {
 					gold = {
@@ -562,11 +562,11 @@ activity_gruesome_festival = {
 							# HumSac faiths still aren't happy.
 							if = {
 								limit = {
-									faith = {
+									rite = { #Unop: Check rite, not faith (main rite only)
 										OR = {
-											has_doctrine_parameter = flower_war_cb_active
-											has_doctrine_parameter = human_sacrifice_active
-											has_doctrine_parameter = gruesome_festivals_active
+											rite_has_parameter = flower_war_cb_active #Unop: Rite check
+											rite_has_parameter = human_sacrifice_active #Unop: Rite check
+											rite_has_parameter = gruesome_festivals_active #Unop: Rite check
 										}
 									}
 								}
@@ -596,7 +596,7 @@ activity_gruesome_festival = {
 			}
 			gruesome_festival_sacrifice_humans_genuine = {
 				is_shown = {
-					faith = { has_doctrine_parameter = gruesome_festivals_active }
+					rite = { rite_has_parameter = gruesome_festivals_active } #Unop: Check rite, not faith (main rite only)
 				}
 
 				on_start = {
@@ -615,11 +615,11 @@ activity_gruesome_festival = {
 							# HumSac faiths still aren't happy.
 							if = {
 								limit = {
-									faith = {
+									rite = { #Unop: Check rite, not faith (main rite only)
 										OR = {
-											has_doctrine_parameter = flower_war_cb_active
-											has_doctrine_parameter = human_sacrifice_active
-											has_doctrine_parameter = gruesome_festivals_active
+											rite_has_parameter = flower_war_cb_active #Unop: Rite check
+											rite_has_parameter = human_sacrifice_active #Unop: Rite check
+											rite_has_parameter = gruesome_festivals_active #Unop: Rite check
 										}
 									}
 								}
@@ -660,7 +660,7 @@ activity_gruesome_festival = {
 						is_ai = no
 						short_term_gold >= gruesome_festival_option_medium
 					}
-					faith = { has_doctrine_parameter = gruesome_festivals_active }
+					rite = { rite_has_parameter = gruesome_festivals_active } #Unop: Check rite, not faith (main rite only)
 				}
 				cost = {
 					gold = {
@@ -700,11 +700,11 @@ activity_gruesome_festival = {
 							# HumSac faiths still aren't happy.
 							if = {
 								limit = {
-									faith = {
+									rite = { #Unop: Check rite, not faith (main rite only)
 										OR = {
-											has_doctrine_parameter = flower_war_cb_active
-											has_doctrine_parameter = human_sacrifice_active
-											has_doctrine_parameter = gruesome_festivals_active
+											rite_has_parameter = flower_war_cb_active #Unop: Rite check
+											rite_has_parameter = human_sacrifice_active #Unop: Rite check
+											rite_has_parameter = gruesome_festivals_active #Unop: Rite check
 										}
 									}
 								}
@@ -742,9 +742,9 @@ activity_gruesome_festival = {
 
 			gruesome_festival_sacrifice_animals_poser = {
 				is_shown = {
-					faith = {
+					rite = { #Unop: Check rite, not faith (main rite only)
 						NOT = {
-							has_doctrine_parameter = gruesome_festivals_active
+							rite_has_parameter = gruesome_festivals_active #Unop: Rite check
 						}
 					}
 				}
@@ -766,11 +766,11 @@ activity_gruesome_festival = {
 							# HumSac faiths still aren't happy.
 							if = {
 								limit = {
-									faith = {
+									rite = { #Unop: Check rite, not faith (main rite only)
 										OR = {
-											has_doctrine_parameter = flower_war_cb_active
-											has_doctrine_parameter = human_sacrifice_active
-											has_doctrine_parameter = gruesome_festivals_active
+											rite_has_parameter = flower_war_cb_active #Unop: Rite check
+											rite_has_parameter = human_sacrifice_active #Unop: Rite check
+											rite_has_parameter = gruesome_festivals_active #Unop: Rite check
 										}
 									}
 								}
@@ -804,9 +804,9 @@ activity_gruesome_festival = {
 						is_ai = no 
 						short_term_gold >= gruesome_festival_option_medium
 					}
-					faith = { 
+					rite = { #Unop: Check rite, not faith (main rite only)
 						NOT = { 
-							has_doctrine_parameter = gruesome_festivals_active 
+							rite_has_parameter = gruesome_festivals_active #Unop: Rite check
 						}
 					}
 				}
@@ -848,11 +848,11 @@ activity_gruesome_festival = {
 							# HumSac faiths still aren't happy.
 							if = {
 								limit = {
-									faith = {
+									rite = { #Unop: Check rite, not faith (main rite only)
 										OR = {
-											has_doctrine_parameter = flower_war_cb_active
-											has_doctrine_parameter = human_sacrifice_active
-											has_doctrine_parameter = gruesome_festivals_active
+											rite_has_parameter = flower_war_cb_active #Unop: Rite check
+											rite_has_parameter = human_sacrifice_active #Unop: Rite check
+											rite_has_parameter = gruesome_festivals_active #Unop: Rite check
 										}
 									}
 								}
@@ -883,9 +883,9 @@ activity_gruesome_festival = {
 			gruesome_festival_sacrifice_humans_poser = {
 				is_shown = {
 					any_vassal_or_below = { highest_held_title_tier >= tier_county }
-					faith = { 
+					rite = { #Unop: Check rite, not faith (main rite only)
 						NOT = { 
-							has_doctrine_parameter = gruesome_festivals_active 
+							rite_has_parameter = gruesome_festivals_active #Unop: Rite check
 						}
 					}
 				}
@@ -907,11 +907,11 @@ activity_gruesome_festival = {
 							# HumSac faiths still aren't happy.
 							if = {
 								limit = {
-									faith = {
+									rite = { #Unop: Check rite, not faith (main rite only)
 										OR = {
-											has_doctrine_parameter = flower_war_cb_active
-											has_doctrine_parameter = human_sacrifice_active
-											has_doctrine_parameter = gruesome_festivals_active
+											rite_has_parameter = flower_war_cb_active #Unop: Rite check
+											rite_has_parameter = human_sacrifice_active #Unop: Rite check
+											rite_has_parameter = gruesome_festivals_active #Unop: Rite check
 										}
 									}
 								}
@@ -945,9 +945,9 @@ activity_gruesome_festival = {
 						is_ai = no
 						short_term_gold >= gruesome_festival_option_medium
 					}
-					faith = {
+					rite = { #Unop: Check rite, not faith (main rite only)
 						NOT = {
-							has_doctrine_parameter = gruesome_festivals_active
+							rite_has_parameter = gruesome_festivals_active #Unop: Rite check
 						}
 					}
 				}
@@ -990,11 +990,11 @@ activity_gruesome_festival = {
 							# HumSac faiths still aren't happy.
 							if = {
 								limit = {
-									faith = {
+									rite = { #Unop: Check rite, not faith (main rite only)
 										OR = {
-											has_doctrine_parameter = flower_war_cb_active
-											has_doctrine_parameter = human_sacrifice_active
-											has_doctrine_parameter = gruesome_festivals_active
+											rite_has_parameter = flower_war_cb_active #Unop: Rite check
+											rite_has_parameter = human_sacrifice_active #Unop: Rite check
+											rite_has_parameter = gruesome_festivals_active #Unop: Rite check
 										}
 									}
 								}

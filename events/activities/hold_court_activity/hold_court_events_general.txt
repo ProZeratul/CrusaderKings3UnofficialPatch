@@ -13176,7 +13176,7 @@ hold_court.8020 = {
 			has_court_event_flag = no
 			is_available_ai_adult = yes
 		}
-		faith = { NOT = { has_doctrine_parameter = unreformed } }
+		rite = { NOT = { rite_has_parameter = unreformed } } #Unop: Check rite, not faith (main rite only)
 		rite = { rite_has_doctrine = doctrine_theocracy_temporal }
 		any_realm_county = { # Less than 10% theocratic counties in realm
 			percent <= 0.1
@@ -13652,8 +13652,8 @@ hold_court.8020 = {
 scripted_trigger hold_court_8040_vassal_trigger = {
 	has_court_event_flag = no
 	faith != root.faith
-	faith = {
-		NOT = { has_doctrine_parameter = unreformed }
+	rite = { #Unop: Check rite, not faith (main rite only)
+		NOT = { rite_has_parameter = unreformed } #Unop: Rite check
 	}
 	government_has_flag = government_is_feudal
 	vassal_contract_obligation_level_can_be_increased = religious_rights
@@ -13710,8 +13710,8 @@ hold_court.8040 = {
 	cooldown = { years = 10 }
 
 	trigger = {
-		faith = {
-			NOT = { has_doctrine_parameter = unreformed }
+		rite = { #Unop: Check rite, not faith (main rite only)
+			NOT = { rite_has_parameter = unreformed } #Unop: Rite check
 		}
 		any_vassal = { hold_court_8040_vassal_trigger = yes }
 		exists = cp:councillor_court_chaplain
@@ -15053,7 +15053,7 @@ hold_court.8060 = {
 		NOT = { has_character_flag = has_had_holding_request_event }
 		NOT = { has_variable = hold_court_8060_church_var }
 		gold > hold_court_holding_cost_double_value
-		faith = { NOT = { has_doctrine_parameter = unreformed } }
+		rite = { NOT = { rite_has_parameter = unreformed } } #Unop: Check rite, not faith (main rite only)
 		rite = { rite_has_doctrine = doctrine_theocracy_temporal }
 		OR = {
 			any_held_title = {
@@ -19217,7 +19217,7 @@ hold_court.8120 = {
 		else_if = {
 			limit = {
 				AND = { 
-					scope:peasant.faith = { has_doctrine_parameter = unreformed }
+					scope:peasant.rite = { rite_has_parameter = unreformed } #Unop: Check rite, not faith (main rite only)
 					rite = { rite_has_parameter = unreformed_syncretic_actor }
 				}
 			}

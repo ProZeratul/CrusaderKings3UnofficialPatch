@@ -1060,10 +1060,10 @@
 						limit = {
 							this = faith.religious_head
 							NOT = { has_trait = torturer }
-							faith = {
+							rite = { #Unop: Check rite, not faith (main rite only)
 								NOR = {
-									has_doctrine_parameter = gruesome_festivals_active
-									has_doctrine_parameter = human_sacrifice_active
+									rite_has_parameter = gruesome_festivals_active #Unop: Rite check
+									rite_has_parameter = human_sacrifice_active #Unop: Rite check
 								}
 							}
 						}
@@ -1073,10 +1073,10 @@
 						limit = {
 							this = faith.religious_head
 							NOT = { has_trait = compassionate }
-							faith = {
+							rite = { #Unop: Check rite, not faith (main rite only)
 								OR = {
-									has_doctrine_parameter = gruesome_festivals_active
-									has_doctrine_parameter = human_sacrifice_active
+									rite_has_parameter = gruesome_festivals_active #Unop: Rite check
+									rite_has_parameter = human_sacrifice_active #Unop: Rite check
 								}
 							}
 						}
