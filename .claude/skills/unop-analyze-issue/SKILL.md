@@ -253,9 +253,9 @@ To proceed, could you please provide:
 **<identity>:** Not a bug (or out of scope).
 
 - <reason, citing what was checked>
-
-Could you confirm whether it still reproduces with only vanilla + Unop?
 ```
+
+Ask the reporter "Could you confirm whether it still reproduces with only vanilla + Unop?" only if the files contradict the report, no repro has run, and another mod or an older version could explain what they saw.
 
 ### gh Snippets
 

@@ -121,35 +121,35 @@ If base shows the bug differently from the shared file's analysis, say so in the
 
 ### 5. Post the Result
 
-Keep one current result comment on the PR: write the comment below to `<file>`, then run `<main>/.claude/scripts/marker-post.sh <PR> unop-test-result <file>`, which edits the trusted one if it exists and posts it otherwise.
+Keep one current result comment on the PR: write the comment below to `<file>`, then run `<main>/.claude/scripts/marker-post.sh <PR> unop-test-result <file>`, which edits the trusted one if it exists and posts it otherwise. Keep it short; the details go in the shared file.
 
 ```markdown
 <!-- unop-test-result -->
 **<identity>:** In-game test <Passed | Failed (fix) | Failed (script) | Inconclusive>
 
-**Base (`main`):** <what happened: exact text, values, log lines>
+**Base (`main`):** <the decisive observation in one line: key text, values or log lines>
 **Head (PR):** <same>
 
-**Deviations from the script:** <each change and why; "none" if none>
+**Deviations:** <only those that matter for the verdict, one line each; omit if none>
 
-**error.log:** <related errors, or "nothing related">
+**error.log:** <related errors; omit if nothing related>
 
-<On Failed: what the should be looked at. On Inconclusive: what blocked the test.>
+<On Failed: what should be looked at. On Inconclusive: what blocked the test.>
 ```
 
-**Repro mode:** keep one current result comment on the **issue**, short, with `<main>/.claude/scripts/marker-post.sh <anchor> unop-repro-result <file>`:
+**Repro mode:** keep one current result comment on the **issue** with `<main>/.claude/scripts/marker-post.sh <anchor> unop-repro-result <file>`. Keep it to a few lines; the details go in the shared file.
 
 ```markdown
 <!-- unop-repro-result -->
 **<identity>:** In-game repro <Reproduced | Not reproduced | Inconclusive>
 
-**Observed (`main`):** <what happened: exact text, values, log lines>
+**Observed (`main`):** <the decisive observation in 1-2 lines: key values or log lines>
 
-**Deviations from the repro:** <each change and why; "none" if none>
+**Deviations:** <only those that matter for the verdict, one line each; omit if none>
 
-**error.log:** <related errors, or "nothing related">
+**error.log:** <related errors; omit if nothing related>
 
-<On Not reproduced: how it differed from the repro. On Inconclusive: what blocked it.>
+<on Not reproduced or Inconclusive: how it differed or what blocked it; omit otherwise>
 ```
 
 ### 6. Append to the Shared File and Apply the Label
