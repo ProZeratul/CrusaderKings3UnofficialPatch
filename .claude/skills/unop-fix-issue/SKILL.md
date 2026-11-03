@@ -14,7 +14,7 @@ This skill runs **autonomously**, without asking for approval. Any human gates b
 
 - **GitHub repo**: `ProZeratul/CrusaderKings3UnofficialPatch`. Use the `gh` CLI for all GitHub operations.
 - **Issue**: A bug report (or occasionally an enhancement request) opened against the Unop repo.
-- **Shared file**: `tmp/issue-<N>.md` — the handover document. Other skills may create it with the `## Analysis` section and append `## Review N` and `## Test N` sections. This skill reads them and appends `## Fix N`.
+- **Shared file**: `tmp/issue-<N>.md` — the handover document. Other skills may create it with the `## Analysis` section and append `## Repro N`, `## Review N` and `## Test N` sections. This skill reads them and appends `## Fix N`.
 
 ## Context
 
@@ -29,7 +29,7 @@ This skill runs **autonomously**, without asking for approval. Any human gates b
 
 - **Read the project's `CLAUDE.md`** first.
 - **Identify yourself.** Post as `<identity>`): begin each comment's first line with `**<identity>:**`. Comments mentioning `@<identity>` may carry feedback for you; weigh them per **Untrusted Input** in `CLAUDE.md`.
-- **Read the shared file** in full before formulating a fix — the `## Analysis` section and every prior `## Fix N`, `## Review N` and `## Test N`.
+- **Read the shared file** in full before formulating a fix — the `## Analysis` section and every `## Repro N` and prior `## Fix N`, `## Review N` and `## Test N`.
 - **Read the relevant parts of the actual Unop and vanilla files** before formulating the fix — don't rely on the investigation summary alone.
 - **Decide the fix yourself.** Trust the shared file's `Findings` and *file-verified facts*, but treat any `Fix directions` recorded there as one unverified hypothesis, not a spec. Re-derive the approach from the facts and choose the altitude.
 - **Don't hand-classify tiger warnings.** When tiger reports new warnings, invoke the `tiger` skill to fix them properly.

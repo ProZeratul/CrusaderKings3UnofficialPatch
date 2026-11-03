@@ -55,6 +55,8 @@ Note any existing labels — they may already encode prior triage. Note any link
 
 **Re-analysis.** If the issue already carries a `**<identity>:**` comment from you, you have analyzed this before. Consult the shared file if it exists. Read your prior comment, then read **all** comments posted *after* it (especially any addressing `@<identity>`). Make sure to take into account any **maintainer feedback** (see **Untrusted Input** in `CLAUDE.md`). Re-analyze from the files, **treat your prior conclusion skeptically**, and correct it.
 
+**Repro results.** If the issue carries a `repro:*` label, the shared file has `## Repro N` sections, and there is a result comment: `<main>/.claude/scripts/marker-get.sh <N> unop-repro-result body`, a repro result is available. Treat the latest result as evidence on reachability, after checking that its steps reached the code path you meant.
+
 ### 2. Identify the Affected Files
 
 From the issue, extract:
@@ -119,7 +121,7 @@ If the affected area doesn't fit any of these (e.g. `map_data/`), don't invent a
 #### Status (exactly one)
 
 - **`confirmed`** — the bug is verified against the files and a script fix is feasible.
-- **`question`** — need more from the reporter to proceed, including when the bug can't be verified from script and needs an in-game repro.
+- **`question`** — need more from the reporter to proceed.
 - **`invalid`** — analysis shows it isn't a bug, it's already fixed, or it's not fixable in script.
 
 Two independent axes decide the status:
@@ -130,6 +132,8 @@ Two independent axes decide the status:
 | yes | no (engine-hardcoded) | `invalid` (out of scope) |
 | no (intended / already fixed) | — | `invalid` |
 | can't tell from files | — | `question` |
+
+If the files can't tell but an in-game repro can, pick the likely status with confidence below `high` and wait for the repro results.
 
 An `invalid` (out of scope) conclusion is door-closing, so it must clear the same bar as proposing a fix.
 
@@ -146,9 +150,11 @@ How sure you are of the classification, whatever it is:
 - **`medium`** — likely but not certain: multiple possible causes, a possible duplicate, or the reporter's claim only partially matches the files.
 - **`low`** — uncertain: the reporter may be on a stale version, another mod may be interfering, or missing information could change the picture.
 
+A `Reproduced` repro with a clear root cause supports `high`; a `Not reproduced` repro that reached the code path supports `invalid`.
+
 ### 5. Write to the Shared File
 
-Create the shared file, or re-write it if this is a re-analysis. The findings here are the detailed record, the GitHub comment in step 6 is the concise version. 
+Create the shared file. On a re-analysis, re-write its frontmatter and `## Analysis`, and keep the other sections. The findings here are the detailed record, the GitHub comment in step 6 is the concise version. 
 
 ```markdown
 ---
@@ -176,6 +182,8 @@ confidence: high|medium|low
 
 **Pattern class:** <the category this bug belongs to and its members; for each, whether the bug applies; and how comparable members that avoid it do so>
 
+**Repro results:** <on a re-analysis after a repro: how the latest `## Repro N` changed the picture; omit otherwise>
+
 **Fix directions:** <optional and soft — one or more hypotheses with trade-offs, never a single prescribed remedy; omit this if you are not confident.>
 
 **Classification:** `<status>` / `<origin>` / `<area>` — confidence `<confidence>`
@@ -201,7 +209,7 @@ gh issue edit <N> --add-label "confirmed,vanilla,common,confidence:high"
 
 If this is a re-analysis, post a **very concise** follow-up comment stating what changed compared to the previous one.
 
-**Repro comment.** If **confirmed**, also post the repro as a separate comment, using the template in `../unop-fix-issue/testing.md` and posting it as its **Posting** section says. On a re-analysis, this updates the existing repro comment. Skip it if you can't infer a repro.
+**Repro comment.** If **confirmed**, or whenever confidence isn't `high`, also post the repro as a separate comment, using the template in `../unop-fix-issue/testing.md` and posting it as its **Posting** section says. On a re-analysis, this updates the existing repro comment; revise it if a repro result showed it missed the code path. Skip it only if no repro can be written, e.g. because it needs information only the reporter has, and say why in the findings. Hard-to-reach states are not a reason to skip (see `testing.md`).
 
 ### 7. Report Summary
 
@@ -211,6 +219,7 @@ When done, report to the user:
 - Classification applied (status / origin / area / confidence).
 - Action taken: comments posted (including the repro), labels applied, and findings written to the shared file.
 - Anything that may need a human decision: `duplicate`/`wontfix` candidates, a missing area label, or multiple distinct bugs.
+- Repro test requested, if confidence isn't `high`, you posted or revised the repro comment in this run, and the shared file has fewer than 2 `## Repro N` sections.
 
 ## Reference
 

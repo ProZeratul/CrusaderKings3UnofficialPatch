@@ -5,12 +5,12 @@ Claude Code agents that work the Unop issue pipeline. Each stage is driven by a 
 | Label | Agent | Does |
 |---|---|---|
 | (Steam) | `unop-steam-importer` | Files Steam Workshop bug reports as issues, adds `action:analyze` |
-| `action:analyze` | `unop-analyzer` | Analyzes and classifies the issue, hands confirmed high-confidence ones to the fixer |
+| `action:analyze` | `unop-analyzer` | Analyzes and classifies the issue, hands confirmed high-confidence ones to the fixer, and the rest, with a repro, to the tester |
 | `action:fix` | `unop-fixer` | Fixes the issue on a branch, opens or updates a draft PR |
 | `action:review` | `unop-reviewer` | Reviews the PR adversarially |
-| `action:test` | `unop-tester` | Runs the PR's test script in-game on `main` and on the PR branch |
+| `action:test` | `unop-tester` | Runs the PR's test script in-game on `main` and on the PR branch, or an issue's repro on `main` and hands it back to the analyzer |
 
-`unop-dispatcher` runs as the main session and starts the others on labelled work. `locked` marks an item an agent is working on; `needs-human` stops the pipeline for that item. The agents hand over through a collapsed `<!-- unop-handover -->` comment on the issue.
+`test:*` labels hold the latest PR test verdict, `repro:*` labels the latest repro verdict. `unop-dispatcher` runs as the main session and starts the others on labelled work. `locked` marks an item an agent is working on; `needs-human` stops the pipeline for that item. The agents hand over through a collapsed `<!-- unop-handover -->` comment on the issue.
 
 ## Trust Model
 
