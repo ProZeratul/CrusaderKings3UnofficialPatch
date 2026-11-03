@@ -17,8 +17,10 @@ opposing_ai_values_trigger = {
 }
 
 ai_has_builder_or_pious_builder_personality = {
-	ai_has_pious_builder_personality = yes
-	ai_has_economical_boom_personality = yes
+	OR = { #Unop Match either personality, not both
+		ai_has_pious_builder_personality = yes
+		ai_has_economical_boom_personality = yes
+	}
 }
 
 ai_has_pious_builder_personality = {
