@@ -556,6 +556,12 @@ scripted_effect pam_strip_personal_landed_titles_effect = {
 					has_clerical_region = no
 					pam_title_is_clerical_elector_trigger = no
 				}
+				trigger_if = { #Unop A secular holder only loses his clerical regions, not his realm
+					limit = {
+						root = { NOT = { government_has_flag = government_is_theocracy } }
+					}
+					has_clerical_region = yes
+				}
 			}
 		}
 		create_title_and_vassal_change = {
@@ -580,6 +586,7 @@ scripted_effect pam_strip_personal_landed_titles_effect = {
 			}
 			if = {
 				limit = {
+					government_has_flag = government_is_theocracy #Unop A secular holder's heir is not his successor in the see
 					exists = primary_heir
 					primary_heir = {
 						rite ?= scope:pam_strip_see_rite
@@ -593,6 +600,7 @@ scripted_effect pam_strip_personal_landed_titles_effect = {
 			}
 			else_if = {
 				limit = {
+					government_has_flag = government_is_theocracy #Unop A secular holder's heir is not his successor in the see
 					exists = player_heir
 					player_heir = {
 						rite ?= scope:pam_strip_see_rite
@@ -653,6 +661,12 @@ scripted_effect pam_strip_personal_landed_titles_effect = {
 					}
 					has_clerical_region = no
 					pam_title_is_clerical_elector_trigger = no
+				}
+				trigger_if = { #Unop A secular holder only loses his clerical regions, not his realm
+					limit = {
+						root = { NOT = { government_has_flag = government_is_theocracy } }
+					}
+					has_clerical_region = yes
 				}
 			}
 			change_title_holder_include_vassals = {
@@ -813,14 +827,20 @@ pam_clergy_events.0051 = {
 	option = {
 		name = pam_clergy_events.0051.c
 		add_internal_flag = dangerous
-		custom_tooltip = pam_clergy_events.0051.c.tt
+		if = { #Unop A secular holder keeps his realm
+			limit = { government_has_flag = government_is_theocracy }
+			custom_tooltip = pam_clergy_events.0051.c.tt
+		}
 
 		pam_strip_personal_landed_titles_effect = yes
 		pam_clear_clerical_region_treasury_effect = yes
 		destroy_title = scope:title
 		hidden_effect = {
 			if = {
-				limit = { has_playable_adventurer_dlc_trigger = yes }
+				limit = {
+					has_playable_adventurer_dlc_trigger = yes
+					NOT = { any_held_title = { tier >= tier_county } } #Unop A secular holder keeps his realm
+				}
 				create_landless_adventurer_title_effect = {
 					REASON = flag:wanderer
 					FLAVOR_CHAR = root
@@ -855,7 +875,10 @@ pam_clergy_events.0052 = {
 	option = {
 		name = pam_clergy_events.0052.a
 		add_internal_flag = dangerous
-		custom_tooltip = pam_clergy_events.0051.c.tt
+		if = { #Unop A secular holder keeps his realm
+			limit = { government_has_flag = government_is_theocracy }
+			custom_tooltip = pam_clergy_events.0051.c.tt
+		}
 
 		pam_strip_personal_landed_titles_effect = yes
 		if = {
@@ -865,7 +888,10 @@ pam_clergy_events.0052 = {
 		}
 		hidden_effect = {
 			if = {
-				limit = { has_playable_adventurer_dlc_trigger = yes }
+				limit = {
+					has_playable_adventurer_dlc_trigger = yes
+					NOT = { any_held_title = { tier >= tier_county } } #Unop A secular holder keeps his realm
+				}
 				create_landless_adventurer_title_effect = {
 					REASON = flag:wanderer
 					FLAVOR_CHAR = root
