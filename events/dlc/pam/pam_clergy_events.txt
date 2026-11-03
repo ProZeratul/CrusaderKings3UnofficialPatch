@@ -585,6 +585,19 @@ scripted_effect pam_strip_personal_landed_titles_effect = {
 				create_character = {
 					template = monk_character_template
 					employer = root
+					gender_female_chance = { #Unop Clergy gender of the see's rite, not of the one root just converted to
+						if = {
+							limit = { scope:pam_strip_see_rite = { rite_has_parameter = clergy_must_be_male } }
+							add = 0
+						}
+						else_if = {
+							limit = { scope:pam_strip_see_rite = { rite_has_parameter = clergy_must_be_female } }
+							add = 100
+						}
+						else = {
+							add = 50
+						}
+					}
 					save_scope_as = heir
 				}
 			}
@@ -766,7 +779,10 @@ pam_clergy_events.0051 = {
 	option = {
 		name = pam_clergy_events.0051.b
 		trigger = { exists = scope:translation_see }
-		custom_tooltip = pam_clergy_events.0051.b.tt
+		if = { #Unop A secular holder keeps his realm
+			limit = { government_has_flag = government_is_theocracy }
+			custom_tooltip = pam_clergy_events.0051.b.tt
+		}
 
 		create_title_and_vassal_change = {
 			type = granted
