@@ -85,10 +85,10 @@ fp3_yearly.8000 = { #Ghazi Gone Bad
 			}
 		}
 
-		faith = {
+		rite = { #Unop: Check rite, not faith (main rite only)
 			NOR = {
-				has_doctrine_parameter = unreformed # Unreformed Pagans cannot Holy War
-				has_doctrine_parameter = holy_wars_forbidden # Pacifists cannot Holy War
+				rite_has_parameter = unreformed # Unreformed Pagans cannot Holy War #Unop: Rite check
+				rite_has_parameter = holy_wars_forbidden # Pacifists cannot Holy War #Unop: Rite check
 			}
 		}
 		exists = cp:councillor_marshal 
@@ -305,9 +305,9 @@ fp3_yearly.8001 = { #Frontier Fortress Benefactor
 
 		root.capital_province = { geographical_region = world_persian_empire } #so that this inside-to-outside worldview makes sense 
 
-		faith = {
+		rite = { #Unop: Check rite, not faith (main rite only)
 			NOT = {
-				has_doctrine_parameter = unreformed # Unreformed Pagans don't need frontier fortresses, generally speaking
+				rite_has_parameter = unreformed # Unreformed Pagans don't need frontier fortresses, generally speaking #Unop: Rite check
 			}
 		}
 		
@@ -711,7 +711,7 @@ fp3_yearly.8002 = { #Faith at the Frontier
 		root.capital_province = { geographical_region = world_persian_empire } #so that this inside-to-outside worldview makes sense 
 
 		#so that the plot makes sense
-		faith = { NOT = { has_doctrine_parameter = unreformed } } # Unreformed Pagans don't need frontier fortresses, generally speaking
+		rite = { NOT = { rite_has_parameter = unreformed } } # Unreformed Pagans don't need frontier fortresses, generally speaking #Unop: Check rite, not faith (main rite only)
 		rite = { NOT = { rite_has_doctrine = doctrine_pluralism_pluralistic } }
 
 		OR = { #Either could make sense, may as well make it as flexible as possible
@@ -2417,7 +2417,7 @@ fp3_yearly.8009 = {
 			is_ai = yes 
 			fp3_yearly.8009_root_and_hof_faith_comparison_trigger = yes
 			NOT = { rite = { rite_has_parameter = witchcraft_accepted } }
-			faith = { NOT = { has_doctrine_parameter = unreformed } }
+			rite = { NOT = { rite_has_parameter = unreformed } } #Unop: Check rite, not faith (main rite only)
 			NOT = { rite = { rite_has_tenet = tenet_carnal_exaltation } }
 			rite = { NOT = { rite_has_doctrine = doctrine_pluralism_pluralistic } }
 		}	
@@ -2822,10 +2822,10 @@ fp3_yearly.8010 = {
 				has_trait = compassionate
 				has_trait = just 
 			}
-			faith = {
+			rite = { #Unop: Check rite, not faith (main rite only)
 				NOR = {
-					has_doctrine_parameter = unreformed
-					has_doctrine_parameter = holy_wars_forbidden # Pacifists cannot Holy War
+					rite_has_parameter = unreformed #Unop: Rite check
+					rite_has_parameter = holy_wars_forbidden # Pacifists cannot Holy War #Unop: Rite check
 				}
 			}
 			rite = { NOT = { rite_has_doctrine = doctrine_pluralism_pluralistic } }

@@ -830,7 +830,7 @@ court_chaplain_conversion_contextual_bonuses = {
 		limit = {
 			exists = scope:county.faith
 			scope:county.faith != scope:councillor.faith
-			scope:councillor.faith = { faith_is_syncretic_with = { FAITH = scope:county.faith } }
+			scope:councillor.rite = { rite_is_syncretic_with = { RITE = scope:county.rite } } #Unop: Check the rite, the faith only sees its main rite
 		}
 		add = {
 			value = scope:councillor.conversion_syncretic_with_religion_malus
@@ -888,8 +888,8 @@ court_chaplain_conversion_contextual_bonuses = {
 				}
 				religion = religion:germanic_religion
 			}
-			scope:county.faith = {
-				NOT = { has_doctrine_parameter = unreformed }
+			scope:county.rite = { #Unop: Check rite, not faith (main rite only)
+				NOT = { rite_has_parameter = unreformed } #Unop: Rite check
 			}
 		}
 		add = {
@@ -1218,7 +1218,7 @@ court_chaplain_conversion_contextual_bonuses = {
 	# Faster conversion for certain special doctrines
 	if = {
 		limit = {
-			scope:councillor_liege.faith = { has_doctrine_parameter = adoptionists_attractively_intuitive_theology }
+			scope:councillor_liege.rite = { rite_has_parameter = adoptionists_attractively_intuitive_theology } #Unop: Check rite, not faith (main rite only)
 			exists = scope:county
 			scope:county.faith.religion = religion:christianity_religion
 		}
@@ -1233,8 +1233,8 @@ court_chaplain_conversion_factors = {
 	value = 1
 	if = {
 		limit = {
-			scope:councillor.faith = {
-				has_doctrine_parameter = unreformed
+			scope:councillor.rite = { #Unop: Check rite, not faith (main rite only)
+				rite_has_parameter = unreformed #Unop: Rite check
 			}
 		}
 		multiply = {

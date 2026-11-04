@@ -4580,9 +4580,10 @@ pam_create_theocratic_dynasty_extra_effects = {
 }
 
 pam_boost_clerical_appointment_score_effect = {
+	$CHARACTER$ ?= { save_scope_as = unop_appointment_candidate } #Unop: Resolve the character before switching to the title
 	$CHARACTER$.superior.primary_title ?= {
 		change_appointment_investment = {
-			target = $CHARACTER$
+			target = scope:unop_appointment_candidate #Unop: $CHARACTER$ can be relative (this, puppet:...), which would resolve from the title
 			value = $VALUE$
 		}
 	}
@@ -8353,7 +8354,10 @@ divorce_house_feud_effect = {
 	}
 }
 divorce_holy_order_lease_effect = {
-	scope:barony_to_lease = { lease_out_to_holy_order = scope:lease_order }
+	if = { #Unop: Guard, the lease scopes are not always set
+		limit = { exists = scope:lease_order }
+		scope:barony_to_lease ?= { lease_out_to_holy_order = scope:lease_order }
+	}
 }
 divorce_get_hook_effect = {
 	if = {
@@ -8789,6 +8793,10 @@ pam_study_rite_tenet_popularity_effect = {
 
 # on_rite_created. scope:new_rite must exist; root is founder.
 pam_tenet_popularity_on_rite_created_effect = {
+	if = { #Unop: on_rite_created does not provide scope:new_rite
+		limit = { NOT = { exists = scope:new_rite } }
+		rite ?= { save_scope_as = new_rite }
+	}
 	if = {
 		limit = {
 			scope:new_rite.faith ?= { has_tenet_popularity_trigger = yes }
