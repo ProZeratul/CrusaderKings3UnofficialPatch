@@ -491,7 +491,7 @@ tgp_decision_events.0100 = {
     after = {
         if = {
             limit = { NOT = { exists = scope:movement_petition_effect } }
-            save_scope_value_as = { name = movement_petition_effect value = var:movement_petition }
+            var:movement_petition ?= { save_scope_as = movement_petition_effect } #Unop: Was save_scope_value_as, which cannot take a flag from a variable
         }
         display_movement_petition_recipient_acceptance_effect = yes
         scope:petition_recipient = {
