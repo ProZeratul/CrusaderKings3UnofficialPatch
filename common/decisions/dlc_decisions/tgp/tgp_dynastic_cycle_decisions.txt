@@ -3271,6 +3271,7 @@ house_head_consults_heaven_decision = {
 					house = {
 						OR = {
 							is_powerful_family = yes
+							is_dominant_family = yes #Unop: Include dominant families
 							title:h_china.holder.house ?= this
 						}
 					}
@@ -3377,7 +3378,10 @@ house_head_consults_heaven_decision = {
 		OR = { # To make sure the cycle isn't nuked by landless families
 			highest_held_title_tier >= tier_duchy
 			house = {
-				is_powerful_family = yes
+				OR = { #Unop: Include dominant families
+					is_powerful_family = yes
+					is_dominant_family = yes
+				}
 			}
 		}
 		situation:dynastic_cycle ?= {

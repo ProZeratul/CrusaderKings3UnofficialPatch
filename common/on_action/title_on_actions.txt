@@ -4264,6 +4264,23 @@ on_title_lost = {
 					}
 				}
 			}
+			#Unop Byz admin landless NF should always be direct vassal of top liege, also when losing their last landed title
+			else_if = {
+				limit = {
+					is_alive = yes
+					government_has_flag = government_is_administrative
+					liege != top_liege
+				}
+				create_title_and_vassal_change = {
+					type = appointment
+					save_scope_as = change
+				}
+				change_liege = {
+					liege = top_liege
+					change = scope:change
+				}
+				resolve_title_and_vassal_change = scope:change
+			}
 		}
 		else_if = {
 			limit = {

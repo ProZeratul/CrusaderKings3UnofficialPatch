@@ -21,19 +21,19 @@ All interaction goes through [ck3.sh](ck3.sh) (macOS and Linux X11; Linux clicks
 
 ## Helper
 
-Set `CK3_SHOT_DIR` to your scratchpad directory, then run `<base>/ck3.sh <command>`, where `<base>` is this skill's base directory as an absolute path.
+Run `<base>/ck3.sh <command>`, where `<base>` is this skill's base directory as an absolute path. Make each call exactly that, with every argument written out: no `cd`, variables, `export`, pipes, redirects or `&&` around it. Only that form matches the sandbox exclusion; anything else runs sandboxed, where the game can't start or be driven. Screenshots go to `~/.cache/ck3-shots`, which the sandbox can read but not write. Numeric arguments must be plain numbers, and `run` files and `--mod` directories must be in the repo or under `/tmp`.
 
 | Command | Effect |
 |---|---|
 | `launch [--mod <dir>]` | Start the game binary directly, bypassing the launcher, and wait for the main menu. Refuses if CK3 is already running. `--mod` loads Unop from `<dir>` (e.g. a PR worktree) instead of the descriptor's path |
 | `start <867\|1066\|1178>` | From the main menu: New Game, the bookmark, its first featured character (Rurik, Vratislav, Kiyomori), Start, and wait until loaded. Prints a crop of the bookmark's name and date and the selected character |
 | `wait game [<s>]` | After `mark` and starting or loading a game by hand, wait until it's loaded (default timeout 300 s) |
-| `exit` | Kill the game that `launch` started and restore the Unop descriptor's path. Refuses to kill a game it didn't start |
+| `exit` | Kill the game that `launch` started, restore the Unop descriptor's path, and delete the effect files `run` copied. Refuses to kill a game it didn't start |
 | `shot <name> [<x> <y> <w> <h>]` | Capture the CK3 window; prints the path of a 1400px-wide copy to Read, or of a full-resolution crop of the given region (1400px coordinates) |
 | `click <x> <y>` | Click at pixel coordinates **of the 1400px screenshot** |
 | `hover <x> <y>` | Move the pointer there without clicking, e.g. to show a tooltip |
 | `key <key>...` | Press keys: `console`, `space`, `enter`, `esc`, `tab`, `up`, `down`, `f10`, `1`-`5` |
-| `cmd <line>` | Type a console line and press Enter; refuses lines over 255 chars |
+| `cmd "<line>"` | Type a console line and press Enter; refuses lines over 255 chars. Quote the line: unquoted, a ` = ` in it runs the call inside the sandbox, where it fails |
 | `run <file>` | Copy an effect file to `run/claude_<timestamp>_<name>` (UTF-8 BOM) and execute it |
 | `mark` | Remember the current length of `error.log` and `debug.log` |
 | `new [error\|debug]` | Print log lines added since the last `mark` |

@@ -3,21 +3,40 @@
 # Backends: macOS (screencapture, cliclick, osascript) and Linux X11 (xdotool, ImageMagick, xclick.py).
 # Coordinates for `click` are pixels in the 1400px-wide screenshot produced by `shot`.
 set -euo pipefail
+# TODO: macOS is untested since the sandbox hardening; test and tune it before using.
 
-ROOT=$(git -C "$(dirname "$0")" rev-parse --show-toplevel)
+# The checkout this script is in
+ROOT=$(cd "$(dirname "$0")/../../.." && pwd -P)
 set -a; . "$ROOT/.env"; set +a
 BIN="$CK3_BASE_DIR/../binaries"
-SHOTS=${CK3_SHOT_DIR:-${TMPDIR:-/tmp}/ck3-shots}
+# Not under $TMPDIR: this script runs outside the sandbox, so its files must live where the sandbox
+# can read but not write, or a planted symlink would redirect its writes.
+SHOTS=$HOME/.cache/ck3-shots
 SMALL=1400   # width of the downscaled screenshot that click coordinates refer to
 MAXLINE=255  # console input limit; longer input overflows into game hotkeys
 DEBUG_LOG="$CK3_USER_DIR/logs/debug.log"
 MOD="$CK3_USER_DIR/mod/CrusaderKings3UnofficialPatch.mod"
 MOD_ORIG="$CK3_USER_DIR/mod/.CrusaderKings3UnofficialPatch.mod.orig"  # saved by launch --mod
 PIDFILE="$CK3_USER_DIR/.claude-ck3.pid"  # the game started by launch; exit kills only this one
-mkdir -p "$SHOTS"
 OS=$(uname)
 
 die() { echo "ck3.sh: $*" >&2; exit 2; }
+
+# Only accept paths in this checkout or under /tmp, resolved without symlinks, and in plain characters.
+safe_path() {
+  local p=$1
+  [[ "$p" =~ ^[[:alnum:]_./\ -]+$ ]] || die "unsupported characters in path: $p"
+  case "$p" in "$ROOT"/*|/tmp/*) ;; *) die "path outside $ROOT and /tmp: $p" ;; esac
+}
+
+# Numbers only: bash arithmetic evaluates a value like a[$(cmd)], which would run cmd.
+# No leading zeros, which arithmetic reads as octal.
+num() { local v; for v in "$@"; do [[ "$v" =~ ^(0|[1-9][0-9]{0,4})$ ]] || die "not a number: $v"; done; }
+
+# Claude Code's sandbox makes the CK3 user dir read-only and hides the display, so fail early with a hint.
+[ -w "$CK3_USER_DIR" ] || die "can't write $CK3_USER_DIR, probably running inside the Claude Code sandbox; use '$0 <command>', with nothing else in the Bash call."
+
+mkdir -p -m 700 "$SHOTS"
 
 # --- platform primitives ---------------------------------------------------
 
@@ -102,10 +121,15 @@ fi
 # Point the Unop descriptor at another checkout (e.g. a PR worktree); the original is kept in $MOD_ORIG.
 set_mod() {
   local dir
-  dir=$(cd "$1" && pwd) || die "no such directory: $1"
+  dir=$(cd "$1" && pwd -P) || die "no such directory: $1"
+  safe_path "$dir"
   [ -f "$dir/descriptor.mod" ] || die "not a Unop checkout (no descriptor.mod): $dir"
   [ -f "$MOD_ORIG" ] || cp "$MOD" "$MOD_ORIG"
-  sed "s|^path=.*|path=\"$dir\"|" "$MOD_ORIG" > "$MOD"
+  local line
+  while IFS= read -r line || [ -n "$line" ]; do
+    case "$line" in path=*) line="path=\"$dir\"" ;; esac
+    printf '%s\n' "$line"
+  done < "$MOD_ORIG" > "$MOD"
 }
 
 restore_mod() { if [ -f "$MOD_ORIG" ]; then cp "$MOD_ORIG" "$MOD"; rm "$MOD_ORIG"; fi; }
@@ -156,6 +180,8 @@ cmd_exit() {
   fi
   rm -f "$PIDFILE"
   restore_mod
+  # delete the effect files that run copied (the sandbox can't)
+  [ ! -d "$CK3_USER_DIR/run" ] || find "$CK3_USER_DIR/run" -maxdepth 1 -type f -name 'claude_*' -delete
   grep '^path=' "$MOD"
 }
 
@@ -164,6 +190,7 @@ cmd_wait() {
     game)
       # needs a `mark` before starting or loading the game
       local i timeout=${2:-300}
+      num "$timeout"
       for ((i = 0; i < timeout; i++)); do
         cmd_new debug | grep "Setting idler 'In Game'" > /dev/null && { sleep 3; echo "in game"; return 0; }
         sleep 1
@@ -197,6 +224,8 @@ cmd_start() {
 
 cmd_shot() {
   local name=${1:?shot <name> [<x> <y> <w> <h>]}
+  [[ "$name" =~ ^[A-Za-z0-9_-]+$ ]] || die "shot name must be letters, digits, _ or -: $name"
+  [ $# -lt 5 ] || num "$2" "$3" "$4" "$5"
   activate
   capture "$SHOTS/$name.png"
   if [ $# -ge 5 ]; then
@@ -212,6 +241,7 @@ cmd_shot() {
 
 cmd_click() {
   local sx=${1:?click <x> <y>} sy=${2:?click <x> <y>} X Y W H
+  num "$sx" "$sy"
   activate
   read -r X Y W H <<< "$(geometry)"
   click_abs $((X + sx * W / SMALL)) $((Y + sy * W / SMALL))
@@ -219,6 +249,7 @@ cmd_click() {
 
 cmd_hover() {
   local sx=${1:?hover <x> <y>} sy=${2:?hover <x> <y>} X Y W H
+  num "$sx" "$sy"
   activate
   read -r X Y W H <<< "$(geometry)"
   hover_abs $((X + sx * W / SMALL)) $((Y + sy * W / SMALL))
@@ -233,10 +264,20 @@ cmd_cmd() {
 }
 
 cmd_run() {
-  local src=${1:?run <effect file>} name
-  name="claude_$(date +%Y%m%d_%H%M%S)_$(basename "$src")"
+  local src=${1:?run <effect file>} name real
+  # Open first, then check the file that was actually opened, so it can't be swapped for a
+  # symlink between the check and the copy. Check for a regular file first, so a FIFO can't block the open.
+  [ -f "$src" ] || die "not a regular file: $src"
+  exec 3< "$src" || die "can't open: $src"
+  # TODO: on macOS this resolves only the directory, so a symlink as the last component passes;
+  # compare the device and inode of /dev/fd/3 and the resolved path there (stat -L -f %d:%i).
+  if [ "$OS" = Linux ]; then real=$(readlink /proc/self/fd/3); else real=$(cd "$(dirname "$src")" && pwd -P)/$(basename "$src"); fi
+  [ -f "$real" ] || die "not a regular file: $src"
+  safe_path "$real"
+  name="claude_$(date +%Y%m%d_%H%M%S)_$(basename "$real")"
   mkdir -p "$CK3_USER_DIR/run"
-  { printf '\xef\xbb\xbf'; cat "$src"; } > "$CK3_USER_DIR/run/$name"
+  { printf '\xef\xbb\xbf'; cat <&3; } > "$CK3_USER_DIR/run/$name"
+  exec 3<&-
   echo "run/$name"
   cmd_cmd "run $name"
 }
@@ -247,7 +288,7 @@ cmd_mark() {
 
 cmd_new() {
   local log=${1:-error} idx n cur
-  [ "$log" = error ] && idx=1 || idx=2
+  case "$log" in error) idx=1 ;; debug) idx=2 ;; *) die "new [error|debug]" ;; esac
   n=$(sed -n "${idx}p" "$SHOTS/.logmark" 2>/dev/null || echo 0)
   cur=$(wc -l < "$CK3_USER_DIR/logs/$log.log")
   [ "$cur" -ge "$n" ] || n=0   # log was recreated by a game restart

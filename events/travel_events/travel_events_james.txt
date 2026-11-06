@@ -710,7 +710,7 @@ scripted_trigger is_near_vikings_trigger = {
 				is_coastal_county = yes
 				has_coastal_province = yes
 				culture = { has_innovation = innovation_longboats }
-				faith = { has_doctrine_parameter = faith_can_raid }
+				rite = { rite_has_parameter = faith_can_raid } #Unop: Check rite, not faith (main rite only)
 			}
 		}
 	}
@@ -774,7 +774,7 @@ travel_events.4003 = {
 					holder = { in_diplomatic_range = root }
 					has_coastal_province = yes
 					culture = { has_innovation = innovation_longboats }
-					faith = { has_doctrine_parameter = faith_can_raid }
+					rite = { rite_has_parameter = faith_can_raid } #Unop: Check rite, not faith (main rite only)
 				}
 			}
 		}
@@ -816,7 +816,7 @@ travel_events.4003 = {
 							holder = { in_diplomatic_range = root }
 							has_coastal_province = yes
 							culture = { has_innovation = innovation_longboats }
-							faith = { has_doctrine_parameter = faith_can_raid }
+							rite = { rite_has_parameter = faith_can_raid } #Unop: Check rite, not faith (main rite only)
 						}
 					}
 					county = {
@@ -3293,7 +3293,7 @@ travel_events.4018 = {
 				culture != root.capital_county.culture
 				faith.religion != root.faith.religion
 				OR = {
-					faith = { has_doctrine_parameter = mendicant_preachers_conversion_active }
+					rite = { rite_has_parameter = mendicant_preachers_conversion_active } #Unop: Check rite, not faith (main rite only)
 					culture = { has_cultural_tradition = tradition_mendicant_mystics }
 				}
 			}
@@ -3863,11 +3863,11 @@ travel_events.4021 = {
 		is_available_travelling = yes
         is_playable_character = yes
 		# Human sacrifice should be shocking to you
-		NOT = { root.faith = { has_doctrine_parameter = human_sacrifice_active } }
+		NOT = { root.rite = { rite_has_parameter = human_sacrifice_active } } #Unop: Check rite, not faith (main rite only)
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
 			county = {
-				faith = { has_doctrine_parameter = human_sacrifice_active }
+				rite = { rite_has_parameter = human_sacrifice_active } #Unop: Check rite, not faith (main rite only)
 			}
 		}
 	}
@@ -6912,7 +6912,7 @@ travel_events.4037 = {
         is_playable_character = yes
 		is_location_valid_for_travel_event_on_land = yes
 		location.faith != root.faith
-		location.faith = { faith_is_syncretic_with = { FAITH = root.faith } }
+		location.rite = { rite_is_syncretic_with = { RITE = root.rite } } #Unop: Check the rite, the faith only sees its main rite
 	}
 	immediate = {
 		wayfarer_storyteller_fame_effect = { VALUE = roaming_reward_fame_small }
@@ -7093,7 +7093,7 @@ travel_events.4038 = {
 			barony.holder = { is_ai = yes }
 			barony.holder != root
 		}
-		faith = { faith_is_syncretic_with = { FAITH = root.location.faith } }
+		rite = { rite_is_syncretic_with = { RITE = root.location.rite } } #Unop: Check the rite, the faith only sees its main rite
 	}
 	immediate = {
 		wayfarer_storyteller_fame_effect = { VALUE = roaming_reward_fame_small }
@@ -7174,7 +7174,7 @@ travel_events.4038 = {
 					add_piety = minor_piety_loss
 					if = {
 						limit = {
-							faith = { has_doctrine_parameter = eastern_syncretic_actor }
+							rite = { rite_has_parameter = eastern_syncretic_actor } #Unop: Check rite, not faith (main rite only)
 						}
 						add_character_modifier = {
 							modifier = offended_eastern_modifier
@@ -7183,7 +7183,7 @@ travel_events.4038 = {
 					}
 					else_if = {
 						limit = {
-							faith = { has_doctrine_parameter = sinitic_syncretic_actor }
+							rite = { rite_has_parameter = sinitic_syncretic_actor } #Unop: Check rite, not faith (main rite only)
 						}
 						add_character_modifier = {
 							modifier = offended_sinitic_modifier
@@ -7192,7 +7192,7 @@ travel_events.4038 = {
 					}
 					else_if = {
 						limit = {
-							faith = { has_doctrine_parameter = unreformed_syncretic_actor }
+							rite = { rite_has_parameter = unreformed_syncretic_actor } #Unop: Check rite, not faith (main rite only)
 						}
 						add_character_modifier = {
 							modifier = offended_pagan_modifier
@@ -7201,7 +7201,7 @@ travel_events.4038 = {
 					}
 					else_if = {
 						limit = {
-							faith = { has_doctrine_parameter = christian_syncretic_actor }
+							rite = { rite_has_parameter = christian_syncretic_actor } #Unop: Check rite, not faith (main rite only)
 						}
 						add_character_modifier = {
 							modifier = offended_christian_modifier
@@ -7210,7 +7210,7 @@ travel_events.4038 = {
 					}
 					else_if = {
 						limit = {
-							faith = { has_doctrine_parameter = islamic_syncretic_actor }
+							rite = { rite_has_parameter = islamic_syncretic_actor } #Unop: Check rite, not faith (main rite only)
 						}
 						add_character_modifier = {
 							modifier = offended_muslim_modifier
@@ -7219,7 +7219,7 @@ travel_events.4038 = {
 					}
 					else_if = {
 						limit = {
-							faith = { has_doctrine_parameter = jewish_syncretic_actor }
+							rite = { rite_has_parameter = jewish_syncretic_actor } #Unop: Check rite, not faith (main rite only)
 						}
 						add_character_modifier = {
 							modifier = offended_jewish_modifier

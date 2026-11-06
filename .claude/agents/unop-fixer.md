@@ -49,16 +49,26 @@ Make sure you are in a worktree before changing anything. Run `pwd`; if it is no
 2. **Pull the handover comment** into the shared file. There should always be one (the analyzer wrote it); if there isn't, proceed without it.
 
    ```shell
-   .claude/scripts/handover-pull.sh <N>
+   <main>/.claude/scripts/handover-pull.sh <N>
    ```
 
 3. **Run the skill** with the issue number and identity `fixer`. It formulates and applies the fix, runs tiger via the `tiger` skill, opens or updates the draft PR, and posts the `**fixer:**` PR comment.
-   - On a re-fix, first check out the linked PR's branch so the skill amends it; on a first fix the skill branches from `main`. 
+   - On a re-fix, first fetch the linked PR's branch and check what it changes, before anything of it is in your worktree:
+
+     ```shell
+     git fetch -q origin main <branch>
+     git diff --name-only origin/main...origin/<branch>
+     git diff --summary origin/main...origin/<branch>
+     ```
+
+     If it touches `Makefile`, `.github/`, `.gitattributes`, `.mcp.json`, or a `.claude/`, `CLAUDE.md` or `CLAUDE.local.md` in any directory, or the summary shows `mode 120000` (a symlink), don't check it out. Post a short `**fixer:**` comment on the issue naming the files, add `needs-human` to the issue, unlock (step 6), and release the worktree (section 4).
+
+     Otherwise check it out without tracking, so the skill amends it: `git checkout -q --no-track -B <branch> origin/<branch>`. On a first fix the skill branches from `origin/main`.
 
 4. **Push the handover comment** from the updated shared file:
 
    ```shell
-   .claude/scripts/handover-push.sh <N>
+   <main>/.claude/scripts/handover-push.sh <N>
    ```
 
 5. **Hand off** to the reviewer: `gh issue edit <N> --add-label action:review --remove-label action:fix`.

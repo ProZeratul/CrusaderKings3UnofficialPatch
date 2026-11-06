@@ -39,7 +39,10 @@ ep3_powerful_families.8000 = {
 		government_has_mechanic = administrative
 		government_allows = noble_families
 		house ?= {
-			is_powerful_family = yes
+			OR = { #Unop: Include dominant families
+				is_powerful_family = yes
+				is_dominant_family = yes
+			}
 		}
 		# No Emperors
 		top_liege != this
@@ -314,7 +317,10 @@ ep3_powerful_families.8010 = {
 		government_has_mechanic = administrative
 		government_allows = noble_families
 		house ?= {
-			is_powerful_family = yes
+			OR = { #Unop: Include dominant families
+				is_powerful_family = yes
+				is_dominant_family = yes
+			}
 		}
 		# No Emperors
 		top_liege != this
@@ -621,7 +627,10 @@ ep3_powerful_families.8020 = {
 		government_has_mechanic = administrative
 		government_allows = noble_families
 		house ?= {
-			is_powerful_family = yes
+			OR = { #Unop: Include dominant families
+				is_powerful_family = yes
+				is_dominant_family = yes
+			}
 		}
 		NOT = {
 			#cooldown
@@ -809,7 +818,10 @@ ep3_powerful_families.8030 = {
 		government_has_mechanic = administrative
 		government_allows = noble_families
 		house ?= {
-			is_powerful_family = yes
+			OR = { #Unop: Include dominant families
+				is_powerful_family = yes
+				is_dominant_family = yes
+			}
 		}
 		# No Emperors
 		top_liege != this
@@ -819,7 +831,10 @@ ep3_powerful_families.8030 = {
 			is_ai = yes
 			liege = root.liege
 			house ?= {
-				is_powerful_family = yes
+				OR = { #Unop: Include dominant families
+					is_powerful_family = yes
+					is_dominant_family = yes
+				}
 			}
 			can_join_faction = root.joined_faction
 			OR = {
@@ -836,7 +851,10 @@ ep3_powerful_families.8030 = {
 				is_ai = yes
 				liege = root.liege
 				house ?= {
-					is_powerful_family = yes
+					OR = { #Unop: Include dominant families
+						is_powerful_family = yes
+						is_dominant_family = yes
+					}
 				}
 				can_join_faction = root.joined_faction
 				OR = {
@@ -953,7 +971,10 @@ ep3_powerful_families.8040 = {
 		government_allows = noble_families
 		is_available = yes
 		house ?= {
-			is_powerful_family = yes
+			OR = { #Unop: Include dominant families
+				is_powerful_family = yes
+				is_dominant_family = yes
+			}
 		}
 		domicile ?= {
 			is_domicile_type = estate
@@ -968,7 +989,10 @@ ep3_powerful_families.8040 = {
 				exists = house
 				house != root.house
 				house = {
-					is_powerful_family = yes
+					OR = { #Unop: Include dominant families
+						is_powerful_family = yes
+						is_dominant_family = yes
+					}
 				}
 				is_available_ai_adult = yes
 			}
@@ -1149,7 +1173,10 @@ ep3_powerful_families.8060 = {
 		government_allows = noble_families
 		is_available = yes
 		house ?= {
-			is_powerful_family = yes
+			OR = { #Unop: Include dominant families
+				is_powerful_family = yes
+				is_dominant_family = yes
+			}
 		}
 		any_relation = {
 			type = rival
@@ -1157,7 +1184,10 @@ ep3_powerful_families.8060 = {
 			exists = house
 			house != root.house
 			house = {
-				is_powerful_family = yes
+				OR = { #Unop: Include dominant families
+					is_powerful_family = yes
+					is_dominant_family = yes
+				}
 			}
 			is_available_ai_adult = yes
 			domicile ?= {
@@ -1175,7 +1205,10 @@ ep3_powerful_families.8060 = {
 				exists = house
 				house != root.house
 				house = {
-					is_powerful_family = yes
+					OR = { #Unop: Include dominant families
+						is_powerful_family = yes
+						is_dominant_family = yes
+					}
 				}
 				is_available_ai_adult = yes
 				domicile ?= {
@@ -1350,7 +1383,10 @@ ep3_powerful_families.8070 = {
 		government_allows = noble_families
 		is_available = yes
 		house ?= {
-			is_powerful_family = yes
+			OR = { #Unop: Include dominant families
+				is_powerful_family = yes
+				is_dominant_family = yes
+			}
 		}
 		exists = domicile
 		house = {
@@ -1747,7 +1783,10 @@ ep3_powerful_families.8080 = {
 # 8090
 scripted_trigger ep3_pf_rival_fam_trigger = {
 	house ?= {
-		is_powerful_family = yes
+		OR = { #Unop: Include dominant families
+			is_powerful_family = yes
+			is_dominant_family = yes
+		}
 	}
 	top_liege != this
 	top_liege = root.top_liege
@@ -1783,7 +1822,10 @@ ep3_powerful_families.8090 = {
 		government_has_mechanic = administrative
 		government_allows = noble_families
 		house ?= {
-			is_powerful_family = yes
+			OR = { #Unop: Include dominant families
+				is_powerful_family = yes
+				is_dominant_family = yes
+			}
 		}
 		top_liege != this
 		scope:activity = {
@@ -1943,7 +1985,10 @@ ep3_powerful_families.8100 = {
 		government_has_mechanic = administrative
 		government_allows = noble_families
 		house ?= {
-			is_powerful_family = yes
+			OR = { #Unop: Include dominant families
+				is_powerful_family = yes
+				is_dominant_family = yes
+			}
 		}
 		top_liege != this
 		house = {

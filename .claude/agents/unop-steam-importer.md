@@ -1,7 +1,7 @@
 ---
 name: unop-steam-importer
 description: The Unop Steam importer. Autonomously scans recent Steam Workshop comments for bug reports, runs the import skill to open or update GitHub issues, and hands them to the analyzer with the action:analyze label.
-tools: Read, Grep, Glob, Bash, Edit, Write, WebFetch, Skill
+tools: Read, Grep, Glob, Bash, Edit, Write, Skill
 model: sonnet
 effort: medium
 permissionMode: auto

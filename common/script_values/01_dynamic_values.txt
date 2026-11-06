@@ -1742,6 +1742,24 @@ root_faith_clergy_gender_female_chance = {
 	}
 }
 
+unop_hof_creator_clergy_gender_female_chance = { #Unop: Like root_faith_clergy_gender_female_chance, for set_up_dynamic_spiritual_hof_title_effect where root can be a faith
+	if = {
+		limit = {
+			scope:hof_creator.rite = { rite_has_parameter = clergy_must_be_male }
+		}
+		add = 0
+	}
+	else_if = {
+		limit = {
+			scope:hof_creator.rite = { rite_has_parameter = clergy_must_be_female }
+		}
+		add = 100
+	}
+	else = {
+		add = 50
+	}
+}
+
 scope_actor_faith_clergy_gender_female_chance = {
 	if = {
 		limit = {
