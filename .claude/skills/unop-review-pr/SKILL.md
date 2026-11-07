@@ -15,6 +15,7 @@ This skill runs **autonomously**, without asking for approval. Any human gates b
 - **GitHub repo**: `ProZeratul/CrusaderKings3UnofficialPatch`. Use the `gh` CLI for all GitHub operations.
 - **Anchor**: the issue or PR number carrying the labels and shared file — the issue a PR closes, or the PR itself if it closes none.
 - **Shared file**: `tmp/issue-<anchor>.md` — the handover document. Other skills may create it with the `## Analysis` section and append `## Fix N` sections. This skill reads both and appends `## Review N`. May be absent.
+- **Tiger issue**: an issue labelled `tiger`, naming tiger reports that its author believes are real bugs. `../unop-fix-issue/tiger-issues.md` says how to work one.
 
 ## Context
 
@@ -75,10 +76,18 @@ Before the line-level review, judge the approach itself — as stated in the lat
 - **Simplicity.** Is this the simplest viable fix? Flag new state, new files, or new triggers added where an existing trigger, variable, flag, or guard would have expressed the fix. See `examples.md` (#420).
 - **Altitude.** Could one higher-level change replace the N changes? If the fix patches each member of a group, is the group itself the right level? If an analogous system handles the same condition, does the fix mirror that verified mechanism or invent a parallel one? See `examples.md` (#498).
 - **Pattern class / sibling systems.** Did the fix enumerate the whole category? Check analogous systems — other files sharing the mechanic — for the same bug; a reproducing sibling left untouched is a finding. See `examples.md` (#498).
-- **Load-bearing assumption.** Is the single behavioral assumption the fix depends on corroborated (a precedent, a doc/log line) or merely asserted? An unverified core assumption is a finding even if prior cycles repeated it. See `examples.md` (#498).
+- **Load-bearing assumption.** Is the single behavioral assumption the fix depends on corroborated (a precedent, a doc/log line) or merely asserted? An unverified core assumption is a finding even if prior cycles repeated it. In a tiger issue, judge an assumption the files can't confirm as a guessed fix instead. See `examples.md` (#498).
 - **Guard intent.** If the approach loosens or adds a guard, is the stated intent sound and aligned with the design intent in the whole feature — comments, localization, and effects? Watch for a widened proxy that re-admits the cases it was guarding. See `examples.md` (#440, #501).
 - **Reporter's fix.** If the approach follows the reporter's suggestion, was that suggestion evaluated critically rather than taken as default? See `examples.md` (#213).
 - **Re-fix.** If a prior `## Review N` exists, does this approach genuinely resolve its `High`/`Medium` findings, or merely work around them?
+- **Tiger issue.** If the anchor is a tiger issue, check each problem as `../unop-fix-issue/tiger-issues.md` says:
+  - Reach your own verdict on every problem, whatever the analysis and the fix concluded.
+  - A fixed problem must be real, and its fix correct. A guessed fix must give its reasons and be the most likely one.
+  - A problem kept ignored needs a sound reason, the section for its verdict, and a rule that hides no report needing another verdict.
+  - A verdict you disagree with, or a guessed fix you find less likely than another, is a `Medium` finding, with the evidence.
+  - On a re-review, weigh the evidence a re-fix gave against your earlier findings, and repeat a finding only if that evidence doesn't hold.
+  - A problem marked no longer reported must not show in your tiger run, and only its rule may change.
+  - Every report the issue names must be fixed, un-ignored, or ignored by a rule that gives the reason.
 
 2. **Review the Implementation**
 
@@ -89,10 +98,10 @@ For each changed file, check:
 - **Side effects.** Does the fix destroy state that other events, effects, or on_actions still depend on? See `examples.md` (#213).
 - **Out-of-scope files.** Fixes never change `Makefile`, `.github/`, `.gitattributes`, `.mcp.json`, or a `.claude/`, `CLAUDE.md` or `CLAUDE.local.md` in any directory, and never add symlinks. If the diff touches any of them, that is a `High` finding: don't run anything from the PR beyond reading it, and add the `needs-human` label to the anchor in step 6.
 - **`#Unop` comments.** Are they present on the first changed line? Are they accurate and concise?
-- **Tiger is clean.** Re-run tiger yourself on the PR export with `ck3-tiger --no-color <export> > tmp/ck3-tiger-pr.out`. Don't trust the fix's claim that it passes. Any error or warning the fix introduced or left unaddressed is a finding. Don't invoke the `tiger` skill or fix anything; that's for the next fix cycle.
-- **Tiger suppressions.** If the fix added entries to `ck3-tiger.conf` (`# False positives` / `# Ignored`), challenge each one: warnings should be fixed, not suppressed, unless tiger is proven wrong. A warning suppressed that should have been fixed is a finding.
+- **Tiger is clean.** Re-run tiger yourself on the PR export, single-threaded as **Run tiger** in `CLAUDE.md` says: `RAYON_NUM_THREADS=1 ck3-tiger --no-color <export> > tmp/ck3-tiger-pr.out`. Don't trust the fix's claim that it passes. Any report the fix introduced or left unaddressed is a finding. Don't invoke the `tiger` skill or fix anything; that's for the next fix cycle.
+- **Tiger suppressions.** Challenge each rule the fix added to or changed in `ck3-tiger.conf`. Judge its reports' verdict by the `tiger` skill's criteria, and the disposition of a real problem by **Resolving Tiger Reports** in `CLAUDE.md`. A report suppressed that should have been fixed, or one in the wrong section, is a finding. In a tiger issue, judge the issue's problems as the **Tiger issue** check above says.
 - **Vanilla file commits.** If a new vanilla file was added, was it added in a separate commit without modifications?
-- **Test script.** Does the PR have a test script comment by a trusted author (`<main>/.claude/scripts/marker-get.sh <PR> unop-test body`) that follows `../unop-fix-issue/testing.md`? Re-check every character ID, title, effect and event ID it names against the files and logs. Does the setup actually reach the bug state, and do the steps exercise the *changed* code, not a direct `event` call that bypasses a fixed trigger? A missing or unusable script is `Medium`, since it blocks verification. Minor inaccuracies are `Low`.
+- **Test script.** Does the PR have a test script comment by a trusted author (`<main>/.claude/scripts/marker-get.sh <PR> unop-test body`) that follows `../unop-fix-issue/testing.md`? Re-check every character ID, title, effect and event ID it names against the files and logs. Does the setup actually reach the bug state, and do the steps exercise the *changed* code, not a direct `event` call that bypasses a fixed trigger? A missing or unusable script is `Medium`, since it blocks verification. Minor inaccuracies are `Low`. A PR opened by a human, or one for a tiger issue, needs no test script.
 
 ### 4. Rate Findings
 
@@ -150,6 +159,8 @@ gh api -X POST repos/ProZeratul/CrusaderKings3UnofficialPatch/pulls/<PR>/reviews
 ```
 
 Comment only on lines present in the diff, using new-file numbers with `side: RIGHT`. Omit `comments` if you have no line-level notes.
+
+In a tiger issue, the review body lists each problem whose verdict you dispute, using the per-problem lines from `../unop-fix-issue/tiger-issues.md` with your verdict, and the reason or evidence.
 
 Apply your verdict label to the **anchor** via the label API — set `review:looks-good` or `review:needs-work`, removing the other:
 

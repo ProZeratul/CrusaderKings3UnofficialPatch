@@ -25,6 +25,7 @@ All relevant directories are in [.env](../.env) (read it for their values; in an
 
 - `CK3_BASE_DIR`: base game root directory
 - `CK3_USER_DIR`: game user data directory (logs, settings, etc.)
+- `CK3_TIGER_DIR`: source of the `ck3-tiger` you run, if it's built locally
 
 ### Game Docs
 
@@ -41,6 +42,7 @@ All relevant directories are in [.env](../.env) (read it for their values; in an
 ### Tiger
 
 - The `ck3-tiger` configuration is `ck3-tiger.conf`, and its output is saved to `ck3-tiger.out`.
+- To check how tiger works, read its source in `CK3_TIGER_DIR`, never on GitHub: the `ck3-tiger` you run may be built from another branch. If `CK3_TIGER_DIR` isn't set, don't use tiger's source.
 - The Unop file that overrides a base game file is **always** a file with the same name (for script files).
 - Unop localization `.yml` files are in `localization/replace/english`:
   - `unop_fixed_keys_l_english.yml`: fixed vanilla keys
@@ -83,15 +85,16 @@ All relevant directories are in [.env](../.env) (read it for their values; in an
 - **Use ASCII only.** Don't use non-ASCII characters (arrows, long dashes, ellipses, etc.) in comments or prose.
 - **No AI attributions.** Never add Claude or Claude Code attributions (e.g. `Co-Authored-By` trailers or "Generated with Claude Code") to commit messages, PR descriptions, issues, or comments.
 
-### Ignoring Tiger Errors
+### Resolving Tiger Reports
 
-- **Use the right section.** In `ck3-tiger.conf`, put genuine false positives under `# False positives` and deliberate ignores under `# Ignored`.
+- **Fix within scope, defer the rest.** This is Unop's disposition of real problems, in place of the `tiger` skill's default. Fix a real problem within the current task's scope, whatever its impact. Reports that the change itself causes are always in scope. Defer one outside the scope by ignoring its reports under `# Vanilla issues`, and mention it in the PR or the summary.
+- **Use the right section.** In `ck3-tiger.conf`, put false positives under `# False positives` with their upstream tiger issues, intended reports under `# Intended`, unclear ones under `# Unclear`, and deferred ones under `# Vanilla issues` with their Unop issues if any. `# Ignored` is only for kinds of reports that Unop doesn't handle, e.g. `missing-localization`.
 - **Group with similar rules.** Place a new rule next to similar ones of the same type; if there are none, append it at the end.
 
 ### Validation and Testing
 
-- **Run tiger.** After a fix, run `ck3-tiger --no-color . > ck3-tiger.out`, it must report no errors or warnings.
-- **Clean up new tiger errors.** New vanilla files may surface unrelated tiger errors; fix or ignore them in the same PR so tiger stays clean.
+- **Run tiger.** After a fix, run `RAYON_NUM_THREADS=1 ck3-tiger --no-color . > ck3-tiger.out`, it must show no reports. Tiger runs single-threaded, since its output varies between multi-threaded runs.
+- **Clean up new tiger reports.** A change may surface unrelated tiger reports; resolve them in the same PR as **Resolving Tiger Reports** says, so tiger stays clean.
 - **Ask for in-game verification.** For an externally-reported issue, ask the user to confirm the fix works.
 - **Check error.log.** Ask the user to run vanilla + Unop in observer mode, then check `${CK3_USER_DIR}/logs/error.log` for errors related to the fix.
 

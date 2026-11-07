@@ -7,10 +7,10 @@ Claude Code agents that work the Unop issue pipeline. Each stage is driven by a 
 | (Steam) | `unop-steam-importer` | Files Steam Workshop bug reports as issues, adds `action:analyze` |
 | `action:analyze` | `unop-analyzer` | Analyzes and classifies the issue, hands confirmed high-confidence ones to the fixer, and the rest, with a repro, to the tester |
 | `action:fix` | `unop-fixer` | Fixes the issue on a branch, opens or updates a draft PR |
-| `action:review` | `unop-reviewer` | Reviews the PR adversarially |
+| `action:review` | `unop-reviewer` | Reviews the PR adversarially, hands a needs-work fix back to the fixer and a looks-good one with a test script to the tester |
 | `action:test` | `unop-tester` | Runs the PR's test script in-game on `main` and on the PR branch, or an issue's repro on `main` and hands it back to the analyzer |
 
-`test:*` labels hold the latest PR test verdict, `repro:*` labels the latest repro verdict. `unop-dispatcher` runs as the main session and starts the others on labelled work. `locked` marks an item an agent is working on; `needs-human` stops the pipeline for that item. The agents hand over through a collapsed `<!-- unop-handover -->` comment on the issue.
+`test:*` labels hold the latest PR test verdict, `repro:*` labels the latest repro verdict. Issues labelled `tiger` name tiger reports on vanilla files: the agents check that each still appears, fix the ones they find real and keep the others ignored in `ck3-tiger.conf`, usually without an in-game test. `unop-dispatcher` runs as the main session and starts the others on labelled work. `locked` marks an item an agent is working on; `needs-human` stops the pipeline for that item. The agents hand over through a collapsed `<!-- unop-handover -->` comment on the issue.
 
 ## Trust Model
 
@@ -66,7 +66,7 @@ sudo apt-get install python3-jwt python3-cryptography
 
 ### 3. Install ck3-tiger and the `tiger` skill
 
-The fixer and reviewer lint with [ck3-tiger](https://github.com/amtep/tiger), which must be on your `PATH`:
+The analyzer, fixer and reviewer run [ck3-tiger](https://github.com/amtep/tiger), which must be on your `PATH`:
 
 ```shell
 gh release download -R amtep/tiger -p 'ck3-tiger-linux-*.tar.gz' -D /tmp
@@ -75,7 +75,7 @@ tar -xzf /tmp/ck3-tiger-linux-*.tar.gz -C ~/bin --strip-components=1 --wildcards
 ck3-tiger --version
 ```
 
-The fixer also uses the `tiger` skill to fix or ignore tiger warnings. It lives in the private [pharaox/ck3](https://github.com/pharaox/ck3) repo; ask pharaox for access, then clone it and link the skill into your user skills:
+They also use the `tiger` skill: the fixer to fix or ignore tiger reports, the analyzer and reviewer to judge them. It lives in the private [pharaox/ck3](https://github.com/pharaox/ck3) repo; ask pharaox for access, then clone it and link the skill into your user skills:
 
 ```shell
 git clone git@github.com:pharaox/ck3.git <path>/ck3
@@ -94,7 +94,9 @@ CK3_BASE_DIR="${HOME}/.steam/steam/steamapps/common/Crusader Kings III/game"
 CK3_USER_DIR="${HOME}/.local/share/Paradox Interactive/Crusader Kings III"
 ```
 
-Allow the agents to read the game files, the game's user directory (logs, `.info` files) and the `tiger` skill, and to use the skill. Put these rules in `~/.claude/settings.json` if you work on several CK3 mods, or in this repo's `.claude/settings.local.json` if Unop is your only one. Pipeline sessions load both files.
+If you build `ck3-tiger` yourself, also add `CK3_TIGER_DIR` with the path of that checkout, so the agents read the source of the tiger they run.
+
+Allow the agents to read the game files, the game's user directory (logs, `.info` files), the `tiger` skill and, if set, `CK3_TIGER_DIR`, and to use the skill. Put these rules in `~/.claude/settings.json` if you work on several CK3 mods, or in this repo's `.claude/settings.local.json` if Unop is your only one. Pipeline sessions load both files.
 
 ```json
 {
@@ -104,6 +106,7 @@ Allow the agents to read the game files, the game's user directory (logs, `.info
       "Read(~/.steam/debian-installation/steamapps/common/Crusader Kings III/**)",
       "Read(~/.local/share/Paradox Interactive/Crusader Kings III/**)",
       "Read(<path>/ck3/.claude/skills/tiger/**)",
+      "Read(<path>/tiger/**)",
       "Read(~/.cache/ck3-shots/**)",
       "Skill(tiger)",
       "Skill(tiger:*)"
