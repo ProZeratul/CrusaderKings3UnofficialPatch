@@ -274,7 +274,7 @@ nomadic_migration_contract_7 = { # Troublesome Neighbors
 			task_contract_location.county = { 
 				county_control < 90 
 				any_neighboring_county = {
-					NOT = { owner.top_liege ?= root.top_liege }
+					NOT = { holder.top_liege ?= root.task_contract_taker.top_liege } #Unop Use the county holder and the taker, root is the contract
 				}
 			}
 		}

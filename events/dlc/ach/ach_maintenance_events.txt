@@ -58,7 +58,7 @@ ach_maintenance_events.0002 = { # ACH Oath synergy culture rewards
 			NOT = { this = root.culture }
 			any_culture_county = {
 				count >= 3
-				top_liege = root.top_liege
+				holder.top_liege = root.top_liege #Unop top_liege is a character link, use the county holder
 			}
 		}
 	}
@@ -293,7 +293,7 @@ ach_maintenance_events.0002 = { # ACH Oath synergy culture rewards
 		var:mend_the_fracture_oath_target_culture = {
 			every_culture_county = {
 				limit = {
-					top_liege = root.top_liege
+					holder.top_liege = root.top_liege #Unop top_liege is a character link, use the county holder
 				}
 				change_variable = {
 					name = synergy_cultures_amount
@@ -326,7 +326,7 @@ ach_maintenance_events.0002 = { # ACH Oath synergy culture rewards
 								NOT = {
 									has_county_modifier = oath_mend_the_fracture_county
 								}
-								top_liege = root.top_liege
+								holder.top_liege = root.top_liege #Unop top_liege is a character link, use the county holder
 							}
 							alternative_limit = {
 								NOT = {
@@ -352,7 +352,7 @@ ach_maintenance_events.0002 = { # ACH Oath synergy culture rewards
 								NOT = {
 									has_county_modifier = oath_mend_the_fracture_county
 								}
-								top_liege = root.top_liege
+								holder.top_liege = root.top_liege #Unop top_liege is a character link, use the county holder
 							}
 							alternative_limit = {
 								NOT = {
