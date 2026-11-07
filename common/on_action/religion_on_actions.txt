@@ -40,6 +40,12 @@ on_faith_created = {
 								any_holy_site = {
 									holy_site_barony.kingdom ?= scope:unop_old_faith_holy_site_kingdom
 								}
+								NOT = {
+									is_target_in_variable_list = {
+										name = dynamic_holy_site_kingdoms
+										target = scope:unop_old_faith_holy_site_kingdom
+									}
+								}
 							}
 						}
 						root = {
