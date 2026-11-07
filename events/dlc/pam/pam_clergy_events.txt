@@ -664,7 +664,10 @@ scripted_effect pam_strip_personal_landed_titles_effect = {
 				change_government = faith.faith_theocratic_goverment_type
 				rite = { force_refresh_head_of_rite = yes }
 				if = {
-					limit = { should_use_theocratic_elective_succession_law_trigger = yes }
+					limit = {
+						exists = scope:heir #Unop A new heir is not created yet when building the tooltip
+						should_use_theocratic_elective_succession_law_trigger = yes
+					}
 					add_realm_law_skip_effects = theocratic_elective_succession_law
 				}
 			}
