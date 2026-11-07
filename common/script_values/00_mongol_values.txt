@@ -231,9 +231,10 @@ mongol_successor_faith_chance = {
 	add = {
 		scope:faith_changer = {
 			every_vassal = {
-				faith = scope:county_faith_check.faith
+				limit = { faith = scope:county_faith_check.faith } #Unop Was a bare trigger, with add = 5 outside every_vassal
+				add = 5
 			}
-			add = 5
+			#add = 5 #Unop Moved into every_vassal
 		}
 	}
 }
