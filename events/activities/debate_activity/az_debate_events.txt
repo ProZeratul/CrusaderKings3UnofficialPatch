@@ -838,9 +838,10 @@ az_debate.0004 = {
 					target = root
 					value >= 0
 				}
+                save_temporary_scope_as = unop_debate_candidate #Unop `this` is the participant group below, not the character
                 situation:dynastic_cycle ?= {
                     situation_participant_group:undecided_movement = {
-                        participant_group_has_character = this
+                        participant_group_has_character = scope:unop_debate_candidate #Unop
                     }
                 }
             }
@@ -860,9 +861,10 @@ az_debate.0004 = {
 						target = root
 						value >= 0
 					}
+                    save_temporary_scope_as = unop_debate_candidate #Unop `this` is the participant group below, not the character
                     situation:dynastic_cycle ?= {
                         situation_participant_group:undecided_movement = {
-                            participant_group_has_character = this
+                            participant_group_has_character = scope:unop_debate_candidate #Unop
                         }
                     }
                 }
@@ -1866,8 +1868,9 @@ az_debate.0008 = {
             }
             any_attending_character = {
             	is_ai = yes
+            	save_temporary_scope_as = unop_debate_candidate #Unop `this` is the participant group below, not the character
             	situation:dynastic_cycle ?= {
-                    situation_participant_group:undecided_movement = { participant_group_has_character = this }
+                    situation_participant_group:undecided_movement = { participant_group_has_character = scope:unop_debate_candidate } #Unop
                 }
                 merit_level < root.merit_level
                 trigger_if = {
@@ -1906,8 +1909,9 @@ az_debate.0008 = {
             random_attending_character = {
                 limit = {
                     is_ai = yes
+	            	save_temporary_scope_as = unop_debate_candidate #Unop `this` is the participant group below, not the character
 	            	situation:dynastic_cycle ?= {
-	                    situation_participant_group:undecided_movement = { participant_group_has_character = this }
+	                    situation_participant_group:undecided_movement = { participant_group_has_character = scope:unop_debate_candidate } #Unop
 	                }
                     merit_level < root.merit_level
                     trigger_if = {
