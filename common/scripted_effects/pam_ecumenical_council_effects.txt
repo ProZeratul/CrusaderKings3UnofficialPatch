@@ -139,14 +139,14 @@ ecumenical_council_become_innovator_effect = {
 				scope:activity = {
 					is_target_in_variable_list = {
 						name = major_conservative
-						target = $CHARACTER$
+						target = scope:ec_switch_stance #Unop $CHARACTER$ may be this, which is the activity here
 					}
 				}
 			}
 			scope:activity = {
 				remove_list_variable = {
 					name = major_conservative
-					target = $CHARACTER$
+					target = scope:ec_switch_stance #Unop $CHARACTER$ may be this, which is the activity here
 				}
 			}
 		}
@@ -171,11 +171,11 @@ ecumenical_council_become_innovator_effect = {
 			scope:activity = {
 				remove_from_guest_subset = {
 					name = conservative
-					target = $CHARACTER$
+					target = scope:ec_switch_stance #Unop $CHARACTER$ may be this, which is the activity here
 				}
 				add_to_variable_list = {
 					name = blocked_from_conservatives
-					target = $CHARACTER$
+					target = scope:ec_switch_stance #Unop $CHARACTER$ may be this, which is the activity here
 				}
 				if = {
 					limit = {
@@ -183,7 +183,7 @@ ecumenical_council_become_innovator_effect = {
 					}
 					remove_list_variable = {
 						name = locked_into_conservatives
-						target = $CHARACTER$
+						target = scope:ec_switch_stance #Unop $CHARACTER$ may be this, which is the activity here
 					}
 				}
 			}
@@ -201,11 +201,11 @@ ecumenical_council_become_innovator_effect = {
 			scope:activity = {
 				add_to_guest_subset = {
 					name = innovator
-					target = $CHARACTER$
+					target = scope:ec_switch_stance #Unop $CHARACTER$ may be this, which is the activity here
 				}
 				add_to_variable_list = {
 					name = locked_into_innovators
-					target = $CHARACTER$
+					target = scope:ec_switch_stance #Unop $CHARACTER$ may be this, which is the activity here
 				}
 				if = {
 					limit = {
@@ -213,7 +213,7 @@ ecumenical_council_become_innovator_effect = {
 					}
 					remove_list_variable = {
 						name = blocked_from_innovators
-						target = $CHARACTER$
+						target = scope:ec_switch_stance #Unop $CHARACTER$ may be this, which is the activity here
 					}
 				}
 			}
@@ -225,7 +225,7 @@ ecumenical_council_become_innovator_effect = {
 						any_in_list = {
 							variable = major_innovator
 							count = all
-							ecumenical_council_innovator_sort_value > $CHARACTER$.ecumenical_council_innovator_sort_value
+							ecumenical_council_innovator_sort_value > scope:ec_switch_stance.ecumenical_council_innovator_sort_value #Unop $CHARACTER$ may be this, which is the list member here
 						}
 					}
 				}
@@ -246,7 +246,7 @@ ecumenical_council_become_innovator_effect = {
 				}
 				add_to_variable_list = {
 					name = major_innovator
-					target = $CHARACTER$
+					target = scope:ec_switch_stance #Unop $CHARACTER$ may be this, which is the activity here
 				}
 			}
 		}

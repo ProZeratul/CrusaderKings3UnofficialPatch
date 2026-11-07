@@ -486,7 +486,9 @@ pam_antipope_challenge_hof_victory_effect = {
 		}
 		if = {
 			limit = { exists = scope:antipope_winner }
-			pam_antipope_become_hof_effect = { WINNER = scope:antipope_winner }
+			scope:antipope_winner = { #Unop Run it at the winner, not the casus belli, as for the attacker above
+				pam_antipope_become_hof_effect = { WINNER = scope:antipope_winner }
+			}
 			pam_antipope_sponsor_vassalize_hof_effect = { SPONSOR = scope:challenger_sponsor }
 		}
 	}

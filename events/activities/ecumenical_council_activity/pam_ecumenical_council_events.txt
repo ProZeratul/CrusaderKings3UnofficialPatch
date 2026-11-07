@@ -95,25 +95,27 @@ scripted_effect save_major_scopes_effect = {
 		limit = {
 			NOT = { exists = scope:court_chaplain }
 		}
-		ordered_attending_character = {
-			order_by = highest_held_title_tier
-			limit = {
-				this != scope:actor
-				trigger_if = {
-					limit = {
-						exists = scope:lead_conservative
+		scope:activity = { #Unop Iterate the attendees in the activity, not in the character
+			ordered_attending_character = {
+				order_by = highest_held_title_tier
+				limit = {
+					this != scope:actor
+					trigger_if = {
+						limit = {
+							exists = scope:lead_conservative
+						}
+						this != scope:lead_conservative
 					}
-					this != scope:lead_conservative
-				}
-				trigger_if = {
-					limit = {
-						exists = scope:lead_innovator
+					trigger_if = {
+						limit = {
+							exists = scope:lead_innovator
+						}
+						this != scope:lead_innovator
 					}
-					this != scope:lead_innovator
+					is_clergy = yes
 				}
-				is_clergy = yes
+				save_scope_as = court_chaplain
 			}
-			save_scope_as = court_chaplain
 		}
 	}
 }
@@ -488,25 +490,27 @@ scripted_effect save_sway_guests_scopes_effect = {
 		limit = {
 			NOT = { exists = scope:court_chaplain }
 		}
-		ordered_attending_character = {
-			order_by = highest_held_title_tier
-			limit = {
-				this != scope:actor
-				trigger_if = {
-					limit = {
-						exists = scope:lead_conservative
+		scope:activity = { #Unop Iterate the attendees in the activity, not in the character
+			ordered_attending_character = {
+				order_by = highest_held_title_tier
+				limit = {
+					this != scope:actor
+					trigger_if = {
+						limit = {
+							exists = scope:lead_conservative
+						}
+						this != scope:lead_conservative
 					}
-					this != scope:lead_conservative
-				}
-				trigger_if = {
-					limit = {
-						exists = scope:lead_innovator
+					trigger_if = {
+						limit = {
+							exists = scope:lead_innovator
+						}
+						this != scope:lead_innovator
 					}
-					this != scope:lead_innovator
+					is_clergy = yes
 				}
-				is_clergy = yes
+				save_scope_as = court_chaplain
 			}
-			save_scope_as = court_chaplain
 		}
 	}
 	save_scope_value_as = {

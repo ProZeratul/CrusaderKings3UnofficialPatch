@@ -63,7 +63,7 @@ declare_antipope_decision = {
 				text = declare_antipope_decision_select_clergy_tt
 				OR = {
 					any_vassal_or_below = {
-						pam_valid_antipope_clergy_vassal_trigger = { LIEGE = scope:actor }
+						pam_valid_antipope_clergy_vassal_trigger = { LIEGE = root } #Unop scope:actor is not set here
 					}
 					exists = cp:councillor_court_chaplain
 					puppet:external_theological_agent_puppet ?= {
@@ -77,7 +77,7 @@ declare_antipope_decision = {
 				text = declare_antipope_decision_select_clergy_no_puppet_tt
 				OR = {
 					any_vassal_or_below = {
-						pam_valid_antipope_clergy_vassal_trigger = { LIEGE = scope:actor }
+						pam_valid_antipope_clergy_vassal_trigger = { LIEGE = root } #Unop scope:actor is not set here
 					}
 					exists = cp:councillor_court_chaplain
 				}
