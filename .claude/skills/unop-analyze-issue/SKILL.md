@@ -15,6 +15,7 @@ This skill runs **autonomously**, without asking for approval. Any human gates b
 - **GitHub repo**: `ProZeratul/CrusaderKings3UnofficialPatch`. Use the `gh` CLI for all GitHub operations.
 - **Issue**: A bug report (or occasionally an enhancement request) opened against the Unop repo.
 - **Shared file**: `tmp/issue-<N>.md` — the handover document. This skill creates it with the `## Analysis` section. Other skills may append to it later.
+- **Tiger issue**: an issue labelled `tiger`, naming tiger reports that its author believes are real bugs. `../unop-fix-issue/tiger-issues.md` says how to work one.
 
 ## Context
 
@@ -51,7 +52,7 @@ gh issue view <N> --json title,labels,state
 
 Note any existing labels — they may already encode prior triage. Note any linked PRs.
 
-**Identify how many distinct bugs the issue contains.** A title may name one symptom while later comments describe others. If the issue covers more than one distinct bug, record each in the findings and classify the issue by the primary bug, noting the others. Don't silently work only the title bug.
+**Identify how many distinct bugs the issue contains.** A title may name one symptom while later comments describe others. If the issue covers more than one distinct bug, record each in the findings and classify the issue by the primary bug, noting the others. Don't silently work on only the title bug. In a tiger issue, each problem is a distinct bug, so work on all of them.
 
 **Re-analysis.** If the issue already carries a `**<identity>:**` comment from you, you have analyzed this before. Consult the shared file if it exists. Read your prior comment, then read **all** comments posted *after* it (especially any addressing `@<identity>`). Make sure to take into account any **maintainer feedback** (see **Untrusted Input** in `CLAUDE.md`). Re-analyze from the files, **treat your prior conclusion skeptically**, and correct it.
 
@@ -77,6 +78,8 @@ If the relevant file cannot be located confidently, classify as **question** and
 
 ### 3. Investigate
 
+**Tiger issue.** First check which reports tiger still shows, then verify each remaining problem, as `../unop-fix-issue/tiger-issues.md` says. Only a real problem needs further investigation.
+
 For each candidate file:
 
 1. **Read the Unop override if it exists.** Unop overrides vanilla — what the game runs is the Unop copy. Read its relevant parts in full.
@@ -90,7 +93,7 @@ For each candidate file:
 * **Map the pattern class.** Identify the category the buggy object belongs to — the object group or family, event chain, or set of analogous systems. Enumerate its members and check each for the same bug. Where a comparable member does **not** exhibit the bug, work out *how* it avoids it — that comparison usually reveals the right altitude for the fix.
 * **Verify against the decisive evidence.** Reading a condition isn't checking it — confirm the actual mechanism, which may live upstream (e.g. how the object is created) rather than in its own definition. A contradiction is a lead to trace, not something to wave away.
 
-* **Work out the repro.** Infer the in-game setup and steps that reach the bug, following `../unop-fix-issue/testing.md`. Verify every character ID, title, effect and event ID you name.
+* **Work out the repro.** Infer the in-game setup and steps that reach the bug, following `../unop-fix-issue/testing.md`. Verify every character ID, title, effect and event ID you name. In a tiger issue, do this only as `tiger-issues.md` allows.
 
 Specifically look for:
 
@@ -137,6 +140,8 @@ If the files can't tell but an in-game repro can, pick the likely status with co
 
 An `invalid` (out of scope) conclusion is door-closing, so it must clear the same bar as proposing a fix.
 
+A tiger issue is `confirmed` if the code or `ck3-tiger.conf` needs to change: a problem is real, no longer reported, or to be ignored in another section than now. It's `invalid` only if nothing changes.
+
 Also flag (but don't apply):
 
 - **`duplicate`** — if you find an existing open or closed issue covering the same thing. Mention the number in the findings and comment.
@@ -151,6 +156,8 @@ How sure you are of the classification, whatever it is:
 - **`low`** — uncertain: the reporter may be on a stale version, another mod may be interfering, or missing information could change the picture.
 
 A `Reproduced` repro with a clear root cause supports `high`; a `Not reproduced` repro that reached the code path supports `invalid`.
+
+In a tiger issue, confidence is `high` once every problem has a verdict, including unclear. It stays below `high` only while a repro for an unclear problem is pending.
 
 ### 5. Write to the Shared File
 
@@ -179,6 +186,8 @@ confidence: high|medium|low
 - <root cause, with the specific trigger/effect/guard and why it misbehaves>
 - <reachability: does it still reproduce in current vanilla?>
 - <any duplicate / wontfix / multi-bug / new-area-label notes>
+
+**Problems:** <tiger issue only: the per-problem lines from `tiger-issues.md`>
 
 **Pattern class:** <the category this bug belongs to and its members; for each, whether the bug applies; and how comparable members that avoid it do so>
 
@@ -209,7 +218,7 @@ gh issue edit <N> --add-label "confirmed,vanilla,common,confidence:high"
 
 If this is a re-analysis, post a **very concise** follow-up comment stating what changed compared to the previous one.
 
-**Repro comment.** If **confirmed**, or whenever confidence isn't `high`, also post the repro as a separate comment, using the template in `../unop-fix-issue/testing.md` and posting it as its **Posting** section says. On a re-analysis, this updates the existing repro comment; revise it if a repro result showed it missed the code path. Skip it only if no repro can be written, e.g. because it needs information only the reporter has, and say why in the findings. Hard-to-reach states are not a reason to skip (see `testing.md`).
+**Repro comment.** If **confirmed**, or whenever confidence isn't `high`, also post the repro as a separate comment, using the template in `../unop-fix-issue/testing.md` and posting it as its **Posting** section says. On a re-analysis, this updates the existing repro comment; revise it if a repro result showed it missed the code path. Skip it only if no repro can be written, e.g. because it needs information only the reporter has, and say why in the findings. Hard-to-reach states are not a reason to skip (see `testing.md`). In a tiger issue, post one only as `tiger-issues.md` allows.
 
 ### 7. Report Summary
 
@@ -234,7 +243,17 @@ Keep the posted comment **concise** — the details are in the shared file. Keep
 
 - <root cause in 1-2 lines>
 
-**Classification:** `confirmed` / `<origin>` / `<area>` — confidence `<confidence>`
+**Classification:** `confirmed` / `<origin>` / `<area>`, confidence `<confidence>`
+```
+
+**Confirmed**, for a tiger issue:
+
+```markdown
+**<identity>:** Confirmed.
+
+<the per-problem lines from `tiger-issues.md`>
+
+**Classification:** `confirmed` / `<origin>` / `<area>`, confidence `<confidence>`
 ```
 
 **Question:**

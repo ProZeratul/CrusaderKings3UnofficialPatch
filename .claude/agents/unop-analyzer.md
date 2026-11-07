@@ -7,6 +7,7 @@ effort: high
 permissionMode: auto
 skills:
   - unop-analyze-issue
+  - tiger
 memory: user
 isolation: worktree
 color: blue
