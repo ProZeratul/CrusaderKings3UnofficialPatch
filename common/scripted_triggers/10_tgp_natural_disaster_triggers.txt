@@ -58,9 +58,11 @@ tgp_natural_disaster_councillor_available_to_manage_trigger = {
 		}
 		trigger_else_if = {
 			limit = { government_has_flag = government_is_landless_adventurer }
-			any_entourage_character = {
-				save_temporary_scope_as = councillor
-				tgp_natural_disaster_councillor_available_for_task_trigger = yes
+			current_travel_plan ?= { #Unop The entourage belongs to the travel plan, not the character
+				any_entourage_character = {
+					save_temporary_scope_as = councillor
+					tgp_natural_disaster_councillor_available_for_task_trigger = yes
+				}
 			}
 		}
 		trigger_else_if = {
