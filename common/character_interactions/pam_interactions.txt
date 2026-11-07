@@ -3128,7 +3128,7 @@ sway_courtier_to_my_rite_interaction = {
 			#Free for holy order leaders spreading beliefs
 			if = {
 				limit = {
-					scope:holy_order_leader ?= this
+					scope:holy_order_leader ?= scope:actor #Unop Interaction cost blocks have no root, so compare with the actor
 					exists = scope:order_tenet
 				}
 				multiply = 0

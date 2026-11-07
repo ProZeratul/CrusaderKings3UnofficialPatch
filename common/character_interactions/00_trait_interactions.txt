@@ -175,8 +175,10 @@ dismiss_strong_hook_interaction = {
 			value = 0
 			if = {
 				limit = {
-					exists = var:movement_power
-					government_has_flag = government_is_celestial
+					scope:actor = { #Unop Interaction cost blocks have no root, so check the actor
+						exists = var:movement_power
+						government_has_flag = government_is_celestial
+					}
 				}
 				add = monumental_influence_value
 			}
@@ -185,9 +187,11 @@ dismiss_strong_hook_interaction = {
 			value = 0
 			if = {
 				limit = {
-					NAND = {
-						exists = var:movement_power
-						government_has_flag = government_is_celestial
+					scope:actor = { #Unop Interaction cost blocks have no root, so check the actor
+						NAND = {
+							exists = var:movement_power
+							government_has_flag = government_is_celestial
+						}
 					}
 				}
 				add = monumental_prestige_value
@@ -329,8 +333,10 @@ dismiss_weak_hook_interaction = {
 			value = 0
 			if = {
 				limit = {
-					exists = var:movement_power
-					government_has_flag = government_is_celestial
+					scope:actor = { #Unop Interaction cost blocks have no root, so check the actor
+						exists = var:movement_power
+						government_has_flag = government_is_celestial
+					}
 				}
 				add = major_influence_value
 			}
@@ -339,9 +345,11 @@ dismiss_weak_hook_interaction = {
 			value = 0
 			if = {
 				limit = {
-					NAND = {
-						exists = var:movement_power
-						government_has_flag = government_is_celestial
+					scope:actor = { #Unop Interaction cost blocks have no root, so check the actor
+						NAND = {
+							exists = var:movement_power
+							government_has_flag = government_is_celestial
+						}
 					}
 				}
 				add = major_prestige_value
