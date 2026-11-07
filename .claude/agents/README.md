@@ -94,7 +94,9 @@ CK3_BASE_DIR="${HOME}/.steam/steam/steamapps/common/Crusader Kings III/game"
 CK3_USER_DIR="${HOME}/.local/share/Paradox Interactive/Crusader Kings III"
 ```
 
-Allow the agents to read the game files, the game's user directory (logs, `.info` files) and the `tiger` skill, and to use the skill. Put these rules in `~/.claude/settings.json` if you work on several CK3 mods, or in this repo's `.claude/settings.local.json` if Unop is your only one. Pipeline sessions load both files.
+If you build `ck3-tiger` yourself, also add `CK3_TIGER_DIR` with the path of that checkout, so the agents read the source of the tiger they run.
+
+Allow the agents to read the game files, the game's user directory (logs, `.info` files), the `tiger` skill and, if set, `CK3_TIGER_DIR`, and to use the skill. Put these rules in `~/.claude/settings.json` if you work on several CK3 mods, or in this repo's `.claude/settings.local.json` if Unop is your only one. Pipeline sessions load both files.
 
 ```json
 {
@@ -104,6 +106,7 @@ Allow the agents to read the game files, the game's user directory (logs, `.info
       "Read(~/.steam/debian-installation/steamapps/common/Crusader Kings III/**)",
       "Read(~/.local/share/Paradox Interactive/Crusader Kings III/**)",
       "Read(<path>/ck3/.claude/skills/tiger/**)",
+      "Read(<path>/tiger/**)",
       "Read(~/.cache/ck3-shots/**)",
       "Skill(tiger)",
       "Skill(tiger:*)"

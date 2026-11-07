@@ -62,7 +62,7 @@ If a rule also covers other reports, narrow it instead of removing it, e.g. drop
 
 The proof is in the files, so a tiger issue gets no test script. A fix whose key assumption the files can't confirm is a guess: give the reasons, as for any guessed fix.
 
-The analysis may settle an unclear problem in-game with a repro following `testing.md`, if its symptom can be derived from the report and reached in-game, and the result would show whether the problem is real. Write at most one repro per issue, for the problem that matters most. If its run is inconclusive, it may be revised and run once more, like any repro. Its result settles the problem: `Reproduced` makes it real, anything else keeps it unclear.
+The analysis may settle an unclear problem in-game with a repro following `testing.md`, if its symptom can be derived from the report and reached in-game, and the result would show whether the problem is real. Write at most one repro per issue, for the problem that matters most. If its run is inconclusive, it may be revised and run once more, like any repro. Its result settles the problem: `Reproduced` makes it real, a `Not reproduced` that reached the code path makes it a false positive or intended, whichever the result shows, and `Inconclusive` keeps it unclear.
 
 ## Per-Problem Lines
 
