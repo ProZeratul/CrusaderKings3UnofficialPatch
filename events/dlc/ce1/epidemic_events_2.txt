@@ -825,7 +825,7 @@ epidemic_events.2006 = { #Dancing plague
 		capital_province = {
 			random_province_epidemic = {
 				limit = {
-					# epidemic_type = epidemic_type:ergotism
+					epidemic_type = epidemic_type:ergotism #Unop Only escalate ergotism, not e.g. bubonic plague into a Black Death
 					outbreak_intensity < apocalyptic
 				}
 				save_scope_as = dancing_plague
@@ -843,7 +843,7 @@ epidemic_events.2006 = { #Dancing plague
 			}
 		}
 
-		scope:dancing_plague = {
+		scope:dancing_plague ?= { #Unop Unset if the capital has no ergotism outbreak
 			set_epidemic_outbreak_intensity = apocalyptic
 		}
 
