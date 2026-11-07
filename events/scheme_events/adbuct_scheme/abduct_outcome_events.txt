@@ -96,7 +96,7 @@ abduct_outcome.1001 = {
 				random_sub_realm_county = {
 					limit = {
 						NOR = {
-							this.capital_province ?= scope:departure
+							scope:departure.county ?= this #Unop A county has no capital_province, compare with the departure county
 							holder = scope:owner
 						}
 						scope:departure = {
