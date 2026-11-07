@@ -485,6 +485,10 @@ illegal_imprisonment_dread_effect = {
 }
 
 blind_castrate_and_disfigure_effect = {
+	if = { #Unop Fall back to scope:actor when called from events, like the other effects here
+		limit = { NOT = { exists = scope:puppet_or_actor } }
+		scope:actor = { save_scope_as = puppet_or_actor }
+	}
 	###STRESS##
 	scope:puppet_or_actor = {
 		if = {
