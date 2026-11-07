@@ -6161,9 +6161,9 @@ festival.1000 = {
 				random_confederation_member_house = {
 					limit = { # Prefer leading house
 						this = scope:bloc.leading_house
-						festival_1000_bloc_member_house_trigger = yes
+						house_head ?= { festival_1000_bloc_member_house_trigger = yes } #Unop Check the house head, not the house
 					}
-					alternative_limit = { festival_1000_bloc_member_house_trigger = yes }
+					alternative_limit = { house_head ?= { festival_1000_bloc_member_house_trigger = yes } } #Unop Check the house head, not the house
 					house_head = { save_scope_as = bloc_member_head_2 }
 				}
 			}
@@ -6177,9 +6177,9 @@ festival.1000 = {
 					random_confederation_member_house = {
 						limit = { # Prefer leading house
 							this = root.intent_target.house.house_confederation.leading_house
-							festival_1000_bloc_member_house_trigger = yes
+							house_head ?= { festival_1000_bloc_member_house_trigger = yes } #Unop Check the house head, not the house
 						}
-						alternative_limit = { festival_1000_bloc_member_house_trigger = yes }
+						alternative_limit = { house_head ?= { festival_1000_bloc_member_house_trigger = yes } } #Unop Check the house head, not the house
 						house_head = { save_scope_as = bloc_member_head_2 }
 					}
 				}

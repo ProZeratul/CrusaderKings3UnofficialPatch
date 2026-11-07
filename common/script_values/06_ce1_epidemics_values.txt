@@ -1380,10 +1380,9 @@ spread_chance_epidemics_default_value = {
 	#Reinfection shouldn't happen often
 	if = {
 		limit = {
-			scope:epidemic = {
-				is_target_in_variable_list = {
-					name = epidemic_cooldown
-				}
+			is_target_in_variable_list = { #Unop Check the province's list for the epidemic type, as the other cooldown checks do
+				name = epidemic_cooldown
+				target = scope:epidemic.epidemic_type
 			}
 		}
 		add = spread_decrease_add_very_high
