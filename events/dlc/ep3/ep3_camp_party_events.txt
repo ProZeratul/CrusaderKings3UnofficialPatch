@@ -3258,16 +3258,22 @@ ep3_camp_party.2000 = {
 					#NOT the same trait as the first person
 					any_character_trait = { 
 						2000_has_same_personality_trait_as_root_trigger = yes
-						NOT = { var:first_follower_trait_var ?= prev } #the trait
+						NOT = { root.var:first_follower_trait_var ?= this } #the trait #Unop Read the variable from root and compare it with the trait
 					}
+					this != scope:first_follower
+				}
+				alternative_limit = { #Unop Fall back to a follower with the same trait rather than none
+					2000_suitable_follower_for_conversation_trigger = yes
+					any_character_trait = { 2000_has_same_personality_trait_as_root_trigger = yes }
 					this != scope:first_follower
 				}
 				save_scope_as = second_follower
 				random_character_trait = {
 					limit = { 
 						2000_has_same_personality_trait_as_root_trigger = yes
-						NOT = { var:first_follower_trait_var ?= prev } #the trait
+						NOT = { root.var:first_follower_trait_var ?= this } #the trait #Unop Read the variable from root and compare it with the trait
 					}
+					alternative_limit = { 2000_has_same_personality_trait_as_root_trigger = yes } #Unop
 					root = {
 						set_variable = {
 							name = second_follower_trait_var
