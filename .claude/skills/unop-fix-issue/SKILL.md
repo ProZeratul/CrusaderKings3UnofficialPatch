@@ -66,7 +66,7 @@ Work out *how* to fix the bug before writing any code.
 - **Evaluate suggested fixes critically.** Both the reporter's diagnosis and any `Fix directions` in the shared file are candidates, not defaults — re-derive the approach from the verified facts. Watch for fixes that destroy state other systems still depend on. See `examples.md` (#213, #498).
 - **Name the load-bearing assumption.** State the single behavioral assumption the fix rests on and corroborate it from files (a working precedent, a `.info`/log line); if it can't be confirmed, flag it for in-game testing. In a tiger issue, treat it as a guess instead, as `tiger-issues.md` says. See `examples.md` (#498).
 - **On a re-fix**, make sure the new approach resolves the review findings rather than working around them.
-- **In a tiger issue**, re-check every problem's verdict as `tiger-issues.md` says, and fix the ones you find real.
+- **In a tiger issue**, re-check every problem's verdict as `tiger-issues.md` says, and fix the real ones that have an impact.
 
 **Paradox Script Gotchas:**
 
@@ -87,7 +87,7 @@ Following the project `CLAUDE.md` "General", "Style", and "Opening PRs" guidelin
 
    Run each line as its own call, and write `<prefix>` out literally in the last one.
 
-2. **Apply the fix.** Minimal change; `#Unop` comment on the first changed line; comment out rather than delete unneeded vanilla code. When enclosing existing code in a scope, indent it properly. New vanilla files should be added without modifications in a separate commit. In a tiger issue, also update the exclusions in `ck3-tiger.conf` as `tiger-issues.md` says, including un-ignoring the reports that are no longer reported.
+2. **Apply the fix.** Minimal change; `#Unop` comment on the first changed line; comment out rather than delete unneeded vanilla code. When enclosing existing code in a scope, indent it properly. New vanilla files should be added without modifications in a separate commit. On a re-fix that drops all of the PR's changes to a vanilla file it added, remove that file from the PR rather than leave an unmodified copy. In a tiger issue, also update the exclusions in `ck3-tiger.conf` as `tiger-issues.md` says, including un-ignoring the reports that are no longer reported.
 
 3. **Validate**: run tiger as **Run tiger** in `CLAUDE.md` says, and ensure no new reports.
    - Resolve any new reports in the same PR with the `tiger` skill in mode `all`, including those in newly-added vanilla files.

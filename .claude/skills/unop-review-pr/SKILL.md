@@ -82,7 +82,7 @@ Before the line-level review, judge the approach itself — as stated in the lat
 - **Re-fix.** If a prior `## Review N` exists, does this approach genuinely resolve its `High`/`Medium` findings, or merely work around them?
 - **Tiger issue.** If the anchor is a tiger issue, check each problem as `../unop-fix-issue/tiger-issues.md` says:
   - Reach your own verdict on every problem, whatever the analysis and the fix concluded.
-  - A fixed problem must be real, and its fix correct. A guessed fix must give its reasons and be the most likely one.
+  - A fixed problem must be real and have an impact, and its fix must be correct. A guessed fix must give its reasons and be the most likely one.
   - A problem kept ignored needs a sound reason, the section for its verdict, and a rule that hides no report needing another verdict.
   - A verdict you disagree with, or a guessed fix you find less likely than another, is a `Medium` finding, with the evidence.
   - On a re-review, weigh the evidence a re-fix gave against your earlier findings, and repeat a finding only if that evidence doesn't hold.

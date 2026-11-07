@@ -10,7 +10,7 @@ Claude Code agents that work the Unop issue pipeline. Each stage is driven by a 
 | `action:review` | `unop-reviewer` | Reviews the PR adversarially, hands a needs-work fix back to the fixer and a looks-good one with a test script to the tester |
 | `action:test` | `unop-tester` | Runs the PR's test script in-game on `main` and on the PR branch, or an issue's repro on `main` and hands it back to the analyzer |
 
-`test:*` labels hold the latest PR test verdict, `repro:*` labels the latest repro verdict. Issues labelled `tiger` name tiger reports on vanilla files: the agents check that each still appears, fix the ones they find real and keep the others ignored in `ck3-tiger.conf`, usually without an in-game test. `unop-dispatcher` runs as the main session and starts the others on labelled work. `locked` marks an item an agent is working on; `needs-human` stops the pipeline for that item. The agents hand over through a collapsed `<!-- unop-handover -->` comment on the issue.
+`test:*` labels hold the latest PR test verdict, `repro:*` labels the latest repro verdict. `unop-dispatcher` runs as the main session and starts the others on labelled work. `locked` marks an item an agent is working on; `needs-human` stops the pipeline for that item. The agents hand over through a collapsed `<!-- unop-handover -->` comment on the issue.
 
 ## Trust Model
 

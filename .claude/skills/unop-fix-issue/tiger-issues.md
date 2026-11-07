@@ -6,12 +6,12 @@ How to analyze, fix and review a **tiger issue**, an issue labelled `tiger`. Suc
 
 Group the reports by the problem they point to, as the `tiger` skill does. Each problem gets its own verdict:
 
-- **No longer reported**: tiger doesn't report it any more, see **Checking the Reports**.
+- **No longer reported**: tiger doesn't report it any more because its code has changed, see **Checking the Reports**.
 - Otherwise, the `tiger` skill's verdict: **real**, **false positive**, **intended** or **unclear**, see **Verifying a Problem**.
 
-The issue's reports are its scope, so a real problem is fixed, see **Resolving Tiger Reports** in `CLAUDE.md`. A false positive, intended or unclear problem keeps its reports ignored.
+The issue's reports are its scope, so a real problem is fixed, even if the fix is a guess, unless it has no impact at all, see **Resolving Tiger Reports** in `CLAUDE.md`. Such a problem, and a false positive, intended or unclear one, keeps its reports ignored.
 
-The pattern-class rules apply as usual, since the issue may have missed cases or be out of date. So the scope also covers siblings with the same mistake.
+The pattern-class rules apply as usual, since the issue may have missed cases or be out of date. So the scope also covers siblings with the same mistake, even those that tiger doesn't report or that another rule ignores.
 
 ## Running Tiger
 
@@ -27,9 +27,9 @@ The game and the Unop change, so some reports may be gone. Before verifying anyt
 
 1. Copy `ck3-tiger.conf` to a temp file, without the rules found above.
 2. Run tiger on the current tree with `--config <copy>`, writing to a temp file.
-3. Look for each of the issue's reports in the output by its file, report type and message, not by its line, since vanilla updates move lines. A report that doesn't appear is **no longer reported**. It needs no further verification and no code change; only its rule goes away.
+3. Look for each of the issue's reports in the output by its file, report type and message, not by its line, since vanilla updates move lines. A report that doesn't appear is **no longer reported** if its code has changed since, e.g. Unop or a game update fixed it. It then needs no further verification and no code change; only its rule goes away. If its code is unchanged, tiger may have stopped seeing it, so verify the problem as usual.
 
-If only some of a problem's reports are gone, un-ignore those, and verify the problem with the rest. Other reports that the removed rules were also hiding don't belong to the issue; leave them alone.
+If only some of a problem's reports are gone, un-ignore those, and verify the problem with the rest. Other reports that the removed rules were also hiding belong to the issue only if they are siblings with the same mistake; leave the others alone.
 
 ## Verifying a Problem
 
@@ -41,7 +41,7 @@ Then reach the verdict by the `tiger` skill's criteria.
 
 ## Arguing Verdicts
 
-Each step reaches its own verdict on every problem. Earlier verdicts and their reasons are input to check, not rulings to follow:
+Each step reaches its own verdict on every problem; for a real problem, the verdict includes whether it has any impact. Earlier verdicts and their reasons are input to check, not rulings to follow:
 
 - **Analysis** gives each verdict with its reason.
 - **Fix** re-checks every problem, and may reach another verdict with evidence, e.g. a caller, a saved scope or a known docs issue that the analysis missed.
@@ -54,6 +54,7 @@ Whenever a verdict differs from an earlier one, give the evidence for it. Don't 
 
 - **No longer reported:** remove the rule that ignores its reports, and change no code.
 - **Real:** remove the rules that ignore its reports, and those of any sibling fixed with it.
+- **Real with no impact:** make sure a rule under `# Vanilla issues` ignores its reports, with the evidence of no impact in its comment and no mention of the issue.
 - **False positive, intended or unclear:** make sure a rule in the verdict's section ignores its reports, with the reason in its comment. When moving a rule, drop any mention of the issue from its comment.
 
 If a rule also covers other reports, narrow it instead of removing it, e.g. drop only the matching `OR` entries. Afterwards, tiger must show neither the fixed nor the no-longer-reported reports, and nothing new.
@@ -70,6 +71,7 @@ List the problems in this shape, one line each, wherever they are summarized:
 
 ```markdown
 - `<file>:<lines>` (`<report types>`): real: <root cause and fix>
+- `<file>:<lines>` (`<report types>`): real, no impact: <root cause and evidence>
 - `<file>:<lines>` (`<report types>`): no longer reported: un-ignore
 - `<file>:<lines>` (`<report types>`): <false positive | intended | unclear>: <reason>
 ```

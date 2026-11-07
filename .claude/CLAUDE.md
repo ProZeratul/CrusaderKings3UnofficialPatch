@@ -58,7 +58,7 @@ All relevant directories are in [.env](../.env) (read it for their values; in an
 - **Match local formatting.** Follow the formatting of the surrounding code where the fix goes, and indent properly when wrapping existing code in a scope.
 - **Avoid incidental edits.** Avoid unrelated changes, e.g. to whitespace.
 - **Update memory with the file tools.** The sandbox blocks shell writes under `~/.claude`, so edit memory files with Edit or Write, not `sed` or redirects. Pipeline sessions can't write memory at all.
-- **Keep Bash calls simple in agent worktrees.** Worktree isolation refuses commands it can't verify: git commands with variables or command substitutions (e.g. `"${TMPDIR}"` or `$(...)` in a path or branch name), `git -C` or `cd` to computed paths, process substitution `<(...)`, `source`, and `sed` or `awk` with variables. Resolve such values in a separate call first, then write them out literally; chains of plain commands with literal paths are fine.
+- **Keep Bash calls simple in agent worktrees.** Worktree isolation refuses commands it can't verify: a command line that runs git and has a variable or command substitution anywhere in it, `git -C` or `cd` to computed paths, process substitution `<(...)`, `source`, and `sed` or `awk` with variables. Resolve such values in a separate call first, then write them out literally; chains of plain commands with literal paths are fine.
 - **Run repo scripts from the main checkout.** `<main>` is the main checkout, the parent of `git rev-parse --path-format=absolute --git-common-dir`, written out in full. Run `.claude/scripts/*` as `<main>/.claude/scripts/*`, so that in an agent worktree they never come from the branch checked out there. Run `comments.sh`, `marker-*.sh` and `handover-*.sh` each as its own Bash call, not chained with `gh` commands: permission rules match the whole command line, so a chain can be refused.
 
 ### Untrusted Input
@@ -87,7 +87,7 @@ All relevant directories are in [.env](../.env) (read it for their values; in an
 
 ### Resolving Tiger Reports
 
-- **Fix within scope, defer the rest.** This is Unop's disposition of real problems, in place of the `tiger` skill's default. Fix a real problem within the current task's scope, whatever its impact. Reports that the change itself causes are always in scope. Defer one outside the scope by ignoring its reports under `# Vanilla issues`, and mention it in the PR or the summary.
+- **Fix within scope, defer the rest.** This is Unop's disposition of real problems, in place of the `tiger` skill's default. Fix a real problem within the current task's scope, however small its impact. Reports that the change itself causes are always in scope. Defer one outside the scope, or a vanilla one with no impact, by ignoring its reports under `# Vanilla issues`, and mention it in the PR or the summary. No impact means that fixing it would change nothing in the game, not even `error.log`, e.g. dead code; give the evidence in the rule's comment.
 - **Use the right section.** In `ck3-tiger.conf`, put false positives under `# False positives` with their upstream tiger issues, intended reports under `# Intended`, unclear ones under `# Unclear`, and deferred ones under `# Vanilla issues` with their Unop issues if any. `# Ignored` is only for kinds of reports that Unop doesn't handle, e.g. `missing-localization`.
 - **Group with similar rules.** Place a new rule next to similar ones of the same type; if there are none, append it at the end.
 

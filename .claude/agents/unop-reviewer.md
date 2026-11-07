@@ -64,27 +64,28 @@ Make sure you are in a worktree before changing anything. Run `pwd`; if it is no
    <main>/.claude/scripts/handover-push.sh <anchor>
    ```
 
-6. **Hand off** only if the shared file has a `## Fix` section: to the fixer if the verdict is needs-work, to the tester if it is looks-good and the PR has a test script. A looks-good PR without one is ready for human review.
-   - Check for the test script first, in its own call; it prints the comment's id, or nothing:
+6. **Hand off** only if the shared file has a `## Fix` section, by the verdict you applied. Run each command as its own Bash call.
+   - **Needs work:** hand off to the fixer:
+
+     ```shell
+     gh api --silent -X POST repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels -f "labels[]=action:fix"
+     ```
+
+   - **Looks good:** check for a test script; this prints the comment's id, or nothing:
 
      ```shell
      <main>/.claude/scripts/marker-get.sh <PR> unop-test id
      ```
 
-   - Then hand off, with `<has-script>` written out as `yes` if it printed an id, or `no`:
+     If it printed an id, hand off to the tester:
 
      ```shell
-     if grep -q '^## Fix' tmp/issue-<anchor>.md; then
-       labels=$(gh api repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels --jq '.[].name')
-       if grep -qx review:needs-work <<< "$labels"; then
-         gh api --silent -X POST repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels -f "labels[]=action:fix"
-       elif grep -qx review:looks-good <<< "$labels" && [ <has-script> = yes ]; then
-         gh api --silent -X POST repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels -f "labels[]=action:test"
-       fi
-     fi
+     gh api --silent -X POST repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels -f "labels[]=action:test"
      ```
 
-   Then clear your request label: `gh api --silent -X DELETE repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels/action:review`.
+     If it printed nothing, the PR is ready for human review, and there is no hand-off.
+
+   Then clear your request label from the anchor: `gh api --silent -X DELETE repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels/action:review`.
 
 7. **Unlock**: `gh api --silent -X DELETE repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels/locked`.
 
