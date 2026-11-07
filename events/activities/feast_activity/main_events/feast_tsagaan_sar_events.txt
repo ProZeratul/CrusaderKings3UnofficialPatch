@@ -297,14 +297,14 @@ scripted_effect add_to_gift_pool_effect = {
         flag:herd = {
             change_variable = {
                 name = feast_herd_total
-                add = $AMOUNT$_herd_value
+                add = scope:giver.domicile.$AMOUNT$_herd_value #Unop Use the giver's domicile value, which is what is paid
             }
             scope:giver = { pay_herd = { target = scope:recipient value = domicile.$AMOUNT$_herd_value } }
         }
         flag:gold = {
             change_variable = {
                 name = feast_gold_total
-                add = $AMOUNT$_gold_value
+                add = scope:giver.$AMOUNT$_gold_value #Unop Use the giver's value, which is what is paid
             }
             scope:giver = { pay_short_term_gold = { target = scope:recipient gold = $AMOUNT$_gold_value } }
         }
