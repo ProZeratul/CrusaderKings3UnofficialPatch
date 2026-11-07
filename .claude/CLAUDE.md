@@ -25,6 +25,7 @@ All relevant directories are in [.env](../.env) (read it for their values; in an
 
 - `CK3_BASE_DIR`: base game root directory
 - `CK3_USER_DIR`: game user data directory (logs, settings, etc.)
+- `CK3_TIGER_DIR`: source of the `ck3-tiger` you run, if it's built locally
 
 ### Game Docs
 
@@ -41,6 +42,7 @@ All relevant directories are in [.env](../.env) (read it for their values; in an
 ### Tiger
 
 - The `ck3-tiger` configuration is `ck3-tiger.conf`, and its output is saved to `ck3-tiger.out`.
+- To check how tiger works, read its source in `CK3_TIGER_DIR`, never on GitHub: the `ck3-tiger` you run may be built from another branch. If `CK3_TIGER_DIR` isn't set, don't use tiger's source.
 - The Unop file that overrides a base game file is **always** a file with the same name (for script files).
 - Unop localization `.yml` files are in `localization/replace/english`:
   - `unop_fixed_keys_l_english.yml`: fixed vanilla keys
