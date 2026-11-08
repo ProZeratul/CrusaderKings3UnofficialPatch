@@ -384,7 +384,7 @@ is_large_conquest_war_for_struggle_trigger = {
 are_holy_wars_disabled_in_struggle_phase_trigger = {
 	exists = scope:target
 	trigger_if = {
-		scope:target.tier = tier_county
+		limit = { scope:target.tier = tier_county } #Unop Make the tier check the limit, so that duchies and kingdoms reach the trigger_else
 		scope:target = {
 			any_county_struggle = {
 				NOT = {	has_struggle_phase_parameter = holy_wars_in_region_cannot_be_declared }

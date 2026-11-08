@@ -4980,8 +4980,10 @@ festival.107 = {
 					is_physically_able_ai_adult = yes
 					age < define:NCharacter|FEMALE_ATTRACTION_CUTOFF_AGE # we just default to the lower of the two
 					trigger_if = {
-						root.intent_target ?= {
-							is_male = yes
+						limit = { #Unop Make the intent target check the limit, so that the trigger_else is reached
+							root.intent_target ?= {
+								is_male = yes
+							}
 						}
 						is_female = yes
 					}
@@ -5073,8 +5075,10 @@ festival.107 = {
 						is_physically_able_ai_adult = yes
 						age < define:NCharacter|FEMALE_ATTRACTION_CUTOFF_AGE # we just default to the lower of the two
 						trigger_if = {
-							root.intent_target ?= {
-								is_male = yes
+							limit = { #Unop Make the intent target check the limit, so that the trigger_else is reached
+								root.intent_target ?= {
+									is_male = yes
+								}
 							}
 							is_female = yes
 						}
@@ -5095,8 +5099,10 @@ festival.107 = {
 					is_physically_able_ai_adult = yes
 					age < define:NCharacter|FEMALE_ATTRACTION_CUTOFF_AGE # we just default to the lower of the two
 					trigger_if = {
-						root.intent_target ?= {
-							is_male = yes
+						limit = { #Unop Make the intent target check the limit, so that the trigger_else is reached
+							root.intent_target ?= {
+								is_male = yes
+							}
 						}
 						is_female = yes
 					}
