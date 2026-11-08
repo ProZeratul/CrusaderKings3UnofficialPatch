@@ -78,10 +78,10 @@ Make sure you are in a worktree before changing anything. Run `pwd`; if it is no
 
 ### 4. Release the worktree
 
-Switch back to the worktree's own branch, so that the worktree is removed when you finish:
+Switch back to the worktree's own branch, so that the worktree is removed when you finish. `<name>` is the last part of the path that `pwd` prints:
 
 ```shell
-git switch -q "worktree-$(basename "$PWD")"
+git switch -q worktree-<name>
 ```
 
 If it refuses because of uncommitted changes, leave them. If you entered the worktree yourself in step 2, also call `ExitWorktree` with `remove`.

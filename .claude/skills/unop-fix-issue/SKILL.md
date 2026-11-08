@@ -15,6 +15,7 @@ This skill runs **autonomously**, without asking for approval. Any human gates b
 - **GitHub repo**: `ProZeratul/CrusaderKings3UnofficialPatch`. Use the `gh` CLI for all GitHub operations.
 - **Issue**: A bug report (or occasionally an enhancement request) opened against the Unop repo.
 - **Shared file**: `tmp/issue-<N>.md` — the handover document. Other skills may create it with the `## Analysis` section and append `## Repro N`, `## Review N` and `## Test N` sections. This skill reads them and appends `## Fix N`.
+- **Tiger issue**: an issue labelled `tiger`, naming tiger reports that its author believes are real bugs. `tiger-issues.md` says how to work one.
 
 ## Context
 
@@ -32,7 +33,7 @@ This skill runs **autonomously**, without asking for approval. Any human gates b
 - **Read the shared file** in full before formulating a fix — the `## Analysis` section and every `## Repro N` and prior `## Fix N`, `## Review N` and `## Test N`.
 - **Read the relevant parts of the actual Unop and vanilla files** before formulating the fix — don't rely on the investigation summary alone.
 - **Decide the fix yourself.** Trust the shared file's `Findings` and *file-verified facts*, but treat any `Fix directions` recorded there as one unverified hypothesis, not a spec. Re-derive the approach from the facts and choose the altitude.
-- **Don't hand-classify tiger warnings.** When tiger reports new warnings, invoke the `tiger` skill to fix them properly.
+- **Don't hand-classify tiger reports.** When tiger shows new reports, invoke the `tiger` skill to resolve them properly.
 - Consult `examples.md` for relevant past investigations when a situation it covers comes up.
 
 ## Workflow
@@ -41,7 +42,7 @@ This skill runs **autonomously**, without asking for approval. Any human gates b
 
 Read the shared file for the investigation findings, classification, and any prior fix/review cycles. Read the repro comment on the issue (marked `<!-- unop-repro -->`) if there is one: `<main>/.claude/scripts/marker-get.sh <N> unop-repro body`.
 
-**Re-fix due to review.** If a `## Review N` section is present, read the most recent one and treat its `High` and `Medium` findings as the work list for this attempt — every one must be addressed before you consider the fix ready. `Low` findings are optional. Earlier `## Fix N` sections show what was already tried.
+**Re-fix due to review.** If a `## Review N` section is present, read the most recent one and treat its `High` and `Medium` findings as the work list for this attempt — every one must be addressed before you consider the fix ready. `Low` findings are optional. Earlier `## Fix N` sections show what was already tried. In a tiger issue, you may also address a finding on a problem's verdict or on a guessed fix by rejecting it with evidence, as `tiger-issues.md` says.
 
 **Re-fix due to a failed test.** If the most recent section is a `## Test N` with result `Failed`, read it and the result comment on the PR (`<main>/.claude/scripts/marker-get.sh <PR> unop-test-result body`). On `Failed (fix)`, the fix doesn't work in-game: treat the observations as the work list. On `Failed (script)`, the test script doesn't reach the changed code or doesn't tell `main` and the fix apart: rewrite the test script (step 3.4); change the fix only if the observations show it's wrong too.
 
@@ -63,8 +64,9 @@ Work out *how* to fix the bug before writing any code.
 - **Check all siblings, not just the ones with the matching pattern.** When a fix applies a guard to some items in a group, read every sibling item's conditions to determine whether it has the same exposure. A sibling whose conditions look unrelated may still be satisfiable by the invalid subject through a different path.
 - **Find all call sites of the buggy code path.** Grep the symbol you're about to guard. Vanilla often runs the same logic in 2-3 places; missing a duplicate leaves the bug unfixed. See `examples.md` (#213).
 - **Evaluate suggested fixes critically.** Both the reporter's diagnosis and any `Fix directions` in the shared file are candidates, not defaults — re-derive the approach from the verified facts. Watch for fixes that destroy state other systems still depend on. See `examples.md` (#213, #498).
-- **Name the load-bearing assumption.** State the single behavioral assumption the fix rests on and corroborate it from files (a working precedent, a `.info`/log line); if it can't be confirmed, flag it for in-game testing. See `examples.md` (#498).
+- **Name the load-bearing assumption.** State the single behavioral assumption the fix rests on and corroborate it from files (a working precedent, a `.info`/log line); if it can't be confirmed, flag it for in-game testing. In a tiger issue, treat it as a guess instead, as `tiger-issues.md` says. See `examples.md` (#498).
 - **On a re-fix**, make sure the new approach resolves the review findings rather than working around them.
+- **In a tiger issue**, re-check every problem's verdict as `tiger-issues.md` says, and fix the real ones that have an impact.
 
 **Paradox Script Gotchas:**
 
@@ -85,15 +87,15 @@ Following the project `CLAUDE.md` "General", "Style", and "Opening PRs" guidelin
 
    Run each line as its own call, and write `<prefix>` out literally in the last one.
 
-2. **Apply the fix.** Minimal change; `#Unop` comment on the first changed line; comment out rather than delete unneeded vanilla code. When enclosing existing code in a scope, indent it properly. New vanilla files should be added without modifications in a separate commit.
+2. **Apply the fix.** Minimal change; `#Unop` comment on the first changed line; comment out rather than delete unneeded vanilla code. When enclosing existing code in a scope, indent it properly. New vanilla files should be added without modifications in a separate commit. On a re-fix that drops all of the PR's changes to a vanilla file it added, remove that file from the PR rather than leave an unmodified copy. In a tiger issue, also update the exclusions in `ck3-tiger.conf` as `tiger-issues.md` says, including un-ignoring the reports that are no longer reported.
 
-3. **Validate**: run `ck3-tiger --no-color . > ck3-tiger.out` and ensure no new errors or warnings.
-   - If new errors appear in newly-added vanilla files, fix or ignore them in the same PR.
-   - **invoke the `tiger` skill to handle tiger error reports.
+3. **Validate**: run tiger as **Run tiger** in `CLAUDE.md` says, and ensure no new reports.
+   - Resolve any new reports in the same PR with the `tiger` skill in mode `all`, including those in newly-added vanilla files.
+   - In a tiger issue, the fixed and the no-longer-reported reports must be gone.
 
-4. **Write the test script** following `testing.md`. Start from the issue's repro comment, re-verify it, and adapt it to what the fix changed.
+4. **Write the test script** following `testing.md`. Start from the issue's repro comment, re-verify it, and adapt it to what the fix changed. A tiger issue gets none.
 
-5. **Commit fix files scoped by path.** Stage explicitly (`git add -- <path>`, never `git add -A`) **and** commit with a pathspec: `git commit -m "<summary>" -- <path...>`. Before committing, run `git diff --cached --name-only` and confirm only the fix files are listed. Commit message: short imperative summary.
+5. **Commit fix files scoped by path.** If the attempt changed no files, e.g. a re-fix that only rejects review findings with evidence, skip the commit and the push, and still post the re-fix comment. Stage explicitly (`git add -- <path>`, never `git add -A`) **and** commit with a pathspec: `git commit -m "<summary>" -- <path...>`. Before committing, run `git diff --cached --name-only` and confirm only the fix files are listed. Commit message: short imperative summary.
 
 6. **Push and open or update the PR.** Push the branch by name; it has no upstream:
 
@@ -113,9 +115,11 @@ Following the project `CLAUDE.md` "General", "Style", and "Opening PRs" guidelin
      )"
      ```
 
+     In a tiger issue, the description lists the per-problem lines from `tiger-issues.md`.
+
      Then post the test script as a separate PR comment, as the **Posting** section of `testing.md` says.
 
-   - **Re-fix attempt**: the push updates the PR automatically. Then post a **concise** `**<identity>:**` PR comment explaining what changed (`gh pr comment <PR>`, resolving `<PR>` with `gh pr view <branch> --json number -q .number`); if the re-fix addressed PR feedback, answer each point in that comment, naming its file and line for inline comments. If the fix changed what should be tested, or the PR has no test script comment, update or post it as the **Posting** section of `testing.md` says.
+   - **Re-fix attempt**: the push updates the PR automatically. Then post a **concise** `**<identity>:**` PR comment explaining what changed (`gh pr comment <PR>`, resolving `<PR>` with `gh pr view <branch> --json number -q .number`); if the re-fix addressed PR feedback, answer each point in that comment, naming its file and line for inline comments. If the fix changed what should be tested, or the PR has no test script comment, update or post it as the **Posting** section of `testing.md` says, except in a tiger issue. In a tiger issue, give the reason or evidence for each verdict you changed or kept against a review finding.
 
 ### 4. Append to the Shared File
 
@@ -131,11 +135,13 @@ Append a `## Fix N` section to the shared file (N = 1 for the first attempt, 2 f
 **Files changed:**
 - `<path>` — <one-line note>
 
+**Problems:** <tiger issue only: the per-problem lines from `tiger-issues.md`>
+
 **Key assumption:** <the single behavioral assumption the fix depends on, and its corroboration — or "test in-game" if unconfirmed>
 
-**Test:** posted | updated | unchanged
+**Test:** posted | updated | unchanged | none
 
-**Commit:** <commit message>
+**Commit:** <commit message> | none
 
 **PR:** <PR URL> | existing PR updated
 ```
@@ -146,7 +152,7 @@ When done, report to the user:
 
 - Approach applied and why; on a re-fix, which review findings it resolved.
 - Files changed, commit, PR link.
-- Ask the user to verify the fix in-game following the PR's test script comment, and to check `error.log`.
+- Ask the user to verify the fix in-game following the PR's test script comment, and to check `error.log`. Skip this for a tiger issue.
 
 ## Reference
 
@@ -157,6 +163,10 @@ When done, report to the user:
 ### Testing
 
 `testing.md` describes how to write the test script.
+
+### Tiger Issues
+
+`tiger-issues.md` describes how to verify and fix a tiger issue, and how to update its exclusions.
 
 ## Usage Examples
 

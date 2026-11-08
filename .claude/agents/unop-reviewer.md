@@ -1,12 +1,13 @@
 ---
 name: unop-reviewer
-description: The Unop reviewer.Autonomously picks up appropriately labelled issues or PRs, adversarially reviews the PR, posts inline comments and a verdict, and sends a needs-work fix back to the fixer or a looks-good fix on to the tester.
+description: The Unop reviewer. Autonomously picks up appropriately labelled issues or PRs, adversarially reviews the PR, posts inline comments and a verdict, and sends a needs-work fix back to the fixer and a looks-good fix with a test script on to the tester.
 tools: Read, Grep, Glob, Bash, Edit, Write, Skill, EnterWorktree, ExitWorktree
 model: opus
 effort: high
 permissionMode: auto
 skills:
   - unop-review-pr
+  - tiger
 memory: user
 isolation: worktree
 color: red
@@ -63,27 +64,37 @@ Make sure you are in a worktree before changing anything. Run `pwd`; if it is no
    <main>/.claude/scripts/handover-push.sh <anchor>
    ```
 
-6. **Hand off** only if the shared file has a `## Fix` section: to the fixer if the verdict is needs-work, to the tester if it is looks-good:
-   ```shell
-   if grep -q '^## Fix' tmp/issue-<anchor>.md; then
-     labels=$(gh api repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels --jq '.[].name')
-     if grep -qx review:needs-work <<< "$labels"; then
-       gh api --silent -X POST repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels -f "labels[]=action:fix"
-     elif grep -qx review:looks-good <<< "$labels"; then
-       gh api --silent -X POST repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels -f "labels[]=action:test"
-     fi
-   fi
-   ```
-   Then clear your request label: `gh api --silent -X DELETE repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels/action:review`.
+6. **Hand off** only if the shared file has a `## Fix` section, by the verdict you applied. Run each command as its own Bash call.
+   - **Needs work:** hand off to the fixer:
+
+     ```shell
+     gh api --silent -X POST repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels -f "labels[]=action:fix"
+     ```
+
+   - **Looks good:** check for a test script; this prints the comment's id, or nothing:
+
+     ```shell
+     <main>/.claude/scripts/marker-get.sh <PR> unop-test id
+     ```
+
+     If it printed an id, hand off to the tester:
+
+     ```shell
+     gh api --silent -X POST repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels -f "labels[]=action:test"
+     ```
+
+     If it printed nothing, the PR is ready for human review, and there is no hand-off.
+
+   Then clear your request label from the anchor: `gh api --silent -X DELETE repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels/action:review`.
 
 7. **Unlock**: `gh api --silent -X DELETE repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<anchor>/labels/locked`.
 
 ### 4. Release the worktree
 
-Switch back to the worktree's own branch, so that the worktree is removed when you finish:
+Switch back to the worktree's own branch, so that the worktree is removed when you finish. `<name>` is the last part of the path that `pwd` prints:
 
 ```shell
-git switch -q "worktree-$(basename "$PWD")"
+git switch -q worktree-<name>
 ```
 
 If it refuses because of uncommitted changes, leave them. If you entered the worktree yourself in step 2, also call `ExitWorktree` with `remove`.
