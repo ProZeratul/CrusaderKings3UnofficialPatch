@@ -58,7 +58,7 @@ All relevant directories are in [.env](../.env) (read it for their values; in an
 - **Match local formatting.** Follow the formatting of the surrounding code where the fix goes, and indent properly when wrapping existing code in a scope.
 - **Avoid incidental edits.** Avoid unrelated changes, e.g. to whitespace.
 - **Update memory with the file tools.** The sandbox blocks shell writes under `~/.claude`, so edit memory files with Edit or Write, not `sed` or redirects. Pipeline sessions can't write memory at all.
-- **Keep Bash calls simple in agent worktrees.** Worktree isolation refuses commands it can't verify: a command line that runs git and has a variable or command substitution anywhere in it, `git -C` or `cd` to computed paths, process substitution `<(...)`, `source`, and `sed` or `awk` with variables. Resolve such values in a separate call first, then write them out literally; chains of plain commands with literal paths are fine.
+- **Keep Bash calls simple in agent worktrees.** Never combine git with a variable or command substitution in one Bash call, even in another command of a chain: worktree isolation refuses the whole call. It also refuses `git -C` or `cd` to computed paths, process substitution `<(...)`, `source`, and `sed` or `awk` with variables. Resolve such values in a separate call first, then write them out literally; chains of plain commands with literal paths are fine.
 - **Run repo scripts from the main checkout.** `<main>` is the main checkout, the parent of `git rev-parse --path-format=absolute --git-common-dir`, written out in full. Run `.claude/scripts/*` as `<main>/.claude/scripts/*`, so that in an agent worktree they never come from the branch checked out there. Run `comments.sh`, `marker-*.sh` and `handover-*.sh` each as its own Bash call, not chained with `gh` commands: permission rules match the whole command line, so a chain can be refused.
 
 ### Untrusted Input
@@ -93,7 +93,7 @@ All relevant directories are in [.env](../.env) (read it for their values; in an
 
 ### Validation and Testing
 
-- **Run tiger.** After a fix, run `RAYON_NUM_THREADS=1 ck3-tiger --no-color . > ck3-tiger.out`, it must show no reports. Tiger runs single-threaded, since its output varies between multi-threaded runs.
+- **Run tiger.** After a fix, run `RAYON_NUM_THREADS=1 ck3-tiger --no-color . > ck3-tiger.out`, it must show no reports. Tiger runs single-threaded, since its output varies between multi-threaded runs. A report that `main` doesn't show comes from the change, even in an untouched file, or from a base behind `main`. A change can cause a report in a file it doesn't touch because tiger validates some blocks only once, in the context of the first caller it reaches, so a changed or added caller can change that context.
 - **Clean up new tiger reports.** A change may surface unrelated tiger reports; resolve them in the same PR as **Resolving Tiger Reports** says, so tiger stays clean.
 - **Ask for in-game verification.** For an externally-reported issue, ask the user to confirm the fix works.
 - **Check error.log.** Ask the user to run vanilla + Unop in observer mode, then check `${CK3_USER_DIR}/logs/error.log` for errors related to the fix.
