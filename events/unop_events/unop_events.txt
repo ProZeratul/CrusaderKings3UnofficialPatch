@@ -68,6 +68,19 @@ unop.0080 = {
 	}
 }
 
+# Become a landless adventurer from unop_debug_unlanded_limbo_interaction, in an event so that the effect has the root it expects
+unop.0100 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		create_landless_adventurer_title_effect = {
+			REASON = flag:voluntary
+			FLAVOR_CHAR = root
+		}
+	}
+}
+
 # Unop: 1.13 update: Not needed anymore, will be removed one day
 # Make sure all of our court is sent to our new capital after a varangian CB
 #unop.1337 = {
