@@ -1,6 +1,5 @@
 ﻿# This decision was made for players who are stuck playing a character that is neither landed nor landless nor adventurer.
 # It is for those who doesn't want to / don't know to use debug mode to unstuck their char (or also don't want to lose potential achievements enabled game)
-#tiger-ignore(block)
 unop_debug_unlanded_limbo_interaction = {
 	category = interaction_category_friendly	
 	desc = unop_debug_unlanded_limbo_interaction_desc
@@ -19,11 +18,6 @@ unop_debug_unlanded_limbo_interaction = {
 	}
 
 	on_accept = {
-		scope:recipient = {
-			create_landless_adventurer_title_effect = {
-				REASON = flag:voluntary
-				FLAVOR_CHAR = scope:recipient
-			}
-		}
+		scope:recipient = { trigger_event = unop.0100 }
 	}
 }
