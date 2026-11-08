@@ -472,13 +472,13 @@ diplomacy_foreign.3001 = {
 	option = {
 		name = diplomacy_foreign.3001.b
 		add_prestige = medium_prestige_gain
-		ai_chance = {
-			base = 0
-			modifier = {
-				add = 80
-				has_trait = lazy
-			}
-		}
+		#ai_chance = { #Unop Merged into the ai_chance below, which replaced this one
+		#	base = 0
+		#	modifier = {
+		#		add = 80
+		#		has_trait = lazy
+		#	}
+		#}
 
 		stress_and_fulfillment_impact = {
 			humble = minor_stress_impact_gain
@@ -494,6 +494,10 @@ diplomacy_foreign.3001 = {
 					has_trait = greedy
 					has_trait = arbitrary
 				}
+			}
+			modifier = { #Unop Moved from the duplicate ai_chance above, which this one replaced
+				add = 80
+				has_trait = lazy
 			}
 		}
 	}
