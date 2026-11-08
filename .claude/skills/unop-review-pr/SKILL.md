@@ -62,7 +62,7 @@ gh pr diff <PR>
 
 Run each line as its own call, so that a failing `merge-tree` shows.
 
-For the PR's history use the ref: `git log --oneline origin/main..pr/<PR>`, `git show pr/<PR>~1`. If the branch conflicts with `main`, report it as a `High` finding: rebase onto `main`.
+For the PR's history use the ref: `git log --oneline origin/main..pr/<PR>`, `git show pr/<PR>~1`. If the PR builds on another open PR, fetch that one's ref the same way and review only the commits on top of it, `pr/<other>..pr/<PR>`; the rest belongs to the other PR's review. If the branch conflicts with `main`, report it as a `High` finding: rebase onto `main`.
 
 ### 3. Review
 
@@ -93,8 +93,11 @@ Before the line-level review, judge the approach itself — as stated in the lat
 
 For each changed file, check:
 
-- **Missed call sites.** Grep the guarded symbol across the codebase. Vanilla often runs the same logic in 2-3 places; one missed duplicate means the bug survives. See `examples.md` (#213).
+- **Missed call sites.** Grep the guarded symbol across the codebase. Vanilla often runs the same logic in 2-3 places; one missed duplicate means the bug survives. Grep every syntax form that reads the same value, too. See `examples.md` (#213).
 - **Guard interactions.** Are there other guards in the same `is_shown` / `is_valid` / `can_create` block that would still block the reporter's case even after this fix? See `examples.md` (#440).
+- **Guard placement.** Does each guard run before what it guards?
+- **Shared helpers.** If the fix routes cases through an existing helper, does the helper cover every tier of each ladder it now serves?
+- **Stray hunks.** In a diff dominated by one large hunk, e.g. a commented-out block, list every hunk: a stray change can hide below it.
 - **Side effects.** Does the fix destroy state that other events, effects, or on_actions still depend on? See `examples.md` (#213).
 - **Out-of-scope files.** Fixes never change `Makefile`, `.github/`, `.gitattributes`, `.mcp.json`, or a `.claude/`, `CLAUDE.md` or `CLAUDE.local.md` in any directory, and never add symlinks. If the diff touches any of them, that is a `High` finding: don't run anything from the PR beyond reading it, and add the `needs-human` label to the anchor in step 6.
 - **`#Unop` comments.** Are they present on the first changed line? Are they accurate and concise?
@@ -158,7 +161,7 @@ SHA=$(gh pr view <PR> --json headRefOid -q .headRefOid)
 gh api -X POST repos/ProZeratul/CrusaderKings3UnofficialPatch/pulls/<PR>/reviews --input tmp/review.json
 ```
 
-Comment only on lines present in the diff, using new-file numbers with `side: RIGHT`. Omit `comments` if you have no line-level notes.
+Comment only on lines present in the diff, using new-file numbers with `side: RIGHT`. GitHub takes inline comments only on files whose diff it shows, and rejects the whole review if one comment is on another file. List those files first, and put your notes on them in the body: `gh api --paginate repos/ProZeratul/CrusaderKings3UnofficialPatch/pulls/<PR>/files -q '.[] | select(.patch == null) | .filename'`. Omit `comments` if you have no line-level notes.
 
 In a tiger issue, the review body lists each problem whose verdict you dispute, using the per-problem lines from `../unop-fix-issue/tiger-issues.md` with your verdict, and the reason or evidence.
 

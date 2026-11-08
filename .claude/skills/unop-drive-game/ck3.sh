@@ -196,7 +196,11 @@ cmd_wait() {
         sleep 1
       done
       die "game not loaded after $timeout s; take a shot: if it shows the main menu, the clicks were lost" ;;
-    *) die "wait game [<seconds>]" ;;
+    [1-9]*)
+      num "$1"
+      [ "$1" -le 120 ] || die "wait at most 120 s"
+      sleep "$1" ;;
+    *) die "wait game [<seconds>] | wait <seconds>" ;;
   esac
 }
 
@@ -297,5 +301,5 @@ cmd_new() {
 
 case ${1:-} in
   launch|start|wait|exit|shot|click|hover|key|cmd|run|mark|new) c=$1; shift; "cmd_$c" "$@" ;;
-  *) sed -n '2,5p' "$0"; echo "usage: ck3.sh launch [--mod <dir>] | start <867|1066|1178> | wait game | exit | shot <name> [<x> <y> <w> <h>] | click <x> <y> | hover <x> <y> | key <key>... | cmd <line> | run <file> | mark | new [error|debug]"; exit 1 ;;
+  *) sed -n '2,5p' "$0"; echo "usage: ck3.sh launch [--mod <dir>] | start <867|1066|1178> | wait game [<seconds>] | wait <seconds> | exit | shot <name> [<x> <y> <w> <h>] | click <x> <y> | hover <x> <y> | key <key>... | cmd <line> | run <file> | mark | new [error|debug]"; exit 1 ;;
 esac

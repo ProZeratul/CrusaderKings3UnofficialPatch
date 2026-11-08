@@ -47,7 +47,7 @@ Run a tick when the loop fires and whenever an agent you started finishes. The l
    - Skip `action:test` while CK3 is running and wasn't started by a tester (`pgrep -f '(^|/)ck3( |$)'`): the user is playing.
    - Start `unop-steam-importer` at most once a day per Steam source, judging by the log, while no importer is running: `Scan main.`, and in a later tick `Scan suggestions.` The in-flight cap already throttles what it imports.
 
-6. **Start the agents** you picked, in the background, one Agent call each, with the agent type and a prompt naming the item, e.g. `Process issue 712. Keep your final report under 5 lines.` or `Process PR 740. ...`. Log each start.
+6. **Start the agents** you picked, in the background, one Agent call each, with the agent type and a prompt naming the item, e.g. `Process issue 712. Keep your final report under 5 lines, not counting feedback.` or `Process PR 740. ...`. Log each start.
 
 7. **Finish the tick.** If nothing was started and nothing is running, log `idle`. Then end your turn; don't wait for the agents.
 

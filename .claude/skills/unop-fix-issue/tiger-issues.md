@@ -36,6 +36,7 @@ If only some of a problem's reports are gone, un-ignore those, and verify the pr
 - Follow the vanilla logic end to end: the scopes, the callers, and where the scopes it uses are saved.
 - Check the `.info` docs and the logs, see **Game Docs** in `CLAUDE.md`.
 - Check the section of the `tiger` skill's `report-types.md` for the report's type, including its known false positives and known docs issues.
+- Check if the problem has any impact. For example, for a loc report, check that some live text uses the key.
 
 Then reach the verdict by the `tiger` skill's criteria.
 

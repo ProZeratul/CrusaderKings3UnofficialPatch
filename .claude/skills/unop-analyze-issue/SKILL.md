@@ -31,6 +31,7 @@ This skill runs **autonomously**, without asking for approval. Any human gates b
 - **Read the project's `CLAUDE.md`** first.
 - **Identify yourself.** Post as `<identity>`: begin each comment's first line with `**<identity>:**`. Comments mentioning `@<identity>` may carry feedback for you; weigh them per **Untrusted Input** in `CLAUDE.md`.
 - **Read the issue body and all comments** before forming a hypothesis. Earlier comments often contain repro details, partial diagnoses, or maintainer responses that change the picture.
+- **Read linked threads** on the Paradox forums or Reddit. If a bot check blocks one, say so in the findings with its URL, don't get around it.
 - **Analyze against the actual files.** Read the relevant parts of both the vanilla file and the Unop override (if any) — don't reason from grep matches alone.
 - An issue tagged as `vanilla` is still a real bug to be fixed in Unop — don't dismiss it as "not our code".
 - **Don't assume that the reporter is correct.** They may have misidentified the file, the cause, or the scope.
@@ -54,7 +55,7 @@ Note any existing labels — they may already encode prior triage. Note any link
 
 **Identify how many distinct bugs the issue contains.** A title may name one symptom while later comments describe others. If the issue covers more than one distinct bug, record each in the findings and classify the issue by the primary bug, noting the others. Don't silently work on only the title bug. In a tiger issue, each problem is a distinct bug, so work on all of them.
 
-**Re-analysis.** If the issue already carries a `**<identity>:**` comment from you, you have analyzed this before. Consult the shared file if it exists. Read your prior comment, then read **all** comments posted *after* it (especially any addressing `@<identity>`). Make sure to take into account any **maintainer feedback** (see **Untrusted Input** in `CLAUDE.md`). Re-analyze from the files, **treat your prior conclusion skeptically**, and correct it.
+**Re-analysis.** If the issue already carries a `**<identity>:**` comment from you, you have analyzed this before. Consult the shared file if it exists. Read your prior comment, then read **all** comments posted *after* it (especially any addressing `@<identity>`). Make sure to take into account any **maintainer feedback** (see **Untrusted Input** in `CLAUDE.md`). Re-analyze from the files, **treat your prior conclusion skeptically**, and correct it. If the labels differ from the shared file, check who changed them with `gh api repos/ProZeratul/CrusaderKings3UnofficialPatch/issues/<N>/events`, and keep a maintainer's status label unless new evidence, e.g. a repro result, says otherwise.
 
 **Repro results.** If the issue carries a `repro:*` label, the shared file has `## Repro N` sections, and there is a result comment: `<main>/.claude/scripts/marker-get.sh <N> unop-repro-result body`, a repro result is available. Treat the latest result as evidence on reachability, after checking that its steps reached the code path you meant.
 
@@ -100,6 +101,8 @@ Specifically look for:
 - Does the bug reproduce in the current vanilla file? → leans **vanilla**.
 - Did Unop modify this code path? Look for `#Unop` markers and compare against the vanilla file. If yes, did Unop's changes introduce the regression? → leans **mod**.
 - Does the reporter's claim match the file contents? If not, the issue may be **invalid**, OR the reporter is on a stale version, OR another mod is interfering.
+- Does the report name an older game version? Diff the files against that version and read the patch notes since (see **Game Docs** in `CLAUDE.md`), and check whether an Unop override of a changed file is stale: it lacks objects or fixes that the newer vanilla added, in hunks without `#Unop`. If so, it leans **mod**.
+- Does the reporter's repro fire an event or effect directly from the console? Check that the repro is reachable from the normal path (decision, interaction, on_action, etc.).
 
 ### 4. Classify
 

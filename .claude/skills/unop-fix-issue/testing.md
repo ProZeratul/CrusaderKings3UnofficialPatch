@@ -21,9 +21,9 @@ In order of preference:
 
 AI behavior over time, game start, and rare random outcomes are still testable. Say how:
 
-- **Observer mode**, plus the log or `error.log` line to check.
-- **Temporary `debug_log`** (e.g. `debug_log = "..."` or `debug_log_scopes = yes`) at a named spot in a named file, plus the `debug.log` line that proves the fix.
-- **Temporary code tweaks** that make a random outcome likely, e.g. raising a `weight`, `chance` or `random` value. Give the file, the block and the new value, and ask to revert it after.
+- **Observer mode**, plus the log or `error.log` line to check. Speed 5 runs about 2.5 game years per real minute.
+- **Temporary `debug_log`** (e.g. `debug_log = "..."` or `debug_log_scopes = yes`) at a named spot in a named file, plus the `debug.log` line that proves the fix. To find out how a state comes about, hook a temporary `common/on_action/zz_*.txt` into the on_action involved, with `debug_log_stack_trace = "<message>"`.
+- **Temporary code tweaks** that make a random outcome likely, e.g. raising a `weight`, `chance` or `random` value. Give the file, the block and the new value, and ask to revert it after. Raise a weight in the pool that actually fires the event at that point, to about 10000; above 100000 it never fires.
 
 ## Common Mistakes
 
@@ -34,6 +34,9 @@ AI behavior over time, game start, and rare random outcomes are still testable. 
 - **`debug_log` writes to `debug.log`**, not `game.log`.
 - **Observer mode is rarely needed.** Game-start effects run whoever is played; any character works.
 - **Console lines over 255 chars** are truncated and run partially. Give longer setups as an effect file (a fenced block run with `run <file>`), not as one console line.
+- **Activity events fired from the console** lack `scope:activity` and `scope:host`, so their loc breaks and they can't chain.
+- **Heirs update a few game days after the setup.** Unpause before checking `primary_heir` or `current_heir`.
+- **`set_father` refuses a parent younger than the child,** and the rest of the run goes on.
 - **Characters created by the setup have no ID.** Keep the creation and every later use in one effect file via `save_scope_as`, or reach them through a relation to the player.
 - **Transient or visual-only feedback.** Toasts disappear in seconds, and screen checks are slow. Prefer an expectation that can be checked in a log: a `debug_log` line from an effect that tests the trait, title, variable or government, or `error.log` content.
 - **Expectations that need interpretation.** State the exact text, value or log line, not "works correctly".
@@ -43,7 +46,7 @@ AI behavior over time, game start, and rare random outcomes are still testable. 
 
 Check all commands or IDs used:
 
-- Character IDs, titles and their holders at the chosen bookmark, against `history/characters/` and `history/titles/`.
+- Character IDs, titles and their holders at the chosen bookmark, against `history/characters/` and `history/titles/`. A title's holder is its last entry dated up to the bookmark.
 - Effects and triggers in console commands, against `${CK3_USER_DIR}/logs/effects.log` and `triggers.log`, including the scope they run in.
 - Event IDs, decision and interaction keys, and loc keys, against the files.
 
