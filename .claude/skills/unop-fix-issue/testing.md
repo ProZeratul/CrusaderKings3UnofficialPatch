@@ -35,6 +35,7 @@ AI behavior over time, game start, and rare random outcomes are still testable. 
 - **Observer mode is rarely needed.** Game-start effects run whoever is played; any character works.
 - **Console lines over 255 chars** are truncated and run partially. Give longer setups as an effect file (a fenced block run with `run <file>`), not as one console line.
 - **Activity events fired from the console** lack `scope:activity` and `scope:host`, so their loc breaks and they can't chain.
+- **`trigger_event` checks the event's `trigger`,** so whether the event fires can show a fixed gate. An `activity_event` sent with `trigger_event` outside its activity doesn't fire at all; temporarily change its `type` to `character_event` in both exports.
 - **Heirs update a few game days after the setup.** Unpause before checking `primary_heir` or `current_heir`.
 - **`set_father` refuses a parent younger than the child,** and the rest of the run goes on.
 - **Characters created by the setup have no ID.** Keep the creation and every later use in one effect file via `save_scope_as`, or reach them through a relation to the player.
