@@ -172,7 +172,10 @@ pam_generic_events.0002 = {
 		name = pam_generic_events.0002.a
 		trigger = {
 			scope:doubting_child = {
-				num_sinful_traits > 0
+				any_character_trait = { #Unop Only personality sins can be flipped
+					has_trait_category = personality
+					scope:doubting_child.rite = { trait_is_sin_rite = prev }
+				}
 			}
 		}
 		scope:doubting_child = {

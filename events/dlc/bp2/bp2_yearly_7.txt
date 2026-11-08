@@ -5391,7 +5391,12 @@ bp2_yearly.7027 = { #cleansing with water
 		flavor =  bp2_yearly.7027.a.tt
 		if = {
 			limit = {
-				scope:teentribal = { num_sinful_traits > 0 }
+				scope:teentribal = {
+					any_character_trait = { #Unop Only personality sins can be flipped
+						has_trait_category = personality
+						scope:teentribal.rite = { trait_is_sin_rite = prev }
+					}
+				}
 			}
 			random_list = {
 				1 = {
@@ -5537,7 +5542,12 @@ bp2_yearly.7028 = { #cleansing with fire
 		flavor = bp2_yearly.7028.a.tt
 		if = {
 			limit = {
-				scope:teentribal = { num_sinful_traits > 0 }
+				scope:teentribal = {
+					any_character_trait = { #Unop Only personality sins can be flipped
+						has_trait_category = personality
+						scope:teentribal.rite = { trait_is_sin_rite = prev }
+					}
+				}
 			}
 			random_list = {
 				1 = {

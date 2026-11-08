@@ -919,7 +919,12 @@ pam_decision_events.0003 = {
 				}
 				2 = {
 					trigger = {
-						num_sinful_traits > 0
+						scope:target_child = { #Unop Check the child, and only personality sins can be flipped
+							any_character_trait = {
+								has_trait_category = personality
+								scope:target_child.rite = { trait_is_sin_rite = prev }
+							}
+						}
 					}
 					send_interface_toast = {
 						title = pam_decision_events.0003.trait
