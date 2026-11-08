@@ -168,6 +168,7 @@ crown = {
 			OR = {
 				artifact_use_indian_building_visuals_trigger = yes #this trigger cuts out the maker
 				artifact_use_southeast_asian_building_visuals_trigger = yes #this trigger cuts out the maker
+				artifact_use_southeast_asian_unit_visuals_trigger = yes #Unop Southeast Asian unit gfx without Indian building gfx (Bouxcuengh) had no crown
 			}
 		}
 		reference = male_headgear_secular_ep1_diamond_crown_artifact_entity
@@ -177,6 +178,7 @@ crown = {
 			OR = {
 				artifact_use_indian_building_visuals_trigger = yes #this trigger cuts out the maker
 				artifact_use_southeast_asian_building_visuals_trigger = yes #this trigger cuts out the maker
+				artifact_use_southeast_asian_unit_visuals_trigger = yes #Unop Southeast Asian unit gfx without Indian building gfx (Bouxcuengh) had no crown
 			}
 			scope:owner = {
 				highest_held_title_tier <= tier_kingdom
@@ -189,6 +191,7 @@ crown = {
 			OR = {
 				artifact_use_indian_building_visuals_trigger = yes #this trigger cuts out the maker
 				artifact_use_southeast_asian_building_visuals_trigger = yes #this trigger cuts out the maker
+				artifact_use_southeast_asian_unit_visuals_trigger = yes #Unop Southeast Asian unit gfx without Indian building gfx (Bouxcuengh) had no crown
 			}
 			scope:owner = {
 				highest_held_title_tier <= tier_kingdom
@@ -201,6 +204,7 @@ crown = {
 			OR = {
 				artifact_use_indian_building_visuals_trigger = yes #this trigger cuts out the maker
 				artifact_use_southeast_asian_building_visuals_trigger = yes #this trigger cuts out the maker
+				artifact_use_southeast_asian_unit_visuals_trigger = yes #Unop Southeast Asian unit gfx without Indian building gfx (Bouxcuengh) had no crown
 			}
 			scope:owner = {
 				highest_held_title_tier <= tier_kingdom
@@ -213,6 +217,7 @@ crown = {
 			OR = {
 				artifact_use_indian_building_visuals_trigger = yes #this trigger cuts out the maker
 				artifact_use_southeast_asian_building_visuals_trigger = yes #this trigger cuts out the maker
+				artifact_use_southeast_asian_unit_visuals_trigger = yes #Unop Southeast Asian unit gfx without Indian building gfx (Bouxcuengh) had no crown
 			}
 			scope:owner = {
 				highest_held_title_tier >= tier_empire
@@ -224,18 +229,18 @@ crown = {
 	asset = {		
 		trigger = {
 			artifact_use_iberian_muslim_unit_visuals_trigger = yes #this trigger cuts out the maker
-			scope:owner = {
-				highest_held_title_tier <= tier_kingdom
-			}
+			#scope:owner = { #Unop Iberian cultures had no crown at empire tier
+			#	highest_held_title_tier <= tier_kingdom
+			#}
 		}
 		reference = male_headgear_secular_fp2_iberian_muslim_royalty_01_artifact_entity
 	}
 	asset = {		
 		trigger = {
 			artifact_use_iberian_christian_unit_visuals_trigger = yes #this trigger cuts out the maker
-			scope:owner = {
-				highest_held_title_tier <= tier_kingdom
-			}
+			#scope:owner = { #Unop See above
+			#	highest_held_title_tier <= tier_kingdom
+			#}
 		}
 		reference = male_headgear_secular_fp2_iberian_christian_royalty_01_artifact_entity
 	}
@@ -270,10 +275,10 @@ crown = {
 	#Sassanid
 	asset = {		
 		trigger = {
-			artifact_use_mena_building_visuals_trigger = yes #this trigger cuts out the maker
-			scope:owner = {
-				culture = { has_cultural_pillar = heritage_iranian }
-			}
+			artifact_use_iranian_building_visuals_trigger = yes #Unop Was MENA building gfx with Iranian heritage, which no culture has; as in crown_court
+			#scope:owner = {
+			#	culture = { has_cultural_pillar = heritage_iranian }
+			#}
 		}
 		reference = male_headgear_secular_ep1_sassanid_crown_artifact_entity
 	}
@@ -283,6 +288,10 @@ crown = {
 			OR = {
 				artifact_use_western_building_visuals_trigger = yes #this trigger cuts out the maker
 				artifact_use_mediterranean_building_visuals_trigger = yes #this trigger cuts out the maker
+				AND = { #Unop Norse building gfx had no crown without Northern Lords
+					artifact_use_norse_building_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_northern_lords }
+				}
 			}
 			scope:owner = {
 				culture = {
@@ -302,6 +311,10 @@ crown = {
 			OR = {
 				artifact_use_western_building_visuals_trigger = yes #this trigger cuts out the maker
 				artifact_use_mediterranean_building_visuals_trigger = yes #this trigger cuts out the maker
+				AND = { #Unop Norse building gfx had no crown without Northern Lords
+					artifact_use_norse_building_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_northern_lords }
+				}
 			}
 			scope:owner = {
 				culture = {
@@ -321,6 +334,10 @@ crown = {
 			OR = {
 				artifact_use_western_building_visuals_trigger = yes #this trigger cuts out the maker
 				artifact_use_mediterranean_building_visuals_trigger = yes #this trigger cuts out the maker
+				AND = { #Unop Norse building gfx had no crown without Northern Lords
+					artifact_use_norse_building_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_northern_lords }
+				}
 			}
 			scope:owner = {
 				culture = {
@@ -340,6 +357,10 @@ crown = {
 			OR = {
 				artifact_use_western_building_visuals_trigger = yes #this trigger cuts out the maker
 				artifact_use_mediterranean_building_visuals_trigger = yes #this trigger cuts out the maker
+				AND = { #Unop Norse building gfx had no crown without Northern Lords
+					artifact_use_norse_building_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_northern_lords }
+				}
 			}
 			scope:owner = {
 				culture = {
@@ -359,6 +380,10 @@ crown = {
 			OR = {
 				artifact_use_western_building_visuals_trigger = yes #this trigger cuts out the maker
 				artifact_use_mediterranean_building_visuals_trigger = yes #this trigger cuts out the maker
+				AND = { #Unop Norse building gfx had no crown without Northern Lords
+					artifact_use_norse_building_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_northern_lords }
+				}
 			}
 			scope:owner = {
 				culture = {
@@ -919,6 +944,7 @@ fabric_roll = {
 			OR = {
 				artifact_should_use_gfx_type_trigger = { TYPE = mena_building }
 				artifact_should_use_gfx_type_trigger = { TYPE = steppe_building }
+				artifact_should_use_gfx_type_trigger = { TYPE = iranian_building } #Unop Iranian building gfx had no asset
 			}
 		}
 		reference = ep1_mena_box_medium_basic_01_a_entity
@@ -928,6 +954,7 @@ fabric_roll = {
 			OR = {
 				artifact_should_use_gfx_type_trigger = { TYPE = mena_building }
 				artifact_should_use_gfx_type_trigger = { TYPE = steppe_building }
+				artifact_should_use_gfx_type_trigger = { TYPE = iranian_building } #Unop Iranian building gfx had no asset
 			}
 		}
 		reference = ep1_mena_box_medium_basic_02_a_entity

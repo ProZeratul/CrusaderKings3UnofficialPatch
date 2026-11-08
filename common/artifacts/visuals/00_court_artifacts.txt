@@ -656,6 +656,8 @@ large_animal_hide = {
 					has_artifact_feature = animal_hide_type_stag
 					has_artifact_feature = animal_hide_type_hart
 					has_artifact_feature = animal_hide_type_elk
+					has_artifact_feature = animal_hide_type_unicorn #Unop Non-legendary unicorn and dragon hides had no asset
+					has_artifact_feature = animal_hide_type_dragon
 				}
 			}
 		}
@@ -673,9 +675,9 @@ large_animal_hide = {
 					has_artifact_feature = animal_hide_type_bison
 				}
 			}
-			scope:artifact = {
-				NOT = { has_artifact_feature = animal_hide_type_leopard }
-			}
+			#scope:artifact = { #Unop Legendary leopard hides had no asset
+			#	NOT = { has_artifact_feature = animal_hide_type_leopard }
+			#}
 		}
 		reference = ep1_generic_animal_hide_big_03_b_entity
 	}
@@ -1455,7 +1457,10 @@ animal_trophy = {
 	asset = {
 		trigger = {
 			scope:artifact = {
-				has_artifact_feature = animal_skull_type_hart
+				OR = { #Unop Elk skulls had no asset
+					has_artifact_feature = animal_skull_type_hart
+					has_artifact_feature = animal_skull_type_elk
+				}
 			}
 		}
 		reference = ep1_generic_trophy_stag_01_a_entity
@@ -2031,6 +2036,32 @@ book = {
 			artifact_high_rarity_trigger = yes
 		}
 		reference = tgp_chinese_book_01_a_entity
+	}
+	asset = { #Unop Indian, Southeast Asian and Tibetan building gfx had no asset; as in indian_book
+		trigger = {
+			artifact_should_use_gfx_type_trigger = { TYPE = indian_building }
+		}
+		reference = ep1_indian_book_big_01_a_entity
+	}
+	asset = {
+		trigger = {
+			artifact_should_use_gfx_type_trigger = { TYPE = indian_building }
+		}
+		reference = ep1_indian_book_big_01_b_entity
+	}
+	asset = {
+		trigger = {
+			artifact_should_use_gfx_type_trigger = { TYPE = indian_building }
+			artifact_high_rarity_trigger = yes
+		}
+		reference = ep1_indian_book_verybig_01_a_entity
+	}
+	asset = {
+		trigger = {
+			artifact_should_use_gfx_type_trigger = { TYPE = indian_building }
+			artifact_high_rarity_trigger = yes
+		}
+		reference = ep1_indian_book_verybig_01_b_entity
 	}
 }
 
@@ -2886,14 +2917,14 @@ crown_court = {
 	# Muslim
 	asset = {
 		trigger = {
-			has_dlc_feature = the_fate_of_iberia
+			#has_dlc_feature = the_fate_of_iberia #Unop Iberian cultures had no crown without Fate of Iberia; the crown visual uses these assets ungated
 			artifact_use_iberian_muslim_unit_visuals_trigger = yes
 		}
 		reference = male_headgear_secular_fp2_iberian_muslim_royalty_01_artifact_entity
 	}
 	asset = {
 		trigger = {
-			has_dlc_feature = the_fate_of_iberia
+			#has_dlc_feature = the_fate_of_iberia #Unop See above
 			artifact_use_iberian_muslim_unit_visuals_trigger = yes
 		}
 		reference = female_headgear_secular_fp2_iberian_muslim_royalty_01_artifact_entity
@@ -2901,14 +2932,14 @@ crown_court = {
 	# Christian
 	asset = {
 		trigger = {
-			has_dlc_feature = the_fate_of_iberia
+			#has_dlc_feature = the_fate_of_iberia #Unop See above
 			artifact_use_iberian_christian_unit_visuals_trigger = yes
 		}
 		reference = male_headgear_secular_fp2_iberian_christian_royalty_01_artifact_entity
 	}
 	asset = {
 		trigger = {
-			has_dlc_feature = the_fate_of_iberia
+			#has_dlc_feature = the_fate_of_iberia #Unop See above
 			artifact_use_iberian_christian_unit_visuals_trigger = yes
 		}
 		reference = female_headgear_secular_fp2_iberian_christian_royalty_01_artifact_entity
@@ -3127,6 +3158,10 @@ crown_court = {
 			OR = {
 				artifact_use_western_building_visuals_trigger = yes #this trigger cuts out the maker
 				artifact_use_mediterranean_building_visuals_trigger = yes #this trigger cuts out the maker
+				AND = { #Unop Norse building gfx had no crown without Northern Lords
+					artifact_use_norse_building_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_northern_lords }
+				}
 			}
 			scope:owner = {
 				culture = {
@@ -3146,6 +3181,10 @@ crown_court = {
 			OR = {
 				artifact_use_western_building_visuals_trigger = yes #this trigger cuts out the maker
 				artifact_use_mediterranean_building_visuals_trigger = yes #this trigger cuts out the maker
+				AND = { #Unop Norse building gfx had no crown without Northern Lords
+					artifact_use_norse_building_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_northern_lords }
+				}
 			}
 			scope:owner = {
 				culture = {
@@ -3165,6 +3204,10 @@ crown_court = {
 			OR = {
 				artifact_use_western_building_visuals_trigger = yes #this trigger cuts out the maker
 				artifact_use_mediterranean_building_visuals_trigger = yes #this trigger cuts out the maker
+				AND = { #Unop Norse building gfx had no crown without Northern Lords
+					artifact_use_norse_building_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_northern_lords }
+				}
 			}
 			scope:owner = {
 				culture = {
@@ -3184,6 +3227,10 @@ crown_court = {
 			OR = {
 				artifact_use_western_building_visuals_trigger = yes #this trigger cuts out the maker
 				artifact_use_mediterranean_building_visuals_trigger = yes #this trigger cuts out the maker
+				AND = { #Unop Norse building gfx had no crown without Northern Lords
+					artifact_use_norse_building_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_northern_lords }
+				}
 			}
 			scope:owner = {
 				culture = {
@@ -3203,6 +3250,10 @@ crown_court = {
 			OR = {
 				artifact_use_western_building_visuals_trigger = yes #this trigger cuts out the maker
 				artifact_use_mediterranean_building_visuals_trigger = yes #this trigger cuts out the maker
+				AND = { #Unop Norse building gfx had no crown without Northern Lords
+					artifact_use_norse_building_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_northern_lords }
+				}
 			}
 			scope:owner = {
 				culture = {
@@ -3298,28 +3349,34 @@ crown_court = {
 	asset = {
 		trigger = {
 			artifact_use_chinese_unit_visuals_trigger = yes  #this trigger cuts out the maker
-			scope:owner = { highest_held_title_tier >= tier_empire }
+			#scope:owner = { highest_held_title_tier >= tier_empire } #Unop Chinese and Japanese unit gfx had no crown below empire tier
 		}
 		reference = tgp_chinese_tongtianguan_crown_entity
 	}
 	asset = {
 		trigger = {
 			artifact_use_japanese_unit_visuals_trigger = yes  #this trigger cuts out the maker
-			scope:owner = { highest_held_title_tier >= tier_empire }
+			#scope:owner = { highest_held_title_tier >= tier_empire } #Unop See above
 		}
 		reference = tgp_japanese_vassal_raikan_crown_entity
 	}
 	asset = {
 		trigger = {
 			artifact_use_southeast_asian_unit_visuals_trigger = yes  #this trigger cuts out the maker
-			scope:owner = { highest_held_title_tier >= tier_kingdom }
+			OR = { #Unop Without Indian building gfx (Bouxcuengh) there was no crown below kingdom tier
+				scope:owner = { highest_held_title_tier >= tier_kingdom }
+				artifact_use_indian_building_visuals_trigger = no
+			}
 		}
 		reference = tgp_southeast_apsara_crown_entity
 	}
 	asset = {
 		trigger = {
 			artifact_use_southeast_asian_unit_visuals_trigger = yes  #this trigger cuts out the maker
-			scope:owner = { highest_held_title_tier >= tier_kingdom }
+			OR = { #Unop Without Indian building gfx (Bouxcuengh) there was no crown below kingdom tier
+				scope:owner = { highest_held_title_tier >= tier_kingdom }
+				artifact_use_indian_building_visuals_trigger = no
+			}
 		}
 		reference = tgp_southeast_khmer_noble_crown_entity
 	}
