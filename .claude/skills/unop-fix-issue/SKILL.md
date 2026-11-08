@@ -40,7 +40,7 @@ This skill runs **autonomously**, without asking for approval. Any human gates b
 
 ### 1. Load Context
 
-Read the shared file for the investigation findings, classification, and any prior fix/review cycles. Read the repro comment on the issue (marked `<!-- unop-repro -->`) if there is one: `<main>/.claude/scripts/marker-get.sh <N> unop-repro body`.
+Read the shared file for the investigation findings, classification, and any prior fix/review cycles. Read the repro comment on the issue (marked `<!-- unop-repro -->`) if there is one: `<main>/.claude/scripts/marker-get.sh <N> unop-repro body`. Also read the issue's comments posted after the analysis, with `<main>/.claude/scripts/comments.sh <N>`: a later one may refute the shared file.
 
 **Re-fix due to review.** If a `## Review N` section is present, read the most recent one and treat its `High` and `Medium` findings as the work list for this attempt — every one must be addressed before you consider the fix ready. `Low` findings are optional. Earlier `## Fix N` sections show what was already tried. In a tiger issue, you may also address a finding on a problem's verdict or on a guessed fix by rejecting it with evidence, as `tiger-issues.md` says.
 
@@ -58,19 +58,15 @@ Work out *how* to fix the bug before writing any code.
 
 - **Look for the simpler fix first.** Is there an existing trigger, variable, flag, or guard that already encodes the state? Avoid new state and new files unless the existing surface really can't express the fix. See `examples.md` (#420).
 - **Find the right altitude.** Before patching individual items, ask whether one higher-level guard subsumes them. When the bug spans members of a group, fixing the group is usually simpler and more complete; if an analogous system already handles the condition, mirror its mechanism. See `examples.md` (#498).
-- **Enumerate the pattern class, including sibling systems.** Identify the category (object group of family, analogous systems) and check every member — in other files too — for the same bug; fix all buggy ones in the same PR. See `examples.md` (#498).
+- **Enumerate the pattern class, including sibling systems.** Identify the category (object group of family, analogous systems) and check every member — in other files too — for the same bug; fix all buggy ones in the same PR. The class includes the mirror half of a paired effect, e.g. a remove next to an add. See `examples.md` (#498).
 - **Articulate the intent of any guard you propose to loosen.** State in one sentence why the original code added it — reading the whole feature for intent, including its localization and effects, not just the guard. A narrow predicate may be a *proxy* for a real condition; target that condition rather than widening the proxy. See `examples.md` (#440, #501).
 - **Verify against the other guards in the same block.** Before removing or loosening a guard, simulate the post-change state against all other guards in the same `is_shown` / `is_valid` / `can_create`. If another guard still blocks the reporter's case, the fix doesn't work. See `examples.md` (#440).
 - **Check all siblings, not just the ones with the matching pattern.** When a fix applies a guard to some items in a group, read every sibling item's conditions to determine whether it has the same exposure. A sibling whose conditions look unrelated may still be satisfiable by the invalid subject through a different path.
-- **Find all call sites of the buggy code path.** Grep the symbol you're about to guard. Vanilla often runs the same logic in 2-3 places; missing a duplicate leaves the bug unfixed. See `examples.md` (#213).
+- **Find all call sites of the buggy code path.** Grep the symbol you're about to guard, in every syntax form that reads the same value, e.g. `aptitude = { ... }`, `aptitude:x` and `"aptitude(x)"`. Vanilla often runs the same logic in 2-3 places; missing a duplicate leaves the bug unfixed. See `examples.md` (#213).
 - **Evaluate suggested fixes critically.** Both the reporter's diagnosis and any `Fix directions` in the shared file are candidates, not defaults — re-derive the approach from the verified facts. Watch for fixes that destroy state other systems still depend on. See `examples.md` (#213, #498).
 - **Name the load-bearing assumption.** State the single behavioral assumption the fix rests on and corroborate it from files (a working precedent, a `.info`/log line); if it can't be confirmed, flag it for in-game testing. In a tiger issue, treat it as a guess instead, as `tiger-issues.md` says. See `examples.md` (#498).
 - **On a re-fix**, make sure the new approach resolves the review findings rather than working around them.
 - **In a tiger issue**, re-check every problem's verdict as `tiger-issues.md` says, and fix the real ones that have an impact.
-
-**Paradox Script Gotchas:**
-
-- **`custom_description` is a tooltip wrapper, not a condition.** `custom_description = { text = X; <trigger> }` evaluates `<trigger>` and labels failures with `X`'s loc — the `text =` line is not a separate condition.
 
 ### 3. Apply the Fix
 
@@ -87,7 +83,7 @@ Following the project `CLAUDE.md` "General", "Style", and "Opening PRs" guidelin
 
    Run each line as its own call, and write `<prefix>` out literally in the last one.
 
-2. **Apply the fix.** Minimal change; `#Unop` comment on the first changed line; comment out rather than delete unneeded vanilla code. When enclosing existing code in a scope, indent it properly. New vanilla files should be added without modifications in a separate commit. On a re-fix that drops all of the PR's changes to a vanilla file it added, remove that file from the PR rather than leave an unmodified copy. In a tiger issue, also update the exclusions in `ck3-tiger.conf` as `tiger-issues.md` says, including un-ignoring the reports that are no longer reported.
+2. **Apply the fix.** Minimal change; `#Unop` comment on the first changed line; comment out rather than delete unneeded vanilla code. When enclosing existing code in a scope, indent it properly. New vanilla files should be added without modifications in a separate commit. Leave their file mode as copied. On a re-fix that drops all of the PR's changes to a vanilla file it added, remove that file from the PR rather than leave an unmodified copy. In a tiger issue, also update the exclusions in `ck3-tiger.conf` as `tiger-issues.md` says, including un-ignoring the reports that are no longer reported.
 
 3. **Validate**: run tiger as **Run tiger** in `CLAUDE.md` says, and ensure no new reports.
    - Resolve any new reports in the same PR with the `tiger` skill in mode `all`, including those in newly-added vanilla files.

@@ -10,8 +10,11 @@ Unop fixes issues. It does not add new content, change the balance, or alter the
 
 * **Do the minimum change required to fix the issue.** Avoid drive-by refactors and unrelated whitespace or formatting changes.
 * **Match the formatting of the surrounding vanilla code.** When wrapping existing code in a new scope, indent it properly.
-* **Mark every change with a `#Unop <reason>` comment** on the first changed line (`#Unop: <reason>` is also acceptable). Don't mention tool names in the comment.
+* **Mark every change with a `#Unop <reason>` comment** on the first changed line (`#Unop: <reason>` is also acceptable). Don't mention tool names in the comment. Changes to Unop's own code don't need a marker.
 * **Comment out vanilla code rather than deleting it.** Put the `#Unop` comment on the first removed/replaced line, and only comment out the lines you're actually replacing.
+* **Don't change the interface of a vanilla object**, e.g. by adding a parameter to a scripted trigger or changing the scope it expects, since a later vanilla caller would break. Fix the call site, or call an `unop_` copy instead.
+* **Put new `unop_` triggers and effects in Unop's own files**, e.g. `common/scripted_triggers/unop_triggers.txt` or `common/scripted_effects/00_unop_effects.txt`, not in a vanilla override. Prefer moving a large inline fix block into such an effect.
+* **Don't write a `NOT` with several entries.** It acts as `NOR` but is easily misread as `NAND`; write `NOR` or `NAND`, or turn it into an `OR` or `AND`.
 * **Add new vanilla files in a separate commit** (unchanged) before the commit with the fix. This makes review much easier.
 
 ## Workflow

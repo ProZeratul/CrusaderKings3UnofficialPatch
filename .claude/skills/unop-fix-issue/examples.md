@@ -24,6 +24,8 @@ Two near-misses:
 1. **First-draft fix targeted the wrong guard.** Proposed dropping `is_roman_emperor_trigger = yes` from `restore_holy_roman_empire_decision.is_shown`. The user pointed out the same block also had `NOT = { has_global_variable = flag_restored_roman_empire }` — which would still block the case. A no-op fix.
 2. **Almost loosened a guard whose intent was right there in the loc.** The trigger label `form_germania_christian_trigger` lives in `common/trigger_localization/`, and its loc reads *"As a Catholic ruler you can reform the HRE instead"* — the design intent in one line. That reframed the fix from "let Roman Emperors create Germania" to "release the Catholic gate only when HRE is no longer reachable" (i.e. `flag_restored_roman_empire` is set). Same one-line change, philosophically aligned with vanilla intent.
 
+The same class came back in [#556](https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/556): a one-time formation decision plus a restrictive `can_create` left `e_goryeo` uncreatable once destroyed. The remedy there too is to relax `can_create` once the decision is gone, rather than reopen the decision and its one-time rewards.
+
 ## Issue 498 — fix at the right altitude, enumerate the pattern class, verify the load-bearing assumption
 
 Lessons: Step 2 (find the right altitude, enumerate the pattern class incl. sibling systems, evaluate suggested fixes critically, name the load-bearing assumption).
@@ -58,3 +60,40 @@ Three mistakes on the first pass:
 1. **Missed a duplicate of the buggy block.** Guarded `set_father` inside `secret_exposed_owner_effects_effect` but vanilla runs the same block again directly in `secret_unmarried_illegitimate_child.on_expose`. The duplicate would still fire and the bug wasn't actually fixed. Grep the symbol you're about to guard across the codebase first — vanilla often runs the same logic in 2-3 places.
 2. **Took the reporter's suggested fix uncritically.** Reporter suggested removing the secret on adoption; the user pointed out this silently strips intrigue leverage from secret owners — a "boon to the wrong party." Right shape: keep the secret, guard the harmful child-side consequences via a `unop_was_adopted` flag. The reporter's diagnosis is one candidate, not the default.
 3. **Hand-classified tiger warnings instead of invoking the `tiger` skill.** Added `# False positives` / `# Ignored` entries from intuition, at one point with the comment "vanilla bug, out of scope for this mod" — directly contradicting the project's purpose. Always invoke the `tiger` skill before touching `ck3-tiger.conf`.
+
+## Issue 452 - keep a UI fix small; new tiger ignores are a smell
+
+Lessons: Step 2 (weigh the change against the issue's stakes, test an assumption instead of removing it), Step 3 (tiger).
+
+Issue [#452](https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/452): a `trigger_if` leaked into a tooltip. A review asked whether the top-level `custom_description` fix also covered triggers inside called scripted triggers.
+
+- **The fix removed the assumption instead of testing it.** It overrode a 1300-line vanilla file and ignored the 8 tiger reports the override surfaced. The maintainer: "You overdid this by a wide margin." Reverting both made the reports vanish.
+- An assumption that a game test can settle belongs in the test script, not in a bigger fix. New ignores for reports that your own change caused usually mean the change grew too far.
+
+## Issue 520 - copy the sibling that already works
+
+Lessons: Step 2 (look for a correct sibling implementation before designing one, and copy it faithfully).
+
+Issue [#520](https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/520): disqualifying a tournament saboteur had no effect. `tournament_events.6050` dispatches to `6052` for a human host and to `6051` otherwise, and `6051` was a copy of `6052` without the phase `switch`.
+
+- **Two rounds designed a new remedy, and both got it wrong.** `remove_from_activity` bars the character from every later contest, not just the current one, and the maintainer rejected it.
+- **The correct fix was 100 lines below.** Copying `6052`'s `switch` into `6051` used vanilla's own mechanism. Keep such a copy faithful, and check what the destination already does that the copy does too, e.g. a second log entry.
+
+## Issue 557 - fix the formula, not its output
+
+Lessons: Step 2 (find the root cause in a formula, mirror the analogous system, leave balance to the maintainer).
+
+Issue [#557](https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/557): the `challenge_status` scheme paid a flat ~145 influence whatever the target had, from `value = 50 add = scheme_success_chance`.
+
+- **Clamping the output missed the bug.** The first fix capped the transfer at the target's influence. The maintainer and the reporter pointed out the real defect: the formula ties the reward to the success chance, two unrelated quantities.
+- **The analogous system had the right shape.** `steal_herd` pays a share of the target's own resource, capped, and the accepted fix mirrors it.
+- **The numbers were the maintainer's call.** The maintainer picked the share and later raised the cap. Flag such values as balance choices rather than settling them.
+
+## Issue 811 - a history setup that breaks vanilla's own rule
+
+Lessons: Step 3 (find the failsafe behind the symptom, scan every bookmark for siblings).
+
+Issue [#811](https://github.com/ProZeratul/CrusaderKings3UnofficialPatch/issues/811): the Wanyan realm in 1066 was forced into another government a few months after the start. The reporter blamed a missing family estate.
+
+- **A runtime failsafe made the change.** A yearly pulse in `yearly_on_actions.txt` changes the government of independent administrative rulers below kingdom tier, and the history setup broke that rule. The missing estate was a co-symptom.
+- **The siblings came from a scan of every bookmark.** A script over `history/titles` listed holder, liege and government at 867.1.1, 1066.9.15 and 1178.10.1. To be complete and avoid false siblings, it must count the tributaries that `00_tributary_setup_effects.txt` sets up as independent even when their history gives them a liege, read `change_government` in dated `effect` blocks, and skip `c_nf_*` titles.

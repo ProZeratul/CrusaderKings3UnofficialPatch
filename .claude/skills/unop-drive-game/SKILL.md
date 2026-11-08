@@ -21,13 +21,14 @@ All interaction goes through [ck3.sh](ck3.sh) (macOS and Linux X11; Linux clicks
 
 ## Helper
 
-Run `<base>/ck3.sh <command>`, where `<base>` is this skill's base directory as an absolute path. Make each call exactly that, with every argument written out: no `cd`, variables, `export`, pipes, redirects or `&&` around it. Only that form matches the sandbox exclusion; anything else runs sandboxed, where the game can't start or be driven. Screenshots go to `~/.cache/ck3-shots`, which the sandbox can read but not write. Numeric arguments must be plain numbers, and `run` files and `--mod` directories must be in the repo or under `/tmp`.
+Run `<base>/ck3.sh <command>`, where `<base>` is this skill's base directory as an absolute path. Make each call exactly that, with every argument written out: no `cd`, variables, `export`, pipes, redirects, `sleep` or other commands around it, though `ck3.sh` calls may be chained with `&&`. Only that form matches the sandbox exclusion; anything else runs sandboxed, where the game can't start or be driven. Screenshots go to `~/.cache/ck3-shots`, which the sandbox can read but not write. Numeric arguments must be plain numbers, and `run` files and `--mod` directories must be in the repo or under `/tmp`.
 
 | Command | Effect |
 |---|---|
 | `launch [--mod <dir>]` | Start the game binary directly, bypassing the launcher, and wait for the main menu. Refuses if CK3 is already running. `--mod` loads Unop from `<dir>` (e.g. a PR worktree) instead of the descriptor's path |
 | `start <867\|1066\|1178>` | From the main menu: New Game, the bookmark, its first featured character (Rurik, Vratislav, Kiyomori), Start, and wait until loaded. Prints a crop of the bookmark's name and date and the selected character |
 | `wait game [<s>]` | After `mark` and starting or loading a game by hand, wait until it's loaded (default timeout 300 s) |
+| `wait <s>` | Wait `<s>` seconds, at most 120, e.g. while game time passes |
 | `exit` | Kill the game that `launch` started, restore the Unop descriptor's path, and delete the effect files `run` copied. Refuses to kill a game it didn't start |
 | `shot <name> [<x> <y> <w> <h>]` | Capture the CK3 window; prints the path of a 1400px-wide copy to Read, or of a full-resolution crop of the given region (1400px coordinates) |
 | `click <x> <y>` | Click at pixel coordinates **of the 1400px screenshot** |
@@ -51,7 +52,7 @@ Only one game runs at a time. If `launch` refuses because CK3 is running, the us
    - The loading screen can stay up a few seconds after `wait game` returns.
 3. **Pause and set the speed.** `key 1` sets speed 1; `key space` toggles pause. Do all setup while paused. The game starts at a faster speed, so set speed 1 before letting time pass.
 4. **Set up.** `key console` opens/closes the console. Take a `shot` to confirm it's open with an empty input before the first `cmd`. Run effects with `cmd` or `run` (see below).
-5. **Let time pass.** `key space`, wait, `key space`. Speed 1 runs at about **2 s per game day**; pausing overshoots by about a day. Check the date (bottom right) and the "Paused" banner in a `shot`.
+5. **Let time pass.** `key space`, `wait <s>`, `key space`, chained in one call, e.g. `<base>/ck3.sh key space && <base>/ck3.sh wait 10 && <base>/ck3.sh key space`. Speed 1 runs at about **2 s per game day**; pausing overshoots by about a day. Check the date (bottom right) and the "Paused" banner in a `shot`.
 6. **Inspect.** Prefer logs over screenshots: `new error` for errors, `new debug` for `debug_log` output. `mark` before the step you want to isolate. `debug.log` is buffered: while the game is paused, new lines can take up to a minute to appear; run `cmd help` (thousands of output lines) to flush it. For text on screen, `shot` with a region crops just that part, which is cheaper and easier to read. Toasts disappear after a few seconds, so `shot` right after the command that sends one.
 7. **Exit.** `exit` kills the game at once. Nothing is saved, so the user's `autosave_exit` is safe, but unflushed log lines are lost: read the logs (flush with `cmd help` if needed) before `exit`.
 

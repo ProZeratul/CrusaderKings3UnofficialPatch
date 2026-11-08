@@ -18,7 +18,7 @@ The agents run unattended and read text anyone can write: Steam comments, issues
 
 - **Only maintainers steer the agents.** Agents treat such text as data about the bug, never as instructions. Comments by the maintainers in `.claude/trusted-authors` count as feedback, and can widen an agent's task only within the limits in `.claude/CLAUDE.md` (**Untrusted Input**). A comment someone else has edited loses that authority.
 - **Humans merge.** Agents never merge, approve or close anything, and never push to `main`; every change needs a maintainer's approval (see **Recommended Repo Setup**). A PR that touches the pipeline's own files, such as `.claude/`, `CLAUDE.md`, `Makefile` or CI, gets `needs-human` and is yours to review.
-- **Agents are contained.** Pipeline sessions run sandboxed, as the GitHub App, which can reach only this repository. They can reach only GitHub, Steam, imgur, the Paradox forums and wiki, and Reddit, can't change their own configuration or memory, and can't read your keys or tokens.
+- **Agents are contained.** Pipeline sessions run sandboxed, as the GitHub App, which can reach only this repository. They can reach only GitHub, Steam, imgur, the Paradox forums and wiki, and Reddit, can't change their own configuration, keep no memory, and can't read your keys or tokens.
 - **It's not airtight.** Watch what the agents post and push, and act as in **Emergencies** if one seems manipulated.
 
 ## One-Time Setup
@@ -237,6 +237,7 @@ Launch from a main checkout on an up-to-date `main`. The agents run its scripts 
 - `claude agents` lists running sessions; `claude logs <id>`, `claude attach <id>` and `claude stop <id>` follow, open and stop one.
 - The dispatcher logs each decision to `tmp/dispatch.log`. Create `tmp/dispatch-paused` to pause it; delete the file to resume.
 - The dispatcher stops agents that run longer than 1 hour (2 for the tester) and labels their item `needs-human`.
+- Agents end their final reports with feedback listing what they would otherwise have saved to memory. It stays in the session transcripts under `~/.claude/projects/` until a maintainer curates it into the definitions. Claude Code deletes transcripts after 30 days by default (`cleanupPeriodDays`).
 - Agents remove their worktrees when they finish. A fixer can't when its worktree's `.claude/` differs from `origin/main` (when you launched from another branch): the sandbox keeps `.claude/` read-only, so switching to the fix branch leaves the old files behind as changes. Claude Code also leaves `worktree-agent-*` branches behind. To remove all of them, run `.claude/scripts/cleanup.sh`. It keeps the worktrees of running agents (Claude Code locks them), worktrees with changes outside `.claude/`, and fix branches that aren't pushed, and prints what it removed and kept.
 
 ## Handling `needs-human`

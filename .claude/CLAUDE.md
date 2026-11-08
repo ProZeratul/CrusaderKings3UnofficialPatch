@@ -38,6 +38,11 @@ All relevant directories are in [.env](../.env) (read it for their values; in an
   - `modifiers.log`
   - `on_actions.log`
   - `triggers.log`
+- Search the logs with `grep -a`: they contain NUL bytes, so a plain `grep` finds nothing
+- Earlier game versions may be in `${CK3_BASE_DIR}-<version>` (e.g. `game-1.20.1.1`); diff against them to see what an update changed
+- The patch notes are in the Steam news API: `https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=1158310&count=15&maxlength=0&format=json`
+- The game binary `${CK3_BASE_DIR}/../binaries/ck3` holds the parts of loc keys that the engine builds; `grep -a` it to back a claim about such a key
+- `.claude/skills/unop-fix-issue/gotchas.md` lists CK3 behavior that is easy to get wrong; read it before analyzing, fixing or reviewing an issue
 
 ### Tiger
 
@@ -57,6 +62,8 @@ All relevant directories are in [.env](../.env) (read it for their values; in an
 - **Prefer the minimal change.** Do the minimal change required to fix the issue.
 - **Match local formatting.** Follow the formatting of the surrounding code where the fix goes, and indent properly when wrapping existing code in a scope.
 - **Avoid incidental edits.** Avoid unrelated changes, e.g. to whitespace.
+- **Keep line endings and BOMs in scripted edits.** Many vanilla files are CRLF with a BOM, so edit them in binary mode. Check the result with `git diff --shortstat`.
+- **Never use `git stash`.** The stash stack holds the user's own stashes, and every worktree shares it.
 - **Update memory with the file tools.** The sandbox blocks shell writes under `~/.claude`, so edit memory files with Edit or Write, not `sed` or redirects. Pipeline sessions can't write memory at all.
 - **Keep Bash calls simple in agent worktrees.** Never combine git with a variable or command substitution in one Bash call, even in another command of a chain: worktree isolation refuses the whole call. It also refuses `git -C` or `cd` to computed paths, process substitution `<(...)`, `source`, and `sed` or `awk` with variables. Resolve such values in a separate call first, then write them out literally; chains of plain commands with literal paths are fine.
 - **Run repo scripts from the main checkout.** `<main>` is the main checkout, the parent of `git rev-parse --path-format=absolute --git-common-dir`, written out in full. Run `.claude/scripts/*` as `<main>/.claude/scripts/*`, so that in an agent worktree they never come from the branch checked out there. Run `comments.sh`, `marker-*.sh` and `handover-*.sh` each as its own Bash call, not chained with `gh` commands: permission rules match the whole command line, so a chain can be refused.
@@ -79,7 +86,7 @@ All relevant directories are in [.env](../.env) (read it for their values; in an
 
 ### Style
 
-- **Mark every change.** Put a `#Unop <description>` (preferred) or `#Unop: <description>` (acceptable) comment on the changed line, or on the first line of a larger block that Unop adds.
+- **Mark every change.** Put a `#Unop <description>` (preferred) or `#Unop: <description>` (acceptable) comment on the changed line, or on the first line of a larger block that Unop adds. Changes to Unop's own code, e.g. an `unop_` object or a block that Unop added, don't need a marker.
 - **Comment sparingly.** Keep comments concise; the `#Unop` marker is usually enough.
 - **Comment out, don't delete.** Comment out vanilla code that is removed entirely rather than deleting it, with an `#Unop` comment on the first removed line. Comment out only the removed lines, not unchanged surrounding ones. Vanilla code that Unop code replaces can be replaced in place.
 - **Use ASCII only.** Don't use non-ASCII characters (arrows, long dashes, ellipses, etc.) in comments or prose.
