@@ -27,15 +27,16 @@ scripted_trigger coronation_events_6000_valid_switch_title_trigger = {
 							this = root
 						}
 					}
-					any_in_list = {
-						list = war_targets
-						OR = {
-							this = root.primary_title
-							any_in_de_jure_hierarchy = {
+					casus_belli = { #Unop Wars have no war_targets list, check the targets of the casus belli instead
+						any_target_title = {
+							OR = {
 								this = root.primary_title
+								any_in_de_jure_hierarchy = {
+									this = root.primary_title
+								}
 							}
-						}
 
+						}
 					}
 				}
 			}
