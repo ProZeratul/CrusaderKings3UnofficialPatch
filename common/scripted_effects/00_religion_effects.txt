@@ -830,6 +830,7 @@ remove_sinful_trait_effect = {
 	save_scope_as = trait_changer
     random_character_trait = {
         limit = {
+            has_trait_category = personality #Unop Only remove personality sins
             scope:trait_changer.rite = {
                 trait_is_sin_rite = prev
             }
@@ -843,6 +844,7 @@ add_virtuous_trait_effect = {
 	save_scope_as = trait_changer
 	random_trait = {
         limit = {
+			has_trait_category = personality #Unop Only grant personality virtues
         	save_temporary_scope_as = temp_trait
 			scope:trait_changer.rite = {
                 trait_is_virtue_rite = prev
@@ -853,7 +855,7 @@ add_virtuous_trait_effect = {
 				}
 				any_opposite_trait = {
 					scope:trait_changer = {
-						has_trait = scope:temp_trait
+						has_trait = prev #Unop Check the opposite trait, not the candidate
 					}
 				}
 			}
@@ -872,7 +874,10 @@ add_virtuous_trait_effect = {
         }
         save_scope_as = virtuous_trait
     }
-    add_trait_force_tooltip = scope:virtuous_trait
+	if = { #Unop Guard against an empty virtue pool
+		limit = { exists = scope:virtuous_trait }
+		add_trait_force_tooltip = scope:virtuous_trait
+	}
 }
 
 replace_sinful_trait_effect = {

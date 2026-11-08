@@ -2004,6 +2004,7 @@ ep3_story_cycle_harrying.2015 = {
 		has_ep3_dlc_trigger = yes
 		is_available = yes
 		primary_title.tier >= tier_duchy
+		unop_has_special_contract_obligation_trigger = yes #Unop: Option c needs the special_contract obligation, which the new ecclesiastical government (e.g. Archbishop of York) does not have
 	}
 
 	immediate = {
@@ -2216,10 +2217,16 @@ ep3_story_cycle_harrying.2015 = {
 			level = 2
 		}
 
-		scope:other_vassal = {
-			vassal_contract_set_obligation_level = {
-				type = special_contract
-				level = 2
+		scope:other_vassal ?= { #Unop: Guard, the other vassal can be dead or have no special_contract obligation
+			if = {
+				limit = {
+					is_alive = yes
+					unop_has_special_contract_obligation_trigger = yes
+				}
+				vassal_contract_set_obligation_level = {
+					type = special_contract
+					level = 2
+				}
 			}
 		}
 
