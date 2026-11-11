@@ -13309,7 +13309,10 @@ pilgrimage.6790 = {
 			has_trait = lifestyle_mystic
 			has_trait = theologian
 		}
-		num_sinful_traits > 0 #you have something to change
+		any_character_trait = { #Unop Only personality sins can be flipped
+			has_trait_category = personality
+			root.rite = { trait_is_sin_rite = prev }
+		}
 		NOT = { has_variable = pilgrimage_6790_var } #once per lifetime
 	}
 	immediate = {
