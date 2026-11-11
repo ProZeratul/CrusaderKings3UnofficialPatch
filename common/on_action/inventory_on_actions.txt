@@ -459,11 +459,16 @@ on_holy_site_artifact_removed = {
 				}
 			}
 		}
-		else_if = {
+		else = { #Unop Was an else_if without limit; it also runs when a relic of your faith is replaced with a better one
 		 	# If this is not a relic of your faith
 			save_scope_as = artifact
-			custom_tooltip = {
-				text = holy_site_relic_will_get_reclaim_relic_cb
+			if = { #Unop A relic of your faith gives no Reclaim Relic CB
+				limit = {
+					NOT = { is_holy_relic_for = scope:actor.faith }
+				}
+				custom_tooltip = {
+					text = holy_site_relic_will_get_reclaim_relic_cb
+				}
 			}
 
 			# Your vassals / fellow vassals / liege doesn't like it
