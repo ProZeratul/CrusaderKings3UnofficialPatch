@@ -13,3 +13,36 @@ unop_inspiration_ongoing_choice_events = {
 		100 = fund_inspiration.7120 # Choose modifiers - sculptures and thrones
 	}
 }
+
+#Unop Keep the governor fallback succession up to date, see unop_update_governor_fallback_succession_effect
+on_game_start = {
+	on_actions = { unop_governor_fallback_succession_game_start }
+}
+on_title_gain = {
+	on_actions = { unop_governor_fallback_succession_update }
+}
+on_vassal_change = {
+	on_actions = { unop_governor_fallback_succession_update }
+}
+on_government_change = {
+	on_actions = { unop_governor_fallback_succession_update }
+}
+yearly_playable_pulse = {
+	on_actions = { unop_governor_fallback_succession_update }
+}
+
+unop_governor_fallback_succession_game_start = {
+	effect = {
+		every_ruler = {
+			limit = { is_governor = yes }
+			unop_update_governor_fallback_succession_effect = yes
+		}
+	}
+}
+
+# root = the character
+unop_governor_fallback_succession_update = {
+	effect = {
+		unop_update_governor_fallback_succession_effect = yes
+	}
+}
