@@ -967,9 +967,11 @@ save_unique_holy_site_and_update_count_variable_for_tally_effect = {
 			#These two really shouldn't exist without each other, but safe-checking
 			exists = var:visited_unique_holy_sites_count
 			#Does this holy site exist in the list?
-			any_in_list = {
-				variable = visited_unique_holy_sites_list
-				NOT = { this = $HOLY_SITE$ }
+			NOT = { #Unop Check that the holy site isn't in the list, not that some other site is
+				any_in_list = {
+					variable = visited_unique_holy_sites_list
+					this = $HOLY_SITE$
+				}
 			}
 		}
 		#Add the holy site to the list
