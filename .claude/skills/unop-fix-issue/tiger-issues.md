@@ -77,4 +77,4 @@ List the problems in this shape, one line each, wherever they are summarized:
 - `<file>:<lines>` (`<report types>`): <false positive | intended | unclear>: <reason>
 ```
 
-Give all of the problem's lines and report types, and each file if it spans several. For a false positive, the reason names its upstream tiger issue, or says that it's a new kind. For an unclear problem, it names the game test that would settle it. When a fix is a guess, append why it's the most likely one. Where the verdict differs from an earlier step's, append the evidence for it.
+Give all of the problem's lines and report types, and each file if it spans several. For a false positive, the reason names its upstream tiger issue, or says that it's a new kind. In GitHub text, cite it as `amtep/tiger#N`. For an unclear problem, it names the game test that would settle it. When a fix is a guess, append why it's the most likely one. Where the verdict differs from an earlier step's, append the evidence for it.
