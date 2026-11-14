@@ -863,7 +863,7 @@ temple_scope = {
 		trigger = {
 			scope:background_temple_scope = {
 				OR = {
-					barony.holder ?= { government_has_flag = government_is_nomadic }
+					government_has_flag = government_is_nomadic #Unop Was barony.holder ?= { ... }, but background_temple_scope is a character for almost all callers
 					religion = religion:tengrism_religion
 					religion = religion:magyar_religion
 					religion = religion:siberian_religion
@@ -15004,7 +15004,7 @@ ep2_activity = {
 	background = { #East Asia
 		trigger = {
 			scope:activity ?= { has_activity_type = activity_feast }
-			scope:activity.location ?= {
+			scope:activity.activity_location ?= { #Unop Was location, which activities don't have
 				OR = {
 					culture = { has_graphical_east_asia_culture_group_trigger = yes }
 					steppe_building_gfx_use_east_asian_trigger = yes
@@ -17911,7 +17911,7 @@ coronation_activity_background = {
 			involved_activity.activity_location.county.title_province ?= {
 				has_holding_type = tribal_holding
 			}
-			has_current_phase = coronation_phase_preparations
+			involved_activity ?= { has_current_phase = coronation_phase_preparations } #Unop Was at the character root
 		}
 		reference = "gfx/interface/illustrations/event_scenes/ep2_holysite_tribal.dds"
 		environment = "environment_event_garden"
@@ -18261,7 +18261,7 @@ coronation_activity_background = {
 				activity_location = { has_holding_type = church_holding }
 				has_current_phase = coronation_phase_coronation 
 			}
-			activity_host ?= {
+			involved_activity.activity_host ?= { #Unop Was activity_host, at the character root
 				OR = {
 					religion = religion:tengrism_religion
 					religion = religion:magyar_religion
@@ -18293,7 +18293,7 @@ coronation_activity_background = {
 				has_current_phase = coronation_phase_coronation 
 			}
 			OR = {
-				activity_host.rite ?= { rite_has_tenet = tenet_sanctity_of_nature }
+				involved_activity.activity_host.rite ?= { rite_has_tenet = tenet_sanctity_of_nature } #Unop Was activity_host, at the character root
 				AND = {
 					scope:activity.activity_location.county.title_province = {
 						OR = {
@@ -18301,7 +18301,7 @@ coronation_activity_background = {
 							has_holding_type = nomad_holding
 						}
 					}
-					activity_host = { religion = { is_in_family = rf_pagan } }
+					involved_activity.activity_host ?= { religion = { is_in_family = rf_pagan } } #Unop Was activity_host, at the character root
 					scope:activity.activity_location.culture = { has_graphical_western_culture_group_trigger = yes }
 				}
 			}
@@ -18335,7 +18335,7 @@ coronation_activity_background = {
 				activity_location = { has_holding_type = church_holding }
 				has_current_phase = coronation_phase_coronation 
 			}
-			activity_host.religion ?= religion:zoroastrianism_religion 
+			involved_activity.activity_host.religion ?= religion:zoroastrianism_religion #Unop Was activity_host, at the character root
 		}
 		reference = "gfx/interface/illustrations/event_scenes/fp3_temple.dds"
 		environment = "environment_event_fp3_temple"
