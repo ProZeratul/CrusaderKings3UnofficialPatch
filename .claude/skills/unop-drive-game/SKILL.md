@@ -51,7 +51,7 @@ Only one game runs at a time. If `launch` refuses because CK3 is running, the us
    - **Continue** and **Load** stay greyed out until the history has loaded, which is slow while the window is in the background.
    - The loading screen can stay up a few seconds after `wait game` returns.
 3. **Pause and set the speed.** `key 1` sets speed 1; `key space` toggles pause. Do all setup while paused. The game starts at a faster speed, so set speed 1 before letting time pass.
-4. **Set up.** `key console` opens/closes the console. Take a `shot` to confirm it's open with an empty input before the first `cmd`. Run effects with `cmd` or `run` (see below).
+4. **Set up.** `key console` opens/closes the console. Take a `shot` to confirm it's open with an empty input before the first `cmd`. Run effects with `cmd` or `run` (see below); both type into the open console and leave it open, so don't press `key console` between them, or the next lines reach the game as hotkeys.
 5. **Let time pass.** `key space`, `wait <s>`, `key space`, chained in one call, e.g. `<base>/ck3.sh key space && <base>/ck3.sh wait 10 && <base>/ck3.sh key space`. Speed 1 runs at about **2 s per game day**; pausing overshoots by about a day. Check the date (bottom right) and the "Paused" banner in a `shot`.
 6. **Inspect.** Prefer logs over screenshots: `new error` for errors, `new debug` for `debug_log` output. `mark` before the step you want to isolate. `debug.log` is buffered: while the game is paused, new lines can take up to a minute to appear; run `cmd help` (thousands of output lines) to flush it. For text on screen, `shot` with a region crops just that part, which is cheaper and easier to read. Toasts disappear after a few seconds, so `shot` right after the command that sends one.
 7. **Exit.** `exit` kills the game at once. Nothing is saved, so the user's `autosave_exit` is safe, but unflushed log lines are lost: read the logs (flush with `cmd help` if needed) before `exit`.
@@ -79,7 +79,7 @@ Take a `shot` and Read it before clicking somewhere new, and after, to confirm t
 
 ## Pitfalls
 
-- **Chain helper commands with `&&` or `set -e`.** After a failed step, later clicks and keys land on the wrong screen.
+- **Chain `ck3.sh` calls with `&&`.** After a failed step, later clicks and keys land on the wrong screen. Don't add other commands to the call.
 - Esc closes the open window more reliably than its close button.
 - **Don't touch the CK3 window while driving it.** Mouse movement over the window edge pans the map (edge scrolling); on macOS, Cmd+H hides the game until the next helper command.
 - **A click that only shows a tooltip didn't register;** click again. The game renders slowly in the background.
