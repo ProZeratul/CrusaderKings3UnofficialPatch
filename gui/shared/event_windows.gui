@@ -1,5 +1,4 @@
-﻿
-####################################
+﻿####################################
 # Event window types and templates #
 ####################################
 
@@ -473,6 +472,38 @@ types Events
 							}
 
 							icon = {
+								name = "purpose_creditor_icon"
+								visible = "[ReasonItem.IsFlag( 'purpose_creditor' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/laws/company_purpose_creditor_small.dds"
+								tooltip = "EVENT_WINDOW_OPTION_PURPOSE_CREDITOR"
+							}
+
+							icon = {
+								name = "purpose_caravaneer_icon"
+								visible = "[ReasonItem.IsFlag( 'purpose_caravaneer' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/laws/company_purpose_caravaneer_small.dds"
+								tooltip = "EVENT_WINDOW_OPTION_PURPOSE_CARAVANEER"
+							}
+
+							icon = {
+								name = "purpose_artisan_icon"
+								visible = "[ReasonItem.IsFlag( 'purpose_artisan' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/laws/company_purpose_artisan_small.dds"
+								tooltip = "EVENT_WINDOW_OPTION_PURPOSE_ARTISAN"
+							}
+
+							icon = {
+								name = "purpose_family_icon"
+								visible = "[ReasonItem.IsFlag( 'purpose_family' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/laws/company_purpose_family_small.dds"
+								tooltip = "EVENT_WINDOW_OPTION_PURPOSE_FAMILY"
+							}
+
+							icon = {
 								name = "high_almoner_icon"
 								visible = "[ReasonItem.IsFlag( 'high_almoner' )]"
 								size = { 34 34 }
@@ -628,7 +659,7 @@ types Events
 								name = "many_followers_icon"
 								visible = "[ReasonItem.IsFlag( 'many_followers' )]"
 								size = { 34 34 }
-								texture = "gfx/interface/skinned/hud_maintab/maintab_court.dds"
+								texture = "gfx/interface/icons/hud_maintab/maintab_court.dds"
 								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_MANY_FOLLOWERS"
 							}
 
@@ -968,6 +999,21 @@ types Events
 								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_ESTATE_BUILDING_WINE_CELLAR"
 							}
 							icon = {
+								name = "east_asian_estate_building_wine_cellar_icon"
+								visible = "[ReasonItem.IsFlag( 'east_asian_estate_building_wine_cellar' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/map_icons/map_icon_chinese_manor.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_EAST_ASIAN_ESTATE_BUILDING_WINE_CELLAR"
+							}
+							icon = {
+								name = "japanese_manor_building_brewery_icon"
+								visible = "[ReasonItem.IsFlag( 'japanese_manor_building_brewery' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/map_icons/map_icon_japanese_manor.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_JAPANESE_MANOR_BUILDING_BREWERY"
+							}
+
+							icon = {
 								name = "skilled_follower_icon"
 								visible = "[ReasonItem.IsFlag( 'skilled_follower' )]"
 								size = { 34 34 }
@@ -1139,14 +1185,6 @@ types Events
 								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_PHYSICIAN"
 							}
 
-							# Brewery Event (travel_events_bp3.85)
-							icon = {
-								name = "brewery_icon"
-								visible = "[ReasonItem.IsFlag( 'brewery' )]"
-								size = { 34 34 }
-								texture = "gfx/interface/icons/court_position_types/court_brewmaster_court_position.dds"
-								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_CHURCH_HOLDING_BREWERY"
-							}
 							icon = {
 								name = "has_culture_icon"
 								visible = "[ReasonItem.IsFlag( 'culture' )]"
@@ -1407,6 +1445,151 @@ types Events
 								size = { 34 34 }
 								texture = "gfx/interface/icons/court_position_types/travel_leader_court_position.dds"
 								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_CARAVAN_MASTER"
+							}
+							icon = {
+								name = "market_recruitment_icon"
+								visible = "[ReasonItem.IsFlag( 'market_recruitment' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/character_interactions/council.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_VISIT_HOLDING_MARKET_RECRUITMENT"
+							}
+							icon = {
+								name = "market_icon"
+								visible = "[ReasonItem.IsFlag( 'marketplace' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/travel/icon_travel_silk_road_marketplace.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_VISIT_HOLDING_MARKET"
+							}
+							icon = {
+
+								name = "docks_icon"
+								visible = "[ReasonItem.IsFlag( 'docks' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/combat_effects/recently_disembarked_advantage.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_VISIT_HOLDING_DOCKS"
+							}							
+							icon = {
+								name = "add_prestige_icon"
+								visible = "[ReasonItem.IsFlag( 'add_prestige' )]"
+								size = { 34 34 }
+								texture = "[GetPlayer.GetPrestigeLevelTexture]"
+								tooltip = "EVENT_WINDOW_OPTION_ADD_PRESTIGE"
+							}
+
+							icon = {
+								name = "visit_patron_icon"
+								visible = "[ReasonItem.IsFlag( 'patron' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/icon_holding_castle.dds"
+								tooltip = "EVENT_WINDOW_OPTION_PATRON_HOLDING"
+							}
+							icon = {
+								name = "flaunt_wealth_icon"
+								visible = "[ReasonItem.IsFlag( 'flaunt_wealth' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/activity_intents/flaunt_wealth_intent.dds"
+								tooltip = "EVENT_WINDOW_OPTION_FLAUNT_WEALTH"
+							}
+							icon = {
+								name = "craftsmen_guild_icon"
+								visible = "[ReasonItem.IsFlag( 'craftsmen_guild' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/icon_holding_city.dds"
+							}
+							icon = {
+								name = "blacksmith_icon"
+								visible = "[ReasonItem.IsFlag( 'blacksmith' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/court_position_types/armorer_camp_officer.dds"
+							}
+							icon = {
+								name = "curator_icon"
+								visible = "[ReasonItem.IsFlag( 'curator' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/court_position_types/antiquarian_court_position.dds"
+							}
+							icon = {
+								name = "guild_master_icon"
+								visible = "[ReasonItem.IsFlag( 'guild_master' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/court_position_types/court_scholar_court_position.dds"
+							}
+							icon = {
+								name = "traders_icon"
+								visible = "[ReasonItem.IsFlag( 'traders' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/message_feed/contract.dds"
+							}
+							icon = {
+								name = "stress_loss_icon"
+								visible = "[ReasonItem.IsFlag( 'stress_loss' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/stress/icon_stress_loss.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_STRESS_LOSS"
+							}
+							icon = {
+								name = "renown_icon"
+								visible = "[ReasonItem.IsFlag( 'renown' )]"
+								size = { 34 34 }
+								texture = "[GetPlayer.GetDynasty.GetDynastyPrestigeLevelTexture]"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_DYNASTY_LEVEL"
+							}
+							icon = {
+								name = "involvement_icon"
+								visible = "[ReasonItem.IsFlag( 'gg_involvement' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/situations/guelph_ghibelline/involvement_icon.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_INVOLVEMENT"
+							}
+							#GDP
+							icon = {
+								name = "have_partner_icon"
+								visible = "[ReasonItem.IsFlag( 'have_partner' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/court_position_types/partner_court_position.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_HAVE_PARTNER"
+							}
+							icon = {
+								name = "have_alcohol_route_icon"
+								visible = "[ReasonItem.IsFlag( 'have_alcohol_route' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/trade/trade_good_categories/trade_category_alcohol_small.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_HAVE_ALCOHOL_ROUTE"
+							}
+							icon = {
+								name = "have_luxury_items_route_icon"
+								visible = "[ReasonItem.IsFlag( 'have_luxury_items_route' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/trade/trade_good_categories/trade_category_luxury_items_small.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_HAVE_LUXURY_ITEMS_ROUTE"
+							}
+							icon = {
+								name = "have_comforts_route_icon"
+								visible = "[ReasonItem.IsFlag( 'have_comforts_route' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/trade/trade_good_categories/trade_category_comforts_small.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_HAVE_COMFORTS_ROUTE"
+							}
+							icon = {
+								name = "have_alcohol_xp_icon"
+								visible = "[ReasonItem.IsFlag( 'have_alcohol_xp' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/trade/trade_good_categories/trade_category_alcohol_small.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_HAVE_ALCOHOL_XP"
+							}
+							icon = {
+								name = "have_bigger_company_icon"
+								visible = "[ReasonItem.IsFlag( 'have_bigger_company' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/map_icons/map_icon_company.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_HAVE_BIGGER_COMPANY"
+							}
+							icon = {
+								name = "charter_icon"
+								visible = "[ReasonItem.IsFlag( 'charter' )]"
+								size = { 34 34 }
+								texture = "gfx/interface/icons/trade/icon_merchant_charter.dds"
+								tooltip = "EVENT_WINDOW_OPTION_AVAILABLE_CHARTER"
 							}
 							
 							#Unop Add icons
@@ -1810,15 +1993,17 @@ template Event_Window_Debug_Info
 	button_round = {
 		size = { 40 40 }
 
+		tooltip = "TOGGLE_DEBUG_OPTION_TOOLTIPS"
+		using = tooltip_below
+		onclick = "[EventWindowData.ToggleDebugOptionTooltips]"
+		onclick = "[GetVariableSystem.Clear('event_tooltip')]"
+		onclick = "[PdxGuiFoldOut.Fold]"
+
 		button_icon = {
+			alwaystransparent = yes
 			size = { 30 30 }
 			parentanchor = center
 			texture = "gfx/interface/icons/flat_icons/history.dds"
-			tooltip = "TOGGLE_DEBUG_OPTION_TOOLTIPS"
-			using = tooltip_below
-			onclick = "[EventWindowData.ToggleDebugOptionTooltips]"
-			onclick = "[GetVariableSystem.Clear('event_tooltip')]"
-			onclick = "[PdxGuiFoldOut.Fold]"
 			fontsize = 24
 		}
 	}
@@ -1826,49 +2011,57 @@ template Event_Window_Debug_Info
 	button_round = {
 		size = { 40 40 }
 
+		tooltip = "TOGGLE_DEVELOPER_EVENT_TOOLS"
+		using = tooltip_below
+		onclick = "[EventWindowData.ToggleEventTools]"
+
 		button_icon = {
+			alwaystransparent = yes
 			size = { 30 30 }
 			parentanchor = center
 			texture = "gfx/interface/icons/flat_icons/tower_construction.dds"
-			tooltip = "TOGGLE_DEVELOPER_EVENT_TOOLS"
-			using = tooltip_below
-			onclick = "[EventWindowData.ToggleEventTools]"
 			fontsize = 24
 		}
 	}
 
 	button_round = {
 		size = { 40 40 }
+
+		tooltip = "TOGGLE_DATA_SYSTEM"
+		using = tooltip_below
+		onclick = "[ExecuteConsoleCommand('Localization.ToggleSkipDataSystemInLocOutput')]"
 
 		button_icon = {
+			alwaystransparent = yes
 			size = { 100% 100% }
 			texture = "gfx/interface/icons/flat_icons/data_system.dds"
-			tooltip = "TOGGLE_DATA_SYSTEM"
-			using = tooltip_below
-			onclick = "[ExecuteConsoleCommand('Localization.ToggleSkipDataSystemInLocOutput')]"
 			fontsize = 24
 		}
 	}
 
 	button_round = {
 		size = { 40 40 }
+		onclick = "[EventWindowData.CopyToClipboard]"
+		tooltip = "COPY_EVENT_CONTENTS"
+
 		button_copy = {
+			alwaystransparent = yes
 			parentanchor = center
-			onclick = "[EventWindowData.CopyToClipboard]"
-			tooltip = "COPY_EVENT_CONTENTS"
 		}
 	}
 
 	button_round = {
 		name = "debug_icon"
 		size = { 40 40 }
+		tooltip = "EVENT_DEBUG_TOOLTIP"
+		using = tooltip_se
+		onclick = "[EventWindowData.DebugOpen]"
+		button_ignore = none
+
 		button_search = {
+			alwaystransparent = yes
 			parentanchor = center
 			size = { 26 26 }
-			tooltip = "EVENT_DEBUG_TOOLTIP"
-			using = tooltip_se
-			onclick = "[EventWindowData.DebugOpen]"
-			button_ignore = none
 		}
 	}
 
@@ -2481,9 +2674,7 @@ types Events {
 		onclick = "[PdxGuiFoldOut.Unfold]"
 		
 		# to disable it so the confirm shortcut takes priority
-		block "button_event_preview" {
-			visible = "[And(And(Or(Not(GetVariableSystem.HasValue('event_tooltip', EventOption.GetText)), PdxGuiFoldOut.IsFolded), Not(IsPauseMenuShown)), LessThan_int32(GetDataModelSize(EventWindowData.GetOptions), '(int32)10'))]"
-		}
+		visible = "[And(And(Or(Not(GetVariableSystem.HasValue('event_tooltip', EventOption.GetText)), PdxGuiFoldOut.IsFolded), Not(IsPauseMenuShown)), LessThan_int32(GetDataModelSize(EventWindowData.GetOptions), '(int32)10'))]"
 		block "is_event_on_top" {}
 	}
 	type widget_event_shortcut_base = widget {
@@ -2617,7 +2808,15 @@ template Event_Window_Right_Tooltips {
 		parentanchor = right|bottom
 		widgetanchor = left|bottom
 	}
+	blockoverride "clean_event_tooltips_position" {
+		position = { -25 -18 }
+		parentanchor = right|bottom
+		widgetanchor = left|bottom
+	}
 	blockoverride "flip_tooltips" {
+		righttoleft = yes
+	}
+	blockoverride "clean_flip_tooltips" {
 		righttoleft = yes
 	}
 	blockoverride "max_tooltip_width" {

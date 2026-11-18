@@ -42,6 +42,22 @@ inspiration_completed_events = {
 		pam_religious_artifact_events.0002 #Religious Artifact
 		fund_inspiration.1001 #Fallback
 	}
+	effect = {
+		if = {
+			limit = { has_realm_law = company_purpose_artisan }
+			send_interface_toast = {
+				type = event_toast_effect_good
+				title = artisan_inspiration_xp_title
+				left_icon = root
+				right_icon = scope:inspiration_owner
+				add_trait_xp = {
+					trait = lifestyle_merchant
+					track = artisan
+					value = lifestyle_merchant_xp_gain_minor_value
+				}
+			}
+		}
+	}
 }
 
 

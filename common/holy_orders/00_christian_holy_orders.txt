@@ -748,7 +748,10 @@ ho_christian_sword_brethren = {
 		#Livonia is prioritized... but only if founder is german
 		if = {
 			limit = {
-				scope:province.county ?= title:c_livs
+				OR = {
+					scope:province.county ?= title:c_riga
+					scope:province.county ?= title:c_livs
+				}
 				scope:founder = {
 					culture = {
 						has_cultural_pillar = heritage_central_germanic
@@ -1956,7 +1959,7 @@ ho_christian_camaldolese = {
 		#Should be founded in Camaldoli
 		if = {
 			limit = {
-				scope:province.barony ?= title:b_camaldoli #Unop Was title, which is a holy order link
+				scope:province.barony ?= title:b_modigliana #Unop Was title, which is a holy order link
 			}
 			add = 1000
 		}
@@ -2064,7 +2067,7 @@ ho_imperial_canonesses = {
 			limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
 			}
-			scope:province.county ?= title:c_frankfurt
+			scope:province.county ?= title:c_halberstadt
 		}
 		trigger_else = {
 			scope:founder = {
@@ -2097,7 +2100,7 @@ ho_imperial_canonesses = {
 		}
 		if = {
 			limit = {
-				scope:province.county ?= title:c_frankfurt
+				scope:province.county ?= title:c_halberstadt
 			}
 			multiply = 10
 		}
@@ -2106,7 +2109,7 @@ ho_imperial_canonesses = {
 			limit = {
 				years_from_game_start < 1
 				
-				scope:province.county ?= title:c_frankfurt
+				scope:province.county ?= title:c_halberstadt
 			}
 			add = 10000
 		}
@@ -2159,7 +2162,7 @@ ho_christian_vallombrosans = {
 			limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
 			}
-			scope:province.county ?= title:c_arezzo
+			scope:province.county ?= title:c_firenze
 		}
 		trigger_else = {
 			scope:founder = {
@@ -2188,7 +2191,7 @@ ho_christian_vallombrosans = {
 		}
 		if = {
 			limit = {
-				scope:province.county ?= title:c_arezzo
+				scope:province.county ?= title:c_firenze
 			}
 			multiply = 10
 		}
@@ -2197,7 +2200,7 @@ ho_christian_vallombrosans = {
 			limit = {
 				years_from_game_start < 1
 				
-				scope:province.county ?= title:c_arezzo
+				scope:province.county ?= title:c_firenze
 			}
 			add = 10000
 		}
@@ -2550,7 +2553,7 @@ ho_christian_columban_benedictines = {
 			limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
 			}
-			scope:province.county ?= title:c_sankt_gallen
+			scope:province.county ?= title:c_konstanz
 			current_year < 868
 		}
 		trigger_else = {
@@ -2591,7 +2594,7 @@ ho_christian_columban_benedictines = {
 			limit = {
 				years_from_game_start < 1
 				
-				scope:province.county ?= title:c_sankt_gallen
+				scope:province.county ?= title:c_konstanz
 				current_year < 868
 			}
 			add = 10000
@@ -2630,7 +2633,7 @@ ho_sankt_gallen_benedictines = {
 				}
 			}
 			scope:province = {
-				county = title:c_sankt_gallen
+				county = title:c_konstanz
 			}
 		}
 	}
@@ -2652,7 +2655,7 @@ ho_sankt_gallen_benedictines = {
 			limit = {
 				years_from_game_start < 1
 				
-				scope:province.county ?= title:c_sankt_gallen
+				scope:province.county ?= title:c_konstanz
 				current_year >= 1066
 			}
 			add = 10000
@@ -2679,6 +2682,7 @@ ho_christian_maurian_benedictines = {
 			scope:founder = {
 				faith = {
 					has_doctrine_parameter = is_western_christian_faith
+
 				}
 			}
 			scope:province = {
@@ -3147,13 +3151,13 @@ ho_christian_eremetic_benedictines = {
 				}
 				OR = {
 					scope:province.county = {
-						county_control < 50
+						county_control < county_control_baseline
 					}
 					NOT = {
 						scope:province.county = {
 							save_temporary_scope_as = county_temp
 							any_neighboring_county = {
-								development_level < scope:county_temp.development_level
+								prosperity_level < scope:county_temp.prosperity_level
 							}
 						}
 					}
@@ -4129,13 +4133,13 @@ ho_christian_pastoral_benedictines = {
 				}
 				OR = {
 					scope:province.county = {
-						county_control < 50
+						county_control < county_control_baseline
 					}
 					NOT = {
 						scope:province.county = {
 							save_temporary_scope_as = county_temp
 							any_neighboring_county = {
-								development_level < scope:county_temp.development_level
+								prosperity_level < scope:county_temp.prosperity_level
 							}
 						}
 					}
@@ -4935,7 +4939,7 @@ ho_christian_studites = {
 			}
 			scope:founder = { has_variable = studite_founder }
 			OR = {
-				scope:province.county ?= title:c_brysis
+				scope:province.county ?= title:c_byzantion
 				scope:province.county ?= title:c_prusa
 			}
 		}
@@ -5137,7 +5141,7 @@ ho_christian_latros_hesychasts = {
 				scope:founder = { has_variable = monastic_game_start_founder }
 			}
 			scope:founder = { has_variable = latros_founder }
-			scope:province.county ?= title:c_ionia
+			scope:province.county ?= title:c_halikarnassos
 		}
 		trigger_else = {
 			scope:founder = {
@@ -5304,7 +5308,7 @@ ho_christian_evergetine_cenobites = {
 				scope:founder = { has_variable = monastic_game_start_founder }
 			}
 			scope:founder = { has_variable = evergetine_founder }
-			scope:province.county ?= title:c_brysis
+			scope:province.county ?= title:c_byzantion
 		}
 		trigger_else = {
 			scope:founder = {

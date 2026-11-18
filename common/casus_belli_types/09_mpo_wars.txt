@@ -36,8 +36,8 @@ migration_cb = {
 		on_declared_war = yes
 		scope:attacker = {
 			every_in_list = {
-			 	variable = obedient_vassals
-			 	limit = { is_ai = yes }
+				variable = obedient_vassals
+				limit = { is_ai = yes }
 				scope:war = { add_attacker = prev }
 			}
 		}
@@ -54,9 +54,10 @@ migration_cb = {
 	}
 
 	on_victory = {
-		scope:attacker = { 
+		on_victory_aggressive_war_effect = yes
+
+		scope:attacker = {
 			save_scope_as = duchy_war
-			show_pow_release_message_effect = yes 
 			if = {
 				limit = {
 					is_ai = yes
@@ -67,9 +68,6 @@ migration_cb = {
 				}
 			}
 		}
-
-		# Legitimacy
-		add_legitimacy_attacker_victory_effect = yes
 
 		#EP2 accolade glory gain for winning against higher ranked enemy
 		scope:attacker = { accolade_attacker_war_end_glory_gain_med_effect = yes }
@@ -83,7 +81,7 @@ migration_cb = {
 			add_claim_on_loss = yes
 		}
 
-		# go through the dejure hierarchy under target titles, transfer eligible vassals and sieze counties from ineligible ones
+		# go through the dejure hierarchy under target titles, transfer eligible vassals and seize counties from ineligible ones
 		every_in_list = {
 			list = target_titles
 			custom_tooltip = MIGRATION_CB_TITLE
@@ -101,7 +99,7 @@ migration_cb = {
 					change = scope:change
 				}
 			}
-			
+
 			every_in_list = {
 				list = titles_taken
 				change_title_holder = {
@@ -131,12 +129,6 @@ migration_cb = {
 			LOSER_ALLY_FAME_SCALE = 1
 		}
 
-		# Truce
-		add_truce_attacker_victory_effect = yes
-
-		# FP1: note the victory for future memorialisation via stele (if applicable).
-		scope:attacker = { fp1_remember_recent_conquest_victory_effect = yes }
-
 		# Move into new lands
 		scope:attacker = {
 			domicile ?= {
@@ -158,7 +150,7 @@ migration_cb = {
 	}
 
 	on_white_peace = {
-		scope:attacker = { show_pow_release_message_effect = yes }
+		on_white_peace_effect = yes
 
 		#EP2 accolade glory gain for doing pretty good against higher ranked enemy
 		scope:defender = { accolade_defender_war_end_glory_gain_low_effect = yes }
@@ -178,8 +170,6 @@ migration_cb = {
 			WINNER_ALLY_FAME_SCALE = 1
 			LOSER_ALLY_FAME_SCALE = 1
 		}
-
-		add_truce_white_peace_effect = yes
 	}
 
 	on_defeat_desc = {
@@ -193,16 +183,12 @@ migration_cb = {
 	}
 
 	on_defeat = {
-		scope:attacker = { show_pow_release_message_effect = yes }
-		
+		on_defeat_aggressive_war_effect = yes
+
 		scope:attacker = { play_sound_effect = "event:/DLC/CE2/UI/Notifications/ce2_ui_notifications_migration_negative" }
 		scope:defender = { play_sound_effect = "event:/DLC/CE2/UI/Notifications/ce2_ui_notifications_migration_positive" }
 
-		# Legitimacy
-		add_legitimacy_attacker_defeat_effect = yes
-
-		scope:defender = { 
-			mandala_peacemaker_perk_serenity_effect = yes
+		scope:defender = {
 			#EP2 accolade glory gain for winning against higher ranked enemy
 			accolade_defender_war_end_glory_gain_high_effect = yes
 			# Prestige for Defender
@@ -230,13 +216,6 @@ migration_cb = {
 			WINNER_ALLY_FAME_SCALE = 1
 			LOSER_ALLY_FAME_SCALE = 1
 		}
-
-		add_truce_attacker_defeat_effect = yes
-
-		scope:attacker = {
-			save_temporary_scope_as = loser
-		}
-		on_lost_aggression_war_discontent_loss = yes
 	}
 
 	transfer_behavior = transfer
@@ -257,7 +236,7 @@ migration_cb = {
 
 	defender_score_from_battles_scale = 300
 	attacker_score_from_battles_scale = 300
-	
+
 	max_defender_score_from_occupation = 150
 	max_attacker_score_from_occupation = 150
 }
@@ -587,16 +566,9 @@ mpo_nomad_invasion_cb = {
 	ai_score_mult = {
 		value = 1
 
-		# HOUSE RELATIONS
-		add = house_relation_ai_score_value
-
-		# AI in struggles act insularly for wars that don't have a familial or legal basis.
-		multiply = struggle_wars_prioritise_struggle_targets_value
-		# Tell the Romans to stop going adventuring into the steppe for no gods-damned reason.
-		multiply = byzantium_conquests_ai_score_value
-		multiply = muslim_invasions_prefer_nonmuslims_ai_score_value
-
-		multiply = frankokratia_leader_protection_value #Set back to 0. Declaring war on the frankokratia leader can really ruin the whole thing
+		add = common_cb_ai_score_mult_additive
+		multiply = aggressive_cb_ai_score_mult
+		multiply = common_cb_ai_score_mult
 	}
 
 	valid_to_start = {
@@ -615,13 +587,10 @@ mpo_nomad_invasion_cb = {
 						NOR = {
 							has_holding_type = nomad_holding
 							has_holding_type = herder_holding
-						}	
+						}
 					}
 					holder ?= {
-						OR = {
-							this = scope:defender
-							is_vassal_or_below_of = scope:defender
-						}
+						target_is_same_character_or_above = scope:defender
 					}
 				}
 				scope:defender = {
@@ -645,27 +614,16 @@ mpo_nomad_invasion_cb = {
 							OR = {
 								has_holding_type = nomad_holding
 								has_holding_type = herder_holding
-							}	
+							}
 						}
 					}
 				}
 			}
-			
 		}
 	}
 
 	should_invalidate = {
-		NOT = {
-			any_in_list = {
-				list = target_titles
-				any_in_de_jure_hierarchy = {
-					tier = tier_county
-					holder = {
-						target_is_same_character_or_above = scope:defender
-					}
-				}
-			}
-		}
+		war_should_invalidate_defender_lost_target_lands_trigger = yes
 	}
 
 	on_invalidated_desc = {
@@ -716,7 +674,6 @@ mpo_nomad_invasion_cb = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					
 					mpo_overrunner_becomes_tribal_desc_trigger = yes
 				}
 				desc = overrunning_war_victory_desc_tribal
@@ -739,6 +696,8 @@ mpo_nomad_invasion_cb = {
 	}
 
 	on_victory = {
+		on_victory_aggressive_war_effect = yes
+
 		#GoK stops really being GoK
 		scope:attacker = {
 			gok_government_change_story_end_effect = yes
@@ -771,10 +730,8 @@ mpo_nomad_invasion_cb = {
 				}
 			}
 		}
-	
-		scope:attacker = { show_pow_release_message_effect = yes }
 
-		# Legitimacy and gold
+		# gold
 		scope:attacker = {
 			if = {
 				limit = {
@@ -787,7 +744,6 @@ mpo_nomad_invasion_cb = {
 			else = {
 				add_short_term_gold = major_gold_value
 			}
-			add_legitimacy = medium_legitimacy_gain
 		}
 
 		#EP2 accolade glory gain for winning against higher ranked enemy
@@ -934,7 +890,6 @@ mpo_nomad_invasion_cb = {
 									}
 								}
 							}
-							
 						}
 						create_title_and_vassal_change = {
 							type = independency
@@ -990,10 +945,9 @@ mpo_nomad_invasion_cb = {
 					}
 				}
 			}
-	
+
 			resolve_title_and_vassal_change = scope:change
 		}
-		
 
 		#Should gain target title, if possible
 		scope:attacker = {
@@ -1191,7 +1145,7 @@ mpo_nomad_invasion_cb = {
 					}
 					ordered_in_list = {
 						list = duchy_capitals
-						order_by = development_level
+						order_by = prosperity_level
 						culture = { save_scope_as = expelled_culture }
 						scope:attacker = {
 							set_realm_capital = prev
@@ -1201,7 +1155,7 @@ mpo_nomad_invasion_cb = {
 				#Most developed county
 				else = {
 					ordered_realm_county = {
-						order_by = development_level
+						order_by = prosperity_level
 						limit = {
 							kingdom = scope:target
 							NOT = {
@@ -1332,7 +1286,7 @@ mpo_nomad_invasion_cb = {
 						#Convert additional tribal county if possible
 						ordered_neighboring_county = {
 							order_by = {
-								value = development_level
+								value = prosperity_level
 								multiply = -1
 							}
 							limit = {
@@ -1363,9 +1317,9 @@ mpo_nomad_invasion_cb = {
 				}
 			}
 		}
-		#Counties lose development levels
+		#Counties lose prosperity levels
 		scope:target = {
-			custom_tooltip = attackers_counties_lose_development
+			custom_tooltip = attackers_counties_lose_prosperity
 		}
 		hidden_effect = {
 			scope:attacker = {
@@ -1384,22 +1338,22 @@ mpo_nomad_invasion_cb = {
 								}
 							}
 						}
-						change_development_level = -1
+						change_prosperity_level = -1
 					}
 					else_if = {
 						limit = {
 							current_year < 1065
 						}
-						change_development_level = -2
+						change_prosperity_level = -2
 					}
 					else_if = {
 						limit = {
 							current_year < 1250
 						}
-						change_development_level = -3
+						change_prosperity_level = -3
 					}
 					else = {
-						change_development_level = -5
+						change_prosperity_level = -4
 					}
 				}
 			}
@@ -1416,15 +1370,6 @@ mpo_nomad_invasion_cb = {
 			WINNER_ALLY_FAME_SCALE = 10
 			LOSER_ALLY_FAME_SCALE = 10
 		}
-
-		# Truce
-		add_truce_attacker_victory_effect = yes
-
-		# FP1: note the victory for future memorialisation via stele (if applicable).
-		scope:attacker = { fp1_remember_recent_conquest_victory_effect = yes }
-
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
 
 		#Event for attacker
 		scope:attacker = {
@@ -1453,7 +1398,7 @@ mpo_nomad_invasion_cb = {
 	}
 
 	on_white_peace = {
-		scope:attacker = { show_pow_release_message_effect = yes }
+		on_white_peace_effect = yes
 
 		#EP2 accolade glory gain for doing ok against higher ranked enemy
 		scope:attacker = { accolade_attacker_war_end_glory_gain_low_effect = yes }
@@ -1468,27 +1413,11 @@ mpo_nomad_invasion_cb = {
 			LOSER_ALLY_FAME_SCALE = 1
 		}
 
-		# Truce
-		add_truce_white_peace_effect = yes
-
 		scope:attacker = {
 			add_dread = minor_dread_loss
 			add_legitimacy = minor_legitimacy_loss
 			add_prestige = mongol_invasion_cb_prestige_white_peace
-			stress_and_fulfillment_impact = {
-				ambitious = medium_stress_impact_gain
-				arrogant = medium_stress_impact_gain
-			}
 		}
-
-		scope:defender = {
-			stress_and_fulfillment_impact = {
-				arrogant = medium_stress_impact_gain
-			}
-		}
-
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
 	}
 
 	on_defeat_desc = {
@@ -1509,16 +1438,9 @@ mpo_nomad_invasion_cb = {
 	}
 
 	on_defeat = {
-		scope:attacker = { show_pow_release_message_effect = yes }
+		on_defeat_aggressive_war_effect = yes
 
-		# Legitimacy
-		add_legitimacy_attacker_defeat_effect = yes
-
-		# Influence
-		add_influence_attacker_defeat_effect = yes
-
-		scope:defender = { 
-			mandala_peacemaker_perk_serenity_effect = yes
+		scope:defender = {
 			#EP2 accolade glory gain for winning against higher ranked enemy
 			accolade_defender_war_end_glory_gain_high_effect = yes
 		}
@@ -1535,10 +1457,10 @@ mpo_nomad_invasion_cb = {
 				multiply = -1.0
 			}
 			switch = {
-			   trigger = has_realm_law
-			   nomadic_authority_5 = { add_realm_law = nomadic_authority_4 }
-			   nomadic_authority_4 = { add_realm_law = nomadic_authority_3 }
-			   nomadic_authority_3 = { add_realm_law = nomadic_authority_2 }
+				trigger = has_realm_law
+				nomadic_authority_5 = { add_realm_law = nomadic_authority_4 }
+				nomadic_authority_4 = { add_realm_law = nomadic_authority_3 }
+				nomadic_authority_3 = { add_realm_law = nomadic_authority_2 }
 			}
 		}
 
@@ -1561,16 +1483,6 @@ mpo_nomad_invasion_cb = {
 			WINNER_ALLY_FAME_SCALE = 10
 			LOSER_ALLY_FAME_SCALE = 10
 		}
-
-		add_truce_attacker_defeat_effect = yes
-
-		scope:attacker = {
-			save_temporary_scope_as = loser
-		}
-		on_lost_aggression_war_discontent_loss = yes
-
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
 	}
 
 	transfer_behavior = transfer
@@ -1848,16 +1760,9 @@ mpo_nomad_duchy_invasion_cb = {
 	ai_score_mult = {
 		value = 1
 
-		# HOUSE RELATIONS
-		add = house_relation_ai_score_value
-
-		# AI in struggles act insularly for wars that don't have a familial or legal basis.
-		multiply = struggle_wars_prioritise_struggle_targets_value
-		# Tell the Romans to stop going adventuring into the steppe for no gods-damned reason.
-		multiply = byzantium_conquests_ai_score_value
-		multiply = muslim_invasions_prefer_nonmuslims_ai_score_value
-
-		multiply = frankokratia_leader_protection_value #Set back to 0. Declaring war on the frankokratia leader can really ruin the whole thing
+		add = common_cb_ai_score_mult_additive
+		multiply = aggressive_cb_ai_score_mult
+		multiply = common_cb_ai_score_mult
 	}
 
 	valid_to_start = {
@@ -1872,27 +1777,16 @@ mpo_nomad_duchy_invasion_cb = {
 							OR = {
 								has_holding_type = nomad_holding
 								has_holding_type = herder_holding
-							}	
+							}
 						}
 					}
 				}
 			}
-			
 		}
 	}
 
 	should_invalidate = {
-		NOT = {
-			any_in_list = {
-				list = target_titles
-				any_in_de_jure_hierarchy = {
-					tier = tier_county
-					holder = {
-						target_is_same_character_or_above = scope:defender
-					}
-				}
-			}
-		}
+		war_should_invalidate_defender_lost_target_lands_trigger = yes
 	}
 
 	on_invalidated_desc = msg_invasion_war_invalidated_message
@@ -1942,7 +1836,6 @@ mpo_nomad_duchy_invasion_cb = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					
 					mpo_overrunner_becomes_tribal_desc_trigger = yes
 				}
 				desc = overrunning_war_victory_desc_tribal
@@ -1965,6 +1858,8 @@ mpo_nomad_duchy_invasion_cb = {
 	}
 
 	on_victory = {
+		on_victory_aggressive_war_effect = yes
+
 		#GoK stops really being GoK
 		scope:attacker = {
 			gok_government_change_story_end_effect = yes
@@ -1986,8 +1881,6 @@ mpo_nomad_duchy_invasion_cb = {
 				}
 			}
 		}
-	
-		scope:attacker = { show_pow_release_message_effect = yes }
 
 		# Legitimacy and gold
 		scope:attacker = {
@@ -2128,7 +2021,7 @@ mpo_nomad_duchy_invasion_cb = {
 				}
 			}
 		}
-		
+
 		scope:target = {
 			custom_tooltip = overrunning_title_transfer_tt
 		}
@@ -2305,7 +2198,7 @@ mpo_nomad_duchy_invasion_cb = {
 				#Most developed county
 				else = {
 					ordered_realm_county = {
-						order_by = development_level
+						order_by = prosperity_level
 						limit = {
 							kingdom = scope:target
 							NOT = {
@@ -2364,7 +2257,7 @@ mpo_nomad_duchy_invasion_cb = {
 			#Vassals tooltip
 			custom_tooltip = overrunning_vassals_gain_titles_duchy_tt
 		}
-		#Counties lose development levels if not tribal
+		#Counties lose prosperity unless they are tribal, nomad, or herder
 		if = {
 			limit = {
 				scope:attacker = {
@@ -2384,10 +2277,10 @@ mpo_nomad_duchy_invasion_cb = {
 				}
 			}
 			scope:target = {
-				custom_tooltip = attackers_counties_lose_development
+				custom_tooltip = attackers_counties_lose_prosperity
 			}
 		}
-		
+
 		hidden_effect = {
 			scope:attacker = {
 				every_held_title = {
@@ -2408,16 +2301,16 @@ mpo_nomad_duchy_invasion_cb = {
 						limit = {
 							current_year < 1065
 						}
-						change_development_level = -1
+						change_prosperity_level = -1
 					}
 					else_if = {
 						limit = {
 							current_year < 1250
 						}
-						change_development_level = -2
+						change_prosperity_level = -2
 					}
 					else = {
-						change_development_level = -4
+						change_prosperity_level = -4
 					}
 				}
 			}
@@ -2453,15 +2346,6 @@ mpo_nomad_duchy_invasion_cb = {
 			LOSER_ALLY_FAME_SCALE = 10
 		}
 
-		# Truce
-		add_truce_attacker_victory_effect = yes
-
-		# FP1: note the victory for future memorialisation via stele (if applicable).
-		scope:attacker = { fp1_remember_recent_conquest_victory_effect = yes }
-
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
-
 		#Event for attacker
 		scope:attacker = {
 			trigger_event = {
@@ -2489,8 +2373,7 @@ mpo_nomad_duchy_invasion_cb = {
 	}
 
 	on_white_peace = {
-
-		scope:attacker = { show_pow_release_message_effect = yes }
+		on_white_peace_effect = yes
 
 		#EP2 accolade glory gain for doing ok against higher ranked enemy
 		scope:attacker = { accolade_attacker_war_end_glory_gain_low_effect = yes }
@@ -2505,27 +2388,11 @@ mpo_nomad_duchy_invasion_cb = {
 			LOSER_ALLY_FAME_SCALE = 1
 		}
 
-		# Truce
-		add_truce_white_peace_effect = yes
-
 		scope:attacker = {
 			add_dread = minor_dread_loss
 			add_legitimacy = minor_legitimacy_loss
 			add_prestige = mongol_invasion_cb_prestige_white_peace
-			stress_and_fulfillment_impact = {
-				ambitious = medium_stress_impact_gain
-				arrogant = medium_stress_impact_gain
-			}
 		}
-
-		scope:defender = {
-			stress_and_fulfillment_impact = {
-				arrogant = medium_stress_impact_gain
-			}
-		}
-
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
 	}
 
 	on_defeat_desc = {
@@ -2546,17 +2413,9 @@ mpo_nomad_duchy_invasion_cb = {
 	}
 
 	on_defeat = {
+		on_defeat_aggressive_war_effect = yes
 
-		scope:attacker = { show_pow_release_message_effect = yes }
-
-		# Legitimacy
-		add_legitimacy_attacker_defeat_effect = yes
-
-		# Influence
-		add_influence_attacker_defeat_effect = yes
-
-		scope:defender = { 
-			mandala_peacemaker_perk_serenity_effect = yes
+		scope:defender = {
 			#EP2 accolade glory gain for winning against higher ranked enemy
 			accolade_defender_war_end_glory_gain_high_effect = yes
 		}
@@ -2573,10 +2432,10 @@ mpo_nomad_duchy_invasion_cb = {
 				multiply = -1.0
 			}
 			switch = {
-			   trigger = has_realm_law
-			   nomadic_authority_5 = { add_realm_law = nomadic_authority_4 }
-			   nomadic_authority_4 = { add_realm_law = nomadic_authority_3 }
-			   nomadic_authority_3 = { add_realm_law = nomadic_authority_2 }
+				trigger = has_realm_law
+				nomadic_authority_5 = { add_realm_law = nomadic_authority_4 }
+				nomadic_authority_4 = { add_realm_law = nomadic_authority_3 }
+				nomadic_authority_3 = { add_realm_law = nomadic_authority_2 }
 			}
 		}
 
@@ -2599,16 +2458,6 @@ mpo_nomad_duchy_invasion_cb = {
 			WINNER_ALLY_FAME_SCALE = 10
 			LOSER_ALLY_FAME_SCALE = 10
 		}
-
-		add_truce_attacker_defeat_effect = yes
-
-		scope:attacker = {
-			save_temporary_scope_as = loser
-		}
-		on_lost_aggression_war_discontent_loss = yes
-
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
 	}
 
 	transfer_behavior = transfer
@@ -2640,7 +2489,7 @@ mpo_nomad_duchy_invasion_cb = {
 humiliation_cb = {
 	icon = humiliation_cb
 	group = humiliation
-	
+
 	ai_only_against_neighbors = yes
 
 	allow_hostages = no
@@ -2710,8 +2559,8 @@ humiliation_cb = {
 		on_declared_war = yes
 		scope:attacker = {
 			every_in_list = {
-			 	variable = obedient_vassals
-			 	limit = { is_ai = yes }
+				variable = obedient_vassals
+				limit = { is_ai = yes }
 				scope:war = { add_attacker = prev }
 			}
 		}
@@ -2728,6 +2577,8 @@ humiliation_cb = {
 	}
 
 	on_victory = {
+		on_victory_effect = yes
+
 		# Lowers the Dominance leavel of the Defender
 		scope:defender = {
 			lower_dominance_level_effect = yes
@@ -2738,7 +2589,7 @@ humiliation_cb = {
 				mpo_release_herder_land_effect = yes
 			}
 		}
-		
+
 		scope:defender = {
 			pay_herd = {
 				target = scope:attacker
@@ -2753,7 +2604,7 @@ humiliation_cb = {
 				}
 			}
 		}
-		
+
 		# You "take" some of their Prestige
 		scope:defender = {
 			add_prestige = major_prestige_loss
@@ -2761,7 +2612,7 @@ humiliation_cb = {
 		scope:attacker = {
 			add_prestige = major_prestige_gain
 		}
-		
+
 		scope:defender = {
 			# Some of their obedient vassals become not obedient
 			custom_tooltip = humiliation_cb_not_obedient_tt
@@ -2785,11 +2636,6 @@ humiliation_cb = {
 				years = 5
 			}
 		}
-	
-		scope:attacker = { show_pow_release_message_effect = yes }
-
-		# Legitimacy
-		add_legitimacy_attacker_victory_effect = yes
 
 		#EP2 accolade glory gain for winning against higher ranked enemy
 		scope:attacker = { accolade_attacker_war_end_glory_gain_med_effect = yes }
@@ -2815,12 +2661,6 @@ humiliation_cb = {
 			WINNER_ALLY_FAME_SCALE = 1
 			LOSER_ALLY_FAME_SCALE = 1
 		}
-
-		# Truce
-		add_truce_attacker_victory_effect = yes
-
-		# FP1: note the victory for future memorialisation via stele (if applicable).
-		scope:attacker = { fp1_remember_recent_conquest_victory_effect = yes }
 	}
 
 	on_white_peace_desc = {
@@ -2834,7 +2674,7 @@ humiliation_cb = {
 	}
 
 	on_white_peace = {
-		scope:attacker = { show_pow_release_message_effect = yes }
+		on_white_peace_effect = yes
 
 		#EP2 accolade glory gain for doing pretty good against higher ranked enemy
 		scope:defender = { accolade_defender_war_end_glory_gain_low_effect = yes }
@@ -2854,8 +2694,6 @@ humiliation_cb = {
 			WINNER_ALLY_FAME_SCALE = 1
 			LOSER_ALLY_FAME_SCALE = 1
 		}
-
-		add_truce_white_peace_effect = yes
 	}
 
 	on_defeat_desc = {
@@ -2869,16 +2707,12 @@ humiliation_cb = {
 	}
 
 	on_defeat = {
-		scope:attacker = { show_pow_release_message_effect = yes }
-		
+		on_defeat_aggressive_war_effect = yes
+
 		scope:attacker = { play_sound_effect = "event:/DLC/CE2/UI/Notifications/ce2_ui_notifications_migration_negative" }
 		scope:defender = { play_sound_effect = "event:/DLC/CE2/UI/Notifications/ce2_ui_notifications_migration_positive" }
 
-		# Legitimacy
-		add_legitimacy_attacker_defeat_effect = yes
-
-		scope:defender = { 
-			mandala_peacemaker_perk_serenity_effect = yes
+		scope:defender = {
 			#EP2 accolade glory gain for winning against higher ranked enemy
 			accolade_defender_war_end_glory_gain_high_effect = yes
 			# Prestige for Defender
@@ -2906,13 +2740,6 @@ humiliation_cb = {
 			WINNER_ALLY_FAME_SCALE = 1
 			LOSER_ALLY_FAME_SCALE = 1
 		}
-
-		add_truce_attacker_defeat_effect = yes
-
-		scope:attacker = {
-			save_temporary_scope_as = loser
-		}
-		on_lost_aggression_war_discontent_loss = yes
 	}
 
 	transfer_behavior = transfer
@@ -2964,7 +2791,7 @@ retaliation_cb = {
 		}
 		is_landed = yes
 	}
-	
+
 	allowed_for_character_display_regardless = { # They're already your Tributary
 		scope:defender = {
 			NOT = { is_tributary_of = scope:attacker }
@@ -2977,7 +2804,7 @@ retaliation_cb = {
 			government_has_flag = government_is_nomadic
 		}
 	}
-	
+
 	ai_score = {
 		value = {
 			value = 100
@@ -3002,7 +2829,7 @@ retaliation_cb = {
 			}
 		}
 	}
-	
+
 	ai_score_mult = {
 		value = 3
 	}
@@ -3051,8 +2878,8 @@ retaliation_cb = {
 		on_declared_war = yes
 		scope:attacker = {
 			every_in_list = {
-			 	variable = obedient_vassals
-			 	limit = { is_ai = yes }
+				variable = obedient_vassals
+				limit = { is_ai = yes }
 				scope:war = { add_attacker = prev }
 			}
 		}
@@ -3069,6 +2896,8 @@ retaliation_cb = {
 	}
 
 	on_victory = {
+		on_victory_effect = yes
+
 		# Make them a Tributary
 		if = { # This if/else exists for localization purposes, since it could be parsed before the war starts
 			limit = { exists = root.war }
@@ -3084,7 +2913,7 @@ retaliation_cb = {
 				SUZERAIN = scope:attacker
 			}
 		}
-		
+
 		#If you tributarize a confederate, they leave their confederation
 		if = {
 			limit = {
@@ -3096,7 +2925,7 @@ retaliation_cb = {
 				remove_confederation_member = scope:defender
 			}
 		}
-		
+
 		# They pay you Herd or Gold
 		if = {
 			limit = {
@@ -3118,8 +2947,8 @@ retaliation_cb = {
 				}
 			}
 		}
-		
-		
+
+
 		# You "take" some of their Prestige
 		scope:defender = {
 			if = {
@@ -3155,11 +2984,6 @@ retaliation_cb = {
 				add_prestige = scope:defender.minor_prestige_gain
 			}
 		}
-	
-		scope:attacker = { show_pow_release_message_effect = yes }
-
-		# Legitimacy
-		add_legitimacy_attacker_victory_effect = yes
 
 		#EP2 accolade glory gain for winning against higher ranked enemy
 		scope:attacker = { accolade_attacker_war_end_glory_gain_med_effect = yes }
@@ -3184,12 +3008,6 @@ retaliation_cb = {
 			LOSER_ALLY_FAME_SCALE = 1
 		}
 
-		# Truce
-		add_truce_attacker_victory_effect = yes
-
-		# FP1: note the victory for future memorialisation via stele (if applicable).
-		scope:attacker = { fp1_remember_recent_conquest_victory_effect = yes }
-		
 		# We clean up the CB
 		hidden_effect = {
 			scope:attacker = {
@@ -3212,7 +3030,7 @@ retaliation_cb = {
 	}
 
 	on_white_peace = {
-		scope:attacker = { show_pow_release_message_effect = yes }
+		on_white_peace_effect = yes
 
 		#EP2 accolade glory gain for doing pretty good against higher ranked enemy
 		scope:defender = { accolade_defender_war_end_glory_gain_low_effect = yes }
@@ -3232,8 +3050,6 @@ retaliation_cb = {
 			WINNER_ALLY_FAME_SCALE = 1
 			LOSER_ALLY_FAME_SCALE = 1
 		}
-
-		add_truce_white_peace_effect = yes
 	}
 
 	on_defeat_desc = {
@@ -3247,16 +3063,12 @@ retaliation_cb = {
 	}
 
 	on_defeat = {
-		scope:attacker = { show_pow_release_message_effect = yes }
-		
+		on_defeat_effect = yes
+
 		scope:attacker = { play_sound_effect = "event:/DLC/CE2/UI/Notifications/ce2_ui_notifications_migration_negative" }
 		scope:defender = { play_sound_effect = "event:/DLC/CE2/UI/Notifications/ce2_ui_notifications_migration_positive" }
 
-		# Legitimacy
-		add_legitimacy_attacker_defeat_effect = yes
-
-		scope:defender = { 
-			mandala_peacemaker_perk_serenity_effect = yes
+		scope:defender = {
 			#EP2 accolade glory gain for winning against higher ranked enemy
 			accolade_defender_war_end_glory_gain_high_effect = yes
 			# Prestige for Defender
@@ -3284,13 +3096,6 @@ retaliation_cb = {
 			WINNER_ALLY_FAME_SCALE = 1
 			LOSER_ALLY_FAME_SCALE = 1
 		}
-
-		add_truce_attacker_defeat_effect = yes
-
-		scope:attacker = {
-			save_temporary_scope_as = loser
-		}
-		on_lost_aggression_war_discontent_loss = yes
 	}
 
 	transfer_behavior = transfer
@@ -3308,7 +3113,7 @@ retaliation_cb = {
 	interface_priority = 79
 
 	attacker_wargoal_percentage = 0.8
-	
+
 	max_defender_score_from_battles = 150
 	max_attacker_score_from_battles = 150
 
@@ -3334,7 +3139,7 @@ domination_cb = {
 	use_de_jure_wargoal_only = yes
 	target_de_jure_regions_above = yes
 	white_peace_possible = no
-	
+
 	attacker_score_from_occupation_scale = 150
 	attacker_score_from_battles_scale = 150
 	defender_score_from_battles_scale = 150
@@ -3368,10 +3173,7 @@ domination_cb = {
 	}
 
 	on_victory = {
-		scope:attacker = { show_pow_release_message_effect = yes }
-		
-		# Legitimacy
-		add_legitimacy_attacker_victory_effect = yes
+		on_victory_aggressive_war_effect = yes
 
 		create_title_and_vassal_change = {
 			type = conquest
@@ -3392,9 +3194,6 @@ domination_cb = {
 		scope:war = {
 			every_war_defender = {
 				custom = every_defender
-				limit = {
-					government_has_flag = government_is_in_steppe
-				}
 				if = {
 					limit = {
 						exists = this.confederation
@@ -3433,15 +3232,6 @@ domination_cb = {
 			WINNER_ALLY_FAME_SCALE = 1
 			LOSER_ALLY_FAME_SCALE = 1
 		}
-
-		# Truce
-		add_truce_attacker_victory_effect = yes
-
-		# FP1: note the victory for future memorialisation via stele (if applicable).
-		scope:attacker = { fp1_remember_recent_conquest_victory_effect = yes }
-
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
 	}
 
 	on_white_peace_desc = {
@@ -3450,7 +3240,7 @@ domination_cb = {
 				trigger = { scope:defender = { is_local_player = yes } }
 				desc = county_conquest_cb_white_peace_desc_defender
 			}
-			
+
 		}
 	}
 
@@ -3474,10 +3264,7 @@ domination_cb = {
 	}
 
 	on_defeat = {
-		scope:attacker = { show_pow_release_message_effect = yes }
-		
-		# Legitimacy
-		add_legitimacy_attacker_defeat_effect = yes
+		on_defeat_aggressive_war_effect = yes
 
 		# Prestige loss for the attacker
 		scope:attacker = {
@@ -3488,8 +3275,7 @@ domination_cb = {
 			add_dread = -50
 		}
 
-		scope:defender = { 
-			mandala_peacemaker_perk_serenity_effect = yes
+		scope:defender = {
 			# Prestige for Defender
 			add_prestige_war_defender_effect = {
 				PRESTIGE_VALUE = medium_prestige_value
@@ -3504,16 +3290,6 @@ domination_cb = {
 			WINNER_ALLY_FAME_SCALE = 1
 			LOSER_ALLY_FAME_SCALE = 1
 		}
-
-		add_truce_attacker_defeat_effect = yes
-
-		scope:attacker = {
-			save_temporary_scope_as = loser
-		}
-		on_lost_aggression_war_discontent_loss = yes
-
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
 	}
 
 	transfer_behavior = transfer
@@ -3531,10 +3307,10 @@ domination_cb = {
 	interface_priority = 75
 
 	attacker_wargoal_percentage = 1.5
-	
+
 	max_defender_score_from_battles = 150
 	max_attacker_score_from_battles = 150
-	
+
 	max_defender_score_from_occupation = 150
 	max_attacker_score_from_occupation = 150
 
@@ -3549,18 +3325,18 @@ de_jure_cb_nomadic = {
 	icon = individual_duchy_de_jure_cb
 	group = de_jure
 	should_check_for_interface_availability = no
-	
+
 	combine_into_one = yes
 	should_show_war_goal_subview = yes
 	mutually_exclusive_titles = { always = yes }
-	
+
 	allowed_for_character = {
 		scope:attacker = {
 			trigger_if = {
 				limit = {
 					is_ai = yes
 				}
-				highest_held_title_tier >= tier_kingdom	
+				highest_held_title_tier >= tier_kingdom
 			}
 			government_has_flag = government_is_nomadic
 			highest_held_title_tier >= tier_duchy
@@ -3578,7 +3354,7 @@ de_jure_cb_nomadic = {
 	target_de_jure_regions_above = yes
 	ignore_effect = change_title_holder
 	ai_only_against_neighbors = yes
-	
+
 	valid_to_start = {
 		scope:target = {
 			trigger_if = {
@@ -3605,19 +3381,16 @@ de_jure_cb_nomadic = {
 				# Internal
 				any_this_title_or_de_jure_above = {
 					holder ?= {
-						OR = {
-							this = scope:attacker
-							target_is_liege_or_above = scope:attacker
-						}
+						target_is_same_character_or_above = scope:attacker
 					}
 				}
-				# External 
+				# External
 				AND = {
 					scope:attacker = {
 						highest_held_title_tier >= tier_kingdom
 					}
 					scope:target = {
-						NOT = { de_jure_liege = scope:attacker.primary_title }
+						de_jure_liege != scope:attacker.primary_title
 						switch = {
 							trigger = scope:target.tier
 							tier_empire = {
@@ -3686,20 +3459,7 @@ de_jure_cb_nomadic = {
 	}
 
 	should_invalidate = {
-		NOT = {
-			any_in_list = {
-				list = target_titles
-				any_in_de_jure_hierarchy = {
-					tier = tier_county
-					holder = {
-						OR = {
-							this = scope:defender
-							target_is_liege_or_above = scope:defender
-						}
-					}
-				}
-			}
-		}
+		war_should_invalidate_defender_lost_target_lands_trigger = yes
 	}
 
 	on_invalidated_desc = {
@@ -3726,7 +3486,7 @@ de_jure_cb_nomadic = {
 
 	on_declaration = {
 		on_declared_war = yes
-	}	
+	}
 
 	on_victory_desc = {
 		first_valid = {
@@ -3737,12 +3497,9 @@ de_jure_cb_nomadic = {
 			desc = de_jure_cb_victory_desc
 		}
 	}
-	
+
 	on_victory = {
-		scope:attacker = { show_pow_release_message_effect = yes }
-		
-		# Legitimacy
-		add_legitimacy_attacker_victory_effect = yes
+		on_victory_aggressive_war_effect = yes
 
 		#EP2 accolade glory gain for winning against higher ranked enemy
 		scope:attacker = { accolade_attacker_war_end_glory_gain_med_effect = yes }
@@ -3760,15 +3517,6 @@ de_jure_cb_nomadic = {
 			WINNER_ALLY_FAME_SCALE = 20
 			LOSER_ALLY_FAME_SCALE = 20
 		}
-		
-		# truce
-		add_truce_attacker_victory_effect = yes
-
-		# FP1: note the victory for future memorialisation via stele (if applicable).
-		scope:attacker = { fp1_remember_recent_conquest_victory_effect = yes }
-
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
 	}
 
 	on_white_peace_desc = {
@@ -3780,9 +3528,9 @@ de_jure_cb_nomadic = {
 			desc = de_jure_cb_white_peace_desc
 		}
 	}
-	
+
 	on_white_peace = {
-		scope:attacker = { show_pow_release_message_effect = yes }
+		on_white_peace_effect = yes
 
 		#EP2 accolade glory gain for doing ok against higher ranked enemy
 		scope:defender = { accolade_defender_war_end_glory_gain_low_effect = yes }
@@ -3813,13 +3561,6 @@ de_jure_cb_nomadic = {
 			WINNER_ALLY_FAME_SCALE = 100
 			LOSER_ALLY_FAME_SCALE = 100
 		}
-		# Defender neither gains nor loses any prestige.
-		
-		# Truce
-		add_truce_white_peace_effect = yes
-
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
 	}
 
 	on_defeat_desc = {
@@ -3835,15 +3576,11 @@ de_jure_cb_nomadic = {
 			desc = de_jure_cb_defeat_desc
 		}
 	}
-	
-	on_defeat = {
-		scope:attacker = { show_pow_release_message_effect = yes }
-		
-		# Legitimacy
-		add_legitimacy_attacker_defeat_effect = yes
 
-		scope:defender = { 
-			mandala_peacemaker_perk_serenity_effect = yes
+	on_defeat = {
+		on_defeat_aggressive_war_effect = yes
+
+		scope:defender = {
 			#EP2 accolade glory gain for winning against higher ranked enemy
 			accolade_defender_war_end_glory_gain_high_effect = yes
 		}
@@ -3877,43 +3614,32 @@ de_jure_cb_nomadic = {
 			WINNER_ALLY_FAME_SCALE = 100
 			LOSER_ALLY_FAME_SCALE = 100
 		}
-	
-		# Truce
-		add_truce_attacker_defeat_effect = yes
-		
-		scope:attacker = {
-			save_temporary_scope_as = loser
-		}
-		on_lost_aggression_war_discontent_loss = yes
-
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
 	}
-	
+
 	on_primary_attacker_death = inherit
 	on_primary_defender_death = inherit
-	
+
 	transfer_behavior = transfer
-	
+
 	attacker_allies_inherit = yes
 	defender_allies_inherit = yes
-	
+
 	war_name = "NOMAD_DEJURE_CB_WAR_NAME"
 	war_name_base = "NOMAD_DEJURE_CB_WAR_NAME_BASE"
 	cb_name = NOMAD_DEJURE_CB_NAME
 	cb_name_no_target = NOMAD_DEJURE_CB_NAME_GENERIC
 	interface_priority = 99 # Below the "take all" one
-	
+
 	attacker_wargoal_percentage = 0.8
-	
+
 	max_defender_score_from_battles = 100
 	max_attacker_score_from_battles = 100
-	
+
 	max_defender_score_from_occupation = 150
 	max_attacker_score_from_occupation = 150
 
 	defender_ticking_warscore = 0.05
-	
+
 	max_ai_diplo_distance_to_title = 500
 
 	ai_score_mult = {
@@ -3934,17 +3660,10 @@ de_jure_cb_nomadic = {
 			}
 			multiply = 0.33
 		}
-		if = {
-			limit = {
-				scope:defender = {
-					any_owned_story = {
-						story_type = frankokratia_story
-						NOT = { has_variable = franko_war_complete }
-					}
-				}
-			}
-			multiply = 0
-		}
+
+		add = common_cb_ai_score_mult_additive
+		multiply = aggressive_cb_ai_score_mult
+		multiply = common_cb_ai_score_mult
 	}
 }
 
@@ -3955,7 +3674,7 @@ sovereignty_cb = {
 	icon = retaliation_cb
 	group = subjugation
 	should_check_for_interface_availability = no
-	
+
 	allowed_for_character = {
 		scope:attacker = {
 			is_landed = yes
@@ -3963,7 +3682,7 @@ sovereignty_cb = {
 				limit = {
 					is_ai = yes
 				}
-				highest_held_title_tier >= tier_kingdom	
+				highest_held_title_tier >= tier_kingdom
 			}
 			government_has_flag = government_is_nomadic
 		}
@@ -3981,7 +3700,7 @@ sovereignty_cb = {
 	}
 	target_titles = none
 	ignore_effect = change_title_holder
-	
+
 	valid_to_start = {
 		scope:defender = {
 			any_tributary = {
@@ -4025,7 +3744,7 @@ sovereignty_cb = {
 
 	on_declaration = {
 		on_declared_war = yes
-	}	
+	}
 
 	on_victory_desc = {
 		first_valid = {
@@ -4036,12 +3755,9 @@ sovereignty_cb = {
 			desc = sovereignty_cb_victory_desc
 		}
 	}
-	
+
 	on_victory = {
-		scope:attacker = { show_pow_release_message_effect = yes }
-		
-		# Legitimacy
-		add_legitimacy_attacker_victory_effect = yes
+		on_victory_effect = yes
 
 		#EP2 accolade glory gain for winning against higher ranked enemy
 		scope:attacker = { accolade_attacker_war_end_glory_gain_med_effect = yes }
@@ -4091,15 +3807,6 @@ sovereignty_cb = {
 			WINNER_ALLY_FAME_SCALE = 20
 			LOSER_ALLY_FAME_SCALE = 20
 		}
-		
-		# truce
-		add_truce_attacker_victory_effect = yes
-
-		# FP1: note the victory for future memorialisation via stele (if applicable).
-		scope:attacker = { fp1_remember_recent_conquest_victory_effect = yes }
-
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
 	}
 
 	on_white_peace_desc = {
@@ -4111,9 +3818,9 @@ sovereignty_cb = {
 			desc = sovereignty_cb_white_peace_desc
 		}
 	}
-	
+
 	on_white_peace = {
-		scope:attacker = { show_pow_release_message_effect = yes }
+		on_white_peace_effect = yes
 
 		#EP2 accolade glory gain for doing ok against higher ranked enemy
 		scope:defender = { accolade_defender_war_end_glory_gain_low_effect = yes }
@@ -4139,13 +3846,6 @@ sovereignty_cb = {
 			WINNER_ALLY_FAME_SCALE = 100
 			LOSER_ALLY_FAME_SCALE = 100
 		}
-		# Defender neither gains nor loses any prestige.
-		
-		# Truce
-		add_truce_white_peace_effect = yes
-
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
 	}
 
 	on_defeat_desc = {
@@ -4161,15 +3861,11 @@ sovereignty_cb = {
 			desc = sovereignty_cb_defeat_desc
 		}
 	}
-	
-	on_defeat = {
-		scope:attacker = { show_pow_release_message_effect = yes }
-		
-		# Legitimacy
-		add_legitimacy_attacker_defeat_effect = yes
 
-		scope:defender = { 
-			mandala_peacemaker_perk_serenity_effect = yes
+	on_defeat = {
+		on_defeat_aggressive_war_effect = yes
+
+		scope:defender = {
 			#EP2 accolade glory gain for winning against higher ranked enemy
 			accolade_defender_war_end_glory_gain_high_effect = yes
 		}
@@ -4197,40 +3893,29 @@ sovereignty_cb = {
 			WINNER_ALLY_FAME_SCALE = 100
 			LOSER_ALLY_FAME_SCALE = 100
 		}
-	
-		# Truce
-		add_truce_attacker_defeat_effect = yes
-		
-		scope:attacker = {
-			save_temporary_scope_as = loser
-		}
-		on_lost_aggression_war_discontent_loss = yes
-
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
 	}
-	
+
 	on_primary_attacker_death = inherit
 	on_primary_defender_death = inherit
-	
+
 	transfer_behavior = transfer
-	
+
 	attacker_allies_inherit = yes
 	defender_allies_inherit = yes
-	
+
 	war_name = "SOVEREIGNTY_WAR_CB_NAME"
 	war_name_base = "SOVEREIGNTY_WAR_WAR_NAME_BASE"
 	#cb_name = NOMAD_DEJURE_CB_NAME
 	#cb_name_no_target = NOMAD_DEJURE_CB_NAME_GENERIC
 	interface_priority = 99 # Below the "take all" one
-	
+
 	attacker_wargoal_percentage = 0.8
-	
+
 	max_defender_score_from_occupation = 150
 	max_attacker_score_from_occupation = 150
 
 	defender_ticking_warscore = 0.05
-	
+
 	max_ai_diplo_distance_to_title = 500
 
 	ai_score = {
@@ -4264,7 +3949,8 @@ sovereignty_cb = {
 
 	ai_score_mult = {
 		value = 1
-		multiply = frankokratia_leader_protection_value #Set back to 0. Declaring war on the frankokratia leader can really ruin the whole thing
+		add = common_cb_ai_score_mult_additive
+		multiply = common_cb_ai_score_mult
 	}
 }
 
@@ -4317,23 +4003,14 @@ mpo_great_war_of_defiance_cb = {
 
 	should_invalidate = {
 		scope:defender = {
-			OR = {
-				#Is vassal for some reason
-				is_independent_ruler = no
-				#Is landless nobody for some reason
-				NOR = {
-					is_landed = yes
-					is_landless_ruler = yes
-				}
-			}
-			
+			is_independent_ruler = no
 		}
 	}
 
 	on_invalidated_desc = {
 		desc = msg_great_war_of_defiance_war_invalidated_message
 	}
-	
+
 	on_invalidated = {
 		scope:attacker = {
 			random_character_war = {
@@ -4357,7 +4034,6 @@ mpo_great_war_of_defiance_cb = {
 		}
 		mpo_gok_war_of_defiance_cleanup_effect = yes
 		remove_global_variable = mpo_gok_war_ongoing
-
 	}
 
 	on_victory_desc = {
@@ -4375,6 +4051,8 @@ mpo_great_war_of_defiance_cb = {
 	}
 
 	on_victory = {
+		on_victory_effect = yes
+
 		scope:attacker = {
 			random_character_war = {
 				limit = {
@@ -4390,10 +4068,6 @@ mpo_great_war_of_defiance_cb = {
 			}
 		}
 		mpo_gok_war_of_defiance_cleanup_effect = yes
-
-		# Legitimacy
-		add_legitimacy_attacker_victory_effect = yes
-
 
 		scope:defender = {
 			#Vassals all become independent...
@@ -4420,7 +4094,7 @@ mpo_great_war_of_defiance_cb = {
 			add_legitimacy = monumental_legitimacy_loss
 			if = {
 				limit = {
-					government_has_flag = government_is_nomadic 
+					government_has_flag = government_is_nomadic
 					exists = domicile
 				}
 				domicile = {
@@ -4480,7 +4154,7 @@ mpo_great_war_of_defiance_cb = {
 					target = scope:defender
 				}
 			}
-			rightfully_imprison_character_less_verbose_effect = { 
+			rightfully_imprison_character_less_verbose_effect = {
 				TARGET = scope:defender
 				IMPRISONER = scope:attacker
 			}
@@ -4498,8 +4172,6 @@ mpo_great_war_of_defiance_cb = {
 			add_prestige_level = -1
 		}
 
-		scope:attacker = { show_pow_release_message_effect = yes }
-
 		#Memories
 		#Memory for Gurkhan
 		scope:defender = {
@@ -4514,9 +4186,7 @@ mpo_great_war_of_defiance_cb = {
 		every_in_list = {
 			list = anti_gok_defenders
 			limit = {
-				NOT = {
-					this = scope:defender
-				}
+				this != scope:defender
 			}
 			create_character_memory = {
 				type = gok_defeated_defiance_war_defenders
@@ -4535,7 +4205,6 @@ mpo_great_war_of_defiance_cb = {
 				}
 			}
 		}
-		
 
 		# Allies on both sides get full prestige value for helping in the war, based on their war participation.
 		modify_allies_of_participants_fame_values = {
@@ -4546,12 +4215,6 @@ mpo_great_war_of_defiance_cb = {
 			LOSER_ALLY_FAME_SCALE = 1
 		}
 		remove_global_variable = mpo_gok_war_ongoing
-
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
-
-		# Truce
-		add_truce_attacker_victory_effect = yes
 
 		#Notification event that Gurkhan is defeated
 		every_player = {
@@ -4584,10 +4247,12 @@ mpo_great_war_of_defiance_cb = {
 			}
 			desc = mpo_war_of_defiance_gok_wins_other
 		}
-		
+
 	}
 
 	on_defeat = {
+		save_scope_as = special_truce
+		on_defeat_effect = yes
 		scope:defender = {
 			random_character_war = {
 				limit = {
@@ -4601,7 +4266,7 @@ mpo_great_war_of_defiance_cb = {
 				}
 			}
 		}
-		
+
 		scope:defender = {
 			custom_tooltip = will_become_greatest_of_khans_tt
 			primary_title = {
@@ -4636,7 +4301,7 @@ mpo_great_war_of_defiance_cb = {
 					}
 					resolve_title_and_vassal_change = scope:change
 				}
-				#They're the same rank... which is annoying 
+				#They're the same rank... which is annoying
 				else_if = {
 					limit = {
 						highest_held_title_tier = scope:defender.highest_held_title_tier
@@ -4686,10 +4351,10 @@ mpo_great_war_of_defiance_cb = {
 					resolve_title_and_vassal_change = scope:change
 				}
 			}
-			
+
 			add_legitimacy = monumental_legitimacy_gain
 			add_prestige = monumental_prestige_gain
-			
+
 			custom_tooltip = great_war_of_defiance_attackers_gold_tt
 			hidden_effect = {
 				every_in_list = {
@@ -4709,8 +4374,6 @@ mpo_great_war_of_defiance_cb = {
 				days = 1
 			}
 		}
-		# Truce
-		add_truce_attacker_defeat_effect = yes
 
 		#Now uh... remove truces
 		scope:defender = {
@@ -4770,9 +4433,7 @@ mpo_great_war_of_defiance_cb = {
 		every_in_list = {
 			list = anti_gok_defenders
 			limit = {
-				NOT = {
-					this = scope:defender
-				}
+				this != scope:defender
 			}
 			create_character_memory = {
 				type = gok_won_defiance_war_defenders
@@ -4801,9 +4462,6 @@ mpo_great_war_of_defiance_cb = {
 			LOSER_ALLY_FAME_SCALE = 1
 		}
 
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
-
 		remove_global_variable = mpo_gok_war_ongoing
 	}
 
@@ -4826,7 +4484,7 @@ mpo_great_war_of_defiance_cb = {
 	should_show_war_goal_subview = yes
 
 	attacker_wargoal_percentage = 0.5
-	
+
 	max_defender_score_from_occupation = 75
 	max_attacker_score_from_occupation = 150
 
@@ -4861,12 +4519,7 @@ mpo_gok_onslaught_cb = {
 	}
 
 	allowed_against_character = {
-		scope:attacker = {
-			ALL_FALSE = {
-				top_liege = scope:defender.top_liege
-				liege = scope:defender
-			}
-		}
+		scope:attacker.top_liege != scope:defender.top_liege
 	}
 
 	should_invalidate = {
@@ -4879,7 +4532,7 @@ mpo_gok_onslaught_cb = {
 	}
 
 	on_invalidated_desc = msg_subjugation_war_invalidated_message
-	
+
 	on_invalidated = {
 	}
 
@@ -4917,7 +4570,10 @@ mpo_gok_onslaught_cb = {
 			# Genghis Khan gets it for free
 			if = {
 				limit = { scope:attacker = { has_character_flag = is_temujin } }
-				multiply = 0
+				multiply = {
+					value = 0
+					desc = CB_GENGHIS_KHAN_COST
+				}
 			}
 			if = {
 				limit = {
@@ -4927,13 +4583,13 @@ mpo_gok_onslaught_cb = {
 			}
 		}
 	}
-	
+
 	on_declaration = {
 		on_declared_war = yes
-	}	
+	}
 
 	on_victory_desc = {
-		desc = {			
+		desc = {
 			first_valid = {
 				triggered_desc = {
 					trigger = {
@@ -4996,14 +4652,15 @@ mpo_gok_onslaught_cb = {
 			}
 		}
 	}
-	
+
 	on_victory = {
+		on_victory_aggressive_war_effect = yes
+
 		#Catalyst if used against China
 		if = {
 			limit = {
 				exists = situation:dynastic_cycle
 				scope:defender = {
-					
 					any_character_situation = {
 						this = situation:dynastic_cycle
 					}
@@ -5216,7 +4873,7 @@ mpo_gok_onslaught_cb = {
 					}
 				}
 			}
-		
+
 			scope:attacker = {
 				if = {
 					limit = {
@@ -5228,7 +4885,7 @@ mpo_gok_onslaught_cb = {
 							target = scope:defender
 						}
 					}
-					rightfully_imprison_character_less_verbose_effect = { 
+					rightfully_imprison_character_less_verbose_effect = {
 						TARGET = scope:defender
 						IMPRISONER = scope:attacker
 					}
@@ -5250,7 +4907,6 @@ mpo_gok_onslaught_cb = {
 						target = scope:attacker
 						gold = major_gold_value
 					}
-					
 				}
 				gok_realm_devastation_effect = yes
 			}
@@ -5295,11 +4951,7 @@ mpo_gok_onslaught_cb = {
 					gok_spawn_subjugated_quality_army_effect = { CHARACTER = scope:defender }
 				}
 			}
-			show_pow_release_message_effect = yes
 		}
-		
-		# Legitimacy
-		add_legitimacy_attacker_victory_effect = yes
 
 		#EP2 accolade glory gain for winning against higher ranked enemy
 		if = {
@@ -5321,7 +4973,7 @@ mpo_gok_onslaught_cb = {
 		else = {
 			scope:attacker = { accolade_attacker_war_end_glory_gain_low_effect = yes }
 		}
-		
+
 		#Transfer vassals
 		hidden_effect = {
 			scope:defender = {
@@ -5505,7 +5157,7 @@ mpo_gok_onslaught_cb = {
 			WINNER_ALLY_FAME_SCALE = 1
 			LOSER_ALLY_FAME_SCALE = 3
 		}
-		
+
 		# Prestige level progress for the attacker
 		scope:attacker = {
 			add_prestige_experience = {
@@ -5520,16 +5172,10 @@ mpo_gok_onslaught_cb = {
 				multiply = -1.0
 			}
 		}
-
-		# FP1: note the victory for future memorialisation via stele (if applicable).
-		scope:attacker = { fp1_remember_recent_conquest_victory_effect = yes }
-
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
 	}
 
 	on_white_peace_desc = {
-		desc = {			
+		desc = {
 			first_valid = {
 				triggered_desc = {
 					trigger = { scope:defender = { is_local_player = yes } }
@@ -5539,8 +5185,9 @@ mpo_gok_onslaught_cb = {
 			}
 		}
 	}
-	
+
 	on_white_peace = {
+		on_white_peace_effect = yes
 
 		#Attacker gains all occupied counties
 		scope:defender = {
@@ -5565,8 +5212,6 @@ mpo_gok_onslaught_cb = {
 			resolve_title_and_vassal_change = scope:change
 		}
 
-		scope:attacker = { show_pow_release_message_effect = yes }
-
 		#EP2 accolade glory gain for doing ok against higher ranked enemy
 		scope:defender = { accolade_defender_war_end_glory_gain_med_effect = yes }
 
@@ -5579,25 +5224,16 @@ mpo_gok_onslaught_cb = {
 			LOSER_ALLY_FAME_SCALE = 5
 		}
 
-		add_truce_white_peace_effect = yes
-
 		scope:attacker = {
 			add_prestige = major_prestige_loss
 			add_legitimacy = minor_legitimacy_loss
-			stress_and_fulfillment_impact = {
-				ambitious = minor_stress_impact_gain
-				arrogant = minor_stress_impact_gain
-			}
 		}
-
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
 
 		gok_retribution_cleanup_effect = yes
 	}
 
 	on_defeat_desc = {
-		desc = {			
+		desc = {
 			first_valid = {
 				triggered_desc = {
 					trigger = { scope:attacker = { is_local_player = yes } }
@@ -5611,12 +5247,20 @@ mpo_gok_onslaught_cb = {
 			}
 		}
 	}
-	
-	on_defeat = {
-		scope:attacker = { show_pow_release_message_effect = yes }
 
-		scope:defender = { 
-			mandala_peacemaker_perk_serenity_effect = yes
+	on_defeat = {
+		if = {
+			limit = {
+				NOR = {
+					scope:attacker = { is_ai = no }
+					scope:defender = { is_ai = no }
+				}
+			}
+			save_scope_as = no_penalty_for_defeat
+		}
+		on_defeat_aggressive_war_effect = yes
+
+		scope:defender = {
 			#EP2 accolade glory gain for winning against higher ranked enemy
 			accolade_defender_war_end_glory_gain_high_effect = yes
 		}
@@ -5629,10 +5273,7 @@ mpo_gok_onslaught_cb = {
 			WINNER_ALLY_FAME_SCALE = 1
 			LOSER_ALLY_FAME_SCALE = 10
 		}
-	
-		# Truce
-		add_truce_attacker_defeat_effect = yes
-			
+
 		scope:defender = {
 			if = {
 				limit = {
@@ -5641,9 +5282,6 @@ mpo_gok_onslaught_cb = {
 						scope:attacker = { is_ai = no } # On the other hand, players shouldn't get away with it
 					}
 				}
-				
-				# Legitimacy
-				add_legitimacy_attacker_defeat_effect = yes
 
 				scope:attacker = {
 					add_prestige = massive_prestige_loss
@@ -5653,7 +5291,7 @@ mpo_gok_onslaught_cb = {
 						arrogant = medium_stress_impact_gain
 					}
 				}
-				
+
 				add_prestige = mongol_invasion_cb_prestige_gain
 				#They defeated Genghis Khan... maybe they're a worthy foe?
 				if = {
@@ -5692,7 +5330,7 @@ mpo_gok_onslaught_cb = {
 						GOLD_VALUE = 5
 					}
 				}
-				
+
 				scope:attacker = {
 					every_vassal = {
 						custom = custom.every_vassal
@@ -5703,35 +5341,27 @@ mpo_gok_onslaught_cb = {
 						}
 					}
 				}
-				
-				scope:attacker = {
-					save_temporary_scope_as = loser
-				}
-				on_lost_aggression_war_discontent_loss = yes
 			}
 		}
 
-		# EP3: note gold gained from military assistance/join war contracts and their war contribution threshold
-		laamp_as_mercenary_payout_tooltip_effect = yes
-
 		gok_retribution_cleanup_effect = yes
 	}
-	
+
 	transfer_behavior = transfer
-	
+
 	on_primary_attacker_death = inherit
 	on_primary_defender_death = inherit
-	
+
 	attacker_allies_inherit = yes
 	defender_allies_inherit = yes
-	
+
 	war_name = "MPO_GOK_ONSLAUGHT_NAME"
 	my_war_name = "MPO_GOK_ONSLAUGHT_NAME_MY"
 	war_name_base = "MPO_GOK_ONSLAUGHT_NAME_BASE"
 	cb_name = "MPO_GOK_ONSLAUGHT_NAME"
-	
+
 	interface_priority = 200
-	
+
 	ticking_war_score_targets_entire_realm = yes
 	attacker_wargoal_percentage = 0.8
 	attacker_ticking_warscore = 0
@@ -5739,22 +5369,13 @@ mpo_gok_onslaught_cb = {
 	max_attacker_score_from_occupation = 150
 	attacker_score_from_occupation_scale = 50
 	defender_score_from_occupation_scale = 50
-	
+
 	max_ai_diplo_distance_to_title = 500
 
 	ai_score_mult = {
 		value = 10
-		#Declaring war on the frankokratia leader can really ruin the whole thing
-		if = {
-			limit = {
-				scope:defender = {
-					any_owned_story = {
-						story_type = frankokratia_story
-						NOT = { has_variable = franko_war_complete }
-					}
-				}
-			}
-			multiply = 0
-		}
+		add = common_cb_ai_score_mult_additive
+		multiply = aggressive_cb_ai_score_mult
+		multiply = frankokratia_leader_protection_value
 	}
 }

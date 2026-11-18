@@ -89,7 +89,7 @@ ep3_emperor_yearly.2000 = {
 			}
 			triggered_desc = {
 				trigger = {
-					scope:county = title:c_roma
+					scope:county = title:c_roma_urbs # Roma + Vaticano
 				}
 				desc = ep3_emperor_yearly.2000.desc_rome
 			}
@@ -215,10 +215,15 @@ ep3_emperor_yearly.2000 = {
 			}
 			NOT = { exists = global_var:ep3_reconquered_ravenna }
 		}
-		trigger_else_if = {
+		trigger_else_if = { # Must have both Roma + Vaticano
 			limit = {
-				scope:county = title:c_roma
+				OR = {
+					scope:county = title:c_roma # Vaticano
+					scope:county = title:c_roma_urbs # Roma
+				}
 			}
+			title:c_roma.holder.top_liege = root.top_liege # Vaticano
+			title:c_roma_urbs.holder.top_liege = root.top_liege # Roma
 			NOT = { exists = global_var:ep3_reconquered_roma }
 		}
 		trigger_else_if = {
@@ -269,6 +274,10 @@ ep3_emperor_yearly.2000 = {
 	}
 
 	immediate = {
+		if = { # Must have both Roma + Vaticano, use Roma for loc
+			limit = { scope:county = title:c_roma } # Vaticano
+			title:c_roma_urbs = { save_scope_as = county } # Roma
+		}
 		switch = {
 			trigger = scope:county
 			title:c_antiocheia = {
@@ -292,7 +301,7 @@ ep3_emperor_yearly.2000 = {
 			title:c_siracusa = {
 				set_global_variable = ep3_reconquered_siracusa
 			}
-			title:c_roma = {
+			title:c_roma_urbs = { # Roma + Vaticano
 				set_global_variable = ep3_reconquered_roma
 			}
 			title:c_ravenna = {
@@ -330,13 +339,25 @@ ep3_emperor_yearly.2000 = {
 	#Option A
 	option = {
 		name = ep3_emperor_yearly.2000.a
-		if = {
+		if = { # Roma + Vaticano
+			limit = { scope:county = title:c_roma_urbs } # Roma
+			title:c_roma = { # Vaticano
+				add_county_modifier = {
+					modifier = ep3_restored_pentarchy_seat_county_modifier
+					years = 10
+				}
+			}
+			add_character_modifier = {
+				modifier = ep3_restored_pentarchy_seat_modifier
+				years = 10
+			}
+		}
+		else_if = {
 			limit = {
 				OR = {
 					scope:county = title:c_antiocheia
 					scope:county = title:c_jerusalem
 					scope:county = title:c_alexandria
-					scope:county = title:c_roma
 				}
 			}
 			scope:county = {
@@ -2097,7 +2118,7 @@ ep3_emperor_yearly.2080 = {
 		#Ongoing building construction in the capital
 		capital_county = {
 			any_county_province = {
-				has_ongoing_construction = yes
+				has_ongoing_holding_construction = yes
 			}
 		}
 	}
@@ -3794,11 +3815,10 @@ ep3_emperor_yearly.2150 = {
 						change_influence = major_influence_gain
 					}
 					else = {
-						add_character_flag = {
-							flag = ep3_2150_found_truth
+						add_character_modifier = {
+							modifier = ep3_emperor_yearly_2150_found_truth_modifier
 							years = 25
 						}
-						custom_tooltip = ep3_emperor_yearly.2150.b.tt
 						change_influence = minor_influence_gain
 					}
 					random_list = {
@@ -3836,11 +3856,10 @@ ep3_emperor_yearly.2150 = {
 							change_influence = major_influence_gain
 						}
 						else = {
-							add_character_flag = {
-								flag = ep3_2150_found_truth
+							add_character_modifier = {
+								modifier = ep3_emperor_yearly_2150_found_truth_modifier
 								years = 25
 							}
-							custom_tooltip = ep3_emperor_yearly.2150.b.tt
 							change_influence = minor_influence_gain
 						}
 						if = {
@@ -4191,11 +4210,10 @@ ep3_emperor_yearly.2160 = {
 					left_icon = scope:nomad_neighbor
 					type = event_generic_neutral
 					add_pressed_claim = scope:nomad_county
-					add_character_flag = {
-						flag = ep3_2160_success
+					add_character_modifier = {
+						modifier = ep3_emperor_yearly_2160_frontier_success_modifier
 						years = 25
 					}
-					custom_tooltip = ep3_emperor_yearly.2160.b.tt
 				}
 			}
 			50 = {
@@ -4210,11 +4228,10 @@ ep3_emperor_yearly.2160 = {
 					left_icon = scope:nomad_neighbor
 					type = event_generic_neutral
 					scope:nomad_neighbor = { add_pressed_claim = scope:our_county }
-					add_character_flag = {
-						flag = ep3_2160_failure
+					add_character_modifier = {
+						modifier = ep3_emperor_yearly_2160_frontier_failure_modifier
 						years = 25
 					}
-					custom_tooltip = ep3_emperor_yearly.2160.b.tt2
 				}
 			}
 		}
@@ -4359,11 +4376,10 @@ ep3_emperor_yearly.2170 = {
 				years = 50
 			}
 		}
-		add_character_flag = {
-			flag = ep3_2170_success
+		add_character_modifier = {
+			modifier = ep3_emperor_yearly_2170_tunnels_closed_modifier
 			years = 25
 		}
-		custom_tooltip = ep3_emperor_yearly.2160.b.tt
 		stress_and_fulfillment_impact = {
 			generous = medium_stress_impact_gain
 			deceitful = medium_stress_impact_gain
@@ -4804,9 +4820,8 @@ ep3_emperor_yearly.2190 = {
 			}
 		}
 		else = {
-			custom_tooltip = ep3_emperor_yearly.2150.b.tt
-			add_character_flag = {
-				flag = ep3_2190_honest
+			add_character_modifier = {
+				modifier = ep3_emperor_yearly_2190_honest_modifier
 				years = 25
 			}
 			liege = {
@@ -5006,7 +5021,7 @@ ep3_emperor_yearly.2200 = {
 			limit = {
 				tgp_realm_has_ceremonial_liege_trigger = yes
 			}
-			top_liege.primary_title.var:administrative_ui_special_title.holder = {
+			ceremonial_liege = {
 				save_scope_as = ceremonial_monarch
 			}
 		}
@@ -5016,11 +5031,10 @@ ep3_emperor_yearly.2200 = {
 	option = {
 		name = ep3_emperor_yearly.2200.a
 		add_gold = major_gold_value
-		add_character_flag = {
-			flag = ep3_embezzling_governor
+		add_character_modifier = {
+			modifier = ep3_emperor_yearly_2200_embezzling_modifier
 			years = 10
 		}
-		custom_tooltip = ep3_emperor_yearly.2160.b.tt2
 		increase_governance_effect = { VALUE = -4 }
 		if = {
 			limit = {
@@ -5495,11 +5509,7 @@ scripted_trigger ep3_2220_valid_county_trigger = {
 			has_holding_type = church_holding
 			ep3_2220_famous_monastery_trigger = yes
 		}
-		OR = {
-			has_building_or_higher = hill_farms_01
-			has_building_or_higher = pastures_01
-			has_building_or_higher = farm_estates_01
-		}
+		province_has_district = villages_district
 	}
 }
 
@@ -5570,10 +5580,7 @@ ep3_emperor_yearly.2220 = {
 				}
 				alternative_limit = {
 					has_holding_type = church_holding
-					OR = {
-						has_building_or_higher = scriptorium_01
-						has_building_or_higher = monastic_schools_01
-					}
+					has_building_or_higher = scriptorium_1
 				}
 				alternative_limit = {
 					has_holding_type = church_holding
@@ -5586,11 +5593,7 @@ ep3_emperor_yearly.2220 = {
 						has_holding_type = church_holding
 						ep3_2220_famous_monastery_trigger = yes
 					}
-					OR = {
-						has_building_or_higher = hill_farms_01
-						has_building_or_higher = pastures_01
-						has_building_or_higher = farm_estates_01
-					}
+					province_has_district = villages_district
 				}
 				save_scope_as = shepherd_province
 			}
@@ -5681,14 +5684,14 @@ ep3_emperor_yearly.2230 = {
 			valid_for_byz_governor_content_trigger = yes
 			valid_for_byz_emperor_content_trigger = yes
 		}
-		capital_county = { county_control <= 75 }
+		capital_county = { county_control <= county_control_relative_75 }
 	}
 
 	weight_multiplier = {
 		base = 1
 		modifier = {
 			capital_county = {
-				county_control <= 50
+				county_control < county_control_baseline
 			}
 			add = 1
 		}
@@ -5943,7 +5946,7 @@ ep3_emperor_yearly.2240 = {
 		desc = ep3_emperor_yearly.2240.desc_outro
 	}
 	theme = learning
-	override_background = { reference = ep3_medi_market }
+	override_background = { reference = market }
 	left_portrait = {
 		character = root
 		animation = rage

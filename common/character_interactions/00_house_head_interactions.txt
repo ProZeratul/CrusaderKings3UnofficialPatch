@@ -616,7 +616,7 @@ legitimize_bastard_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = miniscule_unity_loss
@@ -651,7 +651,7 @@ legitimize_bastard_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = miniscule_unity_gain
@@ -767,7 +767,7 @@ accuse_of_decandence_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = major_unity_loss
@@ -834,10 +834,7 @@ accuse_of_decandence_interaction = {
 		modifier = {
 			add = 100
 			scope:recipient = {
-				OR = {
-					has_relation_rival = scope:actor
-					has_relation_nemesis = scope:actor
-				}
+				has_relation_rival = scope:actor
 			}
 		}
 		
@@ -977,10 +974,7 @@ accuse_of_decandence_interaction = {
 		modifier = {
 			factor = 0
 			scope:recipient = {
-				OR = {
-					has_relation_friend = scope:actor
-					has_relation_best_friend = scope:actor
-				}
+				has_relation_friend = scope:actor
 			}
 		}
 		
@@ -1068,7 +1062,7 @@ extoll_virtuousness_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = major_unity_gain
@@ -1140,7 +1134,6 @@ extoll_virtuousness_interaction = {
 			scope:recipient = {
 				OR = {
 					has_relation_friend = scope:actor
-					has_relation_best_friend = scope:actor
 					is_primary_heir_of = scope:actor
 				}
 			}
@@ -1206,10 +1199,7 @@ extoll_virtuousness_interaction = {
 		modifier = {
 			factor = 0
 			scope:recipient = {
-				OR = {
-					has_relation_rival = scope:actor
-					has_relation_nemesis = scope:actor
-				}
+				has_relation_rival = scope:actor
 			}
 		}
 	}

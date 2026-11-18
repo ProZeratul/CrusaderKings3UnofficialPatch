@@ -2,7 +2,7 @@
 #Literal Activity Cost
 imperial_examination_base_cost = {
 	value = 0 
-	add = standard_activity_base_cost
+	add = standard_activity_base_gold_cost
 }
 
 imperial_examination_actual_cost = {
@@ -79,12 +79,6 @@ imperial_examination_predicted_cost = {
 				add = minor_gold_value_static_max #Metropolitan Exams
 				min = imperial_examination_breadth_restricted_cost
 			}
-			add = {
-				add = medium_gold_value_static_max #Provincial Exams
-				min = imperial_examination_breadth_open_cost
-			}
-			# Divide by total number of option breadth to get an average option cost
-			divide = 3
 			# Scale Option costs by era
 			multiply = activity_cost_scale_by_era
 		}

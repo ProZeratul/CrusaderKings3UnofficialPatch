@@ -1336,7 +1336,7 @@ ep3_story_cycle_harrying.2000 = {
 	}
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 		is_available = yes
 		location = root.capital_province
 		exists = root.cp:councillor_marshal
@@ -1503,7 +1503,7 @@ ep3_story_cycle_harrying.2001 = {
 	sender = scope:marshal
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 	}
 
 	immediate = {
@@ -1568,7 +1568,7 @@ ep3_story_cycle_harrying.2005 = {
 	}
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 		is_available = yes
 		exists = root.cp:councillor_spymaster
 		title:k_england.holder = {
@@ -1762,7 +1762,7 @@ ep3_story_cycle_harrying.2010 = {
 	}
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 		is_available = yes
 		title:k_england.holder = {
 			culture = culture:norman
@@ -1949,6 +1949,7 @@ ep3_story_cycle_harrying.2010 = {
 						modifier = ep3_counties_restless_modifier
 						years = 15
 					}
+					change_county_control = -5
 				}
 			}
 		}
@@ -2001,7 +2002,7 @@ ep3_story_cycle_harrying.2015 = {
 	}
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 		is_available = yes
 		primary_title.tier >= tier_duchy
 		unop_has_special_contract_obligation_trigger = yes #Unop: Option c needs the special_contract obligation, which the new ecclesiastical government (e.g. Archbishop of York) does not have
@@ -2211,17 +2212,26 @@ ep3_story_cycle_harrying.2015 = {
 
 	option = { #Gain Marcher Lord status
 		name = ep3_story_cycle_harrying.2015.c
+		trigger = {
+			OR = { # Fails when the contract has no special contract obligation
+				vassal_contract_obligation_level_can_be_increased = special_contract
+				vassal_contract_obligation_level_can_be_decreased = special_contract
+			}
+		}
 
 		vassal_contract_set_obligation_level = {
 			type = special_contract
 			level = 2
 		}
 
-		scope:other_vassal ?= { #Unop: Guard, the other vassal can be dead or have no special_contract obligation
+		scope:other_vassal = {
 			if = {
 				limit = {
 					is_alive = yes
-					unop_has_special_contract_obligation_trigger = yes
+					OR = {
+						vassal_contract_obligation_level_can_be_increased = special_contract
+						vassal_contract_obligation_level_can_be_decreased = special_contract
+					}
 				}
 				vassal_contract_set_obligation_level = {
 					type = special_contract
@@ -2444,7 +2454,7 @@ ep3_story_cycle_harrying.3005 = {
 	}
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 		is_available = yes
 	}
 
@@ -2731,7 +2741,7 @@ ep3_story_cycle_harrying.3010 = {
 	}
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 		is_available = yes
 		is_healthy = yes
 		global_var:harrying_of_the_north.story_owner ?= {
@@ -2857,7 +2867,7 @@ ep3_story_cycle_harrying.3011 = {
 	}
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 		is_available = yes
 		is_healthy = yes
 	}
@@ -2968,7 +2978,7 @@ ep3_story_cycle_harrying.3015 = {
 	}
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 		is_available = yes
 		is_healthy = yes
 		title:k_denmark.holder = {
@@ -3212,7 +3222,7 @@ ep3_story_cycle_harrying.3020 = {
 	}
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 		is_available = yes
 		is_healthy = yes
 		title:k_england.holder = {
@@ -3336,7 +3346,7 @@ ep3_story_cycle_harrying.3021 = {
 	}
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 		is_available_allow_travelling = yes #Unop: Since this is a travel arrival event, we need to allow travel
 		is_healthy = yes
 		title:k_england.holder = {
@@ -3666,7 +3676,7 @@ ep3_story_cycle_harrying.3022 = {
 	}
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 	}
 
 	immediate = {
@@ -3836,7 +3846,7 @@ ep3_story_cycle_harrying.3050 = {
 	cooldown = { years = 100 }
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 		is_ai = no #Don't even trigger this for AI
 		is_imprisoned = no
 		is_incapable = no
@@ -3911,7 +3921,7 @@ ep3_story_cycle_harrying.3051 = {
 	}
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 	}
 
 	immediate = {
@@ -4064,7 +4074,7 @@ ep3_story_cycle_harrying.3052 = {
 	cooldown = { years = 10 }
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 	}
 
 	immediate = {
@@ -4216,7 +4226,7 @@ ep3_story_cycle_harrying.3053 = {
 	cooldown = { years = 10 }
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 	}
 
 	immediate = {
@@ -4324,7 +4334,7 @@ ep3_story_cycle_harrying.3054 = {
 	}
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 	}
 
 	immediate = {
@@ -4485,7 +4495,7 @@ ep3_story_cycle_harrying.3055 = {
 	}
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 		is_imprisoned = yes
 		imprisoner = scope:william
 	}
@@ -4556,7 +4566,7 @@ ep3_story_cycle_harrying.3056 = {
 	theme = harrying
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 		is_imprisoned = yes
 		imprisoner = scope:william
 	}
@@ -4604,7 +4614,7 @@ ep3_story_cycle_harrying.3057 = {
 	}
 
 	trigger = {
-		has_ep3_dlc_trigger = yes
+		has_playable_adventurer_dlc_trigger = yes
 		is_imprisoned = yes
 		imprisoner = scope:william
 	}

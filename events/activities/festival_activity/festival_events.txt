@@ -3441,6 +3441,7 @@ festival.102 = {
 			}
 			every_attending_character = {
 				limit = {
+					this != root
 					is_ai = yes
 					OR = {
 						has_trait = drunkard
@@ -4980,7 +4981,7 @@ festival.107 = {
 					is_physically_able_ai_adult = yes
 					age < define:NCharacter|FEMALE_ATTRACTION_CUTOFF_AGE # we just default to the lower of the two
 					trigger_if = {
-						limit = { #Unop Make the intent target check the limit, so that the trigger_else is reached
+						limit = {
 							root.intent_target ?= {
 								is_male = yes
 							}
@@ -5075,7 +5076,7 @@ festival.107 = {
 						is_physically_able_ai_adult = yes
 						age < define:NCharacter|FEMALE_ATTRACTION_CUTOFF_AGE # we just default to the lower of the two
 						trigger_if = {
-							limit = { #Unop Make the intent target check the limit, so that the trigger_else is reached
+							limit = {
 								root.intent_target ?= {
 									is_male = yes
 								}
@@ -5296,6 +5297,7 @@ festival.108 = {
 				}	
 				any_attending_character = {
 					house.house_confederation ?= root.house.house_confederation
+					this != root # Matches the pick in immediate
 					is_ai = yes
 					house.house_head = this
 					NOT = { root.intent_target ?= this }
@@ -5312,6 +5314,7 @@ festival.108 = {
 				}
 				any_attending_character = {
 					house.house_confederation ?= root.house.house_confederation
+					this != root
 					is_ai = yes
 					house.house_head = this
 				}
@@ -6109,10 +6112,9 @@ festival.114 = {
 
 scripted_trigger festival_1000_bloc_member_house_trigger = {
 	NOR = {
-		root ?= this
-		scope:bloc_member_head_1 ?= this
+		root.house ?= this
+		scope:bloc_member_head_1.house ?= this
 	}
-	is_house_head = yes
 }
 
 festival.1000 = {
@@ -6144,8 +6146,24 @@ festival.1000 = {
 		is_house_head = yes
 		# House is in a Bloc
 		exists = house.house_confederation
-		OR = {
-			exists = intent_target
+		trigger_if = {
+			limit = { has_activity_intent = remove_from_bloc_intent }
+			intent_target.house.house_confederation = {
+				any_confederation_member_house = {
+					festival_1000_bloc_member_house_trigger = yes
+					this != root.intent_target.house
+				}
+			}
+		}
+		trigger_else_if = {
+			limit = { has_activity_intent = add_to_bloc_intent }
+			house.house_confederation = {
+				any_confederation_member_house = {
+					festival_1000_bloc_member_house_trigger = yes
+				}
+			}
+		}
+		trigger_else = {
 			scope:activity = {
 				any_attending_character = {
 					count >= 2
@@ -6167,9 +6185,9 @@ festival.1000 = {
 				random_confederation_member_house = {
 					limit = { # Prefer leading house
 						this = scope:bloc.leading_house
-						house_head ?= { festival_1000_bloc_member_house_trigger = yes } #Unop Check the house head, not the house
+						house_head ?= { festival_1000_bloc_member_house_trigger = yes }
 					}
-					alternative_limit = { house_head ?= { festival_1000_bloc_member_house_trigger = yes } } #Unop Check the house head, not the house
+					alternative_limit = { house_head ?= { festival_1000_bloc_member_house_trigger = yes } }
 					house_head = { save_scope_as = bloc_member_head_2 }
 				}
 			}
@@ -6183,9 +6201,9 @@ festival.1000 = {
 					random_confederation_member_house = {
 						limit = { # Prefer leading house
 							this = root.intent_target.house.house_confederation.leading_house
-							house_head ?= { festival_1000_bloc_member_house_trigger = yes } #Unop Check the house head, not the house
+							house_head ?= { festival_1000_bloc_member_house_trigger = yes }
 						}
-						alternative_limit = { house_head ?= { festival_1000_bloc_member_house_trigger = yes } } #Unop Check the house head, not the house
+						alternative_limit = { house_head ?= { festival_1000_bloc_member_house_trigger = yes } }
 						house_head = { save_scope_as = bloc_member_head_2 }
 					}
 				}
@@ -6198,7 +6216,13 @@ festival.1000 = {
 					limit = { NOT = { exists = scope:bloc_member_head_2 } }
 					scope:activity = {
 						random_attending_character = {
-							limit = { festival_1000_bloc_member_house_trigger = yes }
+							limit = {
+								is_house_head = yes
+								NOR = {
+									root ?= this
+									scope:bloc_member_head_1 ?= this
+								}
+							}
 							if = {
 								limit = { exists = scope:bloc_member_head_1 }
 								save_scope_as = bloc_member_head_2

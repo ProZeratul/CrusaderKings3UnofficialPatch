@@ -33,21 +33,17 @@ debate_predicted_cost = {
 		}
 
 		# Options 
-		add = { # Books Option 
+		add = { # Books Option - default (Normal) level
 			value = 0
-			subtract = minor_gold_value_static_max
 			add = {
 				value = medium_gold_value_static_max
-				min = 150
+				min = 50
 			}
 			add = {
-				value = major_gold_value_static_max
-				min = 300
+				value = medium_gold_value_static_max
+				multiply = activity_cost_scale_by_era
+				subtract = medium_gold_value_static_max
 			}
-			# Scale option costs by era
-			multiply = activity_cost_scale_by_era
-			# Divide by the number of option levels to get an average option cost
-			divide = 4
 		}
 	}
 }

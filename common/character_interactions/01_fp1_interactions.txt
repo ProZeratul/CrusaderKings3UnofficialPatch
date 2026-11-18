@@ -45,7 +45,7 @@ designate_gruesome_festivals_sacrifice_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = medium_unity_loss
@@ -85,7 +85,7 @@ remove_designated_gruesome_festivals_sacrifice_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = medium_unity_gain
@@ -322,7 +322,7 @@ challenge_to_trial_by_combat_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:puppet_or_actor
 			TARGET = scope:recipient
 			VALUE = medium_unity_loss
@@ -765,9 +765,8 @@ challenge_to_trial_by_combat_interaction = {
 				}
 			}
 			scope:recipient = {
-				NOR = {
+				NOT = {
 					has_relation_rival = scope:puppet_or_actor
-					has_relation_nemesis = scope:puppet_or_actor
 				}
 			}
 			add = -1000
@@ -776,9 +775,8 @@ challenge_to_trial_by_combat_interaction = {
 		modifier = {
 			scope:recipient = {
 				is_spouse_of = scope:puppet_or_actor
-				NOR = {
+				NOT = {
 					has_relation_rival = scope:puppet_or_actor
-					has_relation_nemesis = scope:puppet_or_actor
 				}
 			}
 			add = -1000

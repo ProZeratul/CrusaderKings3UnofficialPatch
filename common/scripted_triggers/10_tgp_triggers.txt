@@ -101,6 +101,16 @@ administrative_counts_can_be_independent = {
 	}
 }
 
+tgp_retires_to_eastern_estate_trigger = {
+	OR = {
+		government_has_flag = government_is_celestial
+		government_has_flag = government_is_steppe_admin
+		government_has_flag = government_is_meritocratic
+		government_has_flag = government_is_japan_administrative
+		government_has_flag = government_is_japan_feudal
+	}
+}
+
 tgp_examination_should_spend_treasury_trigger = {
 	has_treasury = yes
 	government_allows = replace_gold_cost_by_treasury
@@ -341,6 +351,12 @@ is_military_candidate_trigger = {
 		has_trait_with_flag = military_province
 	}
 }
+can_gain_military_career_merit_trigger = {
+	government_has_flag = government_has_merit
+	is_alive = yes
+	top_liege != this
+	is_military_candidate_trigger = yes
+}
 
 # Trigger if scoped character is able to join the war(s) of the target character
 # $TARGET_GOVERNOR$ - Target governor in need of troops
@@ -406,7 +422,7 @@ is_valid_for_japan_events_trigger = {
 tgp_realm_has_ceremonial_liege_trigger = {
 	custom_tooltip = {
 		text = tgp_realm_has_ceremonial_liege_tt
-		exists = top_liege.primary_title.var:administrative_ui_special_title.holder
+		exists = ceremonial_liege
 	}
 }
 
@@ -414,8 +430,7 @@ tgp_realm_has_ceremonial_liege_trigger = {
 tgp_is_ceremonial_liege_trigger = {
 	custom_tooltip = {
 		text = tgp_is_ceremonial_liege_tt
-		this != top_liege
-		tgp_has_ceremonial_liege_title_trigger = yes
+		is_ceremonial_liege = yes
 	}
 }
 
@@ -468,7 +483,7 @@ tgp_has_ceremonial_liege_title_trigger = {
 		limit = { tgp_realm_has_ceremonial_liege_trigger = yes }
 		custom_tooltip = {
 			text = tgp_has_ceremonial_liege_title_tt
-			has_title = top_liege.primary_title.var:administrative_ui_special_title
+			ceremonial_liege ?= this
 		}
 	}
 	trigger_else = {
@@ -483,7 +498,7 @@ tgp_has_ceremonial_liege_title_trigger = {
 tgp_ceremonial_liege_scope_trigger = {
 	top_liege = {
 		save_temporary_scope_as = ruler_temp
-		primary_title.var:administrative_ui_special_title.holder ?= {
+		ceremonial_liege ?= {
 			top_liege ?= scope:ruler_temp.top_liege
 			this = scope:ruler_temp
 			save_temporary_scope_as = ceremonial_liege_temp
@@ -496,7 +511,7 @@ tgp_ceremonial_liege_scope_trigger = {
 tgp_is_in_ceremonial_house_trigger = {
 	custom_tooltip = {
 		text = tgp_is_in_ceremonial_house_tt
-		house.house_head.top_liege.primary_title.var:administrative_ui_special_title.holder.house ?= house
+		house.house_head.ceremonial_liege.house ?= house
 	}
 }
 
@@ -601,7 +616,7 @@ tgp_mongol_vassal_will_become_admin = {
 		#An admin type
 		has_trait = governor
 		faith.religion = religion:confucianism_religion
-		culture = { culture_is_historically_admin_trigger = yes } #Unop Was called in character scope, but it is a culture trigger
+		culture = { culture_is_historically_admin_trigger = yes } # The helper runs in culture scope
 		#Nomad type
 		government_has_flag = government_is_nomadic
 		has_trait = nomadic_philosophy
@@ -973,7 +988,7 @@ tgp_is_ceremonial_petition_shown_trigger = {
 	tgp_realm_has_ceremonial_liege_trigger = yes
 	tgp_has_ceremonial_liege_title_trigger = no
 	top_liege = { tgp_is_ceremonial_regent_trigger = yes } # Not 'actual' ruler
-	top_liege.primary_title.var:administrative_ui_special_title.holder ?= { has_royal_court = yes }
+	ceremonial_liege ?= { has_royal_court = yes }
 }
 
 tgp_is_ceremonial_petition_valid_trigger = {
@@ -981,7 +996,7 @@ tgp_is_ceremonial_petition_valid_trigger = {
 	has_tgp_dlc_trigger = yes
 	is_at_war = no
 	tgp_realm_has_ceremonial_liege_trigger = yes
-	top_liege.primary_title.var:administrative_ui_special_title.holder ?= {
+	ceremonial_liege ?= {
 		is_available_adult = yes
 		has_royal_court = yes
 		NOT = { is_at_war = yes }
@@ -1037,7 +1052,7 @@ tgp_has_cultural_naming_in_chinese = {
 tgp_has_unique_chinese_naming = {
 	OR = {
 		capital_county.title_province ?= { tgp_is_in_chinese_naming_region = yes }
-		scope:title.title_capital_county.title_province ?= { tgp_is_in_chinese_naming_region = yes } #Unop Was capital_county, which is for characters
+		scope:title.title_capital_county.title_province ?= { tgp_is_in_chinese_naming_region = yes }
 		culture = { tgp_has_cultural_naming_in_chinese = no }
 	}
 }
@@ -1063,7 +1078,7 @@ tgp_chinese_naming_tier_trigger = {
 			}
 		}
 		scope:title ?= {
-			title_capital_county.title_province ?= { #Unop Was capital_county, which is for characters
+			title_capital_county.title_province ?= { 
 				trigger_if = {
 					limit = {
 						geographical_region = tgp_county_chinese_naming_region
@@ -1079,35 +1094,6 @@ tgp_chinese_naming_tier_trigger = {
 				trigger_else = {
 					scope:ruler_temp.highest_held_title_tier >= tier_kingdom
 				}
-			}
-		}
-	}
-}
-
-farm_estates_3_4_trigger = {
-	custom_tooltip = {
-		text = farm_estates_3_4_trigger
-		OR = {
-			AND = {
-				building_requirement_castle_city_church = { LEVEL = 02 }
-				scope:holder.culture = {
-					has_innovation = innovation_manorialism
-				}
-				building_farm_estates_requirement_terrain = yes
-			}
-			AND = {
-				has_building_or_higher = pastures_04
-				culture = {
-					has_cultural_parameter = farm_estates_pastures_unlock
-				}
-			}
-			AND = {
-				building_paddy_fields_requirement_terrain = yes
-				scope:holder.culture = {
-					has_innovation = innovation_champa_rice
-					has_innovation = innovation_manorialism
-				}
-				building_requirement_castle_city_church = { LEVEL = 02 }
 			}
 		}
 	}

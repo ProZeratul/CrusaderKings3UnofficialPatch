@@ -1197,6 +1197,14 @@ set_elder_relation_effect = {
 						opinion = -50
 					}
 					save_scope_as = recipient #for loc in tgp_interaction_event.0030
+					show_as_tooltip = { #The event sets the relation, so this tooltip does not look wrong if they already have a grudge
+						scope:actor = { save_scope_as = relationship_reason_involved_character }
+						set_relation_grudge_effect = {
+							TARGET = scope:new_elder
+							REASON = grudge_replaced_as_elder
+						}
+						clear_saved_scope = relationship_reason_involved_character
+					}
 					trigger_event = tgp_interaction_event.0030
 				}
 			}
@@ -1256,20 +1264,20 @@ set_elder_relation_no_breakup_effect = {
 	}
 }
 
-# This effect improves Development in Celestial Tributaries' capital provinces, for as long as they have the Trade Investiture and as long as it's below the Development level of China's capital province
+# This effect improves Prosperity in Celestial Tributaries' capital provinces, for as long as they have the Trade Investiture and as long as it's below the Prosperity level of China's capital province
 develop_celestial_tributaries = {
 	if = {
 		limit = {
 			subject_contract_has_flag = celestial_investiture_trade
-			capital_county.development_level < overlord.capital_county.development_level
+			capital_county.prosperity_level < overlord.capital_county.prosperity_level
 			subject_standing > 10
 		}
 		save_scope_value_as = {
-			name = tributary_capital_development_growth
+			name = tributary_capital_prosperity_growth
 			value = {
-				add = { # ratio of how close they are in development
-					add = capital_county.development_level
-					divide = overlord.capital_county.development_level
+				add = { # ratio of how close they are in prosperity
+					add = capital_county.prosperity_level
+					divide = overlord.capital_county.prosperity_level
 				}
 				subtract = 1
 				multiply = -1
@@ -1288,17 +1296,17 @@ develop_celestial_tributaries = {
 			}
 		}
 		if = {
-			limit = { scope:tributary_capital_development_growth >= 1 }
+			limit = { scope:tributary_capital_prosperity_growth >= 1 }
 			send_interface_message = {
-				type = msg_tributary_capital_province_development_growth
-				title = msg_tributary_capital_province_development_growth_title
-				desc = msg_tributary_capital_province_development_growth_desc
+				type = msg_tributary_capital_province_prosperity_growth
+				title = msg_tributary_capital_province_prosperity_growth_title
+				desc = msg_tributary_capital_province_prosperity_growth_desc
 
 				left_icon = root
 				right_icon = overlord
 
 				capital_county = {
-					change_development_progress_with_overflow = scope:tributary_capital_development_growth
+					change_prosperity_progress_with_overflow = scope:tributary_capital_prosperity_growth
 				}
 			}
 		}
@@ -1370,6 +1378,50 @@ add_merit_if_relevant_effect = {
 			$MERIT$ != 0
 		}
 		change_merit = $MERIT$
+	}
+}
+
+military_service_yearly_merit_effect = {
+	every_knight = {
+		limit = {
+			is_ai = yes
+			NOT = { has_council_position = councillor_marshal }
+			can_gain_military_career_merit_trigger = yes
+		}
+		change_merit = miniscule_merit_gain
+	}
+	if = {
+		limit = {
+			cp:councillor_marshal ?= {
+				is_ai = yes
+				can_gain_military_career_merit_trigger = yes
+			}
+			NAND = {
+				highest_held_title_tier >= tier_hegemony
+				government_has_flag = government_is_celestial
+			}
+		}
+		cp:councillor_marshal = { change_merit = miniscule_merit_gain }
+	}
+}
+
+# Scope: the primary participant who won, from on_war_won_attacker or on_war_won_defender
+military_career_war_victory_merit_effect = {
+	if = {
+		limit = {
+			government_has_flag = government_has_merit
+			OR = {
+				vassal_contract_has_flag = celestial_military_appointment
+				vassal_contract_has_flag = meritocratic_military_appointment
+			}
+		}
+		send_interface_message = {
+			type = msg_military_merit_gain
+			title = msg_military_merit_war_won
+			left_icon = this
+			right_icon = scope:loser
+			change_merit = military_province_war_victory_merit_value
+		}
 	}
 }
 
@@ -1933,9 +1985,7 @@ got_minister_position_effect = {
 		}
 		if = {
 			limit = {
-				is_in_army = no
-				is_travelling = no
-				NOT = { exists = involved_activity }
+				should_in_default_location_trigger = yes
 			}
 			set_location_to_default = yes
 		}
@@ -2685,7 +2735,7 @@ grand_campaign_update_war_participants_effect = {
 							government_allows = redirects_wars_to_overlord
 							top_overlord = scope:owner
 							any_character_war = {
-								this = scope:grand_campaign_war
+								scope:grand_campaign_war ?= this
 							}
 						}
 					}
@@ -3326,7 +3376,7 @@ meritocratic_assign_completed_exams_based_on_merit_effect = {
 tgp_save_realm_ceremonial_liege_effect = {
 	if = {
 		limit = { tgp_realm_has_ceremonial_liege_trigger = yes }
-		top_liege.primary_title.var:administrative_ui_special_title.holder = { save_scope_as = ceremonial_liege }
+		ceremonial_liege = { save_scope_as = ceremonial_liege }
 	}
 }
 
@@ -3542,7 +3592,7 @@ tgp_save_opposing_power_effect = {
 		limit = {
 			tgp_is_ceremonial_regent_trigger = yes
 		}
-		primary_title.var:administrative_ui_special_title.holder = { save_scope_as = opposing_power }
+		ceremonial_liege = { save_scope_as = opposing_power }
 	}
 	else = { # You are the liege
 		top_liege = { save_scope_as = opposing_power }
@@ -3572,7 +3622,7 @@ tgp_one_up_activity_effect = {
 coup_ceremonial_liege_scheme_success_effect = {
 	# scope:target = ceremonial liege
 	# scope:owner = ceremonial regent
-	scope:owner.top_liege.primary_title.var:administrative_ui_special_title = { save_scope_as = ceremonial_title }
+	scope:owner.ceremonial_liege_title = { save_scope_as = ceremonial_title }
 	scope:target = {
 		save_scope_as = background_dungeon_scope
 		save_scope_as = background_courtyard_scope
@@ -3603,7 +3653,7 @@ coup_ceremonial_liege_scheme_success_effect = {
 			limit = {
 				tier > tier_barony
 				OR = {
-					scope:owner.top_liege.primary_title.var:administrative_ui_special_title = this
+					scope:owner.ceremonial_liege_title = this
 					exists = var:ceremonial_title
 					is_landless_type_title = no
 				}
@@ -3619,7 +3669,7 @@ coup_ceremonial_liege_scheme_success_effect = {
 		TARGET = scope:target
 		IMPRISONER = scope:owner
 	}
-	add_clan_unity_interaction_effect = {
+	add_house_unity_interaction_effect = {
 		CHARACTER = scope:owner
 		TARGET = scope:target
 		VALUE = medium_unity_loss
@@ -3671,7 +3721,7 @@ coup_ceremonial_liege_scheme_success_effect = {
 }
 
 coup_ceremonial_liege_scheme_failure_effect = {
-	scope:owner.top_liege.primary_title.var:administrative_ui_special_title = { save_scope_as = ceremonial_title }
+	scope:owner.ceremonial_liege_title = { save_scope_as = ceremonial_title }
 	scope:scheme = { end_scheme = yes }
  	#Add Watchful Modifier to the target
 	scope:target = {
@@ -3731,7 +3781,7 @@ coup_ceremonial_liege_scheme_failure_effect = {
 		PLOTTER = scope:owner
 	}
 	# If we're a clan this affects unity
-	add_clan_unity_interaction_effect = {
+	add_house_unity_interaction_effect = {
 		CHARACTER = scope:owner
 		TARGET = scope:target
 		VALUE = medium_unity_loss
@@ -3767,9 +3817,9 @@ successful_coup_ceremonial_liege_opinion_effect = {
 				target = $PLOTTER$
 				modifier = seized_my_throne_crime
 			}
-			set_relation_rival = {
-				target = scope:owner
-				reason = rival_seized_throne_reason
+			set_relation_rival_effect = {
+				TARGET = scope:owner
+				REASON = rival_seized_throne_reason
 			}
 		}
 		every_spouse = {
@@ -4199,76 +4249,7 @@ convert_steppe_admin_vassals_to_meritocratic_effect = {
 }
 
 nomad_to_steppe_admin_new_capital_effect = {
-	every_sub_realm_county = {
-		limit = {
-			title_province = {
-				NOR = {
-					has_holding_type = nomad_holding
-					has_holding_type = herder_holding
-					has_holding_type = tribal_holding
-				}
-			}
-		}
-		add_to_list = potential_new_capitals
-	}
-	every_held_title = {
-		limit = {
-			tier = tier_county
-			title_province = {
-				NOR = {
-					has_holding_type = nomad_holding
-					has_holding_type = herder_holding
-					has_holding_type = tribal_holding
-				}
-			}
-		}
-		add_to_list = potential_new_capitals
-	}
-	ordered_in_list = {
-		order_by = development_level
-		list = potential_new_capitals
-		save_scope_as = new_capital
-	}
-	if = {
-		limit = {
-			capital_county = {
-				title_province = {
-					NOR = {
-						has_holding_type = nomad_holding
-						has_holding_type = herder_holding
-						has_holding_type = tribal_holding
-					}
-				}
-			}
-		}
-		capital_county = {
-			save_scope_as = new_capital
-		}
-	}
-	if = {
-		limit = {
-			exists = scope:new_capital
-			capital_county != scope:new_capital
-		}
-		if = {
-			limit = {
-				scope:new_capital.holder != root
-			}
-			create_title_and_vassal_change = {
-				type = usurped
-				save_scope_as = change
-				add_claim_on_loss = yes
-			}
-			scope:new_capital = {
-				change_title_holder = {
-					holder = root
-					change = scope:change
-				}
-			}
-			resolve_title_and_vassal_change = scope:change
-		}
-		set_realm_capital = scope:new_capital
-	}
+	take_sub_realm_county_as_new_capital_effect = { EXCLUDE = holding_is_tribal }
 	scope:new_capital.duchy = { save_scope_as = nomad_duchy_for_name }
 	#Should gain target title, if possible
 	if = {
@@ -5043,58 +5024,30 @@ tgp_domicile_conversion_when_changing_government_type = {
 	hidden_effect = {
 		if = {
 			limit = {
-				any_held_title = {
-					is_noble_family_title = yes
-				}
+				any_held_title = { is_noble_family_title = yes }
 				trigger_if = {
-					limit = {
-						has_domicile = yes #If we have a domicile we check its type
-					}
+					limit = { has_domicile = yes } #If we have a domicile we check its type
 					NOT = {
-						domicile ?= {
-							is_domicile_type = $NEW_DOMICILE_TYPE$
-						}
+						domicile ?= { is_domicile_type = $NEW_DOMICILE_TYPE$ }
 					}
 				}
-				trigger_else = {
-					has_domicile = no #If we do not have a domicile we need to still pass so we can add one
-				}
+				trigger_else = { has_domicile = no } #If we do not have a domicile we need to still pass so we can add one
 			}
 			random_held_title = {
-				limit = {
-					is_noble_family_title = yes
-				}
+				limit = { is_noble_family_title = yes }
 				save_scope_as = old_nf_title
 			}
 			tgp_wipe_domicile_effect = yes
-			if = {
-				limit = {
-					has_character_flag = new_government_is_byz_admin
-				}
-				give_noble_family_title = {
-					name = noble_family_name
-					tier = duchy
-					article = DEFAULT_TITLE_NAME_ARTICLE
-					government = $NEW_GOVERNMENT_TYPE$
-					save_scope_as = new_title
-				}
+			give_noble_family_title = {
+				name = noble_family_name
+				tier = county
+				article = DEFAULT_TITLE_NAME_ARTICLE
+				government = $NEW_GOVERNMENT_TYPE$
+				save_scope_as = new_title
 			}
-			else = {
-				give_noble_family_title = {
-					name = noble_family_name
-					tier = county
-					article = DEFAULT_TITLE_NAME_ARTICLE
-					government = $NEW_GOVERNMENT_TYPE$
-					save_scope_as = new_title
-				}
-			}
-			scope:new_title = {
-				copy_title_history = scope:old_nf_title
-			}
+			scope:new_title = { copy_title_history = scope:old_nf_title }
 			destroy_title = scope:old_nf_title
-			domicile ?= {
-				set_up_domicile_estate_effect = yes
-			}
+			domicile ?= { set_up_domicile_estate_effect = yes }
 		}
 	}
 }

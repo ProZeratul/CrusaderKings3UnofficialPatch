@@ -93,7 +93,7 @@ overdue_taxes = {
 				save_scope_as = task_contract
 				task_contract_taker ?= {
 					add_gold = {
-						value = scope:task_contract.task_contract_location.monthly_income
+						value = scope:task_contract.task_contract_location.total_monthly_tax_income
 						multiply = 25
 						multiply = governance_task_contract_tier_value
 						min = 5
@@ -104,7 +104,7 @@ overdue_taxes = {
 					}
 				}
 				scope:task_contract.task_contract_location.county = {
-					change_development_level = 1
+					change_prosperity_level = 1
 				}
 			}
 		}
@@ -115,7 +115,7 @@ overdue_taxes = {
 				save_scope_as = task_contract
 				task_contract_taker ?= {
 					add_gold = {
-						value = scope:task_contract.task_contract_location.monthly_income
+						value = scope:task_contract.task_contract_location.total_monthly_tax_income
 						multiply = 40
 						min = 10
 					}
@@ -129,7 +129,7 @@ overdue_taxes = {
 				save_scope_as = task_contract
 				task_contract_taker ?= {
 					add_gold = {
-						value = scope:task_contract.task_contract_location.monthly_income
+						value = scope:task_contract.task_contract_location.total_monthly_tax_income
 						multiply = 20
 						min = 2
 					}
@@ -152,7 +152,7 @@ overdue_taxes = {
 				}
 				scope:task_contract.task_contract_location.county = {
 					if = {
-						limit = { county_control < 100 }
+						limit = { county_control < county_control_baseline }
 						change_county_control = 10
 					}
 				}
@@ -165,7 +165,7 @@ overdue_taxes = {
 				save_scope_as = task_contract
 				task_contract_taker ?= {
 					add_gold = {
-						value = scope:task_contract.task_contract_location.monthly_income
+						value = scope:task_contract.task_contract_location.total_monthly_tax_income
 						multiply = 20
 						min = 5
 					}
@@ -185,6 +185,7 @@ overdue_taxes = {
 						modifier = ep3_governance_tax_relief
 						years = 10
 					}
+					change_county_control = 5
 				}
 			}
 		}
@@ -357,7 +358,7 @@ hoarding_mayor = {
 						modifier = ep3_governance_infrastructure
 						years = 10
 					}
-					change_development_progress_with_overflow = 10
+					change_prosperity_progress_with_overflow = 10
 				}
 			}
 		}
@@ -371,6 +372,7 @@ hoarding_mayor = {
 						modifier = ep3_governance_festivities
 						years = 10
 					}
+					change_county_control = 5
 				}
 			}
 		}
@@ -388,7 +390,7 @@ hoarding_mayor = {
 				}
 				task_contract_location.county = {
 					if = {
-						limit = { county_control < 100 }
+						limit = { county_control < county_control_baseline }
 						change_county_control = 10
 					}
 				}
@@ -530,7 +532,7 @@ bountiful_harvest = {
 				save_scope_as = task_contract
 				task_contract_taker ?= {
 					every_sub_realm_county = {
-						change_development_progress_with_overflow = 10
+						change_prosperity_progress_with_overflow = 10
 					}
 					if = { # Gain some extra Governor trait exp
 						limit = { has_trait = governor }
@@ -561,7 +563,7 @@ bountiful_harvest = {
 						modifier = ep3_governance_great_harvest
 						years = 10
 					}
-					change_development_progress_with_overflow = 10
+					change_prosperity_progress_with_overflow = 10
 				}
 			}
 		}
@@ -585,7 +587,7 @@ bountiful_harvest = {
 				save_scope_as = task_contract
 				task_contract_taker ?= {
 					add_gold = {
-						value = scope:task_contract.task_contract_location.monthly_income
+						value = scope:task_contract.task_contract_location.total_monthly_tax_income
 						multiply = 10
 						multiply = governance_task_contract_tier_value
 						round = yes
@@ -597,7 +599,7 @@ bountiful_harvest = {
 					}
 				}
 				task_contract_location.county = {
-					change_development_progress_with_overflow = 5
+					change_prosperity_progress_with_overflow = 5
 				}
 			}
 		}
@@ -608,7 +610,7 @@ bountiful_harvest = {
 				save_scope_as = task_contract
 				task_contract_taker ?= {
 					add_gold = {
-						value = scope:task_contract.task_contract_location.monthly_income
+						value = scope:task_contract.task_contract_location.total_monthly_tax_income
 						multiply = 25
 						multiply = governance_task_contract_tier_value
 						
@@ -646,6 +648,9 @@ bountiful_harvest = {
 							target = top_liege
 						}
 					}
+				}
+				task_contract_location.county = {
+					change_county_control = -5
 				}
 			}
 		}
@@ -801,7 +806,7 @@ rampant_bandits = {
 				}
 				task_contract_location.county = {
 					if = {
-						limit = { county_control < 100 }
+						limit = { county_control < county_control_baseline }
 						change_county_control = 10
 					}
 				}
@@ -962,6 +967,9 @@ discontent_soldiers = {
 					add_dread = medium_dread_gain
 					add_gold = medium_gold_value
 				}
+				task_contract_location.county = {
+					change_county_control = 5
+				}
 			}
 		}
 		soldiers_pay = {
@@ -1079,7 +1087,10 @@ inept_mayor = {
 						depose = yes
 					}
 				}
-				task_contract_location.county = { remove_county_modifier = ep3_mismanaged_administration_modifier }
+				task_contract_location.county = {
+                    remove_county_modifier = ep3_mismanaged_administration_modifier
+                    change_county_control = 5
+                }
 			}
 		}
 		mayor_in_help = {
@@ -1267,6 +1278,7 @@ prov_investment = {
 						modifier = ep3_food_distribution_modifier
 						years = 10
 					}
+					change_county_control = 5
 				}
 				task_contract_taker ?= {
 					change_influence = {
@@ -1401,6 +1413,9 @@ raiding_peasants = {
 					}
 					add_dread = minor_dread_gain
 				}
+				task_contract_location.county = {
+					change_county_control = 5
+				}
 			}
 		}
 		peasant_encourage = {
@@ -1413,6 +1428,7 @@ raiding_peasants = {
 						modifier = ep3_peasant_border_raids_modifier
 						years = 10
 					}
+					change_county_control = -5
 				}
 			}
 		}
@@ -1774,6 +1790,7 @@ evil_presence = {
 						modifier = ep3_local_practices_modifier
 						years = 10
 					}
+					change_county_control = 5
 				}
 				task_contract_taker ?= {
 					increase_governance_effect = { VALUE = 4 }
@@ -2366,6 +2383,7 @@ mad_prophet = {
 						modifier = ep3_doom_repressed_modifier
 						years = 10
 					}
+					change_county_control = 5
 				}
 			}
 		}
@@ -2376,6 +2394,9 @@ mad_prophet = {
 				save_scope_as = task_contract
 				task_contract_taker ?= {
 					increase_governance_effect = { VALUE = 6 }
+				}
+				task_contract_location.county = {
+					change_county_control = 5
 				}
 			}
 		}
@@ -2738,6 +2759,7 @@ hungry_times = {
 						modifier = ep3_tight_control_modifier
 						years = 15
 					}
+					change_county_control = 10
 				}
 			}
 		}
@@ -2947,6 +2969,7 @@ wartime_measures = {
 						modifier = ep3_war_compensations_modifier
 						years = 10
 					}
+					change_county_control = 5
 				}
 			}
 		}

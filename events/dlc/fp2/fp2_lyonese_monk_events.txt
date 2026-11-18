@@ -219,9 +219,9 @@ scripted_effect fp2_lyonese_monk_make_acolyte_and_irate_theocrat_rivals_effect =
 			limit = {
 				NOT = { has_relation_rival = scope:irate_theocrat }
 			}
-			set_relation_rival = {
-				target= scope:irate_theocrat
-				reason = rival_blamed_by_mentor
+			set_relation_rival_effect = {
+			    TARGET = scope:irate_theocrat
+			    REASON = rival_blamed_by_mentor
 			}
 		}
 	}
@@ -1676,7 +1676,7 @@ fp2_lyonese_monk.0411 = {
 			limit = { fp2_lyonese_monk_0411_county_to_give_trigger = yes }
 			# Pick the least valuable county.
 			order_by = {
-				value = development_level
+				value = prosperity_level
 				multiply = -1
 			}
 			save_scope_as = acolyte_fief
@@ -2172,19 +2172,18 @@ fp2_lyonese_monk.0441 = {
 					NOT = { has_relation_rival = scope:irate_theocrat }
 				}
 				scope:irate_theocrat = {
-					set_relation_rival = {
-						target = scope:acolyte
-						reason = rival_blamed_by_mentor
+					set_relation_rival_effect = {
+						TARGET = scope:acolyte
+						REASON = rival_blamed_by_mentor
 					}
 				}
 			}
 			# But if we _are_, then it's nemesis time.
 			else_if = {
 				limit = { has_relation_rival = scope:irate_theocrat }
-				set_relation_nemesis = {
-					target = scope:irate_theocrat
-					copy_reason = rival
-					reason = rival_blamed_by_mentor
+				set_relation_nemesis_effect = {
+					TARGET = scope:irate_theocrat
+					REASON = rival_blamed_by_mentor
 				}
 			}
 			# Plus, this shows off their ecclesiastic chops!
@@ -2852,9 +2851,9 @@ fp2_lyonese_monk.0621 = {
 						limit = {
 							can_set_relation_rival_trigger = { CHARACTER = scope:zealous_vassal }
 						}
-						set_relation_rival = {
-							target = scope:zealous_vassal
-							reason = rival_refused_to_see_reason
+						set_relation_rival_effect = {
+						    TARGET = scope:zealous_vassal
+						    REASON = rival_refused_to_see_reason
 						}
 					}
 				}
@@ -2896,9 +2895,9 @@ fp2_lyonese_monk.0621 = {
 			limit = {
 				can_set_relation_rival_trigger = { CHARACTER = scope:zealous_vassal }
 			}
-			set_relation_rival = {
-				target = scope:zealous_vassal
-				reason = rival_refused_to_see_reason
+			set_relation_rival_effect = {
+			    TARGET = scope:zealous_vassal
+			    REASON = rival_refused_to_see_reason
 			}
 		}
 		# Spawn the next event in the cycle.
@@ -3268,7 +3267,10 @@ fp2_lyonese_monk.0801 = {
 		animation = personality_rational
 	}
 	right_portrait = {
-		character = scope:acolyte_at_council
+		character = scope:acolyte
+		trigger = {
+			scope:acolyte = { is_physically_able = yes }
+		}
 		animation = chancellor
 	}
 	override_background = { reference = temple_scope }
@@ -3334,13 +3336,6 @@ fp2_lyonese_monk.0801 = {
 					name = acolyte_stance
 					value = flag:school_felicitous
 				}
-			}
-		}
-		# Aaaaand is scope:acolyte around for the pictures.
-		scope:acolyte = {
-			if = {
-				limit = { is_physically_able = yes }
-				save_scope_as = acolyte_at_council
 			}
 		}
 	}
@@ -3473,7 +3468,10 @@ fp2_lyonese_monk.0811 = {
 		animation = personality_bold
 	}
 	right_portrait = {
-		character = scope:acolyte_at_council
+		character = scope:acolyte
+		trigger = {
+			scope:acolyte = { is_physically_able = yes }
+		}
 		animation = personality_bold
 	}
 	override_background = { reference = temple_scope }
@@ -3489,22 +3487,6 @@ fp2_lyonese_monk.0811 = {
 		trigger_event = {
 			id = fp2_lyonese_monk.0841
 			months = 2
-		}
-	}
-
-	immediate = {
-		# Check to see if scope:acolyte around for the pictures.
-		## Clear the old scope if applicable.
-		if = {
-			limit = { exists = scope:acolyte_at_council }
-			clear_saved_scope = acolyte_at_council
-		}
-		## Now try to refresh it.
-		scope:acolyte = {
-			if = {
-				limit = { is_physically_able = yes }
-				save_scope_as = acolyte_at_council
-			}
 		}
 	}
 
@@ -3864,7 +3846,10 @@ fp2_lyonese_monk.0821 = {
 		animation = personality_cynical
 	}
 	right_portrait = {
-		character = scope:acolyte_at_council
+		character = scope:acolyte
+		trigger = {
+			scope:acolyte = { is_physically_able = yes }
+		}
 		animation = personality_honorable
 	}
 	override_background = { reference = temple_scope }
@@ -3880,22 +3865,6 @@ fp2_lyonese_monk.0821 = {
 		trigger_event = {
 			id = fp2_lyonese_monk.0841
 			months = 2
-		}
-	}
-
-	immediate = {
-		# Check to see if scope:acolyte around for the pictures.
-		## Clear the old scope if applicable.
-		if = {
-			limit = { exists = scope:acolyte_at_council }
-			clear_saved_scope = acolyte_at_council
-		}
-		## Now try to refresh it.
-		scope:acolyte = {
-			if = {
-				limit = { is_physically_able = yes }
-				save_scope_as = acolyte_at_council
-			}
 		}
 	}
 
@@ -4247,7 +4216,10 @@ fp2_lyonese_monk.0831 = {
 		animation = personality_honorable
 	}
 	right_portrait = {
-		character = scope:acolyte_at_council
+		character = scope:acolyte
+		trigger = {
+			scope:acolyte = { is_physically_able = yes }
+		}
 		animation = chaplain
 	}
 	override_background = { reference = temple_scope }
@@ -4263,22 +4235,6 @@ fp2_lyonese_monk.0831 = {
 		trigger_event = {
 			id = fp2_lyonese_monk.0841
 			months = 2
-		}
-	}
-
-	immediate = {
-		# Check to see if scope:acolyte around for the pictures.
-		## Clear the old scope if applicable.
-		if = {
-			limit = { exists = scope:acolyte_at_council }
-			clear_saved_scope = acolyte_at_council
-		}
-		## Now try to refresh it.
-		scope:acolyte = {
-			if = {
-				limit = { is_physically_able = yes }
-				save_scope_as = acolyte_at_council
-			}
 		}
 	}
 
@@ -4679,7 +4635,10 @@ fp2_lyonese_monk.0841 = {
 		animation = personality_bold
 	}
 	right_portrait = {
-		character = scope:acolyte_at_council
+		character = scope:acolyte
+		trigger = {
+			scope:acolyte = { is_physically_able = yes }
+		}
 		animation = chancellor
 	}
 	override_background = { reference = temple_scope }

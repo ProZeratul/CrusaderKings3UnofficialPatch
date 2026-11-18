@@ -3298,9 +3298,21 @@ ep3_frankokratia_events.0044 = {
 
 	lower_center_portrait = {
 		character = scope:beneficiary_3
+		trigger = {
+			has_variable = {
+				name = emp_beneficiary_3
+				name = beneficiary_3
+			}
+		}
 	}
 	lower_right_portrait = {
 		character = scope:beneficiary_2
+		trigger = {
+			has_variable = {
+				name = emp_beneficiary_2
+				name = beneficiary_2
+			}
+		}
 	}
 	lower_left_portrait = {
 		character = scope:beneficiary
@@ -3399,7 +3411,7 @@ ep3_frankokratia_events.0044 = {
 				scope:claimant.capital_county = {
 					custom_tooltip = byz_capital_building_destroyed_past_tooltip
 					custom_tooltip = franko_county_control_past_tooltip
-					custom_tooltip = franko_development_past_tooltip
+					custom_tooltip = franko_prosperity_past_tooltip
 				}
 			}
 		}
@@ -3428,7 +3440,7 @@ ep3_frankokratia_events.0044 = {
 			scope:latin_emperor.capital_county = {
 				custom_tooltip = byz_capital_building_destroyed_past_tooltip
 				custom_tooltip = franko_county_control_past_tooltip
-				custom_tooltip = franko_development_past_tooltip
+				custom_tooltip = franko_prosperity_past_tooltip
 			}
 		}
 		if = {
@@ -3753,20 +3765,6 @@ ep3_frankokratia_events.0044 = {
 	}
 
 	after = {
-		clear_saved_scope = beneficiary
-		if = {
-			limit = {
-				exists = scope:beneficiary_2
-			}
-			clear_saved_scope = beneficiary_2
-		}
-		if = {
-			limit = {
-				exists = scope:beneficiary_3
-			}
-			clear_saved_scope = beneficiary_3
-		}
-
 		#If this is the empire receiver, fire title distribution event
 		if = {
 			limit = {
@@ -4235,14 +4233,6 @@ ep3_frankokratia_events.0046 = {
 				}
 			}
 		}
-
-		if = {
-			limit = { root = scope:latin_emperor }
-			trigger_event = {
-				id = ep3_frankokratia_events.0047
-				days = 30
-			}
-		}
 	}
 }
 
@@ -4618,33 +4608,27 @@ ep3_frankokratia_events.0060 = {
 			custom_tooltip = byzantium_is_destroyed_tooltip
 			if = {
 				limit = {
-					global_var:byz_claimant_champion = {
-						this = root
-					}
+					global_var:byz_claimant_champion = { this = root }
 				}
 				if = {
 					limit =	{
-						can_set_relation_rival_trigger = {
-							CHARACTER = scope:claimant
-						}
+						can_set_relation_rival_trigger = { CHARACTER = scope:claimant }
 					}
 					scope:claimant = {
-						set_relation_rival = {
-							target = root
-							reason = rival_took_title
+						set_relation_rival_effect = {
+							TARGET = root
+							REASON = rival_took_title
 						}
 					}
 				}
 				else_if = {
 					limit =	{
-						can_set_relation_nemesis_trigger = {
-							CHARACTER = scope:claimant
-						}
+						can_set_relation_nemesis_trigger = { CHARACTER = scope:claimant }
 					}
 					scope:claimant = {
-						set_relation_nemesis = {
-							target = root
-							reason = rival_took_title
+						set_relation_nemesis_effect = {
+							TARGET = root
+							REASON = rival_took_title
 						}
 					}
 				}
@@ -5258,9 +5242,9 @@ ep3_frankokratia_events.0070 = {
 			years = 20
 		}
 		scope:financier = {
-			set_relation_rival = {
-				target = root
-				reason = rival_latin_emp_refused_alliance
+			set_relation_rival_effect = {
+			    TARGET = root
+			    REASON = rival_latin_emp_refused_alliance
 			}
 			add_opinion = {
 				modifier = angry_opinion
@@ -7947,7 +7931,10 @@ ep3_frankokratia_events.0120 = {
 	}
 	trigger = {
 		has_ep3_dlc_trigger = yes
-		government_has_flag = government_is_feudal
+		OR = {
+			government_has_flag = government_is_feudal
+			government_has_flag = government_is_republic
+		}
 		title:e_latin_empire.holder ?= this
 		is_alive = yes
 		is_imprisoned = no
@@ -7955,7 +7942,12 @@ ep3_frankokratia_events.0120 = {
 	on_trigger_fail = {
 		title:e_latin_empire.holder ?= {
 			if = {
-				limit = { government_has_flag = government_is_feudal }
+				limit = {
+					OR = {
+						government_has_flag = government_is_feudal
+						government_has_flag = government_is_republic
+					}
+				}
 				trigger_event = {
 					id = ep3_frankokratia_events.0120
 					days = 90
@@ -8393,7 +8385,7 @@ ep3_frankokratia_events.0121 = {
 			else = {
 				add_gold = 40
 				capital_county = {
-					change_development_progress = medium_development_progress_loss
+					change_prosperity_progress = medium_prosperity_progress_loss
 				}
 			}
 		}

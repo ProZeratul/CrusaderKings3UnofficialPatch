@@ -5,6 +5,7 @@ tribute_mission_decision_mandala = {
 		reference = "gfx/interface/illustrations/decisions/tgp_projects_mandala_capital.dds"
 	}
 	decision_group_type = realm
+	sort_order = 10
 
 	should_create_alert = { always = yes }
 
@@ -13,6 +14,7 @@ tribute_mission_decision_mandala = {
 	cooldown = { years = 5 }
 
 	is_shown = {
+		NOT = { government_has_flag = government_is_merchant }
 		is_tributary = yes
 		suzerain ?= { government_has_flag = government_is_mandala }
 	}
@@ -127,6 +129,8 @@ tribute_mission_decision_mandala = {
 	}
 
 	ai_potential = {
+		is_tributary = yes
+		suzerain ?= { government_has_flag = government_is_mandala }
 		suzerain = { save_temporary_scope_as = suzerain } #Unop Save as scope to allow using from a different scope
 		tribute_mission_decision_ai_potential_trigger = { TARGET = scope:suzerain }
 	}
@@ -142,6 +146,7 @@ tribute_mission_decision_china = {
 		reference = "gfx/interface/illustrations/decisions/tgp_kowtow.dds"
 	}
 	decision_group_type = realm
+	sort_order = 10
 
 	should_create_alert = { always = yes }
 
@@ -150,8 +155,9 @@ tribute_mission_decision_china = {
 	cooldown = { years = 5 }
 
 	is_shown = {
-		is_tributary_or_independent_neighbor_of_hegemon_trigger = { HEGEMON = h_china }
+		NOT = { government_has_flag = government_is_merchant }
 		title:h_china ?= { is_title_created = yes }
+		is_tributary_or_independent_neighbor_of_hegemon_trigger = { HEGEMON = h_china }
 	}
 
 	is_valid_showing_failures_only = {
@@ -256,7 +262,8 @@ tribute_mission_decision_china = {
 	}
 
 	ai_potential = {
-		exists = title:h_china.holder
+		NOT = { government_has_flag = government_is_merchant }
+		is_tributary_or_independent_neighbor_of_hegemon_trigger = { HEGEMON = h_china }
 		tribute_mission_decision_ai_potential_trigger = { TARGET = title:h_china.holder }
 	}
 
@@ -277,6 +284,7 @@ tribute_mission_decision_roman_empire = {
 		reference = "gfx/interface/illustrations/decisions/ep3_decision_roman_restoration.dds"
 	}
 	decision_group_type = realm
+	sort_order = 10
 
 	should_create_alert = { always = yes }
 
@@ -285,6 +293,7 @@ tribute_mission_decision_roman_empire = {
 	cooldown = { years = 5 }
 
 	is_shown = {
+		NOT = { government_has_flag = government_is_merchant }
 		title:h_roman_empire ?= { is_title_created = yes }
 		is_tributary_or_independent_neighbor_of_hegemon_trigger = { HEGEMON = h_roman_empire }
 	}
@@ -412,6 +421,7 @@ tribute_mission_decision_eastern_roman_empire = {
 		reference = "gfx/interface/illustrations/decisions/ep3_decision_roman_restoration.dds"
 	}
 	decision_group_type = realm
+	sort_order = 10
 
 	should_create_alert = { always = yes }
 
@@ -420,6 +430,7 @@ tribute_mission_decision_eastern_roman_empire = {
 	cooldown = { years = 5 }
 
 	is_shown = {
+		NOT = { government_has_flag = government_is_merchant }
 		title:h_eastern_roman_empire ?= { is_title_created = yes }
 		is_tributary_or_independent_neighbor_of_hegemon_trigger = { HEGEMON = h_eastern_roman_empire }
 	}
@@ -547,6 +558,7 @@ tribute_mission_decision_dar_al_islam = {
 		reference = "gfx/interface/illustrations/decisions/decision_golden_age.dds"
 	}
 	decision_group_type = realm
+	sort_order = 10
 
 	should_create_alert = { always = yes }
 
@@ -555,6 +567,7 @@ tribute_mission_decision_dar_al_islam = {
 	cooldown = { years = 5 }
 
 	is_shown = {
+		NOT = { government_has_flag = government_is_merchant }
 		title:h_dar_al_islam ?= { is_title_created = yes }
 		is_tributary_or_independent_neighbor_of_hegemon_trigger = { HEGEMON = h_dar_al_islam }
 	}
@@ -682,6 +695,7 @@ tribute_mission_decision_india = {
 		reference = "gfx/interface/illustrations/decisions/decision_golden_age.dds"
 	}
 	decision_group_type = realm
+	sort_order = 10
 
 	should_create_alert = { always = yes }
 
@@ -690,6 +704,7 @@ tribute_mission_decision_india = {
 	cooldown = { years = 5 }
 
 	is_shown = {
+		NOT = { government_has_flag = government_is_merchant }
 		title:h_india ?= { is_title_created = yes }
 		is_tributary_or_independent_neighbor_of_hegemon_trigger = { HEGEMON = h_india }
 	}

@@ -5,6 +5,7 @@
 #								They already have all titles transferred to them
 #	flag:landless_adventurer	landless adventurer
 #	flag:landless_noble_family	landless noble family inside administrative or other realm that allows landless vassals
+#	flag:merchant				merchant character
 #
 on_ruler_designer_finished = {
 	effect = {
@@ -36,7 +37,7 @@ on_ruler_designer_finished = {
 			# Have some Hajjaj
 			add_trait = hajjaj
 		}
-
+		
 		## Landless adventurer
 		if = {
 			limit = {
@@ -60,17 +61,34 @@ on_ruler_designer_finished = {
 				limit = {
 					scope:government_giver != root.top_liege
 				}
-	            create_title_and_vassal_change = {
-	                type = swear_fealty
-	                save_scope_as = change
-	            }
-	            change_liege = {
-	                liege = scope:government_giver
-	                change = scope:change
-	            }
-	            resolve_title_and_vassal_change = scope:change
+				create_title_and_vassal_change = {
+					type = swear_fealty
+					save_scope_as = change
+				}
+				change_liege = {
+					liege = scope:government_giver
+					change = scope:change
+				}
+				resolve_title_and_vassal_change = scope:change
 			}
 			add_gold = 100
+		}
+		else_if = {
+			limit = {
+				scope:ruler_designer = flag:merchant
+			}
+			create_merchant_title_effect = {
+				REASON = flag:voluntary
+				FLAVOR_CHAR = root 
+			}
+			debug_log_scopes = yes
+		}
+		else_if = {
+			limit = {
+				scope:ruler_designer = flag:republic
+			}
+			gdp_create_patrician_family_effect = yes
+			debug_log_scopes = yes
 		}
 		add_prestige = {
 			value = root.prestige
@@ -79,7 +97,7 @@ on_ruler_designer_finished = {
 				value = medium_prestige_value
 				multiply = {
 					value = 0
-
+					
 					# Bonus for older characters (who have presumably accomplished more).
 					if = {
 						limit = { age > 60 }
@@ -101,7 +119,7 @@ on_ruler_designer_finished = {
 						limit = { age > 12 }
 						add = 1
 					}
-
+					
 					# Bonus/penalty for traits.
 					if = {
 						limit = {
@@ -121,12 +139,12 @@ on_ruler_designer_finished = {
 						}
 						add = -1
 					}
-
+					
 					# Humble/content children shouldn't have a prestige penalty!
 					min = 0
 				}
 			}
-
+			
 			# Rulers also gain bonus prestige based on their tier.
 			add = {
 				value = medium_prestige_value

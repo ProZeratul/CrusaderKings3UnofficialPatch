@@ -522,13 +522,12 @@ tgp_chaos_shattering_effect = {
 							primary_title ?= { is_neighbor_to_realm = scope:new_liege }
 							any_in_list = {
 								list = former_vassals
-								this != scope:new_liege
+								is_tributary_of = scope:new_liege
 								this != scope:member
 								primary_title ?= {
 									is_neighbor_to_realm = scope:new_liege
 									is_neighbor_to_realm = scope:member
 								}
-								is_tributary_of = scope:new_liege
 							}
 						}
 					}

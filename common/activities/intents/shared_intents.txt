@@ -148,11 +148,20 @@ woo_attendee_intent = {
 		scope:target = {
 			is_adult = yes
 			is_ai = yes
+			is_attracted_to_gender_of = root
+			NOR = {
+				has_trait = intellect_bad_3
+				has_trait = incapable
+			}
 		}
 		NOR = {
 			this = scope:target
 			has_relation_lover = scope:target
 			has_relation_rival = scope:target
+			guaranteed_under_20_incest_rejection_trigger = {
+				TARGET = scope:target
+				SEDUCER = root
+			}
 		}
 		OR = {
 			has_perk = unshackled_lust_perk
@@ -161,8 +170,17 @@ woo_attendee_intent = {
 		# Just opt out anyone who has a partner they'd never cheat on.
 		## It's possible for someone to still reach this state _after_ they become a woo target, but at least we're cutting it down to edge cases.
 		OR = {
-			scope:target = { might_cheat_on_every_partner_trigger = yes }
 			is_consort_of = scope:target
+			scope:target = {
+				NOR = {
+					has_trait = celibate
+					exists = concubinist
+					any_spouse = {}
+					any_relation = { type = lover }
+					exists = betrothed
+				}
+			}
+			scope:target = { might_cheat_on_every_partner_trigger = yes }
 		}
 	}
 
@@ -377,11 +395,13 @@ legitimacy_intent = {
 			text = has_legit_intent_access_tt
 			dynasty ?= { ce1_legitimacy_legacy_track_perks >= 3 }
 		}
+		is_valid_for_legitimacy_change = yes
 	}
 	
 	is_shown = {
 		has_dlc_feature = advanced_activities
 		has_dlc_feature = legends_of_the_dead
+		is_valid_for_legitimacy_change = yes
 	}
 
 	on_invalidated = { trigger_event = activity_system.0090 }
@@ -464,5 +484,67 @@ impose_obedience_intent = {
 
 	scripted_animation = {
 		animation = menacing
+	}
+}
+
+schmooze_intent = {
+	icon = schmooze_intent
+
+	auto_complete = yes
+
+	is_shown = {
+		has_dlc_feature = advanced_activities
+		is_alive = yes
+		is_adult = yes
+		has_domicile = yes
+		government_has_flag = government_is_merchant
+	}
+
+	on_invalidated = { trigger_event = activity_system.0090 }
+
+	ai_will_do = {
+		value = 50
+		add = {
+			value = ai_sociability
+			divide = 2
+		}
+		add = {
+			value = ai_energy
+			divide = 2
+		}
+		if = {
+			limit = { has_trait = gregarious }
+			add = 25
+		}
+		if = {
+			limit = { has_trait = shy }
+			add = -25
+		}
+		if = {
+			limit = { has_trait = craven }
+			add = 25
+		}
+		if = {
+			limit = { has_trait = brave }
+			add = -25
+		}
+		if = {
+			limit = { has_trait = humble }
+			add = 25
+		}
+		if = {
+			limit = {
+				exists = suzerain
+				reverse_opinion = {
+					target = suzerain
+					value < 25
+				}
+			}
+			add = 1000
+		}
+	}
+
+	scripted_animation = {
+		animation = trade_deal
 	}
 }

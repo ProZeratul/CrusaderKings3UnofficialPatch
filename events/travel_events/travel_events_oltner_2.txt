@@ -38,8 +38,7 @@ travel_events_oltner_2.1000 = {
 				terrain = oasis
 			}
 			OR = {
-				has_building_or_higher = plantations_01
-				has_building_or_higher = orchards_01
+				has_building_or_higher = communal_plantations_1
 				county ?= {
 					has_county_modifier = fertile_desert_mountains_modifier
 				}
@@ -98,7 +97,7 @@ travel_events_oltner_2.1000 = {
 		name = travel_events_oltner_2.1000.option.a
 		
 		capital_county ?= {
-			change_development_progress_with_overflow = 30
+			change_prosperity_progress_with_overflow = 30
 		}
 		
 		stress_and_fulfillment_impact = {
@@ -252,7 +251,7 @@ travel_events_oltner_2.1010 = {
 		is_landed = yes
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
-			has_building_or_higher = hospices_01
+			has_building_or_higher = hospitals_1
 		}
 	}
 
@@ -523,7 +522,11 @@ travel_events_oltner_2.1020 = {
 		is_landed = yes
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
-			has_building_or_higher = camel_farms_01
+			OR = {
+				terrain = desert
+				terrain = drylands
+				terrain = oasis
+			}
 		}
 	}
 
@@ -737,7 +740,11 @@ travel_events_oltner_2.1030 = {
 		OR = {
 			location.culture = { has_cultural_tradition = tradition_caravaneers }
 			location = {
-				has_building_or_higher = camel_farms_01
+				OR = {
+					terrain = desert
+					terrain = drylands
+					terrain = oasis
+				}
 			}
 		}
 	}
@@ -1008,8 +1015,9 @@ travel_events_oltner_2.1040 = {
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
 			OR = {
-				has_building_or_higher = camel_farms_01
 				terrain = oasis
+				terrain = desert
+				terrain = drylands
 			}
 		}
 	}
@@ -1118,7 +1126,7 @@ travel_events_oltner_2.1040 = {
 			}
 		}
 		capital_county ?= {
-			change_development_progress_with_overflow = 25
+			change_prosperity_progress_with_overflow = 25
 		}
 		scope:local_character = {
 			add_to_court_and_entourage_effect = yes
@@ -1225,8 +1233,10 @@ travel_events_oltner_2.1050 = {
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
 			OR = {
-				has_building_or_higher = stables_01
-				has_building_or_higher = horse_pastures_01
+				has_building_or_higher = horses_resource_building_1
+				has_building_or_higher = horse_studfarm_1
+				has_building_or_higher = horse_grazing_1
+				has_building_or_higher = cavalry_stables_1
 			}
 			NOT = {
 				county.holder ?= root
@@ -1520,8 +1530,10 @@ travel_events_oltner_2.1060 = {
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
 			OR = {
-				has_building_or_higher = stables_01
-				has_building_or_higher = horse_pastures_01
+				has_building_or_higher = horses_resource_building_1
+				has_building_or_higher = horse_studfarm_1
+				has_building_or_higher = horse_grazing_1
+				has_building_or_higher = cavalry_stables_1
 			}
 			NOT = {
 				county.holder ?= root
@@ -1751,8 +1763,10 @@ travel_events_oltner_2.1070 = {
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
 			OR = {
-				has_building_or_higher = stables_01
-				has_building_or_higher = horse_pastures_01
+				has_building_or_higher = horses_resource_building_1
+				has_building_or_higher = horse_studfarm_1
+				has_building_or_higher = horse_grazing_1
+				has_building_or_higher = cavalry_stables_1
 			}
 		}
 	}
@@ -1989,7 +2003,11 @@ travel_events_oltner_2.1080 = {
 		is_landed = yes
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
-			has_building_or_higher = camel_farms_01
+			OR = {
+				terrain = desert
+				terrain = drylands
+				terrain = oasis
+			}
 		}
 	}
 
@@ -2170,7 +2188,7 @@ travel_events_oltner_2.1090 = {
 		is_landed = yes
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
-			has_building_or_higher = watchtowers_01
+			has_building_or_higher = watchtowers_1
 		}
 	}
 
@@ -2387,7 +2405,7 @@ travel_events_oltner_2.1100 = {
 		is_landed = yes
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
-			has_building_or_higher = pastures_01
+			has_building_or_higher = meadowlands_pastures_1
 		}
 	}
 
@@ -2633,10 +2651,7 @@ travel_events_oltner_2.1110 = {
 		is_landed = yes
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
-			OR = {
-				has_building_or_higher = blacksmiths_01
-				has_building_or_higher = smiths_01
-			}
+			has_smithing_district_or_building = yes
 		}
 	}
 
@@ -2855,10 +2870,7 @@ travel_events_oltner_2.1120 = {
 		is_landed = yes
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
-			OR = {
-				has_building_or_higher = blacksmiths_01
-				has_building_or_higher = smiths_01
-			}
+			has_smithing_district_or_building = yes
 		}
 	}
 
@@ -3064,7 +3076,7 @@ travel_events_oltner_2.1130 = {
 		is_landed = yes
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
-			has_building_or_higher = hill_forts_01
+			has_building_or_higher = ramparts_1
 			NOT = {
 				county.holder ?= root
 			}
@@ -3358,7 +3370,7 @@ travel_events_oltner_2.1140 = {
 		is_landed = yes
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
-			has_building_or_higher = hill_forts_01
+			has_building_or_higher = ramparts_1
 		}
 	}
 
@@ -3598,7 +3610,7 @@ travel_events_oltner_2.1150 = {
 		is_landed = yes
 		is_location_valid_for_travel_event_on_land = yes
 		location = {
-			has_building_or_higher = hill_forts_01
+			has_building_or_higher = ramparts_1
 		}
 	}
 
@@ -4364,12 +4376,14 @@ travel_events_oltner_2.1170 = {
 			}
 		}
 		scope:entourage_member_1 = {
-			set_relation_rival = {
-				target = scope:entourage_member_2
-				involved_character = root
-				reason = rival_conflict_on_the_road
-				province = root.location
+			root.location = { save_scope_as = relationship_reason_province }
+			root = { save_scope_as = relationship_reason_involved_character }
+			set_relation_rival_effect = {
+			    TARGET = scope:entourage_member_2
+			    REASON = rival_conflict_on_the_road
 			}
+			clear_saved_scope = relationship_reason_province
+			clear_saved_scope = relationship_reason_involved_character
 		}
 	}
 
@@ -5057,12 +5071,14 @@ travel_events_oltner_2.1190 = {
 			}
 		}
 		scope:entourage_member_1 = {
-			set_relation_rival = {
-				target = scope:entourage_member_2
-				involved_character = root
-				reason = rival_stole_on_the_road
-				province = root.location
+			root.location = { save_scope_as = relationship_reason_province }
+			root = { save_scope_as = relationship_reason_involved_character }
+			set_relation_rival_effect = {
+			    TARGET = scope:entourage_member_2
+			    REASON = rival_stole_on_the_road
 			}
+			clear_saved_scope = relationship_reason_province
+			clear_saved_scope = relationship_reason_involved_character
 		}
 	}
 

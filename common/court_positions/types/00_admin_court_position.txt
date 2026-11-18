@@ -113,6 +113,15 @@
 			add = {
 				if = {
 					limit = {
+						has_trait = education_republican_knowledge_5
+					}
+					add = {
+						value = 10
+						desc = republican_knowledge_5_desc
+					}
+				}
+				if = {
+					limit = {
 						has_trait = education_republican_knowledge_4
 					}
 					add = {
@@ -231,11 +240,11 @@
 			}
 		}
 
-		# Capital Bureau
+		# Capital Magistracy
 		if = {
 			limit = {
 				liege ?= {
-					capital_province ?= { has_building_or_higher = capital_bureau_01 }
+					capital_province ?= { has_building_or_higher = capital_magistracy_1 }
 				}
 			}
 			add = {
@@ -244,48 +253,30 @@
 					capital_province = {
 						if = {
 							limit = {
-								has_building_or_higher = capital_bureau_08
+								has_building_or_higher = capital_magistracy_5
 							}
-							add = 16
+							add = capital_magistracy_eparch_aptitude_tier_5
 						}
 						else_if = {
 							limit = {
-								has_building_or_higher = capital_bureau_07
+								has_building_or_higher = capital_magistracy_4
 							}
-							add = 14
+							add = capital_magistracy_eparch_aptitude_tier_4
 						}
 						else_if = {
 							limit = {
-								has_building_or_higher = capital_bureau_06
+								has_building_or_higher = capital_magistracy_3
 							}
-							add = 12
+							add = capital_magistracy_eparch_aptitude_tier_3
 						}
 						else_if = {
 							limit = {
-								has_building_or_higher = capital_bureau_05
+								has_building_or_higher = capital_magistracy_2
 							}
-							add = 10
-						}
-						else_if = {
-							limit = {
-								has_building_or_higher = capital_bureau_04
-							}
-							add = 8
-						}
-						else_if = {
-							limit = {
-								has_building_or_higher = capital_bureau_03
-							}
-							add = 6
-						}
-						else_if = {
-							limit = {
-								has_building_or_higher = capital_bureau_02
-							}
-							add = 4
+							add = capital_magistracy_eparch_aptitude_tier_2
 						}
 						else = {
-							add = 2
+							add = capital_magistracy_eparch_aptitude_tier_1
 						}
 					}
 				}
@@ -387,15 +378,21 @@
 	}
 
 	scaling_employer_modifiers = {
-	}
-
-	custom_scaling_employer_modifier_description = {
-		terrible = eparch_terrible_desc
-		poor = eparch_poor_desc
-		average = eparch_average_desc
-		good = eparch_good_desc
-		excellent = eparch_excellent_desc
-		range = eparch_range_desc
+		terrible = {
+			governor_efficiency_add = 0.01
+		}
+		poor = {
+			governor_efficiency_add = 0.02
+		}
+		average = {
+			governor_efficiency_add = 0.03
+		}
+		good = {
+			governor_efficiency_add = 0.04
+		}
+		excellent = {
+			governor_efficiency_add = 0.05
+		}
 	}
 
 	custom_employer_modifier_description = eparch_custom_effect_desc

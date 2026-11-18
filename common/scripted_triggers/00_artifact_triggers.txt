@@ -61,11 +61,15 @@ artifact_is_worthy_to_improve_trigger = {
 		name = 1025_treasure_map
 	}
 }
-artifact_can_be_gift_base_trigger = {
+artifact_can_be_accepted_as_gift_trigger = {
 	has_none_of_variables = {
 		name = ai_to_ai_destroy_in_sieges
 		name = unwanted_artifact
 		name = cursed_artifact
+	}
+}
+artifact_can_be_gift_base_trigger = {
+	has_none_of_variables = {
 		name = 1025_treasure_map
 		name = ungiftable
 		name = is_tribute_mission_artifact
@@ -75,6 +79,17 @@ artifact_can_be_gift_base_trigger = {
 # e.g. a formal tribute gift 
 artifact_can_be_gift_advance_trigger = {
 	artifact_can_be_gift_base_trigger = yes
+	trigger_if = { # in interaction it would be refused instead not visible.
+		limit = {
+			OR = {
+				exists = root
+				scope:puppet_or_actor ?= {
+					is_ai = yes
+				}
+			}
+		}
+		artifact_can_be_accepted_as_gift_trigger = yes
+	}
 	NOR = {
 		has_variable = banner_dynasty
 		has_variable = banner_house
@@ -85,6 +100,17 @@ artifact_can_be_gift_advance_trigger = {
 
 artifact_can_be_gift_to_trigger = {
 	artifact_can_be_gift_base_trigger = yes
+	trigger_if = { # in interaction it would be refused instead not visible.
+		limit = {
+			OR = {
+				exists = root
+				scope:puppet_or_actor ?= {
+					is_ai = yes
+				}
+			}
+		}
+		artifact_can_be_accepted_as_gift_trigger = yes
+	}
 	trigger_if = {
 		limit = {
 			NOT = { $RECIPIENT$ = { has_artifact_claim = prev } }
@@ -1619,7 +1645,7 @@ artifact_feature_earthware_stone_trigger = {
 	}
 }
 
-# porcelain
+# Porcelain
 artifact_feature_earthware_porcelain_trigger = {
 	trigger_if = {
 		limit = { exists = scope:potter }
@@ -2201,18 +2227,14 @@ eligible_for_scientific_apparatus_armillary_sphere_trigger = {
 		culture = { has_innovation = innovation_armilary_sphere }
 		OR = {
 			# Wide spread in the Arabic world fairly early.
-
-			has_court_language = language_arabic
-			has_court_language = language_iranian #FP3 addition 
-
-
 			knows_language = language_arabic
 			# Becomes commonplace towards the end of the period.
 			culture = { has_cultural_era_or_later = culture_era_late_medieval }
-			trigger_if = {
-				limit = { has_royal_court = yes }
+			AND = {
+				has_royal_court = yes
 				OR = {
 					has_court_language = language_arabic
+					has_court_language = language_iranian
 					# Nerds can import the knowledge.
 					has_court_type = court_scholarly
 				}
@@ -2392,5 +2414,236 @@ any_recent_previous_owner = {
 		previous_owner = $OWNER$
 		previous_owner_level_2 = $OWNER$
 		previous_owner_level_3 = $OWNER$
+	}
+}
+
+artifact_not_luxury_contract_trigger = {
+	trigger_if = {
+		limit = { exists = scope:task_contract }
+		scope:task_contract = {
+			NOR = {
+				has_task_contract_type = menagerie_acquisition
+				has_task_contract_type = find_curio
+			}
+		}
+	}
+}
+
+landed_ruler_artifact_modifier_trigger = {
+	trigger_if = {
+		limit = { exists = scope:owner }
+		scope:owner = { is_landed = yes }
+	}
+	trigger_else = {
+		artifact_owner ?= { is_landed = yes }
+	}
+	artifact_not_luxury_contract_trigger = yes
+}
+
+vassal_artifact_modifier_trigger = {
+	trigger_if = {
+		limit = { exists = scope:owner }
+		scope:owner = { vassal_count > 0 }
+	}
+	trigger_else = {
+		artifact_owner ?= { vassal_count > 0 }
+	}
+	artifact_not_luxury_contract_trigger = yes
+}
+
+short_reign_artifact_modifier_trigger = {
+	merchant_artifact_modifier_trigger = no
+	trigger_if = {
+		limit = { exists = scope:owner }
+		scope:owner = { exists = primary_title }
+	}
+	trigger_else = {
+		artifact_owner ?= { exists = primary_title }
+	}
+	artifact_not_luxury_contract_trigger = yes
+}
+
+powerful_vassal_artifact_modifier_trigger = {
+	vassal_artifact_modifier_trigger = yes
+	trigger_if = {
+		limit = { exists = scope:owner }
+		scope:owner = { NOT = { government_has_flag = no_powerful_vassals } }
+	}
+	trigger_else = {
+		artifact_owner ?= { NOT = { government_has_flag = no_powerful_vassals } }
+	}
+}
+
+merchant_artifact_modifier_trigger = {
+	trigger_if = {
+		limit = { exists = scope:owner }
+		scope:owner = { government_has_flag = government_is_merchant }
+	}
+	trigger_else = {
+		artifact_owner ?= { government_has_flag = government_is_merchant }
+	}
+}
+
+# Slot 1 of each type is always available; company_unlock_*_slot_N unlocks slots 2 to N+1.
+has_free_domicile_curio_slot_trigger = {
+	exists = domicile
+	OR = {
+		AND = {
+			domicile = { has_domicile_parameter = company_unlock_curio_slot_3 }
+			NOT = {
+				any_equipped_character_artifact = {
+					count >= 4
+					artifact_slot_type = curio
+				}
+			}
+		}
+		AND = {
+			domicile = {
+				has_domicile_parameter = company_unlock_curio_slot_2
+				NOT = { has_domicile_parameter = company_unlock_curio_slot_3 }
+			}
+			NOT = {
+				any_equipped_character_artifact = {
+					count >= 3
+					artifact_slot_type = curio
+				}
+			}
+		}
+		AND = {
+			domicile = {
+				has_domicile_parameter = company_unlock_curio_slot_1
+				NOR = {
+					has_domicile_parameter = company_unlock_curio_slot_2
+					has_domicile_parameter = company_unlock_curio_slot_3
+				}
+			}
+			NOT = {
+				any_equipped_character_artifact = {
+					count >= 2
+					artifact_slot_type = curio
+				}
+			}
+		}
+		AND = {
+			domicile = {
+				is_domicile_type = merchant_company
+				NOR = {
+					has_domicile_parameter = company_unlock_curio_slot_1
+					has_domicile_parameter = company_unlock_curio_slot_2
+					has_domicile_parameter = company_unlock_curio_slot_3
+				}
+			}
+			NOT = {
+				any_equipped_character_artifact = {
+					artifact_slot_type = curio
+				}
+			}
+		}
+	}
+}
+
+has_free_domicile_creature_slot_trigger = {
+	exists = domicile
+	OR = {
+		AND = {
+			domicile = { has_domicile_parameter = company_unlock_creature_slot_3 }
+			NOT = {
+				any_equipped_character_artifact = {
+					count >= 4
+					artifact_slot_type = creature
+				}
+			}
+		}
+		AND = {
+			domicile = {
+				has_domicile_parameter = company_unlock_creature_slot_2
+				NOT = { has_domicile_parameter = company_unlock_creature_slot_3 }
+			}
+			NOT = {
+				any_equipped_character_artifact = {
+					count >= 3
+					artifact_slot_type = creature
+				}
+			}
+		}
+		AND = {
+			domicile = {
+				has_domicile_parameter = company_unlock_creature_slot_1
+				NOR = {
+					has_domicile_parameter = company_unlock_creature_slot_2
+					has_domicile_parameter = company_unlock_creature_slot_3
+				}
+			}
+			NOT = {
+				any_equipped_character_artifact = {
+					count >= 2
+					artifact_slot_type = creature
+				}
+			}
+		}
+		AND = {
+			domicile = {
+				is_domicile_type = merchant_company
+				NOR = {
+					has_domicile_parameter = company_unlock_creature_slot_1
+					has_domicile_parameter = company_unlock_creature_slot_2
+					has_domicile_parameter = company_unlock_creature_slot_3
+				}
+			}
+			NOT = {
+				any_equipped_character_artifact = {
+					artifact_slot_type = creature
+				}
+			}
+		}
+	}
+}
+
+no_or_worse_equipped_artifact_type_trigger = {
+	trigger_if = {
+		limit = {
+			scope:target = { artifact_slot_type = $SLOT_TYPE$ }
+		}
+		OR = {
+			NOT = {
+				any_equipped_character_artifact = { artifact_slot_type = $SLOT_TYPE$ }
+			}
+			any_equipped_character_artifact = {
+				artifact_slot_type = $SLOT_TYPE$
+				trigger_if = {
+					limit = {
+						scope:target ?= { rarity = illustrious }
+					}
+					NOT = { rarity = illustrious }
+				}
+				trigger_else_if = {
+					limit = {
+						scope:target ?= { rarity = famed }
+					}
+					NOR = {
+						rarity = illustrious
+						rarity = famed
+					}
+				}
+				trigger_else_if = {
+					limit = {
+						scope:target ?= { rarity = masterwork }
+					}
+					NOR = {
+						rarity = illustrious
+						rarity = famed
+						rarity = masterwork
+					}
+				}
+				trigger_else = { # common
+					NOR = {
+						rarity = illustrious
+						rarity = famed
+						rarity = masterwork
+						rarity = common
+					}
+				}
+			}
+		}
 	}
 }

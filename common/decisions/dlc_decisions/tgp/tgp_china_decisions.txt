@@ -1619,7 +1619,7 @@ extract_gold_from_treasury = {
 			if = {
 				limit = {
 					is_valid_for_legitimacy_change = no
-					NOT = { government_has_flag = government_has_influence }
+					government_has_flag = government_is_ecclesiastical
 					NOT = {
 						top_participant_group:the_christian_church ?= {
 							has_participant_group_parameter = the_christian_church_withdraw_funds_from_treasury_decision
@@ -1627,6 +1627,19 @@ extract_gold_from_treasury = {
 					}
 				}
 				add = massive_piety_value
+			}
+		}
+		prestige = {
+			value = 0
+			if = {
+				limit = {
+					is_valid_for_legitimacy_change = no
+					NOR = {
+						government_has_flag = government_is_ecclesiastical
+						government_has_flag = government_has_influence
+					}
+				}
+				add = massive_prestige_value
 			}
 		}
 	}

@@ -293,6 +293,7 @@ study_faith_outcome.1000 = {
 	}
 
 	trigger = {
+		is_playable_character = yes # Only playable characters can learn rites
 		study_faith_has_anything_to_learn_trigger = { RITE = scope:target.rite }
 	}
 
@@ -563,6 +564,7 @@ study_faith_outcome.1200 = {
 	}
 
 	trigger = {
+		is_playable_character = yes
 		any_character_tenet = {
 			knowledge_filter = unknown
 			passive_rite_learning_candidate_tenet_is_core_trigger = { RITE = scope:target.rite }
@@ -698,6 +700,7 @@ study_faith_outcome.1400 = {
 	}
 
 	trigger = {
+		is_playable_character = yes
 		any_character_doctrine = {
 			knowledge_filter = unknown
 			passive_rite_learning_candidate_doctrine_is_core_trigger = { RITE = scope:target.rite }
@@ -866,8 +869,11 @@ study_faith_outcome.1500 = {
 	}
 
 	trigger = {
-		NOT = {
-			study_faith_has_anything_to_learn_trigger = { RITE = scope:target.rite }
+		OR = {
+			is_playable_character = no # The learning outcomes need a playable character
+			NOT = {
+				study_faith_has_anything_to_learn_trigger = { RITE = scope:target.rite }
+			}
 		}
 	}
 
@@ -924,6 +930,15 @@ scripted_trigger is_valid_study_faith_continuation_target = {
 }
 
 # Invalidation
+scripted_effect study_faith_restore_continued_modifiers_effect = {
+	restore_scheme_modifiers = yes
+	# Modifiers that came from the previous teacher do not carry over
+	remove_scheme_modifier = study_faith_ask_directly_modifier
+	remove_scheme_modifier = study_faith_ask_for_emissary_modifier
+	remove_scheme_modifier = study_faith_study_from_afar_modifier
+	remove_scheme_modifier = study_faith_learning_mannerism
+}
+
 study_faith_outcome.3000 = {
 	type = character_event
 	title = study_faith_outcome.3000.t
@@ -1141,6 +1156,7 @@ study_faith_outcome.3000 = {
 					}
 					add_scheme_progress = root.var:study_faith_progress
 				}
+				study_faith_restore_continued_modifiers_effect = yes
 			}
 		}
 	}
@@ -1180,6 +1196,7 @@ study_faith_outcome.3000 = {
 					}
 					add_scheme_progress = root.var:study_faith_progress
 				}
+				study_faith_restore_continued_modifiers_effect = yes
 			}
 		}
 	}
@@ -1219,6 +1236,7 @@ study_faith_outcome.3000 = {
 					}
 					add_scheme_progress = root.var:study_faith_progress
 				}
+				study_faith_restore_continued_modifiers_effect = yes
 			}
 		}
 	}
@@ -1230,6 +1248,7 @@ study_faith_outcome.3000 = {
 	after = {
 		remove_variable = study_faith_dissatisfied_with_current_teacher
 		remove_variable = study_faith_progress
+		clear_saved_scheme_modifiers = study_faith
 	}
 }
 

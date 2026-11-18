@@ -70,9 +70,6 @@ dynastic_cycle = {
 				ai_attempt_to_host_activity = activity_imperial_examination
 			}
 		}
-		
-		# SILK ROAD
-		tgp_silk_road_china_stability_effect = yes
 
 		#Epidemics
 		if = {
@@ -432,14 +429,15 @@ dynastic_cycle = {
 				}
 			}
 		}
-		other_rulers = { #all other independent rulers in the Dynastic Cycle region
+		other_rulers = { #all other rulers in the Dynastic Cycle region
 			icon = "gfx/interface/icons/dynastic_cycle/dynastic_cycle_group_independent.dds"
 			is_character_valid = {
 				trigger_if = {
 					limit = {
 						exists = title:h_china.holder
 					}
-					is_independent_ruler = yes
+					is_ruler = yes
+					NOT = { is_vassal_or_below_of = title:h_china.holder }
 					NAND = {
 						is_tributary_of = title:h_china.holder
 						subject_contract_has_flag = celestial_investiture_politics
@@ -878,11 +876,6 @@ dynastic_cycle = {
 							dynastic_cycle_locks_title_integration = yes
 						}
 					}
-					other_rulers = {
-						parameters = {
-							dynastic_cycle_no_effects = yes
-						}
-					}
 				}
 				dynastic_cycle_character_effects = {
 					hegemon_ruler = {
@@ -904,7 +897,7 @@ dynastic_cycle = {
 					expansion_movement = {
 						character_modifier = {
 							men_at_arms_cap = 3
-							men_at_arms_maintenance = -0.3
+							men_at_arms_maintenance = -0.2
 						}
 					}
 					conservative_movement = {
@@ -913,6 +906,14 @@ dynastic_cycle = {
 							domicile_build_gold_cost = -0.1
 							domicile_monthly_influence_add = 1
 							dynasty_house_opinion = 10
+						}
+					}
+					other_rulers = {
+						character_modifier = {
+							trade_route_length_add = 2
+							trade_capacity_mult = 0.1
+							trade_expertise_decline_mult = -0.15
+							trade_category_luxury_items_sell_price_mult = -0.005
 						}
 					}
 				}
@@ -1130,11 +1131,6 @@ dynastic_cycle = {
 							dynastic_cycle_faster_title_integration = yes
 						}
 					}
-					other_rulers = {
-						parameters = {
-							dynastic_cycle_no_effects = yes
-						}
-					}
 				}
 
 				dynastic_cycle_character_effects = {
@@ -1146,9 +1142,9 @@ dynastic_cycle = {
 							max_political_schemes_add = 1
 							max_hostile_schemes_add = 1
 							max_personal_schemes_add = 1
+							artisan_tax_mult = 0.1
 						}
 						county_modifier = {
-							build_gold_cost = -0.15
 							build_speed = -0.15
 						}
 					}
@@ -1159,9 +1155,9 @@ dynastic_cycle = {
 							men_at_arms_maintenance = 0.1
 							cultural_head_fascination_mult = 0.1
 							liege_opinion = 10
+							artisan_tax_mult = 0.05
 						}
 						county_modifier = {
-							build_gold_cost = -0.1
 							build_speed = -0.1
 						}
 					}
@@ -1171,9 +1167,9 @@ dynastic_cycle = {
 							men_at_arms_cap = -2
 							men_at_arms_maintenance = 0.2
 							cultural_head_fascination_mult = 0.2
+							artisan_tax_mult = 0.15
 						}
 						county_modifier = {
-							build_gold_cost = -0.2
 							build_speed = -0.2
 						}
 					}
@@ -1192,6 +1188,13 @@ dynastic_cycle = {
 						character_modifier = {
 							men_at_arms_cap = -2
 							men_at_arms_maintenance = 0.2
+						}
+					}
+					other_rulers = {
+						character_modifier = {
+							trade_expertise_growth_mult = 0.15
+							monthly_income_from_trade_mult = 0.05
+							trade_route_length_add = -1
 						}
 					}
 				}
@@ -1446,11 +1449,6 @@ dynastic_cycle = {
 							dynastic_cycle_locks_title_integration = yes
 						}
 					}
-					other_rulers = {
-						parameters = {
-							dynastic_cycle_no_effects = yes
-						}
-					}
 				}
 
 				dynastic_cycle_character_effects = {
@@ -1502,6 +1500,15 @@ dynastic_cycle = {
 						character_modifier = {
 							vassal_tax_contribution_mult = -0.2
 							vassal_opinion = -20
+						}
+					}
+					other_rulers = {
+						character_modifier = {
+							trade_category_cereals_sell_price_mult = 0.005
+							trade_category_base_metals_sell_price_mult = 0.005
+							trade_category_beasts_of_burden_sell_price_mult = 0.005
+							trade_category_luxury_items_sell_price_mult = -0.005
+							trade_capacity_mult = -0.1
 						}
 					}
 				}
@@ -1699,6 +1706,10 @@ dynastic_cycle = {
 			modifier_sets = {
 				dynastic_cycle_government_effects = {
 					hegemon_ruler = {
+						character_modifier = {
+							realm_governor_efficiency_add = -0.25
+							realm_governor_efficiency_per_legitimacy_level_add = 0.05
+						}
 						parameters = {
 							#phase defining effects
 							dynastic_cycle_more_peasant_factions = yes
@@ -1706,7 +1717,6 @@ dynastic_cycle = {
 							dynastic_cycle_vassal_internal_wars_allowed = yes
 							dynastic_cycle_internal_vassals_non_admin_war_desire = yes # NOT IMPLEMENTED
 							dynastic_cycle_offensive_wars_ban = yes
-							dynastic_cycle_governor_efficiency_penalty = yes
 							dynastic_cycle_external_tributaries_vassals_increased_independence_desire = yes
 							dynastic_cycle_vassals_reduced_independence_penalties = yes # NOT IMPLEMENTED
 							dynastic_cycle_locks_title_integration = yes
@@ -1722,7 +1732,6 @@ dynastic_cycle = {
 							#shared effects
 							dynastic_cycle_vassal_internal_wars_allowed = yes
 							dynastic_cycle_internal_vassals_non_admin_war_desire = yes # NOT IMPLEMENTED
-							dynastic_cycle_governor_efficiency_penalty = yes
 							dynastic_cycle_external_tributaries_vassals_increased_independence_desire = yes
 							dynastic_cycle_vassals_reduced_independence_penalties = yes # NOT IMPLEMENTED
 							dynastic_cycle_locks_title_integration = yes
@@ -1736,7 +1745,6 @@ dynastic_cycle = {
 							#shared effects
 							dynastic_cycle_vassal_internal_wars_allowed = yes
 							dynastic_cycle_internal_vassals_non_admin_war_desire = yes # NOT IMPLEMENTED
-							dynastic_cycle_governor_efficiency_penalty = yes
 							dynastic_cycle_external_tributaries_vassals_increased_independence_desire = yes
 							dynastic_cycle_vassals_reduced_independence_penalties = yes # NOT IMPLEMENTED
 							dynastic_cycle_locks_title_integration = yes
@@ -1750,7 +1758,6 @@ dynastic_cycle = {
 							#shared effects
 							dynastic_cycle_vassal_internal_wars_allowed = yes
 							dynastic_cycle_internal_vassals_non_admin_war_desire = yes # NOT IMPLEMENTED
-							dynastic_cycle_governor_efficiency_penalty = yes
 							dynastic_cycle_external_tributaries_vassals_increased_independence_desire = yes
 							dynastic_cycle_vassals_reduced_independence_penalties = yes # NOT IMPLEMENTED
 							dynastic_cycle_locks_title_integration = yes
@@ -1764,7 +1771,6 @@ dynastic_cycle = {
 							#shared effects
 							dynastic_cycle_vassal_internal_wars_allowed = yes
 							dynastic_cycle_internal_vassals_non_admin_war_desire = yes # NOT IMPLEMENTED
-							dynastic_cycle_governor_efficiency_penalty = yes
 							dynastic_cycle_external_tributaries_vassals_increased_independence_desire = yes
 							dynastic_cycle_vassals_reduced_independence_penalties = yes # NOT IMPLEMENTED
 							dynastic_cycle_locks_title_integration = yes
@@ -1793,7 +1799,7 @@ dynastic_cycle = {
 							mercenary_hire_cost_mult = 2.5
 							vassal_tax_mult = -0.2
 							vassal_opinion = -20
-							monthly_treasury_from_vassals = -0.01
+							monthly_treasury_from_vassals = -0.1
 							legitimacy_gain_mult = 0.2
 							legitimacy_loss_mult = 0.2
 							max_political_schemes_add = 1
@@ -1836,6 +1842,13 @@ dynastic_cycle = {
 							vassal_opinion = -20
 						}
 					}
+					other_rulers = {
+						character_modifier = {
+							trade_competitiveness_add = 5
+							trade_category_precious_metals_sell_price_mult = 0.005
+							trade_capacity_mult = -0.1
+						}
+					}
 				}
 			}
 		}
@@ -1855,6 +1868,11 @@ dynastic_cycle = {
 						}
 						trigger_event = tgp_dynastic_cycle.0081 # China shatters
 					}
+				}
+				# safeguard in case start with chaos
+				if = {
+					limit = { NOT = { exists = scope:huangdi } }
+					title:h_china.previous_holder ?= { save_scope_as = huangdi }
 				}
 				tgp_dynastic_cycle_record_history_phase_change_effect = {
 					PHASE = situation_dynastic_cycle_phase_chaos
@@ -1929,7 +1947,22 @@ dynastic_cycle = {
 							dynastic_cycle_reclaim_mandate_decision = yes
 						}
 						county_modifier = {
-							tax_mult = -0.2
+							civic_tax_mult = -0.2
+							urban_tax_mult = -0.2
+							prosperity_growth_factor = -0.5
+							prosperity_decline = -0.5
+							control_baseline_add = -10
+						}
+					}
+				}
+
+				dynastic_cycle_character_effects = {
+					other_rulers = {
+						character_modifier = {
+							trade_route_length_add = -2
+							trade_capacity_mult = -0.2
+							trade_category_base_metals_sell_price_mult = 0.005
+							trade_competitiveness_mult = 0.15
 						}
 					}
 				}
@@ -1943,6 +1976,8 @@ dynastic_cycle = {
 		movement_petition_decision
 		situation_dynastic_cycle_claim_mandate_decision
 		situation_dynastic_cycle_favor_own_culture_for_appointments
+		favor_movement_decision
+		situation_dynastic_cycle_choose_movement_decision
 	}
 
 	##################################################

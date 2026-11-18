@@ -1112,6 +1112,7 @@ trait_specific.7001 = {
 	trigger = {
 		NOT = { has_trait = drunkard }
 		age >= 12
+		stress >= lower_than_baseline_stress
 	}
 
 	weight_multiplier = {
@@ -1131,6 +1132,13 @@ trait_specific.7001 = {
 		modifier = {
 			add = -0.25
 			has_trait = temperate
+		}
+		modifier = {
+			add = {
+				value = stress_level
+				divide = 3 # 1 = 0.3
+				min = 0
+			}
 		}
 	}
 
@@ -1235,7 +1243,7 @@ trait_specific.8001 = {
 
 	option = { #I am not interested
 		name = trait_specific.8002.b
-		add_gold = minor_gold_value
+		add_gold = tiny_gold_value
 	}
 }
 

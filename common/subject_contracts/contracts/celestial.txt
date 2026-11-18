@@ -2,11 +2,11 @@
 	obligation_levels = {
 		default = {
 			levies = {
-				value = 0.3
+				value = 0.2
 			}
 
 			tax = {
-				value = 0.75
+				value = 0.5
 			}
 		}
 	}
@@ -146,9 +146,10 @@ celestial_provinces = {
 			enable_title_maa = no
 
 			subject_modifier = {
-				development_growth_factor = 0.05
-				build_gold_cost = -0.1
+				prosperity_growth_factor = 0.05
 				build_speed = -0.2
+				artisan_tax_mult = 0.05
+				mining_tax_mult = 0.05
 				monthly_merit_per_liege_tax = 1.2
 			}
 
@@ -284,10 +285,11 @@ celestial_provinces = {
 			enable_title_maa = no
 
 			subject_modifier = {
-				domain_tax_mult = 0.05
-				development_growth_factor = 0.05
-				monthly_county_control_growth_factor = -0.1
+				urban_tax_mult = 0.05
+				prosperity_growth_factor = 0.05
+				monthly_control_change_when_below_baseline_mult = 0.1
 				monthly_merit_per_liege_tax = 2.4
+				governor_efficiency_per_diplomacy_add = 0.005
 			}
 
 			flag = celestial_civil_appointment
@@ -440,8 +442,8 @@ celestial_provinces = {
 			levies_factor = 0.5
 
 			subject_modifier = {
-				development_growth_factor = -0.2
-				monthly_county_control_growth_factor = 0.1
+				prosperity_growth_factor = -0.2
+				monthly_control_change_when_above_baseline_mult = -0.1
 				additional_fort_level = 2
 				defender_advantage = 4
 				monthly_merit_per_title_maa_value = 0.024
@@ -582,7 +584,7 @@ celestial_provinces = {
 			levies_factor = -1
 
 			subject_modifier = {
-				development_growth_factor = -0.3
+				prosperity_growth_factor = -0.3
 				maa_damage_mult = 0.1
 				men_at_arms_title_cap = 1
 				men_at_arms_title_limit = 1
@@ -591,6 +593,7 @@ celestial_provinces = {
 				domain_tax_mult = -0.2
 
 				monthly_treasury_from_military_budget_base = 1.5
+				governor_efficiency_per_martial_add = 0.005
 			}
 
 			flag = admin_ai_is_warlike

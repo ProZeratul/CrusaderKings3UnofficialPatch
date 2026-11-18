@@ -224,7 +224,12 @@ tgp_silk_road_innovation_setup_add_effect = {
 
 tgp_silk_road_innovation_setup_effect = {
 	if = {
-		limit = { has_tgp_dlc_trigger = yes }
+		limit = {
+			OR = {
+				has_tgp_dlc_trigger = yes # All Under Heaven
+				has_gdp_dlc_trigger = yes # Silk & Silver
+			}
+		}
 		# CHAM
 		culture:cham = {
 			tgp_silk_road_innovation_setup_add_effect = { INNOVATION = champa_rice }
@@ -297,6 +302,37 @@ tgp_silk_road_innovation_setup_effect = {
 				# 震天雷 by 1044
 				tgp_silk_road_innovation_setup_add_effect = { INNOVATION = grenades }
 			}
+		}
+	}
+}
+
+# Lacquerware exists without TGP or GDP, unlike the other Silk Road innovations, but needs one to spread
+lacquerware_innovation_setup_effect = {
+	# CHINA
+	culture:han = {
+		# Pre-Tang
+		tgp_silk_road_innovation_setup_add_effect = { INNOVATION = lacquerware }
+	}
+	# JAPAN
+	culture:japanese = {
+		tgp_silk_road_innovation_setup_add_effect = { INNOVATION = lacquerware }
+	}
+	# KOREA
+	culture:baekje = {
+		tgp_silk_road_innovation_setup_add_effect = { INNOVATION = lacquerware }
+	}
+	culture:goguryeo = {
+		tgp_silk_road_innovation_setup_add_effect = { INNOVATION = lacquerware }
+	}
+	culture:silla = {
+		tgp_silk_road_innovation_setup_add_effect = { INNOVATION = lacquerware }
+	}
+	culture:goryeo = {
+		if = {
+			limit = {
+				game_start_date >= 1066.1.1
+			}
+			tgp_silk_road_innovation_setup_add_effect = { INNOVATION = lacquerware }
 		}
 	}
 }
@@ -511,10 +547,22 @@ tgp_silk_road_mongol_devastation_effect = { # county scope
 }
 
 tgp_silk_road_iranian_intermezzo_yearly_effect = {
+	# NO SOT
 	if = {
 		limit = {
+			NOT = { exists = struggle:persian_struggle }
+			title:e_persia.holder ?= { is_in_civil_war = yes }
+			situation_has_catalyst = catalyst_silk_road_persia_civil_war
+		}
+		situation:silk_road_situation.situation_sub_region:region_silk_road_proper_occident ?= {
+			trigger_sub_region_catalyst = { catalyst = catalyst_silk_road_persia_civil_war }
+		}
+	}
+	# SOT
+	else_if = {
+		limit = {
 			struggle:persian_struggle ?= { is_struggle_phase = struggle_persia_phase_unrest }
-			situation:silk_road_situation ?= { situation_has_catalyst = catalyst_silk_road_iranian_intermezzo_in_unrest }
+			situation_has_catalyst = catalyst_silk_road_iranian_intermezzo_in_unrest
 		}
 		situation:silk_road_situation.situation_sub_region:region_silk_road_proper_occident ?= {
 			trigger_sub_region_catalyst = { catalyst = catalyst_silk_road_iranian_intermezzo_in_unrest }
@@ -552,8 +600,41 @@ tgp_silk_road_china_consolidation_effect = {
 }
 
 tgp_silk_road_china_stability_effect = {
+	# NO AUH
 	if = {
 		limit = {
+			exists = title:h_china.holder
+			NOT = { exists = situation:dynastic_cycle }
+		}
+		if = {
+			limit = { # China is at Peace
+				situation_has_catalyst = catalyst_silk_road_china_no_war
+				title:h_china.holder = { is_at_war = no }
+			}
+			every_situation_sub_region = {
+				trigger_sub_region_catalyst = {
+					catalyst = catalyst_silk_road_china_no_war
+					character = title:h_china.holder
+				}
+			}
+		}
+		else_if = { # China is in Civil War
+			limit = {
+				situation_has_catalyst = catalyst_silk_road_china_civil_war
+				title:h_china.holder = { is_in_civil_war = yes }
+			}
+			every_situation_sub_region = {
+				trigger_sub_region_catalyst = {
+					catalyst = catalyst_silk_road_china_civil_war
+					character = title:h_china.holder
+				}
+			}
+		}
+	}
+	# AUH
+	else_if = {
+		limit = {
+			situation_has_catalyst = catalyst_silk_road_china_stability
 			situation:dynastic_cycle = {
 				OR = {
 					situation_current_phase = situation_dynastic_cycle_phase_stability
@@ -562,15 +643,19 @@ tgp_silk_road_china_stability_effect = {
 				}
 			}
 		}
-		situation:silk_road_situation ?= {
+		title:h_china = {
 			if = {
-				limit = { situation_has_catalyst = catalyst_silk_road_china_stability }
-				every_situation_sub_region = {
-					trigger_sub_region_catalyst = {
-						catalyst = catalyst_silk_road_china_stability
-						character = scope:huangdi
-					}
-				}
+				limit = { exists = holder }
+				holder = { save_scope_as = huangdi }
+			}
+			else = {
+				previous_holder = { save_scope_as = huangdi }
+			}
+		}
+		every_situation_sub_region = {
+			trigger_sub_region_catalyst = {
+				catalyst = catalyst_silk_road_china_stability
+				character = scope:huangdi
 			}
 		}
 	}
@@ -578,27 +663,55 @@ tgp_silk_road_china_stability_effect = {
 
 tgp_silk_road_feudalize_holding_effect = {
 	save_temporary_scope_as = county_temp
-	random_county_situation = {
+	if = {
 		limit = {
-			situation_type = silk_road_situation
-			situation_has_catalyst = catalyst_silk_road_mpo_region_resettled
+			prev = { holding_is_nomad = yes }
 		}
-		trigger_situation_catalyst = {
-			catalyst = catalyst_silk_road_mpo_region_resettled
-			county = scope:county_temp.title_province #Unop The county argument takes a province, not a title
-			character = scope:actor
+		random_county_situation = {
+			limit = {
+				situation_type = silk_road_situation
+				situation_has_catalyst = catalyst_silk_road_mpo_region_resettled
+			}
+			trigger_situation_catalyst = {
+				catalyst = catalyst_silk_road_mpo_region_resettled
+				county = scope:county_temp.title_province #Unop The county argument takes a province, not a title
+				character = scope:actor
+			}
 		}
 	}
 }
 
 tgp_silk_road_byzantium_destroyed_effect = {
-	situation:silk_road_situation = {
+	situation:silk_road_situation ?= {
 		if = {
 			limit = { situation_has_catalyst = catalyst_silk_road_byzantium_blew_up }
 			situation_sub_region:region_silk_road_proper_occident = {
 				trigger_sub_region_catalyst = {
 					catalyst = catalyst_silk_road_byzantium_blew_up
 					character = title:e_byzantium.previous_holder
+				}
+			}
+		}
+	}
+}
+
+tgp_silk_road_china_destroyed_effect = {
+	situation:silk_road_situation ?= {
+		if = {
+			limit = { situation_has_catalyst = catalyst_silk_road_china_blew_up }
+			title:h_china = {
+				if = {
+					limit = { exists = holder }
+					holder = { save_scope_as = huangdi }
+				}
+				else = {
+					previous_holder = { save_scope_as = huangdi }
+				}
+			}
+			every_situation_sub_region = {
+				trigger_sub_region_catalyst = {
+					catalyst = catalyst_silk_road_china_blew_up
+					character = scope:huangdi
 				}
 			}
 		}

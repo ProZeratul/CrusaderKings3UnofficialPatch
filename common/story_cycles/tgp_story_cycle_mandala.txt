@@ -16,9 +16,6 @@
 				add = 1
 			}
 		}
-
-		#Should we add some bonuses here? Modifiers? Levy size?
-
 		story_owner = {
 			set_variable = mandala_godking
 		}
@@ -142,7 +139,7 @@
 											holder = scope:subject_trigger_check
 											title_province = {
 												has_building_with_flag = mandala_capital_building
-												has_ruined_great_building = no
+												has_ruined_great_district = no
 											}
 										}
 									}
@@ -160,7 +157,7 @@
 											holder = scope:subject_check
 											title_province = {
 												has_building_with_flag = mandala_capital_building
-												has_ruined_great_building = no
+												has_ruined_great_district = no
 											}
 										}
 									}
@@ -357,7 +354,7 @@
 										}
 										if = {
 											limit = {
-												any_realm_province = { has_free_building_slot = yes }
+												any_realm_province = { has_free_district_slot = yes }
 											}
 											ai_attempt_to_build_building_effect = yes
 										}
@@ -365,7 +362,7 @@
 											limit = {
 												any_realm_province = { 
 													has_holding = no
-													has_ongoing_construction = no
+													has_ongoing_holding_construction = no
 												}
 											}
 											random = {
@@ -373,7 +370,7 @@
 												random_realm_province = {
 													limit = { 
 														has_holding = no
-														has_ongoing_construction = no
+														has_ongoing_holding_construction = no
 													}
 													begin_create_holding = temple_citadel_holding
 												}
@@ -428,7 +425,7 @@
 										}
 										if = {
 											limit = {
-												any_realm_province = { has_free_building_slot = yes }
+												any_realm_province = { has_free_district_slot = yes }
 											}
 											ai_attempt_to_build_building_effect = yes
 										}
@@ -436,7 +433,7 @@
 											limit = {
 												any_realm_province = { 
 													has_holding = no
-													has_ongoing_construction = no
+													has_ongoing_holding_construction = no
 												}
 											}
 											random = {
@@ -444,7 +441,7 @@
 												random_realm_province = {
 													limit = { 
 														has_holding = no
-														has_ongoing_construction = no
+														has_ongoing_holding_construction = no
 													}
 													begin_create_holding = temple_citadel_holding
 												}
@@ -511,7 +508,7 @@
 										}
 										if = {
 											limit = {
-												any_realm_province = { has_free_building_slot = yes }
+												any_realm_province = { has_free_district_slot = yes }
 											}
 											ai_attempt_to_build_building_effect = yes
 										}
@@ -519,7 +516,7 @@
 											limit = {
 												any_realm_province = { 
 													has_holding = no
-													has_ongoing_construction = no
+													has_ongoing_holding_construction = no
 												}
 											}
 											random = {
@@ -527,7 +524,7 @@
 												random_realm_province = {
 													limit = { 
 														has_holding = no
-														has_ongoing_construction = no
+														has_ongoing_holding_construction = no
 													}
 													begin_create_holding = temple_citadel_holding
 												}
@@ -671,7 +668,7 @@
 									else_if = {
 										limit = {
 											capital_province = {
-												has_ongoing_construction = no
+												has_ongoing_holding_construction = no
 												OR = {
 													has_building = castle_01
 													has_building = temple_01
@@ -683,22 +680,7 @@
 										capital_province = {
 											random = {
 												chance = 30
-												if = {
-													limit = { has_building = castle_01 }
-													add_building = castle_02
-												}
-												if = {
-													limit = { has_building = temple_citadel_01 }
-													add_building = temple_citadel_02
-												}
-												if = {
-													limit = { has_building = city_01 }
-													add_building = city_02
-												}
-												if = {
-													limit = { has_building = temple_01 }
-													add_building = temple_02
-												}
+												upgrade_holding_primary_building_effect = yes
 											}
 										}
 									}
@@ -743,7 +725,7 @@
 									else_if = {
 										limit = {
 											capital_province = {
-												has_ongoing_construction = no
+												has_ongoing_holding_construction = no
 												OR = {
 													has_building = castle_02
 													has_building = temple_02
@@ -755,22 +737,7 @@
 										capital_province = {
 											random = {
 												chance = 30
-												if = {
-													limit = { has_building = castle_02 }
-													add_building = castle_03
-												}
-												if = {
-													limit = { has_building = temple_citadel_02 }
-													add_building = temple_citadel_03
-												}
-												if = {
-													limit = { has_building = city_02 }
-													add_building = city_03
-												}
-												if = {
-													limit = { has_building = temple_02 }
-													add_building = temple_03
-												}
+												upgrade_holding_primary_building_effect = yes
 											}
 										}
 									}
@@ -1129,7 +1096,7 @@
 								}
 								remove_short_term_gold = ai_rebuild_value
 								add_piety = ai_rebuild_value
-								capital_province = { rebuild_great_building = yes }
+								capital_province = { rebuild_great_district = yes }
 							}
 							else = {
 								move_budget_gold = { gold = short_term_gold from = budget_war_chest to = budget_short_term }
@@ -1142,7 +1109,7 @@
 									}
 									remove_short_term_gold = ai_rebuild_value
 									add_piety = ai_rebuild_value
-									capital_province = { rebuild_great_building = yes }
+									capital_province = { rebuild_great_district = yes }
 								}
 							}	
 						}
@@ -1359,11 +1326,13 @@
 											has_unfunded_contribution_in_planned_mandala_capital_trigger = yes
 											house = { has_house_aspiration_parameter = aspect_of_creation }
 											is_house_head = yes
-											any_scheme = {
-												NOR = {
-													scheme_type = coerce_contribution
-													scheme_type = leverage_contribution
-													scheme_type = coerce_tributary
+											NOT = {
+												any_scheme = {
+													OR = {
+														scheme_type = coerce_contribution
+														scheme_type = leverage_contribution
+														scheme_type = coerce_tributary
+													}
 												}
 											}
 										}
@@ -1426,11 +1395,13 @@
 											has_unfunded_contribution_in_planned_mandala_capital_trigger = yes
 											house = { has_house_head_parameter = unlock_leverage_contribution_scheme }
 											is_house_head = yes
-											any_scheme = {
-												NOR = {
-													scheme_type = coerce_contribution
-													scheme_type = leverage_contribution
-													scheme_type = coerce_tributary
+											NOT = {
+												any_scheme = {
+													OR = {
+														scheme_type = coerce_contribution
+														scheme_type = leverage_contribution
+														scheme_type = coerce_tributary
+													}
 												}
 											}
 										}
@@ -1867,11 +1838,13 @@
 						limit = {
 							house = { has_house_head_parameter = unlock_coerce_tributary_scheme }
 							is_house_head = yes
-							any_scheme = {
-								NOR = {
-									scheme_type = coerce_contribution
-									scheme_type = leverage_contribution
-									scheme_type = coerce_tributary
+							NOT = {
+								any_scheme = {
+									OR = {
+										scheme_type = coerce_contribution
+										scheme_type = leverage_contribution
+										scheme_type = coerce_tributary
+									}
 								}
 							}
 						}
@@ -1964,13 +1937,15 @@
 							house = { has_house_head_parameter = unlock_disbelieve_mandala_scheme }
 							is_house_head = yes
 							OR = {
-								any_scheme = {
-									NOR = {
-										scheme_type = disbelieve_mandala
-										scheme_type = murder
-										scheme_type = abduct
-										scheme_type = claim_throne
-										scheme_type = fabricate_hook
+								NOT = {
+									any_scheme = {
+										OR = {
+											scheme_type = disbelieve_mandala
+											scheme_type = murder
+											scheme_type = abduct
+											scheme_type = claim_throne
+											scheme_type = fabricate_hook
+										}
 									}
 								}
 								AND = {

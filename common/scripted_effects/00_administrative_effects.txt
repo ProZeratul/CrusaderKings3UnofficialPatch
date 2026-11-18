@@ -53,16 +53,6 @@ change_to_administrative_effect = {
 	else = {
 		top_liege = { save_scope_as = governor_liege }
 	}
-	# exactly 0 treasury,  i.e. newly get this feature
-	if = {
-		limit = {
-			OR = {
-				has_treasury = no
-				treasury = 0
-			}
-		}
-		save_scope_as = new_treasury
-	}
 	# Set the correct government
 	if = {
 		limit = {
@@ -219,14 +209,12 @@ change_to_administrative_effect = {
 			change_government = meritocratic_government
 		}
 		else = { # Administrative
-			add_character_flag = new_government_is_byz_admin
 			change_to_administrative_holding_effect = yes
 			tgp_domicile_conversion_when_changing_government_type = {
 				NEW_DOMICILE_TYPE = estate
 				NEW_GOVERNMENT_TYPE = administrative_government
 			}
 			change_government = administrative_government
-			remove_character_flag = new_government_is_byz_admin
 		}
 	}
 	# Set up a noble family title
@@ -264,16 +252,6 @@ change_to_administrative_effect = {
 		}
 		domicile ?= {
 			set_up_domicile_estate_effect = yes
-		}
-	}
-	if = {
-		limit = {
-			has_treasury = yes
-			exists = scope:new_treasury  # do not give it mutiple times
-		}
-		add_treasury = {
-			value = gold
-			min = 100
 		}
 	}
 }
@@ -386,17 +364,21 @@ change_to_administrative_interaction_effect = {
 give_new_noble_family_title_effect = {
 	if = {
 		limit = {
-			is_house_head = yes
 			government_allows = noble_families
 			trigger_if = {
-				limit = {
-					government_has_flag = government_has_county_tier_noble_families
-				}
-				highest_held_title_tier >= tier_county
+				limit = { government_has_mechanic = administrative } # excludes republic/soryo
+				is_house_head = yes
+				highest_held_title_tier >= min_appointment_tier
+				liege = { government_allows = noble_families }
 			}
-			trigger_else = { highest_held_title_tier >= tier_duchy }
-			liege = {
-				government_allows = noble_families
+			# Republic house members in the same republic as their house head must not found a cadet branch
+			trigger_if = {
+				limit = {
+					government_has_flag = government_is_republic
+					is_house_head = no
+					exists = house.house_head.highest_liege_matching_mechanic:republic
+				}
+				NOT = { highest_liege_matching_mechanic:republic = house.house_head.highest_liege_matching_mechanic:republic }
 			}
 			trigger_if = {
 				limit = { any_held_title = { is_noble_family_title = yes } }
@@ -532,6 +514,22 @@ noble_family_title_realm_setup_effect = {
 			set_color_from_title = scope:nf_holder.capital_county
 			# Ensure Noble Family CoA match House
 			set_coa = scope:nf_house
+		}
+	}
+}
+
+empty_treasury_effect = {
+	if = {
+		limit = { treasury > 0 }
+		remove_treasury = treasury
+	}
+	else_if = {
+		limit = { treasury < 0 }
+		hidden_effect = {
+			add_treasury = {
+				value = treasury
+				multiply = -1
+			}
 		}
 	}
 }

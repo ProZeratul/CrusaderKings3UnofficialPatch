@@ -32,6 +32,7 @@ is_roman_emperor_excluding_byzantium_trigger = {
 	OR = {
 		has_title = title:h_roman_empire
 		has_title = title:h_eastern_roman_empire
+		has_title = title:h_roman_republic
 	}
 }
 
@@ -61,6 +62,7 @@ is_roman_emperor_primary_title_excluding_byzantium_trigger = {
 	OR = {
 		primary_title ?= title:h_roman_empire
 		primary_title ?= title:h_eastern_roman_empire
+		primary_title ?= title:h_roman_republic
 	}
 }
 
@@ -212,7 +214,7 @@ restore_greece_decision_county_trigger = {
 			holder.top_liege = root
 			has_county_modifier = backwater_county_modifier
 		}
-		development_level >= 50
+		prosperity_level >= 50
 	}
 }
 
@@ -352,7 +354,7 @@ governor_contract_invalidated_message_trigger = {
 	task_contract_employer ?= {
 		NOT = { root.task_contract_taker ?= this }
 		OR = {
-			is_incapable = yes
+			is_available_quick = { incapable = yes }
 			is_imprisoned = yes
 			is_alive = no
 		}
@@ -380,7 +382,7 @@ chariot_race_0201_negative_crowd_reaction_trigger = {
 		scope:activity.var:emperor_speech_topic = flag:discredit_claimant_fail
 		AND = {
 			scope:host.capital_county = {
-				county_opinion <= -30
+				popular_opinion <= -30
 			}
 			NOT = { scope:activity.var:emperor_speech_topic = flag:appease_populace }
 		}
@@ -1213,6 +1215,36 @@ has_any_gallowsbait_xp_trigger = {
 	}
 }
 
+notorious_gallowsbait_xp_trigger = {
+	OR = {
+		has_trait_xp = {
+			trait = gallowsbait
+			track = bandit
+			value >= 40
+		}
+		has_trait_xp = {
+			trait = gallowsbait
+			track = trickster
+			value >= 40
+		}
+		has_trait_xp = {
+			trait = gallowsbait
+			track = marauder
+			value >= 40
+		}
+		has_trait_xp = {
+			trait = gallowsbait
+			track = poacher
+			value >= 40
+		}
+		has_trait_xp = {
+			trait = gallowsbait
+			track = thief
+			value >= 40
+		}
+	}
+}
+
 ep3_restored_rome_hard_mode_trigger = {
 	OR = {
 		this = title:h_roman_empire.holder
@@ -1627,14 +1659,14 @@ hasan_evangelize_province_trigger = {
 			}
 		}
 	}
-	development_level <= 25
+	prosperity_level <= 25
 	custom_tooltip = {
 		text = has_tougher_to_convert_tt
 		NOT = { has_county_modifier = tougher_to_convert }
 	}
 	custom_tooltip = {
-		text = 0_or_below_county_opinion_tt
-		county_opinion <= 0
+		text = 0_or_below_popular_opinion_tt
+		popular_opinion <= 0
 	}
 	custom_tooltip = {
 		text = NOT_IS_HOLY_SITE_TRIGGER

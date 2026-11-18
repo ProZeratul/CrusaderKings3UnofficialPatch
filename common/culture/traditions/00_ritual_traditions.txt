@@ -300,6 +300,7 @@ tradition_sacred_mountains = {
 	parameters = {
 		piety_gain_on_building_complete_in_mountains = yes
 		zealous_people_internal_yurt_unlock = yes
+		sacred_mountains_religious_building_slot = yes
 	}
 	
 	character_modifier = {
@@ -437,6 +438,9 @@ tradition_sacred_groves = {
 	
 	parameters = {
 		piety_gain_on_building_complete_in_forest_taiga = yes
+		sacred_groves_holding_religious_tax = yes
+		sacred_groves_religious_building_slot = yes
+		sacred_groves_building = yes
 	}
 	province_modifier = {
 		forest_tax_mult = 0.05
@@ -572,6 +576,11 @@ tradition_culinary_art = {
 		renown_from_feasts = yes
 		characters_are_better_food_tasters = yes
 		better_food_tasters = yes
+		culinary_artists_spice_needs = yes
+	}
+
+	character_modifier = {
+		trade_good_spices_buy_price_mult = -0.0075
 	}
 	
 	cost = {
@@ -662,6 +671,10 @@ tradition_festivities = {
 		reveler_traits_more_common = yes
 		reveler_traits_more_valued = yes
 	}
+
+	character_modifier = {
+		trade_category_alcohol_buy_price_mult = -0.0075
+	}
 	
 	cost = {
 		prestige = {
@@ -694,7 +707,7 @@ tradition_festivities = {
 						NOT = {
 							any_ruler = {
 								count >= 5
-								culture = prev
+								culture_filter = root
 								primary_title.tier >= tier_county
 								has_trait = lifestyle_reveler
 							}
@@ -766,9 +779,9 @@ tradition_sorcerous_metallurgy = {
 	parameters = {
 		more_expensive_weapon_inspiration = yes
 		improved_weapon_inspiration = yes
-		building_barracks_piety_bonuses = yes
 		sorcerous_metallurgy_internal_yurt_unlock = yes
 		nomadic_metal_artifact_unlock = yes
+		sorcerous_metallurgy_sacred_forge = yes
 	}
 
 	character_modifier = {
@@ -805,7 +818,7 @@ tradition_sorcerous_metallurgy = {
 						NOT = {
 							any_ruler = {
 								count >= 3
-								culture = prev
+								culture_filter = root
 								primary_title.tier >= tier_county
 								has_trait = witch
 							}
@@ -881,10 +894,11 @@ tradition_mystical_ancestors = {
 		cannot_disherit = yes
 		landing_house_members_gives_renown = yes
 		piety_penalty_for_revoking_titles_from_house_members = yes
+		mystical_ancestors_lineage_archive = yes
 	}
 
 	character_modifier = {
-		dynasty_opinion = 10
+		dynasty_opinion = 5
 	}
 
 	cost = {
@@ -1092,7 +1106,7 @@ tradition_religious_patronage = {
 						NOT = {
 							any_ruler = {
 								count >= 5
-								culture = prev
+								culture_filter = root
 								primary_title.tier >= tier_county
 								faith = scope:character.faith
 								has_trait = zealous
@@ -1147,10 +1161,17 @@ tradition_medicinal_plants = {
 	parameters = {
 		herbalist_traits_more_common = yes
 		herbalist_trait_gives_bonuses = yes
+		medicinal_plants_herb_gardens_unlock = yes
+		medicinal_plants_medicaments_district_tax = yes
 	}
 
 	character_modifier = {
 		owned_hostile_scheme_success_chance_add = 5
+		trade_category_medicaments_xp_gain_mult = 0.2
+		trade_good_medicaments_sell_price_mult = 0.02
+	}
+	province_modifier = {
+		trade_category_medicaments_production_mult = 0.2
 	}
 	
 	cost = {
@@ -1183,7 +1204,7 @@ tradition_medicinal_plants = {
 						NOT = {
 							any_ruler = {
 								count >= 3
-								culture = prev
+								culture_filter = root
 								primary_title.tier >= tier_county
 								has_trait = lifestyle_herbalist
 							}
@@ -1285,7 +1306,7 @@ tradition_sacred_hunts = {
 						NOT = {
 							any_ruler = {
 								count >= 5
-								culture = prev
+								culture_filter = root
 								primary_title.tier >= tier_county
 								has_trait = lifestyle_hunter
 							}
@@ -1371,7 +1392,7 @@ tradition_faith_bound = {
 								is_ai = no
 							}
 							any_ruler = {
-								culture = prev
+								culture_filter = root
 								THIS != scope:character
 								faith = scope:character.faith
 								primary_title.tier >= tier_county
@@ -1380,7 +1401,7 @@ tradition_faith_bound = {
 						NOT = {
 							any_ruler = {
 								percent >= 0.9
-								culture = prev
+								culture_filter = root
 								primary_title.tier >= tier_county
 								faith = scope:character.faith
 							}
@@ -1494,7 +1515,7 @@ tradition_by_the_sword = {
 						NOT = {
 							any_ruler = {
 								count >= 5
-								culture = prev
+								culture_filter = root
 								primary_title.tier >= tier_county
 								faith = scope:character.faith
 								has_trait = zealous
@@ -1672,7 +1693,7 @@ tradition_runestones = {
 						NOT = {
 							any_ruler = {
 								count >= 5
-								culture = prev
+								culture_filter = root
 								primary_title.tier >= tier_county
 								OR = {
 									has_trait = lifestyle_poet

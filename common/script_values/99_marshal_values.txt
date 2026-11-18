@@ -81,10 +81,22 @@ marshal_organize_levies_pandidakterion_bonus = {
 marshal_organize_levies_modifier_total = {
 	add = marshal_organize_levies_base
 	add = marshal_organize_levies_skill_base
-	add = marshal_organize_levies_erudition_bonus
-	add = marshal_organize_levies_family_business_bonus
-	add = marshal_organize_levies_consulted_house_bonus
-	add = marshal_organize_levies_pandidakterion_bonus
+	if = {
+		limit = { councillor_liege_has_erudition_legacy_5_perk = yes }
+		add = marshal_organize_levies_erudition_bonus
+	}
+	if = {
+		limit = { councillor_liege_has_family_business_bonus = yes }
+		add = marshal_organize_levies_family_business_bonus
+	}
+	if = {
+		limit = { councillor_liege_has_consulted_house_bonus = yes }
+		add = marshal_organize_levies_consulted_house_bonus
+	}
+	if = {
+		limit = { scope:councillor_liege = { has_title = title:c_byzantion } }
+		add = marshal_organize_levies_pandidakterion_bonus
+	}
 }
 
 ### Army maintenance
@@ -165,10 +177,22 @@ task_organize_levies_maintenance_pandidakterion_bonus = {
 marshal_organize_levies_maintenance_total = {
 	add = marshal_organize_levies_maintenance_base
 	add = marshal_organize_levies_maintenance_skill_base
-	add = marshal_organize_levies_maintenance_erudition_bonus
-	add = marshal_organize_levies_maintenance_family_business_bonus
-	add = marshal_organize_levies_maintenance_consulted_house_bonus
-	add = task_organize_levies_maintenance_pandidakterion_bonus
+	if = {
+		limit = { councillor_liege_has_erudition_legacy_5_perk = yes }
+		add = marshal_organize_levies_maintenance_erudition_bonus
+	}
+	if = {
+		limit = { councillor_liege_has_family_business_bonus = yes }
+		add = marshal_organize_levies_maintenance_family_business_bonus
+	}
+	if = {
+		limit = { councillor_liege_has_consulted_house_bonus = yes }
+		add = marshal_organize_levies_maintenance_consulted_house_bonus
+	}
+	if = {
+		limit = { scope:councillor_liege = { has_title = title:c_byzantion } }
+		add = task_organize_levies_maintenance_pandidakterion_bonus
+	}
 }
 
 ########################
@@ -307,7 +331,56 @@ marshal_increase_control_current_progress = {
 	}
 }
 
+marshal_increase_control_max_progress = {
+	value = 0
+	if = {
+		limit = { exists = scope:county }
+		add = scope:county.county_control_baseline
+	}
+}
+
 marshal_increase_control_base = 0.2
+
+
+manor_houses_marshal_increase_control_bonus = {
+	value = 0
+	if = {
+		limit = {
+			exists = scope:county
+			scope:county.title_province = {
+				province_has_district = manor_houses_district
+			}
+		}
+		add = manor_marshal_control_task_bonus
+		if = {
+			limit = {
+				scope:county.title_province = {
+					has_building = pb_manor_houses_02
+				}
+			}
+			multiply = 2
+		}
+		else_if = {
+			limit = {
+				scope:county.title_province = {
+					has_building = pb_manor_houses_03
+				}
+			}
+			multiply = 3
+		}
+		else_if = {
+			limit = {
+				scope:county.title_province = {
+					has_building = pb_manor_houses_04
+				}
+			}
+			multiply = 4
+		}
+		else = {
+			#multiply = 1
+		}
+	}
+}
 
 marshal_increase_county_control_monthly_change = {
 	add = martial
@@ -439,11 +512,23 @@ marshal_increase_county_control_experience_bonus_monthly_change = {
 marshal_increase_control_total = {
 	value = marshal_increase_control_base
 	add = marshal_increase_county_control_monthly_change
-	add = marshal_increase_control_monthly_increase_friend_bonus
-	add = marshal_increase_control_monthly_increase_best_friend_bonus
-	add = marshal_increase_control_monthly_increase_rival_bonus
-	add = marshal_increase_control_monthly_increase_nemesis_bonus
+	if = {
+		limit = {
+			# Best friends and nemeses also count as friends and rivals
+			scope:councillor_liege = {
+				OR = {
+					has_relation_friend = scope:councillor
+					has_relation_rival = scope:councillor
+				}
+			}
+		}
+		add = marshal_increase_control_monthly_increase_friend_bonus
+		add = marshal_increase_control_monthly_increase_best_friend_bonus
+		add = marshal_increase_control_monthly_increase_rival_bonus
+		add = marshal_increase_control_monthly_increase_nemesis_bonus
+	}
 	add = marshal_increase_county_control_perk_bonus_monthly_change
+	add = manor_houses_marshal_increase_control_bonus
 	if = {
 		limit = {
 			councillor_liege_has_erudition_legacy_5_perk = yes
@@ -648,8 +733,7 @@ marshal_reliable_house_scale = {
 	value = 0
 	if = {
 		limit = {
-			exists = liege.dynasty
-			liege.dynasty = { has_dynasty_perk = fp2_coterie_legacy_2 }
+			liege.dynasty ?= { has_dynasty_perk = fp2_coterie_legacy_2 }
 			house = liege.house
 		}
 		add = martial

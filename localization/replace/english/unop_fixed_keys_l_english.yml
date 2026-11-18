@@ -64,8 +64,8 @@
  ai_opinion.reason.laamp_stooge: "Not a chance : $VALUE|=+0$"
  # [target_activity_host.GetPossessiveNameRegnal|U] > [target_activity_host.GetTitledFirstNamePossessive|U]
  activity_system.0310.desc.intro:0 "The blaring of the war horns have reached me here in [target_activity_location.GetName] as I am attending [target_activity_host.GetTitledFirstNamePossessive|U] [target_activity_type.GetNameNoTooltip]. I have been summoned to aid in the war between [attacker.GetTitledFirstName|U] and [defender.GetTitledFirstName|U]."
- # Not a fix, just rephrased it since you are now allowing you to build on another special building slot
- mpo_pleasure_dome_barony_decision_tt_first: "#weak The holding must be the capital of its [county|E], not be [leased|E], not already have a [special_building|E], and be in the [the_great_steppe|E]#!\n@warning_icon! #weak #color_red You will not be able to change this location at a later time!#!\n@warning_icon! #weak #color_red If the province has a special building slot, it will be used!#!"
+ # Not a fix, just rephrased it since you are now allowing you to build on another special district slot
+ mpo_pleasure_dome_barony_decision_tt_first: "#weak The holding must be the capital of its [county|E], not be [leased|E], not already have a [special_district|E], and be in the [the_great_steppe|E]#!\n@warning_icon! #weak #color_red You will not be able to change this location at a later time!#!\n@warning_icon! #weak #color_red If the province has a special district slot, it will be used!#!"
  #Replace hardcoded his with [famous_dead_parent.GetHerHis]
  bp2_yearly.4022.desc: "The light of [ROOT.Char.GetFaith.HighGodName] guides me in my holy quest, as it once guided my [pious_dead_parent.GetMotherFather], the great [pious_dead_parent.GetTitledFirstName]. The life of [ROOT.Char.GetFaith.HighGodNamePossessive] pious servant is not an easy one, yet I feel compelled to become even greater than my [pious_dead_parent.GetMotherFather].\n\nShould a good [ROOT.Char.GetFaith.GetAdherentNameNoTooltip] always relentlessly pursue the recognition of both [pious_dead_parent.GetHerHis] peers and [ROOT.Char.GetFaith.HighGodName]? Is a [pious_dead_parent.GetMotherFather]'s example a beacon to follow or a goal to achieve and surpass?"
  # triump and glory > triumph and glory
@@ -84,8 +84,6 @@
  action_join_tributary_war_label: "@war_icon! You can join the [tributary_war.GetName] war against your Tributary, [recipient.GetShortUIName]"
  # Remove the space between in " My rule
  coronation_events.0110.desc.fallback: "#emp \"My rule will be remembered, by those who come after, as the start of a golden age for [activity.GetHost.GetPrimaryTitle.GetNameNoTier].\"#!"
- # Removed the farm_estates_01 since nothing allows it actually in scripts
- culture_parameter_rice_cultivators_can_construct_paddy_fields_in_hills_and_jungle: "The [GetBuilding('paddy_fields_01').GetTypeName|V] line of [buildings|E] may be built in [GetTerrain( 'hills' ).GetName] and [GetTerrain( 'jungle' ).GetName]"
 
  # Use the [SelectLocalization( IsLandlessAdventurer(lover).. to not have duchy's appearing when the lover is an adventurer (disable need more test)
  #spymaster_task.0311.secret_lover.lustful:0 "\n\n[secret_holder.GetSheHe|U] has been engaged in carnality with [lover.GetTitledFirstName], running [secret_holder.GetHerHis] hands across the [SelectLocalization( IsLandlessAdventurer(lover), activity_adventure_owner, lover.GetTitleTierNamePossessive)] body, locking lips in all manner of ways... Oh, the scandal if this was to become public knowledge!"
@@ -110,14 +108,8 @@
  legend_spread_events.8181.t: "The [killer.Custom2('InsultNoun', ROOT.Char)|U] Buried"
  # Fix missing Custom2 call
  clan_unity_proper_courtier_position.desc: "offered [beneficiary_of_nepotism.GetName] a position as a courtier, which is less than what [beneficiary_of_nepotism.GetHerHis] [beneficiary_of_nepotism.Custom2('RelationToMe', SCOPE.sC('advocate_of_nepotism'))] [advocate_of_nepotism.GetName] wanted"
- # Fix missing coma in Custom2 call
- title_event.0014.desc:0 "The recent formation of an independent [castille.GetBaseName], ruled by [castille_char.Custom2('MyCharacterIntroduction', leon_char)], has shattered my realm's claim to be the [asturias.GetBaseName].\n\nWith our eastern lands firmly lost to us, we are dominated by the inland area of [leon.GetBaseNameNoTier], and folk of every class and sect are letting the old title fall by the wayside."
  # GetHimHer > GetHerHim
  murder_save.1015.actual_weapon_artifact.desc:1 "$murder_save.1015.start_desc$ [this_artifact.GetName]. The color drains from [attempted_assassin.GetHerHis] face as [attempted_assassin.GetSheHe] realizes I am armed. It takes little effort to dispatch [attempted_assassin.GetHerHim] with the [SCOPE.Custom('ThisArtifactType')]."
- # Fix missing coma in Custom2 call
- prison.1001.anothers_secret.desc:1 ""You know something about [reveal_secret_owner.Custom2('MyCharacterIntroductionNoComma', SCOPE.sC('puppet_or_actor'))]," [puppet_or_actor.GetTitledFirstName] says. "Tell me everything, or else...""
- #HerHim > GetHerHim
- playdate.5010.desc: ""Get him! Push her into the wall! That's it!" [obnoxious_parent.GetFirstNamePossessive] voice booms out across the courtyard. [obnoxious_parent.GetSheHe|U] has posted up in the corner to watch [embarrassed_child.GetFirstName] play in the game of football, their bias towards the [embarrassed_child.Custom('GirlBoy')] clear to see.\n\nSuffice to say, [obnoxious_parent.GetFirstNameNoTooltip] is taking it a #EMP tad#! too seriously.\n\n"Hey! No pushing [embarrassed_child.GetHerHim], that's cheating!" [obnoxious_parent.GetFirstNamePossessiveNoTooltip] histrionics are really beginning to grate."
 
  activity_pulse_action_guest_impressed_by_court_artifact:1 "[first.GetShortUINameNoTooltip] Impressed by your [second.GetNameNoTooltip]"
  
@@ -143,8 +135,6 @@
  frankokratia_latin_kingdom_memory_desc: "I established a potent [GetTitleByKey('e_latin_empire').GetAdjective] dominion over the [ROOT.Var('swapped_kingdom').Title.GetName]"
  frankokratia_latin_kingdom_memory_desc_second_perspective: "You established a potent [GetTitleByKey('e_latin_empire').GetAdjective] dominion over the [ROOT.Var('swapped_kingdom').Title.GetName]"
  frankokratia_latin_kingdom_memory_desc_third_perspective: "[owner.GetFirstName] established a potent [GetTitleByKey('e_latin_empire').GetAdjective] dominion over the [ROOT.Var('swapped_kingdom').Title.GetName]"
- # The University Visit is no longer locked behind Wards & Wardens, always show the Study Materials cost reduction
- culture_parameter_block_printing_university_bonuses: "$culture_parameter_block_printing_university_bonuses_text$"
 
  #Unop: $VARIABLE$ is not supplied by the engine and displays as VARIABLE, drop it
  has_variable_trigger:1 "Has the required variable"

@@ -97,7 +97,7 @@ nomadic_migration_contract_3 = { # Contentious Grazelands
 			is_landed = no
 		}
 		any_held_county = {
-			county_control < 90
+			county_control < 50
 			NOT = { has_county_modifier = ongoing_settlement_contract }
 		}
 	}
@@ -272,7 +272,7 @@ nomadic_migration_contract_7 = { # Troublesome Neighbors
 		custom_tooltip = {
 			text = migration_contract_county_alt_text
 			task_contract_location.county = { 
-				county_control < 90 
+				county_control < 50 
 				any_neighboring_county = {
 					NOT = { holder.top_liege ?= root.task_contract_taker.top_liege } #Unop Use the county holder and the taker, root is the contract
 				}
@@ -372,7 +372,7 @@ nomadic_migration_contract_9 = { # Drawing Lines
 		custom_tooltip = {
 			text = migration_contract_county_alt_text
 			task_contract_location.county = { 
-				county_control < 90 
+				county_control < 50 
 				any_neighboring_county = {
 					holder = root.task_contract_taker
 				}
@@ -429,7 +429,7 @@ nomadic_migration_contract_10 = { # The Old Tribe
 		custom_tooltip = {
 			text = migration_contract_county_alt_text
 			task_contract_location.county = { 
-				county_control < 90 
+				county_control < 50 
 				has_variable = migration_previous_culture
 				NOT = { var:migration_previous_culture = root.task_contract_taker.culture }
 			}

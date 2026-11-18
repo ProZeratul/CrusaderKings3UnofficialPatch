@@ -112,6 +112,7 @@ action_hegemonic_tributary_has_low_subject_standing_tributary = {
 			limit = {
 				is_tributary = yes
 				suzerain = { highest_held_title_tier = tier_hegemony }
+				subject_standing >= 0
 				subject_standing < exact_tribute_subject_standing_value
 			}
 			try_create_important_action = {
@@ -156,6 +157,7 @@ action_hegemonic_tributary_has_low_subject_standing_suzerain = {
 			limit = {
 			highest_held_title_tier = tier_hegemony
 				any_tributary = {
+					subject_standing >= 0
 					subject_standing < exact_tribute_subject_standing_value
 					save_temporary_scope_as = target_tributary
 				}
@@ -724,7 +726,7 @@ action_no_house_aspiration = {
 		if = {
 			limit = {
 				is_house_head = yes
-				is_culture_or_descended_from_trigger = { CULTURE = culture:japanese }
+				government_is_japanese_trigger = yes
 				house = {
 					can_change_house_aspiration = yes
 					has_house_aspiration_trigger = no
@@ -1132,14 +1134,19 @@ action_start_great_project = { # Only non-important ones, Important GPs get thei
 				root = {
 					OR = {
 						can_plan_great_project = great_project_type:minister_project_culture
-						can_plan_great_project = great_project_type:minister_project_development
+						can_plan_great_project = great_project_type:minister_project_prosperity
 						can_plan_great_project = great_project_type:minister_project_establish_control
+						can_plan_great_project = great_project_type:minister_project_train_troops
+						can_plan_great_project = great_project_type:minister_project_conduct_census
+						can_plan_great_project = great_project_type:minister_compel_religious_uniformity
 						can_plan_great_project = great_project_type:construct_great_barracks
 						can_plan_great_project = great_project_type:strengthen_capital
 						can_plan_great_project = great_project_type:great_wall
 						can_plan_great_project = great_project_type:great_wall_extend_to_shanhai_pass
 						can_plan_great_project = great_project_type:great_wall_extend_to_liaodong
 						can_plan_great_project = great_project_type:grand_canals
+						can_plan_great_project = great_project_type:gdp_republic_civic_works
+						gdp_can_plan_great_plaza_project_trigger = yes
 					}
 				}
 			}

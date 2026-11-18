@@ -523,48 +523,90 @@ add_hook_interaction = {
 		scope:recipient != scope:actor
 	}
 
+	send_options_exclusive = no
+
 	send_option = {
+		is_valid = {
+			NOR = {
+				scope:strong_hook = yes
+				scope:perpetual_hook = yes
+				scope:obligation_hook = yes
+			}
+		}
+		starts_enabled = { always = yes	}
 		flag = weak_hook
 		localization = add_weak_hook_interaction
 	}
 	send_option = {
+		is_valid = {
+			NOR = {
+				scope:weak_hook = yes
+				scope:perpetual_hook = yes
+				scope:obligation_hook = yes
+			}
+		}
 		flag = strong_hook
 		localization = add_strong_hook_interaction
 	}
 	send_option = {
+		is_valid = {
+			NOR = {
+				scope:weak_hook = yes
+				scope:strong_hook = yes
+				scope:obligation_hook = yes
+			}
+		}
 		flag = perpetual_hook
 		localization = add_perpetual_hook_interaction
 	}
 	send_option = {
+		is_valid = {
+			NOR = {
+				scope:weak_hook = yes
+				scope:strong_hook = yes
+				scope:perpetual_hook = yes
+			}
+		}
 		flag = obligation_hook
 		localization = add_obligation_hook_interaction
 	}
+	send_option = {
+		flag = reverse
+		localization = reverse_maneuver_descriptor
+	}
 	auto_accept = yes
 	on_accept = {
-		scope:actor = {
+		scope:actor = { save_scope_as = getter }
+		scope:recipient = { save_scope_as = giver }
+		if = {
+			limit = { scope:reverse = yes }
+			scope:actor = { save_scope_as = giver }
+			scope:recipient = { save_scope_as = getter }
+		}
+		scope:getter = {
 			switch = {
 				trigger = yes
 				scope:weak_hook = {
 					add_hook = {
-						target = scope:recipient
+						target = scope:giver
 						type = favor_hook
 					}
 				}
 				scope:strong_hook = {
 					add_hook = {
-						target = scope:recipient
+						target = scope:giver
 						type = strong_test_hook
 					}
 				}
 				scope:perpetual_hook = {
 					add_hook = {
-						target = scope:recipient
+						target = scope:giver
 						type = perpetual_test_hook
 					}
 				}
 				scope:obligation_hook = {
 					add_hook = {
-						target = scope:recipient
+						target = scope:giver
 						type = obligation_hook
 					}
 				}
@@ -681,7 +723,6 @@ set_relation_debug = {
 						secret_target = scope:recipient
 					}
 					has_relation_lover = scope:recipient
-					has_relation_soulmate = scope:recipient
 				}
 			}
 		}
@@ -984,7 +1025,7 @@ set_relation_debug = {
 					set_relation_friend = { reason = test_friend_desc target = scope:actor }
 				}
 				scope:rival = {
-					set_relation_rival = { reason = test_rival_desc target = scope:actor }
+					set_relation_rival_effect = { REASON = test_rival_desc TARGET = scope:actor }
 				}
 				scope:lover = {
 					set_relation_lover = { reason = test_lover_desc target = scope:actor }
@@ -1005,7 +1046,12 @@ set_relation_debug = {
 					set_relation_best_friend = { reason = best_friend_poetry copy_reason = friend target = scope:actor }
 				}
 				scope:nemesis = {
-					set_relation_nemesis = { reason = test_nemesis_desc copy_reason = rival target = scope:actor }
+					scope:actor = {
+						set_relation_nemesis_effect = {
+							TARGET = scope:recipient
+							REASON = test_nemesis_desc
+						}
+					}
 				}
 				scope:soulmate = {
 					set_relation_soulmate = { reason = test_soulmate_desc copy_reason = lover target = scope:actor }
@@ -1018,13 +1064,20 @@ set_relation_debug = {
 				scope:victim = { set_relation_victim = scope:actor }
 				scope:grudge = {
 					scope:actor = {
-						set_relation_grudge = {
-							reason = grudge_imprisonment_desc
-							target = scope:recipient
+						set_relation_grudge_effect = {
+						    TARGET = scope:recipient
+						    REASON = grudge_imprisonment_desc
 						}
 					}
 				}
-				scope:grudge_on_me = { set_relation_grudge = scope:actor }
+				scope:grudge_on_me = {
+					scope:recipient = {
+						set_relation_grudge_effect = {
+						    TARGET = scope:actor
+						    REASON = grudge_imprisonment_desc
+						}
+					}
+				}
 				scope:blood_brother = { set_relation_blood_brother = scope:actor }
 				scope:elder = { set_relation_disciple = scope:actor }
 				scope:disciple = { set_relation_elder = scope:actor }
@@ -1771,6 +1824,38 @@ take_artifact_interaction = {
 	auto_accept = yes
 }
 
+give_trade_post_interaction = {
+	category = interaction_debug_gdp
+	use_diplomatic_range = no
+	ignores_pending_interaction_block = yes
+	icon = icon_scheme_steal_back_artifact
+
+	target_type = district
+	target_filter = trade_post
+	target_source = actor
+
+	is_shown = {
+		debug_only = yes
+		scope:recipient = {
+			can_have_trade_posts = yes
+		}
+	}
+
+	is_highlighted = { always = yes }
+
+	on_accept = {
+		scope:target = {
+			set_trade_post_district_owner = scope:recipient
+		}
+	}
+
+	ai_accept = {
+		base = 100
+	}
+
+	auto_accept = yes
+}
+
 add_artifact_claim_interaction = {
 	category = interaction_debug_main
 	use_diplomatic_range = no
@@ -2456,9 +2541,10 @@ add_glory_interaction = {
 }
 
 debug_progress_all_active_schemes_interaction = {
-	category = interaction_debug_admin
+	category = interaction_debug_extra
 	use_diplomatic_range = no
 	ignores_pending_interaction_block = yes
+	common_interaction = yes
 	icon = debug_secret
 	is_shown = { debug_only = yes }
 	is_valid_showing_failures_only = {
@@ -2468,7 +2554,6 @@ debug_progress_all_active_schemes_interaction = {
 	}
 	on_accept = { scope:recipient = { every_scheme = { add_scheme_progress = 1000 } } }
 	auto_accept = yes
-	common_interaction = yes
 }
 
 debug_travel_to_ruler_interaction = {
@@ -2853,7 +2938,7 @@ spawn_legend_interaction = {
 }
 
 debug_buff_schemes = {
-	category = interaction_debug_admin
+	category = interaction_debug_extra
 	use_diplomatic_range = no
 	ignores_pending_interaction_block = yes
 	icon = scheme_assassination
@@ -2968,7 +3053,7 @@ debug_buff_schemes = {
 }
 
 debug_clear_agents_from_schemes = {
-	category = interaction_debug_admin
+	category = interaction_debug_extra
 	use_diplomatic_range = no
 	ignores_pending_interaction_block = yes
 	icon = independence
@@ -3104,7 +3189,7 @@ debug_clear_agents_from_schemes = {
 }
 
 debug_make_laamp = {
-	category = interaction_debug_admin
+	category = interaction_debug_extra
 	desc = debug_make_laamp_desc
 	use_diplomatic_range = no
 	ignores_pending_interaction_block = yes
@@ -3130,8 +3215,137 @@ debug_make_laamp = {
 	}
 }
 
+debug_make_merchant = {
+	category = interaction_debug_gdp
+	desc = debug_make_merchant_desc
+	use_diplomatic_range = no
+	ignores_pending_interaction_block = yes
+	icon = purchase_land_interaction
+
+	interface_priority = -1
+
+	is_shown = { 
+		debug_only = yes 
+		# Is not HOF
+		custom_tooltip = {
+			text = become_landless_adventurer_decision_hof_tt
+			trigger_if = {
+				limit = {
+					exists = religious_head_title.holder
+				}
+				faith.religious_head_title.holder != scope:recipient
+			}
+		}
+		# Must be a house head
+		custom_tooltip = {
+			text = become_merchant_decision_house_head_tt
+			is_house_head = yes
+		}
+		NOT = {
+			scope:recipient = {
+				is_ruler = yes
+				government_has_flag = government_is_merchant
+			}
+		}
+	}
+
+	auto_accept = yes
+
+	on_accept = {
+		scope:recipient = {
+			save_scope_as = merchant
+			if = {
+				limit = {
+					player_heir ?= {
+						this != scope:merchant
+						is_adult = yes
+						is_ruler = no
+					}
+				}
+				player_heir = {
+					save_scope_as = laamp_heir
+					save_scope_as = laamp_inheritor
+					custom_tooltip = become_landless_adventurer_decision_title_scope_tt
+				}
+			}
+			else_if = {
+				limit = { top_liege != this }
+				liege = {
+					save_scope_as = laamp_liege
+					save_scope_as = laamp_inheritor
+					custom_tooltip = become_landless_adventurer_decision_title_scope_tt
+				}
+			}
+			else = {
+				custom_tooltip = become_landless_adventurer_decision_title_created_tt
+				if = {
+					limit = {
+						NOT = { exists = scope:laamp_inheritor }
+					}
+					hidden_effect_new_object = {
+						create_character = {
+							template = laamp_inheritor_template
+							gender_female_chance = recipient_soldier_female_chance
+							culture = scope:merchant.capital_county.culture
+							faith = scope:merchant.capital_county.faith
+							dynasty = generate
+							location = scope:merchant.capital_province
+							after_creation = {
+								save_scope_as = laamp_inheritor
+								add_character_flag = new_laamp_inheritor
+							}
+						}
+					}
+				}
+			}
+			show_as_tooltip = {
+				custom_tooltip = become_merchant_tt
+				add_gold = scope:merchant.major_gold_value
+				add_character_modifier = {
+					modifier = gdp_voluntary_merchant_modifier
+					years = 5
+				}
+			}
+			# Save scopes for loc
+			primary_title = { save_scope_as = old_primary_title }
+			capital_province = { save_scope_as = old_capital_province }
+			if = {
+				limit = { top_liege != this }
+				liege = { save_scope_as = old_liege }
+			}
+			# Transfer landed titles
+			every_held_title = {
+				title_tier > barony
+				limit = {
+					OR = {
+						is_landless_type_title = no
+						is_nomad_title = yes
+					}
+				}
+				add_to_list = target_titles
+			}
+			create_title_and_vassal_change = {
+				type = conquest
+				save_scope_as = change
+				add_claim_on_loss = no
+			}
+			hidden_effect = {
+				every_in_list = {
+					list = target_titles
+					change_title_holder_include_vassals = {
+						holder = scope:laamp_inheritor
+						change = scope:change
+					}
+				}
+				resolve_title_and_vassal_change = scope:change
+			}
+			trigger_event = { id = gdp_merchant.0001 }
+		}
+	}
+}
+
 debug_add_to_contact_list_interaction = {
-	category = interaction_debug_admin
+	category = interaction_debug_extra
 	use_diplomatic_range = no
 	ignores_pending_interaction_block = yes
 	icon = icon_contract_modification_single
@@ -3191,7 +3405,7 @@ debug_alliance_interaction = {
 }
 
 create_task_contract_interaction = {
-	category = interaction_debug_admin
+	category = interaction_debug_extra
 	use_diplomatic_range = no
 	ignores_pending_interaction_block = yes
 	icon = icon_contract_modification_single
@@ -3300,10 +3514,9 @@ create_task_contract_interaction = {
 
 # Debug move domicile, choose between moving just the domicile, moving the domicile and the owner, and if you want to use the travel system to do it (last option is only for laamps).
 debug_move_domicile_interaction = {
-	category = interaction_debug_admin
+	category = interaction_debug_extra
 	use_diplomatic_range = no
 	ignores_pending_interaction_block = yes
-	common_interaction = yes
 	icon = travel_mixed
 
 	interface_priority = -1
@@ -3393,16 +3606,16 @@ debug_move_domicile_interaction = {
 }
 
 debug_populate_contracts = {
-	category = interaction_debug_admin
+	category = interaction_debug_extra
 	use_diplomatic_range = no
 	ignores_pending_interaction_block = yes
-	common_interaction = no
 	icon = icon_scheme_learn_language
 
 	interface_priority = -1
 
 	is_shown = {
 		debug_only = yes
+		scope:recipient = { government_has_flag = government_is_landless_adventurer }
 	}
 
 	auto_accept = yes
@@ -3418,7 +3631,7 @@ debug_populate_contracts = {
 }
 
 give_infinite_schemes_of_type_interaction = {
-	category = interaction_debug_admin
+	category = interaction_debug_extra
 	use_diplomatic_range = no
 	ignores_pending_interaction_block = yes
 	icon = icon_adultery
@@ -3753,10 +3966,9 @@ destroy_title_interaction = {
 }
 
 debug_change_the_great_steppe = {
-	category = interaction_debug_mpo
+	category = interaction_debug_extra
 	use_diplomatic_range = no
 	ignores_pending_interaction_block = yes
-	common_interaction = yes
 	icon = travel_mixed
 
 	interface_priority = -1
@@ -4064,10 +4276,9 @@ change_coronation_law = {
 }
 
 debug_change_dynastic_cycle = {
-	category = interaction_debug_admin
+	category = interaction_debug_extra
 	use_diplomatic_range = no
 	ignores_pending_interaction_block = yes
-	common_interaction = yes
 	icon = travel_mixed
 
 	interface_priority = -1
@@ -4220,10 +4431,9 @@ debug_change_dynastic_cycle = {
 }
 
 debug_change_silk_road_cycle = {
-	category = interaction_debug_admin
+	category = interaction_debug_extra
 	use_diplomatic_range = no
 	ignores_pending_interaction_block = yes
-	common_interaction = yes
 	icon = travel_mixed
 
 	interface_priority = -1
@@ -4335,12 +4545,11 @@ debug_change_silk_road_cycle = {
 }
 
 debug_set_mandala_aspect = {
-	category = interaction_debug_main
+	category = interaction_debug_extra
 	desc = debug_set_mandala_aspect_desc
 	use_diplomatic_range = no
 	ignores_pending_interaction_block = yes
 	icon = debug_mandala_interaction
-	common_interaction = yes
 	is_shown = {
 		debug_only = yes
 		scope:recipient = { government_has_flag = government_is_mandala }
@@ -4957,6 +5166,296 @@ debug_change_the_christian_church = {
 			}
 		}
 	}
+}
+
+debug_set_gg_phase = {
+	category = interaction_debug_gdp
+	desc = debug_set_gg_phase_desc
+	use_diplomatic_range = no
+	ignores_pending_interaction_block = yes
+	icon = debug_guelph_ghibelline_interaction
+	common_interaction = yes
+
+	is_shown = {
+		debug_only = yes
+		situation:guelph_ghibelline ?= { 
+			any_situation_participant = { this = scope:recipient }
+		}
+		scope:actor = scope:recipient
+	}
+
+	#Progenitor phases
+	#In nomine Domini
+	send_option = {
+		is_valid = {
+			NOT = {
+				situation:guelph_ghibelline ?= { situation_current_phase = in_nomine_domini }
+			}
+		}
+		flag = in_nomine_domini
+		localization = debug_set_gg_phase_in_nomine_domini
+	}
+
+	#Dictatus Papae
+	send_option = {
+		is_valid = {
+			NOT = {
+				situation:guelph_ghibelline ?= { situation_current_phase = dictatus_papae }
+			}
+		}
+		flag = dictatus_papae
+		localization = debug_set_gg_phase_dictatus_papae
+	}
+
+	#Interim
+	send_option = {
+		is_valid = {
+			NOT = {
+				situation:guelph_ghibelline ?= { situation_current_phase = ad_interim }
+			}
+		}
+		flag = ad_interim
+		localization = debug_set_gg_phase_ad_interim
+	}
+
+	#Actual phases
+	#Repose
+	send_option = {
+		is_valid = {
+			NOT = {
+				situation:guelph_ghibelline ?= { situation_current_phase = repose }
+			}
+		}
+		flag = repose
+		localization = debug_set_gg_phase_repose
+	}
+
+	#Agitation
+	send_option = {
+		is_valid = {
+			NOT = {
+				situation:guelph_ghibelline ?= { situation_current_phase = agitation }
+			}
+		}
+		flag = agitation
+		localization = debug_set_gg_phase_agitation
+	}
+
+	#Guelph Advantage
+	send_option = {
+		is_valid = {
+			NOT = {
+				situation:guelph_ghibelline ?= { situation_current_phase = guelph_advantage }
+			}
+		}
+		flag = guelph_advantage
+		localization = debug_set_gg_phase_guelph_advantage
+	}
+
+	#Ghibelline Advantage
+	send_option = {
+		is_valid = {
+			NOT = {
+				situation:guelph_ghibelline ?= { situation_current_phase = ghibelline_advantage }
+			}
+		}
+		flag = ghibelline_advantage
+		localization = debug_set_gg_phase_ghibelline_advantage
+	}
+
+	on_accept = {
+		switch = {
+			trigger = yes
+			scope:in_nomine_domini = { 
+				situation:guelph_ghibelline ?= {
+					every_situation_sub_region = { change_phase = in_nomine_domini }
+				}
+			}
+			scope:dictatus_papae = { 
+				situation:guelph_ghibelline ?= {
+					every_situation_sub_region = { change_phase = dictatus_papae }
+				}
+			}
+			scope:ad_interim = { 
+				situation:guelph_ghibelline ?= {
+					every_situation_sub_region = { change_phase = ad_interim }
+				}
+			}
+			scope:repose = { 
+				situation:guelph_ghibelline ?= {
+					every_situation_sub_region = { change_phase = repose }
+				}
+			}
+			scope:agitation = { 
+				situation:guelph_ghibelline ?= {
+					every_situation_sub_region = { change_phase = agitation }
+				}
+			}
+			scope:guelph_advantage = { 
+				situation:guelph_ghibelline ?= {
+					every_situation_sub_region = { change_phase = guelph_advantage }
+				}
+			}
+			scope:ghibelline_advantage = { 
+				situation:guelph_ghibelline ?= {
+					every_situation_sub_region = { change_phase = ghibelline_advantage }
+				}
+			}
+		}
+	}
+	auto_accept = yes
+}
+
+debug_make_guelph_ghibelline = {
+	category = interaction_debug_gdp
+	desc = debug_make_guelph_ghibelline_desc
+	use_diplomatic_range = no
+	ignores_pending_interaction_block = yes
+	icon = icon_scheme_gg_switch_sides
+	common_interaction = yes
+
+	is_shown = {
+		debug_only = yes
+		scope:actor != scope:recipient
+		scope:recipient = {
+			OR = {
+				is_gg_undecided_trigger = yes
+				is_guelph_or_ghibelline_trigger = yes
+			}
+			is_guelph_leader_trigger = no
+			is_ghibelline_leader_trigger = no
+		}
+	}
+
+	#Guelph
+	send_option = {
+		is_valid = {
+			scope:recipient = { is_guelph_trigger = no }
+		}
+		flag = guelph
+		localization = guelph
+	}
+
+	#Ghibelline
+	send_option = {
+		is_valid = {
+			scope:recipient = { is_ghibelline_trigger = no }
+		}
+		flag = ghibelline
+		localization = ghibelline
+	}
+
+	on_accept = {
+		scope:recipient = {
+			switch = {
+				trigger = yes
+				scope:guelph = { 
+					gg_change_side_to_guelph_effect = { REASON = flag:schemed }
+				}
+				scope:ghibelline = {
+					gg_change_side_to_ghibelline_effect = { REASON = flag:schemed }
+				}
+			}
+			hidden_effect = { recalculate_participant_group = situation:guelph_ghibelline }
+		}
+	}
+	auto_accept = yes
+}
+
+debug_change_house_unity_interaction = {
+	category = interaction_debug_gdp
+	icon = unity_harmonious
+	use_diplomatic_range = no
+	ignores_pending_interaction_block = yes
+	common_interaction = no
+	auto_accept = yes
+
+	is_shown = {
+		debug_only = yes
+		scope:recipient = {
+			house ?= { has_house_unity = yes }
+		}
+	}
+
+	is_valid = {
+		scope:recipient = {
+			house ?= { has_house_unity = yes }
+		}
+	}
+
+	send_option = {
+		flag = unity_max
+		localization = "Max"
+	}
+
+	send_option = {
+		flag = unity_gain
+		localization = INCREASE_HOUSE_UNITY
+		starts_enabled = { always = yes	}
+	}
+
+	send_option = {
+		flag = unity_loss
+		localization = DECREASE_HOUSE_UNITY
+	}
+
+	send_option = {
+		flag = unity_min
+		localization = "DESTROY_ACCOLADE"
+	}
+
+	on_accept = {
+		scope:recipient.house = {
+			add_unity_value = {
+				value = {
+					if = {
+						limit = { scope:unity_max = yes }
+						add = 200
+					}
+					else_if = {
+						limit = { scope:unity_gain = yes }
+						add = major_unity_gain
+					}
+					else_if = {
+						limit = { scope:unity_loss = yes }
+						add = major_unity_loss
+					}
+					else_if = {
+						limit = { scope:unity_min = yes }
+						add = -200
+					}
+				}
+				character = scope:recipient
+				desc = debug_change_house_unity_interaction
+			}
+		}
+	}
+}
+
+debug_set_republican_war_law = {
+	category = interaction_debug_gdp
+	desc = debug_set_republican_war_law_desc
+	use_diplomatic_range = no
+	ignores_pending_interaction_block = yes
+	icon = icon_combat
+	common_interaction = yes
+
+	is_shown = {
+		debug_only = yes
+		scope:actor = { government_has_flag = government_is_republic }
+		scope:actor = scope:recipient
+	}
+
+	is_valid = {
+		scope:actor = { 
+			NOT = { has_realm_law = republic_war_declaration_2_unlimited }
+		}
+	}
+
+	on_accept = {
+		scope:actor = { add_realm_law = republic_war_declaration_2_unlimited }
+	}
+	auto_accept = yes
 }
 
 debug_add_schism_progress = {

@@ -101,6 +101,10 @@ declare_antipope_decision = {
 					limit = { pam_antipope_declaration_discounted_trigger = yes }
 					multiply = 0.67
 				}
+				if = {
+					limit = { gg_excommunicated_ghibelline_leader_in_dictatus_papae_trigger = yes }
+					multiply = 0.5
+				}
 			}
 		}
 		treasury = {
@@ -118,6 +122,10 @@ declare_antipope_decision = {
 					limit = { pam_antipope_declaration_discounted_trigger = yes }
 					multiply = 0.67
 				}
+				if = {
+					limit = { gg_excommunicated_ghibelline_leader_in_dictatus_papae_trigger = yes }
+					multiply = 0.5
+				}
 			}
 		}
 		piety = {
@@ -129,6 +137,10 @@ declare_antipope_decision = {
 			if = {
 				limit = { pam_antipope_declaration_discounted_trigger = yes }
 				multiply = 0.67
+			}
+			if = {
+				limit = { gg_excommunicated_ghibelline_leader_in_dictatus_papae_trigger = yes }
+				multiply = 0
 			}
 			if = {
 				limit = {
@@ -225,7 +237,10 @@ declare_antipope_decision = {
 
 	ai_potential = {
 		is_adult = yes
-		ai_zeal >= 0
+		OR = {
+			ai_zeal >= 0
+			gg_excommunicated_ghibelline_leader_in_dictatus_papae_trigger = yes
+		}
 		any_vassal_or_below = {
 			pam_valid_antipope_clergy_vassal_trigger = { LIEGE = root }
 		}
@@ -260,22 +275,21 @@ declare_antipope_decision = {
  			max = 25
  		}
 		modifier = {
+			add = 25
+			gg_excommunicated_ghibelline_leader_in_dictatus_papae_trigger = yes
+		}
+		modifier = {
 			factor = 2
-			OR = {
-				has_relation_rival = faith.religious_head
-				has_relation_nemesis = faith.religious_head
-			}
+			has_relation_rival = faith.religious_head
 		}
 		modifier = { # AI shouldn't usually do this if they're main rite
 			factor = 0.15
 			rite = faith.main_rite
+			gg_excommunicated_ghibelline_leader_in_dictatus_papae_trigger = no
 		}
 		modifier = {
 			factor = 0
-			OR = {
-				has_relation_friend = faith.religious_head
-				has_relation_best_friend = faith.religious_head
-			}
+			has_relation_friend = faith.religious_head
 		}
 	}
 }
@@ -556,17 +570,11 @@ declare_yourself_antipope_decision = {
  		}
 		modifier = {
 			factor = 2
-			OR = {
-				has_relation_rival = faith.religious_head
-				has_relation_nemesis = faith.religious_head
-			}
+			has_relation_rival = faith.religious_head
 		}
 		modifier = {
 			factor = 0
-			OR = {
-				has_relation_friend = faith.religious_head
-				has_relation_best_friend = faith.religious_head
-			}
+			has_relation_friend = faith.religious_head
 		}
 	}
 }

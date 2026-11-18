@@ -51,51 +51,57 @@ chronicler_generate_seeds = {
 		custom_tooltip = yearly_legend_seed_tt
 	}
 	on_yearly = {
+		# Aptitude is expensive, so only work it out on the max possible chance. Outer chance x inner multiply must be 100
+		# See "Chance gates" in _court_position_tasks.info
 		random = {
-			chance = {
-				value = 1
-				if = {
-					limit = {
-						aptitude = {
-							court_position = chronicler_court_position
-							value >= 1 #Unop: Aptitude levels are 0-4, not 1-5
+			chance = 20 #Unop: Was 10, so that the inner chance stays within 100 with the excellent tier below
+			random = {
+				chance = {
+					value = 1
+					if = {
+						limit = {
+							aptitude = {
+								court_position = chronicler_court_position
+								value >= 1 #Unop: Aptitude levels are 0-4, not 1-5
+							}
 						}
+						add = 1
 					}
-					add = 1
-				}
-				if = {
-					limit = {
-						aptitude = {
-							court_position = chronicler_court_position
-							value >= 2 #Unop: Aptitude levels are 0-4, not 1-5
+					if = {
+						limit = {
+							aptitude = {
+								court_position = chronicler_court_position
+								value >= 2 #Unop: Aptitude levels are 0-4, not 1-5
+							}
 						}
+						add = 2
 					}
-					add = 2
-				}
-				if = {
-					limit = {
-						aptitude = {
-							court_position = chronicler_court_position
-							value >= 3 #Unop: Aptitude levels are 0-4, not 1-5
+					if = {
+						limit = {
+							aptitude = {
+								court_position = chronicler_court_position
+								value >= 3 #Unop: Aptitude levels are 0-4, not 1-5
+							}
 						}
+						add = 4
 					}
-					add = 4
-				}
-				if = {
-					limit = {
-						aptitude = {
-							court_position = chronicler_court_position
-							value >= 4 #Unop: Aptitude levels are 0-4, not 1-5
+					if = { #Unop: Restore the excellent tier, which was dropped as unreachable with the wrong 1-5 levels
+						limit = {
+							aptitude = {
+								court_position = chronicler_court_position
+								value >= 4
+							}
 						}
+						add = 10
 					}
-					add = 10
+					multiply = 5 #Unop: Was 10, outer chance x inner multiply must be 100
 				}
-			}
-			save_scope_as = chronicler
-			scope:liege = {
-				trigger_event = {
-					id = legend_events.0001
-					months = { 0 6 } # To avoid triggering on January every year
+				save_scope_as = chronicler
+				scope:liege = {
+					trigger_event = {
+						id = legend_events.0001
+						months = { 0 6 } # To avoid triggering on January every year
+					}
 				}
 			}
 		}

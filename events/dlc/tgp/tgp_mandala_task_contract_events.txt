@@ -693,7 +693,7 @@ tgp_east_asia_mandala_task_contract_events.1000 = {
 
 	after = {
 		mandala_contract_complete_contract_effect = yes
-		scope:local_character = {
+		scope:local_character ?= {
 			silent_disappearance_ai_if_created_effect = yes
 		}
 	}
@@ -784,7 +784,7 @@ tgp_east_asia_mandala_task_contract_events.1100 = {
 		big_mandala_piety_reward_effect = yes
 		small_mandala_legitimacy_reward_effect = yes
 		
-		scope:ritual_location.county = { change_development_progress_with_overflow = 25 }
+		scope:ritual_location.county = { change_prosperity_progress_with_overflow = 25 }
 
 		current_travel_plan = {
 			hidden_effect = {
@@ -824,7 +824,7 @@ tgp_east_asia_mandala_task_contract_events.1100 = {
 		
 		small_mandala_piety_reward_effect = yes
 		
-		scope:ritual_location.county = { change_development_progress_with_overflow = -25 }
+		scope:ritual_location.county = { change_prosperity_progress_with_overflow = -25 }
 		
 		hidden_effect = {
 			current_travel_plan ?= {
@@ -2149,8 +2149,8 @@ tgp_east_asia_mandala_task_contract_events.1700 = {
 		big_mandala_piety_reward_effect = yes
 		big_mandala_legitimacy_reward_effect = yes
 		
-		capital_county = { change_development_progress_with_overflow = -75 }
-		scope:ritual_location.county = { change_development_progress_with_overflow = 75 }
+		capital_county = { change_prosperity_progress_with_overflow = -75 }
+		scope:ritual_location.county = { change_prosperity_progress_with_overflow = 75 }
 		
 		scope:ritual_location.county = {
 			add_county_modifier = {
@@ -2878,7 +2878,7 @@ tgp_east_asia_mandala_task_contract_events.2100 = {
 				}
 			}
 			change_county_control = -50
-			change_development_progress_with_overflow = -50
+			change_prosperity_progress_with_overflow = -50
 		}
 
 		ai_chance = {
@@ -2894,7 +2894,7 @@ tgp_east_asia_mandala_task_contract_events.2100 = {
 		
 		scope:vengeance_target = {
 			change_county_control = -15
-			change_development_progress_with_overflow = -15
+			change_prosperity_progress_with_overflow = -15
 		}
 
 		ai_chance = {
@@ -3017,7 +3017,7 @@ tgp_east_asia_mandala_task_contract_events.2200 = {
 		increase_wounds_effect = { REASON = whipping }
 		
 		scope:ritual_location.county = {
-			change_development_progress_with_overflow = 10
+			change_prosperity_progress_with_overflow = 10
 		}
 		
 		stress_and_fulfillment_impact = {
@@ -3050,7 +3050,7 @@ tgp_east_asia_mandala_task_contract_events.2200 = {
 		
 		scope:ritual_location.county = {
 			change_county_control = -10
-			change_development_progress_with_overflow = 10
+			change_prosperity_progress_with_overflow = 10
 		}
 
 		ai_chance = {
@@ -3265,7 +3265,7 @@ tgp_east_asia_mandala_task_contract_events.2300 = {
 					scope:ritual_location.county = {
 						if = {
 							limit = {
-								county_control < 100
+								county_control < county_control_baseline
 							}
 							change_county_control = 15
 						}
@@ -3687,7 +3687,7 @@ tgp_east_asia_mandala_task_contract_events.2500 = {
 			county = {
 				if = {
 					limit = {
-						county_control < 100
+						county_control < county_control_baseline
 					}
 					change_county_control = 15
 				}
@@ -3735,7 +3735,7 @@ tgp_east_asia_mandala_task_contract_events.2500 = {
 			county = {
 				if = {
 					limit = {
-						county_control < 100
+						county_control < county_control_baseline
 					}
 					change_county_control = 15
 				}
@@ -3760,7 +3760,11 @@ tgp_east_asia_mandala_task_contract_events.2500 = {
 		random = {
 			chance = 10
 			scope:ritual_location.county = {
-				add_county_modifier = county_corruption_bandits_rampant_modifier
+				if = {
+					limit = { can_worsen_county_corruption_trigger = yes }
+					add_county_modifier = county_corruption_bandits_rampant_modifier
+				}
+				change_county_control = -5
 			}
 		}
 
@@ -3912,7 +3916,7 @@ tgp_east_asia_mandala_task_contract_events.2600 = {
 				modifier = slaughtered_village_modifier
 				years = 15
 			}
-			change_development_progress_with_overflow = -25
+			change_prosperity_progress_with_overflow = -25
 		}
 
 		stress_and_fulfillment_impact = {
@@ -3939,7 +3943,7 @@ tgp_east_asia_mandala_task_contract_events.2600 = {
 		small_mandala_legitimacy_reward_effect = yes
 		
 		scope:ritual_location.county = {
-			change_development_progress_with_overflow = -25
+			change_prosperity_progress_with_overflow = -25
 		}
 
 		stress_and_fulfillment_impact = {
@@ -4073,14 +4077,14 @@ tgp_east_asia_mandala_task_contract_events.2700 = {
 		big_mandala_legitimacy_reward_effect = yes
 		
 		scope:ritual_location.county = {
-			change_development_progress_with_overflow = -50
+			change_prosperity_progress_with_overflow = -50
 			add_county_modifier = {
 				modifier = enforced_levy_modifier
 				years = 15
 			}
 			if = {
 				limit = {
-					county_control < 100
+					county_control < county_control_baseline
 				}
 				change_county_control = 15
 			}
@@ -4132,7 +4136,7 @@ tgp_east_asia_mandala_task_contract_events.2800 = {
 	title = tgp_east_asia_mandala_task_contract_events.2800.t
 	desc = tgp_east_asia_mandala_task_contract_events.2800.desc
 	theme = mandala
-	override_background = tgp_market_asia
+	override_background = market
 	
 	left_portrait = {
 		character = root
@@ -4215,10 +4219,10 @@ tgp_east_asia_mandala_task_contract_events.2800 = {
 		}
 		
 		scope:ritual_location.county = {
-			change_development_progress_with_overflow = -50
+			change_prosperity_progress_with_overflow = -50
 			if = {
 				limit = {
-					county_control < 100
+					county_control < county_control_baseline
 				}
 				change_county_control = 15
 			}
@@ -4549,7 +4553,7 @@ tgp_east_asia_mandala_task_contract_events.3000 = {
 		}
 		
 		scope:ritual_location.county = {
-			change_development_progress_with_overflow = -50
+			change_prosperity_progress_with_overflow = -50
 			add_county_modifier = {
 				modifier = fearful_population_modifier
 				years = 10
@@ -4581,7 +4585,7 @@ tgp_east_asia_mandala_task_contract_events.3000 = {
 		}
 		
 		scope:ritual_location.county = {
-			change_development_progress_with_overflow = -25
+			change_prosperity_progress_with_overflow = -25
 		}
 
 		stress_and_fulfillment_impact = {
@@ -4998,7 +5002,7 @@ tgp_east_asia_mandala_task_contract_events.3300 = {
 	title = tgp_east_asia_mandala_task_contract_events.3300.t
 	desc = tgp_east_asia_mandala_task_contract_events.3300.desc
 	theme = mandala
-	override_background = tgp_market_asia
+	override_background = market
 	
 	left_portrait = {
 		character = root
@@ -7015,6 +7019,9 @@ tgp_east_asia_mandala_task_contract_events.4300 = {
 					culture = scope:ritual_location.culture
 					gender_female_chance = 50
 					save_scope_as = local_character
+					after_creation = {
+						add_character_flag = created
+					}
 				}
 			}
 		}
@@ -7185,7 +7192,7 @@ tgp_east_asia_mandala_task_contract_events.4300 = {
 		mandala_contract_complete_contract_effect = yes
 		scope:local_character = {
 			remove_character_flag = local_ruler
-			silent_disappearance_ai_if_created_effect = yes
+			silent_disappear_ai_if_not_hired_with_flag = yes
 		}
 	}
 }
@@ -8413,17 +8420,17 @@ tgp_east_asia_mandala_task_contract_events.4900 = {
 	
 	left_portrait = {
 		character = scope:local_character
-		animation = horse_exhausted
+		animation = horse_exhausted # always horse
 		camera = camera_event_horse_very_left
 	}
 	center_portrait = {
 		character = scope:entourage_character
-		animation = jockey_walk
+		animation = jockey_walk # always horse
 		camera = camera_event_horse_very_left
 	}
 	right_portrait = {
 		character = root
-		animation = horse_surveying
+		animation = horse_surveying # always horse
 		camera = camera_event_horse_very_left
 	}
 	immediate = {
@@ -8870,7 +8877,7 @@ tgp_east_asia_mandala_task_contract_events.5000 = {
 					right_icon = scope:local_character_2
 					
 					root.capital_county = {
-						change_development_level = 2
+						change_prosperity_level = 2
 					}
 				}
 			}
@@ -8885,7 +8892,7 @@ tgp_east_asia_mandala_task_contract_events.5000 = {
 					right_icon = scope:local_character_2
 					
 					root.capital_county = {
-						change_development_level = 2
+						change_prosperity_level = 2
 						set_county_faith = scope:local_character.faith
 						set_county_rite = scope:local_character.rite
 					}

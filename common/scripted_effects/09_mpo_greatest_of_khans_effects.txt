@@ -7011,8 +7011,8 @@ gok_realm_devastation_effect = {
 					}
 				}
 				change_county_control = massive_county_control_loss
-				change_development_level = {
-					subtract = development_level
+				change_prosperity_level = {
+					subtract = prosperity_level
 					multiply = 0.2
 					floor = yes
 				}
@@ -7058,8 +7058,8 @@ gok_realm_devastation_effect = {
 						right_icon = scope:county
 
 						scope:county = {
-							change_development_level = {
-								subtract = scope:county.development_level
+							change_prosperity_level = {
+								subtract = scope:county.prosperity_level
 								multiply = 0.5
 								floor = yes
 							}
@@ -7098,6 +7098,7 @@ gok_realm_devastation_effect = {
 				if = {
 					limit = {
 						culture = {
+							this != scope:attacker.culture
 							cultural_acceptance = {
 								target = scope:attacker.culture
 								value > 0
@@ -7298,8 +7299,8 @@ gok_realm_devastation_effect = {
 		every_sub_realm_county = {
 			custom = custom.every_taken_county
 			change_county_control = medium_county_control_loss
-			change_development_level = {
-				subtract = development_level
+			change_prosperity_level = {
+				subtract = prosperity_level
 				multiply = 0.1
 				floor = yes
 			}
@@ -7889,14 +7890,14 @@ gok_upgrade_realm_and_government_effect = {
 				}
 				holding_pre_feudalize_effect = yes
 				set_holding_type = castle_holding
-				add_building = castle_02
+				upgrade_holding_primary_building_effect = yes
 				if = {
 					limit = {
 						any_culture_global = {
 							has_cultural_era_or_later = culture_era_high_medieval
 						}
 					}
-					add_building = castle_03
+					upgrade_holding_primary_building_effect = yes
 				}
 				if = {
 					limit = {
@@ -7904,7 +7905,7 @@ gok_upgrade_realm_and_government_effect = {
 							has_cultural_era_or_later = culture_era_late_medieval
 						}
 					}
-					add_building = castle_04
+					upgrade_holding_primary_building_effect = yes
 				}
 			}
 			random_county_province = {
@@ -7920,7 +7921,7 @@ gok_upgrade_realm_and_government_effect = {
 							has_cultural_era_or_later = culture_era_high_medieval
 						}
 					}
-					add_building = temple_03
+					upgrade_holding_primary_building_effect = yes
 				}
 				if = {
 					limit = {
@@ -7928,7 +7929,7 @@ gok_upgrade_realm_and_government_effect = {
 							has_cultural_era_or_later = culture_era_late_medieval
 						}
 					}
-					add_building = temple_02
+					upgrade_holding_primary_building_effect = yes
 				}
 			}
 			random_county_province = {
@@ -7947,7 +7948,7 @@ gok_upgrade_realm_and_government_effect = {
 							has_cultural_era_or_later = culture_era_high_medieval
 						}
 					}
-					add_building = city_03
+					upgrade_holding_primary_building_effect = yes
 				}
 				if = {
 					limit = {
@@ -7955,7 +7956,7 @@ gok_upgrade_realm_and_government_effect = {
 							has_cultural_era_or_later = culture_era_late_medieval
 						}
 					}
-					add_building = city_02
+					upgrade_holding_primary_building_effect = yes
 				}
 			}
 		}
@@ -8023,7 +8024,7 @@ gok_upgrade_realm_and_government_effect = {
 								has_cultural_era_or_later = culture_era_high_medieval
 							}
 						}
-						add_building = castle_02
+						upgrade_holding_primary_building_effect = yes
 					}
 					if = {
 						limit = {
@@ -8031,7 +8032,7 @@ gok_upgrade_realm_and_government_effect = {
 								has_cultural_era_or_later = culture_era_late_medieval
 							}
 						}
-						add_building = castle_03
+						upgrade_holding_primary_building_effect = yes
 					}
 				}
 			}

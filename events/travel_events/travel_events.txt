@@ -688,9 +688,9 @@ travel_events.1002 = {
 	#Well shoot
 	option = {
 		name = travel_events.1002.a
-		set_relation_rival = {
-			target = scope:shoeless_peasant
-			reason = rival_ungenerous
+		set_relation_rival_effect = {
+		    TARGET = scope:shoeless_peasant
+		    REASON = rival_ungenerous
 		}
 		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_gain
@@ -744,7 +744,7 @@ travel_events.1003 = {
 			}
 		}
 		has_none_of_variables = {
-			name = had_travel_danger_event_1002_bandit_event_recently
+			name = had_travel_event_1003_bandit_event_recently
 			name = had_travel_event_3070_bandit_event_recently
 		}
     }
@@ -1562,6 +1562,9 @@ travel_events.1020 = {
 						max_template_average_skill
 					}
 					save_scope_as = temp_caravan_master_option_2
+					after_creation = {
+						add_character_flag = created
+					}
 				}
 				scope:temp_caravan_master_option_2 = {
 					# Add travel trait and randomized experience to both tracks
@@ -1597,6 +1600,9 @@ travel_events.1020 = {
 						max_template_average_skill
 					}
 					save_scope_as = temp_caravan_master_option_2
+					after_creation = {
+						add_character_flag = created
+					}
 				}
 				scope:temp_caravan_master_option_2 = {
 					# Add travel trait and randomized experience to both tracks
@@ -1663,6 +1669,9 @@ travel_events.1020 = {
 					max_template_average_skill
 				}
 				save_scope_as = temp_caravan_master_option_2
+				after_creation = {
+					add_character_flag = created
+				}
 			}
 			scope:temp_caravan_master_option_2 = {
 				# Add travel trait and randomized experience to both tracks

@@ -116,35 +116,6 @@ unop_reveal_or_add_genetic_trait = {
 	}
 }
 
-# Transfer the story to another character, used on inheritance
-transfer_holy_order_loan_story_cycle_to_effect = {
-	$STORY$ = {
-		# Set story owner
-		make_story_owner = $CHARACTER$
-
-		#Modify the inner variable for tracking purpose
-		set_variable = { name = current_loan_holder value = $CHARACTER$ }
-
-		$STORY$.var:original_loan_holder = {
-			save_scope_as = original_loan_holder
-		}
-
-		# Save story scope for reference
-		save_scope_as = loan_story
-	}
-
-	$CHARACTER$ = {
-		# Inform player heir that a loan was inherited
-		if = {
-			limit = { is_ai = no } #Unop: No need to fire an event for the AI
-			trigger_event = {
-				id = loan_story.0002
-				days = { 3 5 }
-			}
-		}
-	}
-}
-
 add_sparring_flag_effect = {
 	random_list = {
 		1 = {

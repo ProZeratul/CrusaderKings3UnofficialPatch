@@ -166,71 +166,69 @@ east_europe.0011 = { #by Mathilda Bjarnehed
 }
 
 #I am the Defender of Defensive Pagan Highgod (pick holy site)
-#east_europe.0015 = { #by Mathilda Bjarnehed
-#	orphan = yes
-#	type = character_event
-#	title = east_europe.0015.t
-#	desc = east_europe.0015.desc
-#	theme = faith
-#	left_portrait = {
-#		character = root
-#		animation = personality_zealous
-#	}
+east_europe.0015 = { #by Mathilda Bjarnehed
+	type = character_event
+	title = east_europe.0015.t
+	desc = east_europe.0015.desc
+	theme = faith
+	left_portrait = {
+		character = root
+		animation = personality_zealous
+	}
 
-#	immediate = {
-#		#Music cue in follow-up event.
-#		faith = {
-#			every_holy_site_barony = {
-#				limit = {
-#					county.holder = root
-#					title_province = { has_special_building = no  }
+	immediate = {
+		faith = {
+			every_holy_site_barony = {
+				limit = {
+					county.holder = root
+					title_province = { has_special_district = no  }
 					# barony = { }
-#				}
-#				add_to_list = holy_sites
-#			}
-#		}
+				}
+				add_to_list = holy_sites
+			}
+		}
 
-#		save_target_list_as_separate_scopes_effect = { TARGET_LIST = holy_sites }
-#	}
+		save_target_list_as_separate_scopes_effect = { TARGET_LIST = holy_sites }
+	}
 
-#	option = {
-#		name = east_europe.0015.a
-#		custom_tooltip = east_europe.0015.tooltip
-#		scope:target_list_member_a = {
-#			save_scope_as = holy_site
-#		}
-#	}
+	option = {
+		name = east_europe.0015.a
+		custom_tooltip = east_europe.0015.tooltip
+		scope:target_list_member_a = {
+			save_scope_as = holy_site
+		}
+	}
 
-#	option = {
-#		name = east_europe.0015.b
-#		custom_tooltip = east_europe.0015.tooltip
-#		scope:target_list_member_b = {
-#			save_scope_as = holy_site
-#		}
-#	}
+	option = {
+		name = east_europe.0015.b
+		custom_tooltip = east_europe.0015.tooltip
+		scope:target_list_member_b = {
+			save_scope_as = holy_site
+		}
+	}
 
-#	option = {
-#		trigger = { exists = scope:target_list_member_c }
-#		name = east_europe.0015.c
-#		custom_tooltip = east_europe.0015.tooltip
-#		scope:target_list_member_c = {
-#			save_scope_as = holy_site
-#		}
-#	}
+	option = {
+		trigger = { exists = scope:target_list_member_c }
+		name = east_europe.0015.c
+		custom_tooltip = east_europe.0015.tooltip
+		scope:target_list_member_c = {
+			save_scope_as = holy_site
+		}
+	}
 
-#	option = {
-#		trigger = { exists = scope:target_list_member_d }
-#		name = east_europe.0015.d
-#		custom_tooltip = east_europe.0015.tooltip
-#		scope:target_list_member_d = {
-#			save_scope_as = holy_site
-#		}
-#	}
+	option = {
+		trigger = { exists = scope:target_list_member_d }
+		name = east_europe.0015.d
+		custom_tooltip = east_europe.0015.tooltip
+		scope:target_list_member_d = {
+			save_scope_as = holy_site
+		}
+	}
 
-#	after = {
-#		trigger_event = east_europe.0016
-#	}
-#}
+	after = {
+		trigger_event = east_europe.0016
+	}
+}
 
 #I am the Defender of Defensive Pagan Highgod (actual event)
 east_europe.0016 = { #by Mathilda Bjarnehed
@@ -1432,9 +1430,9 @@ east_europe.0115 = {
 		#Still recoup that lost piety.
 		add_piety = medium_piety_gain
 		#Set the "convert" as your rival.
-		set_relation_rival = {
-			target = scope:heretic
-			reason = rival_faked_conversion
+		set_relation_rival_effect = {
+			TARGET = scope:heretic
+			REASON = rival_faked_conversion
 		}
 		hidden_effect = {
 			scope:heretic = {
@@ -1442,9 +1440,9 @@ east_europe.0115 = {
 					title = east_europe.0115.b.toast
 					left_icon = scope:accuser
 					show_as_tooltip = {
-						set_relation_rival = {
-							target = scope:accuser
-							reason = rival_faked_conversion
+						set_relation_rival_effect = {
+							TARGET = scope:accuser
+							REASON = rival_faked_conversion
 						}
 					}
 				}
@@ -1714,11 +1712,10 @@ east_europe.0117 = {
 			is_ai = no
 			can_set_relation_rival_trigger = { CHARACTER = scope:heretic }
 		}
-
 		#Set the heretic as your rival.
-		set_relation_rival = {
-			target = scope:heretic
-			reason = rival_heresy
+		set_relation_rival_effect = {
+			TARGET = scope:heretic
+			REASON = rival_heresy
 		}
 		hidden_effect = {
 			scope:heretic = {
@@ -1764,18 +1761,18 @@ east_europe.0117 = {
 			limit = {
 				can_set_relation_rival_trigger = { CHARACTER = scope:heretic }
 			}
-			set_relation_rival = {
-				target = scope:heretic
-				reason = rival_heresy
+			set_relation_rival_effect = {
+				TARGET = scope:heretic
+				REASON = rival_heresy
 			}
 		}
 		if = {
 			limit = {
 				can_set_relation_rival_trigger = { CHARACTER = scope:hof }
 			}
-			set_relation_rival = {
-				target = scope:hof
-				reason = rival_heresy
+			set_relation_rival_effect = {
+				TARGET = scope:hof
+				REASON = rival_heresy
 			}
 		}
 

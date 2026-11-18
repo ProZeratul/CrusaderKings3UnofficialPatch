@@ -2796,10 +2796,10 @@ character_view_bg = {
 					OR = {
 						is_eastern_roman_emperor_primary_title_trigger = yes
 						liege ?= {
-							exists = primary_title
-							primary_title.tier >= tier_empire
-							is_eastern_roman_emperor_primary_title_trigger = yes
-						}
+		 					exists = primary_title
+		 					primary_title.tier >= tier_empire
+		 					is_eastern_roman_emperor_primary_title_trigger = yes
+		 				}
 					}
 				}
 			}
@@ -3181,6 +3181,199 @@ character_view_bg = {
 	# 	}
 	# }
 
+
+	##########################################
+	# Trader paused at a market
+
+	#####
+	# Asia
+	#####
+	texture = {
+		reference = "event_scenes/tgp_market_asia.dds"
+
+		trigger = {
+			gdp_trader_should_use_market_background_trigger = yes
+			location ?= {
+				OR = {
+					culture ?= { has_graphical_east_asia_culture_group_trigger = yes }
+					culture ?= { has_graphical_japanese_culture_group_trigger = yes }
+					culture ?= { has_building_gfx = southeast_asian_building_gfx }
+				}
+			}
+		}
+	}
+
+	environment = {
+		reference = "environment_tgp_market_asia"
+
+		trigger = {
+			gdp_trader_should_use_market_background_trigger = yes
+			location ?= {
+				OR = {
+					culture ?= { has_graphical_east_asia_culture_group_trigger = yes }
+					culture ?= { has_graphical_japanese_culture_group_trigger = yes }
+					culture ?= { has_building_gfx = southeast_asian_building_gfx }
+				}
+			}
+		}
+	}
+
+	#####
+	# Italian
+	#####
+	texture = {
+		reference = "event_scenes/gdp_italian_market.dds"
+
+		trigger = {
+			gdp_trader_should_use_market_background_trigger = yes
+			location ?= { geographical_region = world_europe_south_italy }
+		}
+	}
+
+	environment = {
+		reference = "environment_bp2_courtyard"
+
+		trigger = {
+			gdp_trader_should_use_market_background_trigger = yes
+			location ?= { geographical_region = world_europe_south_italy }
+		}
+	}
+
+	#####
+	# Mediterranean
+	#####
+	texture = {
+		reference = "event_scenes/ep3_medi_market.dds"
+
+		trigger = {
+			gdp_trader_should_use_market_background_trigger = yes
+			location ?= {
+				OR = {
+					geographical_region = mediteranean_coast
+					geographical_region = world_asia_minor
+					culture ?= { has_graphical_mediterranean_culture_group_trigger = yes }
+				}
+			}
+		}
+	}
+
+	environment = {
+		reference = "environment_ep3_medi_market"
+
+		trigger = {
+			gdp_trader_should_use_market_background_trigger = yes
+			location ?= {
+				OR = {
+					geographical_region = mediteranean_coast
+					geographical_region = world_asia_minor
+					culture ?= { has_graphical_mediterranean_culture_group_trigger = yes }
+				}
+			}
+		}
+	}
+
+	#####
+	# Eastern
+	#####
+	texture = {
+		reference = "event_scenes/market_east.dds"
+
+		trigger = {
+			gdp_trader_should_use_market_background_trigger = yes
+			location ?= {
+				OR = {
+					geographical_region = graphical_mena
+					geographical_region = graphical_india
+					culture ?= { has_building_gfx = iranian_building_gfx }
+					culture ?= { has_building_gfx = indian_building_gfx }
+					culture ?= { has_building_gfx = tibetan_building_gfx }
+					AND = {
+						geographical_region = world_europe_west_iberia
+						faith ?= { religion = religion:islam_religion }
+					}
+				}
+			}
+		}
+	}
+
+	environment = {
+		reference = "environment_event_market_east"
+
+		trigger = {
+			gdp_trader_should_use_market_background_trigger = yes
+			location ?= {
+				OR = {
+					geographical_region = graphical_mena
+					geographical_region = graphical_india
+					culture ?= { has_building_gfx = iranian_building_gfx }
+					culture ?= { has_building_gfx = indian_building_gfx }
+					culture ?= { has_building_gfx = tibetan_building_gfx }
+					AND = {
+						geographical_region = world_europe_west_iberia
+						faith ?= { religion = religion:islam_religion }
+					}
+				}
+			}
+		}
+	}
+
+	#####
+	# Tribal
+	#####
+	texture = {
+		reference = "event_scenes/market_tribal.dds"
+
+		trigger = {
+			gdp_trader_should_use_market_background_trigger = yes
+			location ?= {
+				county.holder ?= {
+					OR = {
+						government_has_flag = government_is_tribal
+						government_has_flag = government_is_clan
+						government_has_flag = government_is_in_steppe
+					}
+				}
+				NOT = { geographical_region = graphical_mena }
+			}
+		}
+	}
+
+	environment = {
+		reference = "environment_event_market_tribal"
+
+		trigger = {
+			gdp_trader_should_use_market_background_trigger = yes
+			location ?= {
+				county.holder ?= {
+					OR = {
+						government_has_flag = government_is_tribal
+						government_has_flag = government_is_clan
+						government_has_flag = government_is_in_steppe
+					}
+				}
+				NOT = { geographical_region = graphical_mena }
+			}
+		}
+	}
+
+	#####
+	# Western fallback
+	#####
+	texture = {
+		reference = "event_scenes/market_west.dds"
+
+		trigger = {
+			gdp_trader_should_use_market_background_trigger = yes
+		}
+	}
+
+	environment = {
+		reference = "environment_event_market_west"
+
+		trigger = {
+			gdp_trader_should_use_market_background_trigger = yes
+		}
+	}
 
 	####
 	# sea, norse
@@ -4300,10 +4493,7 @@ character_view_bg = {
 				NOT = { location = involved_activity.activity_location }
 			}
 			location = {
-				OR = {
-					terrain = terraced_hills
-					has_building_or_higher = paddy_fields_01
-				}
+				terrain = terraced_hills
 			}
 		}
 	}
@@ -4324,10 +4514,7 @@ character_view_bg = {
 				NOT = { location = involved_activity.activity_location }
 			}
 			location = {
-				OR = {
-					terrain = terraced_hills
-					has_building_or_higher = paddy_fields_01
-				}
+				terrain = terraced_hills
 			}
 			is_character_window_main_character = yes
 		}
@@ -4352,10 +4539,7 @@ character_view_bg = {
 							NOT = { location = involved_activity.activity_location }
 						}
 						location = {
-							OR = {
-								terrain = terraced_hills
-								has_building_or_higher = paddy_fields_01
-							}
+							terrain = terraced_hills
 						}
 					}
 				}
@@ -4373,10 +4557,7 @@ character_view_bg = {
 							NOT = { location = involved_activity.activity_location }
 						}
 						location = {
-							OR = {
-								terrain = terraced_hills
-								has_building_or_higher = paddy_fields_01
-							}
+							terrain = terraced_hills
 						}
 					}
 				}
@@ -4394,10 +4575,7 @@ character_view_bg = {
 							NOT = { location = involved_activity.activity_location }
 						}
 						location = {
-							OR = {
-								terrain = terraced_hills
-								has_building_or_higher = paddy_fields_01
-							}
+							terrain = terraced_hills
 						}
 					}
 				}
@@ -6228,6 +6406,317 @@ character_view_bg = {
 							exists = province_owner
 						}
 					}
+				}
+			}
+			is_character_window_main_character = no
+		}
+	}
+
+	###
+	# asia unlanded merchant
+	#
+	texture = {
+		reference = "event_scenes/tgp_market_asia.dds"
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			OR = {
+				AND = {
+					is_landless_merchant = yes
+					location.culture ?= { has_graphical_east_asia_or_southeast_asia_group_trigger =  yes }
+				}
+				liege ?= {
+					is_landless_merchant = yes
+					location.culture ?= { has_graphical_east_asia_or_southeast_asia_group_trigger =  yes }
+				}
+				primary_spouse ?= { # Primary Spouse
+					is_landless_merchant = yes
+					location.culture ?= { has_graphical_east_asia_or_southeast_asia_group_trigger =  yes }
+				}
+			}
+		}
+	}
+
+	environment = {
+		reference = "environment_tgp_market_asia" # TODO_CD_GDP
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			is_landless_merchant = yes
+			location.culture ?= { has_graphical_east_asia_or_southeast_asia_group_trigger =  yes }
+		}
+	}
+
+	environment = {
+		reference = "environment_tgp_market_asia" # TODO_CD_GDP
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			OR = {
+				primary_spouse ?= {
+					is_landless_merchant = yes
+					location.culture ?= { has_graphical_east_asia_or_southeast_asia_group_trigger =  yes }
+				}
+				betrothed ?= {
+					is_landless_merchant = yes
+					location.culture ?= { has_graphical_east_asia_or_southeast_asia_group_trigger =  yes }
+				}
+				AND = {
+					liege.diarch ?= this
+					liege ?= {
+						is_landless_merchant = yes
+						location.culture ?= { has_graphical_east_asia_or_southeast_asia_group_trigger =  yes }
+					}
+				}
+			}
+			is_character_window_main_character = no
+		}
+	}
+
+	###
+	# mena unlanded merchant domicile
+	#
+	texture = {
+		reference = "event_scenes/gdp_mena_merchant_domicile.dds"
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			OR = {
+				AND = {
+					is_landless_merchant = yes
+					culture = {
+						OR = {
+							has_graphical_mena_culture_group_trigger = yes
+							has_graphical_african_culture_group_trigger = yes
+							has_graphical_steppe_culture_group_trigger = yes
+							has_graphical_india_culture_group_trigger = yes
+							has_graphical_iberian_culture_group_trigger = yes
+							has_graphical_iranian_culture_group_trigger = yes
+						}
+					}
+				}
+				liege ?= {
+					is_landless_merchant = yes
+					culture = {
+						OR = {
+							has_graphical_mena_culture_group_trigger = yes
+							has_graphical_african_culture_group_trigger = yes
+							has_graphical_steppe_culture_group_trigger = yes
+							has_graphical_india_culture_group_trigger = yes
+							has_graphical_iberian_culture_group_trigger = yes
+							has_graphical_iranian_culture_group_trigger = yes
+						}
+					}
+				}
+				primary_spouse ?= { # Primary Spouse
+					is_landless_merchant = yes
+					culture = {
+						OR = {
+							has_graphical_mena_culture_group_trigger = yes
+							has_graphical_african_culture_group_trigger = yes
+							has_graphical_steppe_culture_group_trigger = yes
+							has_graphical_india_culture_group_trigger = yes
+							has_graphical_iberian_culture_group_trigger = yes
+							has_graphical_iranian_culture_group_trigger = yes
+						}
+					}
+				}
+			}
+		}
+	}
+
+	environment = {
+		reference = "environment_gdp_mena_merchant_domicile"
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			OR = {
+				AND = {
+					is_landless_merchant = yes
+					culture = {
+						OR = {
+							has_graphical_mena_culture_group_trigger = yes
+							has_graphical_african_culture_group_trigger = yes
+							has_graphical_steppe_culture_group_trigger = yes
+							has_graphical_india_culture_group_trigger = yes
+							has_graphical_iberian_culture_group_trigger = yes
+							has_graphical_iranian_culture_group_trigger = yes
+						}
+					}
+				}
+				liege ?= {
+					is_landless_merchant = yes
+					culture = {
+						OR = {
+							has_graphical_mena_culture_group_trigger = yes
+							has_graphical_african_culture_group_trigger = yes
+							has_graphical_steppe_culture_group_trigger = yes
+							has_graphical_india_culture_group_trigger = yes
+							has_graphical_iberian_culture_group_trigger = yes
+							has_graphical_iranian_culture_group_trigger = yes
+						}
+					}
+				}
+				primary_spouse ?= { # Primary Spouse
+					is_landless_merchant = yes
+					culture = {
+						OR = {
+							has_graphical_mena_culture_group_trigger = yes
+							has_graphical_african_culture_group_trigger = yes
+							has_graphical_steppe_culture_group_trigger = yes
+							has_graphical_india_culture_group_trigger = yes
+							has_graphical_iberian_culture_group_trigger = yes
+							has_graphical_iranian_culture_group_trigger = yes
+						}
+					}
+				}
+			}
+		}
+	}
+
+	environment = {
+		reference = "environment_gdp_mena_merchant_domicile"
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			OR = {
+				betrothed ?= {
+					is_landless_merchant = yes
+					culture = {
+						OR = {
+							has_graphical_mena_culture_group_trigger = yes
+							has_graphical_african_culture_group_trigger = yes
+							has_graphical_steppe_culture_group_trigger = yes
+							has_graphical_india_culture_group_trigger = yes
+							has_graphical_iberian_culture_group_trigger = yes
+							has_graphical_iranian_culture_group_trigger = yes
+						}
+					}
+				}
+				primary_spouse ?= { # Primary Spouse
+					is_landless_merchant = yes
+					culture = {
+						OR = {
+							has_graphical_mena_culture_group_trigger = yes
+							has_graphical_african_culture_group_trigger = yes
+							has_graphical_steppe_culture_group_trigger = yes
+							has_graphical_india_culture_group_trigger = yes
+							has_graphical_iberian_culture_group_trigger = yes
+							has_graphical_iranian_culture_group_trigger = yes
+						}
+					}
+				}
+				betrothed ?= {
+					is_landless_merchant = yes
+					culture = {
+						OR = {
+							has_graphical_mena_culture_group_trigger = yes
+							has_graphical_african_culture_group_trigger = yes
+							has_graphical_steppe_culture_group_trigger = yes
+							has_graphical_india_culture_group_trigger = yes
+							has_graphical_iberian_culture_group_trigger = yes
+							has_graphical_iranian_culture_group_trigger = yes
+						}
+					}
+				}
+				AND = {
+					liege.diarch ?= this
+					liege ?= {
+						is_landless_merchant = yes
+						location.culture = {
+							OR = {
+								has_graphical_mena_culture_group_trigger = yes
+								has_graphical_african_culture_group_trigger = yes
+								has_graphical_steppe_culture_group_trigger = yes
+								has_graphical_india_culture_group_trigger = yes
+								has_graphical_iberian_culture_group_trigger = yes
+								has_graphical_iranian_culture_group_trigger = yes
+							}
+						}
+					}
+				}
+			}
+			is_character_window_main_character = no
+		}
+	}
+
+	###
+	# european unlanded merchant domicile
+	#
+	texture = {
+		reference = "event_scenes/gdp_merchant_domicile.dds"
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			OR = {
+				is_landless_merchant = yes
+				liege ?= { is_landless_merchant = yes }
+				primary_spouse ?= { is_landless_merchant = yes } # Primary Spouse
+			}
+		}
+	}
+
+	environment = {
+		reference = "environment_gdp_merchant_domicile"
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			OR = {
+				is_landless_merchant = yes
+				liege ?= { is_landless_merchant = yes }
+				primary_spouse ?= { is_landless_merchant = yes } # Primary Spouse
+			}
+		}
+	}
+
+	environment = {
+		reference = "environment_gdp_merchant_domicile"
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			OR = {
+				liege ?= { is_landless_merchant = yes }
+				primary_spouse ?= { is_landless_merchant = yes }
+				betrothed ?= { is_landless_merchant = yes }
+				AND = {
+					liege.diarch ?= this
+					liege ?= { is_landless_merchant = yes }
 				}
 			}
 			is_character_window_main_character = no
@@ -8764,38 +9253,40 @@ character_view_bg = {
 	##########################################
 
 	#Under-construction cathedral
-	texture = {
-		reference = "event_scenes/pam_cathedral_construction.dds"
+	# TODO_PAM Parked with the CE3 buildings ep5 commented out in pam_buildings.txt (1978cc1203a) - restore with the building
+#	texture = {
+#		reference = "event_scenes/pam_cathedral_construction.dds"
 
-		trigger = {
-			capital_county ?= {
-				any_county_province = {
-					has_building = great_project_cathedral_under_construction
-				}
-			}
-			should_use_temple_character_background_trigger = yes
-			religion = religion:christianity_religion
-			#Does actually have a cathedral domicile
-			domicile ?= { has_domicile_building_or_higher = ecclesiastical_domicile_main_01 }
-		}
-	}
+#		trigger = {
+#			capital_county ?= {
+#				any_county_province = {
+#					has_building = great_project_cathedral_under_construction
+#				}
+#			}
+#			should_use_temple_character_background_trigger = yes
+#			religion = religion:christianity_religion
+#			#Does actually have a cathedral domicile
+#			domicile ?= { has_domicile_building_or_higher = ecclesiastical_domicile_main_01 }
+#		}
+#	}
 
-	environment = {
-		reference = "environment_pam_cathedral_construction"
+	# TODO_PAM Parked with the CE3 buildings ep5 commented out in pam_buildings.txt (1978cc1203a) - restore with the building
+#	environment = {
+#		reference = "environment_event_church"
 
-		trigger = {
-			capital_county ?= {
-				any_county_province = {
-					has_building = great_project_cathedral_under_construction
-				}
-			}
-			should_use_temple_character_background_trigger = yes
-			religion = religion:christianity_religion
-			#Does actually have a cathedral domicile
-			domicile ?= { has_domicile_building_or_higher = ecclesiastical_domicile_main_01 }
-			is_character_window_main_character = yes
-		}
-	}
+#		trigger = {
+#			capital_county ?= {
+#				any_county_province = {
+#					has_building = great_project_cathedral_under_construction
+#				}
+#			}
+#			should_use_temple_character_background_trigger = yes
+#			religion = religion:christianity_religion
+#			#Does actually have a cathedral domicile
+#			domicile ?= { has_domicile_building_or_higher = ecclesiastical_domicile_main_01 }
+#			is_character_window_main_character = yes
+#		}
+#	}
 
 	texture = { # Christian - Grand Cathedral (high clergy)
 		reference = "event_scenes/church.dds"
@@ -13505,4 +13996,117 @@ character_private = {
 		reference = "environment_event_temple"
 	}
 
+}
+
+county_terrain_background = {
+	texture = {
+		reference = "event_scenes/bp3_steppe_winter.dds"
+		trigger = {
+			terrain = steppe
+			has_winter_trigger = yes
+		}
+	}
+	texture = {
+		reference = "terrain_types/steppe.dds"
+		trigger = { terrain = steppe }
+	}
+
+	texture = {
+		reference = "event_scenes/bp3_plains_winter.dds"
+		trigger = {
+			terrain = plains
+			has_winter_trigger = yes
+		}
+	}
+	texture = {
+		reference = "terrain_types/plains.dds"
+		trigger = { terrain = plains }
+	}
+
+	texture = {
+		reference = "event_scenes/bp3_hills_winter.dds"
+		trigger = {
+			terrain = hills
+			has_winter_trigger = yes
+		}
+	}
+	texture = {
+		reference = "terrain_types/hills.dds"
+		trigger = { terrain = hills }
+	}
+
+	texture = {
+		reference = "event_scenes/bp3_mountain_winter.dds"
+		trigger = {
+			terrain = mountains
+			has_winter_trigger = yes
+		}
+	}
+	texture = {
+		reference = "terrain_types/mountains.dds"
+		trigger = { terrain = mountains }
+	}
+
+	texture = {
+		reference = "event_scenes/bp3_wetlands_winter.dds"
+		trigger = {
+			terrain = wetlands
+			has_winter_trigger = yes
+		}
+	}
+	texture = {
+		reference = "terrain_types/wetlands.dds"
+		trigger = { terrain = wetlands }
+	}
+
+	texture = {
+		reference = "terrain_types/farmlands.dds"
+		trigger = { terrain = farmlands }
+	}
+	texture = {
+		reference = "terrain_types/floodplains.dds"
+		trigger = { terrain = floodplains }
+	}
+	texture = {
+		reference = "terrain_types/forest.dds"
+		trigger = { terrain = forest }
+	}
+	texture = {
+		reference = "terrain_types/taiga.dds"
+		trigger = { terrain = taiga }
+	}
+	texture = {
+		reference = "terrain_types/jungle.dds"
+		trigger = { terrain = jungle }
+	}
+	texture = {
+		reference = "terrain_types/terraced_hills.dds"
+		trigger = { terrain = terraced_hills }
+	}
+	texture = {
+		reference = "terrain_types/desert.dds"
+		trigger = { terrain = desert }
+	}
+	texture = {
+		reference = "terrain_types/desert_mountains.dds"
+		trigger = { terrain = desert_mountains }
+	}
+	texture = {
+		reference = "terrain_types/oasis.dds"
+		trigger = { terrain = oasis }
+	}
+	texture = {
+		reference = "terrain_types/drylands.dds"
+		trigger = { terrain = drylands }
+	}
+	texture = {
+		reference = "terrain_types/sea.dds"
+		trigger = { terrain = sea }
+	}
+	texture = {
+		reference = "terrain_types/coastal_sea.dds"
+		trigger = { terrain = coastal_sea }
+	}
+
+	texture = { reference = "terrain_types/plains.dds" }
 }

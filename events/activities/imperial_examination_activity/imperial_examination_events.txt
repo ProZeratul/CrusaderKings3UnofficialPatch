@@ -324,7 +324,6 @@ scripted_effect imperial_examination_fetch_examiner_effect = {
 			scope:activity = {
 				any_guest_subset = {
 					name = imperial_examiners
-					count >= 1
 					is_ai = yes
 				}
 			}
@@ -357,25 +356,32 @@ scripted_effect imperial_examination_fetch_examiner_effect = {
 
 scripted_effect imperial_examination_fetch_other_entrant_effect = {
 	scope:activity = {
-		random_attending_character = {
-			limit = {
-				this != root
-				# The attending list can still hold guests who have already left
-				involved_activity ?= scope:activity
-				is_in_guest_subset = { name = entrants }
-			}
+		random_guest_subset_current_phase = {
+			name = entrants
+			limit = { this != root }
 			save_scope_as = other_entrant
 		}
 	}
 }
 
+scripted_effect imperial_examination_fetch_exam_examiner_effect = {
+	if = {
+		limit = {
+			scope:activity = { has_activity_type = activity_imperial_examination }
+			title:e_minister_of_rites.holder ?= { is_participant_in_activity = scope:activity }
+		}
+		title:e_minister_of_rites.holder = { save_scope_as = examiner }
+	}
+	else = { imperial_examination_fetch_examiner_effect = yes }
+}
+
 scripted_trigger 1020_new_entrant_trigger = {
+	is_ai = yes
+	this != root
 	NOR = {
-		this = root
 		is_of_minor_interest_trigger = { CHARACTER = root }
 		is_of_major_interest_trigger = { CHARACTER = root }
 	}
-	is_ai = yes
 }
 
 #Entrant: Meet a fellow entrant
@@ -404,8 +410,6 @@ imperial_examination.1020 = {
 	}
 	trigger = {
 		is_ruler = yes # for performance reasons, if success is not a factor here, we only care about rulers
-		#Are we in the correct subset
-		is_in_guest_subset = { name = entrants }
 		trigger_if = {
 			limit = {
 				scope:activity = { has_activity_type = activity_imperial_examination }
@@ -413,8 +417,10 @@ imperial_examination.1020 = {
 			has_activity_intent = imperial_exam_taker_intent
 		}
 		trigger_else = { has_activity_intent = local_exam_taker_intent }
+		#Are we in the correct subset
+		is_in_guest_subset = { name = entrants }
 		scope:activity = {
-			any_guest_subset = {
+			any_guest_subset_current_phase = {
 				name = entrants
 				1020_new_entrant_trigger = yes
 			}
@@ -422,7 +428,7 @@ imperial_examination.1020 = {
 	}
 	immediate = {
 		scope:activity = {
-			random_guest_subset = {
+			random_guest_subset_current_phase = {
 				name = entrants
 				limit = { 1020_new_entrant_trigger = yes }
 				save_scope_as = new_entrant
@@ -856,8 +862,6 @@ imperial_examination.1050 = {
 	}
 
 	trigger = {
-		#Are we in the correct subset
-		is_in_guest_subset = { name = entrants }
 		trigger_if = {
 			limit = {
 				scope:activity = { has_activity_type = activity_imperial_examination }
@@ -868,32 +872,34 @@ imperial_examination.1050 = {
 		scope:activity = {
 			any_guest_subset = {
 				name = imperial_examiners
-				count >= 1
 				is_ai = yes
 			}
 		}
+		#Are we in the correct subset
+		is_in_guest_subset = { name = entrants }
 	}
 
 	immediate = {
 		imperial_examination_fetch_examiner_effect = yes
 		scope:activity = {
-			#Grab an examiner
-			random_guest_subset = {
-				name = entrants
+			random_guest_subset_current_phase = {
+				name = scoreboard
 				limit = {
-					is_in_guest_subset = { name = scoreboard }
 					is_ai = yes
+					this != root
+					is_in_guest_subset = { name = entrants }
 				}
 				save_scope_as = other_entrant
 			}
 			if = {
 				limit = {
-					NOT = { exists = scope:entrant_to_meet }
+					NOT = { exists = scope:other_entrant }
 				}
-				random_guest_subset = {
+				random_guest_subset_current_phase = {
 					name = entrants
 					limit = {
 						is_ai = yes
+						this != root
 					}
 					save_scope_as = other_entrant
 				}
@@ -3278,6 +3284,7 @@ imperial_examination.4010 = {
 	}
 	cooldown = { months = 6 }
 	trigger = {
+		has_character_flag = exam_cheat_intent
 		#Are we in the correct subset
 		is_in_guest_subset = { name = entrants }
 		trigger_if = {
@@ -3302,7 +3309,6 @@ imperial_examination.4010 = {
 				trigger_else = { always = yes }
 			}
 		}
-		has_character_flag = exam_cheat_intent
 	}
 	immediate = {
 		#For ease of access
@@ -3522,7 +3528,6 @@ imperial_examination.4030 = {
 				OR = {
 					has_relation_potential_friend = root
 					has_relation_friend = root
-					has_relation_best_friend = root
 				}
 			}
 		}
@@ -3536,7 +3541,6 @@ imperial_examination.4030 = {
 					OR = {
 						has_relation_potential_friend = root
 						has_relation_friend = root
-						has_relation_best_friend = root
 					}
 					save_temporary_scope_as = char_check
 					imperial_examination_4030_can_be_lovers_trigger = { CHARACTER = scope:char_check }
@@ -3704,7 +3708,6 @@ imperial_examination.4050 = {
 				OR = {
 					has_relation_potential_friend = root
 					has_relation_friend = root
-					has_relation_best_friend = root
 				}
 			}
 		}
@@ -3718,7 +3721,6 @@ imperial_examination.4050 = {
 					OR = {
 						has_relation_potential_friend = root
 						has_relation_friend = root
-						has_relation_best_friend = root
 					}
 					save_temporary_scope_as = char_check
 					imperial_examination_4030_can_be_lovers_trigger = { CHARACTER = scope:char_check }
@@ -4030,9 +4032,9 @@ imperial_examination.4060 = {
 			examination_type_duel_effect = { EXAM_TYPE = martial }
 		}
 		scope:promising_lowborn = {
-			set_relation_grudge = {
-				target = root
-				reason = rival_stifled_my_influence
+			set_relation_grudge_effect = { 
+			    TARGET = root
+			    REASON = rival_stifled_my_influence
 			}
 		}
 	}
@@ -4149,6 +4151,7 @@ imperial_examination.4070 = {
 				intrigue >= high_skill_rating
 				influence >= major_influence_value
 				any_hooked_character = {
+					is_participant_in_activity = scope:activity
 					is_in_guest_subset = { name = imperial_examiners }
 				}
 			}
@@ -4166,6 +4169,7 @@ imperial_examination.4070 = {
 					intrigue >= high_skill_rating
 					influence >= major_influence_value
 					any_hooked_character = {
+						is_participant_in_activity = scope:activity
 						is_in_guest_subset = { name = imperial_examiners }
 					}
 				}
@@ -4571,6 +4575,7 @@ imperial_examination.4090 = {
 	}
 
 	immediate = {
+		save_scope_as = event_participant
 		scope:activity = {
 			random_guest_subset = {
 				name = entrants
@@ -5378,21 +5383,18 @@ imperial_examination.9001 = {
 		}
 		# We should become rivals if we're not already.
 		if = {
-			limit = {
-				NOT = { has_relation_rival = scope:favored_entrant }
-			}
-			set_relation_rival = {
-				target = scope:favored_entrant
-				reason = rival_favored_entrant
+			limit = { has_relation_rival = scope:favored_entrant }
+			progress_towards_nemesis_effect = {
+				REASON = rival_favored_entrant
+				CHARACTER = scope:favored_entrant
+				OPINION = 0
 			}
 		}
-		# But if we _are_, then it's nemesis time.
-		else_if = {
-			limit = { has_relation_rival = scope:favored_entrant }
-			set_relation_nemesis = {
-				target = scope:favored_entrant
-				copy_reason = rival
-				reason = rival_favored_entrant
+		else = {
+			progress_towards_rival_effect = {
+				REASON = rival_favored_entrant
+				CHARACTER = scope:favored_entrant
+				OPINION = 0
 			}
 		}
 		# Then add influence.
@@ -6037,35 +6039,19 @@ imperial_examination.5000 = {
 		animation = stressed_teacher
 	}
 	trigger = {
-		trigger_if = {
-			limit = {
-				scope:activity = {
-					has_activity_type = activity_imperial_examination
-				}
-			}
-			NOT = {
-				scope:activity = {
-					has_activity_option = {
-						category = special_type
-						option = imperial_examination_focus_martial
-					}
-				}
-			}
-			is_in_guest_subset = { name = entrants }
-			scope:activity = {
-				has_current_phase = imperial_examination_phase_examination
-			}
-		}
-		trigger_else = {
-			is_in_guest_subset = { name = entrants }
-			scope:activity = {
-				has_current_phase = local_examination_phase_examination
-			}
-		}
 		has_none_of_variables = {
 			name = had_essay_examination
 			name = been_caught_cheating
 		}
+		scope:activity = {
+			trigger_if = {
+				limit = { has_activity_type = activity_imperial_examination }
+				has_current_phase = imperial_examination_phase_examination
+				NOT = { activity_is_martial_focus_trigger = yes }
+			}
+			trigger_else = { has_current_phase = local_examination_phase_examination }
+		}
+		is_in_guest_subset = { name = entrants }
 	}
 	immediate = {
 		set_variable = had_essay_examination
@@ -6074,19 +6060,10 @@ imperial_examination.5000 = {
 			value = flag:essay
 		}
 		imperial_examination_set_up_exam_advantage_scope = yes
-		scope:activity = {
+		if = {
+			limit = { is_ai = no }
 			imperial_examination_fetch_other_entrant_effect = yes
-			if = {
-				limit = {
-					has_activity_type = activity_imperial_examination
-					any_attending_character = { has_title = title:e_minister_of_rites }
-				}
-				random_attending_character = {
-					limit = { has_title = title:e_minister_of_rites }
-					save_scope_as = examiner
-				}
-			}
-			else = { imperial_examination_fetch_examiner_effect = yes }
+			imperial_examination_fetch_exam_examiner_effect = yes
 		}
 	}
 	#Cheat: Someone else takes the exam for you
@@ -6194,35 +6171,19 @@ imperial_examination.5050 = {
 		animation = stressed_teacher
 	}
 	trigger = {
-		trigger_if = {
-			limit = {
-				scope:activity = {
-					has_activity_type = activity_imperial_examination
-				}
-			}
-			NOT = {
-				scope:activity = {
-					has_activity_option = {
-						category = special_type
-						option = imperial_examination_focus_martial
-					}
-				}
-			}
-			is_in_guest_subset = { name = entrants }
-			scope:activity = {
-				has_current_phase = imperial_examination_phase_examination
-			}
-		}
-		trigger_else = {
-			is_in_guest_subset = { name = entrants }
-			scope:activity = {
-				has_current_phase = local_examination_phase_examination
-			}
-		}
 		has_none_of_variables = {
 			name = had_classics_examination
 			name = been_caught_cheating
 		}
+		scope:activity = {
+			trigger_if = {
+				limit = { has_activity_type = activity_imperial_examination }
+				has_current_phase = imperial_examination_phase_examination
+				NOT = { activity_is_martial_focus_trigger = yes }
+			}
+			trigger_else = { has_current_phase = local_examination_phase_examination }
+		}
+		is_in_guest_subset = { name = entrants }
 	}
 	immediate = {
 		set_variable = had_classics_examination
@@ -6231,19 +6192,9 @@ imperial_examination.5050 = {
 			value = flag:classics
 		}
 		imperial_examination_set_up_exam_advantage_scope = yes
-		scope:activity = {
-			imperial_examination_fetch_other_entrant_effect = yes
-			if = {
-				limit = {
-					has_activity_type = activity_imperial_examination
-					any_attending_character = { has_title = title:e_minister_of_rites }
-				}
-				random_attending_character = {
-					limit = { has_title = title:e_minister_of_rites }
-					save_scope_as = examiner
-				}
-			}
-			else = { imperial_examination_fetch_examiner_effect = yes }
+		if = {
+			limit = { is_ai = no }
+			imperial_examination_fetch_exam_examiner_effect = yes
 		}
 	}
 	#Cheat: Someone else takes the exam for you
@@ -6391,35 +6342,19 @@ imperial_examination.5100 = {
 		animation = stressed_teacher
 	}
 	trigger = {
-		trigger_if = {
-			limit = {
-				scope:activity = {
-					has_activity_type = activity_imperial_examination
-				}
-			}
-			NOT = {
-				scope:activity = {
-					has_activity_option = {
-						category = special_type
-						option = imperial_examination_focus_martial
-					}
-				}
-			}
-			is_in_guest_subset = { name = entrants }
-			scope:activity = {
-				has_current_phase = imperial_examination_phase_examination
-			}
-		}
-		trigger_else = {
-			is_in_guest_subset = { name = entrants }
-			scope:activity = {
-				has_current_phase = local_examination_phase_examination
-			}
-		}
 		has_none_of_variables = {
 			name = had_poetry_examination
 			name = been_caught_cheating
 		}
+		scope:activity = {
+			trigger_if = {
+				limit = { has_activity_type = activity_imperial_examination }
+				has_current_phase = imperial_examination_phase_examination
+				NOT = { activity_is_martial_focus_trigger = yes }
+			}
+			trigger_else = { has_current_phase = local_examination_phase_examination }
+		}
+		is_in_guest_subset = { name = entrants }
 	}
 	immediate = {
 		set_variable = had_poetry_examination
@@ -6428,19 +6363,10 @@ imperial_examination.5100 = {
 			value = flag:poetry
 		}
 		imperial_examination_set_up_exam_advantage_scope = yes
-		scope:activity = {
+		if = {
+			limit = { is_ai = no }
 			imperial_examination_fetch_other_entrant_effect = yes
-			if = {
-				limit = {
-					has_activity_type = activity_imperial_examination
-					any_attending_character = { has_title = title:e_minister_of_rites }
-				}
-				random_attending_character = {
-					limit = { has_title = title:e_minister_of_rites }
-					save_scope_as = examiner
-				}
-			}
-			else = { imperial_examination_fetch_examiner_effect = yes }
+			imperial_examination_fetch_exam_examiner_effect = yes
 		}
 	}
 	#Cheat: Someone else takes the exam for you
@@ -6591,20 +6517,11 @@ imperial_examination.5150 = {
 			name = current_examination
 			value = flag:archery
 		}
-		scope:activity = {
-			# Find an examiner
-			if = {
-				limit = {
-					any_attending_character = { has_title = title:e_minister_of_rites }
-				}
-				random_attending_character = {
-					limit = { has_title = title:e_minister_of_rites }
-					save_scope_as = examiner
-				}
-			}
-			else = { imperial_examination_fetch_examiner_effect = yes }
+		if = {
+			limit = { is_ai = no }
+			imperial_examination_fetch_exam_examiner_effect = yes
+			imperial_examination_fetch_other_entrant_effect = yes
 		}
-		imperial_examination_fetch_other_entrant_effect = yes
 		#Let's count our advantages
 		imperial_examination_set_up_exam_advantage_scope = yes
 	}
@@ -6735,20 +6652,11 @@ imperial_examination.5160 = {
 			name = current_examination
 			value = flag:polearm
 		}
-		scope:activity = {
-			if = {
-				limit = {
-					any_attending_character = { has_title = title:e_minister_of_rites }
-				}
-				random_attending_character = {
-					limit = { has_title = title:e_minister_of_rites }
-					save_scope_as = examiner
-				}
-			}
-			else = { imperial_examination_fetch_examiner_effect = yes }
+		if = {
+			limit = { is_ai = no }
+			imperial_examination_fetch_exam_examiner_effect = yes
+			imperial_examination_fetch_other_entrant_effect = yes
 		}
-		# Find other entrant
-		imperial_examination_fetch_other_entrant_effect = yes
 		#Let's count our advantages
 		imperial_examination_set_up_exam_advantage_scope = yes
 	}
@@ -6870,8 +6778,10 @@ imperial_examination.5170 = {
 			name = current_examination
 			value = flag:riding
 		}
-		# Find other entrant
-		imperial_examination_fetch_other_entrant_effect = yes
+		if = {
+			limit = { is_ai = no }
+			imperial_examination_fetch_other_entrant_effect = yes
+		}
 		#Let's count our advantages
 		imperial_examination_set_up_exam_advantage_scope = yes
 	}
@@ -7027,7 +6937,6 @@ imperial_examination.6000 = {
 						OR = {
 							has_relation_potential_friend = root
 							has_relation_friend = root
-							has_relation_best_friend = root
 							has_relation_lover = root
 						}
 					}
@@ -7039,7 +6948,6 @@ imperial_examination.6000 = {
 						OR = {
 							has_relation_potential_friend = root
 							has_relation_friend = root
-							has_relation_best_friend = root
 							has_relation_lover = root
 						}
 					}
@@ -7121,7 +7029,10 @@ imperial_examination.6000 = {
 		name = imperial_examination.6000.c
 		trigger = { exists = scope:friend_to_sacrifice }
 		#Bye bye
-		set_relation_rival = scope:friend_to_sacrifice
+		set_relation_rival_effect = {
+			TARGET = scope:friend_to_sacrifice
+			REASON = rival_accused_cheater
+		}
 		#Clean the slate
 		imperial_examination_cheat_washing_effect = yes
 		ai_chance = {
@@ -7169,6 +7080,11 @@ imperial_examination.5200 = {
 			activity_is_martial_focus_trigger = yes
 			has_current_phase = imperial_examination_phase_palace_examination
 		}
+	}
+
+	immediate = {
+		# The duel weights below use scope:exam_advantage_mult, as in the other examinations
+		imperial_examination_set_up_exam_advantage_scope = yes
 	}
 
 	option = { # Give it all
@@ -7367,6 +7283,10 @@ imperial_examination.5300 = {
 			activity_is_learning_focus_trigger = yes
 			has_current_phase = imperial_examination_phase_palace_examination
 		}
+	}
+
+	immediate = {
+		imperial_examination_set_up_exam_advantage_scope = yes
 	}
 
 	option = {
@@ -8853,10 +8773,7 @@ imperial_examination.7100 = {
 						add = 50
 					}
 					modifier = {
-						OR = {
-							has_relation_friend = root
-							has_relation_best_friend = root
-						}
+						has_relation_friend = root
 						add = 10
 					}
 				}
@@ -8883,10 +8800,7 @@ imperial_examination.7100 = {
 						add = 50
 					}
 					modifier = {
-						OR = {
-							has_relation_friend = root
-							has_relation_best_friend = root
-						}
+						has_relation_friend = root
 						add = 10
 					}
 				}
@@ -8945,10 +8859,7 @@ imperial_examination.7100 = {
 						add = 50
 					}
 					modifier = {
-						OR = {
-							has_relation_friend = root
-							has_relation_best_friend = root
-						}
+						has_relation_friend = root
 						add = 10
 					}
 				}

@@ -502,6 +502,136 @@ ecumenical_council_make_core_preview_effect = {
 	}
 }
 
+# Saves scope:ec_host_rite when the host leads a branched rite of the council's faith
+ecumenical_council_save_host_branched_rite_effect = {
+	scope:host = {
+		if = {
+			limit = {
+				rite != faith.main_rite
+				rite.head_of_rite ?= this
+			}
+			rite = {
+				save_temporary_scope_as = ec_host_rite
+			}
+		}
+	}
+}
+
+# A host who leads a branched rite carries a passed make-core ruling over to that rite
+# At the core tenet limit the rite gives up the tenet the main rite demoted, else its least popular tenet that is not core in the main rite
+# can_pick still sees the tenet about to be dropped
+# The four exclusive ascetic tenets may swap for one another when it is the only one of them the rite holds
+# Does nothing if the rite still cannot take the tenet, or has nothing to give up
+# Uses rite_has_tenet, because has_tenet_status on a branched rite falls back to the main rite, which already holds $TENET$
+# Reads scope:ec_demoted_tenet, saved when the main rite demoted a tenet
+ecumenical_council_host_rite_adopt_core_tenet_effect = {
+	ecumenical_council_save_host_branched_rite_effect = yes
+	$TENET$ = {
+		save_temporary_scope_as = ec_host_rite_new_tenet
+	}
+	if = {
+		limit = {
+			exists = scope:ec_host_rite
+			scope:ec_host_rite = {
+				NOT = { rite_has_tenet = scope:ec_host_rite_new_tenet }
+			}
+		}
+		scope:ec_host_rite = {
+			if = {
+				limit = { pam_rite_is_at_core_tenet_cap_trigger = yes }
+				if = {
+					limit = {
+						exists = scope:ec_demoted_tenet
+						rite_has_tenet = scope:ec_demoted_tenet
+					}
+					scope:ec_demoted_tenet = {
+						save_temporary_scope_as = ec_host_rite_dropped_tenet
+					}
+				}
+				else = {
+					ordered_rite_tenet = {
+						limit = {
+							save_temporary_scope_as = ec_host_rite_drop_candidate
+							scope:host.faith = {
+								NOT = { pam_faith_tenet_is_core_trigger = { TENET = scope:ec_host_rite_drop_candidate } }
+							}
+						}
+						order_by = {
+							save_temporary_scope_as = pam_popularity_tenet
+							scope:host.faith = { subtract = pam_faith_tenet_popularity_value }
+						}
+						position = 0
+						save_temporary_scope_as = ec_host_rite_dropped_tenet
+					}
+				}
+				if = {
+					limit = {
+						exists = scope:ec_host_rite_dropped_tenet
+						OR = {
+							rite_can_choose_tenet = scope:ec_host_rite_new_tenet
+							pam_rite_can_swap_exclusive_ascetic_tenet_trigger = {
+								NEW = scope:ec_host_rite_new_tenet
+								DROPPED = scope:ec_host_rite_dropped_tenet
+							}
+						}
+					}
+					custom_tooltip = {
+						text = ecumenical_council_host_rite_drops_tenet_tt
+						hidden_effect = {
+							remove_rite_tenet = scope:ec_host_rite_dropped_tenet
+						}
+					}
+					custom_tooltip = {
+						text = ecumenical_council_host_rite_adopts_tenet_tt
+						hidden_effect = {
+							add_rite_tenet = scope:ec_host_rite_new_tenet
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = { rite_can_choose_tenet = scope:ec_host_rite_new_tenet }
+				custom_tooltip = {
+					text = ecumenical_council_host_rite_adopts_tenet_tt
+					hidden_effect = {
+						add_rite_tenet = scope:ec_host_rite_new_tenet
+					}
+				}
+			}
+		}
+	}
+}
+
+# A host who leads a branched rite carries a passed doctrine ruling over to that rite
+# Reads scope:ec_proposal_doctrine
+# Head of faith doctrines are main rite only, so they never carry over
+ecumenical_council_host_rite_adopt_doctrine_effect = {
+	ecumenical_council_save_host_branched_rite_effect = yes
+	if = {
+		limit = {
+			exists = scope:ec_host_rite
+			exists = scope:ec_proposal_doctrine
+			NOR = {
+				scope:ec_proposal_doctrine = doctrine:doctrine_no_head
+				scope:ec_proposal_doctrine = doctrine:doctrine_spiritual_head
+				scope:ec_proposal_doctrine = doctrine:doctrine_temporal_head
+			}
+			scope:ec_host_rite = {
+				NOT = { rite_has_doctrine = scope:ec_proposal_doctrine }
+				rite_can_choose_doctrine = scope:ec_proposal_doctrine
+			}
+		}
+		scope:ec_host_rite = {
+			custom_tooltip = {
+				text = ecumenical_council_host_rite_adopts_doctrine_tt
+				hidden_effect = {
+					change_rite_doctrine = scope:ec_proposal_doctrine
+				}
+			}
+		}
+	}
+}
+
 # Applies the outcome of a passed debate vote to the host's faith.
 # scope:activity.var:current_topic holds the tenet/doctrine being debated.
 # scope:activity.var:current_debate_proposal holds the proposed change.
@@ -690,6 +820,7 @@ ecumenical_council_apply_debate_outcome_effect = {
 							limit = { has_tenet_popularity_trigger = yes }
 							change_tenet_popularity = { target = scope:activity.var:current_topic change = major_tenet_popularity_gain }
 						}
+						ecumenical_council_host_rite_adopt_core_tenet_effect = { TENET = scope:activity.var:current_topic }
 					}
 				}
 			}
@@ -754,6 +885,7 @@ ecumenical_council_apply_debate_outcome_effect = {
 					}
 				}
 			}
+			ecumenical_council_host_rite_adopt_doctrine_effect = yes
 		}
 		scope:activity = {
 			set_variable = {
@@ -1020,38 +1152,9 @@ pam_sort_guests_into_ecumenical_council_groups_effect = {
 				# Only eligible voters
 				pam_valid_ecumenical_council_voter_trigger = yes
 				NOT = {	has_relation_rival = scope:host }
-				trigger_if = {
-					limit = {
-						scope:activity = { has_current_phase = ecumenical_council_phase_first_debate }
-					}
-					scope:activity.activity_tenet:1 = {
-						save_temporary_scope_as = tenet
-					}
-					OR = {
-						scope:host = { has_strong_hook = prev }
-						ecumenical_council_attendee_support_value > 0
-					}
-				}
-				trigger_else_if = {
-					limit = {
-						scope:activity = { has_current_phase = ecumenical_council_phase_second_debate }
-					}
-					scope:activity.activity_tenet:2 = {
-						save_temporary_scope_as = tenet
-					}
-					OR = {
-						scope:host = { has_strong_hook = prev }
-						ecumenical_council_attendee_support_value > 0
-					}
-				}
-				trigger_else = {
-					scope:activity.var:third_debate_proposal ?= {
-						save_temporary_scope_as = doctrine
-					}
-					OR = {
-						scope:host = { has_strong_hook = prev }
-						ecumenical_council_doctrine_attendee_support_value > 0
-					}
+				OR = {
+					scope:host = { has_strong_hook = prev }
+					ecumenical_council_current_proposal_attendee_support_value > ecumenical_council_current_proposal_innovator_threshold_value
 				}
 			}
 			add_to_list = innovator
@@ -1105,42 +1208,51 @@ pam_sort_guests_into_ecumenical_council_groups_effect = {
 				# populate the list otherwise we have no random event at all.
 				ordered_in_list = {
 					list = conservative
-					limit = { is_ai = yes }
+					limit = {
+						is_ai = yes
+						# Only flip attendees who lean towards the change, even if not past the innovator threshold
+						ecumenical_council_current_proposal_attendee_support_value > 0
+					}
 					max = { # a bit more to prevent all flipped
 						value = list_size:conservative
 						multiply = 0.1
 						max = 10
 						min = 1
 					}
-					order_by = {
-						if = {
-							limit = {
-								scope:activity = { has_current_phase = ecumenical_council_phase_first_debate }
-							}
-							scope:activity.activity_tenet:1 = {
-								save_temporary_scope_as = tenet
-							}
-							add = ecumenical_council_attendee_support_value
+					order_by = ecumenical_council_current_proposal_attendee_support_value
+					remove_from_list = conservative
+					add_to_list = innovator
+					scope:activity = {
+						remove_from_guest_subset = {
+							name = conservative
+							target = prev
 						}
-						else_if = {
-							limit = {
-								scope:activity = { has_current_phase = ecumenical_council_phase_second_debate }
-							}
-							scope:activity.activity_tenet:2 = {
-								save_temporary_scope_as = tenet
-							}
-							add = ecumenical_council_attendee_support_value
-						}
-						else = {
-							if = {
-								limit = { exists = scope:activity.var:third_debate_proposal }
-								scope:activity.var:third_debate_proposal = {
-									save_temporary_scope_as = doctrine
-								}
-							}
-							add = ecumenical_council_doctrine_attendee_support_value
+						add_to_guest_subset = {
+							name = innovator
+							target = prev
 						}
 					}
+				}
+			}
+			# Nearly every sway event needs an AI innovator, so we draft the least opposed AI conservative if none leans towards the change
+			# The Head of Faith stays a conservative to argue against the host, and we always leave at least one conservative
+			if = {
+				limit = {
+					NOT = {
+						any_in_list = {
+							list = innovator
+							this != scope:host
+						}
+					}
+					list_size:conservative >= 2
+				}
+				ordered_in_list = {
+					list = conservative
+					limit = {
+						NOT = { scope:host.faith.religious_head ?= this }
+					}
+					max = 1
+					order_by = ecumenical_council_current_proposal_attendee_support_value
 					remove_from_list = conservative
 					add_to_list = innovator
 					scope:activity = {
