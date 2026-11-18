@@ -521,7 +521,7 @@ laamp_extra_contract_schemes.0012 = {
 		}
 		first_valid = {
 			triggered_desc = {
-				trigger = { exists = scope:agent_lookout_speed } #Unop: Since agent_lookout is now agent_lookout_speed (see ep3_contract_event.0030)
+				trigger = { exists = scope:agent_lookout }
 				desc = laamp_extra_contract_schemes.0012.desc_lookout
 			}
 			desc = laamp_extra_contract_schemes.0012.desc_no_lookout
@@ -565,24 +565,26 @@ laamp_extra_contract_schemes.0012 = {
 			task_contract.var:task_contract_object = { save_scope_as = task_contract_object }
 			if = {
 				limit = {
-					any_scheme_agent_slot = { is_agent_slot_type = agent_lookout_speed } #Unop: Since agent_lookout is now agent_lookout_speed (see ep3_contract_event.0030)
+					any_scheme_agent_slot = { is_agent_slot_type = agent_lookout_speed is_filled = yes } #Unop The lookout slots are agent_lookout_speed (see ep3_contract_event.0030), and an empty slot has no character
 				}
 				random_scheme_agent_slot = {
 					limit = {
-						is_agent_slot_type = agent_lookout_speed #Unop: Since agent_lookout is now agent_lookout_speed (see ep3_contract_event.0030)
+						is_agent_slot_type = agent_lookout_speed #Unop The lookout slots are agent_lookout_speed (see ep3_contract_event.0030), and an empty slot has no character
+						is_filled = yes
 					}
 					slot_character = {
-						save_scope_as = agent_lookout_speed #Unop: Since agent_lookout is now agent_lookout_speed (see ep3_contract_event.0030)
+						save_scope_as = agent_lookout
 					}
 				}
 			}
 			if = {
 				limit = {
-					any_scheme_agent_slot = { is_agent_slot_type = agent_thief }
+					any_scheme_agent_slot = { is_agent_slot_type = agent_thief is_filled = yes } #Unop An empty slot has no character
 				}
 				random_scheme_agent_slot = {
 					limit = {
 						is_agent_slot_type = agent_thief
+						is_filled = yes #Unop An empty slot has no character
 					}
 					slot_character = {
 						save_scope_as = agent_thief
@@ -591,11 +593,12 @@ laamp_extra_contract_schemes.0012 = {
 			}
 			if = {
 				limit = {
-					any_scheme_agent_slot = { is_agent_slot_type = agent_infiltrator }
+					any_scheme_agent_slot = { is_agent_slot_type = agent_infiltrator is_filled = yes } #Unop An empty slot has no character
 				}
 				random_scheme_agent_slot = {
 					limit = {
 						is_agent_slot_type = agent_infiltrator
+						is_filled = yes #Unop An empty slot has no character
 					}
 					slot_character = {
 						save_scope_as = agent_infiltrator
@@ -711,11 +714,12 @@ laamp_extra_contract_schemes.0013 = {
 			task_contract.var:task_contract_object = { save_scope_as = task_contract_object }
 			if = {
 				limit = {
-					any_scheme_agent_slot = { is_agent_slot_type = agent_lookout }
+					any_scheme_agent_slot = { is_agent_slot_type = agent_lookout_speed is_filled = yes } #Unop The lookout slots are agent_lookout_speed (see ep3_contract_event.0030), and an empty slot has no character
 				}
 				random_scheme_agent_slot = {
 					limit = {
-						is_agent_slot_type = agent_lookout
+						is_agent_slot_type = agent_lookout_speed #Unop The lookout slots are agent_lookout_speed (see ep3_contract_event.0030), and an empty slot has no character
+						is_filled = yes
 					}
 					slot_character = {
 						save_scope_as = agent_lookout
@@ -724,11 +728,12 @@ laamp_extra_contract_schemes.0013 = {
 			}
 			if = {
 				limit = {
-					any_scheme_agent_slot = { is_agent_slot_type = agent_thief }
+					any_scheme_agent_slot = { is_agent_slot_type = agent_thief is_filled = yes } #Unop An empty slot has no character
 				}
 				random_scheme_agent_slot = {
 					limit = {
 						is_agent_slot_type = agent_thief
+						is_filled = yes #Unop An empty slot has no character
 					}
 					slot_character = {
 						save_scope_as = agent_thief
@@ -737,11 +742,12 @@ laamp_extra_contract_schemes.0013 = {
 			}
 			if = {
 				limit = {
-					any_scheme_agent_slot = { is_agent_slot_type = agent_infiltrator }
+					any_scheme_agent_slot = { is_agent_slot_type = agent_infiltrator is_filled = yes } #Unop An empty slot has no character
 				}
 				random_scheme_agent_slot = {
 					limit = {
 						is_agent_slot_type = agent_infiltrator
+						is_filled = yes #Unop An empty slot has no character
 					}
 					slot_character = {
 						save_scope_as = agent_infiltrator
