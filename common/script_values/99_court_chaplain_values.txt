@@ -408,16 +408,12 @@ court_chaplain_fabricate_claim_monthly_increase_nemesis_bonus = {
 }
 
 court_chaplain_fabricate_claim_county_base = 3
-court_chaplain_fabricate_claim_county_min_cost = {
-	value = { 40 60 }
-}
+court_chaplain_fabricate_claim_county_min_cost = 30
 
 court_chaplain_fabricate_claim_duchy_base = 7
-court_chaplain_fabricate_claim_duchy_min_cost = {
-	value = { 80 100 }
-}
+court_chaplain_fabricate_claim_duchy_min_cost = 60
 
-court_chaplain_fabricate_claim_factor = 1
+court_chaplain_fabricate_claim_factor = 0.6
 
 court_chaplain_fabricate_claim_struggle_penalty_multiplier_value = {
 	if = {
@@ -447,6 +443,9 @@ court_chaplain_fabricate_claim_county_cost = {
 	# Struggle Factors
 	multiply = court_chaplain_fabricate_claim_struggle_penalty_multiplier_value
 
+	divide = 5
+	round = yes
+	multiply = 5
 	min = court_chaplain_fabricate_claim_county_min_cost
 }
 
@@ -460,6 +459,9 @@ court_chaplain_fabricate_claim_duchy_cost = {
 	# Struggle Factors
 	multiply = court_chaplain_fabricate_claim_struggle_penalty_multiplier_value
 
+	divide = 5
+	round = yes
+	multiply = 5
 	min = court_chaplain_fabricate_claim_duchy_min_cost
 }
 
