@@ -233,39 +233,37 @@ give_pilgrim_trait_or_xp_effect = {
 							}
 							add_trait = pilgrim
 						}
-						else = { #Unop Was else_if without limit
-							if = {
-								limit = {
-									has_pam_dlc_trigger = yes
-									faith = { has_variable = pam_secured_pilgrim_routes }
-									has_trait_xp = { 
-										trait = pilgrim 
-										value < 100
-									}
-								}
-								add_trait_xp = { 
-									trait = pilgrim 
-									value = 30
+						else_if = {
+							limit = {
+								has_pam_dlc_trigger = yes
+								faith = { has_variable = pam_secured_pilgrim_routes }
+								has_trait_xp = {
+									trait = pilgrim
+									value < 100
 								}
 							}
-							else_if = {
-								limit = {
-									has_trait_xp = { 
-										trait = pilgrim 
-										value < 100
-									}
-								}
-								add_trait_xp = { #Unop Moved from the else below, which was only reached with 100 xp
-									trait = pilgrim 
-									value = 20
-								}
+							add_trait_xp = {
+								trait = pilgrim
+								value = 30
 							}
-							else_if = { #Unop Moved from below, as in the non-host case
-								limit = { has_lifestyle = learning_lifestyle }
-								add_learning_lifestyle_xp = major_lifestyle_xp
-							}
-							else = { add_character_flag = should_get_trait_piety } #Unop Moved from below, as in the non-host case
 						}
+						else_if = {
+							limit = {
+								has_trait_xp = {
+									trait = pilgrim
+									value < 100
+								}
+							}
+							add_trait_xp = {
+								trait = pilgrim
+								value = 20
+							}
+						}
+						else_if = {
+							limit = { has_lifestyle = learning_lifestyle }
+							add_learning_lifestyle_xp = major_lifestyle_xp
+						}
+						else = { add_character_flag = should_get_trait_piety }
 					}
 				}
 			}
@@ -1162,6 +1160,7 @@ give_pilgrimage_reward_effect = {
 		give_pious_type_reward_effect = yes
 		give_worldly_type_reward_effect = yes
 	}
+	gdp_trader_pilgrimage_expertise_reward_effect = yes
 	christian_saint_bone_tooltip_effect = yes
 	pilgrimage_additional_reward_effect = yes
 	# PAM - Spiritual fulfillment from completing a pilgrimage

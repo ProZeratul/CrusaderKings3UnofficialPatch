@@ -1734,10 +1734,10 @@ mandala_built_piety_building_effect = {
 			root.county.holder = {
 				if = {
 					limit = { government_has_flag = government_is_mandala }
-				}
-				add_piety = {
-					value = miniscule_piety_value
-					multiply = 1.5
+					add_piety = {
+						value = miniscule_piety_value
+						multiply = 1.5
+					}
 				}
 			}
 		}
@@ -1777,10 +1777,10 @@ mandala_built_piety_duchy_building_t1_effect = {
 			root.county.holder = {
 				if = {
 					limit = { government_has_flag = government_is_mandala }
-				}
-				add_piety = {
-					value = minor_piety_value
-					multiply = 1.5
+					add_piety = {
+						value = minor_piety_value
+						multiply = 1.5
+					}
 				}
 			}
 		}
@@ -1817,10 +1817,10 @@ mandala_built_piety_duchy_building_t2_effect = {
 			root.county.holder = {
 				if = {
 					limit = { government_has_flag = government_is_mandala }
-				}
-				add_piety = {
-					value = medium_piety_value
-					multiply = 1.5
+					add_piety = {
+						value = medium_piety_value
+						multiply = 1.5
+					}
 				}
 			}
 		}
@@ -1857,10 +1857,10 @@ mandala_built_piety_duchy_building_t3_effect = {
 			root.county.holder = {
 				if = {
 					limit = { government_has_flag = government_is_mandala }
-				}
-				add_piety = {
-					value = major_piety_value
-					multiply = 1.5
+					add_piety = {
+						value = major_piety_value
+						multiply = 1.5
+					}
 				}
 			}
 		}
@@ -1905,10 +1905,10 @@ mandala_built_temple_holding_effect = {
 			root.county.holder = {
 				if = {
 					limit = { government_has_flag = government_is_mandala }
-				}
-				add_piety = {
-					value = major_piety_value
-					multiply = 1.5
+					add_piety = {
+						value = major_piety_value
+						multiply = 1.5
+					}
 				}
 			}
 		}
@@ -1942,6 +1942,7 @@ mandala_upgraded_temple_holding_effect = {
 		#Liege paid for the holding
 		if = {
 			limit = {
+				is_alive = yes
 				root.county.holder = { is_independent_ruler = no }
 				this = scope:character
 				government_has_flag = government_is_mandala
@@ -1953,16 +1954,19 @@ mandala_upgraded_temple_holding_effect = {
 			root.county.holder = {
 				if = {
 					limit = { government_has_flag = government_is_mandala }
-				}
-				add_piety = {
-					value = minor_piety_value
-					multiply = 1.5
+					add_piety = {
+						value = minor_piety_value
+						multiply = 1.5
+					}
 				}
 			}
 		}
 		#Vassal paid for the holding
 		else_if = {
-			limit = { government_has_flag = government_is_mandala }
+			limit = {
+				is_alive = yes
+				government_has_flag = government_is_mandala
+			}
 			add_piety = {
 				value = medium_piety_value
 				multiply = 1.5
@@ -2147,7 +2151,7 @@ decommission_temple_accept_effect = {
 		capital_province = {
 			if = {
 				limit = { has_building_with_flag = mandala_capital_building }
-				ruin_great_building = yes
+				ruin_great_district = yes
 			}
 		}
 	}
@@ -3127,7 +3131,7 @@ add_all_valid_mandala_contract_provinces_no_holding_to_list_effect = {
 }
 
 set_mandala_contract_tier_effect = {
-	#Consider county_opinion as a factor
+	#Consider popular_opinion as a factor
 	random_list = {
 		30 = {
 			save_scope_value_as = {
@@ -3143,11 +3147,11 @@ set_mandala_contract_tier_effect = {
 
 			modifier = {
 				add = 10
-				scope:target_province.county.county_opinion >= 10
+				scope:target_province.county.popular_opinion >= 10
 			}
 			modifier = {
 				add = 10
-				scope:target_province.county.county_opinion >= 20
+				scope:target_province.county.popular_opinion >= 20
 			}
 		}
 		5 = {
@@ -3158,19 +3162,19 @@ set_mandala_contract_tier_effect = {
 
 			modifier = {
 				add = 10
-				scope:target_province.county.county_opinion >= 40
+				scope:target_province.county.popular_opinion >= 40
 			}
 			modifier = {
 				add = 10
-				scope:target_province.county.county_opinion >= 60
+				scope:target_province.county.popular_opinion >= 60
 			}
 			modifier = {
 				add = 10
-				scope:target_province.county.county_opinion >= 80
+				scope:target_province.county.popular_opinion >= 80
 			}
 			modifier = {
 				add = 10
-				scope:target_province.county.county_opinion >= 100
+				scope:target_province.county.popular_opinion >= 100
 			}
 		}
 	}

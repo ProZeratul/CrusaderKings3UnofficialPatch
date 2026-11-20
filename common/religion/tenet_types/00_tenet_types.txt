@@ -128,6 +128,12 @@ tenet_aniconism = {
 		church_holding_build_gold_cost = -0.33
 		church_holding_holding_build_speed = -0.33
 		church_holding_holding_build_gold_cost = -0.33
+		trade_good_books_paper_sell_price_mult = 0.01
+	}
+
+	county_modifier = {
+		trade_good_books_paper_production_mult = 0.15
+		trade_category_jewelry_materials_production_mult = -0.15
 	}
 
 	parameters = {
@@ -305,6 +311,11 @@ tenet_alexandrian_catechism = {
 		scholasticism_is_holy
 	}
 
+	personal_tenet_modifier = {
+		trade_category_books_xp_gain_mult = 0.25
+		trade_good_books_paper_sell_price_mult = 0.02
+	}
+
 	personal_tenet_parameters = {
 		tenet_alexandrian_catechism_catechetical_school
 		tenet_alexandrian_catechism_catechesis_conversion
@@ -461,6 +472,7 @@ tenet_armed_pilgrimages = {
 		knight_limit = 1
 		monthly_piety_gain_per_knight_mult = 0.01
 		holy_order_hire_cost_mult = -0.1
+		trade_competitiveness_per_knight_mult = 0.005
 	}
 
 	personal_tenet_parameters = {
@@ -519,6 +531,8 @@ tenet_carnal_exaltation = {
 	}
 
 	parameters = {
+		sanctify_artifacts_luxurious
+		tenet_carnal_exaltation_brothel_popular_opinion
 		sanctify_artifacts_debauched
 		piety_from_seduction_active
 		tenet_carnal_exaltation_clergy_no_continence
@@ -532,6 +546,11 @@ tenet_carnal_exaltation = {
 	character_modifier = {
 		fertility = 0.1
 		attraction_opinion = 5
+	}
+
+	personal_tenet_modifier = {
+		trade_category_luxury_items_xp_gain_mult = 0.2
+		trade_good_silk_sell_price_mult = 0.015
 	}
 
 	personal_tenet_parameters = {
@@ -689,11 +708,17 @@ tenet_communal_identity = {
 		name = "tenet_communal_identity_opinion"
 		same_culture_opinion = 10
 		same_faith_different_rite_opinion = -20
-		same_faith_different_rite_county_opinion_add = -10
+		same_faith_different_rite_popular_opinion_add = -10
+		trade_competitiveness_mult = 0.03
+		trade_expertise_decline_mult = -0.15
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.1
+		prosperity_growth_factor = 0.1
+	}
+
+	personal_tenet_modifier = {
+		trade_competitiveness_add = 3
 	}
 
 	personal_tenet_parameters = {
@@ -767,12 +792,18 @@ tenet_communion = {
 	}
 
 	parameters = {
+		sanctify_artifacts_libation
+		communion_wine
 		tenet_communion_denied_sacrament
 	}
 
+	character_modifier = {
+		trade_good_wine_sell_price_mult = 0.01
+	}
+
 	county_modifier = {
-		monthly_county_control_decline_at_war_factor = -0.2
-		same_rite_county_opinion_add = 5
+		monthly_control_change_at_war_mult = -0.2
+		same_rite_popular_opinion_add = 5
 	}
 
 	personal_tenet_parameters = {
@@ -781,6 +812,9 @@ tenet_communion = {
 
 	personal_tenet_modifier = {
 		levy_reinforcement_rate_same_faith = 0.25
+		trade_category_alcohol_xp_gain_mult = 0.2
+		trade_category_cereals_xp_gain_mult = 0.2
+		trade_good_grain_sell_price_mult = 0.02
 	}
 
 	traits = {
@@ -1418,6 +1452,8 @@ tenet_mendicant_preachers = {
 		pilgrimage_decision_active
 		unlock_voluntary_laampdom_faith
 		sanctify_artifacts_humble
+		mendicant_alms
+		mendicant_seasoned_traveler_trade_capacity
 	}
 
 	personal_tenet_parameters = {
@@ -1430,7 +1466,16 @@ tenet_mendicant_preachers = {
 	}
 
 	character_modifier = {
+		monthly_control_change_when_below_baseline_mult = 0.1
 		character_travel_speed_mult = 0.2
+		trade_route_length_add = 2
+	}
+
+	personal_tenet_modifier = {
+		trade_category_books_xp_gain_mult = 0.2
+		trade_category_comforts_xp_gain_mult = 0.2
+		trade_category_comforts_sell_price_mult = 0.015
+		trade_route_length_add = 1
 	}
 
 	traits = {
@@ -1524,6 +1569,7 @@ tenet_pacifism = {
 	character_modifier = {
 		ai_war_chance = -0.25
 		ai_war_cooldown = 5
+		trade_good_textiles_sell_price_mult = 0.0075
 	}
 
 	personal_tenet_modifier = {
@@ -1535,8 +1581,8 @@ tenet_pacifism = {
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.2
-		county_opinion_add = 10
+		prosperity_growth_factor = 0.2
+		popular_opinion_add = 10
 	}
 }
 
@@ -1689,7 +1735,7 @@ tenet_pentarchy = {
 	}
 	
 	personal_tenet_parameters = {
-		tenet_pentarchy_development_growth_in_holy_sites
+		tenet_pentarchy_prosperity_growth_in_holy_sites
 		tenet_pentarchy_pilgrim_circuit
 		tenet_pentarchy_pilgrim_circuit_companions
 	}
@@ -1745,7 +1791,7 @@ tenet_unrelenting_faith = {
 		prowess = 4
 		tolerance_advantage_mod = 4
 		levy_size = 0.1
-		different_faith_county_opinion_mult = 0.1
+		different_faith_popular_opinion_mult = 0.1
 	}
 
 	parameters = {
@@ -1926,9 +1972,16 @@ tenet_vows_of_poverty = {
 
 	parameters = {
 		vows_of_poverty_active
+		poverty_luxury_modest
 		unlock_voluntary_laampdom_faith
 		no_seek_indulgences
 		sanctify_artifacts_humble
+		tenet_vows_of_poverty_hostelry_charity
+	}
+
+	county_modifier = {
+		trade_good_jewelry_production_mult = -0.2
+		trade_good_silk_production_mult = -0.2
 	}
 
 	personal_tenet_parameters = {
@@ -1974,15 +2027,15 @@ tenet_pastoral_isolation = {
 		}
 	}
 
+	personal_tenet_parameters = {
+		tenet_pastoral_isolation_endogamy
+	}
+
 	parameters = {
 		sanctioned_false_conversion_county_resistance
 		sanctioned_false_conversion
 		unattractive_for_character_conversions
 		tenet_unlocks_t3_withdraw_from_view
-	}
-
-	personal_tenet_parameters = {
-		tenet_pastoral_isolation_endogamy
 	}
 	
 	special_parameters = {
@@ -1992,6 +2045,7 @@ tenet_pastoral_isolation = {
 	}
 
 	character_modifier = {
+		prosperity_growth_factor = -0.1
 		different_faith_liege_opinion = 10
 		opinion_of_different_faith_liege = 10
 	}
@@ -2001,8 +2055,9 @@ tenet_pastoral_isolation = {
 	}
 
 	personal_tenet_modifier = {
-		tax_mult = 0.05
-		development_growth_factor = 0.1
+		agricultural_tax_mult = 0.1
+		woodland_tax_mult = 0.1
+		prosperity_growth_factor = 0.1
 		fertility = 0.1
 		diplomacy = -2
 		monthly_diplomacy_lifestyle_xp_gain_mult = -0.2
@@ -2077,11 +2132,13 @@ tenet_adaptive = {
 	}
 
 	character_modifier = {
-		different_faith_county_opinion_mult = -0.25
+		different_faith_popular_opinion_mult = -0.25
 		different_faith_liege_opinion = 15
 		different_faith_suzerain_opinion = 15
 		opinion_of_different_faith_liege = 15
 		opinion_of_different_faith_suzerain = 15
+		trade_route_length_add = 1
+		trade_competitiveness_add = 2
 	}
 
 	personal_tenet_modifier = {
@@ -2091,6 +2148,7 @@ tenet_adaptive = {
 		study_faith_scheme_phase_duration_add = medium_scheme_phase_duration_bonus_value
 		learn_language_scheme_phase_duration_add = medium_scheme_phase_duration_bonus_value
 		max_learn_language_schemes_add = 1
+		trade_competitiveness_mult = 0.05
 	}
 
 	personal_tenet_parameters = {
@@ -2194,9 +2252,19 @@ tenet_esotericism = {
 		tenet_esotericism_seek_spiritual_mysteries
 	}
 
+	character_modifier = {
+		trade_good_glass_sell_price_mult = 0.0125
+	}
+
+	county_modifier = {
+		trade_good_glass_production_mult = 0.15
+	}
+
 	personal_tenet_modifier = {
 		lifestyle_mystic_xp_gain_mult = 0.5
 		monthly_learning_lifestyle_xp_gain_mult = 0.1
+		trade_category_medicaments_xp_gain_mult = 0.2
+		trade_good_medicaments_sell_price_mult = 0.02
 	}
 }
 
@@ -2245,8 +2313,15 @@ tenet_legalism = {
 		}
 	}
 	
+	character_modifier = {
+		trade_capacity_mult = 0.03
+		trade_category_precious_metals_buy_price_mult = -0.01
+		trade_category_precious_metals_xp_gain_mult = 0.1
+	}
+
 	personal_tenet_modifier = {
 		lifestyle_scholar_xp_gain_mult = 0.20
+		trade_category_all_sell_price_mult = 0.005
 	}
 
 	parameters = {
@@ -2254,6 +2329,7 @@ tenet_legalism = {
 		legalism_increased_faction_sins
 		tenet_legalism_sinful_revocation
 		tenet_legalism_title_integration
+		tenet_legalism_temple_district_control
 	}
 
 	personal_tenet_parameters = {
@@ -2305,12 +2381,18 @@ tenet_literalism = {
 	character_modifier = {
 		monthly_merit_mult = 0.1
 		advantage_against_coreligionists = 5
+		trade_capacity_add = 2
+		trade_category_all_buy_price_mult = -0.0025
 	}
 
 	parameters = {
 		literalist_debate_enabled
 		tenet_literalism_conversion_resistance
 		literalism_holy_war_cb_active
+	}
+
+	personal_tenet_modifier = {
+		trade_capacity_add = 3
 	}
 
 	personal_tenet_parameters = {
@@ -2509,16 +2591,30 @@ tenet_religious_legal_pronouncements = {
 		temporal_condemnation_enabled
 		temporal_condemnation_criminal
 		religious_legal_pronouncements_law_cost_reduction
+		tenet_religious_legal_pronouncements_paper_output
 	}
 
 	personal_tenet_modifier = {
+		trade_category_books_xp_gain_mult = 0.2
+		trade_good_books_paper_sell_price_mult = 0.02
 		tyranny_gain_mult = -0.2
+		trade_route_length_mult = 0.05
 	}
 
 	personal_tenet_parameters = {
 		tenet_religious_law_scholar_trait
 		tenet_religious_law_condemnation_bonus
 		tenet_religious_law_imprisonment_bonus
+	}
+
+	character_modifier = {
+		trade_competitiveness_mult = 0.03
+		trade_category_books_xp_gain_mult = 0.1
+		trade_good_books_paper_sell_price_mult = 0.01
+	}
+
+	county_modifier = {
+		trade_good_books_paper_production_mult = 0.15
 	}
 
 	traits = {
@@ -2676,11 +2772,14 @@ tenet_false_conversion_sanction = {
 
 	character_modifier = {
 		monthly_intrigue_lifestyle_xp_gain_mult = 0.1 #FP3 addition to make this tenet more attractive
+		trade_competitiveness_mult = 0.03
+		trade_capacity_add = 2
 	}
 
 	personal_tenet_modifier = {
 		intrigue = 2
 		faith_conversion_piety_cost_mult = -0.5
+		trade_competitiveness_mult = 0.05
 	}
 
 	traits = {
@@ -2760,6 +2859,7 @@ tenet_tax_nonbelievers = {
 
 	personal_tenet_modifier = {
 		monthly_stewardship_lifestyle_xp_gain_mult = 0.2
+		trait_track_creditor_xp_gain_mult = 0.15
 	}
 
 	personal_tenet_parameters = {
@@ -2791,7 +2891,16 @@ tenet_asceticism = {
 
 	historical_glossary = {
 		first_valid = {
-			desc = tenet_asceticism_tapas_historical_glossary
+			triggered_desc = {
+				trigger = {
+					OR = {
+						rite_religion_tag = hinduism_religion
+						rite_religion_tag = buddhism_religion
+						rite_religion_tag = jainism_religion
+					}
+				}
+				desc = tenet_asceticism_tapas_historical_glossary
+			}
 		}
 	}
 
@@ -2832,6 +2941,8 @@ tenet_asceticism = {
 		meditation_mechanics_active
 		unlock_voluntary_laampdom_faith
 		sanctify_artifacts_humble
+		luxury_forbidden
+		luxury_buildings_modest
 		tenet_asceticism_inappetetic_bonus
 		tenet_asceticism_comfort_eater_penalty
 	}
@@ -2839,10 +2950,19 @@ tenet_asceticism = {
 	character_modifier = {
 		prowess = -2
 		piety_standalone_gain_mult = 0.1
+		trade_category_fabrics_xp_gain_mult = 0.1
+		trade_category_fabrics_sell_price_mult = 0.01
+	}
+
+	county_modifier = {
+		trade_category_fabrics_production_mult = 0.1
+		trade_category_luxury_consumption_production_mult = -0.2
 	}
 
 	personal_tenet_modifier = {
 		character_spiritual_fulfillment_gain_mult = 0.15
+		trade_category_fabrics_xp_gain_mult = 0.2
+		trade_category_fabrics_sell_price_mult = 0.02
 	}
 
 	personal_tenet_parameters = {
@@ -2888,7 +3008,11 @@ tenet_asceticism = {
 	can_pick = {
 		custom_description = {
 			text = hesychasm_anachoresis_mortification_exclusivity_desc
-			NOR = { has_tenet = tenet_anachoresis has_tenet = tenet_mortification_of_the_flesh has_tenet = tenet_hesychasm }
+			NOR = {
+				tenet:tenet_anachoresis = { is_in_list = selected_doctrines }
+				tenet:tenet_mortification_of_the_flesh = { is_in_list = selected_doctrines }
+				tenet:tenet_hesychasm = { is_in_list = selected_doctrines }
+			}
 		}
 	}
 }
@@ -2949,8 +3073,19 @@ tenet_bhakti = {
 		NOT = { rite = { rite_has_doctrine = doctrine_monotheist } }
 	}
 
+	character_modifier = {
+		trade_category_jewelry_materials_xp_gain_mult = 0.1
+		trade_good_ivory_sell_price_mult = 0.015
+	}
+
+	county_modifier = {
+		trade_category_jewelry_materials_production_mult = 0.15
+	}
+
 	personal_tenet_modifier = {
 		piety_level_impact_mult = 0.2
+		trade_category_jewelry_materials_xp_gain_mult = 0.2
+		trade_good_ivory_sell_price_mult = 0.03
 	}
 
 	personal_tenet_parameters = {
@@ -3044,6 +3179,8 @@ tenet_dharmic_pacifism = { #Mix of reincarnation and pacifism rites
 	personal_tenet_modifier = {
 		stress_gain_mult = -0.15
 		health = 0.1
+		trade_category_jewelry_materials_xp_gain_mult = 0.2
+		trade_good_gems_sell_price_mult = 0.025
 	}
 
 	traits = {
@@ -3057,9 +3194,11 @@ tenet_dharmic_pacifism = { #Mix of reincarnation and pacifism rites
 	}
 	
 	character_modifier = {
-		domain_limit = 1
+		commerce_tax_mult = 0.1
 		ai_war_chance = -0.25
 		ai_war_cooldown = 0.25
+		trade_competitiveness_mult = 0.03
+		trade_good_gems_sell_price_mult = 0.0125
 	}
 }
 
@@ -3189,6 +3328,8 @@ tenet_ritual_hospitality = {
 
 	character_modifier = {
 		monthly_piety_gain_per_happy_powerful_vassal_add = 0.3
+		trade_capacity_add = 2
+		trade_good_fruit_sell_price_mult = 0.02
 	}
 
 	county_modifier = {
@@ -3200,6 +3341,9 @@ tenet_ritual_hospitality = {
 		diplomatic_range_mult = 0.25
 		monthly_piety_gain_per_court_position_mult = 0.01
 		monthly_prestige_gain_per_court_position_mult = 0.01
+		trait_track_caravaneer_xp_gain_mult = 0.15
+		trade_category_luxury_consumption_xp_gain_mult = 0.2
+		trade_good_spices_sell_price_mult = 0.015
 	}
 }
 
@@ -3274,8 +3418,10 @@ tenet_ancestor_worship = {
 	parameters = {
 		pilgrimage_decision_active
 		sanctify_artifacts_ancestral
+		tenet_ancestor_worship_burial_site_popular_opinion
 		tenet_ancestor_worship_renown_on_death
 		tenet_ancestor_worship_seek_ancestral_guidance
+		ritual_incense
 	}
 
 	special_parameters = {
@@ -3286,12 +3432,15 @@ tenet_ancestor_worship = {
 
 	character_modifier = {
 		close_relative_opinion = 5
+		trade_good_incense_sell_price_mult = 0.0075
 	}
 
 	personal_tenet_modifier = {
 		monthly_dynasty_prestige = 0.1
 		stress_loss_mult = 0.15
 		stress_gain_mult = -0.15
+		trade_category_incense_xp_gain_mult = 0.2
+		trade_good_incense_sell_price_mult = 0.015
 	}
 
 	traits = {
@@ -3393,6 +3542,8 @@ tenet_astrology = {
 
 	personal_tenet_modifier = {
 		naval_movement_speed_mult = 0.25
+		trade_category_carpentry_supplies_xp_gain_mult = 0.2
+		trade_good_wood_sell_price_mult = 0.03
 	}
 
 	traits = {
@@ -3464,6 +3615,7 @@ tenet_hedonistic = {
 		piety_from_feasts_active
 		piety_from_festivals_active
 		sanctify_artifacts_luxurious
+		hedonistic_indulgence
 	}
 
 	divergence_multiplier = 1.5
@@ -3481,6 +3633,10 @@ tenet_hedonistic = {
 
 	personal_tenet_modifier = {
 		lifestyle_reveler_xp_gain_mult = 0.5
+		trade_category_comforts_xp_gain_mult = 0.2
+		trade_category_alcohol_xp_gain_mult = 0.2
+		trade_good_wine_sell_price_mult = 0.02
+		trade_category_luxury_consumption_xp_gain_mult = 0.25
 	}
 
 	personal_tenet_parameters = {
@@ -3492,6 +3648,7 @@ tenet_hedonistic = {
 
 	character_modifier = {
 		stress_loss_mult = 0.2
+		trade_good_sugar_sell_price_mult = 0.0075
 	}
 }
 
@@ -3656,12 +3813,30 @@ tenet_ritual_celebrations = {
 		piety_from_feasts_active
 		piety_from_festivals_active
 		mandatory_feast_attendance
-		allows_brewery
+		ritual_brewing_popular_opinion
+		sanctify_artifacts_libation
+		tenet_ritual_celebrations_banquet_hall_popular_opinion
 	}
 
 	character_modifier = {
 		vassal_opinion = 5
 		courtier_opinion = 5
+		# TODO_PAM_TENETS Personal tenet effects below
+		# happy_powerful_vassal_tax_contribution_mult = 0.2
+		# happy_powerful_vassal_prestige_contribution_mult = 0.2
+		# happy_powerful_vassal_piety_contribution_mult = 0.2
+		# happy_powerful_vassal_herd_contribution_mult = 0.2
+		trade_category_alcohol_xp_gain_mult = 0.1
+		trade_good_beer_sell_price_mult = 0.015
+	}
+
+	personal_tenet_modifier = {
+		trade_category_alcohol_xp_gain_mult = 0.2
+		trade_good_beer_sell_price_mult = 0.03
+	}
+
+	county_modifier = {
+		trade_good_beer_production_mult = 0.15
 	}
 
 	personal_tenet_parameters = {
@@ -3725,6 +3900,8 @@ tenet_sacred_childbirth = {
 
 	personal_tenet_modifier = {
 		negate_fertility_penalty_add = 0.5
+		trade_category_medicaments_xp_gain_mult = 0.2
+		trade_good_medicaments_sell_price_mult = 0.02
 	}
 
 	traits = {
@@ -3790,13 +3967,16 @@ tenet_sanctity_of_nature = {
 		forest_levy_size = 0.2
 		holding_build_gold_cost = 0.25
 		holding_build_speed = 0.25
-		nomad_government_opinion_same_faith = 20
-		tribal_government_opinion_same_faith = 20
-		wanua_government_opinion_same_faith = 20
+		nomad_government_opinion_same_faith = 5
+		tribal_government_opinion_same_faith = 5
+		wanua_government_opinion_same_faith = 5
+		trade_good_wood_sell_price_mult = 0.015
 	}
 	
 	county_modifier = {
-		county_opinion_add = 5
+		popular_opinion_add = 5
+		trade_good_honey_production_mult = 0.15
+		trade_category_base_metals_production_mult = -0.2
 	}
 
 	traits = {
@@ -3839,6 +4019,7 @@ tenet_sun_worship = {
 		summer_festivals_active
 		trial_by_sun_active
 		sanctify_artifacts_regal
+		sun_disc_gold
 	}
 
 	personal_tenet_parameters = {
@@ -3849,10 +4030,13 @@ tenet_sun_worship = {
 	character_modifier = {
 		desert_attrition_mult = -0.25
 		desert_mountains_attrition_mult = -0.25
+		trade_good_gold_sell_price_mult = 0.0075
 	}
 
 	personal_tenet_modifier = {
 		character_travel_speed_mult = 0.15
+		trade_category_precious_metals_xp_gain_mult = 0.2
+		trade_good_gold_sell_price_mult = 0.015
 	}
 
 	traits = {
@@ -3915,6 +4099,7 @@ tenet_warmonger = {
 		great_holy_wars_active_if_reformed
 		clergy_can_fight
 		sanctify_artifacts_weapons
+		tenet_warmonger_sacred_forge
 	}
 
 	special_parameters = {
@@ -3925,6 +4110,11 @@ tenet_warmonger = {
 		ai_war_chance = 0.5
 		ai_war_cooldown = -0.25
 		accolade_glory_gain_mult = 0.1
+		trade_good_iron_sell_price_mult = 0.01
+	}
+
+	county_modifier = {
+		trade_category_base_metals_production_mult = 0.1
 	}
 
 	personal_tenet_parameters = {
@@ -3933,6 +4123,8 @@ tenet_warmonger = {
 
 	personal_tenet_modifier = {
 		prowess_per_piety_level = 1
+		trade_category_base_metals_xp_gain_mult = 0.25
+		trade_good_iron_sell_price_mult = 0.02
 		maa_damage_mult = 0.05
 	}
 
@@ -4043,9 +4235,17 @@ tenet_gruesome_festivals = {
 		human_sacrifice_active
 		human_sacrifice_sharing_power_prestige
 		sanctify_artifacts_sacrificial
+		tenet_gruesome_festivals_execution_site_control
+		gruesome_festivals_sacrificial_beasts
 	}
 
 	divergence_multiplier = 5
+
+	personal_tenet_modifier = {
+		trade_category_beasts_of_burden_xp_gain_mult = 0.2
+		trade_good_cattle_sell_price_mult = 0.02
+		trade_category_meat_xp_gain_mult = 0.2
+	}
 
 	character_modifier = {
 		stress_loss_mult = 0.1
@@ -4146,6 +4346,8 @@ tenet_cthonic_redoubts = {
 		desert_mountains_attrition_mult = -0.5
 		desert_mountains_levy_size = 0.3
 		desert_mountains_advantage = 5
+		trade_good_copper_sell_price_mult = 0.01
+		trade_good_gems_sell_price_mult = 0.0125
 	}
 
 	personal_tenet_modifier = {
@@ -4153,11 +4355,18 @@ tenet_cthonic_redoubts = {
 		desert_mountains_travel_danger = desert_mountains_medium_danger_reduction
 		mountains_construction_gold_cost = -0.1
 		desert_mountains_construction_gold_cost = -0.1
+		trade_category_base_metals_xp_gain_mult = 0.2
+		trade_good_copper_sell_price_mult = 0.02
 	}
 
 	personal_tenet_parameters = {
 		cthonic_redoubts_mountain_travel_fulfillment
 		cthonic_redoubts_hike
+	}
+
+	county_modifier = {
+		trade_category_base_metals_production_mult = 0.15
+		trade_good_gems_production_mult = 0.15
 	}
 
 	traits = {
@@ -4204,18 +4413,24 @@ tenet_household_gods = {
 	parameters = {
 		same_culture_conversion_bonus_active
 		same_faith_promote_culture_bonus_active
+		domestic_incense
 	}
 
 	character_modifier = {
 		monthly_influence = 0.5
 		ignore_opinion_of_different_faith = yes
-		different_faith_county_opinion_mult = -0.1
+		different_faith_popular_opinion_mult = -0.1
 		levy_reinforcement_rate_same_faith = 0.25
 		faith_conversion_piety_cost_mult = -0.15
+		trade_good_ceramics_sell_price_mult = 0.015
 	}
 
 	personal_tenet_modifier = {
 		monthly_prestige_gain_mult = 0.2
+	}
+
+	county_modifier = {
+		trade_good_ceramics_production_mult = 0.15
 	}
 
 	traits = {
@@ -4301,6 +4516,16 @@ tenet_sinitic_syncretism = {
 		tenet_syncretism_invite_religious_exiles
 		tenet_syncretism_county_bonus
 		tenet_sinitic_syncretism_study_rite_bonus
+	}
+
+	character_modifier = {
+		trade_competitiveness_add = 2
+		trade_expertise_growth_mult = 0.05
+		trade_good_tea_sell_price_mult = 0.01
+	}
+
+	personal_tenet_modifier = {
+		trade_capacity_mult = 0.05
 	}
 
 	special_parameters = {
@@ -4394,10 +4619,20 @@ tenet_eastern_syncretism = {
 		tenet_syncretism_county_bonus
 		tenet_eastern_syncretism_study_rite_bonus
 	}
+
+	character_modifier = {
+		trade_competitiveness_add = 2
+		trade_expertise_growth_mult = 0.05
+		trade_good_cotton_sell_price_mult = 0.015
+	}
+
+	personal_tenet_modifier = {
+		trade_capacity_mult = 0.05
+	}
 	
 	special_parameters = {
 		hostility_level_override = {
-			eastern_hostility_doctrine = astray
+			special_doctrine_is_eastern_faith = astray
 		}
 		parameter_opinion_override = {
 			#Sync this to syncretic_mutual_opinion_bonus_value
@@ -4443,6 +4678,16 @@ tenet_unreformed_syncretism = {
 		tenet_syncretism_invite_religious_exiles
 		tenet_syncretism_county_bonus
 		tenet_unreformed_syncretism_study_rite_bonus
+	}
+
+	character_modifier = {
+		trade_competitiveness_add = 2
+		trade_expertise_growth_mult = 0.05
+		trade_good_horses_sell_price_mult = 0.01
+	}
+
+	personal_tenet_modifier = {
+		trade_capacity_mult = 0.05
 	}
 
 	can_pick = {
@@ -4542,6 +4787,16 @@ tenet_christian_syncretism = {
 		tenet_christian_syncretism_study_rite_bonus
 	}
 
+	character_modifier = {
+		trade_competitiveness_add = 2
+		trade_expertise_growth_mult = 0.05
+		trade_good_wine_sell_price_mult = 0.01
+	}
+
+	personal_tenet_modifier = {
+		trade_capacity_mult = 0.05
+	}
+
 	parameters = {
 		can_use_christian_artifacts
 		# Actor opinion is delivered by special_parameters; the syncretic trigger checks the doctrine.
@@ -4622,6 +4877,16 @@ tenet_islamic_syncretism = {
 		tenet_islamic_syncretism_study_rite_bonus
 	}
 
+	character_modifier = {
+		trade_competitiveness_add = 2
+		trade_expertise_growth_mult = 0.05
+		trade_good_spices_sell_price_mult = 0.0075
+	}
+
+	personal_tenet_modifier = {
+		trade_capacity_mult = 0.05
+	}
+
 	parameters = {
 		can_use_islamic_artifacts
 		islamic_syncretic_actor
@@ -4696,6 +4961,16 @@ tenet_jewish_syncretism = {
 		tenet_syncretism_county_bonus
 		can_use_jewish_artifacts
 		tenet_jewish_syncretism_study_rite_bonus
+	}
+
+	character_modifier = {
+		trade_competitiveness_add = 2
+		trade_expertise_growth_mult = 0.05
+		trade_good_dyes_sell_price_mult = 0.015
+	}
+
+	personal_tenet_modifier = {
+		trade_capacity_mult = 0.05
 	}
 
 	parameters = {
@@ -4843,6 +5118,7 @@ tenet_natural_primitivism = {
 
 	parameters = {
 		naked_adherents_active
+		clothes_need_suppressed
 		natural_primitivism_law_cost_increase
 		sanctify_artifacts_natural
 	}
@@ -4857,6 +5133,17 @@ tenet_natural_primitivism = {
 		tyranny_gain_mult = 1.00
 		stress_gain_mult = -0.25
 		stress_loss_mult = 0.25
+		urban_housing_district_district_build_gold_cost = -0.1
+		villages_district_district_build_gold_cost = -0.1
+		manor_houses_district_district_build_gold_cost = -0.1
+		trade_good_honey_sell_price_mult = 0.015
+		trade_good_furs_sell_price_mult = 0.01
+	}
+
+	county_modifier = {
+		trade_good_honey_production_mult = 0.15
+		trade_good_furs_production_mult = 0.15
+		trade_category_luxury_items_production_mult = -0.2
 	}
 
 	personal_tenet_modifier = {
@@ -5291,10 +5578,16 @@ tenet_megaliths = {
 	}
 
 	character_modifier = {
-		hills_development_growth_factor = 0.15
+		hills_prosperity_growth_factor = 0.15
 		hills_tax_mult = 0.1
 		hills_levy_size = 0.3
 		hills_advantage = 5
+		trade_category_stone_xp_gain_mult = 0.1
+		trade_good_stone_sell_price_mult = 0.015
+	}
+
+	county_modifier = {
+		trade_good_stone_production_mult = 0.2
 	}
 
 	personal_tenet_modifier = {
@@ -5302,7 +5595,10 @@ tenet_megaliths = {
 		terraced_hills_construction_gold_cost = -0.1
 		mountains_construction_gold_cost = -0.1
 		desert_mountains_construction_gold_cost = -0.1
-		build_speed = 0.25
+		build_speed = -0.1
+		domicile_build_gold_cost = -0.1
+		trade_category_stone_xp_gain_mult = 0.25
+		trade_good_stone_sell_price_mult = 0.03
 	}
 
 	personal_tenet_parameters = {
@@ -5495,13 +5791,13 @@ tenet_communal_possessions = {
 	}
 
 	character_modifier = {
-		monthly_county_control_growth_factor = -0.2
+		monthly_control_change_when_below_baseline_mult = -0.2
 		build_gold_cost = -0.1
-		county_opinion_add = 10
+		popular_opinion_add = 10
 	}
 
 	personal_tenet_modifier = {
-		development_growth_factor = 0.1
+		prosperity_growth_factor = 0.1
 		stress_loss_mult = 0.15
 		monthly_prestige_gain_mult = -0.2
 	}
@@ -5638,16 +5934,20 @@ tenet_no_mind = { # Zen
 	parameters = {
 		better_artifacts
 		less_likely_to_become_infirm
+		no_mind_tea
 	}
 
 	character_modifier = {
 		negate_prowess_penalty_add = 5
 		stress_gain_mult = -0.1
+		trade_good_tea_sell_price_mult = 0.01
 	}
 
 	personal_tenet_modifier = {
 		prowess_per_piety_level = 1
 		negate_health_penalty_add = 0.2
+		trade_category_comforts_xp_gain_mult = 0.2
+		trade_good_tea_sell_price_mult = 0.02
 	}
 
 	personal_tenet_parameters = {
@@ -5797,7 +6097,7 @@ tenet_extinction_of_dharma = {
 		hostility_levels = {
 			same_religion = hostile
 		}
-		hostility_level_override = { #Unop Make other Buddhists hostile, the same_religion entry above loses to the religion's eastern_hostility_doctrine
+		hostility_level_override = {
 			special_doctrine_maitreya_hostility = hostile
 		}
 	}
@@ -5963,6 +6263,11 @@ tenet_pursuit_of_knowledge = {
 
 	character_modifier = {
 		monthly_lifestyle_xp_gain_mult = 0.1
+		trade_expertise_growth_mult = 0.05
+	}
+
+	county_modifier = {
+		trade_good_books_paper_production_mult = 0.15
 	}
 
 	# On both sides: trigger accepts either
@@ -5975,6 +6280,9 @@ tenet_pursuit_of_knowledge = {
 	personal_tenet_modifier = {
 		monthly_lifestyle_xp_gain_mult = 0.1
 		stress_gain_mult = 0.25
+		trade_category_books_xp_gain_mult = 0.25
+		trade_good_books_paper_sell_price_mult = 0.02
+		trade_expertise_growth_mult = 0.1
 	}
 }
 
@@ -6043,11 +6351,18 @@ tenet_benevolent_governance = {
 
 	character_modifier = {
 		dread_gain_mult = -0.75
+		trade_category_cereals_sell_price_mult = 0.01
+	}
+
+	county_modifier = {
+		trade_category_cereals_production_mult = 0.1
 	}
 
 	personal_tenet_modifier = {
-		county_opinion_add = 10
+		popular_opinion_add = 10
 		monthly_piety_from_buildings_mult = 0.2
+		trade_category_cereals_xp_gain_mult = 0.2
+		trade_category_cereals_sell_price_mult = 0.02
 	}
 
 	personal_tenet_parameters = {
@@ -6129,6 +6444,7 @@ tenet_filial_piety = {
 		parents_get_hooks_on_children
 		children_less_likely_to_be_burdened
 		sanctify_artifacts_ancestral
+		ancestral_vessels
 	}
 
 	character_modifier = {
@@ -6216,8 +6532,13 @@ tenet_harmonious_society = {
 		more_often_zealots
 	}
 
+	county_modifier = {
+		trade_category_agricultural_goods_production_mult = 0.1
+	}
+
 	personal_tenet_modifier = {
 		monthly_diplomacy_lifestyle_xp_gain_mult = 0.2
+		monthly_income_from_trade_mult = -0.05
 	}
 
 	personal_tenet_parameters = {
@@ -6266,7 +6587,7 @@ tenet_sacred_destruction = {
 			NOT = { tenet:tenet_dharmic_pacifism = { is_in_list = selected_doctrines } }
 		}
 		custom_description = {
-			text = incompatible_tenet_tenet_preservation_trigger
+			text = incompatible_tenet_preservation_trigger
 			NOT = { tenet:tenet_preservation = { is_in_list = selected_doctrines } }
 		}
 	}
@@ -6321,7 +6642,7 @@ tenet_preservation = {
 	can_pick = {
 		religion = religion:hinduism_religion
 		custom_description = {
-			text = incompatible_tenet_tenet_sacred_destruction_trigger
+			text = incompatible_tenet_sacred_destruction_trigger
 			NOT = { tenet:tenet_sacred_destruction = { is_in_list = selected_doctrines } }
 		}
 	}
@@ -6331,15 +6652,18 @@ tenet_preservation = {
 		church_holding_holding_build_speed = -0.15
 		temple_citadel_holding_build_gold_cost = -0.15
 		temple_citadel_holding_holding_build_speed = -0.15
+		trade_good_stone_sell_price_mult = 0.015
 	}
 
 	parameters = {
-		building_temples_gives_development
-		monastic_schools_allowed_in_every_holding_type
+		building_temples_gives_prosperity
 	}
 
 	personal_tenet_modifier = {
 		monthly_piety_from_buildings_mult = 0.2
+		trade_category_stone_xp_gain_mult = 0.2
+		trade_good_stone_sell_price_mult = 0.03
+		trade_expertise_decline_mult = -0.3
 	}
 
 	personal_tenet_parameters = {
@@ -6386,14 +6710,22 @@ tenet_takamin = {
 
 	character_modifier = {
 		taiga_travel_danger = taiga_high_danger_reduction
+		trade_good_furs_sell_price_mult = 0.01
 	}
 
 	personal_tenet_modifier = {
 		lifestyle_hunter_xp_gain_mult = 0.25
+		trade_category_clothes_xp_gain_mult = 0.2
+		trade_category_meat_xp_gain_mult = 0.2
+		trade_good_fish_sell_price_mult = 0.02
 	}
 
 	personal_tenet_parameters = {
 		tenet_takamin_hunter_trait
+	}
+
+	county_modifier = {
+		trade_good_furs_production_mult = 0.2
 	}
 	
 	parameters = {

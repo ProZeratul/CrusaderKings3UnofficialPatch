@@ -2,13 +2,11 @@
 	obligation_levels = {
 		default = {
 			levies = {
-				value = 0.3
-				#multiply = governor_efficiency
+				value = 0.2
 			}
 
 			tax = {
-				value = 0.75
-				#multiply = governor_efficiency
+				value = 0.5
 			}
 		}
 	}
@@ -93,11 +91,12 @@ administrative_themes = {
 			tax_factor = 0.5
 
 			subject_modifier = {
-				development_growth_factor = 0.2
+				prosperity_growth_factor = 0.2
 				build_gold_cost = -0.1
 				build_speed = -0.1
 				men_at_arms_title_limit = -2
 				men_at_arms_title_cap = -2
+				governor_efficiency_per_stewardship_add = 0.005
 			}
 			
 			flag = admin_stewardship_obligation_bonus
@@ -148,12 +147,13 @@ administrative_themes = {
 			levies_factor = 0.75
 			
 			subject_modifier = {
-				development_growth_factor = -0.25
-				monthly_county_control_growth_factor = 0.1
+				prosperity_growth_factor = -0.25
+				monthly_control_change_when_above_baseline_mult = -0.1
 				maa_damage_mult = 0.1
 				men_at_arms_title_cap = 2
 				men_at_arms_maintenance = -0.2
 				monthly_treasury_from_military_budget_base = 1
+				governor_efficiency_per_martial_add = 0.005
 			}
 			
 			flag = admin_martial_obligation_bonus
@@ -209,6 +209,7 @@ administrative_themes = {
 				ai_boldness = 20
 				ai_rationality = -15
 				monthly_treasury_from_military_budget_base = 1.5
+				governor_efficiency_per_prowess_add = 0.005
 			}
 			
 			flag = admin_prowess_obligation_bonus
@@ -289,6 +290,7 @@ administrative_themes = {
 			subject_modifier = {
 				monthly_prestige = 0.5
 				monthly_influence = 0.25
+				governor_efficiency_per_prestige_level_add = 0.04
 			}
 			
 			flag = admin_theme_imperial
@@ -377,12 +379,11 @@ administrative_themes = {
 				naval_movement_speed_mult = 0.25
 				no_disembark_penalty = yes
 				coastal_advantage = 10
-				development_growth_factor = 0.1
+				prosperity_growth_factor = 0.1
 				monthly_treasury_from_military_budget_base = 1
 			}
 			
 			flag = admin_naval_duchy_expansion_unlocked
-			flag = admin_tradeport_obligation_bonus
 			flag = admin_theme_naval
 			flag = province_military
 		}

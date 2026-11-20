@@ -930,7 +930,29 @@ offer_confederation_accepter_effect = {
 		custom_tooltip = join_confederation_recipient_tt
 	}
 	custom_tooltip = confederation_defensive_wars_tt
-	custom_tooltip = unlock_leave_confederation_interaction_tt
+	custom_tooltip = unlock_leave_confederation_decision_tt
+}
+
+leave_confederation_membership_effect = {
+	if = {
+		limit = {
+			any_confederation_member = {
+				count >= 2
+				NOT = { this = $LEAVER$ }
+			}
+		}
+		if = {
+			limit = { is_title_based = yes }
+			remove_confederation_member_title = $LEAVER$.primary_title
+		}
+		else = {
+			remove_confederation_member = $LEAVER$
+		}
+	}
+	else = {
+		# Not enough members would remain, so the whole confederation is dissolved.
+		disband_confederation = yes
+	}
 }
 
 confederation_realm_transfer_effect = {
@@ -1567,7 +1589,7 @@ mpo_find_suitable_merchant_effect = {
 		1 = { #Merv
 			trigger = {
 				title:c_bukhara = {
-					development_level >= 10
+					prosperity_level >= 10
 					NOT = {
 						holder.top_liege = {
 							government_has_flag = government_is_nomadic
@@ -1576,7 +1598,7 @@ mpo_find_suitable_merchant_effect = {
 				}
 			}
 			modifier = {
-				add = title:c_bukhara.development_level
+				add = title:c_bukhara.prosperity_level
 			}
 			#Unop Favor origins closer to root's domicile location
 			modifier = {
@@ -1589,7 +1611,7 @@ mpo_find_suitable_merchant_effect = {
 		1 = { #Nishapur
 			trigger = {
 				title:c_nishapur = {
-					development_level >= 10
+					prosperity_level >= 10
 					NOT = {
 						holder.top_liege = {
 							government_has_flag = government_is_nomadic
@@ -1598,7 +1620,7 @@ mpo_find_suitable_merchant_effect = {
 				}
 			}
 			modifier = {
-				add = title:c_nishapur.development_level
+				add = title:c_nishapur.prosperity_level
 			}
 			#Unop Favor origins closer to root's domicile location
 			modifier = {
@@ -1611,7 +1633,7 @@ mpo_find_suitable_merchant_effect = {
 		1 = { #Khotan
 			trigger = {
 				title:c_khotan = {
-					development_level >= 10
+					prosperity_level >= 10
 					NOT = {
 						holder.top_liege = {
 							government_has_flag = government_is_nomadic
@@ -1620,7 +1642,7 @@ mpo_find_suitable_merchant_effect = {
 				}
 			}
 			modifier = {
-				add = title:c_khotan.development_level
+				add = title:c_khotan.prosperity_level
 			}
 			#Unop Favor origins closer to root's domicile location
 			modifier = {
@@ -1633,7 +1655,7 @@ mpo_find_suitable_merchant_effect = {
 		1 = { #Wroclaw
 			trigger = {
 				title:c_breslau = {
-					development_level >= 10
+					prosperity_level >= 10
 					NOT = {
 						holder.top_liege = {
 							government_has_flag = government_is_nomadic
@@ -1642,7 +1664,7 @@ mpo_find_suitable_merchant_effect = {
 				}
 			}
 			modifier = {
-				add = title:c_breslau.development_level
+				add = title:c_breslau.prosperity_level
 			}
 			#Unop Favor origins closer to root's domicile location
 			modifier = {
@@ -1655,7 +1677,7 @@ mpo_find_suitable_merchant_effect = {
 		1 = { #Krakow
 			trigger = {
 				title:c_krakowska = {
-					development_level >= 10
+					prosperity_level >= 10
 					NOT = {
 						holder.top_liege = {
 							government_has_flag = government_is_nomadic
@@ -1664,7 +1686,7 @@ mpo_find_suitable_merchant_effect = {
 				}
 			}
 			modifier = {
-				add = title:c_krakowska.development_level
+				add = title:c_krakowska.prosperity_level
 			}
 			#Unop Favor origins closer to root's domicile location
 			modifier = {
@@ -1677,7 +1699,7 @@ mpo_find_suitable_merchant_effect = {
 		1 = { #Novgorod
 			trigger = {
 				title:c_novgorod = {
-					development_level >= 10
+					prosperity_level >= 10
 					NOT = {
 						holder.top_liege = {
 							government_has_flag = government_is_nomadic
@@ -1686,7 +1708,7 @@ mpo_find_suitable_merchant_effect = {
 				}
 			}
 			modifier = {
-				add = title:c_novgorod.development_level
+				add = title:c_novgorod.prosperity_level
 			}
 			#Unop Favor origins closer to root's domicile location
 			modifier = {
@@ -1699,7 +1721,7 @@ mpo_find_suitable_merchant_effect = {
 		1 = { #Kyiv
 			trigger = {
 				title:c_kiev = {
-					development_level >= 10
+					prosperity_level >= 10
 					NOT = {
 						holder.top_liege = {
 							government_has_flag = government_is_nomadic
@@ -1708,7 +1730,7 @@ mpo_find_suitable_merchant_effect = {
 				}
 			}
 			modifier = {
-				add = title:c_kiev.development_level
+				add = title:c_kiev.prosperity_level
 			}
 			#Unop Favor origins closer to root's domicile location
 			modifier = {
@@ -1721,7 +1743,7 @@ mpo_find_suitable_merchant_effect = {
 		1 = { #Baghdad
 			trigger = {
 				title:c_baghdad = {
-					development_level >= 10
+					prosperity_level >= 10
 					NOT = {
 						holder.top_liege = {
 							government_has_flag = government_is_nomadic
@@ -1730,7 +1752,7 @@ mpo_find_suitable_merchant_effect = {
 				}
 			}
 			modifier = {
-				add = title:c_baghdad.development_level
+				add = title:c_baghdad.prosperity_level
 			}
 			#Unop Favor origins closer to root's domicile location
 			modifier = {
@@ -1743,7 +1765,7 @@ mpo_find_suitable_merchant_effect = {
 		1 = { #Pisa
 			trigger = {
 				title:c_pisa = {
-					development_level >= 10
+					prosperity_level >= 10
 					NOT = {
 						holder.top_liege = {
 							government_has_flag = government_is_nomadic
@@ -1752,7 +1774,7 @@ mpo_find_suitable_merchant_effect = {
 				}
 			}
 			modifier = {
-				add = title:c_pisa.development_level
+				add = title:c_pisa.prosperity_level
 			}
 			#Unop Favor origins closer to root's domicile location
 			modifier = {
@@ -1765,7 +1787,7 @@ mpo_find_suitable_merchant_effect = {
 		1 = { #Venice
 			trigger = {
 				title:c_venezia = {
-					development_level >= 10
+					prosperity_level >= 10
 					NOT = {
 						holder.top_liege = {
 							government_has_flag = government_is_nomadic
@@ -1774,7 +1796,7 @@ mpo_find_suitable_merchant_effect = {
 				}
 			}
 			modifier = {
-				add = title:c_venezia.development_level
+				add = title:c_venezia.prosperity_level
 			}
 			#Unop Favor origins closer to root's domicile location
 			modifier = {
@@ -1787,7 +1809,7 @@ mpo_find_suitable_merchant_effect = {
 		1 = { #Cairo
 			trigger = {
 				title:c_cairo = {
-					development_level >= 10
+					prosperity_level >= 10
 					NOT = {
 						holder.top_liege = {
 							government_has_flag = government_is_nomadic
@@ -1796,7 +1818,7 @@ mpo_find_suitable_merchant_effect = {
 				}
 			}
 			modifier = {
-				add = title:c_cairo.development_level
+				add = title:c_cairo.prosperity_level
 			}
 			#Unop Favor origins closer to root's domicile location
 			modifier = {
@@ -1809,7 +1831,7 @@ mpo_find_suitable_merchant_effect = {
 		1 = { #Genua
 			trigger = {
 				title:c_genoa = {
-					development_level >= 10
+					prosperity_level >= 10
 					NOT = {
 						holder.top_liege = {
 							government_has_flag = government_is_nomadic
@@ -1818,7 +1840,7 @@ mpo_find_suitable_merchant_effect = {
 				}
 			}
 			modifier = {
-				add = title:c_genoa.development_level
+				add = title:c_genoa.prosperity_level
 			}
 			#Unop Favor origins closer to root's domicile location
 			modifier = {
@@ -1831,7 +1853,7 @@ mpo_find_suitable_merchant_effect = {
 		1 = { #Constantinople
 			#something has to be in constantinople
 			modifier = {
-				add = title:c_byzantion.development_level
+				add = title:c_byzantion.prosperity_level
 			}
 			#Unop Favor origins closer to root's domicile location
 			modifier = {
@@ -2330,7 +2352,6 @@ mpo_decisions_events_friend_fail_effect = {
 							this = scope:friendship_target
 							this = scope:heir
 							has_relation_friend = scope:friendship_target
-							has_relation_best_friend = scope:friendship_target
 							has_any_bad_relationship_with_character_trigger = { CHARACTER = scope:friendship_target }
 							is_at_war_with = scope:friendship_target
 						}
@@ -2344,7 +2365,6 @@ mpo_decisions_events_friend_fail_effect = {
 							this = scope:friendship_target
 							this = scope:heir
 							has_relation_friend = scope:friendship_target
-							has_relation_best_friend = scope:friendship_target
 							has_any_bad_relationship_with_character_trigger = { CHARACTER = scope:friendship_target }
 							is_at_war_with = scope:friendship_target
 						}
@@ -2361,7 +2381,6 @@ mpo_decisions_events_friend_fail_effect = {
 						this = scope:friendship_target
 						this = scope:heir
 						has_relation_friend = scope:friendship_target
-						has_relation_best_friend = scope:friendship_target
 						has_any_bad_relationship_with_character_trigger = { CHARACTER = scope:friendship_target }
 						is_at_war_with = scope:friendship_target
 					}
@@ -2384,7 +2403,6 @@ mpo_decisions_events_friend_fail_effect = {
 							this = scope:friendship_target
 							this = scope:heir
 							has_relation_friend = scope:friendship_target
-							has_relation_best_friend = scope:friendship_target
 							has_any_bad_relationship_with_character_trigger = { CHARACTER = scope:friendship_target }
 							is_at_war_with = scope:friendship_target
 						}
@@ -2411,7 +2429,6 @@ mpo_decisions_events_friend_fail_effect = {
 				scope:friendship_target = {
 					NOR = {
 						has_relation_friend = scope:friendship_target
-						has_relation_best_friend = scope:friendship_target
 						has_any_bad_relationship_with_character_trigger = { CHARACTER = root }
 					}
 				}
@@ -3185,6 +3202,63 @@ nomad_convert_people_to_tribe_effect = {
 	}
 }
 
+nomad_convert_realm_to_tribal_effect = {
+	every_sub_realm_county = {
+		limit = {
+			title_province = {
+				OR = { 
+					has_holding_type = nomad_holding 
+					has_holding_type = herder_holding 
+				}
+			}
+		}
+		title_province = {
+			set_holding_type = tribal_holding
+		}
+		add_to_list = holding_conversion
+	}
+	change_government = tribal_government
+	every_vassal_or_below = {
+		limit = {
+			has_government = nomad_government
+		}
+		if = {
+			limit = { has_realm_law = nomadic_authority_1 }
+			remove_realm_law = nomadic_authority_1
+		}
+		if = {
+			limit = { has_realm_law = nomadic_authority_2 }
+			remove_realm_law = nomadic_authority_2
+		}
+		if = {
+			limit = { has_realm_law = nomadic_authority_3 }
+			remove_realm_law = nomadic_authority_3
+		}
+		if = {
+			limit = { has_realm_law = nomadic_authority_4 }
+			remove_realm_law = nomadic_authority_4
+		}
+		if = {
+			limit = { has_realm_law = nomadic_authority_5 }
+			remove_realm_law = nomadic_authority_5
+		}
+		change_government = tribal_government
+		if = {
+			limit = {
+				NOT = { has_realm_law = tribal_authority_1 }
+			}
+			add_realm_law_skip_effects = tribal_authority_1
+		}
+	}
+	#Start off tribal authorities.
+	if = {
+		limit = {
+			NOT = { has_realm_law = tribal_authority_2 }
+		}
+		add_realm_law_skip_effects = tribal_authority_2
+	}
+}
+
 nomad_convert_people_to_clan_effect = {
 	change_government = clan_government
 
@@ -3353,7 +3427,7 @@ mpo_overrunning_vassal_title_distribution_effect = {
 				}
 				else = {
 					ordered_de_jure_county = {
-						order_by = development_level
+						order_by = prosperity_level
 						limit = {
 							holder = scope:attacker
 						}
@@ -3365,7 +3439,7 @@ mpo_overrunning_vassal_title_distribution_effect = {
 		#Counts
 		else = {
 			ordered_in_list = {
-				order_by = development_level
+				order_by = prosperity_level
 				list = overrun_counties
 				save_scope_as = title_to_grant
 			}
@@ -3771,7 +3845,7 @@ mpo_duchy_overrunning_vassal_title_distribution_effect = {
 			}
 		}
 		ordered_in_list = {
-			order_by = development_level
+			order_by = prosperity_level
 			list = overrun_counties
 			save_scope_as = title_to_grant
 		}
@@ -4949,12 +5023,14 @@ mpo_confederation_join_defensive_war_effect = {
 				highest_held_title_tier >= tier_county
 				NOR = {
 					is_at_war_with = scope:defender
+					is_at_war_with = scope:attacker # Cannot join a second war against them
 					is_allied_to = scope:attacker
 					is_imprisoned_by = scope:defender
 					is_imprisoned_by = scope:attacker
 					is_defender_in_war = scope:war
 					is_attacker_in_war = scope:war
 				}
+				can_confederation_member_join_war_against = scope:attacker
 			}
 			scope:war = {
 				add_defender = prev
@@ -6090,7 +6166,7 @@ clean_up_ai_nomad_effect = {
 			}
 			if = {
 				limit = {
-					has_dlc_feature = roads_to_power
+					has_playable_adventurer_dlc_trigger = yes
 					is_physically_able_adult = yes
 					exists = location.county
 					ai_can_valid_to_create_laamp_trigger = yes
@@ -6807,5 +6883,69 @@ mpo_release_herder_land_effect = {
 				resolve_title_and_vassal_change = scope:change
 			}
 		}
+	}
+}
+
+take_sub_realm_county_as_new_capital_effect = {
+	if = {
+		limit = {
+			capital_county.title_province = {
+				$EXCLUDE$ = no
+			}
+		}
+		capital_county = {
+			save_scope_as = new_capital
+		}
+	}
+	else = {
+		every_sub_realm_county = {
+			limit = {
+				is_landless_type_title = no
+				title_province = {
+					$EXCLUDE$ = no
+				}
+				# avoid steal player's title
+				trigger_if = {
+					limit = { holder != prev }
+					holder = { is_ai = yes }
+				}
+			}
+			alternative_limit = {
+				is_landless_type_title = no
+				title_province = {
+					$EXCLUDE$ = no
+				}
+			}
+			add_to_list = potential_new_capitals
+		}
+		ordered_in_list = {
+			order_by = title_province.province_size
+			list = potential_new_capitals
+			save_scope_as = new_capital
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:new_capital
+			capital_county != scope:new_capital
+		}
+		if = {
+			limit = {
+				scope:new_capital.holder != root
+			}
+			create_title_and_vassal_change = {
+				type = usurped
+				save_scope_as = change
+				add_claim_on_loss = yes
+			}
+			scope:new_capital = {
+				change_title_holder = {
+					holder = root
+					change = scope:change
+				}
+			}
+			resolve_title_and_vassal_change = scope:change
+		}
+		set_realm_capital = scope:new_capital
 	}
 }

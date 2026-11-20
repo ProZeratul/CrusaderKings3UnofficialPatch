@@ -272,7 +272,6 @@ fp3_frontier_story_cycle.0003 = { #Nomads story cycle
 				scope:turkic_leader = {
 					NOT = {
 						has_relation_rival = root
-						has_relation_nemesis = root
 					}
 				}
 			}
@@ -1430,7 +1429,7 @@ fp3_frontier_story_cycle.0007 = { #Nomads story cycle
 			}
 			alternative_limit = {
 				bandit_infested_county_trigger = yes
-				county_control < full_county_control
+				county_control < county_control_baseline
 				any_county_province = { geographical_region = dlc_fp3_eastern_persian_frontier_regions }
 			}
 			alternative_limit = {
@@ -1439,7 +1438,7 @@ fp3_frontier_story_cycle.0007 = { #Nomads story cycle
 			}
 			alternative_limit = {
 				bandit_infested_county_trigger = yes
-				county_control < full_county_control
+				county_control < county_control_baseline
 			}
 			alternative_limit = {
 				bandit_infested_county_trigger = yes
@@ -1697,12 +1696,12 @@ fp3_frontier_story_cycle.0099 = { #Nomads story cycle
 			alternative_limit = {
 				is_landless_type_title = no
 				this != root.capital_county
-				development_level <= bad_development_level
+				prosperity_level <= bad_prosperity_level
 			}
 			alternative_limit = {
 				is_landless_type_title = no
 				this != root.capital_county
-				development_level <= medium_development_level
+				prosperity_level <= medium_prosperity_level
 			}
 			alternative_limit = {
 				is_landless_type_title = no
@@ -1739,7 +1738,7 @@ fp3_frontier_story_cycle.0099 = { #Nomads story cycle
 						this = root.capital_county
 						this = scope:title_to_grant
 					}
-					development_level <= bad_development_level
+					prosperity_level <= bad_prosperity_level
 				}
 				alternative_limit = {
 					tier = tier_county
@@ -1748,7 +1747,7 @@ fp3_frontier_story_cycle.0099 = { #Nomads story cycle
 						this = root.capital_county
 						this = scope:title_to_grant
 					}
-					development_level <= medium_development_level
+					prosperity_level <= medium_prosperity_level
 				}
 				alternative_limit = {
 					tier = tier_county
@@ -1793,7 +1792,7 @@ fp3_frontier_story_cycle.0099 = { #Nomads story cycle
 						this = scope:title_to_grant
 						this = scope:extra_title_to_grant
 					}
-					development_level <= bad_development_level
+					prosperity_level <= bad_prosperity_level
 				}
 				alternative_limit = {
 					tier = tier_county
@@ -1803,7 +1802,7 @@ fp3_frontier_story_cycle.0099 = { #Nomads story cycle
 						this = scope:title_to_grant
 						this = scope:extra_title_to_grant
 					}
-					development_level <= medium_development_level
+					prosperity_level <= medium_prosperity_level
 				}
 				alternative_limit = {
 					tier = tier_county

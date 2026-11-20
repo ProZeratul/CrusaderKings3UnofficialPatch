@@ -368,7 +368,7 @@ share_known_secrets_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:puppet_or_actor
 			TARGET = scope:recipient
 			VALUE = minor_unity_loss
@@ -620,7 +620,7 @@ propose_best_friendship_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = minor_unity_gain
@@ -669,7 +669,7 @@ propose_best_friendship_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = minor_unity_loss
@@ -807,7 +807,7 @@ reaffirm_best_friendship_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = minor_unity_gain
@@ -851,7 +851,7 @@ reaffirm_best_friendship_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = minor_unity_loss
@@ -978,7 +978,7 @@ synergise_friendship_interaction = {
 		synergise_friendship_interaction_actual_effect = yes
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = minor_unity_gain
@@ -1012,7 +1012,7 @@ synergise_friendship_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = minor_unity_loss
@@ -1138,18 +1138,10 @@ challenge_to_2p_chess_interaction = {
 				bg_can_start_board_game_is_scope_banned_checks_trigger = no
 			}
 		}
-		#limit range for landless adventurers
-		trigger_if = {
-			limit = {
-				scope:actor = {
-					has_government = landless_adventurer_government
-				}
-			}
-			#Has to be used instead of diplo range checks in laamp to landed interactions
-			ep3_laamp_diplo_range_trigger = {
-				TARGET = scope:recipient
-				LAAMP = scope:actor
-			}
+		#limit range for landless adventurers/merchants
+		exceptional_diplo_range_trigger = {
+			CHARACTER = scope:actor
+			TARGET = scope:recipient
 		}
 	}
 
@@ -1379,7 +1371,7 @@ challenge_to_2p_chess_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = miniscule_unity_loss
@@ -1425,7 +1417,7 @@ challenge_to_2p_chess_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:recipient
 			TARGET = scope:actor
 			VALUE = miniscule_unity_loss
@@ -2149,18 +2141,10 @@ purchase_truce_interaction = {
 				NOT = { any_truce_holder = { this = scope:recipient } }
 			}
 		}
-		#limit range for landless adventurers
-		trigger_if = {
-			limit = {
-				scope:puppet_or_actor = {
-					has_government = landless_adventurer_government
-				}
-			}
-			#Has to be used instead of diplo range checks in laamp to landed interactions
-			ep3_laamp_diplo_range_trigger = {
-				TARGET = scope:recipient
-				LAAMP = scope:puppet_or_actor
-			}
+		#limit range for landless adventurers/merchants
+		exceptional_diplo_range_trigger = {
+			CHARACTER = scope:puppet_or_actor
+			TARGET = scope:recipient
 		}
 	}
 	
@@ -2234,7 +2218,7 @@ purchase_truce_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:puppet_or_actor
 			TARGET = scope:recipient
 			VALUE = minor_unity_gain
@@ -2281,7 +2265,7 @@ purchase_truce_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:recipient
 			TARGET = scope:puppet_or_actor
 			VALUE = minor_unity_loss
@@ -2656,6 +2640,15 @@ purchase_truce_interaction = {
 		empire = 0
 		hegemony = 0
 	}
+	ai_frequency_by_tier_government_override = {
+		government = merchant_government
+		barony = 0
+		county = 180
+		duchy = 0
+		kingdom = 0
+		empire = 0
+		hegemony = 0
+	}
 	ai_will_do = {
 		base = 0
 
@@ -2899,7 +2892,7 @@ incite_revolts_interaction = {
 				any_sub_realm_county = {
 					count > 0
 					holder = scope:recipient
-					county_opinion < 0
+					popular_opinion < 0
 					NOR = {
 						has_county_modifier = small_investment_in_revolt_modifier
 						has_county_modifier = medium_investment_in_revolt_modifier
@@ -2954,7 +2947,7 @@ incite_revolts_interaction = {
 							has_county_modifier = medium_investment_in_revolt_modifier
 							has_county_modifier = high_investment_in_revolt_modifier
 						}
-						county_opinion < 0
+						popular_opinion < 0
 						holder = scope:recipient
 					}
 					weight = {
@@ -3005,10 +2998,7 @@ incite_revolts_interaction = {
 				if = {
 					limit = {
 						scope:actor = {
-							OR = {
-								has_relation_rival = scope:recipient
-								has_relation_nemesis = scope:recipient
-							}
+							has_relation_rival = scope:recipient
 						}
 					}
 					stress_and_fulfillment_impact = {
@@ -3183,7 +3173,7 @@ incite_revolts_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = medium_unity_loss
@@ -3289,10 +3279,7 @@ incite_revolts_interaction = {
 		modifier = {
 			add = 50
 			scope:recipient = {
-				OR = {
-					has_relation_rival = scope:actor
-					has_relation_nemesis = scope:actor
-				}
+				has_relation_rival = scope:actor
 			}
 		}
 
@@ -3312,8 +3299,6 @@ incite_revolts_interaction = {
 				OR = {
 					has_relation_friend = scope:actor
 					has_relation_lover = scope:actor
-					has_relation_soulmate = scope:actor
-					has_relation_best_friend = scope:actor
 				}
 			}
 		}
@@ -3589,7 +3574,7 @@ contract_assistance_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = medium_unity_loss
@@ -3603,7 +3588,7 @@ contract_assistance_interaction = {
 		scope:actor = { trigger_event = char_interaction.0236 }
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:recipient
 			TARGET = scope:actor
 			VALUE = minor_unity_gain
@@ -4182,7 +4167,7 @@ request_contract_assistance_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = medium_unity_loss
@@ -4196,7 +4181,7 @@ request_contract_assistance_interaction = {
 		scope:actor = { trigger_event = char_interaction.0236 }
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:recipient
 			TARGET = scope:actor
 			VALUE = minor_unity_gain
@@ -4739,7 +4724,7 @@ enforce_truce_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = medium_unity_gain
@@ -4753,7 +4738,7 @@ enforce_truce_interaction = {
 		scope:actor = { trigger_event = char_interaction.0236 }
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:recipient
 			TARGET = scope:actor
 			VALUE = medium_unity_loss
@@ -5092,7 +5077,7 @@ bargain_fealty_interaction = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = medium_unity_gain
@@ -5106,7 +5091,7 @@ bargain_fealty_interaction = {
 		scope:actor = { trigger_event = char_interaction.0236 }
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:recipient
 			TARGET = scope:actor
 			VALUE = minor_unity_loss
@@ -5373,7 +5358,7 @@ invite_foreign_ruler_to = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:actor
 			TARGET = scope:recipient
 			VALUE = medium_unity_gain
@@ -5407,7 +5392,7 @@ invite_foreign_ruler_to = {
 		}
 
 		# If we're a clan this interaction affects unity
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:recipient
 			TARGET = scope:actor
 			VALUE = minor_unity_loss
@@ -5510,10 +5495,7 @@ invite_foreign_ruler_to = {
 
 		modifier = {
 			add = 100
-			OR = {
-				has_relation_lover = scope:actor
-				has_relation_soulmate = scope:actor
-			}
+			has_relation_lover = scope:actor
 			desc = WE_ARE_LOVERS
 		}
 

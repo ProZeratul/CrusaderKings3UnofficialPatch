@@ -34,20 +34,25 @@ on_barter_action_completion = {
 				desc = msg_barter_completed_barterer_desc
 				left_icon = scope:county.holder
 				right_icon = scope:barony
-
 				show_as_tooltip = {
 					root = { add_loot = scope:value } #Unop add_loot is for the army (root), not the barterer
-					scope:barony.title_province = {
-						add_province_modifier = {
-							modifier = recently_bartered_modifier
-							years = 5
+					scope:barony = {
+						title_province = {
+							add_province_modifier = {
+								modifier = recently_bartered_modifier
+								years = 5
+							}
+						}
+						trade_market = {
+							add_trade_market_modifier = {
+								modifier = gdp_market_bartering_trade_modifier
+								years = 5
+							}
 						}
 					}
 				}
 				if = {
-					limit = {
-						scope:barterer != scope:barony.county.holder
-					}
+					limit = { scope:barterer != scope:barony.county.holder }
 					reverse_add_opinion = {
 						target = scope:barony.county.holder
 						modifier = bartered_in_my_lands_opinion
@@ -55,7 +60,6 @@ on_barter_action_completion = {
 				}
 			}
 		}
-
 		scope:county.holder = {
 			send_interface_message = {
 				type = msg_barter_completed
@@ -63,11 +67,18 @@ on_barter_action_completion = {
 				desc = msg_barter_completed_holder_desc
 				left_icon = scope:barterer
 				right_icon = scope:barony
-
-				scope:barony.title_province = {
-					add_province_modifier = {
-						modifier = recently_bartered_modifier
-						years = 5
+				scope:barony = {
+					title_province = {
+						add_province_modifier = {
+							modifier = recently_bartered_modifier
+							years = 5
+						}
+					}
+					trade_market = {
+						add_trade_market_modifier = {
+							modifier = gdp_market_bartering_trade_modifier
+							years = 5
+						}
 					}
 				}
 			}

@@ -275,7 +275,7 @@ raise_stele_variant_ancestor_value = {
 	}
 	# Weight up for low popular opinion.
 	add = {
-		value = this.county_opinion
+		value = this.popular_opinion
 		multiply = -1
 	}
 	# Weight down for existing stele.
@@ -313,8 +313,8 @@ raise_stele_variant_promotion_value = {
 		limit = { fp1_can_raise_stele_title_scope_trigger = yes }
 		add = 25
 	}
-	# Weight up for development.
-	add = this.development_level
+	# Weight up for prosperity.
+	add = this.prosperity_level
 	# Weight down for existing stele.
 	if = {
 		limit = { exists = this.var:stele_slot_occupied }
@@ -738,6 +738,7 @@ fp1_0111_sorcerer_learning_low = mediocre_skill_rating
 # Wars
 
 varangian_adventurers_standard_levy_cap_value = 2000
+varangian_adventurers_max_bonus_troops_value = 1000
 
 varangian_adventurers_bonus_levies_value = {
 	value = 0
@@ -944,8 +945,8 @@ fp1_trade_events_eligible_settlement_value = {
 fp1_trade_events_cash_settlement_value = {
 	value = 0
 
-	# Every point of development is worth 1g extra.
-	add = scope:county.development_level
+	# Every point of prosperity is worth 1g extra.
+	add = scope:county.prosperity_level
 
 	# Keeping to a sensible minimum & a balanced maximum.
 	min = 10
@@ -1021,8 +1022,8 @@ fp1_jomsvikings_coup_priority_value = {
 fp1_jomvsvikings_raid_value = {
 	value = 0
 
-	# Weight up for development.
-	add = development_level
+	# Weight up for prosperity.
+	add = prosperity_level
 	# Weight up high control.
 	add = county_control
 	# Weight up for coastal counties.

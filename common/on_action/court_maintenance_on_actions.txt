@@ -72,6 +72,20 @@ on_leave_court = {
 				}
 				remove_character_flag = suzerains_missionary
 			}
+			# If they were assigned as a Trader, we remove the modifier if they leave court.
+			if = {
+				limit = {
+					exists = scope:old_employer
+					has_opinion_modifier = {
+						target = scope:old_employer
+						modifier = trader_assigned_opinion
+					}
+				}
+				remove_opinion = {
+					target = scope:old_employer
+					modifier = trader_assigned_opinion
+				}
+			}
 		}
 		remove_variable = court_8311_cooldown
 	}

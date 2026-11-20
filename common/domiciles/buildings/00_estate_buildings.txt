@@ -18,7 +18,7 @@ estate_main_01 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.25
+		domicile_monthly_gold_add = estate_income_main_level_1
 		domicile_monthly_influence_add = 1
 		domicile_external_slots_capacity_add = 2
 	}
@@ -102,13 +102,13 @@ estate_main_02 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.25
+		domicile_monthly_gold_add = estate_income_main_level_2
 		domicile_monthly_influence_add = 0.5
 		domicile_external_slots_capacity_add = 1
 	}
 
 	ai_value = {
-		value = 100
+		value = ai_building_domicile_main_upgrade_value
 	}
 	
 	asset = {
@@ -186,14 +186,14 @@ estate_main_03 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.5
+		domicile_monthly_gold_add = estate_income_main_level_3
 		domicile_monthly_gold_mult = 0.02
 		domicile_monthly_influence_add = 0.5
 		domicile_external_slots_capacity_add = 1
 	}
 
 	ai_value = {
-		value = 100
+		value = ai_building_domicile_main_upgrade_value
 	}
 	
 	asset = {
@@ -258,7 +258,7 @@ estate_main_04 = {
 	previous_building = estate_main_03
 	
 	can_construct = {
-		culture ?= { has_innovation = innovation_development_03 }
+		culture ?= { has_innovation = innovation_prosperity_03 }
 	}
 
 	cost = {
@@ -271,14 +271,14 @@ estate_main_04 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.5
+		domicile_monthly_gold_add = estate_income_main_level_4
 		domicile_monthly_gold_mult = 0.03
 		domicile_monthly_influence_add = 0.5
 		domicile_external_slots_capacity_add = 1
 	}
 
 	ai_value = {
-		value = 100
+		value = ai_building_domicile_main_upgrade_value
 	}
 	
 	asset = {
@@ -356,14 +356,14 @@ estate_main_05 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.75
+		domicile_monthly_gold_add = estate_income_main_level_5
 		domicile_monthly_gold_mult = 0.05
 		domicile_monthly_influence_add = 0.5
 		domicile_external_slots_capacity_add = 1
 	}
 
 	ai_value = {
-		value = 100
+		value = ai_building_domicile_main_upgrade_value
 	}
 	
 	asset = {
@@ -451,7 +451,11 @@ living_quarters_01 = {
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -490,7 +494,11 @@ living_quarters_02 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -532,7 +540,11 @@ living_quarters_03 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -575,7 +587,11 @@ living_quarters_04 = {
 	
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -609,7 +625,11 @@ trophy_room_01 = {
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -642,7 +662,11 @@ trophy_room_02 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -683,7 +707,11 @@ trophy_room_03 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -725,7 +753,11 @@ trophy_room_04 = {
 	
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -764,7 +796,11 @@ office_01 = {
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -792,17 +828,21 @@ office_02 = {
 	
 	parameters = {
 		estate_local_theme_cost_reduction = yes
-		estate_governor_efficiency_bonus = yes
 		estate_unlock_teach_governor_interaction = yes
 	}
 
 	character_modifier = {
 		monthly_stewardship_lifestyle_xp_gain_mult = 0.05
+		governor_efficiency_add = estate_governor_efficiency_bonus_value
 	}
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -834,7 +874,6 @@ office_03 = {
 	
 	parameters = {
 		estate_local_theme_cost_reduction = yes
-		estate_governor_efficiency_bonus = yes
 		estate_governor_efficiency_bonus_for_house_members = yes
 		estate_unlock_teach_governor_interaction = yes
 	}
@@ -845,7 +884,11 @@ office_03 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -877,7 +920,6 @@ office_04 = {
 	
 	parameters = {
 		estate_local_theme_cost_reduction = yes
-		estate_governor_efficiency_bonus = yes
 		estate_governor_efficiency_bonus_for_house_members = yes
 		estate_governor_trait_xp_bonus_for_contracts = yes
 		estate_unlock_teach_governor_interaction = yes
@@ -889,7 +931,11 @@ office_04 = {
 	
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -924,7 +970,11 @@ servants_quarters_01 = {
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -960,7 +1010,11 @@ servants_quarters_02 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1001,7 +1055,11 @@ servants_quarters_03 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1044,7 +1102,11 @@ servants_quarters_04 = {
 	
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1082,7 +1144,11 @@ library_01 = {
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -1118,7 +1184,11 @@ library_02 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1161,7 +1231,11 @@ library_observatory_03 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1202,7 +1276,11 @@ library_observatory_04 = {
 	
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1246,7 +1324,11 @@ library_education_03 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1289,7 +1371,11 @@ library_education_04 = {
 	
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1333,7 +1419,11 @@ bath_01 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -1376,7 +1466,11 @@ bath_02 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1423,7 +1517,11 @@ bath_03 = {
 	
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1470,7 +1568,11 @@ bath_04 = {
 	
 	ai_value = {
 		value = 3
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1513,7 +1615,11 @@ guest_room_01 = {
 			}
 			add = 2
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -1557,7 +1663,11 @@ guest_room_02 = {
 			}
 			add = 2
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1606,7 +1716,11 @@ guest_room_03 = {
 			}
 			add = 2
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1654,7 +1768,11 @@ guest_room_04 = {
 			}
 			add = 2
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1703,7 +1821,11 @@ guest_room_05 = {
 			}
 			add = 2
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1751,7 +1873,11 @@ guest_room_06 = {
 			}
 			add = 2
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1795,7 +1921,11 @@ wine_cellar_01 = {
 			}
 			add = 3
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -1837,7 +1967,11 @@ wine_cellar_02 = {
 			}
 			add = 3
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1879,7 +2013,11 @@ wine_cellar_03 = {
 			}
 			add = 3
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1917,7 +2055,11 @@ courtyard_01 = {
 	
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -1954,7 +2096,11 @@ courtyard_02 = {
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -1995,7 +2141,11 @@ courtyard_03 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -2036,7 +2186,11 @@ courtyard_04 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -2083,7 +2237,11 @@ prison_01 = {
 			}
 			add = 5
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -2132,7 +2290,11 @@ prison_02 = {
 			}
 			add = 5
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -2186,7 +2348,11 @@ prison_03 = {
 			}
 			add = 5
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -2240,7 +2406,11 @@ prison_04 = {
 			}
 			add = 5
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -2284,7 +2454,11 @@ reception_hall_01 = {
 
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -2327,7 +2501,11 @@ reception_hall_02 = {
 
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -2371,7 +2549,11 @@ reception_hall_03 = {
 
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -2415,7 +2597,11 @@ reception_hall_04 = {
 
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -2459,7 +2645,11 @@ reception_hall_05 = {
 
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -2504,7 +2694,11 @@ cabinet_of_curiosities_01 = {
 
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -2558,7 +2752,11 @@ cabinet_of_curiosities_02 = {
 
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -2614,7 +2812,11 @@ cabinet_of_curiosities_03 = {
 
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -2650,13 +2852,17 @@ grand_solar_01 = {
 	}
 
 	character_modifier = {
-		dynasty_opinion = 5
+		dynasty_opinion = 2
 		stress_gain_mult = -0.05
 	}
 
 	ai_value = {
 		value = 10
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -2675,7 +2881,7 @@ grand_solar_02 = {
 	can_construct = {
 		custom_tooltip = {
 			text = unlocked_via_event
-			house.house_head = { has_character_flag = ep3_construct_grand_solar }
+			house.house_head ?= { has_character_flag = ep3_construct_grand_solar }
 		}
 	}
 
@@ -2691,13 +2897,17 @@ grand_solar_02 = {
 	}
 
 	character_modifier = {
-		dynasty_opinion = 5
+		dynasty_opinion = 3
 		stress_gain_mult = -0.05
 	}
 
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -2716,7 +2926,7 @@ grand_solar_03 = {
 	can_construct = {
 		custom_tooltip = {
 			text = unlocked_via_event
-			house.house_head = { has_character_flag = ep3_construct_grand_solar }
+			house.house_head ?= { has_character_flag = ep3_construct_grand_solar }
 		}
 		domicile ?= { has_domicile_building_or_higher = estate_main_02 }
 	}
@@ -2734,13 +2944,17 @@ grand_solar_03 = {
 
 	character_modifier = {
 		monthly_dynasty_prestige = 0.1
-		dynasty_opinion = 5
+		dynasty_opinion = 2
 		stress_gain_mult = -0.1
 	}
 
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -2759,7 +2973,7 @@ grand_solar_04 = {
 	can_construct = {
 		custom_tooltip = {
 			text = unlocked_via_event
-			house.house_head = { has_character_flag = ep3_construct_grand_solar }
+			house.house_head ?= { has_character_flag = ep3_construct_grand_solar }
 		}
 		domicile ?= { has_domicile_building_or_higher = estate_main_03 }
 	}
@@ -2781,13 +2995,17 @@ grand_solar_04 = {
 
 	character_modifier = {
 		monthly_dynasty_prestige = 0.1
-		dynasty_opinion = 5
+		dynasty_opinion = 3
 		stress_gain_mult = -0.1
 	}
 
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -2832,7 +3050,11 @@ temple_small_01 = {
 	
 	ai_value = {
 		value = 9
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -2959,7 +3181,11 @@ temple_small_02 = {
 	
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -3090,7 +3316,11 @@ temple_small_03 = {
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -3238,7 +3468,11 @@ temple_crypt_04 = {
 			}
 			add = 10
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -3384,7 +3618,11 @@ temple_crypt_05 = {
 			}
 			add = 10
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -3531,7 +3769,11 @@ temple_crypt_06 = {
 			}
 			add = 10
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -3657,7 +3899,7 @@ temple_large_04 = {
 
 	character_modifier = {
 		domicile_monthly_piety_add = 0.2
-		domicile_monthly_gold_add = 0.3
+		domicile_monthly_gold_add = estate_income_temple_large_level_4
 		clergy_opinion = 5
 	}
 	parameters = {
@@ -3667,7 +3909,11 @@ temple_large_04 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -3791,7 +4037,7 @@ temple_large_05 = {
 
 	character_modifier = {
 		domicile_monthly_piety_add = 0.2
-		domicile_monthly_gold_add = 0.4
+		domicile_monthly_gold_add = estate_income_temple_large_level_5
 		clergy_opinion = 5
 	}
 	parameters = {
@@ -3801,7 +4047,11 @@ temple_large_05 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -3925,7 +4175,7 @@ temple_large_06 = {
 
 	character_modifier = {
 		domicile_monthly_piety_add = 0.3
-		domicile_monthly_gold_add = 0.5
+		domicile_monthly_gold_add = estate_income_temple_large_level_6
 		clergy_opinion = 5
 	}
 
@@ -3937,7 +4187,11 @@ temple_large_06 = {
 	
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -4067,7 +4321,7 @@ temple_monastery_04 = {
 
 	character_modifier = {
 		domicile_monthly_piety_mult = 0.05
-		domicile_monthly_gold_add = 0.6
+		domicile_monthly_gold_add = estate_income_temple_monastery_level_4
 	}
 
 	parameters = {
@@ -4076,7 +4330,11 @@ temple_monastery_04 = {
 	
 	ai_value = {
 		value = 10
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -4204,7 +4462,7 @@ temple_monastery_05 = {
 
 	character_modifier = {
 		domicile_monthly_piety_mult = 0.05
-		domicile_monthly_gold_add = 0.8
+		domicile_monthly_gold_add = estate_income_temple_monastery_level_5
 	}
 
 	parameters = {
@@ -4213,7 +4471,11 @@ temple_monastery_05 = {
 	
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -4341,7 +4603,7 @@ temple_monastery_06 = {
 
 	character_modifier = {
 		domicile_monthly_piety_mult = 0.05
-		domicile_monthly_gold_add = 1
+		domicile_monthly_gold_add = estate_income_temple_monastery_level_6
 	}
 
 	parameters = {
@@ -4350,7 +4612,11 @@ temple_monastery_06 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -4484,7 +4750,11 @@ barracks_01 = {
 	
 	ai_value = {
 		value = 9
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -4572,7 +4842,11 @@ barracks_02 = {
 	
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -4664,7 +4938,11 @@ barracks_03 = {
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -4756,7 +5034,11 @@ barracks_04 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -4848,7 +5130,11 @@ barracks_05 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -4940,7 +5226,11 @@ barracks_06 = {
 	
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -5011,7 +5301,7 @@ watchtower_01 = {
 	}
 
 	character_modifier = {
-		monthly_county_control_growth_factor = 0.03
+		character_capital_county_monthly_control_change_mult = 0.03
 		defender_holding_advantage = 2
 		hostile_raid_time = 0.1
 	}
@@ -5023,7 +5313,11 @@ watchtower_01 = {
 	
 	ai_value = {
 		value = 9
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -5093,7 +5387,7 @@ watchtower_02 = {
 	}
 
 	character_modifier = {
-		monthly_county_control_growth_factor = 0.03
+		character_capital_county_monthly_control_change_mult = 0.03
 		defender_holding_advantage = 2
 		archers_damage_mult = 0.02
 		archers_toughness_mult = 0.01
@@ -5107,7 +5401,11 @@ watchtower_02 = {
 	
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -5186,7 +5484,7 @@ watchtower_03 = {
 	}
 
 	character_modifier = {
-		monthly_county_control_growth_factor = 0.03
+		character_capital_county_monthly_control_change_mult = 0.03
 		defender_holding_advantage = 2
 		archers_damage_mult = 0.02
 		archers_toughness_mult = 0.01
@@ -5195,7 +5493,11 @@ watchtower_03 = {
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -5275,7 +5577,7 @@ watchtower_04 = {
 	}
 
 	character_modifier = {
-		monthly_county_control_growth_factor = 0.03
+		character_capital_county_monthly_control_change_mult = 0.03
 		defender_holding_advantage = 2
 		archers_damage_mult = 0.02
 		archers_toughness_mult = 0.01
@@ -5284,7 +5586,11 @@ watchtower_04 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -5364,7 +5670,7 @@ watchtower_05 = {
 	}
 
 	character_modifier = {
-		monthly_county_control_growth_factor = 0.03
+		character_capital_county_monthly_control_change_mult = 0.03
 		defender_holding_advantage = 2
 		archers_damage_mult = 0.02
 		archers_toughness_mult = 0.01
@@ -5373,7 +5679,11 @@ watchtower_05 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -5454,7 +5764,7 @@ watchtower_06 = {
 	}
 
 	character_modifier = {
-		monthly_county_control_growth_factor = 0.03
+		character_capital_county_monthly_control_change_mult = 0.03
 		defender_holding_advantage = 2
 		archers_damage_mult = 0.02
 		archers_toughness_mult = 0.01
@@ -5463,7 +5773,11 @@ watchtower_06 = {
 	
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -5547,7 +5861,11 @@ guardhouse_01 = {
 	
 	ai_value = {
 		value = 9
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -5630,7 +5948,11 @@ guardhouse_02 = {
 	
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -5719,7 +6041,11 @@ guardhouse_03 = {
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -5808,7 +6134,11 @@ guardhouse_04 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -5930,7 +6260,11 @@ garden_01 = {
 			}
 			add = 10
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -6051,7 +6385,11 @@ garden_02 = {
 			}
 			add = 10
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -6172,7 +6510,11 @@ garden_03 = {
 			}
 			add = 10
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -6301,7 +6643,11 @@ garden_leisure_04 = {
 			}
 			add = 10
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -6428,7 +6774,11 @@ garden_leisure_05 = {
 			}
 			add = 10
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -6555,7 +6905,11 @@ garden_leisure_06 = {
 			}
 			add = 10
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -6631,9 +6985,14 @@ garden_fruit_04 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.2
-		development_growth = 0.1
+		domicile_monthly_gold_add = estate_income_minor
+		prosperity_growth = 0.1
 		negate_health_penalty_add = 0.05
+	}
+
+	province_modifier = {
+		trade_good_fruit_production_add = domicile_primary_production_add_3_levels
+		trade_good_fruit_production_mult = domicile_primary_production_mult_3_levels
 	}
 
 	parameters = {
@@ -6683,7 +7042,11 @@ garden_fruit_04 = {
 			}
 			add = 10
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -6757,9 +7120,14 @@ garden_fruit_05 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.2
-		development_growth = 0.1
+		domicile_monthly_gold_add = estate_income_minor
+		prosperity_growth = 0.1
 		negate_health_penalty_add = 0.1
+	}
+
+	province_modifier = {
+		trade_good_fruit_production_add = domicile_primary_production_add_3_levels
+		trade_good_fruit_production_mult = domicile_primary_production_mult_3_levels
 	}
 
 	parameters = {
@@ -6809,7 +7177,11 @@ garden_fruit_05 = {
 			}
 			add = 10
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -6883,9 +7255,14 @@ garden_fruit_06 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.2
-		development_growth = 0.1
+		domicile_monthly_gold_add = estate_income_minor
+		prosperity_growth = 0.1
 		negate_health_penalty_add = 0.15
+	}
+
+	province_modifier = {
+		trade_good_fruit_production_add = domicile_primary_production_add_3_levels
+		trade_good_fruit_production_mult = domicile_primary_production_mult_3_levels
 	}
 
 	parameters = {
@@ -6935,6 +7312,11 @@ garden_fruit_06 = {
 			}
 			add = 10
 		}
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -7018,7 +7400,11 @@ stable_01 = {
 			}
 			add = 2
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -7105,7 +7491,11 @@ stable_02 = {
 			}
 			add = 2
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -7192,7 +7582,11 @@ stable_03 = {
 			}
 			add = 2
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -7279,7 +7673,11 @@ stable_grand_04 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -7365,7 +7763,11 @@ stable_grand_05 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -7451,7 +7853,11 @@ stable_grand_06 = {
 	
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -7547,7 +7953,11 @@ stable_kennel_04 = {
 			}
 			add = 2
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -7642,7 +8052,11 @@ stable_kennel_05 = {
 			}
 			add = 2
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -7738,7 +8152,11 @@ stable_kennel_06 = {
 			}
 			add = 2
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -7824,7 +8242,11 @@ stable_chariot_04 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -7909,7 +8331,11 @@ stable_chariot_05 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -7994,7 +8420,11 @@ stable_chariot_06 = {
 	
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -8065,13 +8495,17 @@ workshop_01 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.2
+		domicile_monthly_gold_add = estate_income_workshop_level_1
 		domicile_build_speed = -0.05
 	}
 	
 	ai_value = {
 		value = 9
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_income_value
 	}
 	
 	asset = {
@@ -8141,13 +8575,17 @@ workshop_02 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_workshop_level_2
 		domicile_build_speed = -0.05
 	}
 	
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -8223,8 +8661,13 @@ workshop_carpenter_03 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_small
 		domicile_build_speed = -0.05
+	}
+
+	province_modifier = {
+		trade_good_wood_production_add = domicile_primary_production_add_4_levels
+		trade_good_wood_production_mult = domicile_primary_production_mult_4_levels
 	}
 	
 	parameters = {
@@ -8233,7 +8676,11 @@ workshop_carpenter_03 = {
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -8312,12 +8759,21 @@ workshop_carpenter_04 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_small
+	}
+
+	province_modifier = {
+		trade_good_wood_production_add = domicile_primary_production_add_4_levels
+		trade_good_wood_production_mult = domicile_primary_production_mult_4_levels
 	}
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -8396,13 +8852,22 @@ workshop_carpenter_05 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_small
 		domicile_build_speed = -0.05
+	}
+
+	province_modifier = {
+		trade_good_wood_production_add = domicile_primary_production_add_4_levels
+		trade_good_wood_production_mult = domicile_primary_production_mult_4_levels
 	}
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -8482,12 +8947,21 @@ workshop_carpenter_06 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_small
+	}
+
+	province_modifier = {
+		trade_good_wood_production_add = domicile_primary_production_add_4_levels
+		trade_good_wood_production_mult = domicile_primary_production_mult_4_levels
 	}
 	
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -8563,15 +9037,24 @@ workshop_mason_03 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_small
 		build_speed = -0.05
 		build_gold_cost = -0.05
 		domicile_build_speed = -0.05
 	}
+
+	province_modifier = {
+		trade_good_stone_production_add = domicile_primary_production_add_4_levels
+		trade_good_stone_production_mult = domicile_primary_production_mult_4_levels
+	}
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -8645,15 +9128,24 @@ workshop_mason_04 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_small
 		build_speed = -0.05
 		build_gold_cost = -0.05
 		domicile_build_speed = -0.05
 	}
+
+	province_modifier = {
+		trade_good_stone_production_add = domicile_primary_production_add_4_levels
+		trade_good_stone_production_mult = domicile_primary_production_mult_4_levels
+	}
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -8727,17 +9219,26 @@ workshop_mason_05 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_small
 		build_speed = -0.05
 		build_gold_cost = -0.05
 		holding_build_gold_cost = -0.05
 		holding_build_speed = -0.05
 		domicile_build_speed = -0.05
 	}
+
+	province_modifier = {
+		trade_good_stone_production_add = domicile_primary_production_add_4_levels
+		trade_good_stone_production_mult = domicile_primary_production_mult_4_levels
+	}
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -8811,17 +9312,26 @@ workshop_mason_06 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_small
 		build_speed = -0.05
 		build_gold_cost = -0.05
 		holding_build_gold_cost = -0.05
 		holding_build_speed = -0.05
 		domicile_build_speed = -0.05
 	}
+
+	province_modifier = {
+		trade_good_stone_production_add = domicile_primary_production_add_4_levels
+		trade_good_stone_production_mult = domicile_primary_production_mult_4_levels
+	}
 	
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -8897,8 +9407,13 @@ workshop_textile_03 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.2
+		domicile_monthly_gold_add = estate_income_minor
 		domicile_monthly_prestige_mult = 0.05
+	}
+
+	province_modifier = {
+		trade_good_textiles_production_add = domicile_primary_production_add_4_levels
+		trade_good_textiles_production_mult = domicile_primary_production_mult_4_levels
 	}
 
 	parameters = {
@@ -8907,7 +9422,11 @@ workshop_textile_03 = {
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -8981,8 +9500,13 @@ workshop_textile_04 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.2
+		domicile_monthly_gold_add = estate_income_minor
 		domicile_monthly_prestige_mult = 0.05
+	}
+
+	province_modifier = {
+		trade_good_textiles_production_add = domicile_primary_production_add_4_levels
+		trade_good_textiles_production_mult = domicile_primary_production_mult_4_levels
 	}
 
 	parameters = {
@@ -8991,7 +9515,11 @@ workshop_textile_04 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -9065,8 +9593,13 @@ workshop_textile_05 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.2
+		domicile_monthly_gold_add = estate_income_minor
 		domicile_monthly_prestige_mult = 0.05
+	}
+
+	province_modifier = {
+		trade_good_textiles_production_add = domicile_primary_production_add_4_levels
+		trade_good_textiles_production_mult = domicile_primary_production_mult_4_levels
 	}
 
 	parameters = {
@@ -9075,7 +9608,11 @@ workshop_textile_05 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -9149,8 +9686,13 @@ workshop_textile_06 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.2
+		domicile_monthly_gold_add = estate_income_minor
 		domicile_monthly_prestige_mult = 0.05
+	}
+
+	province_modifier = {
+		trade_good_textiles_production_add = domicile_primary_production_add_4_levels
+		trade_good_textiles_production_mult = domicile_primary_production_mult_4_levels
 	}
 
 	parameters = {
@@ -9159,7 +9701,11 @@ workshop_textile_06 = {
 	
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -9245,7 +9791,11 @@ storage_01 = {
 			}
 			add = 2
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -9330,7 +9880,11 @@ storage_02 = {
 			}
 			add = 2
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -9406,7 +9960,7 @@ storage_warehouse_03 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_small
 		build_gold_cost = -0.05
 	}
 
@@ -9416,7 +9970,11 @@ storage_warehouse_03 = {
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -9490,7 +10048,7 @@ storage_warehouse_04 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_small
 		build_gold_cost = -0.1
 	}
 
@@ -9500,7 +10058,11 @@ storage_warehouse_04 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -9576,9 +10138,9 @@ storage_granary_03 = {
 	}
 
 	character_modifier = {
-		development_growth_factor = 0.05
+		prosperity_growth_factor = 0.05
 		epidemic_resistance = 2
-		county_opinion_add = 10
+		popular_opinion_add = building_minor_popular_opinion_gain
 	}
 	
 	ai_value = {
@@ -9589,7 +10151,11 @@ storage_granary_03 = {
 			}
 			add = 2
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -9667,9 +10233,9 @@ storage_granary_04 = {
 	}
 
 	character_modifier = {
-		development_growth_factor = 0.1
+		prosperity_growth_factor = 0.1
 		epidemic_resistance = 5
-		county_opinion_add = 10
+		popular_opinion_add = building_minor_popular_opinion_gain
 	}
 	
 	ai_value = {
@@ -9680,7 +10246,11 @@ storage_granary_04 = {
 			}
 			add = 2
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -9755,7 +10325,7 @@ market_01 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_market_level_1
 	}
 	
 	ai_value = {
@@ -9770,7 +10340,11 @@ market_01 = {
 			}
 			add = 20
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_income_value
 	}
 	
 	asset = {
@@ -9845,12 +10419,16 @@ market_02 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_market_level_2
 	}
 	
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -9930,12 +10508,16 @@ market_03 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.2
+		domicile_monthly_gold_add = estate_income_market_level_3
 	}
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -10015,12 +10597,16 @@ market_04 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.4
+		domicile_monthly_gold_add = estate_income_market_level_4
 	}
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -10100,12 +10686,16 @@ market_05 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.8
+		domicile_monthly_gold_add = estate_income_market_level_5
 	}
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -10185,12 +10775,16 @@ market_06 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 1.6
+		domicile_monthly_gold_add = estate_income_market_level_6
 	}
 	
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -10266,6 +10860,11 @@ grazing_land_01 = {
 		light_cavalry_maintenance_mult = -0.05
 	}
 
+	province_modifier = {
+		trade_good_horses_production_add = domicile_primary_production_add_6_levels_level_1
+		trade_good_horses_production_mult = domicile_primary_production_mult_6_levels
+	}
+
 	parameters = {
 		cheaper_grain_fields_buildings_1 = yes
 	}
@@ -10312,7 +10911,11 @@ grazing_land_01 = {
 			}
 			add = 4
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_value
 	}
 	
 	asset = {
@@ -10387,6 +10990,10 @@ grazing_land_02 = {
 		light_cavalry_maintenance_mult = -0.05
 	}
 
+	province_modifier = {
+		trade_good_horses_production_mult = domicile_primary_production_mult_6_levels
+	}
+
 	parameters = {
 		cheaper_grain_fields_buildings_1 = yes
 	}
@@ -10433,7 +11040,11 @@ grazing_land_02 = {
 			}
 			add = 4
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -10508,6 +11119,10 @@ grazing_land_03 = {
 		light_cavalry_maintenance_mult = -0.05
 	}
 
+	province_modifier = {
+		trade_good_horses_production_mult = domicile_primary_production_mult_6_levels
+	}
+
 	parameters = {
 		cheaper_grain_fields_buildings_2 = yes
 	}
@@ -10554,7 +11169,11 @@ grazing_land_03 = {
 			}
 			add = 4
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -10636,6 +11255,10 @@ grazing_land_04 = {
 		heavy_cavalry_maintenance_mult = -0.05
 	}
 
+	province_modifier = {
+		trade_good_horses_production_mult = domicile_primary_production_mult_6_levels
+	}
+
 	parameters = {
 		cheaper_grain_fields_buildings_2 = yes
 	}
@@ -10666,7 +11289,11 @@ grazing_land_04 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -10748,6 +11375,10 @@ grazing_land_05 = {
 		heavy_cavalry_maintenance_mult = -0.05
 	}
 
+	province_modifier = {
+		trade_good_horses_production_mult = domicile_primary_production_mult_6_levels
+	}
+
 	parameters = {
 		cheaper_grain_fields_buildings_3 = yes
 	}
@@ -10778,7 +11409,11 @@ grazing_land_05 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -10860,6 +11495,10 @@ grazing_land_06 = {
 		heavy_cavalry_maintenance_mult = -0.05
 	}
 
+	province_modifier = {
+		trade_good_horses_production_mult = domicile_primary_production_mult_6_levels
+	}
+
 	parameters = {
 		cheaper_grain_fields_buildings_3 = yes
 	}
@@ -10890,7 +11529,11 @@ grazing_land_06 = {
 	
 	ai_value = {
 		value = 4
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -10972,6 +11615,10 @@ horse_pasture_04 = {
 		archer_cavalry_maintenance_mult = -0.05
 	}
 
+	province_modifier = {
+		trade_good_horses_production_mult = domicile_primary_production_mult_6_levels
+	}
+
 	on_complete = {
 		if = {
 			limit = {
@@ -10998,7 +11645,11 @@ horse_pasture_04 = {
 	
 	ai_value = {
 		value = 10
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -11078,6 +11729,10 @@ horse_pasture_05 = {
 		archer_cavalry_maintenance_mult = -0.05
 	}
 
+	province_modifier = {
+		trade_good_horses_production_mult = domicile_primary_production_mult_6_levels
+	}
+
 	on_complete = {
 		if = {
 			limit = {
@@ -11104,7 +11759,11 @@ horse_pasture_05 = {
 	
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -11184,6 +11843,10 @@ horse_pasture_06 = {
 		archer_cavalry_maintenance_mult = -0.1
 	}
 
+	province_modifier = {
+		trade_good_horses_production_mult = domicile_primary_production_mult_6_levels
+	}
+
 	on_complete = {
 		if = {
 			limit = {
@@ -11210,7 +11873,11 @@ horse_pasture_06 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -11318,7 +11985,11 @@ camel_pasture_04 = {
 	
 	ai_value = {
 		value = 10
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -11424,7 +12095,11 @@ camel_pasture_05 = {
 	
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -11530,7 +12205,11 @@ camel_pasture_06 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -11611,10 +12290,18 @@ elephant_pasture_04 = {
 		elephant_cavalry_toughness_mult = 0.03
 		elephant_cavalry_maintenance_mult = -0.05
 	}
+
+	province_modifier = {
+		trade_good_ivory_production_add = domicile_elephant_pasture_ivory_production_add
+	}
 	
 	ai_value = {
 		value = 12
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -11693,10 +12380,18 @@ elephant_pasture_05 = {
 		elephant_cavalry_toughness_mult = 0.03
 		elephant_cavalry_maintenance_mult = -0.05
 	}
+
+	province_modifier = {
+		trade_good_ivory_production_add = domicile_elephant_pasture_ivory_production_add
+	}
 	
 	ai_value = {
 		value = 10
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -11775,10 +12470,18 @@ elephant_pasture_06 = {
 		elephant_cavalry_toughness_mult = 0.03
 		elephant_cavalry_maintenance_mult = -0.1
 	}
+
+	province_modifier = {
+		trade_good_ivory_production_add = domicile_elephant_pasture_ivory_production_add
+	}
 	
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_value
 	}
 	
 	asset = {
@@ -11872,9 +12575,14 @@ grain_field_01 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.4
-		development_growth_factor = 0.04
+		domicile_monthly_gold_add = estate_income_significant
+		prosperity_growth_factor = 0.04
 		supply_limit_mult = 0.05
+	}
+
+	province_modifier = {
+		trade_good_grain_production_add = domicile_primary_production_add_6_levels_level_1
+		trade_good_grain_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -11913,7 +12621,11 @@ grain_field_01 = {
 			}
 			add = 20
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_income_value
 	}
 	
 	asset = {
@@ -12005,9 +12717,14 @@ grain_field_02 = {
 		}
 	}
 	character_modifier = {
-		domicile_monthly_gold_add = 0.4
-		development_growth_factor = 0.04
+		domicile_monthly_gold_add = estate_income_significant
+		prosperity_growth_factor = 0.04
 		supply_limit_mult = 0.05
+	}
+
+	province_modifier = {
+		trade_good_grain_production_add = domicile_primary_production_add_6_levels
+		trade_good_grain_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -12036,7 +12753,11 @@ grain_field_02 = {
 	
 	ai_value = {
 		value = 9
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -12133,9 +12854,14 @@ grain_field_03 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.4
-		development_growth_factor = 0.04
+		domicile_monthly_gold_add = estate_income_significant
+		prosperity_growth_factor = 0.04
 		supply_limit_mult = 0.05
+	}
+
+	province_modifier = {
+		trade_good_grain_production_add = domicile_primary_production_add_6_levels
+		trade_good_grain_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -12164,7 +12890,11 @@ grain_field_03 = {
 	
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -12261,9 +12991,14 @@ grain_field_04 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.4
-		development_growth_factor = 0.04
+		domicile_monthly_gold_add = estate_income_significant
+		prosperity_growth_factor = 0.04
 		supply_limit_mult = 0.05
+	}
+
+	province_modifier = {
+		trade_good_grain_production_add = domicile_primary_production_add_6_levels
+		trade_good_grain_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -12292,7 +13027,11 @@ grain_field_04 = {
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -12389,9 +13128,14 @@ grain_field_05 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.4
-		development_growth_factor = 0.04
+		domicile_monthly_gold_add = estate_income_significant
+		prosperity_growth_factor = 0.04
 		supply_limit_mult = 0.05
+	}
+
+	province_modifier = {
+		trade_good_grain_production_add = domicile_primary_production_add_6_levels
+		trade_good_grain_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -12420,7 +13164,11 @@ grain_field_05 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -12517,9 +13265,14 @@ grain_field_06 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.4
-		development_growth_factor = 0.04
+		domicile_monthly_gold_add = estate_income_significant
+		prosperity_growth_factor = 0.04
 		supply_limit_mult = 0.05
+	}
+
+	province_modifier = {
+		trade_good_grain_production_add = domicile_primary_production_add_6_levels
+		trade_good_grain_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -12548,7 +13301,11 @@ grain_field_06 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -12618,14 +13375,23 @@ rice_field_01 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.4
-		development_growth_factor = 0.04
+		domicile_monthly_gold_add = estate_income_significant
+		prosperity_growth_factor = 0.04
 		supply_limit_mult = 0.05
+	}
+
+	province_modifier = {
+		trade_good_rice_production_add = domicile_primary_production_add_6_levels_level_1
+		trade_good_rice_production_mult = domicile_primary_production_mult_6_levels
 	}
 	
 	ai_value = {
 		value = 10
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_income_value
 	}
 	
 	asset = {
@@ -12691,14 +13457,23 @@ rice_field_02 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.4
-		development_growth_factor = 0.04
+		domicile_monthly_gold_add = estate_income_significant
+		prosperity_growth_factor = 0.04
 		supply_limit_mult = 0.05
+	}
+
+	province_modifier = {
+		trade_good_rice_production_add = domicile_primary_production_add_6_levels
+		trade_good_rice_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	ai_value = {
 		value = 9
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -12768,14 +13543,23 @@ rice_field_03 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.4
-		development_growth_factor = 0.04
+		domicile_monthly_gold_add = estate_income_significant
+		prosperity_growth_factor = 0.04
 		supply_limit_mult = 0.05
+	}
+
+	province_modifier = {
+		trade_good_rice_production_add = domicile_primary_production_add_6_levels
+		trade_good_rice_production_mult = domicile_primary_production_mult_6_levels
 	}
 	
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -12845,14 +13629,23 @@ rice_field_04 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.4
-		development_growth_factor = 0.04
+		domicile_monthly_gold_add = estate_income_significant
+		prosperity_growth_factor = 0.04
 		supply_limit_mult = 0.05
+	}
+
+	province_modifier = {
+		trade_good_rice_production_add = domicile_primary_production_add_6_levels
+		trade_good_rice_production_mult = domicile_primary_production_mult_6_levels
 	}
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -12922,14 +13715,23 @@ rice_field_05 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.4
-		development_growth_factor = 0.04
+		domicile_monthly_gold_add = estate_income_significant
+		prosperity_growth_factor = 0.04
 		supply_limit_mult = 0.05
+	}
+
+	province_modifier = {
+		trade_good_rice_production_add = domicile_primary_production_add_6_levels
+		trade_good_rice_production_mult = domicile_primary_production_mult_6_levels
 	}
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -12999,14 +13801,23 @@ rice_field_06 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.4
-		development_growth_factor = 0.04
+		domicile_monthly_gold_add = estate_income_significant
+		prosperity_growth_factor = 0.04
 		supply_limit_mult = 0.05
+	}
+
+	province_modifier = {
+		trade_good_rice_production_add = domicile_primary_production_add_6_levels
+		trade_good_rice_production_mult = domicile_primary_production_mult_6_levels
 	}
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -13081,7 +13892,12 @@ vineyard_01 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.25
+		domicile_monthly_gold_add = estate_income_moderate
+	}
+
+	province_modifier = {
+		trade_good_wine_production_add = domicile_primary_production_add_6_levels_level_1
+		trade_good_wine_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -13120,7 +13936,11 @@ vineyard_01 = {
 			}
 			add = 20
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_income_value
 	}
 	
 	asset = {
@@ -13194,7 +14014,12 @@ vineyard_02 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.25
+		domicile_monthly_gold_add = estate_income_moderate
+	}
+
+	province_modifier = {
+		trade_good_wine_production_add = domicile_primary_production_add_6_levels
+		trade_good_wine_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -13223,7 +14048,11 @@ vineyard_02 = {
 	
 	ai_value = {
 		value = 9
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -13300,7 +14129,12 @@ vineyard_03 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.25
+		domicile_monthly_gold_add = estate_income_moderate
+	}
+
+	province_modifier = {
+		trade_good_wine_production_add = domicile_primary_production_add_6_levels
+		trade_good_wine_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -13329,7 +14163,11 @@ vineyard_03 = {
 	
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -13406,7 +14244,12 @@ vineyard_04 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.25
+		domicile_monthly_gold_add = estate_income_moderate
+	}
+
+	province_modifier = {
+		trade_good_wine_production_add = domicile_primary_production_add_6_levels
+		trade_good_wine_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -13435,7 +14278,11 @@ vineyard_04 = {
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -13512,7 +14359,12 @@ vineyard_05 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.25
+		domicile_monthly_gold_add = estate_income_moderate
+	}
+
+	province_modifier = {
+		trade_good_wine_production_add = domicile_primary_production_add_6_levels
+		trade_good_wine_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -13541,7 +14393,11 @@ vineyard_05 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -13618,7 +14474,12 @@ vineyard_06 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.25
+		domicile_monthly_gold_add = estate_income_moderate
+	}
+
+	province_modifier = {
+		trade_good_wine_production_add = domicile_primary_production_add_6_levels
+		trade_good_wine_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -13647,7 +14508,11 @@ vineyard_06 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -13707,7 +14572,7 @@ tea_01 = {
 	allowed_domicile_types = { estate }
 
 	can_construct = {
-		culture ?= { has_innovation = innovation_champa_rice }
+		culture ?= { has_innovation = innovation_tea_culture }
 	}
 
 	cost = {
@@ -13722,8 +14587,13 @@ tea_01 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.25
+		domicile_monthly_gold_add = estate_income_moderate
 		negate_health_penalty_add = 0.01
+	}
+
+	province_modifier = {
+		trade_good_tea_production_add = domicile_primary_production_add_6_levels_level_1
+		trade_good_tea_production_mult = domicile_primary_production_mult_6_levels
 	}
 	
 	ai_value = {
@@ -13736,7 +14606,11 @@ tea_01 = {
 			}
 			add = 20
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_income_value
 	}
 
 	asset = {
@@ -13808,13 +14682,22 @@ tea_02 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.25
+		domicile_monthly_gold_add = estate_income_moderate
 		negate_health_penalty_add = 0.02
+	}
+
+	province_modifier = {
+		trade_good_tea_production_add = domicile_primary_production_add_6_levels
+		trade_good_tea_production_mult = domicile_primary_production_mult_6_levels
 	}
 	
 	ai_value = {
 		value = 9
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 
 	asset = {
@@ -13889,13 +14772,22 @@ tea_03 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.25
+		domicile_monthly_gold_add = estate_income_moderate
 		negate_health_penalty_add = 0.04
+	}
+
+	province_modifier = {
+		trade_good_tea_production_add = domicile_primary_production_add_6_levels
+		trade_good_tea_production_mult = domicile_primary_production_mult_6_levels
 	}
 	
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 
 	asset = {
@@ -13969,13 +14861,22 @@ tea_04 = {
 	}
 	
 	character_modifier = {
-		domicile_monthly_gold_add = 0.25
+		domicile_monthly_gold_add = estate_income_moderate
 		negate_health_penalty_add = 0.06
+	}
+
+	province_modifier = {
+		trade_good_tea_production_add = domicile_primary_production_add_6_levels
+		trade_good_tea_production_mult = domicile_primary_production_mult_6_levels
 	}
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 
 	asset = {
@@ -14049,13 +14950,22 @@ tea_05 = {
 	}
 	
 	character_modifier = {
-		domicile_monthly_gold_add = 0.25
+		domicile_monthly_gold_add = estate_income_moderate
 		negate_health_penalty_add = 0.08
+	}
+
+	province_modifier = {
+		trade_good_tea_production_add = domicile_primary_production_add_6_levels
+		trade_good_tea_production_mult = domicile_primary_production_mult_6_levels
 	}
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 
 	asset = {
@@ -14129,13 +15039,22 @@ tea_06 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.25
+		domicile_monthly_gold_add = estate_income_moderate
 		negate_health_penalty_add = 0.1
+	}
+
+	province_modifier = {
+		trade_good_tea_production_add = domicile_primary_production_add_6_levels
+		trade_good_tea_production_mult = domicile_primary_production_mult_6_levels
 	}
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -14206,8 +15125,13 @@ olive_01 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.3
+		domicile_monthly_gold_add = estate_income_medium
 		epidemic_resistance = 1
+	}
+
+	province_modifier = {
+		trade_good_oil_production_add = domicile_primary_production_add_6_levels_level_1
+		trade_good_oil_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -14246,7 +15170,11 @@ olive_01 = {
 			}
 			add = 20
 		}
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_income_value
 	}
 	
 	asset = {
@@ -14316,8 +15244,13 @@ olive_02 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.3
+		domicile_monthly_gold_add = estate_income_medium
 		epidemic_resistance = 1
+	}
+
+	province_modifier = {
+		trade_good_oil_production_add = domicile_primary_production_add_6_levels
+		trade_good_oil_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -14346,7 +15279,11 @@ olive_02 = {
 	
 	ai_value = {
 		value = 9
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -14420,8 +15357,13 @@ olive_03 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.3
+		domicile_monthly_gold_add = estate_income_medium
 		epidemic_resistance = 2
+	}
+
+	province_modifier = {
+		trade_good_oil_production_add = domicile_primary_production_add_6_levels
+		trade_good_oil_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -14450,7 +15392,11 @@ olive_03 = {
 	
 	ai_value = {
 		value = 8
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -14524,8 +15470,13 @@ olive_04 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.3
+		domicile_monthly_gold_add = estate_income_medium
 		epidemic_resistance = 2
+	}
+
+	province_modifier = {
+		trade_good_oil_production_add = domicile_primary_production_add_6_levels
+		trade_good_oil_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -14554,7 +15505,11 @@ olive_04 = {
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -14628,9 +15583,14 @@ olive_05 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.3
+		domicile_monthly_gold_add = estate_income_medium
 		epidemic_resistance = 2
 		attraction_opinion = 4
+	}
+
+	province_modifier = {
+		trade_good_oil_production_add = domicile_primary_production_add_6_levels
+		trade_good_oil_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -14659,7 +15619,11 @@ olive_05 = {
 	
 	ai_value = {
 		value = 6
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -14733,9 +15697,14 @@ olive_06 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.3
+		domicile_monthly_gold_add = estate_income_medium
 		epidemic_resistance = 4
 		attraction_opinion = 6
+	}
+
+	province_modifier = {
+		trade_good_oil_production_add = domicile_primary_production_add_6_levels
+		trade_good_oil_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -14764,7 +15733,11 @@ olive_06 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -14845,9 +15818,14 @@ silk_01 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_small
 		domicile_monthly_influence_add = 0.05
 		owned_political_scheme_success_chance_add = 3
+	}
+
+	province_modifier = {
+		trade_good_silk_production_add = domicile_primary_production_add_6_levels_level_1
+		trade_good_silk_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -14876,7 +15854,11 @@ silk_01 = {
 	
 	ai_value = {
 		value = 15
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_new_income_value
 	}
 	
 	asset = {
@@ -14925,9 +15907,14 @@ silk_02 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_small
 		domicile_monthly_influence_add = 0.05
 		owned_political_scheme_success_chance_add = 3
+	}
+
+	province_modifier = {
+		trade_good_silk_production_add = domicile_primary_production_add_6_levels
+		trade_good_silk_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -14956,7 +15943,11 @@ silk_02 = {
 	
 	ai_value = {
 		value = 13
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -15006,9 +15997,14 @@ silk_03 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_small
 		domicile_monthly_influence_add = 0.05
 		owned_political_scheme_success_chance_add = 3
+	}
+
+	province_modifier = {
+		trade_good_silk_production_add = domicile_primary_production_add_6_levels
+		trade_good_silk_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -15037,7 +16033,11 @@ silk_03 = {
 	
 	ai_value = {
 		value = 11
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -15088,9 +16088,14 @@ silk_04 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_small
 		domicile_monthly_influence_add = 0.1
 		owned_political_scheme_success_chance_add = 3
+	}
+
+	province_modifier = {
+		trade_good_silk_production_add = domicile_primary_production_add_6_levels
+		trade_good_silk_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -15119,7 +16124,11 @@ silk_04 = {
 	
 	ai_value = {
 		value = 9
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -15170,9 +16179,14 @@ silk_05 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_small
 		domicile_monthly_influence_add = 0.1
 		owned_political_scheme_success_chance_add = 4
+	}
+
+	province_modifier = {
+		trade_good_silk_production_add = domicile_primary_production_add_6_levels
+		trade_good_silk_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -15201,7 +16215,11 @@ silk_05 = {
 	
 	ai_value = {
 		value = 7
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {
@@ -15252,9 +16270,14 @@ silk_06 = {
 	}
 
 	character_modifier = {
-		domicile_monthly_gold_add = 0.1
+		domicile_monthly_gold_add = estate_income_small
 		domicile_monthly_influence_add = 0.15
 		owned_political_scheme_success_chance_add = 4
+	}
+
+	province_modifier = {
+		trade_good_silk_production_add = domicile_primary_production_add_6_levels
+		trade_good_silk_production_mult = domicile_primary_production_mult_6_levels
 	}
 
 	on_complete = {
@@ -15283,7 +16306,11 @@ silk_06 = {
 	
 	ai_value = {
 		value = 5
-		add = estate_building_ai_modifier_value
+		multiply = ai_building_domicile_nudge_slope
+		add = ai_building_domicile_nudge_offset
+		min = ai_building_domicile_nudge_min
+		max = ai_building_domicile_nudge_max
+		multiply = ai_building_domicile_upgrade_income_value
 	}
 	
 	asset = {

@@ -7,6 +7,7 @@ form_switzerland_kingdom_decision = {
 	desc = form_switzerland_kingdom_decision_desc
 	selection_tooltip = form_switzerland_kingdom_decision_tooltip
 	decision_group_type = major
+	sort_order = 110
 
 	ai_check_interval_by_tier = {
 		barony = 0
@@ -119,6 +120,7 @@ form_austria_kingdom_decision = {
 	desc = form_austria_kingdom_decision_desc
 	selection_tooltip = form_austria_kingdom_decision_tooltip
 	decision_group_type = major
+	sort_order = 110
 	ai_goal = yes
 
 	is_shown = {
@@ -244,35 +246,135 @@ reform_carolingian_empire_decision = {
 	desc = reform_carolingian_empire_decision_desc
 	selection_tooltip = reform_carolingian_empire_decision_tooltip
 	decision_group_type = major
+	sort_order = 130
 
 	ai_check_interval_by_tier = {
 		barony = 0
 		county = 0
 		duchy = 0
-		kingdom = 120
+		kingdom = 0
 		empire = 120
 		hegemony = 0
 	}
 
 	is_shown = {
-		culture ?= { has_cultural_pillar = heritage_frankish }
-		top_liege ?= this
+		OR = {
+			has_title = title:e_france
+			has_title = title:e_hre
+		}
 		is_playable_character = yes
 		capital_province ?= { geographical_region = world_europe_west }
 		faith.religion ?= faith:catholic.religion #Christian
+		NOT = { government_has_flag = government_is_theocracy }
 		NOT = {  #Can only do it once.
 			is_target_in_global_variable_list = {
 				name = unavailable_unique_decisions
 				target = flag:flag_reformed_carolingian_empire
 			}
 		}
-		NOT = { has_title = title:e_hre } #HRE title holders can't Restore Carolingian Borders as the decision requires the HRE to serve as an "antagonist"
-		is_ruler = yes
+		top_liege ?= this
+		culture = { 
+			OR = {
+				has_cultural_pillar = heritage_frankish 
+				has_cultural_pillar = heritage_central_germanic
+			}
+		}
+		capital_province ?= { geographical_region = world_europe_west }
 	}
 
 	is_valid = {
-		prestige_level >= high_prestige_level
-		has_title = title:e_france
+		OR = {
+			prestige_level >= 5
+			trigger_if = {
+				limit = {
+					has_legitimacy = yes
+				}
+				legitimacy_level >= 5
+			}
+		}
+		OR = {
+			custom_tooltip = {
+				text = carolingian_primary_title_france_check
+				primary_title = title:e_france
+			}
+			custom_tooltip = {
+				text = carolingian_primary_title_hre_check
+				primary_title = title:e_hre
+			}
+		}
+		# No competing Carolingian emperor may exist — hold them or leave them without a claimant
+		trigger_if = {
+			limit = {
+				title:e_france ?= {
+					is_titular = no
+					exists = holder
+				}
+			}
+			title:e_france = {
+				save_temporary_scope_as = current_title_check
+			}
+			custom_tooltip = {
+				text = carolingian_border_other_empires_check
+				OR = {
+					has_title = title:e_france
+					NOT = { exists = title:e_france.holder }
+				}
+			}
+		}
+		trigger_if = {
+			limit = {
+				title:e_germany ?= {
+					is_titular = no
+					exists = holder
+				}
+			}
+			title:e_germany = {
+				save_temporary_scope_as = current_title_check
+			}
+			custom_tooltip = {
+				text = carolingian_border_other_empires_check
+				OR = {
+					has_title = title:e_germany
+					NOT = { exists = title:e_germany.holder }
+				}
+			}
+		}
+		trigger_if = {
+			limit = {
+				title:e_italy ?= {
+					is_titular = no
+					exists = holder
+				}
+			}
+			title:e_italy = {
+				save_temporary_scope_as = current_title_check
+			}
+			custom_tooltip = {
+				text = carolingian_border_other_empires_check
+				OR = {
+					has_title = title:e_italy
+					NOT = { exists = title:e_italy.holder }
+				}
+			}
+		}
+		trigger_if = {
+			limit = {
+				title:e_hre ?= {
+					is_titular = no
+					exists = holder
+				}
+			}
+			title:e_hre = {
+				save_temporary_scope_as = current_title_check
+			}
+			custom_tooltip = {
+				text = carolingian_border_other_empires_check
+				OR = {
+					has_title = title:e_hre
+					NOT = { exists = title:e_hre.holder }
+				}
+			}
+		}
 		#All of starting e_france
 		completely_controls_region = custom_carolingian_francia
 		#Frisia
@@ -296,11 +398,16 @@ reform_carolingian_empire_decision = {
 		is_at_war = no
 	}
 
+	cost = {
+		gold = {
+			value = 1000
+		}
+	}
+
 	effect = {
-		gain_heroic_legend_seed_tooltip_effect = yes
 		custom_tooltip = reform_carolingian_empire_decision_effect_tooltip
 		show_as_tooltip = {
-			form_carolingian_empire_scripted_effect = yes
+			form_carolingian_hegemony_gdp_scripted_effect = yes
 		}
 		trigger_event = {
 			id = middle_europe_decisions.0005
@@ -315,6 +422,7 @@ reform_carolingian_empire_decision = {
 				value = root
 			}
 		}
+		gain_heroic_legend_seed_tooltip_effect = yes
 	}
 
 	ai_potential = {
@@ -335,6 +443,7 @@ unify_burgundy_kingdom_decision = {
 	desc = unify_burgundy_kingdom_decision_desc
 	selection_tooltip = unify_burgundy_kingdom_decision_tooltip
 	decision_group_type = major
+	sort_order = 110
 	ai_goal = yes
 
 	is_shown = {
@@ -422,7 +531,8 @@ unify_burgundy_kingdom_decision = {
 	}
 
 	ai_potential = {
-		always = yes
+		NOT = { exists = title:k_burgundy.holder }
+		capital_province ?= { geographical_region = custom_burgundy }
 	}
 
 	ai_will_do = {
@@ -441,6 +551,7 @@ empower_sicilian_parliament_decision = {
 	desc = empower_sicilian_parliament_decision_desc
 	selection_tooltip = empower_sicilian_parliament_decision_tooltip
 	decision_group_type = major
+	sort_order = 100
 	ai_goal = yes
 
 	is_shown = {
@@ -471,13 +582,13 @@ empower_sicilian_parliament_decision = {
 			AND = {
 				completely_controls = title:d_sicily # The Island
 				title:c_palermo = {
-					title_province = { has_special_building = no }
+					title_province = { has_special_district = no }
 				}
 			}
 			AND = {
 				completely_controls = title:d_capua # The Boot
 				title:c_napoli = {
-					title_province = { has_special_building = no }
+					title_province = { has_special_district = no }
 				}
 			}
 		}
@@ -562,6 +673,7 @@ promote_gothic_innovations_decision = { #12th century Renaissance
 	desc = promote_gothic_innovations_decision_desc
 	selection_tooltip = promote_gothic_innovations_decision_tooltip
 	decision_group_type = major
+	sort_order = 100
 	ai_goal = yes
 
 	is_shown = {
@@ -682,6 +794,7 @@ restore_holy_roman_empire_decision = {
 		reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
 	}
 	decision_group_type = major
+	sort_order = 120
 
 	ai_check_interval_by_tier = {
 		barony = 0
@@ -696,13 +809,17 @@ restore_holy_roman_empire_decision = {
 	selection_tooltip = restore_holy_roman_empire_decision_tooltip
 
 	is_shown = {
+		highest_held_title_tier >= tier_kingdom
+		is_landed_or_landless_administrative = yes
+		exists = dynasty # Everyone should have a dynasty, but in case they don't...
+		NOT = { has_global_variable = flag_restored_roman_empire } # Not if Rome already exists (prevent Rome from restoring HRE)
+		highest_held_title_tier < tier_hegemony	# Don't destroy your hegemony.
 		NOR = {	#Title existence conditions.
 			exists = title:e_hre.holder	#Well, that'd be redundant.
 		}
-		OR = {	#Government conditions.
-			government_has_mechanic = administrative
-			government_has_flag = government_is_feudal
-			government_has_flag = government_is_clan
+		NOR = { #It doesn't make sense for these competing empires.
+			is_roman_emperor_trigger = yes
+			mpo_has_gok_mongol_empire_trigger = yes
 		}
 		AND = {	#Faith conditions.
 			faith = {
@@ -720,14 +837,11 @@ restore_holy_roman_empire_decision = {
 			#	faith = title:e_byzantium.holder.faith
 			#}
 		}
-		NOR = { #It doesn't make sense for these competing empires.
-			is_roman_emperor_trigger = yes
-			mpo_has_gok_mongol_empire_trigger = yes
+		OR = {	#Government conditions.
+			government_has_flag = government_is_feudal
+			government_has_flag = government_is_clan
+			government_has_mechanic = administrative
 		}
-		highest_held_title_tier < tier_hegemony	# Don't destroy your hegemony.
-		NOT = { has_global_variable = flag_restored_roman_empire } # Not if Rome already exists (prevent Rome from restoring HRE)
-		is_landed_or_landless_administrative = yes
-		exists = dynasty # Everyone should have a dynasty, but in case they don't...
 	}
 
 	is_valid = {
@@ -942,6 +1056,7 @@ establish_norman_culture_decision = {
 		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
 	}
 	decision_group_type = major
+	sort_order = 100
 
 	ai_check_interval_by_tier = {
 		barony = 0
@@ -1120,6 +1235,195 @@ establish_norman_culture_decision = {
 	}
 }
 
+##################################
+# Establish Italo-Norman Culture #
+##################################
+
+### Establish Italo-Norman Culture ###
+establish_italo_norman_culture_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
+	}
+	decision_group_type = major
+	sort_order = 100
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 120
+		kingdom = 120
+		empire = 120
+		hegemony = 120
+	}
+
+	desc = establish_italo_norman_culture_decision_desc
+	selection_tooltip = establish_italo_norman_culture_decision_tooltip
+
+	is_shown = {
+		NOT = {
+			is_target_in_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:flag_formed_italo_norman_decision
+			}
+		}
+		any_sub_realm_county = {
+			OR = {
+				target_is_de_jure_liege_or_above = title:d_sicily
+				target_is_de_jure_liege_or_above = title:d_apulia
+			}
+			culture ?= culture:sicilian
+		}
+		culture ?= culture:norman
+	}
+
+	is_valid = {
+		culture = culture:norman
+		completely_controls = title:d_sicily
+		completely_controls = title:d_apulia
+	}
+
+	is_valid_showing_failures_only = {
+		is_at_war = no
+		is_imprisoned = no
+	}
+
+	effect = {
+		hidden_effect = {
+			title:d_sicily = {
+				every_in_de_jure_hierarchy = {
+					limit = { tier = tier_county }
+					add_to_list = italo_norman_counties
+				}
+			}
+			title:d_apulia = {
+				every_in_de_jure_hierarchy = {
+					limit = { tier = tier_county }
+					add_to_list = italo_norman_counties
+				}
+			}
+			every_sub_realm_title = {
+				limit = {
+					tier = tier_county
+				}
+				if = {
+					limit = {
+						title_province = { geographical_region = custom_sicily }
+						OR = {
+							culture = culture:norman
+							culture = culture:sicilian
+						}
+					}
+					add_to_list = italo_norman_counties
+				}
+			}
+
+			every_in_list = {
+				list = italo_norman_counties
+				merge_cultures_in_region_effect = {
+					OLD_CULTURE_1 = culture:norman
+					OLD_CULTURE_2 = culture:sicilian
+					NEW_CULTURE = culture:italo_norman
+					REGION = custom_sicily
+				}
+			}
+
+			# Notify players the same way a dynamic hybrid culture does (see on_culture_created)
+			save_scope_as = founder
+			culture:norman = { save_scope_as = old_culture_1 save_scope_as = parent_1 }
+			culture:sicilian = { save_scope_as = old_culture_2 save_scope_as = parent_2 }
+			culture:italo_norman = {
+				reset_culture_creation_date = yes
+				get_all_innovations_from = scope:old_culture_1
+				get_all_innovations_from = scope:old_culture_2
+				save_scope_as = new_culture
+			}
+			every_player = {
+				if = {
+					limit = {
+						OR = {
+							culture = scope:new_culture
+							culture = scope:parent_1
+							culture = scope:parent_2
+						}
+					}
+					trigger_event = {
+						id = culture_notification.1011
+						days = 0
+					}
+				}
+				else_if = {
+					limit = {
+						in_diplomatic_range = scope:founder
+					}
+					trigger_event = {
+						id = culture_notification.1001
+						days = 0
+					}
+				}
+			}
+		}
+
+		# Player changes culture
+		set_culture = culture:italo_norman
+		add_character_flag = converted_culture_this_lifetime
+		hidden_effect = {
+			every_in_list = {
+				list = italo_norman_counties
+				limit = {
+					holder.capital_county = { is_in_list = italo_norman_counties }
+				}
+				holder = {
+					add_to_list = mass_melting_pot_list
+					every_courtier = { add_to_list = mass_melting_pot_list }
+					every_courtier_away = { add_to_list = mass_melting_pot_list }
+				}
+				every_in_list = {
+					list = mass_melting_pot_list
+					limit = {
+						OR = {
+							culture = culture:norman
+							culture = culture:sicilian
+						}
+					}
+					set_culture = culture:italo_norman
+				}
+			}
+		}
+
+		show_as_tooltip = {
+			custom_tooltip = establish_italo_norman_culture_decision_effect.tt
+			culture:italo_norman = {
+				get_all_innovations_from = scope:old_culture_1
+				get_all_innovations_from = scope:old_culture_2
+			}
+		}
+
+		add_to_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:flag_formed_italo_norman_decision
+		}
+	}
+
+	cost = {
+	}
+
+	ai_potential = {
+		always = yes
+	}
+
+	ai_will_do = {
+		base = 0
+
+		modifier = {
+			add = 100
+			any_sub_realm_county = {
+				percent >= 0.5
+				culture = culture:sicilian
+			}
+		}
+	}
+}
+
 ######################################
 # Establish the Electorate of Saxony #
 # by James Beaumont			 		 #
@@ -1131,6 +1435,7 @@ establish_the_electorate_of_saxony_decision = {
 		reference = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds"
 	}
 	decision_group_type = major
+	sort_order = 100
 
 	ai_check_interval = 0
 
@@ -1246,6 +1551,7 @@ decision_restore_carantania = {
 		reference = "gfx/interface/illustrations/decisions/decision_castle_view.dds"
 	}
 	decision_group_type = major
+	sort_order = 100
 
 	ai_check_interval_by_tier = {
 		barony = 0
@@ -1257,16 +1563,12 @@ decision_restore_carantania = {
 	}
 
 	is_shown = {
+		exists = title:k_carantania
 		has_culture = culture:carantanian
 		OR = {
+			has_title = title:d_krain
 			has_title = title:d_carinthia
 			has_title = title:d_steyermark
-			has_title = title:d_krain
-		}
-		OR = {
-			title:d_steyermark = { is_titular = no }
-			title:d_carinthia = { is_titular = no }
-			title:d_krain = { is_titular = no }
 		}
 		NOT = {
 			is_target_in_global_variable_list = {
@@ -1274,7 +1576,11 @@ decision_restore_carantania = {
 				target = flag:flag_formed_carantania
 			}
 		}
-		exists = title:k_carantania
+		OR = {
+			title:d_krain = { is_titular = no }
+			title:d_carinthia = { is_titular = no }
+			title:d_steyermark = { is_titular = no }
+		}
 	}
 
 	is_valid = {

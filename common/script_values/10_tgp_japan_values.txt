@@ -13,35 +13,35 @@ japanese_manor_external_building_normal_cost_tier_1_value = {
 japanese_manor_external_building_normal_cost_tier_2_value = {
 	value = {
 		value = japanese_manor_external_building_normal_base_cost_value
-		multiply = 1.5
+		multiply = 2
 	}
 	multiply = japanese_manor_location_cost_modifier_value
 }
 japanese_manor_external_building_normal_cost_tier_3_value = {
 	value = {
 		value = japanese_manor_external_building_normal_base_cost_value
-		multiply = 2.25
+		multiply = 3
 	}
 	multiply = japanese_manor_location_cost_modifier_value
 }
 japanese_manor_external_building_normal_cost_tier_4_value = {
 	value = {
 		value = japanese_manor_external_building_normal_base_cost_value
-		multiply = 3
+		multiply = 5
 	}
 	multiply = japanese_manor_location_cost_modifier_value
 }
 japanese_manor_external_building_normal_cost_tier_5_value = {
 	value = {
 		value = japanese_manor_external_building_normal_base_cost_value
-		multiply = 4.25
+		multiply = 7
 	}
 	multiply = japanese_manor_location_cost_modifier_value
 }
 japanese_manor_external_building_normal_cost_tier_6_value = {
 	value = {
 		value = japanese_manor_external_building_normal_base_cost_value
-		multiply = 6
+		multiply = 10
 	}
 	multiply = japanese_manor_location_cost_modifier_value
 }
@@ -53,42 +53,42 @@ japanese_manor_external_building_high_cost_tier_1_value = {
 japanese_manor_external_building_high_cost_tier_2_value = {
 	value = {
 		value = japanese_manor_external_building_high_base_cost_value
-		multiply = 1.5
+		multiply = 2
 	}
 	multiply = japanese_manor_location_cost_modifier_value
 }
 japanese_manor_external_building_high_cost_tier_3_value = {
 	value = {
 		value = japanese_manor_external_building_high_base_cost_value
-		multiply = 2.25
+		multiply = 3
 	}
 	multiply = japanese_manor_location_cost_modifier_value
 }
 japanese_manor_external_building_high_cost_tier_4_value = {
 	value = {
 		value = japanese_manor_external_building_high_base_cost_value
-		multiply = 3
+		multiply = 5
 	}
 	multiply = japanese_manor_location_cost_modifier_value
 }
 japanese_manor_external_building_high_cost_tier_5_value = {
 	value = {
 		value = japanese_manor_external_building_high_base_cost_value
-		multiply = 4.25
+		multiply = 7
 	}
 	multiply = japanese_manor_location_cost_modifier_value
 }
 japanese_manor_external_building_high_cost_tier_6_value = {
 	value = {
 		value = japanese_manor_external_building_high_base_cost_value
-		multiply = 6
+		multiply = 10
 	}
 	multiply = japanese_manor_location_cost_modifier_value
 }
 japanese_manor_external_building_high_cost_tier_7_value = {
 	value = {
 		value = japanese_manor_external_building_high_base_cost_value
-		multiply = 7.5
+		multiply = 13
 	}
 	multiply = japanese_manor_location_cost_modifier_value
 }
@@ -117,21 +117,21 @@ japanese_manor_internal_building_normal_cost_tier_3_value = {
 japanese_manor_internal_building_normal_cost_tier_4_value = {
 	value = {
 		value = japanese_manor_internal_building_normal_base_cost_value
-		multiply = 4
+		multiply = 5
 	}
 	multiply = japanese_manor_location_cost_modifier_value
 }
 japanese_manor_internal_building_normal_cost_tier_5_value = {
 	value = {
 		value = japanese_manor_internal_building_normal_base_cost_value
-		multiply = 5
+		multiply = 7
 	}
 	multiply = japanese_manor_location_cost_modifier_value
 }
 japanese_manor_internal_building_normal_cost_tier_6_value = {
 	value = {
 		value = japanese_manor_internal_building_normal_base_cost_value
-		multiply = 6
+		multiply = 10
 	}
 	multiply = japanese_manor_location_cost_modifier_value
 }
@@ -158,21 +158,21 @@ japanese_manor_internal_building_high_cost_tier_3_value = {
 japanese_manor_internal_building_high_cost_tier_4_value = {
 	value = {
 		value = japanese_manor_internal_building_high_base_cost_value
-		multiply = 4
+		multiply = 5
 	}
 	multiply = japanese_manor_location_cost_modifier_value
 }
 japanese_manor_internal_building_high_cost_tier_5_value = {
 	value = {
 		value = japanese_manor_internal_building_high_base_cost_value
-		multiply = 5
+		multiply = 7
 	}
 	multiply = japanese_manor_location_cost_modifier_value
 }
 japanese_manor_internal_building_high_cost_tier_6_value = {
 	value = {
 		value = japanese_manor_internal_building_high_base_cost_value
-		multiply = 6
+		multiply = 10
 	}
 	multiply = japanese_manor_location_cost_modifier_value
 }
@@ -182,33 +182,6 @@ japanese_manor_location_cost_modifier_value = {
 	if = { # Everything is a bit more expensive in the capital
 		limit = { domicile.domicile_location = top_liege.capital_province }
 		add = 0.2
-	}
-}
-### Japanese Manor building AI values
-japanese_manor_building_ai_modifier_value = {
-	if = {
-		limit = { # Some characters should want to build in their manor before they construct buildings in holdings
-			scope:owner = {
-				OR = {
-					has_trait = arbitrary
-					has_trait = gluttonous
-					has_trait = greedy
-				}
-			}
-		}
-		add = 10
-	}
-	if = { # Character's loyal to the realm should very slightly favor constructing buildings in holdings first
-		limit = {
-			scope:owner = {
-				has_trait = loyal
-				OR = {
-					has_trait = diligent
-					has_trait = just
-				}
-			}
-		}
-		add = -1 # This will generally (though not guaranteed) make the AI build estate buildings one tier later than normal
 	}
 }
 
@@ -265,9 +238,9 @@ japanese_kampaku_house_imperial_parent_value = {
 		if = {
 			limit = {
 				exists = house
-				exists = top_liege.primary_title.var:administrative_ui_special_title.holder.house
+				exists = ceremonial_liege.house
 			}
-			top_liege.primary_title.var:administrative_ui_special_title.holder.house = { save_temporary_scope_as = imperial_house_temp }
+			ceremonial_liege.house = { save_temporary_scope_as = imperial_house_temp }
 			house = {
 				every_house_member = {
 					limit = {
@@ -304,7 +277,7 @@ japanese_kampaku_house_imperial_child_value = {
 				tgp_is_in_ceremonial_house_trigger = no
 			}
 			house = { save_temporary_scope_as = candidate_house_temp }
-			top_liege.primary_title.var:administrative_ui_special_title.holder.house ?= {
+			ceremonial_liege.house ?= {
 				every_house_member = {
 					limit = {
 						any_parent = {
@@ -335,7 +308,7 @@ japanese_kampaku_imperial_spouse_value = {
 				tgp_is_in_ceremonial_house_trigger = no
 			}
 			house = { save_temporary_scope_as = candidate_house_temp }
-			top_liege.primary_title.var:administrative_ui_special_title.holder ?= {
+			ceremonial_liege ?= {
 				every_spouse = {
 					even_if_dead = yes
 					limit = { house ?= scope:candidate_house_temp }
@@ -362,10 +335,10 @@ japanese_kampaku_house_imperial_spouse_value = {
 				tgp_is_in_ceremonial_house_trigger = no
 			}
 			house ?= { save_temporary_scope_as = candidate_house_temp }
-			top_liege.primary_title.var:administrative_ui_special_title.holder.house ?= {
+			ceremonial_liege.house ?= {
 				every_house_member = {
 					limit = {
-						NOT = { top_liege.primary_title.var:administrative_ui_special_title.holder ?= this }
+						NOT = { ceremonial_liege ?= this }
 						any_spouse = {
 							even_if_dead = yes
 							exists = house

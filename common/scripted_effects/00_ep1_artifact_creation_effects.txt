@@ -91,6 +91,17 @@ get_artifact_quality_effect = {
 					}
 				}
 			}
+			# Bonus for Merchant Artisan capstone
+			if = {
+				limit = { exists = scope:inspiration_sponsor.primary_title.var:merchant_company_artisan_capstone_unlocked }
+				save_scope_value_as = {
+					name = random_inspired_skill_quality_bonus
+					value = {
+						value = scope:random_inspired_skill_quality_bonus
+						add = 0.5
+					}
+				}
+			}
 			save_scope_value_as = {
 				name = random_quality_bonus
 				value = 0
@@ -275,157 +286,6 @@ get_artifact_quality_effect = {
 						}
 					}
 
-					# Bonuses from Buildings
-					if = { #Smiths line
-						limit = {
-							court_owner ?= {
-								any_directly_owned_province = {
-									has_building_or_higher = smiths_05
-								}
-							}
-						}
-						court_owner = {
-							every_directly_owned_province = {
-								limit = {
-									has_building_or_higher = smiths_05
-								}
-								add = 2
-							}
-							every_directly_owned_province = {
-								limit = {
-									has_building_or_higher = smiths_06
-								}
-								add = 2
-							}
-							every_directly_owned_province = {
-								limit = {
-									has_building_or_higher = smiths_07
-								}
-								add = 2
-							}
-							every_directly_owned_province = {
-								limit = {
-									has_building_or_higher = smiths_08
-								}
-								add = 2
-							}
-						}
-					}
-					if = { #blacksmiths duchy building
-						limit = {
-							court_owner ?= {
-								any_directly_owned_province = {
-									has_building_or_higher = blacksmiths_01
-								}
-							}
-						}
-						court_owner = {
-							every_directly_owned_province = {
-								limit = {
-									has_building_or_higher = blacksmiths_01
-								}
-								add = 4
-							}
-							every_directly_owned_province = {
-								limit = {
-									has_building_or_higher = blacksmiths_02
-								}
-								add = 8
-							}
-							every_directly_owned_province = {
-								limit = {
-									has_building_or_higher = blacksmiths_03
-								}
-								add = 12
-							}
-						}
-					}
-					if = { #caravanserai line
-						limit = {
-							court_owner ?= {
-								any_directly_owned_province = {
-									has_building_or_higher = caravanserai_04
-								}
-							}
-						}
-						court_owner = {
-							every_directly_owned_province = {
-								limit = {
-									has_building_or_higher = caravanserai_04
-								}
-								add = 2
-							}
-							every_directly_owned_province = {
-								limit = {
-									has_building_or_higher = caravanserai_05
-								}
-								add = 2
-							}
-							every_directly_owned_province = {
-								limit = {
-									has_building_or_higher = caravanserai_06
-								}
-								add = 2
-							}
-							every_directly_owned_province = {
-								limit = {
-									has_building_or_higher = caravanserai_07
-								}
-								add = 2
-							}
-							every_directly_owned_province = {
-								limit = {
-									has_building_or_higher = caravanserai_08
-								}
-								add = 2
-							}
-						}
-					}
-					if = { #Wind Furnaces line
-						limit = {
-							court_owner ?= {
-								any_directly_owned_province = {
-									has_building_or_higher = wind_furnace_04
-								}
-							}
-							OR = {
-								ep1_character_had_or_has_inspiration_type_trigger = { TYPE = armor }
-								ep1_character_had_or_has_inspiration_type_trigger = { TYPE = weapon }
-							}
-						}
-						court_owner = {
-							every_directly_owned_province = {
-								limit = {
-									has_building_or_higher = wind_furnace_04
-								}
-								add = 6
-							}
-							every_directly_owned_province = {
-								limit = {
-									has_building_or_higher = wind_furnace_05
-								}
-								add = 4
-							}
-							every_directly_owned_province = {
-								limit = {
-									has_building_or_higher = wind_furnace_06
-								}
-								add = 4
-							}
-							every_directly_owned_province = {
-								limit = {
-									has_building_or_higher = wind_furnace_07
-								}
-								add = 4
-							}
-							every_directly_owned_province = {
-								limit = {
-									has_building_or_higher = wind_furnace_08
-								}
-								add = 4
-							}
-						}
-					}
 					if = { # Universities boost Book Inspirations
 						limit = {
 							court_owner ?= {
@@ -454,26 +314,54 @@ get_artifact_quality_effect = {
 						add = 20
 					}
 
+					# Bonus from Court Workshops in the court owner's capital
+					if = {
+						limit = {
+							court_owner.capital_province ?= { has_building_or_higher = royal_court_workshops_1 }
+						}
+						court_owner.capital_province = {
+							if = {
+								limit = { has_building_or_higher = royal_court_workshops_5 }
+								add = court_workshops_artifact_quality_tier_5
+							}
+							else_if = {
+								limit = { has_building_or_higher = royal_court_workshops_4 }
+								add = court_workshops_artifact_quality_tier_4
+							}
+							else_if = {
+								limit = { has_building_or_higher = royal_court_workshops_3 }
+								add = court_workshops_artifact_quality_tier_3
+							}
+							else_if = {
+								limit = { has_building_or_higher = royal_court_workshops_2 }
+								add = court_workshops_artifact_quality_tier_2
+							}
+							else = {
+								add = court_workshops_artifact_quality_tier_1
+							}
+						}
+					}
+
 					# Bonus from Estates
 					if = {
 						limit = {
-							court_owner ?= {
-								domicile ?= {
-									has_domicile_parameter = estate_improved_inspirations_2
-								}
-							}
+							court_owner.domicile ?= { has_domicile_parameter = estate_improved_inspirations_2 }
 						}
 						add = 10
 					}
 					else_if = {
 						limit = {
-							court_owner ?= {
-								domicile ?= {
-									has_domicile_parameter = estate_improved_inspirations_1
-								}
-							}
+							court_owner.domicile ?= { has_domicile_parameter = estate_improved_inspirations_1 }
 						}
 						add = 5
+					}
+
+					# Merchant Capstone
+					if = {
+						limit = {
+							court_owner.domicile ?= { has_domicile_parameter = company_better_inspiration_quality }
+						}
+						add = 10
 					}
 				}
 
@@ -484,7 +372,6 @@ get_artifact_quality_effect = {
 					}
 					add = 20
 				}
-
 
 				# Family Epic base quality
 				if = {
@@ -526,6 +413,12 @@ get_artifact_quality_effect = {
 					add = 100
 				}
 
+				# Bonus for Merchant Artisan capstone
+				if = {
+					limit = { exists = scope:inspiration_sponsor.primary_title.var:merchant_company_artisan_capstone_unlocked }
+					add = 25
+				}
+
 				# Can't have negative quality
 				min = 1
 			}
@@ -564,14 +457,14 @@ get_artifact_wealth_effect = {
 						multiply = 10
 					}
 
-					# Add up to 25 wealth, scaling with capital's development
+					# Add up to 25 wealth, scaling with capital's prosperity
 					if = {
 						limit = {
 							exists = scope:owner.capital_county
 						}
 						scope:owner.capital_county = {
 							add = {
-								value = development_level
+								value = prosperity_level
 								multiply = 0.25
 							}
 						}
@@ -594,32 +487,32 @@ get_artifact_wealth_effect = {
 							limit = {
 								court_owner ?= {
 									any_directly_owned_province = {
-										has_building_or_higher = smiths_05
+										has_building_or_higher = blacksmiths_forge_2
 									}
 								}
 							}
 							court_owner = {
 								every_directly_owned_province = {
 									limit = {
-										has_building_or_higher = smiths_05
+										has_building_or_higher = blacksmiths_forge_2
 									}
 									add = 2
 								}
 								every_directly_owned_province = {
 									limit = {
-										has_building_or_higher = smiths_06
+										has_building_or_higher = blacksmiths_forge_3
 									}
 									add = 2
 								}
 								every_directly_owned_province = {
 									limit = {
-										has_building_or_higher = smiths_07
+										has_building_or_higher = blacksmiths_forge_4
 									}
 									add = 2
 								}
 								every_directly_owned_province = {
 									limit = {
-										has_building_or_higher = smiths_08
+										has_building_or_higher = blacksmiths_forge_5
 									}
 									add = 2
 								}
@@ -671,6 +564,12 @@ get_artifact_wealth_effect = {
 							add = 20
 						}
 					}
+				}
+
+				# Bonus for Merchant Artisan capstone
+				if = {
+					limit = { exists = scope:inspiration_sponsor.primary_title.var:merchant_company_artisan_capstone_unlocked }
+					add = 20
 				}
 
 				#If it is worth bringing home from an adventure it is not common.
@@ -1209,6 +1108,10 @@ add_scaled_artifact_modifier_combat_effect = {
 				}
 			}
 			modifier = {
+				merchant_artifact_modifier_trigger = yes
+				factor = 0.5
+			}
+			modifier = {
 				exists = scope:inspiration_owner
 				scope:inspiration_owner = { has_variable = chosen_knights_mod }
 				add = 160
@@ -1229,6 +1132,10 @@ add_scaled_artifact_modifier_combat_effect = {
 
 		# Knight Effectiveness
 		20 = {
+			modifier = {
+				merchant_artifact_modifier_trigger = yes
+				factor = 0.5
+			}
 			modifier = {
 				exists = scope:inspiration_owner
 				scope:inspiration_owner = { has_variable = chosen_knights_mod }
@@ -1375,6 +1282,7 @@ add_scaled_artifact_modifier_combat_effect = {
 		# Controlled Province Advantage
 		20 = {
 			trigger = {
+				merchant_artifact_modifier_trigger = no
 				artifact_slot_type = armor
 			}
 			if = {
@@ -1462,7 +1370,10 @@ add_scaled_artifact_modifier_combat_effect = {
 
 		# Levy Reinforcement Rate Same Faith — exclusive to weapons with religious decorations
 		40 = {
-			trigger = { artifact_has_religious_decorations_trigger = yes }
+			trigger = {
+				artifact_has_religious_decorations_trigger = yes
+				merchant_artifact_modifier_trigger = no
+			}
 			if = {
 				limit = {
 					rarity = common
@@ -1531,7 +1442,10 @@ add_scaled_artifact_modifier_combat_effect = {
 
 		# zealot_levy_contribution_mult — exclusive to weapons with religious decorations
 		40 = {
-			trigger = { artifact_has_religious_decorations_trigger = yes }
+			trigger = {
+				artifact_has_religious_decorations_trigger = yes
+				vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_zealot_levy_contribution_mult_1_modifier
@@ -1552,6 +1466,9 @@ add_scaled_artifact_modifier_combat_effect = {
 
 		# glory_hound_levy_contribution_mult
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_glory_hound_levy_contribution_mult_1_modifier
@@ -1572,6 +1489,9 @@ add_scaled_artifact_modifier_combat_effect = {
 
 		# belligerent_levy_contribution_mult
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_belligerent_levy_contribution_mult_1_modifier
@@ -2586,6 +2506,10 @@ add_2_scaled_artifact_modifier_combat_effect = {
 				}
 			}
 			modifier = {
+				merchant_artifact_modifier_trigger = yes
+				factor = 0.5
+			}
+			modifier = {
 				exists = scope:inspiration_owner
 				scope:inspiration_owner = { has_variable = chosen_knights_mod }
 				add = 160
@@ -2606,6 +2530,10 @@ add_2_scaled_artifact_modifier_combat_effect = {
 
 		# Knight Effectiveness
 		20 = {
+			modifier = {
+				merchant_artifact_modifier_trigger = yes
+				factor = 0.5
+			}
 			modifier = {
 				exists = scope:inspiration_owner
 				scope:inspiration_owner = { has_variable = chosen_knights_mod }
@@ -2752,6 +2680,7 @@ add_2_scaled_artifact_modifier_combat_effect = {
 		# Controlled Province Advantage
 		20 = {
 			trigger = {
+				merchant_artifact_modifier_trigger = no
 				artifact_slot_type = armor
 			}
 			if = {
@@ -2839,7 +2768,10 @@ add_2_scaled_artifact_modifier_combat_effect = {
 
 		# Levy Reinforcement Rate Same Faith — exclusive to weapons with religious decorations
 		40 = {
-			trigger = { artifact_has_religious_decorations_trigger = yes }
+			trigger = {
+				artifact_has_religious_decorations_trigger = yes
+				merchant_artifact_modifier_trigger = no
+			}
 			if = {
 				limit = {
 					rarity = common
@@ -4244,6 +4176,9 @@ add_scaled_artifact_modifier_majesty_effect = {
 
 		# Short Reign Duration
 		20 = {
+			trigger = {
+				short_reign_artifact_modifier_trigger = yes
+			}
 			modifier = {
 				exists = scope:inspiration_owner
 				scope:inspiration_owner = { has_variable = chosen_reign_mod }
@@ -4523,6 +4458,9 @@ add_scaled_artifact_modifier_majesty_effect = {
 
 		# Tyranny Decay
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			modifier = {
 				exists = scope:inspiration_owner
 				scope:inspiration_owner = { has_variable = chosen_dread_mod }
@@ -4576,6 +4514,9 @@ add_scaled_artifact_modifier_majesty_effect = {
 
 		# happy_powerful_vassal_tax_contribution_mult
 		20 = {
+			trigger = {
+				powerful_vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				random_list = {
@@ -4624,6 +4565,9 @@ add_scaled_artifact_modifier_majesty_effect = {
 
 		# courtly_tax_contribution_mult
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_courtly_tax_contribution_mult_1_modifier
@@ -4644,6 +4588,9 @@ add_scaled_artifact_modifier_majesty_effect = {
 
 		# glory_hound_tax_contribution_mult
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_glory_hound_tax_contribution_mult_1_modifier
@@ -4696,6 +4643,9 @@ add_scaled_artifact_modifier_majesty_effect = {
 
 		# courtly_opinion
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_courtly_vassal_opinion_1_modifier
@@ -4716,6 +4666,9 @@ add_scaled_artifact_modifier_majesty_effect = {
 
 		# glory_hound_opinion
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_glory_hound_vassal_opinion_1_modifier
@@ -4737,6 +4690,7 @@ add_scaled_artifact_modifier_majesty_effect = {
 		# vassal_tax_contribution_mult
 		20 = {
 			trigger = {
+				vassal_artifact_modifier_trigger = yes
 				rarity = illustrious
 			}
 			random_list = {
@@ -4778,6 +4732,9 @@ add_2_scaled_artifact_modifier_majesty_effect = {
 
 		# Short Reign Duration
 		20 = {
+			trigger = {
+				short_reign_artifact_modifier_trigger = yes
+			}
 			modifier = {
 				exists = scope:inspiration_owner
 				scope:inspiration_owner = { has_variable = chosen_reign_mod }
@@ -5047,6 +5004,9 @@ add_2_scaled_artifact_modifier_majesty_effect = {
 
 		# Tyranny Decay
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			modifier = {
 				exists = scope:inspiration_owner
 				scope:inspiration_owner = { has_variable = chosen_dread_mod }
@@ -5100,6 +5060,9 @@ add_2_scaled_artifact_modifier_majesty_effect = {
 
 		# happy_powerful_vassal_tax_contribution_mult
 		20 = {
+			trigger = {
+				powerful_vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				random_list = {
@@ -5148,6 +5111,9 @@ add_2_scaled_artifact_modifier_majesty_effect = {
 
 		# courtly_tax_contribution_mult
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_courtly_tax_contribution_mult_1_modifier
@@ -5168,6 +5134,9 @@ add_2_scaled_artifact_modifier_majesty_effect = {
 
 		# glory_hound_tax_contribution_mult
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_glory_hound_tax_contribution_mult_1_modifier
@@ -5220,6 +5189,9 @@ add_2_scaled_artifact_modifier_majesty_effect = {
 
 		# courtly_opinion
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_courtly_vassal_opinion_1_modifier
@@ -5240,6 +5212,9 @@ add_2_scaled_artifact_modifier_majesty_effect = {
 
 		# glory_hound_opinion
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_glory_hound_vassal_opinion_1_modifier
@@ -5261,6 +5236,7 @@ add_2_scaled_artifact_modifier_majesty_effect = {
 		# vassal_tax_contribution_mult
 		20 = {
 			trigger = {
+				vassal_artifact_modifier_trigger = yes
 				rarity = illustrious
 			}
 			random_list = {
@@ -5298,6 +5274,9 @@ add_scaled_artifact_modifier_rulership_effect = {
 	random_list = {
 		# Vassal Limit
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			modifier = {
 				exists = scope:inspiration_owner
 				scope:inspiration_owner = { has_variable = chosen_vassals_mod }
@@ -5352,9 +5331,7 @@ add_scaled_artifact_modifier_rulership_effect = {
 		# Powerful Vassal Opinion
 		20 = {
 			trigger = {
-				scope:inspiration_owner ?= { 
-					NOT = { government_has_flag = no_powerful_vassals }
-				}
+				powerful_vassal_artifact_modifier_trigger = yes
 			}
 			modifier = {
 				exists = scope:inspiration_owner
@@ -5409,6 +5386,9 @@ add_scaled_artifact_modifier_rulership_effect = {
 
 		# courtly_opinion
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			modifier = {
 				exists = scope:inspiration_owner
 				scope:inspiration_owner = { has_variable = chosen_vassals_mod }
@@ -5434,6 +5414,9 @@ add_scaled_artifact_modifier_rulership_effect = {
 
 		# parochial_opinion
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			modifier = {
 				exists = scope:inspiration_owner
 				scope:inspiration_owner = { has_variable = chosen_vassals_mod }
@@ -5459,6 +5442,9 @@ add_scaled_artifact_modifier_rulership_effect = {
 
 		# belligerent_opinion
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			modifier = {
 				exists = scope:inspiration_owner
 				scope:inspiration_owner = { has_variable = chosen_vassals_mod }
@@ -5590,6 +5576,18 @@ add_scaled_artifact_modifier_rulership_effect = {
 
 		# men_at_arms_maintenance
 		20 = {
+			trigger = {
+				OR = {
+					landed_ruler_artifact_modifier_trigger = yes
+					trigger_if = {
+						limit = { exists = scope:owner }
+						scope:owner = { government_has_flag = government_is_landless_adventurer }
+					}
+					trigger_else = {
+						artifact_owner ?= { government_has_flag = government_is_landless_adventurer }
+					}
+				}
+			}
 			if = {
 				limit = { rarity = common }
 				random_list = {
@@ -5638,6 +5636,9 @@ add_scaled_artifact_modifier_rulership_effect = {
 
 		# build_gold_cost
 		20 = {
+			trigger = {
+				landed_ruler_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_build_gold_cost_1_modifier
@@ -5656,40 +5657,38 @@ add_scaled_artifact_modifier_rulership_effect = {
 			}
 		}
 
-		# domain_tax_mult
+		# domicile build_gold_cost
 		20 = {
 			trigger = {
-				OR = {
-					rarity = famed
-					rarity = illustrious
+				trigger_if = {
+					limit = { exists = scope:owner }
+					exists = scope:owner.domicile
 				}
+				trigger_else = { exists = artifact_owner.domicile }
 			}
 			if = {
+				limit = { rarity = common }
+				add_artifact_modifier = artifact_domicile_build_gold_cost_1_modifier
+			}
+			else_if = {
+				limit = { rarity = masterwork }
+				add_artifact_modifier = artifact_domicile_build_gold_cost_2_modifier
+			}
+			else_if = {
 				limit = { rarity = famed }
-				random_list = {
-					20 = {
-						add_artifact_modifier = artifact_domain_tax_mult_1_modifier
-					}
-					10 = {
-						add_artifact_modifier = artifact_domain_tax_mult_2_modifier
-					}
-				}
+				add_artifact_modifier = artifact_domicile_build_gold_cost_3_modifier
 			}
 			else_if = {
 				limit = { rarity = illustrious }
-				random_list = {
-					20 = {
-						add_artifact_modifier = artifact_domain_tax_mult_3_modifier
-					}
-					10 = {
-						add_artifact_modifier = artifact_domain_tax_mult_4_modifier
-					}
-				}
+				add_artifact_modifier = artifact_domicile_build_gold_cost_4_modifier
 			}
 		}
 
 		# parochial_tax_contribution_mult
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_parochial_tax_contribution_mult_1_modifier
@@ -5710,6 +5709,9 @@ add_scaled_artifact_modifier_rulership_effect = {
 
 		# belligerent_tax_contribution_mult
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_belligerent_tax_contribution_mult_1_modifier
@@ -5751,6 +5753,7 @@ add_scaled_artifact_modifier_rulership_effect = {
 		# herd_gain_mult
 		20 = {
 			trigger = {
+				landed_ruler_artifact_modifier_trigger = yes
 				scope:liege ?= { government_has_flag = government_is_nomadic }
 			}
 			if = {
@@ -5802,6 +5805,7 @@ add_scaled_artifact_modifier_rulership_effect = {
 		# herd_conversion
 		20 = {
 			trigger = {
+				landed_ruler_artifact_modifier_trigger = yes
 				scope:liege ?= { government_has_flag = government_is_nomadic }
 			}
 			if = {
@@ -5866,6 +5870,9 @@ add_2_scaled_artifact_modifier_rulership_effect = {
 		unique = yes
 		# Vassal Limit
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			modifier = {
 				exists = scope:inspiration_owner
 				scope:inspiration_owner = { has_variable = chosen_vassals_mod }
@@ -5919,6 +5926,9 @@ add_2_scaled_artifact_modifier_rulership_effect = {
 
 		# Powerful Vassal Opinion
 		20 = {
+			trigger = {
+				powerful_vassal_artifact_modifier_trigger = yes
+			}
 			modifier = {
 				exists = scope:inspiration_owner
 				scope:inspiration_owner = { has_variable = chosen_vassals_mod }
@@ -5972,6 +5982,9 @@ add_2_scaled_artifact_modifier_rulership_effect = {
 
 		# courtly_opinion
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			modifier = {
 				exists = scope:inspiration_owner
 				scope:inspiration_owner = { has_variable = chosen_vassals_mod }
@@ -5997,6 +6010,9 @@ add_2_scaled_artifact_modifier_rulership_effect = {
 
 		# parochial_opinion
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			modifier = {
 				exists = scope:inspiration_owner
 				scope:inspiration_owner = { has_variable = chosen_vassals_mod }
@@ -6022,6 +6038,9 @@ add_2_scaled_artifact_modifier_rulership_effect = {
 
 		# belligerent_opinion
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			modifier = {
 				exists = scope:inspiration_owner
 				scope:inspiration_owner = { has_variable = chosen_vassals_mod }
@@ -6153,6 +6172,18 @@ add_2_scaled_artifact_modifier_rulership_effect = {
 
 		# men_at_arms_maintenance
 		20 = {
+			trigger = {
+				OR = {
+					landed_ruler_artifact_modifier_trigger = yes
+					trigger_if = {
+						limit = { exists = scope:owner }
+						scope:owner = { government_has_flag = government_is_landless_adventurer }
+					}
+					trigger_else = {
+						artifact_owner ?= { government_has_flag = government_is_landless_adventurer }
+					}
+				}
+			}
 			if = {
 				limit = { rarity = common }
 				random_list = {
@@ -6201,6 +6232,9 @@ add_2_scaled_artifact_modifier_rulership_effect = {
 
 		# build_gold_cost
 		20 = {
+			trigger = {
+				landed_ruler_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_build_gold_cost_1_modifier
@@ -6219,40 +6253,38 @@ add_2_scaled_artifact_modifier_rulership_effect = {
 			}
 		}
 
-		# domain_tax_mult
+		# domicile build_gold_cost
 		20 = {
 			trigger = {
-				OR = {
-					rarity = famed
-					rarity = illustrious
+				trigger_if = {
+					limit = { exists = scope:owner }
+					exists = scope:owner.domicile
 				}
+				trigger_else = { exists = artifact_owner.domicile }
 			}
 			if = {
+				limit = { rarity = common }
+				add_artifact_modifier = artifact_domicile_build_gold_cost_1_modifier
+			}
+			else_if = {
+				limit = { rarity = masterwork }
+				add_artifact_modifier = artifact_domicile_build_gold_cost_2_modifier
+			}
+			else_if = {
 				limit = { rarity = famed }
-				random_list = {
-					20 = {
-						add_artifact_modifier = artifact_domain_tax_mult_1_modifier
-					}
-					10 = {
-						add_artifact_modifier = artifact_domain_tax_mult_2_modifier
-					}
-				}
+				add_artifact_modifier = artifact_domicile_build_gold_cost_3_modifier
 			}
 			else_if = {
 				limit = { rarity = illustrious }
-				random_list = {
-					20 = {
-						add_artifact_modifier = artifact_domain_tax_mult_3_modifier
-					}
-					10 = {
-						add_artifact_modifier = artifact_domain_tax_mult_4_modifier
-					}
-				}
+				add_artifact_modifier = artifact_domicile_build_gold_cost_4_modifier
 			}
 		}
 
 		# parochial_tax_contribution_mult
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_parochial_tax_contribution_mult_1_modifier
@@ -6273,6 +6305,9 @@ add_2_scaled_artifact_modifier_rulership_effect = {
 
 		# belligerent_tax_contribution_mult
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_belligerent_tax_contribution_mult_1_modifier
@@ -6310,6 +6345,7 @@ add_2_scaled_artifact_modifier_rulership_effect = {
 		# herd_gain_mult
 		20 = {
 			trigger = {
+				landed_ruler_artifact_modifier_trigger = yes
 				scope:liege ?= { government_has_flag = government_is_nomadic }
 			}
 			if = {
@@ -6361,6 +6397,7 @@ add_2_scaled_artifact_modifier_rulership_effect = {
 		# herd_conversion
 		20 = {
 			trigger = {
+				landed_ruler_artifact_modifier_trigger = yes
 				scope:liege ?= { government_has_flag = government_is_nomadic }
 			}
 			if = {
@@ -6670,6 +6707,9 @@ add_scaled_artifact_modifier_devotion_effect = {
 		}
 		# church_holding_build_gold_cost
 		20 = {
+			trigger = {
+				landed_ruler_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = {
 					rarity = common
@@ -6879,37 +6919,6 @@ add_scaled_artifact_modifier_devotion_effect = {
 				}
 			}
 		}
-		# domain_tax_same_faith_mult
-		20 = {
-			trigger = {
-				OR = {
-					rarity = famed
-					rarity = illustrious
-				}
-			}
-			if = {
-				limit = { rarity = famed }
-				random_list = {
-					20 = {
-						add_artifact_modifier = artifact_domain_tax_same_faith_mult_1_modifier
-					}
-					10 = {
-						add_artifact_modifier = artifact_domain_tax_same_faith_mult_2_modifier
-					}
-				}
-			}
-			else_if = {
-				limit = { rarity = illustrious }
-				random_list = {
-					20 = {
-						add_artifact_modifier = artifact_domain_tax_same_faith_mult_3_modifier
-					}
-					10 = {
-						add_artifact_modifier = artifact_domain_tax_same_faith_mult_4_modifier
-					}
-				}
-			}
-		}
 		# monthly_piety_gain_per_happy_powerful_vassal_add
 		20 = {
 			trigger = {
@@ -6981,6 +6990,9 @@ add_scaled_artifact_modifier_devotion_effect = {
 		}
 		# zealot_tax_contribution_mult
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_zealot_tax_contribution_mult_1_modifier
@@ -7261,6 +7273,9 @@ add_2_scaled_artifact_modifier_devotion_effect = {
 		}
 		# church_holding_build_gold_cost
 		20 = {
+			trigger = {
+				landed_ruler_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = {
 					rarity = common
@@ -7470,37 +7485,6 @@ add_2_scaled_artifact_modifier_devotion_effect = {
 				}
 			}
 		}
-		# domain_tax_same_faith_mult
-		20 = {
-			trigger = {
-				OR = {
-					rarity = famed
-					rarity = illustrious
-				}
-			}
-			if = {
-				limit = { rarity = famed }
-				random_list = {
-					20 = {
-						add_artifact_modifier = artifact_domain_tax_same_faith_mult_1_modifier
-					}
-					10 = {
-						add_artifact_modifier = artifact_domain_tax_same_faith_mult_2_modifier
-					}
-				}
-			}
-			else_if = {
-				limit = { rarity = illustrious }
-				random_list = {
-					20 = {
-						add_artifact_modifier = artifact_domain_tax_same_faith_mult_3_modifier
-					}
-					10 = {
-						add_artifact_modifier = artifact_domain_tax_same_faith_mult_4_modifier
-					}
-				}
-			}
-		}
 		# monthly_piety_gain_per_happy_powerful_vassal_add
 		20 = {
 			trigger = {
@@ -7572,6 +7556,9 @@ add_2_scaled_artifact_modifier_devotion_effect = {
 		}
 		# zealot_tax_contribution_mult
 		20 = {
+			trigger = {
+				vassal_artifact_modifier_trigger = yes
+			}
 			if = {
 				limit = { rarity = common }
 				add_artifact_modifier = artifact_zealot_tax_contribution_mult_1_modifier
@@ -8470,76 +8457,6 @@ add_scaled_artifact_modifier_attractiveness_effect = {
 
 add_scaled_artifact_modifier_scholarship_effect = {
 	random_list = {
-		# development_growth
-		20 = {
-			trigger = {
-				artifact_owner ?= { NOT = { government_has_flag = government_is_nomadic } } 
-			}
-			if = {
-				limit = {
-					rarity = common
-				}
-				random_list = {
-					20 = {
-						add_artifact_modifier = artifact_development_growth_1_modifier
-					}
-					15 = {
-						add_artifact_modifier = artifact_development_growth_2_modifier
-					}
-					5 = {
-						add_artifact_modifier = artifact_development_growth_3_modifier
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					rarity = masterwork
-				}
-				random_list = {
-					20 = {
-						add_artifact_modifier = artifact_development_growth_4_modifier
-					}
-					15 = {
-						add_artifact_modifier = artifact_development_growth_5_modifier
-					}
-					5 = {
-						add_artifact_modifier = artifact_development_growth_6_modifier
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					rarity = famed
-				}
-				random_list = {
-					20 = {
-						add_artifact_modifier = artifact_development_growth_7_modifier
-					}
-					15 = {
-						add_artifact_modifier = artifact_development_growth_8_modifier
-					}
-					5 = {
-						add_artifact_modifier = artifact_development_growth_9_modifier
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					rarity = illustrious
-				}
-				random_list = {
-					20 = {
-						add_artifact_modifier = artifact_development_growth_10_modifier
-					}
-					15 = {
-						add_artifact_modifier = artifact_development_growth_11_modifier
-					}
-					5 = {
-						add_artifact_modifier = artifact_development_growth_12_modifier
-					}
-				}
-			}
-		}
 		# fertility_growth
 		20 = {
 			trigger = {
@@ -11180,6 +11097,11 @@ create_artifact_icon_effect = {
 		}
 
 		scope:newly_created_artifact = {
+			# Only the court icon types get icon_decoration on creation
+			if = {
+				limit = { artifact_type = miscellaneous_when_not_court }
+				set_artifact_feature_group = icon_decoration
+			}
 			# Get decoration type and update description
 			get_artifact_feature_references_effect = yes
 			set_artifact_name = artifact_icon_name
@@ -11381,6 +11303,25 @@ create_artifact_brooch_effect = {
 					type = prize_created
 					recipient = scope:host
 				}
+				save_scope_as = newly_created_artifact
+			}
+		}
+		else_if = { #Set the history manually, outside of this effect
+			limit = {
+				exists = scope:goldsmith
+				exists = scope:owner
+				scope:goldsmith = scope:owner
+				exists = scope:no_artifact_history
+			}
+			create_artifact = {
+				name = artifact_brooch_name
+				description = placeholder
+				visuals = brooch
+				type = brooch
+				modifier = artifact_placeholder_modifier
+				wealth = scope:wealth
+				quality = scope:quality
+				generate_history = no
 				save_scope_as = newly_created_artifact
 			}
 		}
@@ -11659,6 +11600,25 @@ create_artifact_necklace_effect = {
 					type = prize_created
 					recipient = scope:host
 				}
+				save_scope_as = newly_created_artifact
+			}
+		}
+		else_if = { #Set the history manually, outside of this effect
+			limit = {
+				exists = scope:goldsmith
+				exists = scope:owner
+				scope:goldsmith = scope:owner
+				exists = scope:no_artifact_history
+			}
+			create_artifact = {
+				name = artifact_necklace_name
+				description = placeholder #properly set later
+				visuals = necklace
+				type = necklace
+				modifier = artifact_placeholder_modifier
+				wealth = scope:wealth
+				quality = scope:quality
+				generate_history = no
 				save_scope_as = newly_created_artifact
 			}
 		}
@@ -12397,6 +12357,10 @@ generate_trinket_effect = {
 						##^^Add more/other trigger flags above^^##
 					}
 				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality <= 5
+				}
 			}
 			#MODIFIERS
 			##stewardship_general.2001
@@ -12455,6 +12419,10 @@ generate_trinket_effect = {
 						##^^Add more/other trigger flags above^^##
 					}
 				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality <= 5
+				}
 			}
 			#MODIFIERS
 			##stewardship_general.2001
@@ -12511,6 +12479,10 @@ generate_trinket_effect = {
 						}
 						##^^Add more/other trigger flags above^^##
 					}
+				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality <= 5
 				}
 			}
 			#MODIFIERS
@@ -12569,6 +12541,10 @@ generate_trinket_effect = {
 						##^^Add more/other trigger flags above^^##
 					}
 				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality <= 5
+				}
 			}
 			#MODIFIERS
 			##stewardship_general.2001
@@ -12626,6 +12602,11 @@ generate_trinket_effect = {
 						##^^Add more/other trigger flags above^^##
 					}
 				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality > 5
+					scope:quality < 45
+				}
 			}
 			#MODIFIERS
 			##stewardship_general.2001
@@ -12652,7 +12633,6 @@ generate_trinket_effect = {
 				type = miscellaneous
 				visuals = pocket_fancy_case
 				modifier = artifact_clergy_opinion_1_modifier
-				modifier = artifact_zealot_vassal_opinion_2_modifier
 				save_scope_as = new_trinket
 				wealth = 15
 				quality = 15
@@ -12662,6 +12642,12 @@ generate_trinket_effect = {
 			scope:new_trinket = {
 				set_variable = st_davids_morsel_trinket
 				flag_as_trash_artifact = yes
+				if = {
+					limit = {
+						scope:trinket_receiver = { vassal_count > 0 }
+					}
+					add_artifact_modifier = artifact_zealot_vassal_opinion_2_modifier
+				}
 			}
 		}
 		##Common 02
@@ -12682,6 +12668,11 @@ generate_trinket_effect = {
 
 						##^^Add more/other trigger flags above^^##
 					}
+				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality > 5
+					scope:quality < 45
 				}
 			}
 			#MODIFIERS
@@ -12722,6 +12713,11 @@ generate_trinket_effect = {
 
 						##Add more/other trigger flags below
 					}
+				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality > 5
+					scope:quality < 45
 				}
 			}
 			#MODIFIERS
@@ -12778,6 +12774,11 @@ generate_trinket_effect = {
 						##Add more/other trigger flags below
 					}
 				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality > 5
+					scope:quality < 45
+				}
 			}
 			#MODIFIERS
 			##stewardship_general.2001
@@ -12807,7 +12808,6 @@ generate_trinket_effect = {
 				type = miscellaneous
 				visuals = rock
 				modifier = artifact_clergy_opinion_1_modifier
-				modifier = artifact_zealot_vassal_opinion_2_modifier
 				save_scope_as = new_trinket
 				wealth = 15
 				quality = 15
@@ -12817,6 +12817,12 @@ generate_trinket_effect = {
 			scope:new_trinket = {
 				set_variable = potsherd_trinket
 				flag_as_trash_artifact = yes
+				if = {
+					limit = {
+						scope:trinket_receiver = { vassal_count > 0 }
+					}
+					add_artifact_modifier = artifact_zealot_vassal_opinion_2_modifier
+				}
 			}
 		}
 		##Common 05
@@ -12835,6 +12841,11 @@ generate_trinket_effect = {
 						has_character_flag = used_in_mpo_events_ariana_0070
 						##^^Add more/other trigger flags above^^##
 					}
+				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality > 5
+					scope:quality < 45
 				}
 			}
 			#MODIFIERS
@@ -12892,6 +12903,11 @@ generate_trinket_effect = {
 
 						##^^Add more/other trigger flags above^^##
 					}
+				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality > 5
+					scope:quality < 45
 				}
 			}
 			#MODIFIERS
@@ -12953,6 +12969,11 @@ generate_trinket_effect = {
 						##^^Add more/other trigger flags above^^##
 					}
 				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality >= 45
+					scope:quality < 65
+				}
 			}
 			#MODIFIERS
 			##stewardship_general.2001
@@ -13010,6 +13031,11 @@ generate_trinket_effect = {
 						##^^Add more/other trigger flags above^^##
 					}
 				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality >= 45
+					scope:quality < 65
+				}
 			}
 			#MODIFIERS
 			###Less likely if we already have a Mythical Figurine
@@ -13066,6 +13092,11 @@ generate_trinket_effect = {
 						##^^Add more/other trigger flags above^^##
 					}
 				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality >= 45
+					scope:quality < 65
+				}
 			}
 			#MODIFIERS
 			##^^Add more/other modifier flags above^^##
@@ -13077,7 +13108,6 @@ generate_trinket_effect = {
 				visuals = pocket_basic_case
 				modifier = artifact_monthly_piety_1_modifier
 				modifier = artifact_health_gain_1_modifier
-				modifier = artifact_zealot_vassal_opinion_2_modifier
 				save_scope_as = new_trinket
 				wealth = 45
 				quality = 45
@@ -13086,6 +13116,12 @@ generate_trinket_effect = {
 			}
 			scope:new_trinket = {
 				set_variable = st_davids_taper_trinket
+				if = {
+					limit = {
+						scope:trinket_receiver = { vassal_count > 0 }
+					}
+					add_artifact_modifier = artifact_zealot_vassal_opinion_2_modifier
+				}
 			}
 		}
 		##Uncommon 04
@@ -13110,6 +13146,11 @@ generate_trinket_effect = {
 
 						##^^Add more/other trigger flags above^^##
 					}
+				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality >= 45
+					scope:quality < 65
 				}
 			}
 			#MODIFIERS
@@ -13157,6 +13198,11 @@ generate_trinket_effect = {
 						##^^Add more/other trigger flags above^^##
 					}
 				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality >= 45
+					scope:quality < 65
+				}
 			}
 			#MODIFIERS
 			##stewardship_general.2001
@@ -13193,7 +13239,6 @@ generate_trinket_effect = {
 				type = miscellaneous
 				visuals = medallion
 				modifier = artifact_monthly_stewardship_lifestyle_xp_1_modifier
-				modifier = artifact_domain_tax_mult_2_modifier
 				modifier = artifact_stewardship_per_stress_level_1_modifier
 				save_scope_as = new_trinket
 				wealth = 45
@@ -13228,6 +13273,11 @@ generate_trinket_effect = {
 						##^^Add more/other trigger flags above^^##
 					}
 				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality >= 45
+					scope:quality < 65
+				}
 			}
 			#MODIFIERS
 			##^^Add more/other modifier flags above^^##
@@ -13238,7 +13288,6 @@ generate_trinket_effect = {
 				type = miscellaneous
 				visuals = necklace
 				modifier = artifact_monthly_piety_2_modifier
-				modifier = artifact_monthly_piety_from_buildings_mult_3_modifier
 				save_scope_as = new_trinket
 				wealth = 45
 				quality = 45
@@ -13247,6 +13296,12 @@ generate_trinket_effect = {
 			}
 			scope:new_trinket = {
 				set_variable = lavender_jade_pendant_trinket
+				if = {
+					limit = {
+						scope:trinket_receiver = { NOT = { government_has_flag = government_is_merchant } }
+					}
+					add_artifact_modifier = artifact_monthly_piety_from_buildings_mult_3_modifier
+				}
 			}
 		}
 		#RARE - 1/35 with no modifiers
@@ -13273,6 +13328,10 @@ generate_trinket_effect = {
 						has_character_flag = used_in_mpo_events_ariana_0070
 						##^^Add more/other trigger flags above^^##
 					}
+				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality >= 65
 				}
 			}
 			#MODIFIERS
@@ -13332,6 +13391,10 @@ generate_trinket_effect = {
 
 						##^^Add more/other trigger flags above^^##
 					}
+				}
+				trigger_if = {
+					limit = { exists = scope:quality }
+					scope:quality >= 65
 				}
 			}
 			#MODIFIERS
@@ -13913,11 +13976,17 @@ create_artifact_bow_effect = {
 					}
 				}
 				if = {
-					limit = { scope:bow_type = flag:artifact_bow_type_composite }
+					limit = {
+						scope:bow_type = flag:artifact_bow_type_composite
+						merchant_artifact_modifier_trigger = no
+					}
 					add_scaled_artifact_modifier_archer_cavalry_screen_add_effect = yes
 				}
 				else_if = {
-					limit = { scope:bow_type = flag:artifact_bow_type_longbow }
+					limit = {
+						scope:bow_type = flag:artifact_bow_type_longbow
+						merchant_artifact_modifier_trigger = no
+					}
 					add_scaled_artifact_modifier_archers_screen_add_effect = yes
 				}
 				else = { add_2_scaled_artifact_modifier_combat_effect = yes }
@@ -13930,11 +13999,17 @@ create_artifact_bow_effect = {
 					}
 				}
 				if = {
-					limit = { scope:bow_type = flag:artifact_bow_type_composite }
+					limit = {
+						scope:bow_type = flag:artifact_bow_type_composite
+						merchant_artifact_modifier_trigger = no
+					}
 					add_scaled_artifact_modifier_archer_cavalry_screen_add_effect = yes
 				}
 				else_if = {
-					limit = { scope:bow_type = flag:artifact_bow_type_longbow }
+					limit = {
+						scope:bow_type = flag:artifact_bow_type_longbow
+						merchant_artifact_modifier_trigger = no
+					}
 					add_scaled_artifact_modifier_archers_screen_add_effect = yes
 				}
 				else = { add_2_scaled_artifact_modifier_combat_effect = yes }
@@ -13948,11 +14023,17 @@ create_artifact_bow_effect = {
 					# No decorations
 				}
 				if = {
-					limit = { scope:bow_type = flag:artifact_bow_type_composite }
+					limit = {
+						scope:bow_type = flag:artifact_bow_type_composite
+						merchant_artifact_modifier_trigger = no
+					}
 					add_scaled_artifact_modifier_archer_cavalry_screen_add_effect = yes
 				}
 				else_if = {
-					limit = { scope:bow_type = flag:artifact_bow_type_longbow }
+					limit = {
+						scope:bow_type = flag:artifact_bow_type_longbow
+						merchant_artifact_modifier_trigger = no
+					}
 					add_scaled_artifact_modifier_archers_screen_add_effect = yes
 				}
 				else = { add_2_scaled_artifact_modifier_combat_effect = yes }
@@ -13963,11 +14044,17 @@ create_artifact_bow_effect = {
 					# No decorations
 				}
 				if = {
-					limit = { scope:bow_type = flag:artifact_bow_type_composite }
+					limit = {
+						scope:bow_type = flag:artifact_bow_type_composite
+						merchant_artifact_modifier_trigger = no
+					}
 					add_scaled_artifact_modifier_archer_cavalry_screen_add_effect = yes
 				}
 				else_if = {
-					limit = { scope:bow_type = flag:artifact_bow_type_longbow }
+					limit = {
+						scope:bow_type = flag:artifact_bow_type_longbow
+						merchant_artifact_modifier_trigger = no
+					}
 					add_scaled_artifact_modifier_archers_screen_add_effect = yes
 				}
 				else = { add_2_scaled_artifact_modifier_combat_effect = yes }
@@ -14043,6 +14130,25 @@ create_artifact_ring_effect = {
 					type = prize_created
 					recipient = scope:host
 				}
+			}
+		}
+		else_if = { #Set the history manually, outside of this effect
+			limit = {
+				exists = scope:goldsmith
+				exists = scope:owner
+				scope:goldsmith = scope:owner
+				exists = scope:no_artifact_history
+			}
+			create_artifact = {
+				name = artifact_ring_name
+				description = placeholder # Will be updated in the post-creation effects after decorations are assigned.
+				visuals = ring
+				type = ring
+				modifier = artifact_placeholder_modifier
+				wealth = scope:wealth
+				quality = scope:quality
+				generate_history = no
+				save_scope_as = newly_created_artifact
 			}
 		}
 		else_if = {
@@ -14320,7 +14426,7 @@ create_artifact_plate_effect = {
 		}
 		else_if = {
 			limit = {
-				scope:host ?= $OWNER$
+				scope:host ?= scope:owner
 				scope:activity ?= { has_activity_type = activity_tournament }
 			}
 			create_artifact = {
@@ -14340,7 +14446,7 @@ create_artifact_plate_effect = {
 			}
 		}
 		else_if = {
-			trigger = { exists = scope:goldsmith }
+			limit = { exists = scope:goldsmith }
 			create_artifact = {
 				name = artifact_plate_name
 				creator = scope:goldsmith
@@ -14485,8 +14591,16 @@ create_artifact_urn_effect = {
 			get_artifact_feature_references_effect = yes
 			set_artifact_description = artifact_urn_description
 			# Add artifact modifiers
-			add_scaled_artifact_modifier_grandeur_small_effect = yes
-			add_scaled_artifact_modifier_minor_prestige_effect = yes
+			if = {
+				limit = {
+					NOT = { exists = scope:merchant }
+				}
+				add_scaled_artifact_modifier_grandeur_small_effect = yes
+			}
+			else = {
+				add_scaled_artifact_modifier_scholarship_effect = yes
+			}
+			add_scaled_artifact_modifier_prestige_effect = yes
 			if = {
 				limit = {
 					OR = {

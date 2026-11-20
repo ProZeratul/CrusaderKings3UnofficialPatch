@@ -64,10 +64,15 @@ secure_high_kingdom_north_sea_scripted_effect = {
 		if = {
 			limit = {
 				title:d_flanders = { is_titular = no }
+				title:d_artois = { is_titular = no }
 				title:d_normandy = { is_titular = no }
 				OR = {
 					has_title = title:d_flanders
 					completely_controls = title:d_flanders
+				}
+				OR = {
+					has_title = title:d_artois
+					completely_controls = title:d_artois
 				}
 				OR = {
 					has_title = title:d_normandy
@@ -97,6 +102,7 @@ secure_high_kingdom_north_sea_scripted_effect = {
 				resolve_title_and_vassal_change = scope:change
 				title:d_flanders = { set_de_jure_liege_title = scope:new_title }
 				title:d_normandy = { set_de_jure_liege_title = scope:new_title }
+				title:d_artois = { set_de_jure_liege_title = scope:new_title }
 				scope:new_title = { 
 					set_de_jure_liege_title = title:e_north_sea 
 					set_coa = title:c_guines
@@ -278,37 +284,17 @@ secure_high_kingdom_north_sea_scripted_effect = {
 }
 
 found_capital_of_rus_scripted_effect = {
-	#Reward fame to compensate for reduced development gain.
-	scope:new_rus_capital.holder = {
-		add_prestige_experience = major_prestige_gain
-	}
 	scope:new_rus_capital = {
-		#Boost local development a few levels; majority of development gain is handled in the modifiers now.
-		if = {
-			limit = { development_level < 5 }
-			change_development_level = {
-				value = 5
-				subtract = scope:new_rus_capital.development_level
-			}
-		}
-		else_if = {
-			limit = { development_level < 8 }
-			change_development_level = {
-				value = 8
-				subtract = scope:new_rus_capital.development_level
-			}
-		}
-		else_if = {
-			limit = { development_level < 12 }
-			change_development_level = {
-				value = 12
-				subtract = scope:new_rus_capital.development_level
+		title_province = {
+			if = {
+				limit = { province_size_level < 5 }
+				change_province_size_progress = 100
 			}
 		}
 		#If control is less than full, boost it to full.
 		if = {
-			limit = { county_control < full_county_control }
-			change_county_control = 100
+			limit = { county_control < county_control_baseline }
+			change_county_control = 30
 		}
 		#Add county modifier giving solid opinion for a decent chunk of time.
 		add_county_modifier = {
@@ -401,8 +387,8 @@ elevate_mann_and_the_isles_scripted_effect = {
 		title_province = { 
 			add_province_modifier = elevate_mann_and_the_isles_modifier
 		}
-		# And a decent development boost.
-		change_development_level = medium_development_level_gain
+		# And a decent prosperity boost.
+		change_prosperity_level = medium_prosperity_level_gain
 	}
 	# Make it your capital if it wasn't already.
 	if = {
@@ -423,28 +409,20 @@ elevate_mann_and_the_isles_scripted_effect = {
 		}
 		title:c_isle_of_man = { set_county_culture = scope:founder.culture }
 	}
-	# Have a huge, terrifying event army.
+	# Have a terrifying event army.
 	spawn_army = {
-		levies = 5000
+		levies = 1500
 		men_at_arms = {
 			type = jomsviking_pirates
-			stacks = 5
-		}
-		men_at_arms = {
-			type = jomsviking_pirates
-			stacks = 5
+			stacks = 4
 		}
 		men_at_arms = {
 			type = varangian_veterans
-			stacks = 5
+			stacks = 2
 		}
 		men_at_arms = {
 			type = bondi
-			stacks = 5
-		}
-		men_at_arms = {
-			type = bondi
-			stacks = 5
+			stacks = 4
 		}
 		location = title:c_isle_of_man.title_province
 		name = fp1_mann_event_troops
@@ -565,45 +543,12 @@ forge_the_jomsvikings_scripted_effect = {
 	## Give it some buildings.
 	hidden_effect = {
 		scope:leased_barony.title_province = {
-			# Walls & Towers.
 			if = {
-				limit = {
-					NOT = { has_building_or_higher = curtain_walls_01 }
-				}
-				# If it doesn't have a free building slot, give it one.
-				if = {
-					limit = { free_building_slots = 0 }
-					add_province_modifier = extra_building_slot
-				}
-				# Add the building.
-				add_building = curtain_walls_01
+				limit = { free_building_slots = 0 }
+				add_province_modifier = extra_building_slot
 			}
-			# Barracks.
-			if = {
-				limit = {
-					NOT = { has_building_or_higher = barracks_01 }
-				}
-				# If it doesn't have a free building slot, give it one.
-				if = {
-					limit = { free_building_slots = 0 }
-					add_province_modifier = extra_building_slot
-				}
-				# Add the building.
-				add_building = barracks_01
-			}
-			# Military Camps.
-			if = {
-				limit = {
-					NOT = { has_building_or_higher = military_camps_01 }
-				}
-				# If it doesn't have a free building slot, give it one.
-				if = {
-					limit = { free_building_slots = 0 }
-					add_province_modifier = extra_building_slot
-				}
-				# Add the building.
-				add_building = military_camps_01
-			}
+			add_random_fortification_building_effect = yes
+			add_random_military_building_effect = yes
 		}
 	}
 	## Mark it so it can be renamed if the order is ever destroyed.

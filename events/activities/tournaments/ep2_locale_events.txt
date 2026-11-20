@@ -5366,17 +5366,14 @@ ep2_locale_events.3002 = {
 			any_attending_character = {
 				count >= 2
 				is_adult = yes
+				this != scope:lech1_temporary
 				willing_lecherous_knight_trigger = yes
-				OR = { #Unop: Harmonized with the immediate check (to not allow this event to fire without required char)
+				OR = {
 					has_trait = lustful
 					has_trait = rakish
 					is_deviant_trigger = yes
-					trigger_if = {
-						limit = { exists = scope:lech1_temporary }
-						is_attracted_to_gender_of = scope:lech1_temporary
-					}
+					is_attracted_to_gender_of = scope:lech1_temporary
 				}
-				this != scope:lech1_temporary
 				save_temporary_scope_as = lech2_temporary
 			}
 			any_attending_character = { # Unop: This is needed since we need a character attracted to both lech1 & lech2 genders !

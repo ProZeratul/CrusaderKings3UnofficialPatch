@@ -344,7 +344,7 @@ debate_host_rewards_effect = {
     if = {
         # Host won debate
         limit = {
-            this = scope:activity.var:debate_winner
+            scope:activity.var:debate_winner ?= this
         }
         # Activity is imperial debate (determines favored movement)
         if = {
@@ -503,7 +503,7 @@ debate_host_rewards_effect = {
                         option = debate_type_favor
                     }
                 }
-                this = scope:activity.var:debate_winner
+                scope:activity.var:debate_winner ?= this
             }
             add = monumental_influence_value
         }
@@ -515,7 +515,7 @@ debate_host_rewards_effect = {
                         option = debate_type_leadership
                     }
                 }
-                this = scope:activity.var:debate_winner
+                scope:activity.var:debate_winner ?= this
             }
             add = major_influence_value
         }
@@ -531,7 +531,7 @@ debate_host_rewards_effect = {
                         option = debate_type_favor
                     }
                 }
-                this = scope:activity.var:debate_winner
+                scope:activity.var:debate_winner ?= this
             }
             add = monumental_prestige_value
         }
@@ -543,7 +543,7 @@ debate_host_rewards_effect = {
                         option = debate_type_leadership
                     }
                 }
-                this = scope:activity.var:debate_winner
+                scope:activity.var:debate_winner ?= this
             }
             add = major_prestige_value
         }
@@ -577,7 +577,7 @@ debate_guest_rewards = {
     if = {
         limit = {
             this = scope:activity.var:challenged_movement_leader
-            this = scope:activity.var:debate_winner
+            scope:activity.var:debate_winner ?= this
         }
         add_prestige = major_prestige_value
         change_influence = major_influence_value

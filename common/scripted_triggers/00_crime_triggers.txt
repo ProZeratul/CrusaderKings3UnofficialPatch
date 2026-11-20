@@ -131,3 +131,11 @@ murdering_character_is_crime_in_rite_trigger = {
 		always = no
 	}
 }
+
+character_is_prisoner_of_war = {
+	save_temporary_scope_as = prisoner
+	imprisoner = {
+		is_at_war = yes
+		any_primary_war_enemy = { this = scope:prisoner.liege }
+	}
+}

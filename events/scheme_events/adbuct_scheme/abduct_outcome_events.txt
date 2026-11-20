@@ -745,9 +745,9 @@ abduct_outcome.5001 = {
 	option = {
 		name = abduct_outcome.5001.a
 		play_music_cue = "mx_cue_stress"
-		add_opinion = {
-			target = scope:owner
-			modifier = abducted_me_opinion
+		abduct_opinion_effect = {
+			VICTIM = root
+			ABDUCTER = scope:owner
 		}
 	}
 }
@@ -815,9 +815,9 @@ abduct_outcome.5002 = {
 		trigger = {
 			exists = scope:scheme_discovered
 		}
-		add_opinion = {
-			target = scope:owner
-			modifier = attempted_abduction_opinion
+		attempted_abduction_opinion_effect = {
+			VICTIM = root
+			ABDUCTER = scope:owner
 		}
 		add_character_modifier = {
 			modifier = watchful_modifier

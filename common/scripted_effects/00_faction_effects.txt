@@ -845,7 +845,7 @@ successful_nomadic_revolt_outcome_effect = {
 						add = county_fertility
 					}
 					else = {
-						add = development_level
+						add = prosperity_level
 					}
 
 					multiply = {
@@ -1070,6 +1070,7 @@ successful_nomadic_revolt_outcome_effect = {
 						}
 						remove_county_modifier = peasant_war_lost_county_modifier
 					}
+					peasant_war_popular_opinion_to_baseline_effect = yes
 				}
 				if = {
 					limit = {
@@ -1515,6 +1516,24 @@ spawn_nomadic_revolt_troops = {
 	}
 }
 
+# County scope. Run after adding or removing the peasant war opinion modifiers
+# They only raise the baseline, so this applies them immediately
+peasant_war_popular_opinion_to_baseline_effect = {
+	save_temporary_scope_value_as = {
+		name = peasant_war_opinion_to_baseline
+		value = {
+			value = base_popular_opinion
+			subtract = popular_opinion
+		}
+	}
+	if = {
+		limit = {
+			scope:peasant_war_opinion_to_baseline > 0
+		}
+		add_popular_opinion = scope:peasant_war_opinion_to_baseline
+	}
+}
+
 peasant_faction_demands_enforced = {
 	# escalate if in the Cycle
 	# The double ?= are intended because $FACTION$ can be garbled data in very rare cases
@@ -1556,6 +1575,7 @@ peasant_faction_demands_enforced = {
 					modifier = peasant_war_lost_county_modifier
 					years = 10
 				}
+				peasant_war_popular_opinion_to_baseline_effect = yes
 			}
 			destroy_faction = yes
 		}
@@ -1654,6 +1674,7 @@ peasant_faction_demands_enforced = {
 					modifier = peasant_war_lost_county_modifier
 					years = 10
 				}
+				peasant_war_popular_opinion_to_baseline_effect = yes
 			}
 			hidden_effect = {
 				clean_revolt_county_modifiers_from_faction_members_effect = yes

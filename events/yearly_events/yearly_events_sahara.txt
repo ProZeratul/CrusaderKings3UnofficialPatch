@@ -650,7 +650,7 @@ yearly_saharan.0005 = {
 		#Torch half the county to flip them back.
 		scope:target_county = {
 			change_county_control = massive_county_control_loss
-			change_development_progress = major_development_progress_loss
+			change_prosperity_progress = major_prosperity_progress_loss
 			add_county_modifier = {
 				modifier = persecuted_converts_saharan_modifier
 				years = 25
@@ -711,13 +711,13 @@ scripted_effect pick_nomad-appropriate_county_effect = {
 					multiply = 0.1
 				}
 			}
-			#Weight down higher development counties proportionally: both not the focus of the event, and less likely to be accepted by the player.
+			#High prosperity is not the focus and players rarely take it, so we weight those counties down
 			modifier = {
 				add = {
-					value = development_level
+					value = prosperity_level
 					multiply = -1
 				}
-				development_level >= bad_development_level
+				prosperity_level >= bad_prosperity_level
 			}
 		}
 	}

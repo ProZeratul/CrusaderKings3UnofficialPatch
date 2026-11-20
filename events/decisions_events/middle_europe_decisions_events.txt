@@ -218,19 +218,18 @@ middle_europe_decisions.0005 = {
 	type = character_event
 	title = middle_europe_decisions.0005.t
 	desc = middle_europe_decisions.0005.desc
-	theme = realm
+	window = big_event_window
+	theme = crown
 	left_portrait = {
 		character = root
 		animation = personality_bold
 	}
-	right_portrait = {
-		character = scope:scoped_emperor
-		animation = shock
-	}
+
+	override_effect_2d = { reference = legend_glow }
 
 	immediate = {
 		play_music_cue = "mx_cue_epic_sacral_moment"
-		form_carolingian_empire_scripted_effect = yes
+		form_carolingian_hegemony_gdp_scripted_effect = yes
 		legend_seed_great_deed_title_effect = {
 			TITLE = root.primary_title
 		}
@@ -238,37 +237,6 @@ middle_europe_decisions.0005 = {
 	option = {
 		name = middle_europe_decisions.0005.a
 		set_nickname_effect = { NICKNAME = nick_the_great }
-
-		# Send narrative fluff to other players (if any).
-		every_player = {
-			limit = {
-				this != root
-				is_ruler = yes
-				is_landed = yes
-				capital_province = { geographical_region = world_europe }
-				is_within_diplo_range = { CHARACTER = root }
-			}
-			trigger_event = middle_europe_decisions.0006
-		}
-		hidden_effect = { # Latins chance to convert to French.
-			every_vassal = {
-				limit = {
-					NOR = {
-						this = root
-						has_culture = culture:french
-					}
-					OR = {
-						culture = { has_cultural_pillar = heritage_frankish }
-						culture = { has_cultural_pillar = heritage_central_germanic }
-					}
-					is_ai = yes
-				}
-				random = {
-					chance = 33
-					set_culture_same_as = root
-				}
-			}
-		}
 	}
 }
 
@@ -277,6 +245,7 @@ middle_europe_decisions.0006 = {
 	title = middle_europe_decisions.0005.t
 	desc = middle_europe_decisions.0006.desc
 	theme = realm
+	orphan = yes
 	left_portrait = {
 		character = scope:scoped_ruler
 		animation = personality_bold
@@ -461,7 +430,7 @@ middle_europe_decisions.0010 = {
 		trigger = {
 			completely_controls = title:d_sicily
 			title:c_palermo = {
-				title_province = { has_special_building = no }
+				title_province = { has_special_district = no }
 			}
 		}
 		if = { # Nickname
@@ -547,7 +516,7 @@ middle_europe_decisions.0010 = {
 		trigger = {
 			completely_controls = title:d_capua
 			title:c_napoli = {
-				title_province = { has_special_building = no }
+				title_province = { has_special_district = no }
 			}
 		}
 		custom_tooltip = middle_europe_decisions.0010.tt_napoli_warning

@@ -532,7 +532,8 @@ agent_events.0011 = {
 				random_relation = {
 					type = potential_friend
 					limit = {
-						scope:scheme = { scheme_is_character_agent = scope:char_1 }
+						save_temporary_scope_as = char_2_candidate
+						scope:scheme = { scheme_is_character_agent = scope:char_2_candidate }
 					}
 					save_scope_as = char_2
 				}
@@ -1994,10 +1995,13 @@ agent_events.0041 = {
 
 		add_stress = monumental_stress_loss
 		add_prestige = medium_prestige_gain
-		reverse_add_opinion = {
-			target = scope:char_1
-			modifier = frustrated_opinion
-			opinion = -15
+		if = {
+			limit = { scope:char_1 = { is_alive = yes } } # They can die before the option is chosen
+			reverse_add_opinion = {
+				target = scope:char_1
+				modifier = frustrated_opinion
+				opinion = -15
+			}
 		}
 
 		ai_chance = {
@@ -3420,6 +3424,16 @@ agent_events.3011 = {
 			modifier = grateful_opinion
 			opinion = 40
 		}
+		if = {
+			limit = { government_has_flag = government_is_merchant }
+			apply_house_unity_interaction_effect = {
+				CHARACTER = root
+				TARGET = scope:relation
+				DESC = merchant_unity_associate_before_company_desc
+				VALUE = minor_unity_gain
+				VALUE_REVERSED = no
+			}
+		}
 
 		stress_and_fulfillment_impact = {
 			base = medium_stress_impact_loss
@@ -3449,6 +3463,16 @@ agent_events.3011 = {
 			target = scope:relation
 			modifier = hurt_opinion
 			opinion = -50
+		}
+		if = {
+			limit = { government_has_flag = government_is_merchant }
+			apply_house_unity_interaction_effect = {
+				CHARACTER = root
+				TARGET = scope:relation
+				DESC = merchant_unity_associate_after_company_desc
+				VALUE = minor_unity_loss
+				VALUE_REVERSED = no
+			}
 		}
 
 		stress_and_fulfillment_impact = {
@@ -3629,17 +3653,20 @@ agent_events.3021 = {
 
 		# Benefits with the relation.
 		add_favour_hook_if_possible_simple_effect = { TARGET = scope:relation }
-		hidden_effect = {
-			add_opinion = {
+		if = {
+			limit = { scope:relation = { is_alive = yes } }
+			hidden_effect = {
+				add_opinion = {
+					target = scope:relation
+					modifier = trust_opinion
+					opinion = 30
+				}
+			}
+			reverse_add_opinion = {
 				target = scope:relation
 				modifier = trust_opinion
 				opinion = 30
 			}
-		}
-		reverse_add_opinion = {
-			target = scope:relation
-			modifier = trust_opinion
-			opinion = 30
 		}
 		# Benefits for the scheme.
 		scope:scheme ?= {
@@ -4727,6 +4754,7 @@ agent_events.4001 = {
 			scheme_number_of_filled_agent_slots >= 1
 			is_scheme_target_type = character
 			scheme_target_character = {
+				NOT = { this = scope:scheme.scheme_owner }
 				is_imprisoned = no
 				is_travelling = no
 				is_commanding_army = no
@@ -4893,6 +4921,7 @@ agent_events.4011 = {
 			scheme_number_of_filled_agent_slots >= 1
 			is_scheme_target_type = character
 			scheme_target_character = {
+				NOT = { this = scope:scheme.scheme_owner }
 				is_imprisoned = no
 				is_travelling = no
 				is_commanding_army = no

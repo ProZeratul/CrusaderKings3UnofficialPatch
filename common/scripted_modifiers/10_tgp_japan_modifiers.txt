@@ -17,69 +17,41 @@ house_relation_ai_accept_modifiers = {
 		$HOUSE_1_MEMBER$.house = {
 			any_house_relation = {
 				any_relation_house = { this = $HOUSE_2_MEMBER$.house }
+				NOT = { has_house_relation_level = neutral }
 			}
 		}
 		add = {
 			value = 0
-			if = {
-				limit = {
-					tgp_has_house_relation_level_trigger = {
-						HOUSE_1_MEMBER = $HOUSE_1_MEMBER$
-						HOUSE_2_MEMBER = $HOUSE_2_MEMBER$
-						LEVEL = feud
+			$HOUSE_1_MEMBER$.house = {
+				every_house_relation = {
+					limit = {
+						any_relation_house = { this = $HOUSE_2_MEMBER$.house }
+					}
+					if = {
+						limit = { has_house_relation_level = feud }
+						add = -50
+					}
+					else_if = {
+						limit = { has_house_relation_level = rivalry }
+						add = -25
+					}
+					else_if = {
+						limit = { has_house_relation_level = quarrel }
+						add = -10
+					}
+					else_if = {
+						limit = { has_house_relation_level = cordial }
+						add = 10
+					}
+					else_if = {
+						limit = { has_house_relation_level = friendly }
+						add = 25
+					}
+					else_if = {
+						limit = { has_house_relation_level = amity }
+						add = 50
 					}
 				}
-				add = -50
-			}
-			else_if = {
-				limit = {
-					tgp_has_house_relation_level_trigger = {
-						HOUSE_1_MEMBER = $HOUSE_1_MEMBER$
-						HOUSE_2_MEMBER = $HOUSE_2_MEMBER$
-						LEVEL = rivalry
-					}
-				}
-				add = -25
-			}
-			else_if = {
-				limit = {
-					tgp_has_house_relation_level_trigger = {
-						HOUSE_1_MEMBER = $HOUSE_1_MEMBER$
-						HOUSE_2_MEMBER = $HOUSE_2_MEMBER$
-						LEVEL = quarrel
-					}
-				}
-				add = -10
-			}
-			else_if = {
-				limit = {
-					tgp_has_house_relation_level_trigger = {
-						HOUSE_1_MEMBER = $HOUSE_1_MEMBER$
-						HOUSE_2_MEMBER = $HOUSE_2_MEMBER$
-						LEVEL = cordial
-					}
-				}
-				add = 10
-			}
-			else_if = {
-				limit = {
-					tgp_has_house_relation_level_trigger = {
-						HOUSE_1_MEMBER = $HOUSE_1_MEMBER$
-						HOUSE_2_MEMBER = $HOUSE_2_MEMBER$
-						LEVEL = friendly
-					}
-				}
-				add = 25
-			}
-			else_if = {
-				limit = {
-					tgp_has_house_relation_level_trigger = {
-						HOUSE_1_MEMBER = $HOUSE_1_MEMBER$
-						HOUSE_2_MEMBER = $HOUSE_2_MEMBER$
-						LEVEL = amity
-					}
-				}
-				add = 50
 			}
 			multiply = $MULTIPLIER$
 		}
@@ -178,7 +150,7 @@ house_bloc_desire_to_join_modifiers = {
 	}
 	# Relative Character
 	modifier = { # Prestige level
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
+		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ } # Saves scope:inviter_temp and scope:joiner_temp for all modifiers below
 		scope:joiner_temp.prestige_level != scope:inviter_temp.prestige_level
 		add = {
 			value = scope:inviter_temp.prestige_level
@@ -192,7 +164,6 @@ house_bloc_desire_to_join_modifiers = {
 		desc = AI_RELATIVE_PRESTIGE_LEVEL_REASON
 	}
 	modifier = { # Influence level
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		scope:joiner_temp = { government_has_flag = government_has_influence }
 		scope:inviter_temp = { government_has_flag = government_has_influence }
 		scope:joiner_temp.influence_level != scope:inviter_temp.influence_level
@@ -208,7 +179,6 @@ house_bloc_desire_to_join_modifiers = {
 		desc = AI_RELATIVE_INFLUENCE_LEVEL_REASON
 	}
 	modifier = { # Military power
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		scope:joiner_temp = { government_has_flag = government_is_japan_feudal }
 		scope:inviter_temp = { government_has_flag = government_is_japan_feudal }
 		NAND = {
@@ -220,8 +190,8 @@ house_bloc_desire_to_join_modifiers = {
 			scope:inviter_temp.house = {
 				every_house_member = {
 					limit = {
-						top_liege = scope:inviter_temp.top_liege
 						tgp_house_bloc_interaction_valid_trigger = yes
+						top_liege = scope:inviter_temp.top_liege
 					}
 					add = military_power
 				}
@@ -229,8 +199,8 @@ house_bloc_desire_to_join_modifiers = {
 			scope:joiner_temp.house = {
 				every_house_member = {
 					limit = {
-						top_liege = scope:joiner_temp.top_liege
 						tgp_house_bloc_interaction_valid_trigger = yes
+						top_liege = scope:joiner_temp.top_liege
 					}
 					add = {
 						value = military_power
@@ -244,7 +214,6 @@ house_bloc_desire_to_join_modifiers = {
 		desc = AI_RELATIVE_MILITARY_POWER
 	}
 	modifier = { # Loyal
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		exists = scope:joiner_temp.confederation
 		scope:joiner_temp = { has_trait = loyal }
 		add = {
@@ -255,7 +224,6 @@ house_bloc_desire_to_join_modifiers = {
 	}
 	# Government
 	modifier = { # Different government type
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		scope:joiner_temp = {
 			NOT = { has_same_government = scope:inviter_temp }
 		}
@@ -263,7 +231,6 @@ house_bloc_desire_to_join_modifiers = {
 		desc = AI_DIFFERENT_GOVERNMENT_REASON
 	}
 	modifier = { # Not same as top liege
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		scope:joiner_temp = {
 			NOR = {
 				exists = house.house_confederation
@@ -275,7 +242,6 @@ house_bloc_desire_to_join_modifiers = {
 	}
 	# Family
 	modifier = { # Close dynasty house
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		exists = scope:inviter_temp.dynasty
 		scope:joiner_temp.dynasty ?= scope:inviter_temp.dynasty
 		#OR = { #Unop: Useless OR
@@ -299,7 +265,6 @@ house_bloc_desire_to_join_modifiers = {
 		desc = CLOSE_FAMILY_REASON #Unop: Was AI_CLOSE_HOUSE_REASON but does not exists
 	}
 	modifier = { # Distant dynasty house
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		exists = scope:inviter_temp.dynasty
 		scope:joiner_temp.dynasty ?= scope:inviter_temp.dynasty
 		scope:joiner_temp.house != scope:inviter_temp.house
@@ -310,7 +275,6 @@ house_bloc_desire_to_join_modifiers = {
 		desc = AI_SAME_DYNASTY_REASON
 	}
 	modifier = { # Same house
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ } #Unop Save needed scopes
 		exists = scope:inviter_temp.house
 		scope:joiner_temp.house ?= scope:inviter_temp.house
 		add = 1000
@@ -318,7 +282,6 @@ house_bloc_desire_to_join_modifiers = {
 	}
 	# Relative House
 	modifier = { # Splendor level
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		add = {
 			value = scope:inviter_temp.dynasty.dynasty_prestige_level
 			subtract = scope:joiner_temp.dynasty.dynasty_prestige_level
@@ -328,7 +291,6 @@ house_bloc_desire_to_join_modifiers = {
 		desc = AI_RELATIVE_DYNASTY_PRESTIGE_REASON
 	}
 	modifier = {
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		exists = scope:inviter_temp.house
 		exists = scope:joiner_temp.house
 		scope:inviter_temp.house = {
@@ -347,7 +309,6 @@ house_bloc_desire_to_join_modifiers = {
 		desc = AI_RELATIVE_FAMILY_RATING_REASON
 	}
 	modifier = {
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		exists = scope:inviter_temp.house
 		exists = scope:joiner_temp.house
 		scope:inviter_temp.house = {
@@ -366,7 +327,6 @@ house_bloc_desire_to_join_modifiers = {
 		desc = AI_RELATIVE_FAMILY_RATING_REASON
 	}
 	modifier = {
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		exists = scope:joiner_temp.house
 		scope:joiner_temp = { tgp_is_in_ceremonial_house_trigger = yes }
 		NOT = {
@@ -381,14 +341,12 @@ house_bloc_desire_to_join_modifiers = {
 	}
 	# Aspiration
 	modifier = { # Same Aspiration
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		exists = scope:inviter_temp.confederation.leading_house
 		scope:joiner_temp.house ?= { has_same_house_aspiration_as = scope:inviter_temp.confederation.leading_house }
 		add = 25
 		desc = AI_SAME_LEADING_ASPIRATION_REASON
 	}
 	modifier = { # Same Better Aspiration
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		exists = scope:inviter_temp.confederation.leading_house
 		scope:joiner_temp.house ?= {
 			has_same_house_aspiration_as = scope:inviter_temp.house.house_confederation.leading_house
@@ -421,7 +379,6 @@ house_bloc_desire_to_join_modifiers = {
 		desc = AI_BETTER_LEADING_ASPIRATION_REASON
 	}
 	modifier = { # Different Aspiration
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		exists = scope:joiner_temp.house
 		exists = scope:inviter_temp.confederation.leading_house
 		NOT = {
@@ -432,7 +389,6 @@ house_bloc_desire_to_join_modifiers = {
 	}
 	# Bloc
 	modifier = { # More attractive if it's a small bloc
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		scope:inviter_temp.house.house_confederation.member_count < 5
 		add = {
 			value = 5
@@ -444,7 +400,6 @@ house_bloc_desire_to_join_modifiers = {
 		desc = AI_BLOC_SIZE_AVERSION_REASON
 	}
 	modifier = { # Less attractive as bloc grows
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		scope:inviter_temp.house.house_confederation.member_count >= 10
 		add = {
 			value = 10
@@ -457,7 +412,6 @@ house_bloc_desire_to_join_modifiers = {
 	}
 	# Relative Bloc
 	modifier = { # Military power
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		scope:inviter_temp = {
 			government_has_flag = government_is_japan_feudal
 			exists = house.house_confederation
@@ -476,7 +430,6 @@ house_bloc_desire_to_join_modifiers = {
 		desc = AI_RELATIVE_BLOC_MILITARY_POWER
 	}
 	modifier = { # Cohesion
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		scope:joiner_temp.house.house_confederation ?= { cohesion <= 50 }
 		add = {
 			value = 50
@@ -489,7 +442,6 @@ house_bloc_desire_to_join_modifiers = {
 		desc = AI_LOW_COHESION_REASON
 	}
 	modifier = { # Distance
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		exists = scope:joiner_temp.domicile
 		exists = scope:inviter_temp.domicile
 		scope:inviter_temp.domicile.domicile_location = {
@@ -504,7 +456,6 @@ house_bloc_desire_to_join_modifiers = {
 		desc = AI_DISTANT_DOMICILE_REASON
 	}
 	modifier = { # Cohesion
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		NOT = { exists = scope:joiner_temp.house.house_confederation }
 		exists = scope:inviter_temp.house.house_confederation
 		scope:inviter_temp.house.house_confederation.cohesion != 50
@@ -529,7 +480,6 @@ house_bloc_desire_to_join_modifiers = {
 		desc = AI_BLOC_COHESION_REASON
 	}
 	modifier = { # Relative Cohesion
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		exists = scope:joiner_temp.house.house_confederation
 		exists = scope:inviter_temp.house.house_confederation
 		scope:joiner_temp.house.house_confederation.cohesion != scope:inviter_temp.house.house_confederation.cohesion
@@ -541,13 +491,11 @@ house_bloc_desire_to_join_modifiers = {
 		desc = AI_BLOC_RELATIVE_COHESION_REASON
 	}
 	modifier = {
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		exists = scope:joiner_temp.house.house_confederation
 		add = -25
 		DESC = AI_ALREADY_IN_BLOC_REASON
 	}
 	modifier = { # Soryo bloc is not near any other bloc members
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		exists = scope:inviter_temp.house.house_confederation
 		scope:joiner_temp ?= {
 			is_landed = yes
@@ -569,7 +517,6 @@ house_bloc_desire_to_join_modifiers = {
 	}
 	# Threat
 	modifier = {
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		NOT = { exists = scope:joiner_temp.house.house_confederation }
 		scope:inviter_temp = { government_has_mechanic = administrative }
 		scope:joiner_temp = {
@@ -602,7 +549,6 @@ house_bloc_desire_to_join_modifiers = {
 	}
 	#Dynasty Legacy and Same Dynasty
 	modifier = {
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		scope:inviter_temp.dynasty = { has_dynasty_perk = tgp_japan_legacy_1 }
 		scope:inviter_temp.dynasty = scope:joiner_temp.dynasty
 		add = tgp_legacy_japan_dynasty_bloc_bonus_value
@@ -610,7 +556,6 @@ house_bloc_desire_to_join_modifiers = {
 	}
 	#Diplomacy Perk
 	modifier = {
-		tgp_house_bloc_inviter_or_leader_trigger = { INVITER = $INVITER$ JOINER = $JOINER$ }
 		scope:inviter_temp = { has_perk = forced_vassalage_perk }
 		add = tgp_join_bloc_interaction_lifestyle_perk_value
 		desc = AI_BLOCK_JOIN_LIFESTYLE_PERK

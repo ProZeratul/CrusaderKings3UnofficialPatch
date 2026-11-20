@@ -125,7 +125,6 @@ bookmark.0003 = { #by Mathilda Bjarnehed
 	hidden = yes
 	
 	trigger = {
-		root.rite = { trait_is_virtue_rite = vengeful }
 		scope:imprisoner = {
 			any_close_family_member = {
 				even_if_dead = yes
@@ -1252,10 +1251,13 @@ bookmark.1070 = {
 		hidden_effect = {
 			add_pressed_claim = title:d_salerno
 			add_pressed_claim = title:c_napoli
+			add_pressed_claim = title:c_amalfi
 			add_pressed_claim = title:d_capua
 			add_pressed_claim = title:c_siracusa
+			add_pressed_claim = title:c_caltagirone
 			add_pressed_claim = title:c_agrigento
 			add_pressed_claim = title:c_palermo
+			add_pressed_claim = title:c_trapani
 		}
 	}
 
@@ -1673,7 +1675,7 @@ bookmark.1071 = {
 				claimant = scope:raiktor
 				target_title = title:c_dyrrachion
 				target_title = title:c_avlonas
-				target_title = title:c_buthrotum
+				target_title = title:c_corfu
 			}
 			random_character_war = {
 				limit = {
@@ -1841,7 +1843,20 @@ bookmark.1072 = {
 
 	trigger = {
 		exists = title:c_cordoba.holder
-		NOT = { title:c_cordoba.holder = root }
+		title:c_cordoba.holder = {
+			this != root
+			trigger_if = {
+				limit = { # If root is AI, then Cordoba must also be AI - let's avoid punishing players wanting to play as Cordoba
+					root = { is_ai = yes }
+				}
+				NOR = {
+					is_ai = no
+					any_vassal_or_below = {
+						is_ai = no
+					}
+				}
+			}
+		}
 	}
 
 	immediate = {
@@ -1935,7 +1950,7 @@ bookmark.1072 = {
 		name = bookmark.1072.c
 		
 		ai_chance = {
-			base = 0
+			base = 50 # Medium chance for the AI to opt out, so that Cordoba stays relevant for longer
 		}
 	}
 }
@@ -1959,6 +1974,10 @@ bookmark.1073 = {
 	lower_left_portrait = scope:qutalmish
 	lower_right_portrait = scope:tughril
 
+	trigger = {
+		has_ep3_dlc_trigger = yes
+	}
+
 	immediate = {
 		character:3040 = { save_scope_as = alp_arslan }
 		character:3033 = { save_scope_as = qutalmish }
@@ -1966,7 +1985,10 @@ bookmark.1073 = {
 		title:e_persia.title_capital_county.title_province = { save_scope_as = background_terrain_scope }
 		show_as_tooltip = {
 			scope:alp_arslan = {
-				set_relation_rival = { reason = rival_killed_parent target = root }
+				set_relation_rival_effect = {
+					TARGET = root
+					REASON = rival_killed_parent
+				}
 			}
 			add_realm_law = camp_purpose_mercenaries
 		}
@@ -2065,9 +2087,15 @@ bookmark.1073 = {
 	option = {
 		name = bookmark.1073.b
 		add_unpressed_claim = title:e_persia
-		add_realm_law = camp_purpose_legitimists
+		if = {
+			limit = { has_ep3_dlc_trigger = yes }
+			add_realm_law = camp_purpose_legitimists
+		}
 		scope:alp_arslan = {
-			set_relation_nemesis = { reason = rival_killed_parent target = root }
+			set_relation_nemesis_effect = {
+				TARGET = root
+				REASON = rival_killed_parent
+			}
 		}
 		ai_chance = {
 			base = 10
@@ -2430,22 +2458,40 @@ bookmark.0500 = {
 		name = bookmark.0500.c
 
 		trigger = {
-			has_dlc_feature = roads_to_power
+			OR = {
+				has_playable_adventurer_dlc_trigger = yes
+				has_gdp_dlc_trigger = yes
+			}
 		}
 
-		create_landless_adventurer_title_tooltip_effect = yes
-		add_character_modifier = {
-			modifier = ep3_voluntary_laamp_character_modifier
-			years = 5
-		}
-		hidden_effect = {
-			# Create Adventurer
-			create_landless_adventurer_title_effect = {
-				REASON = flag:runaway_allowed
+		if = {
+			limit = {
+				has_gdp_dlc_trigger = yes
+			}
+			create_merchant_title_effect = {
+				REASON = flag:voluntary
 				FLAVOR_CHAR = root
 			}
-			domicile ?= {
-				change_provisions = major_provisions_gain
+			add_character_modifier = {
+				modifier = gdp_voluntary_merchant_modifier
+				years = 5
+			}
+		}
+		else = {
+			create_landless_adventurer_title_tooltip_effect = yes
+			add_character_modifier = {
+				modifier = ep3_voluntary_laamp_character_modifier
+				years = 5
+			}
+			hidden_effect = {
+				# Create Adventurer
+				create_landless_adventurer_title_effect = {
+					REASON = flag:runaway_allowed
+					FLAVOR_CHAR = root
+				}
+				domicile ?= {
+					change_provisions = major_provisions_gain
+				}
 			}
 		}
 

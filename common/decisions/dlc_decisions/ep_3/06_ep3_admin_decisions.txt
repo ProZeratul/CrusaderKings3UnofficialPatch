@@ -28,11 +28,6 @@ estate_hire_agents_decisions = {
 			has_domicile_parameter = estate_unlock_hire_agents_decision
 		}
 		has_ep3_dlc_trigger = yes
-		#Unop AI is charged influence in effect, not the cost block, so still require it can afford it
-		trigger_if = {
-			limit = { is_ai = yes }
-			influence >= major_influence_value
-		}
 	}
 
 	is_valid = {
@@ -43,27 +38,14 @@ estate_hire_agents_decisions = {
 	}
 
 	effect = {
-		debug_log = "unop_475 estate_hire_agents_decisions" #Unop debug log to confirm issue #475
 		add_character_modifier = {
 			modifier = ep3_estate_hired_agents_modifier
 			years = 15
 		}
-		#Unop AI pays the influence here since the cost block is free for it
-		if = {
-			limit = { is_ai = yes }
-			change_influence = major_influence_loss
-		}
 	}
 
 	cost = {
-		#Unop AI never budgets cost-block influence; charge it via is_shown/effect below
-		influence = {
-			value = 0
-			if = {
-				limit = { is_ai = no }
-				add = major_influence_value
-			}
-		}
+		influence = major_influence_value
 	}
 
 	ai_potential = {
@@ -130,11 +112,6 @@ estate_bolster_security_decision = {
 			has_domicile_parameter = estate_unlock_bolster_security_decision
 		}
 		has_ep3_dlc_trigger = yes
-		#Unop AI is charged influence in effect, not the cost block, so still require it can afford it
-		trigger_if = {
-			limit = { is_ai = yes }
-			influence >= major_influence_value
-		}
 	}
 
 	is_valid = {
@@ -145,27 +122,14 @@ estate_bolster_security_decision = {
 	}
 
 	effect = {
-		debug_log = "unop_475 estate_bolster_security_decision" #Unop debug log to confirm issue #475
 		add_character_modifier = {
 			modifier = ep3_estate_bolster_security_modifier
 			years = 15
 		}
-		#Unop AI pays the influence here since the cost block is free for it
-		if = {
-			limit = { is_ai = yes }
-			change_influence = major_influence_loss
-		}
 	}
 
 	cost = {
-		#Unop AI never budgets cost-block influence; charge it via is_shown/effect below
-		influence = {
-			value = 0
-			if = {
-				limit = { is_ai = no }
-				add = major_influence_value
-			}
-		}
+		influence = major_influence_value
 	}
 
 	ai_potential = {
@@ -257,6 +221,7 @@ estate_governor_patrols_decision = {
 				modifier = ep3_estate_governor_patrols_modifier
 				years = 15
 			}
+			change_county_control = 5
 		}
 		increase_governance_effect = { VALUE = 6 }
 	}
@@ -406,7 +371,7 @@ estate_granary_decision = {
 			limit = {
 				domicile ?= {
 					domicile_location.county = {
-						county_control < 100
+						county_control < county_control_baseline
 					}
 				}
 			}
@@ -416,21 +381,21 @@ estate_granary_decision = {
 			limit = {
 				domicile ?= {
 					domicile_location.county = {
-						development_level >= estate_granary_development_bonus_2_value
+						prosperity_level >= estate_granary_prosperity_bonus_2_value
 					}
 				}
 			}
-			custom_tooltip = estate_unlock_granary_decision_development_2_tt
+			custom_tooltip = estate_unlock_granary_decision_prosperity_2_tt
 		}
 		else_if = {
 			limit = {
 				domicile ?= {
 					domicile_location.county = {
-						development_level >= estate_granary_development_bonus_1_value
+						prosperity_level >= estate_granary_prosperity_bonus_1_value
 					}
 				}
 			}
-			custom_tooltip = estate_unlock_granary_decision_development_1_tt
+			custom_tooltip = estate_unlock_granary_decision_prosperity_1_tt
 		}
 		if = {
 			limit = {
@@ -702,11 +667,6 @@ consolidate_rule_decision = {
 			}
 		}
 		has_ep3_dlc_trigger = yes
-		#Unop AI is charged influence in effect, not the cost block, so still require it can afford it
-		trigger_if = {
-			limit = { is_ai = yes }
-			influence >= medium_influence_value
-		}
 	}
 
 	is_valid = {
@@ -721,25 +681,12 @@ consolidate_rule_decision = {
 	}
 
 	effect = {
-		debug_log = "unop_475 consolidate_rule_decision" #Unop debug log to confirm issue #475
 		custom_tooltip = consolidate_rule_decision_effect_tt
 		trigger_event = ep3_decisions_event.4050
-		#Unop AI pays the influence here since the cost block is free for it
-		if = {
-			limit = { is_ai = yes }
-			change_influence = medium_influence_loss
-		}
 	}
 
 	cost = {
-		#Unop AI never budgets cost-block influence; charge it via is_shown/effect below
-		influence = {
-			value = 0
-			if = {
-				limit = { is_ai = no }
-				add = medium_influence_value
-			}
-		}
+		influence = medium_influence_value
 		piety = medium_piety_value
 	}
 
@@ -787,7 +734,8 @@ convert_to_administrative_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/ep3_cerimonial_decision.dds"
 	}
-	decision_group_type = major
+	decision_group_type = realm
+	sort_order = 40
 	title = {
 		first_valid = {
 			triggered_desc = {
@@ -839,6 +787,10 @@ convert_to_administrative_decision = {
 			government_has_flag = government_is_feudal
 			government_has_flag = government_is_clan
 			government_has_flag = government_is_japan_feudal
+			AND = { # Republic doges may become admin
+				government_has_flag = government_is_republic
+				highest_liege_matching_rule:uses_assembly = this
+			}
 		}
 		trigger_if = {
 			limit = { top_liege != this }
@@ -901,6 +853,7 @@ convert_to_administrative_decision = {
 			limit = {
 				top_liege = this
 				is_ai = no
+				NOT = { government_has_flag = government_is_republic }
 			}
 			custom_tooltip = {
 				text = all_powerful_vassals_required_tt
@@ -913,6 +866,12 @@ convert_to_administrative_decision = {
 				}
 			}
 		}
+		trigger_if = { # Republics have to be despots
+			limit = {
+				government_has_flag = government_is_republic
+			}
+			has_realm_law = republican_despot_succession_law
+		}
 		trigger_if = {
 			limit = { is_ai = yes }
 			calc_true_if = {
@@ -922,7 +881,7 @@ convert_to_administrative_decision = {
 				culture = { has_cultural_pillar = ethos_egalitarian }
 				culture = { has_cultural_tradition = tradition_legalistic }
 				has_realm_law = crown_authority_3
-				capital_county = { development_level > medium_development_level }
+				capital_county = { prosperity_level > medium_prosperity_level }
 				rite = { rite_has_tenet = tenet_legalism }
 				dynasty = { has_dynasty_perk = erudition_legacy_5 }
 				dynasty = { has_dynasty_perk = law_legacy_5 }
@@ -1371,7 +1330,8 @@ convert_to_feudalism_from_administrative_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
 	}
-	decision_group_type = major
+	decision_group_type = realm
+	sort_order = 40
 	desc = convert_to_feudalism_from_administrative_decision_desc
 
 	is_shown = {
@@ -1390,12 +1350,11 @@ convert_to_feudalism_from_administrative_decision = {
 	is_valid = {
 		is_landed = yes
 		trigger_if = {
-			limit = {
-				is_independent_ruler = no
-			}
-			top_liege ?= {
-				realm_law_authority_level_0 = yes
-			}
+			limit = { is_independent_ruler = no }
+			custom_tooltip = {
+				text = liege_has_realm_law_authority_0_tt
+				top_liege ?= { realm_law_authority_level_0 = yes }
+			}	
 			custom_tooltip = {
 				text = governorship_is_on_the_border_tt
 				any_sub_realm_county = {
@@ -1681,11 +1640,6 @@ renounce_governorship_decision = {
 			is_governor_or_admin_count = yes
 			tgp_is_any_minister = yes
 		}
-		#Unop AI is charged influence in effect, not the cost block, so still require it can afford it
-		trigger_if = {
-			limit = { is_ai = yes }
-			influence >= minor_influence_value
-		}
 	}
 
 	is_valid_showing_failures_only = {
@@ -1700,7 +1654,6 @@ renounce_governorship_decision = {
 	}
 
 	effect = {
-		debug_log = "unop_475 renounce_governorship_decision" #Unop debug log to confirm issue #475
 		if = {
 			limit = {
 				tgp_is_any_minister = yes
@@ -1756,22 +1709,10 @@ renounce_governorship_decision = {
 			view = decisions
 			player = root
 		}
-		#Unop AI pays the influence here since the cost block is free for it
-		if = {
-			limit = { is_ai = yes }
-			change_influence = minor_influence_loss
-		}
 	}
 
 	cost = {
-		#Unop AI never budgets cost-block influence; charge it via is_shown/effect below
-		influence = {
-			value = 0
-			if = {
-				limit = { is_ai = no }
-				add = minor_influence_value
-			}
-		}
+		influence = minor_influence_value
 	}
 
 	ai_potential = {
@@ -1893,10 +1834,8 @@ change_imperial_aspirations_decision = {
 
 	is_valid = {
 		government_has_flag = government_is_administrative
-		trigger_if = { # Unavailable if you are the top liege - Unless you have either modifier, so you may remove it.
-			limit = {
-				top_liege = this
-			}
+		trigger_if = { # Unavailable if you are the top liege - Unless if you have either modifier, so you may remove it.
+			limit = { top_liege = this }
 			OR = {
 				has_character_modifier = ep3_admin_renounce_throne_personal
 				house ?= { has_house_modifier = ep3_admin_renounce_throne_house }

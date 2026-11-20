@@ -59,6 +59,12 @@ hunt_random_pulse = {
 		500 = hunt.7100 #Seduce convo
 		500 = hunt.7300 # Befriend convo
 		500 = pam_spread_tenet_events.0101 # Around the Fire - preach your personal tenet at the hunt camp
+		# Schmooze
+		500 = gdp_schmooze_events.1000
+		500 = gdp_schmooze_events.1010
+		500 = gdp_schmooze_events.1030
+		500 = gdp_schmooze_events.1050
+		500 = gdp_schmooze_events.1060
 		# Falconry
 		25 = hunt.5060 # Find an eyas
 		100 = hunt.8000 # Show off your falconry skills to your lover
@@ -222,13 +228,13 @@ hunt_end_events = {
 # For firing yearly Sighting events
 hunt_sighting_on_action = {
 	trigger = {
-		hunt_sighting_event_trigger = yes
 		NOR = {
-			can_employ_court_position_type = master_of_hunt_court_position
 			employs_court_position = master_of_hunt_court_position
 			has_character_flag = recent_hunt_sighting
 			has_character_flag = disabled_hunt_sightings_flag
+			can_employ_court_position_type = master_of_hunt_court_position
 		}
+		hunt_sighting_event_trigger = yes
 	}
 	random_events = {
 		chance_of_no_event = {

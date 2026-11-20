@@ -592,6 +592,15 @@ destroy_artifact_aniconist_effect = {
 					}
 					round = yes #Unop: Move the round here from the multiply block since it will make it multiply by 0
 				}
+				#Nerf it a bit less for Merchants
+				else_if = {
+					limit = { 
+						$DESTROYER$ = { is_landless_merchant = yes }
+					}
+					multiply = {
+						value = 0.5
+					}
+				}
 				if = {
 					limit = {
 						exists = scope:artifact.var:ai_to_ai_destroy_in_sieges # Trash artifact
@@ -601,12 +610,40 @@ destroy_artifact_aniconist_effect = {
 						multiply = 0.5
 					}
 				}
+				else_if = {
+					limit = {
+						scope:artifact = { is_unique = yes }
+					}
+					max = {
+						value = $DESTROYER$.medium_gold_value
+					}
+				}
+				else = {
+					max = {
+						value = $DESTROYER$.minor_gold_value
+					}
+				}
 
 				round = yes
 				min = 1
 			}
 		}
-		destroy_owned_artifact = scope:artifact
+		# Living creatures are still removed, but a sale should not describe that as destruction.
+		if = {
+			limit = {
+				$GIVE_GOLD$ = yes
+				is_landless_merchant = yes
+				scope:artifact = { artifact_type = creature }
+			}
+			scope:artifact = { save_scope_as = sold_creature }
+			custom_tooltip = {
+				text = sell_creature_artifact_effect
+				destroy_owned_artifact = scope:artifact
+			}
+		}
+		else = {
+			destroy_owned_artifact = scope:artifact
+		}
 	}
 }
 

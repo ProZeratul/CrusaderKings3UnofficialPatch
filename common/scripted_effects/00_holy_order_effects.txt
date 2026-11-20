@@ -404,7 +404,7 @@ create_monastic_decision_effect = {
 					}
 					limit = {
 						has_holding = no
-						has_ongoing_construction = no
+						has_ongoing_holding_construction = no
 					}
 					begin_create_holding = church_holding
 					save_scope_as = province
@@ -1047,9 +1047,9 @@ take_vows_demand_effect = {
 					has_trait = bastard
 				}
 			}
-			set_relation_rival = {
-				target = scope:puppet_or_actor
-				reason = rival_forced_to_take_vows
+			set_relation_rival_effect = {
+				TARGET = scope:puppet_or_actor
+				REASON = rival_forced_to_take_vows
 			}
 		}
 		else = {
@@ -1620,8 +1620,9 @@ set_up_historical_monastic_orders_effect = {
 			#Benedictines in Italy are eternal
 			always = yes
 		}
-		title:b_cento = {
+		title:b_nonantola = {
 			save_scope_as = monastic_barony
+			holder.liege = { get_title = prev } # grab from theocrat baron vassal
 			county.holder = {
 				save_scope_as = game_start_founder
 				set_variable = {
@@ -1745,16 +1746,22 @@ set_up_historical_monastic_orders_effect = {
 				lease_out_to_holy_order = scope:benedictine
 			}
 			#Lorsch abbey
-			title:b_besensheim = {
+			title:b_lorsch = {
 				holder.liege = { get_title = prev } # grab from theocrat baron vassal
 				lease_out_to_holy_order = scope:benedictine
 			}
 			#Niederalteich abbey
-			title:b_deggendorf = { lease_out_to_holy_order = scope:benedictine }
+			title:b_deggendorf = {
+				holder.liege = { get_title = prev } # grab from theocrat baron vassal
+				lease_out_to_holy_order = scope:benedictine
+			}
 			title:b_argonne = { lease_out_to_holy_order = scope:benedictine }
 
 			#Was under direct leadership of Benedict of Aniane
-			title:b_prum = { lease_out_to_holy_order = scope:benedictine }
+			title:b_prum = {
+				holder.liege = { get_title = prev } # grab from theocrat baron vassal
+				lease_out_to_holy_order = scope:benedictine
+			}
 
 			#FRANCE
 			title:b_loches = {
@@ -1787,15 +1794,19 @@ set_up_historical_monastic_orders_effect = {
 			title:b_taunton = { lease_out_to_holy_order = scope:benedictine }
 
 			#HRE
-			title:b_dassel = { lease_out_to_holy_order = scope:benedictine }
+			title:b_corvey = { lease_out_to_holy_order = scope:benedictine }
 			title:b_corbie = { lease_out_to_holy_order = scope:benedictine }
-			title:b_gent = { lease_out_to_holy_order = scope:benedictine }
+			#Affligem abbey, standing in for the abbeys of Ghent
+			title:b_aalst = { lease_out_to_holy_order = scope:benedictine }
 			title:b_sankt_gallen = {
 				holder.liege = { get_title = prev } # grab from theocrat baron vassal
 				lease_out_to_holy_order = scope:benedictine
 			}
-			title:b_lure = { lease_out_to_holy_order = scope:benedictine }
-			title:b_besensheim = {
+			title:b_lure = {
+				holder.liege = { get_title = prev } # grab from theocrat baron vassal
+				lease_out_to_holy_order = scope:benedictine
+			}
+			title:b_lorsch = {
 				holder.liege = { get_title = prev } # grab from theocrat baron vassal
 				lease_out_to_holy_order = scope:benedictine
 			}
@@ -1804,7 +1815,10 @@ set_up_historical_monastic_orders_effect = {
 				holder.liege = { get_title = prev } # grab from theocrat baron vassal
 				lease_out_to_holy_order = scope:benedictine
 			}
-			title:b_deggendorf = { lease_out_to_holy_order = scope:benedictine }
+			title:b_deggendorf = {
+				holder.liege = { get_title = prev } # grab from theocrat baron vassal
+				lease_out_to_holy_order = scope:benedictine
+			}
 			title:b_slany = { lease_out_to_holy_order = scope:benedictine }
 
 			#FRANCIA
@@ -1842,7 +1856,7 @@ set_up_historical_monastic_orders_effect = {
 			holder.liege = { get_title = prev } # grab from theocrat baron vassal
 			save_scope_as = monastic_barony
 		}
-		title:c_sankt_gallen.holder = {
+		title:c_konstanz.holder = {
 			save_scope_as = game_start_founder
 			set_variable = {
 				name = monastic_game_start_founder
@@ -1885,15 +1899,19 @@ set_up_historical_monastic_orders_effect = {
 				exists = scope:columban_benedictine
 			}
 			#Columban founde monasteries here and nearby
-			title:b_lure = { lease_out_to_holy_order = scope:columban_benedictine }
+			title:b_lure = {
+				holder.liege = { get_title = prev } # grab from theocrat baron vassal
+				lease_out_to_holy_order = scope:columban_benedictine
+			}
 			#Representing Bobbio
-			title:b_florentiola = { lease_out_to_holy_order = scope:columban_benedictine }
+			title:b_bobbio = { lease_out_to_holy_order = scope:columban_benedictine }
 			title:b_pomposa = { lease_out_to_holy_order = scope:columban_benedictine }
 
 			#Columban influence had faded, but generic benedictines are a bit bloated so...
-			title:b_dassel = { lease_out_to_holy_order = scope:columban_benedictine }
+			title:b_corvey = { lease_out_to_holy_order = scope:columban_benedictine }
 			title:b_corbie = { lease_out_to_holy_order = scope:columban_benedictine }
-			title:b_gent = { lease_out_to_holy_order = scope:columban_benedictine }
+			#Abbeys of Ghent
+			title:b_aalst = { lease_out_to_holy_order = scope:columban_benedictine }
 		}
 	}
 	##Eremetic Benedictines
@@ -2334,10 +2352,25 @@ set_up_historical_monastic_orders_effect = {
 			#in vicinity of Abbey of Saint-Jean-d’Angély, rebuilt in 11th c
 			title:b_jonzac = { lease_out_to_holy_order = scope:cluniac }
 			title:b_abbeville = { lease_out_to_holy_order = scope:cluniac }
+
+			#ITALY
+			title:b_bobbio = {
+				if = {
+					limit = {
+						holder = { highest_held_title_tier = tier_barony }
+					}
+					holder.liege = { get_title = prev }
+				}
+				lease_out_to_holy_order = scope:cluniac
+			}
 			title:b_beaugency = { lease_out_to_holy_order = scope:cluniac }
 
 			#EASTERN EUROPE
-			title:b_bielsko = { lease_out_to_holy_order = scope:cluniac }
+			#Representing Tyniec Abbey
+			title:b_czestochowa = {
+				holder.liege = { get_title = prev } # grab from theocrat baron vassal
+				lease_out_to_holy_order = scope:cluniac
+			}
 		}
 		#Lease out additional holdings in 1178
 		if = {
@@ -2346,7 +2379,8 @@ set_up_historical_monastic_orders_effect = {
 				current_year >= 1178
 			}
 			title:b_corbie = { lease_out_to_holy_order = scope:cluniac }
-			title:b_gent = { lease_out_to_holy_order = scope:cluniac }
+			#Affligem abbey
+			title:b_aalst = { lease_out_to_holy_order = scope:cluniac }
 			#Grand-Sauve
 			title:b_fronsac = { lease_out_to_holy_order = scope:cluniac }
 
@@ -2369,7 +2403,7 @@ set_up_historical_monastic_orders_effect = {
 		limit = {
 			current_date >= 1066.1.1
 		}
-		title:b_camaldoli = {
+		title:b_dovadola = {
 			holder.liege = { get_title = prev } # grab from theocrat baron vassal
 			save_scope_as = monastic_barony
 		}
@@ -2507,7 +2541,6 @@ set_up_historical_monastic_orders_effect = {
 				exists = scope:ugo
 			}
 			title:b_cassino = { lease_out_to_holy_order = scope:ugo }
-			title:b_florentiola = { lease_out_to_holy_order = scope:ugo }
 		}
 	}
 	#Vallombrosans
@@ -2515,14 +2548,14 @@ set_up_historical_monastic_orders_effect = {
 		limit = {
 			current_year >= 1066
 		}
-		title:b_vallombrosa = {
+		title:b_castiglione = {
 			save_scope_as = monastic_barony
 		}
 		if = {
 			limit = {
 				current_year < 1067
 			}
-			title:c_arezzo.holder = {
+			title:c_firenze.holder = {
 				save_scope_as = game_start_founder
 				set_variable = {
 					name = monastic_game_start_founder
@@ -2534,7 +2567,7 @@ set_up_historical_monastic_orders_effect = {
 			}
 		}
 		else = {
-			title:c_arezzo.holder = {
+			title:c_firenze.holder = {
 				save_scope_as = game_start_founder
 				set_variable = {
 					name = monastic_game_start_founder
@@ -2677,9 +2710,10 @@ set_up_historical_monastic_orders_effect = {
 		limit = {
 			current_year >= 1066
 		}
-		#Putting here to preserve former capital of Emperor's sister
-		title:b_limburg = {
+		#Both leaders were Abbesses of Quedlinburg
+		title:b_quedlinburg = {
 			save_scope_as = monastic_barony
+			holder.liege = { get_title = prev } # grab from theocrat baron vassal
 		}
 		title:e_hre.holder = {
 			save_scope_as = game_start_founder
@@ -2734,11 +2768,6 @@ set_up_historical_monastic_orders_effect = {
 				exists = scope:canoness
 			}
 			title:b_essen = {
-				holder.liege = { get_title = prev } # grab from theocrat baron vassal
-				lease_out_to_holy_order = scope:canoness
-			}
-			#Quedlinburg, I believe
-			title:b_arnstein = {
 				holder.liege = { get_title = prev } # grab from theocrat baron vassal
 				lease_out_to_holy_order = scope:canoness
 			}
@@ -2812,7 +2841,10 @@ set_up_historical_monastic_orders_effect = {
 				exists = scope:gorze
 			}
 			title:b_argonne = { lease_out_to_holy_order = scope:gorze }
-			title:b_prum = { lease_out_to_holy_order = scope:gorze }
+			title:b_prum = {
+				holder.liege = { get_title = prev } # grab from theocrat baron vassal
+				lease_out_to_holy_order = scope:gorze
+			}
 			title:b_hersfeld = {
 				holder.liege = { get_title = prev } # grab from theocrat baron vassal
 				lease_out_to_holy_order = scope:gorze
@@ -2823,11 +2855,11 @@ set_up_historical_monastic_orders_effect = {
 				exists = scope:gorze
 				current_year >= 1178
 			}
-			title:b_dassel = {
+			title:b_corvey = {
 				holder.liege = { get_title = prev } # grab from theocrat baron vassal
 				lease_out_to_holy_order = scope:gorze
 			}
-			title:b_besensheim = {
+			title:b_lorsch = {
 				holder.liege = { get_title = prev } # grab from theocrat baron vassal
 				lease_out_to_holy_order = scope:gorze
 			}
@@ -2842,7 +2874,7 @@ set_up_historical_monastic_orders_effect = {
 			current_date > 1066.1.1
 		}
 		#Pannonhalma
-		title:b_zirc = {
+		title:b_pannonhalma = {
 			save_scope_as = monastic_barony
 		}
 		title:k_hungary.holder = {
@@ -3038,8 +3070,11 @@ set_up_historical_monastic_orders_effect = {
 			}
 			title:b_lorient = { lease_out_to_holy_order = scope:cistercian }
 			title:b_loches = { lease_out_to_holy_order = scope:cistercian }
-			#Around Fontenay
-			title:b_montbard = { lease_out_to_holy_order = scope:cistercian }
+			#Trois-Fontaines Abbey, first daughter of Clairvaux
+			title:b_saint_dizier = {
+				holder.liege = { get_title = prev } # grab from theocrat baron vassal
+				lease_out_to_holy_order = scope:cistercian
+			}
 			#Sauvigny Abbey, which had its own Order until shortly before start date
 			title:b_mortain = { lease_out_to_holy_order = scope:cistercian }
 
@@ -3064,7 +3099,7 @@ set_up_historical_monastic_orders_effect = {
 				lease_out_to_holy_order = scope:cistercian
 			}
 			#Kołbacz Abbey
-			title:b_gryfino = { lease_out_to_holy_order = scope:cistercian }
+			title:b_stargard = { lease_out_to_holy_order = scope:cistercian }
 
 			#IBERIA
 			title:b_leiria = { lease_out_to_holy_order = scope:cistercian }
@@ -3131,8 +3166,11 @@ set_up_historical_monastic_orders_effect = {
 			limit = {
 				exists = scope:premonstratensian
 			}
-			#Premonstratensians were introduced into Sicily by this time and there were monasteries here
-			title:b_catania = { lease_out_to_holy_order = scope:premonstratensian }
+			#San Giorgio di Gratteri, their only house in Sicily
+			title:b_termini = {
+				holder.liege = { get_title = prev } # grab from theocrat baron vassal
+				lease_out_to_holy_order = scope:premonstratensian
+			}
 			#Želiv Abbey
 			title:b_chynov = { lease_out_to_holy_order = scope:premonstratensian }
 		}
@@ -3256,7 +3294,7 @@ set_up_historical_monastic_orders_effect = {
 			current_date >= 1178.1.1
 		}
 		#closest to Fontevraud
-		title:b_loudun = {
+		title:b_fontevraud = {
 			save_scope_as = monastic_barony
 			county.holder = {
 				save_scope_as = game_start_founder
@@ -3430,7 +3468,10 @@ set_up_historical_monastic_orders_effect = {
 				holder.liege = { get_title = prev } # grab from theocrat baron vassal
 				lease_out_to_holy_order = scope:hirsau_benedictine
 			}
-			title:b_lure = { lease_out_to_holy_order = scope:hirsau_benedictine }
+			title:b_lure = {
+				holder.liege = { get_title = prev } # grab from theocrat baron vassal
+				lease_out_to_holy_order = scope:hirsau_benedictine
+			}
 			title:b_calw = { lease_out_to_holy_order = scope:hirsau_benedictine }
 		}
 	}
@@ -6428,6 +6469,10 @@ monastic_lease_swapping_effect = {
 				}
 				any_leased_title = {
 					monastic_lease_can_be_suborned_trigger = { ORDER = scope:holy_order }
+					holder ?= {
+						primary_title.tier > tier_barony
+						domain_size > 1
+					}
 				}
 				scope:holy_order_leader.var:old_order ?= this
 			}
@@ -6437,16 +6482,24 @@ monastic_lease_swapping_effect = {
 				}
 				any_leased_title = {
 					monastic_lease_can_be_suborned_trigger = { ORDER = scope:holy_order }
+					holder ?= {
+						primary_title.tier > tier_barony
+						domain_size > 1
+					}
 				}
 			}
 			save_scope_as = target_order
 			ordered_leased_title = {
 				order_by = {
-					value = county.development_level
+					value = county.prosperity_level
 					multiply = -1
 				}
 				limit = {
 					monastic_lease_can_be_suborned_trigger = { ORDER = scope:holy_order }
+					holder ?= { # A baron's title or someone's only title cannot be leased out again
+						primary_title.tier > tier_barony
+						domain_size > 1
+					}
 					NOT = {
 						county = scope:target_order.leader.capital_county
 					}
@@ -6462,11 +6515,15 @@ monastic_lease_swapping_effect = {
 				}
 				ordered_leased_title = {
 					order_by = {
-						value = county.development_level
+						value = county.prosperity_level
 						multiply = -1
 					}
 					limit = {
 						monastic_lease_can_be_suborned_trigger = { ORDER = scope:holy_order }
+						holder ?= {
+							primary_title.tier > tier_barony
+							domain_size > 1
+						}
 					}
 					save_scope_as = taken_monastery
 				}

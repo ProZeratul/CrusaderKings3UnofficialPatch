@@ -1017,29 +1017,29 @@ ep3_frankokratia_capital_sacking_effect = {
 		if = {
 			limit = {
 				scope:claimant.capital_county = {
-					development_level >= 90
+					prosperity_level >= 90
 				}
 			}
-			change_development_level = -20
+			change_prosperity_level = -20
 		}
 		else_if = {
 			limit = {
 				scope:claimant.capital_county = {
-					development_level >= 60
+					prosperity_level >= 60
 				}
 			}
-			change_development_level = -15
+			change_prosperity_level = -15
 		}
 		else_if = {
 			limit = {
 				scope:claimant.capital_county = {
-					development_level >= 40
+					prosperity_level >= 40
 				}
 			}
-			change_development_level = -10
+			change_prosperity_level = -10
 		}
 		else = {
-			change_development_level = -5
+			change_prosperity_level = -5
 		}
 		custom_tooltip = byz_capital_building_destroyed_tooltip
 	}
@@ -1331,6 +1331,10 @@ ep3_frankokratia_kill_byzantines_effect = {
 	every_in_list = {
 		list = byz_slaughter_recipients
 		trigger_event = ep3_frankokratia_events.0046
+	}
+	trigger_event = {
+		id = ep3_frankokratia_events.0047
+		days = 30
 	}
 	
 	hidden_effect = {
@@ -2065,6 +2069,14 @@ ep3_frankokratia_grant_latin_empire_effect = {
 			}
 			duchy = {
 				add_to_list = latin_emperor_titles
+			}
+		}
+	}
+	scope:latin_emperor = {
+		if = {
+			limit = { gdp_is_trade_league_member_trigger = yes }
+			confederation = {
+				leave_confederation_membership_effect = { LEAVER = scope:latin_emperor }
 			}
 		}
 	}
@@ -2946,6 +2958,19 @@ ep3_frankokratia_grant_latin_lands_effect = {
 			}
 			var:latin_duchy = {
 				add_to_list = my_latin_titles
+				save_scope_as = destroyed_latin_duchy
+			}
+			# We empty the treasury first to avoid weirdness later if it's recreated
+			hidden_effect = {
+				scope:destroyed_latin_duchy.holder ?= {
+					if = {
+						limit = {
+							primary_title = scope:destroyed_latin_duchy
+							has_treasury = yes
+						}
+						empty_treasury_effect = yes
+					}
+				}
 			}
 			destroy_title = var:latin_duchy
 		}
@@ -4418,139 +4443,31 @@ ep3_frankokratia_form_byzantine_kingdoms_effect = {
 		}
 	}
 	#Move de jure neighbour vassals into kingdoms
-	if = {
+	while = {
 		limit = {
 			any_vassal = {
-				is_in_list = byz_vassals
-				highest_held_title_tier <= tier_duchy
-				government_has_mechanic = administrative
-				OR = {
-					ai_boldness <= medium_negative_ai_value
-					ai_honor >= medium_positive_ai_value
-					ai_energy <= medium_negative_ai_value
-					has_trait = loyal
-				}
-				capital_county = {
-					save_temporary_scope_as = prime_title
-					kingdom.holder ?= {
-						OR = {
-							is_in_list = byz_vassals
-							this = title:e_byzantium.holder
-						}
-					}
-				}
-				#One of heir counties borders the king's personal counties
-				any_sub_realm_county = {
-					any_neighboring_county = {
-						holder = {
-							OR = {
-								this = scope:prime_title.kingdom.holder
-								any_liege_or_above = {
-									this = scope:prime_title.kingdom.holder
-								}
-							}
-						}
-					}
-				}
+				ep3_frankokratia_byz_vassal_joins_new_kingdom_trigger = yes
 			}
 		}
-		while = {
+		random_vassal = {
 			limit = {
-				any_vassal = {
-					is_in_list = byz_vassals
-					highest_held_title_tier <= tier_duchy
-					government_has_mechanic = administrative
-					OR = {
-						ai_boldness <= medium_negative_ai_value
-						ai_honor >= medium_positive_ai_value
-						ai_energy <= medium_negative_ai_value
-						has_trait = loyal
-					}
-					capital_county = {
-						save_temporary_scope_as = prime_title
-						kingdom.holder ?= {
-							OR = {
-								is_in_list = byz_vassals
-								this = title:e_byzantium.holder
-							}
-						}
-					}
-					any_sub_realm_county = {
-						any_neighboring_county = {
-							holder = {
-								OR = {
-									this = scope:prime_title.kingdom.holder
-									any_liege_or_above = {
-										this = scope:prime_title.kingdom.holder
-									}
-								}
-							}
-						}
-					}
-				}
+				ep3_frankokratia_byz_vassal_joins_new_kingdom_trigger = yes
 			}
-			random_in_list = {
-				list = byz_vassals
-				limit = {
-					is_in_list = byz_vassals
-					highest_held_title_tier <= tier_duchy
-					government_has_mechanic = administrative
-					OR = {
-						ai_boldness <= medium_negative_ai_value
-						ai_honor >= medium_positive_ai_value
-						ai_energy <= medium_negative_ai_value
-						has_trait = loyal
-					}
-					capital_county = {
-						save_temporary_scope_as = prime_title
-						kingdom.holder ?= {
-							OR = {
-								is_in_list = byz_vassals
-								this = title:e_byzantium.holder
-							}
-						}
-					}
-					any_sub_realm_county = {
-						any_neighboring_county = {
-							holder = {
-								OR = {
-									this = scope:prime_title.kingdom.holder
-									any_liege_or_above = {
-										this = scope:prime_title.kingdom.holder
-									}
-								}
-							}
-						}
-					}
-				}
-				save_scope_as = vassalizing_vassal
-				random_in_list = {
-					list = byz_vassals
-					limit = {
-						is_in_list = byz_vassals
-						any_held_title = {
-							title_tier = kingdom
-							any_de_jure_county = {
-								save_temporary_scope_as = county_temp
-								scope:vassalizing_vassal.capital_county = {
-									this = scope:county_temp
-								}
-							}
-						}
-					}
-					save_scope_as = new_liege
-				}
-				create_title_and_vassal_change = {
-					type = granted
-					save_scope_as = change
-					add_claim_on_loss = no
-				}
-				change_liege = {
-					liege = scope:new_liege
-					change = scope:change
-				}
-				resolve_title_and_vassal_change = scope:change
+			capital_county.kingdom.holder = {
+				save_scope_as = new_liege
 			}
+			create_title_and_vassal_change = {
+				type = granted
+				save_scope_as = change
+				add_claim_on_loss = no
+			}
+			change_liege = {
+				liege = scope:new_liege
+				change = scope:change
+			}
+			resolve_title_and_vassal_change = scope:change
+			#Spared from ep3_frankokratia_byzantine_independence_effect
+			add_to_list = byz_new_kingdom_vassals
 		}
 	}
 	#Move landless into kingdoms
@@ -4838,6 +4755,7 @@ ep3_frankokratia_byzantine_independence_effect = {
 			is_ai = yes
 			highest_held_title_tier < tier_kingdom
 			highest_held_title_tier >= tier_county
+			NOT = { is_in_list = byz_new_kingdom_vassals }
 			liege = {
 				save_temporary_scope_as = temp_byz_liege
 			}
@@ -4857,9 +4775,6 @@ ep3_frankokratia_byzantine_independence_effect = {
 							NOT = {
 								government_has_mechanic = administrative
 							}
-						}
-						liege = {
-							governor_efficiency < 0.7
 						}
 						culture = {
 							this != scope:temp_byz_liege.culture
@@ -4891,9 +4806,6 @@ ep3_frankokratia_byzantine_independence_effect = {
 						opinion = {
 							target = liege
 							value <= -25
-						}
-						liege = {
-							governor_efficiency < 0.85
 						}
 					}
 				}
@@ -5049,6 +4961,7 @@ ep3_frankokratia_end_story_effect = {
 			}
 			every_in_list = {
 				variable = frankokratia_leaders
+				limit = { is_alive = yes }
 				hidden_effect = {
 					remove_character_modifier = grand_crusader_fleet_modifier
 					remove_character_flag = joining_frankokratia
@@ -7034,6 +6947,34 @@ frankokratia_remove__war_leader_var_effect = {
 						target = scope:actor
 					}
 				}
+			}
+		}
+	}
+}
+
+complete_frankokratia_story_effect = {
+	scope:attacker = {
+		random_character_war = {
+			limit = {
+				using_cb = crusading_claim_cb
+			}
+			every_war_attacker = {
+				save_temporary_scope_as = war_attackers
+				scope:attacker = {
+					random_owned_story = {
+						type = frankokratia_story
+						add_to_variable_list = {
+							name = frankokratia_leaders
+							target = scope:war_attackers
+						}
+					}
+				}
+			}
+		}
+		random_owned_story = {
+			type = frankokratia_story
+			set_variable = {
+				name = franko_war_complete
 			}
 		}
 	}

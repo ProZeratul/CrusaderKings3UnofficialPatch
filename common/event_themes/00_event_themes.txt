@@ -1226,6 +1226,53 @@ sway_scheme = {
 	}
 }
 
+republic_intrigue_scheme = {
+	icon = "gfx/interface/icons/event_types/type_republic.dds"
+
+	header_background = {
+		reference = "gfx/interface/window_event/event_header_purple.dds"
+	}
+	sound = {
+		trigger = {
+			scope:scheme = {
+				OR = {
+					scheme_type = murder
+					scheme_type = abduct
+					scheme_type = influence_house_ambition
+					scheme_type = overthrow_government
+				}
+			}
+		}
+		reference = "event:/SFX/Events/Themes/sfx_event_theme_type_intrigue"
+	}
+	sound = {
+		trigger = {
+			scope:scheme = { scheme_type = elope }
+		}
+		reference = "event:/SFX/Events/Themes/sfx_event_theme_type_love"
+	}
+	sound = {
+		trigger = { #Fallback
+			scope:scheme = {
+				NOR = {
+					scheme_type = murder
+					scheme_type = abduct
+					scheme_type = elope
+				}
+			}
+		}
+		reference = "event:/SFX/Events/Themes/sfx_event_theme_type_intrigue"
+	}
+	background = { # Landless Adventurer
+		trigger = { government_has_flag = government_is_landless_adventurer }
+		reference = bp1_bonfire
+	}
+	background = {
+		reference = ep3_medi_study
+	}
+}
+
+
 
 ### LIFESTYLE FOCUSES ###
 
@@ -1542,6 +1589,21 @@ study_faith = {
 
 ### ACTIVITIES ###
 
+carnival_activity = {
+	icon = {
+		reference = "gfx/interface/icons/event_types/type_carnival.dds"
+	}
+	header_background = {
+		reference = "gfx/interface/window_event/event_header_dark.dds"
+	}
+	sound = {
+		reference = "event:/DLC/EP5/SFX/Events/Event_Windows/ep5_evn_carnival_activity"
+	}
+	background = {
+		reference = gdp_carnival_event_background
+	}
+}
+
 feast_activity = {
 	icon = {
 		reference = "gfx/interface/icons/event_types/type_feast.dds"
@@ -1744,6 +1806,7 @@ coronation_activity = {
 		reference = coronation_activity_background
 	}
 }
+
 
 ### SCRIPTED RELATIONS ###
 
@@ -3013,6 +3076,68 @@ ecumenical_council = {
 		reference = pam_ecumenical_council_activity_background
 	}
 }
+
+# GDP
+trade = {
+	icon = {
+		reference = "gfx/interface/icons/event_types/type_trade.dds"
+	}
+	header_background = {
+		reference = "gfx/interface/window_event/event_header_green.dds"
+	}
+	sound = {
+		reference = "event:/DLC/EP5/SFX/Events/Event_Windows/ep5_evn_trade"
+	}
+	background = {
+		reference = market
+	}
+}
+
+merchant = {
+	icon = {
+		reference = "gfx/interface/icons/event_types/type_merchant.dds"
+	}
+	header_background = {
+		reference = "gfx/interface/window_event/event_header_green.dds"
+	}
+	sound = {
+		reference = "event:/DLC/EP5/SFX/Events/Event_Windows/ep5_evn_merchant"
+	}
+	background = {
+		reference = gdp_merchant_domicile
+	}
+}
+
+republic = {
+	icon = {
+		reference = "gfx/interface/icons/event_types/type_republic.dds"
+	}
+	header_background = {
+		reference = "gfx/interface/window_event/event_header_blue.dds"
+	}
+	sound = {
+		reference = "event:/DLC/EP5/SFX/Events/Event_Windows/ep5_evn_republic"
+	}
+	background = {
+		reference = market
+	}
+}
+
+guelph_ghibelline = {
+	icon = {
+		reference = "gfx/interface/icons/event_types/type_guelph_ghibelline_situation.dds"
+	}
+	header_background = {
+		reference = "gfx/interface/window_event/event_header_blue.dds"
+	}
+	sound = {
+		reference = "event:/DLC/EP5/SFX/Events/Event_Windows/ep5_evn_guelph_ghibelline"
+	}
+	background = {
+		reference = throne_room
+	}
+}
+
 
 # Background uses this activity's phases to avoid ecumenical-council missing-phase errors
 pam_investiture_council = {

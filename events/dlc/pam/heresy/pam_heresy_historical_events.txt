@@ -600,7 +600,7 @@ heresy_historical.0050 = {
 		name = heresy_historical.0050.b
 		add_internal_flag = dangerous
 		trigger = {
-			has_ep3_dlc_trigger = yes
+			has_playable_adventurer_dlc_trigger = yes
 			exists = scope:founder
 			scope:founder = { is_alive = yes }
 		}
@@ -662,8 +662,6 @@ heresy_historical.0011 = {
 	}
 
 	immediate = {
-		clear_saved_scope = convert_ruler
-
 		scope:origin_faith = {
 			random_faith_ruler = {
 				limit = {
@@ -766,7 +764,7 @@ heresy_historical.0011 = {
 		}
 
 		if = {
-			limit = { exists = scope:convert_ruler }
+			limit = { scope:convert_ruler ?= { rite != scope:new_rite } }
 
 			if = {
 				limit = {

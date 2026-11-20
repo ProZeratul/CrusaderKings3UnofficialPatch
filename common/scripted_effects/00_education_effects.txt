@@ -19,10 +19,62 @@
 
 #rank_up_education_effect - Increases your education by 1 rank unless it's at 4 (or you don't have any)
 
+#domicile_education_bonus_effect - Adds education points from a court owner's domicile. Takes EDUCATION_VARIABLE and PARAMETER.
+
 ######################################################################
 # EFFECTS
 ######################################################################
 
+
+domicile_education_bonus_effect = {
+	court_owner ?= {
+		domicile ?= {
+			switch = {
+				trigger = has_domicile_parameter
+				$PARAMETER$_05 = {
+					root = {
+						change_variable = {
+							name = $EDUCATION_VARIABLE$
+							add = 5
+						}
+					}
+				}
+				$PARAMETER$_04 = {
+					root = {
+						change_variable = {
+							name = $EDUCATION_VARIABLE$
+							add = 4
+						}
+					}
+				}
+				$PARAMETER$_03 = {
+					root = {
+						change_variable = {
+							name = $EDUCATION_VARIABLE$
+							add = 3
+						}
+					}
+				}
+				$PARAMETER$_02 = {
+					root = {
+						change_variable = {
+							name = $EDUCATION_VARIABLE$
+							add = 2
+						}
+					}
+				}
+				$PARAMETER$_01 = {
+					root = {
+						change_variable = {
+							name = $EDUCATION_VARIABLE$
+							add = 1
+						}
+					}
+				}
+			}
+		}
+	}
+}
 
 #Education point acquisition
 
@@ -373,6 +425,15 @@ education_point_acquisition_support_effect = {
 				add = 5
 			}
 
+			modifier = {
+				has_focus = education_stewardship
+				OR = {
+					culture = { has_cultural_parameter = better_stewardship_education }
+					faith = { has_doctrine_parameter = better_stewardship_education }
+				}
+				add = 10
+			}
+
 			change_variable = {
 				name = education_$SKILL$_variable
 				add = 2
@@ -663,36 +724,75 @@ education_complete_notification_effect = {
 save_event_targets_from_childhood_effect = {
 	if = {
 		limit = {
-			any_relation = { type = friend always = yes }
+			any_relation = { type = guardian }
+		}
+		random_relation = {
+			type = guardian
+			save_scope_as = educator
+		}
+	}
+	else = {
+		court_owner.court_position:court_tutor_court_position ?= { save_scope_as = educator }
+	}
+	if = {
+		limit = { exists = scope:educator }
+		set_variable = { # for consistent follow-ups
+			name = educator
+			value = scope:educator
+			weeks = 1
+		}
+	}
+	if = {
+		limit = {
+			any_relation = { type = friend age < 21 } # loc expects child-hood friends
 		}
 		random_relation = {
 			type = friend
+			limit = { age = 16 }
+			alternative_limit = { is_adult = no }
+			alternative_limit = { age < 21 }
 			save_scope_as = friend
+			add_to_list = childhood_portraits
 		}
 	}
-	if = {
-		limit = {
-			exists = var:had_childhood_crush_variable
-		}
-		var:had_childhood_crush_variable = {
-			save_scope_as = crush
-		}
+	var:had_childhood_crush_variable ?= {
+		save_scope_as = crush
+		add_to_list = childhood_portraits
+	}
+	var:had_childhood_bully_variable ?= {
+		save_scope_as = bully
+		add_to_list = childhood_portraits
+	}
+	var:had_childhood_victim_variable ?= {
+		save_scope_as = victim
+		add_to_list = childhood_portraits
 	}
 	if = {
-		limit = {
-			exists = var:had_childhood_bully_variable
-		}
-		var:had_childhood_bully_variable = {
-			save_scope_as = bully
+		limit = { exists = scope:educator }
+		scope:educator = { save_scope_as = portrait_1 }
+	}
+	else = {
+		random_in_list = {
+			list = childhood_portraits
+			save_scope_as = portrait_1
 		}
 	}
-	if = {
+	random_in_list = {
+		list = childhood_portraits
 		limit = {
-			exists = var:had_childhood_victim_variable
+			NOT = { scope:portrait_1 ?= this }
 		}
-		var:had_childhood_victim_variable = {
-			save_scope_as = victim
+		save_scope_as = portrait_2
+	}
+	random_in_list = {
+		list = childhood_portraits
+		limit = {
+			NOR = {
+				scope:portrait_1 ?= this
+				scope:portrait_2 ?= this
+			}
 		}
+		save_scope_as = portrait_3
 	}
 }
 
@@ -1658,6 +1758,10 @@ display_correct_education_trait_gain_tooltip_effect = {
 		limit = { has_trait = education_republican_knowledge_4 }
 		show_as_tooltip = { add_trait_force_tooltip = education_republican_knowledge_4 }
 	}
+	if = {
+		limit = { has_trait = education_republican_knowledge_5 }
+		show_as_tooltip = { add_trait_force_tooltip = education_republican_knowledge_5 }
+	}
 }
 
 
@@ -1948,6 +2052,15 @@ wrap_up_education_effect = {
 			}
 			if = {
 				limit = {
+					root.court_owner = { is_landless_merchant = yes }
+				}
+				set_variable = {
+					name = education_merchant
+					value = yes
+				}
+			}
+			else_if = {
+				limit = {
 					root.court_owner = { is_landed = no }
 				}
 				set_variable = {
@@ -1989,6 +2102,24 @@ wrap_up_education_effect = {
 			set_variable = {
 				name = education_realm
 				value = root.court_owner.primary_title
+			}
+			if = {
+				limit = {
+					root.court_owner = { is_landless_merchant = yes }
+				}
+				set_variable = {
+					name = education_merchant
+					value = yes
+				}
+			}
+			else_if = {
+				limit = {
+					root.court_owner = { is_landed = no }
+				}
+				set_variable = {
+					name = education_landless
+					value = yes
+				}
 			}
 			set_variable = {
 				name = education_location
@@ -2607,8 +2738,13 @@ cultural_traditions_education_boost_effect = {
 	}
 	if = {
 		limit = {
-			culture = {
-				has_cultural_parameter = martial_education_worse_outcomes
+			OR = {
+				culture = {
+					has_cultural_parameter = martial_education_worse_outcomes
+				}
+				faith = {
+					has_doctrine_parameter = martial_education_worse_outcomes
+				}
 			}
 			has_focus = education_martial
 			exists = var:education_martial_variable
@@ -3193,18 +3329,28 @@ dynasty_perk_secondary_education_trait_effect = {
 			}
 		}
 
-		# Assign a trait, chance based on the development of the location
+		# Assign a trait, chance based on the prosperity of the location
 		if = {
 			limit = { exists = current_travel_plan }
 			set_variable = {
 				name = chance_for_extra_trait
-				value = current_travel_plan.departure_location.county.development_level
+				value = current_travel_plan.departure_location.county.prosperity_level
 			}
 		}
 		else = {
-			set_variable = {
+            set_variable = {
+                name = chance_for_extra_trait
+                value = location.county.prosperity_level
+            }
+		}
+		# Republics get an additional small bonus - which we add on top of the prosperity level
+		if = {
+			limit ={
+				government_has_flag = government_is_republic
+			}
+			change_variable = {
 				name = chance_for_extra_trait
-				value = location.county.development_level
+				add = 5 # Value corresponds to the same amount of prosperity levels
 			}
 		}
 
@@ -3222,19 +3368,19 @@ dynasty_perk_secondary_education_trait_effect = {
 					50 = {
 						modifier = {
 							add = {
-								value =  var:chance_for_extra_trait
+								value = var:chance_for_extra_trait
 								multiply = -0.5
 							}
 						}
 						add_trait = education_republican_knowledge_1
 					}
 
-					# Level 2: from 35% to 50%
+					# Level 2: from 35% to 25%
 					35 = {
 						modifier = {
 							add = {
-								value =  var:chance_for_extra_trait
-								multiply = 0.05
+								value = var:chance_for_extra_trait
+								multiply = -0.1
 							}
 						}
 						add_trait = education_republican_knowledge_2
@@ -3245,30 +3391,45 @@ dynasty_perk_secondary_education_trait_effect = {
 						modifier = {
 							add = {
 								value =  var:chance_for_extra_trait
-								multiply = 0.5
+								multiply = 0.15
 							}
 						}
 						add_trait = education_republican_knowledge_3
 					}
 
-					# Level 4: from 0 to 20% chance
+					# Level 4: from 0 to 25% chance
 					0 = {
 						modifier = {
 							add = {
-								value =  var:chance_for_extra_trait
-								multiply = 0.5
+								value = var:chance_for_extra_trait
+								multiply = 0.25
 							}
 						}
 						add_trait = education_republican_knowledge_4
 					}
+
+					# Level 5: from 0 to 20% chance
+					# Unlocked at prosperity level 30
+					0 = {
+						trigger = {
+							var:chance_for_extra_trait >= 30
+						}
+						modifier = {
+							add = {
+								value = var:chance_for_extra_trait
+								multiply = 0.2
+							}
+						}
+						add_trait = education_republican_knowledge_5
+					}
 				}
 			}
 
-			# Failing -  There will be a:
-			# 84% chance at development 5
-			# 66% chance at development 10
-			# 50% chance at development 15
-			# 0% chance  once  development level 30 is reached
+			# Fail chance by prosperity level:
+			# 84% chance at prosperity 5
+			# 66% chance at prosperity 10
+			# 50% chance at prosperity 15
+			# 0% chance once prosperity level 30 is reached
 			30 = {
 				modifier = {
 					exists = var:chance_for_extra_trait

@@ -158,7 +158,7 @@ common_cb_cost_multiplier_core = {
 						scope:attacker = {
 							house ?= {
 								OR = {
-								 	has_house_modifier = fp3_house_modifier_frontier_ambitions
+									has_house_modifier = fp3_house_modifier_frontier_ambitions
 									has_house_modifier = fp3_house_modifier_rebuilding_efforts
 								}
 							}
@@ -171,7 +171,7 @@ common_cb_cost_multiplier_core = {
 						scope:defender = {
 							house ?= {
 								OR = {
-								 	has_house_modifier = fp3_house_modifier_frontier_ambitions
+									has_house_modifier = fp3_house_modifier_frontier_ambitions
 									has_house_modifier = fp3_house_modifier_rebuilding_efforts
 								}
 							}
@@ -289,6 +289,19 @@ common_cb_cost_multiplier_core = {
 			value = 1
 			add = tgp_disarmament_law_increased_cb_cost_value
 			desc = disarmament_law_increased_cb_cost_desc
+		}
+	}
+	# Attacking a Republic
+	if = {
+		limit = {
+			scope:defender = {
+				government_has_flag = government_is_republic
+			}
+		}
+		multiply = {
+			value = 1
+			add = gdp_attacking_republic_cb_cost_value
+			desc = gdp_attacking_republic_cb_cost_desc
 		}
 	}
 }
@@ -438,7 +451,34 @@ common_cb_piety_cost_multiplier = {
 			desc = CB_STRUGGLE_PHASE_DISCOUNT
 		}
 	}
-
+	#Guelphs & Ghibellines 
+	if = {
+		limit = {
+			OR = {
+				#Dictatus Papae, Ad Interim and Agitation phases
+				AND = {
+					gg_phase_has_cheaper_opposite_party_wars_trigger = yes
+					gg_first_and_second_are_opposite_sides_trigger = { FIRST = scope:attacker SECOND = scope:defender }
+				}
+				#Guelph Advantage phase
+				AND = {
+					situation:guelph_ghibelline ?= { situation_current_phase = guelph_advantage }
+					scope:attacker = { is_ghibelline_trigger = yes }
+					scope:defender = { is_guelph_trigger = yes }
+				}
+				#Ghibelline Advantage phase
+				AND = {
+					situation:guelph_ghibelline ?= { situation_current_phase = ghibelline_advantage }
+					scope:attacker = { is_guelph_trigger = yes }
+					scope:defender = { is_ghibelline_trigger = yes }
+				}
+			}
+		}
+		multiply = {
+			value = 0.5
+			desc = CB_SITUATION_PHASE_DISCOUNT
+		}
+	}
 	# Common multiplier
 	multiply = common_cb_cost_multiplier_core
 }
@@ -469,6 +509,46 @@ holy_war_cb_piety_cost_multiplier = {
 		multiply = {
 			value = ghazi_religious_war_cost_reduction
 			desc = "CB_ATTACKER_VASSAL_CONTRACT"
+		}
+	}
+
+	if = {
+		limit = {
+			scope:attacker = {
+				any_active_accolade = {
+					accolade_parameter = acclaimed_knight_piety_from_battle_high
+				}
+			}
+		}
+		multiply = {
+			value = accolade_piety_reduction_value_high
+			desc = "fanatic_attribute"
+		}
+	}
+	else_if = {
+		limit = {
+			scope:attacker = {
+				any_active_accolade = {
+					accolade_parameter = acclaimed_knight_piety_from_battle
+				}
+			}
+		}
+		multiply = {
+			value = accolade_piety_reduction_value
+			desc = "fanatic_attribute"
+		}
+	}
+	if = {
+		limit = {
+			scope:attacker = {
+				top_participant_group:the_christian_church ?= {
+					has_participant_group_parameter = the_christian_church_cheaper_religious_wars
+				}
+			}
+		}
+		multiply = {
+			value = 0.75
+			desc = pam_the_christian_church_cheaper_religious_wars_desc
 		}
 	}
 }
@@ -697,6 +777,35 @@ common_cb_prestige_cost_multiplier = {
 		}
 	}
 
+	#Guelphs & Ghibellines 
+	if = {
+		limit = {
+			OR = {
+				#Dictatus Papae, Ad Interim and Agitation phases
+				AND = {
+					gg_phase_has_cheaper_opposite_party_wars_trigger = yes
+					gg_first_and_second_are_opposite_sides_trigger = { FIRST = scope:attacker SECOND = scope:defender }
+				}
+				#Guelph Advantage phase
+				AND = {
+					situation:guelph_ghibelline ?= { situation_current_phase = guelph_advantage }
+					scope:attacker = { is_ghibelline_trigger = yes }
+					scope:defender = { is_guelph_trigger = yes }
+				}
+				#Ghibelline Advantage phase
+				AND = {
+					situation:guelph_ghibelline ?= { situation_current_phase = ghibelline_advantage }
+					scope:attacker = { is_guelph_trigger = yes }
+					scope:defender = { is_ghibelline_trigger = yes }
+				}
+			}
+		}
+		multiply = {
+			value = 0.5
+			desc = CB_SITUATION_PHASE_DISCOUNT
+		}
+	}
+
 	# Common modifier
 	multiply = common_cb_cost_multiplier
 }
@@ -705,7 +814,7 @@ vassalization_cb_prestige_cost_mulitiplier = {
 	value = 1
 	if = {
 		limit = {
-			scope:defender.primary_title.tier = tier_kingdom
+			scope:defender.highest_held_title_tier = tier_kingdom
 		}
 		multiply = {
 			value = 2
@@ -714,11 +823,61 @@ vassalization_cb_prestige_cost_mulitiplier = {
 	}
 	else_if = {
 		limit = {
-			scope:defender.primary_title.tier = tier_empire
+			scope:defender.highest_held_title_tier = tier_empire
 		}
 		multiply = {
 			value = 4
 			desc = CB_VASSALIZING_EMPEROR
+		}
+	}
+}
+
+claim_cb_cost_multiplier_legitimacy = {
+	scope:attacker = {
+		if = {
+			limit = { has_legitimacy_flag = reduced_claim_cb_cost }
+			add = {
+				value = 0.5
+				desc = legitimacy_high_modifier_tt
+			}
+		}
+		else_if = {
+			limit = { has_legitimacy_flag = very_reduced_claim_cb_cost }
+			add = {
+				value = 0.25
+				desc = legitimacy_high_modifier_tt
+			}
+		}
+		else_if = {
+			limit = { has_legitimacy_flag = extra_reduced_claim_cb_cost }
+			add = {
+				value = 0.15
+				desc = legitimacy_high_modifier_tt
+			}
+		}
+		else_if = {
+			limit = { has_legitimacy_flag = increased_claim_cb_cost }
+			add = {
+				value = 1.5
+				desc = legitimacy_low_modifier_tt
+			}
+		}
+		else_if = {
+			limit = { has_legitimacy_flag = very_increased_claim_cb_cost }
+			add = {
+				value = 2
+				desc = legitimacy_low_modifier_tt
+			}
+		}
+		else_if = {
+			limit = { has_legitimacy_flag = massively_increased_claim_cb_cost }
+			add = {
+				value = 2.5
+				desc = legitimacy_low_modifier_tt
+			}
+		}
+		else = {
+			add = 1
 		}
 	}
 }
@@ -1031,6 +1190,184 @@ tribal_subjugation_cb_prestige_cost = {
 	}
 
 	multiply = common_cb_prestige_cost_multiplier
+}
+
+county_cb_influence_base_cost = {
+	if = {
+		limit = {
+			scope:attacker = { government_has_flag = government_has_influence }
+		}
+		add = {
+			value = 25
+			desc = CB_BASE_COST
+		}
+		add = {
+			value = 0.5
+			multiply = scope:attacker.sub_realm_size
+			desc = CB_REALM_SIZE_COST
+			max = 75
+		}
+	}
+}
+
+duchy_cb_influence_base_cost = {
+	if = {
+		limit = {
+			scope:attacker = { government_has_flag = government_has_influence }
+		}
+		add = {
+			value = 50
+			desc = CB_BASE_COST
+		}
+		add = {
+			value = 1
+			multiply = scope:attacker.sub_realm_size
+			desc = CB_REALM_SIZE_COST
+			max = 250
+		}
+	}
+}
+
+county_cb_prestige_base_cost = {
+	if = {
+		limit = {
+			scope:defender.faith != scope:attacker.faith
+		}
+		add = {
+			value = 50
+			desc = CB_COST_DIFFERENT_FAITH
+		}
+		add = {
+			value = 5
+			multiply = scope:attacker.sub_realm_size
+			desc = CB_REALM_SIZE_COST
+			max = 100
+		}
+	}
+}
+
+duchy_cb_prestige_base_cost = {
+	if = {
+		limit = {
+			scope:defender.faith != scope:attacker.faith
+		}
+		add = {
+			value = 150
+			desc = CB_COST_DIFFERENT_FAITH
+		}
+		add = {
+			value = 10
+			multiply = scope:attacker.sub_realm_size
+			desc = CB_REALM_SIZE_COST
+			max = 800
+		}
+	}
+}
+# admin cbs, cheaper since they pay influence at the same time
+county_cb_prestige_base_cost_with_influence = {
+	add = {
+		value = 50
+		desc = CB_BASE_COST
+	}
+	add = {
+		value = 2.5
+		multiply = scope:attacker.sub_realm_size
+		desc = CB_REALM_SIZE_COST
+		max = 150
+	}
+}
+
+duchy_cb_prestige_base_cost_with_influence = {
+	add = {
+		value = 100
+		desc = CB_BASE_COST
+	}
+	add = {
+		value = 5
+		multiply = scope:attacker.sub_realm_size
+		desc = CB_REALM_SIZE_COST
+		max = 500
+	}
+}
+
+county_cb_piety_base_cost = {
+	if = {
+		limit = {
+			scope:defender.faith = scope:attacker.faith
+		}
+		add = {
+			value = 25
+			desc = CB_SAME_FAITH_COST
+		}
+		add = {
+			value = 5
+			multiply = scope:attacker.sub_realm_size
+			desc = CB_REALM_SIZE_COST
+			max = 75
+		}
+	}
+}
+
+duchy_cb_piety_base_cost = {
+	if = {
+		limit = {
+			scope:defender.faith = scope:attacker.faith
+		}
+		add = {
+			value = 100
+			desc = CB_SAME_FAITH_COST
+		}
+		add = {
+			value = 10
+			multiply = scope:attacker.sub_realm_size
+			desc = CB_REALM_SIZE_COST
+			max = 800
+		}
+	}
+}
+
+conquest_cb_prestige_cost_multiplier = {
+	value = 1
+	# fp2 iberian struggle ending
+	if = {
+		limit = {
+			scope:attacker.house = {
+				OR = {
+					has_house_modifier = fp2_struggle_hostility_house_culture_modifier
+					has_house_modifier = fp2_struggle_hostility_house_combined_modifier
+				}
+			}
+			any_in_global_list = {
+				variable = fp2_struggle_ending_culture_list
+				this = scope:attacker.culture
+			}
+			any_in_global_list = {
+				variable = fp2_struggle_ending_culture_list
+				this = scope:defender.culture
+			}
+		}
+		divide = {
+			value = 2
+			desc = CB_COST_FP2_STRUGGLE_HOSTILITY_CULTURE_DISCOUNT
+		}
+	}
+	if = {
+		limit = {
+			has_global_variable = fp2_struggle_compromise_ending
+			any_in_global_list = {
+				variable = fp2_struggle_ending_culture_list
+				this = scope:attacker.culture
+			}
+			any_in_global_list = {
+				variable = fp2_struggle_ending_culture_list
+				this = scope:defender.culture
+			}
+		}
+		multiply = {
+			value = 2
+			desc = CB_COST_FP2_STRUGGLE_COMPROMISE_MULTIPLIER
+		}
+	}
 }
 
 # Ancestor war base cost

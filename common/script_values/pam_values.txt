@@ -1960,6 +1960,10 @@ ecumenical_council_scaled_cost = {
 
 pam_cathedral_treadwheel_fascination_progress_value = 25
 
+pam_cathedral_province_size_baseline_tier_1 = 10
+pam_cathedral_province_size_baseline_tier_2 = 30
+pam_cathedral_province_size_baseline_tier_3 = 60
+
 @cathedral_tier_2_contribution_cost_mult = 1.5
 
 cathedral_tier_2_starting_cost_value = {
@@ -1983,7 +1987,7 @@ cathedral_construction_time_multiplier_value = {
 		limit = {
 			scope:province.county ?= {
 				any_county_province = {
-					has_building_or_higher = quarries_01
+					has_building_or_higher = stone_resource_building_1
 				}
 			}
 		}
@@ -2072,7 +2076,7 @@ cathedral_construction_time_multiplier_value = {
 	if = {
 		limit = {
 			culture = {
-				has_innovation = innovation_development_03
+				has_innovation = innovation_prosperity_03
 			}
 		}
 		add = -0.03
@@ -2208,6 +2212,24 @@ tenet_popularity_neutral_threshold = 0
 # An AI Head of Faith permits the tenet past this, ignoring Spiritual Fulfillment lists
 pam_tenet_popularity_ai_override_threshold = 2000
 
+# County counts at which a branched rite's core tenet needs a more extreme AI Pope to prohibit it
+pam_rite_tenet_protection_medium_counties_value = 10
+pam_rite_tenet_protection_large_counties_value = 40
+
+# Faith scope. Counties of the largest branched rite that holds scope:pam_protected_tenet, or 0.
+pam_largest_branched_rite_holding_tenet_counties_value = {
+	value = 0
+	ordered_faith_rite = {
+		limit = {
+			this != prev.main_rite
+			rite_has_tenet = scope:pam_protected_tenet
+		}
+		order_by = rite_counties
+		max = 1
+		add = rite_counties
+	}
+}
+
 miniscule_tenet_popularity_gain = { value = miniscule_tenet_popularity_value }
 minor_tenet_popularity_gain = { value = minor_tenet_popularity_value }
 medium_tenet_popularity_gain = { value = medium_tenet_popularity_value }
@@ -2218,6 +2240,14 @@ minor_tenet_popularity_loss = { add = minor_tenet_popularity_value multiply = -1
 medium_tenet_popularity_loss = { add = medium_tenet_popularity_value multiply = -1 }
 major_tenet_popularity_loss = { add = major_tenet_popularity_value multiply = -1 }
 massive_tenet_popularity_loss = { add = massive_tenet_popularity_value multiply = -1 }
+# Level a prohibited tenet is pulled down to. Not a delta: popularity above this is lowered to it.
+prohibited_tenet_popularity_ceiling = { add = massive_tenet_popularity_value multiply = -1 }
+
+# Faith scope. How far scope:tp_seed_tenet sits above the prohibited ceiling. Negative when it is above.
+pam_tenet_popularity_gap_to_prohibited_ceiling_value = {
+	value = prohibited_tenet_popularity_ceiling
+	subtract = "tenet_popularity(scope:tp_seed_tenet)"
+}
 
 # scope:tp_personal_tenet_changer = the character gaining or losing the personal tenet
 pam_personal_tenet_popularity_gain = {
@@ -2288,6 +2318,25 @@ pam_tenet_popularity_impact_value = {
 pam_tenet_unpopularity_impact_value = {
 	value = pam_tenet_popularity_impact_value
 	multiply = -1
+}
+# Tenet scope, from the event character. Permit weight for a council debate topic.
+# While root's main rite prohibits this tenet, the weight stays at least 1 so a zero-weight Core option cannot re-enter the even draw.
+# root.faith.main_rite is one scope change, so prev is still this tenet
+pam_ec_permit_option_ai_weight_value = {
+	value = 10
+	add = pam_tenet_popularity_impact_value
+	add = pam_christian_vice_restraint_value
+	if = {
+		limit = {
+			root.faith.main_rite = {
+				has_tenet_status = {
+					tenet = prev
+					status = prohibited
+				}
+			}
+		}
+		min = 1
+	}
 }
 # The council holds back the same vice and abomination tenets the AI declines elsewhere. Evaluated on the tenet
 pam_christian_vice_restraint_value = {
@@ -2525,6 +2574,7 @@ clerical_appointment_score_max_value = {
 	if = {
 		limit = {
 			exists = scope:target
+			scope:target = { has_title_law_flag = appointment_type_succession }
 			exists = scope:target.current_heir
 			exists = scope:secondary_recipient
 		}
@@ -2719,6 +2769,41 @@ activity_tenet_pick_score = {
 			NOT = { scope:index ?= 2 }
 		}
 		multiply = 0.25
+	}
+	# Debate topic 2 prohibits, so it never debates an intrinsic tenet and seeks out a permitted anathema
+	faith = { save_temporary_scope_as = ec_pick_faith }
+	if = {
+		limit = {
+			scope:index ?= 2
+			scope:tenet = { tenet_is_intrinsic_to_faith_trigger = { FAITH = scope:ec_pick_faith } }
+		}
+		add = -100000
+	}
+	else_if = {
+		limit = {
+			scope:index ?= 2
+			faith.main_rite = {
+				has_tenet_status = {
+					tenet = scope:tenet
+					status = permitted
+				}
+			}
+			scope:tenet = { tenet_is_anathema_to_faith_trigger = { FAITH = scope:ec_pick_faith } }
+		}
+		add = 1000
+	}
+	else_if = {
+		limit = {
+			NOT = { scope:index ?= 2 }
+			faith.main_rite = {
+				has_tenet_status = {
+					tenet = scope:tenet
+					status = prohibited
+				}
+			}
+			scope:tenet = { tenet_is_intrinsic_to_faith_trigger = { FAITH = scope:ec_pick_faith } }
+		}
+		add = 1000
 	}
 	# Debate topic 1: favor high-popularity tenets; debate 2: favor low-popularity tenets.
 	if = {
@@ -3155,6 +3240,9 @@ ecumenical_council_social_alignment_value = {
 		}
 	}
 }
+
+# An AI attendee needs support above this to side with the innovators; worth 50 opinion of the host
+ecumenical_council_innovator_threshold_value = 2
 
 ecumenical_council_attendee_support_value = {
 	value = ecumenical_council_attendee_base_support_value
@@ -3619,6 +3707,9 @@ ecumenical_council_doctrine_social_alignment_value = {
 	}
 }
 
+# Doctrine counterpart of ecumenical_council_innovator_threshold_value; host opinion alone never exceeds it
+ecumenical_council_doctrine_innovator_threshold_value = 20
+
 ecumenical_council_doctrine_attendee_support_value = {
 	value = 0
 	if = {
@@ -3629,6 +3720,54 @@ ecumenical_council_doctrine_attendee_support_value = {
 			min = -30
 			max = 30
 		}
+	}
+}
+
+# Support of the attendee in scope for the proposal of the current debate; reads scope:activity
+ecumenical_council_current_proposal_attendee_support_value = {
+	value = 0
+	if = {
+		limit = {
+			scope:activity = { has_current_phase = ecumenical_council_phase_first_debate }
+		}
+		scope:activity.activity_tenet:1 = {
+			save_temporary_scope_as = tenet
+		}
+		add = ecumenical_council_attendee_support_value
+	}
+	else_if = {
+		limit = {
+			scope:activity = { has_current_phase = ecumenical_council_phase_second_debate }
+		}
+		scope:activity.activity_tenet:2 = {
+			save_temporary_scope_as = tenet
+		}
+		add = ecumenical_council_attendee_support_value
+	}
+	else = {
+		if = {
+			limit = { exists = scope:activity.var:third_debate_proposal }
+			scope:activity.var:third_debate_proposal = {
+				save_temporary_scope_as = doctrine
+			}
+		}
+		add = ecumenical_council_doctrine_attendee_support_value
+	}
+}
+
+# Innovator threshold for the proposal of the current debate; reads scope:activity
+ecumenical_council_current_proposal_innovator_threshold_value = {
+	value = ecumenical_council_doctrine_innovator_threshold_value
+	if = {
+		limit = {
+			scope:activity = {
+				OR = {
+					has_current_phase = ecumenical_council_phase_first_debate
+					has_current_phase = ecumenical_council_phase_second_debate
+				}
+			}
+		}
+		value = ecumenical_council_innovator_threshold_value
 	}
 }
 
@@ -9207,34 +9346,6 @@ pam_ecumenical_council_rite_champion_sort_value = {
 	}
 }
 
-### Ecclesiastical domicile building AI values
-ecclesiastical_domicile_building_ai_modifier_value = {
-	if = {
-		limit = { # Some characters should want to build in their domicile before they construct buildings in holdings
-			scope:owner = {
-				OR = {
-					has_trait = arbitrary
-					has_trait = gluttonous
-					has_trait = greedy
-				}
-			}
-		}
-		add = 10
-	}
-	if = { # Character's loyal to the realm should very slightly favor constructing buildings in holdings first
-		limit = {
-			scope:owner = {
-				has_trait = loyal
-				OR = {
-					has_trait = diligent
-					has_trait = just
-				}
-			}
-		}
-		add = -1 # This will generally (though not guaranteed) make the AI build domicile buildings one tier later than normal
-	}
-}
-
 merge_clerical_region_cooldown_years_value = 10
 
 # How long the HoF remembers a same-faith expansion outside the see's home kingdom
@@ -9636,6 +9747,7 @@ take_vows_dynasty_prestige_cost_value = {
 	if = {
 		limit = {
 			scope:demand = yes
+			scope:puppet_or_actor = { is_dynast = yes } # Only the dynast can spend Renown, everyone else pays take_vows_prestige_cost_value
 			scope:recipient = {
 				NOT = {
 					has_trait = bastard
@@ -9673,6 +9785,56 @@ take_vows_dynasty_prestige_cost_value = {
 							is_known_by = scope:puppet_or_actor
 						}
 						has_trait = bastard
+					}
+				}
+			}
+			multiply = 0
+		}
+	}
+}
+
+take_vows_prestige_cost_value = {
+	add = 0
+	if = {
+		limit = {
+			scope:demand = yes
+			scope:puppet_or_actor = { is_dynast = no }
+			scope:recipient = {
+				NOT = {
+					has_trait = bastard
+				}
+			}
+		}
+		add = miniscule_prestige_value
+
+		if = {
+			limit = {
+				scope:recipient = {
+					is_landed_or_landless_administrative_or_theocratic = yes
+				}
+			}
+			add = minor_prestige_value
+		}
+		if = {
+			limit = {
+				scope:recipient = {
+					is_landed_or_landless_administrative_or_theocratic = no
+					any_heir_title = {
+						exists = holder
+					}
+				}
+			}
+			add = miniscule_prestige_value
+		}
+		if = {
+			limit = {
+				scope:recipient = {
+					OR = {
+						has_trait = disputed_heritage
+						any_secret = {
+							type = secret_disputed_heritage
+							is_known_by = scope:puppet_or_actor
+						}
 					}
 				}
 			}

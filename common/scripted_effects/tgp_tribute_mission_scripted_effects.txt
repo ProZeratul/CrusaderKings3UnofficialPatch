@@ -161,6 +161,17 @@ tribute_mission_decision_effect = {
 				var:predetermined_concubine_tribute ?= { 
 					save_scope_as = predetermined_concubine_tribute_scope 
 				}
+				# Fallback in case there's no saved concubine
+				if = {
+					limit = {
+						NOT = { exists = scope:predetermined_concubine_tribute_scope }
+					}
+					create_character = {
+						template = tgp_concubine_template
+						location = root.location
+						save_scope_as = predetermined_concubine_tribute_scope
+					}
+				}
 				scope:predetermined_concubine_tribute_scope = {
 					add_character_flag = {
 						flag = cannot_be_diarch # just enough to make sure they don't succeed to the diarchy while en route

@@ -4,6 +4,8 @@
 	
 	activity_group_type = grand
 	
+	#activity_group_type = grand #TODO_PAM TIT-67883 Make into grand activity when the code allows it
+	
 	is_shown = {
 		has_pam_dlc_trigger = yes
 		can_hold_ecumenical_council_trigger = yes
@@ -134,10 +136,10 @@
 					barony ?= { is_holy_site_of = scope:host.faith }
 					county.holder.faith ?= scope:host.faith
 				}
-				AND = { # Grand Cathedral of our faith
-					county.holder.faith ?= scope:host.faith
-					has_cathedral_great_project_building_trigger = yes
-				}
+				# AND = { # Cathedral Great Project TODO_PAM Make the scripted trigger and add all the Cathedral GP templates
+					# county.faith ?= scope:host.faith
+					# county = { has_cathedral_great_project_building_trigger = yes }
+				# }
 				AND = { # Large Religious centers of our faith
 					county.faith ?= scope:host.faith
 					is_religious_studies_location = yes
@@ -159,7 +161,7 @@
 			trigger = {
 				OR = {
 					is_religious_studies_location = yes
-					has_cathedral_great_project_building_trigger = yes
+					# barony.county = { has_cathedral_great_project_building_trigger = yes }
 				}
 			}
 			desc = activity_ecumenical_council_cathedral_province
@@ -307,10 +309,7 @@
 		}
 		if = {
 			limit = {
-				OR = {
-					is_religious_studies_location = yes
-					has_cathedral_great_project_building_trigger = yes
-				}
+				is_religious_studies_location = yes
 			}
 			add = {
 				value = 25
@@ -373,6 +372,10 @@
 	###################
 
 	special_option_category = special_type
+
+	###################
+	# OPTIONS
+	###################
 
 	options = {
 		special_type = {
@@ -846,9 +849,12 @@
 		is_healthy = yes
 		in_diplomatic_range = scope:host
 		# Specific Checks
-		NOT = { government_has_flag = government_is_republic }
-		NOT = { government_has_flag = government_is_landless_adventurer }
-		NOT = { government_has_flag = government_is_mercenary }
+		NOR = { 
+			government_has_flag = government_is_republic 
+			government_has_flag = government_is_merchant
+			government_has_flag = government_is_landless_adventurer
+			government_has_flag = government_is_mercenary
+		}
 		OR = {
 			is_clergy = yes
 			# You must be a king+
@@ -877,11 +883,13 @@
 		}
 	}
 
+	#TODO_PAM new intents are vague placeholders, they need to mention actual mechanics that they're tied into
 	host_intents = {
 		intents = { spiritual_intent_host fervor_intent murder_attendee_intent befriend_attendee_intent }
 		default = spiritual_intent_host
 	}
 
+	#TODO_PAM new intents are vague placeholders, they need to mention actual mechanics that they're tied into
 	guest_intents = {
 		intents = { spiritual_intent fervor_intent clerical_appointment_intent alliance_intent murder_attendee_intent befriend_attendee_intent }
 		default = spiritual_intent
@@ -916,6 +924,7 @@
 	}
 
 	wait_time_before_start = {
+		# Fixed duration, because it is an open activity
 		months = ecumenical_council_wait_time_before_start_months
 	}
 
@@ -1084,11 +1093,7 @@
 		trigger = {
 			scope:host.location != scope:activity.activity_location
 			scope:host.location = {
-				terrain = farmlands
-				OR = {
-					terrain = terraced_hills
-					has_building_or_higher = paddy_fields_01
-				}
+				has_rice_fields_district = yes
 			}
 		}
 		texture = "gfx/interface/illustrations/event_scenes/tgp_rice_fields.dds"
@@ -1381,18 +1386,14 @@
 				activity_location = {
 					religion = religion:christianity_religion
 					OR = {
+						AND = {
+							culture = { has_graphical_mediterranean_culture_group_trigger = yes }
+							faith = faith:orthodox
+						}
 						geographical_region = graphical_mena
 						geographical_region = graphical_india
 						geographical_region = world_europe_south_east
 						geographical_region = world_asia_minor
-						rite = {
-							rite_has_doctrine = special_doctrine_is_eastern_christian_faith
-						}
-					}
-					NOT = {
-						rite = {
-							rite_has_doctrine = special_doctrine_is_western_christian_faith
-						}
 					}
 				}
 			}
@@ -1506,73 +1507,71 @@
 		environment = "environment_indian_holy_site"
 		ambience = "event:/DLC/EP2/SFX/Events/Backgrounds/evn_background_jungle"
 	}
-	background = { #Western generic holy site, gothic
+	background = { #Western Christian - Gothic exterior
 		trigger = {
 			scope:activity ?= {
 				has_current_phase = ecumenical_council_phase_summons
-				activity_location ?= {
-					NOT = {
-						religion ?= { is_in_family = rf_pagan }
-					}
-				}
-				activity_host ?= {
-					rite = {
-						rite_has_doctrine = special_doctrine_is_western_christian_faith
-					}
-					pam_church_event_background_is_grand_western_trigger = yes
-				}
+				activity_host = { pam_is_western_christian_trigger = yes }
 			}
-			current_year >= 900
+			current_year >= 1130
 		}
 		texture = "gfx/interface/illustrations/event_scenes/ep2_wedding_ceremony_western.dds"
 		environment = "environment_western_wedding"
-		ambience = "event:/DLC/EP2/SFX/Events/Grand_Activities/Weddings/ep2_event_grand_wedding"
+		ambience = "event:/SFX/Events/Backgrounds/temple_christian"
 	}
-	background = { #Western generic holy site, mediterranean
+	background = { #Western Christian - Mediterranean or urban Romanesque exterior
 		trigger = {
 			scope:activity ?= {
 				has_current_phase = ecumenical_council_phase_summons
-				activity_location ?= {
-					NOT = {
-						religion ?= { is_in_family = rf_pagan }
-					}
-				}
-				activity_host ?= {
-					rite = {
-						rite_has_doctrine = special_doctrine_is_western_christian_faith
-					}
-					OR = {
-						pam_church_event_background_is_grand_western_pre_gothic_trigger = yes
-						AND = {
-							pam_church_event_background_is_developed_trigger = yes
-							scope:activity.activity_location = { pam_church_background_location_is_mediterranean_or_urban_trigger = yes }
-						}
-					}
-				}
+				activity_host = { pam_is_western_christian_trigger = yes }
+				activity_location = { pam_church_background_location_is_mediterranean_or_urban_trigger = yes }
 			}
 			current_year >= 900
+			current_year < 1130
 		}
 		texture = "gfx/interface/illustrations/event_scenes/pam_romanesque_church_exterior.dds"
 		environment = "environment_pam_romanesque_church_exterior"
 		ambience = "event:/DLC/CE3/SFX/Events/romanesque_church_exterior" #AUDIO CE3
 	}
+	background = { #Western Christian - Green Romanesque exterior
+		trigger = {
+			scope:activity ?= {
+				has_current_phase = ecumenical_council_phase_summons
+				activity_host = { pam_is_western_christian_trigger = yes }
+			}
+			current_year >= 900
+			current_year < 1130
+		}
+		texture = "gfx/interface/illustrations/event_scenes/ep2_holysite_western.dds"
+		environment = "environment_western_holy_site"
+		ambience = "event:/SFX/Events/Backgrounds/temple_christian"
+	}
+	background = { #Western Christian - Pre-Romanesque exterior
+		trigger = {
+			scope:activity ?= {
+				has_current_phase = ecumenical_council_phase_summons
+				activity_host = { pam_is_western_christian_trigger = yes }
+			}
+			current_year < 900
+		}
+		texture = "gfx/interface/illustrations/event_scenes/pam_pre-romanesque_church_exterior.dds"
+		environment = "environment_pam_preromanesque_church_exterior"
+		ambience = "event:/DLC/CE3/SFX/Events/pre-romanesque_church_exterior" #AUDIO CE3
+	}
 	background = { #Western generic holy site
 		trigger = {
 			scope:activity ?= {
 				has_current_phase = ecumenical_council_phase_summons
-				activity_location ?= {
+				activity_location = {
+					OR = {
+						culture ?= { has_graphical_western_culture_group_trigger = yes }
+						steppe_building_gfx_use_western_trigger = yes
+					}
 					NOT = {
 						religion ?= { is_in_family = rf_pagan }
 					}
 				}
-				activity_host ?= {
-					rite = {
-						rite_has_doctrine = special_doctrine_is_western_christian_faith
-					}
-					pam_church_event_background_is_developed_trigger = yes
-				}
 			}
-			current_year >= 900
 		}
 		texture = "gfx/interface/illustrations/event_scenes/ep2_holysite_western.dds"
 		environment = "environment_western_holy_site"
@@ -1582,13 +1581,8 @@
 		trigger = {
 			scope:activity ?= {
 				has_current_phase = ecumenical_council_phase_summons
-				activity_location ?= {
-					county.title_province ?= {
-						has_holding_type = tribal_holding
-					}
-					NOT = {
-						has_holding_type = church_holding
-					}
+				activity_location.county.title_province ?= {
+					has_holding_type = tribal_holding
 				}
 			}
 		}
@@ -1596,16 +1590,13 @@
 		environment = "environment_event_garden"
 		ambience = "event:/DLC/FP1/SFX/Events/event_temple" 
 	}
-	background = {  #Pre-Romanesque Western generic holy site... and fallback
+	background = { # Fallback
 		trigger = {
-			scope:activity ?= {
-				has_current_phase = ecumenical_council_phase_summons
-				activity_host.faith.religion = religion:christianity_religion
-			}
+			scope:activity ?= { has_current_phase = ecumenical_council_phase_summons }
 		}
-		texture = "gfx/interface/illustrations/event_scenes/pam_pre-romanesque_church_exterior.dds"
-		environment = "environment_pam_preromanesque_church_exterior"
-		ambience = "event:/DLC/CE3/SFX/Events/pre-romanesque_church_exterior" #AUDIO CE3
+		texture = "gfx/interface/illustrations/event_scenes/ep2_holysite_western.dds"
+		environment = "environment_bp2_courtyard"
+		ambience = "event:/DLC/FP2/SFX/Events/courtyard" 
 	}
 	
 	## Debates -- Temple Interior
@@ -1707,18 +1698,7 @@
 		environment = "environment_mpo_temple_steppe"
 		ambience = "event:/DLC/CE2/Events/Event_Images/mpo_temple_steppe"
 	}
-	background = { #Christian - Grand Cathedral (Western pre-Gothic)
-		trigger = {
-			scope:activity ?= {
-				has_current_phase_any_debate_trigger = yes
-				activity_host = { pam_church_event_background_is_grand_western_pre_gothic_trigger = yes }
-			}
-		}
-		texture = "gfx/interface/illustrations/event_scenes/church.dds"
-		environment = "environment_event_church"
-		ambience = "event:/SFX/Events/Backgrounds/temple_christian"
-	}
-	background = { #Christian - Grand Cathedral, Gothic
+	background = { #Christian - Grand Cathedral
 		trigger = {
 			scope:activity ?= {
 				has_current_phase_any_debate_trigger = yes
@@ -1726,7 +1706,7 @@
 			}
 		}
 		texture = "gfx/interface/illustrations/event_scenes/pam_gothic_cathedral_interior.dds"
-		environment = "environment_pam_gothic_cathedral_interior"
+		environment = "environment_event_church" # TODO_PAM placeholder environment, replace with bespoke church environment
 		ambience = "event:/DLC/CE3/SFX/Events/gothic_cathedral_interior"
 	}
 	background = { # Christian - Grand Cathedral Eastern (Hagia Sophia)
@@ -1751,21 +1731,19 @@
 			}
 		}
 		texture = "gfx/interface/illustrations/event_scenes/pam_romanesque_church_interior.dds"
-		environment = "environment_pam_romanesque_church_interior"
+		environment = "environment_event_church" # TODO_PAM placeholder environment, replace with bespoke church environment
 		ambience = "event:/DLC/CE3/SFX/Events/romanesque_church_interior"
 	}
 	background = { #General Christian
 		trigger = {
-			scope:activity ?= {
+			scope:activity ?= { 
 				has_current_phase_any_debate_trigger = yes
-				activity_host = {
-					faith = { religion = religion:christianity_religion }
-				}
+				scope:host = { religion = religion:christianity_religion }
 			}
 		}
-		texture = "gfx/interface/illustrations/event_scenes/pam_simple_church_western_interior.dds"
-		environment = "environment_pam_simple_church_western_interior"
-		ambience = "event:/DLC/CE3/SFX/Events/simple_western_church_interior"
+		texture = "gfx/interface/illustrations/event_scenes/church.dds"
+		environment = "environment_event_church"
+		ambience = "event:/SFX/Events/Backgrounds/temple_christian"
 	}
 	background = { #Norse generic holy site
 		trigger = {
@@ -1864,19 +1842,7 @@
 					}	
 				}	
 			}
-			scripted_animation = {
-				triggered_animation = {
-					trigger = {
-						scope:character.location = { is_sea_province = yes }
-					}
-					animation = { idle }
-				}
-				triggered_animation = {
-					trigger = { scope:character = { has_trait = impatient } }
-					animation = { jockey_gallop }
-				}
-				animation = jockey_walk
-			}
+			scripted_animation = horse_camel_activity_travel_animation
 		}
 		player_guest = {
 			camera = camera_event_center
@@ -1924,157 +1890,8 @@
 					}
 				}
 			}
-			scripted_animation = {
-				triggered_animation = {
-					trigger = {
-						scope:character.location = { is_sea_province = yes }
-					}
-					animation = { idle }
-				}
-				triggered_animation = {
-					trigger = { scope:character = { has_trait = impatient } }
-					animation = { jockey_gallop }
-				}
-				animation = jockey_walk
-			}
+			scripted_animation = horse_camel_activity_travel_animation
 		}
-		clergy_guest_travelling = {
-			camera = camera_activity_horse
-
-			effect = {
-				if = {
-					limit = {
-						scope:host.location = scope:activity.activity_location
-					}
-					ordered_attending_character = {
-						limit = {
-							is_clergy = yes
-							this != scope:host
-							location != scope:activity.activity_location
-						}
-						order_by = {
-							value = 1
-							add = {
-								value = highest_held_title_tier
-								multiply = 15
-							}
-						}
-						add_to_list = characters
-					}
-				}
-			}
-			scripted_animation = {
-				triggered_animation = {
-					trigger = {
-						scope:character.location = { is_sea_province = yes }
-					}
-					animation = { idle }
-				}
-				triggered_animation = {
-					trigger = { scope:character = { has_trait = impatient } }
-					animation = { jockey_gallop }
-				}
-				animation = jockey_walk
-			}
-		}
-		# Clerical guests stand to the host's right (list before host, matching coronation/feast)
-		clergy_guest_arrived = {
-			camera = camera_body_right
-
-			effect = {
-				if = {
-					limit = {
-						scope:host.location = scope:activity.activity_location
-					}
-					ordered_attending_character = {
-						limit = {
-							is_clergy = yes
-							this != scope:host
-							location = scope:activity.activity_location
-						}
-						order_by = {
-							value = 1
-							add = {
-								value = highest_held_title_tier
-								multiply = 15
-							}
-						}
-						add_to_list = characters
-					}
-				}
-			}
-			scripted_animation = ecumenical_council_clergy_guest_animation_alt
-		}
-		clergy_guest = {
-			camera = camera_body_right
-
-			effect = {
-				if = {
-					limit = {
-						scope:host.location = scope:activity.activity_location
-					}
-					ordered_attending_character = {
-						limit = {
-							is_clergy = yes
-							this != scope:host
-							location = scope:activity.activity_location
-						}
-						order_by = {
-							value = 1
-							add = {
-								value = highest_held_title_tier
-								multiply = 15
-							}
-						}
-						check_range_bounds = no
-						position = 1
-						add_to_list = characters
-					}
-				}
-			}
-			scripted_animation = ecumenical_council_clergy_guest_animation
-		}
-		host = {
-			camera = camera_body
-			effect = {
-				if = {
-					limit = { scope:host = { location = scope:activity.activity_location } }
-				}
-				scope:host ?= { add_to_list = characters }
-			}
-			scripted_animation = ecumenical_council_host_animation
-		}
-		travel_host = {
-			camera = camera_event_horse_left
-			
-			effect = {
-				if = {
-					limit = {
-						NOT = {
-							scope:host.location = scope:activity.activity_location
-						}
-					}
-					scope:host = {
-						add_to_list = characters
-					}
-				}
-			}
-
-			scripted_animation = {
-				triggered_animation = {
-					trigger = {
-						scope:character.location = { is_sea_province = yes }
-					}
-					animation = { idle }
-				}
-				triggered_animation = {
-					trigger = { scope:character = { has_trait = impatient } }
-					animation = { jockey_gallop }
-				}
-				animation = jockey_walk
-			}
-		}
-		# Lay guests stand to the host's left
 		non_clergy_guest_arrived = {
 			camera = camera_body_left_slight
 
@@ -2106,6 +1923,117 @@
 				}
 			}
 			scripted_animation = ecumenical_council_lay_guest_animation_alt
+		}
+		host = {
+			camera = camera_body
+			effect = {
+				if = {
+					limit = { scope:host = { location = scope:activity.activity_location } }
+				}
+				scope:host ?= { add_to_list = characters }
+			}
+			scripted_animation = ecumenical_council_host_animation
+		}
+		travel_host = {
+			camera = camera_event_horse_left
+			
+			effect = {
+				if = {
+					limit = {
+						NOT = {
+							scope:host.location = scope:activity.activity_location
+						}
+					}
+					scope:host = {
+						add_to_list = characters
+					}
+				}
+			}
+
+			scripted_animation = horse_camel_activity_travel_animation
+		}
+		clergy_guest_arrived = {
+			camera = camera_body_right
+
+			effect = {
+				if = {
+					limit = {
+						scope:host.location = scope:activity.activity_location
+					}
+					ordered_attending_character = {
+						limit = {
+							is_clergy = yes
+							this != scope:host
+							location = scope:activity.activity_location
+						}
+						order_by = {
+							value = 1
+							add = {
+								value = highest_held_title_tier
+								multiply = 15
+							}
+						}
+						add_to_list = characters
+					}
+				}
+			}
+			scripted_animation = ecumenical_council_clergy_guest_animation_alt
+		}
+		clergy_guest_travelling = {
+			camera = camera_activity_horse
+
+			effect = {
+				if = {
+					limit = {
+						scope:host.location = scope:activity.activity_location
+					}
+					ordered_attending_character = {
+						limit = {
+							is_clergy = yes
+							this != scope:host
+							location != scope:activity.activity_location
+						}
+						order_by = {
+							value = 1
+							add = {
+								value = highest_held_title_tier
+								multiply = 15
+							}
+						}
+						add_to_list = characters
+					}
+				}
+			}
+			scripted_animation = horse_camel_activity_travel_animation
+		}
+		clergy_guest = {
+			camera = camera_body_right
+
+			effect = {
+				if = {
+					limit = {
+						scope:host.location = scope:activity.activity_location
+					}
+					ordered_attending_character = {
+						limit = {
+							is_clergy = yes
+							this != scope:host
+							location = scope:activity.activity_location
+						}
+						order_by = {
+							value = 1
+							add = {
+								value = highest_held_title_tier
+								multiply = 15
+							}
+						}
+						check_range_bounds = no
+						position = 1
+						add_to_list = characters
+					}
+				}
+			}
+			scripted_animation = ecumenical_council_clergy_guest_animation
 		}
 		non_clergy_guest = {
 			camera = camera_body_left

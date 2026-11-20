@@ -10,6 +10,13 @@
 			trigger_situation_catalyst = catalyst_the_christian_church_antipope_declared
 		}
 	}
+	if = {
+		limit = {
+			scope:antipope.faith = { religious_head_title ?= title:k_papal_state }
+			scope:sponsor ?= { is_guelph_trigger = no }
+		}
+		gg_untargeted_catalyst_effect = { CATALYST = catalyst_gg_antipope_declared }
+	}
 }
 
 pam_antipope_sponsored_catalyst_effect = {
@@ -24,11 +31,19 @@ pam_antipope_sponsored_catalyst_effect = {
 			trigger_situation_catalyst = catalyst_the_christian_church_antipope_sponsored
 		}
 	}
+	if = {
+		limit = {
+			scope:antipope.faith = { religious_head_title ?= title:k_papal_state }
+			scope:sponsor ?= { is_guelph_trigger = no }
+		}
+		gg_untargeted_catalyst_effect = { CATALYST = catalyst_gg_antipope_declared }
+	}
 }
 
 pam_antipope_removed_catalyst_effect = {
 	if = {
 		limit = {
+			$FAITH$.religion = religion:christianity_religion
 			exists = situation:the_christian_church
 			situation:the_christian_church = {
 				situation_top_has_catalyst = catalyst_the_christian_church_antipope_removed
@@ -37,6 +52,12 @@ pam_antipope_removed_catalyst_effect = {
 		situation:the_christian_church = {
 			trigger_situation_catalyst = catalyst_the_christian_church_antipope_removed
 		}
+	}
+	if = {
+		limit = {
+			$FAITH$ = { religious_head_title ?= title:k_papal_state }
+		}
+		gg_untargeted_reconciliation_catalyst_effect = { CATALYST = catalyst_gg_antipope_removed }
 	}
 }
 
@@ -378,8 +399,10 @@ pam_antipope_become_hof_effect = {
 	}
 	if = {
 		limit = { exists = scope:hof_title }
-		scope:antipope_faith = {
-			set_religious_head_title = scope:hof_title
+		hidden_effect = {
+			scope:antipope_faith = {
+				set_religious_head_title = scope:hof_title
+			}
 		}
 	}
 	if = {
@@ -498,6 +521,36 @@ pam_antipope_challenge_hof_victory_effect = {
 			NOT = { scope:attacker.faith.religious_head ?= scope:defender }
 		}
 		pam_challenge_hof_war_on_attacker_victory_events_effect = yes
+	}
+	scope:attacker.faith = {
+		every_faith_character = {
+			limit = {
+				is_ruler = yes
+				NOR = {
+					is_close_family_of = scope:attacker
+					is_spouse_of = scope:attacker
+					scope:antipope_winner ?= this
+					this = scope:attacker
+				}
+			}
+			custom = custom_faith_rulers_challenge_hof
+			add_opinion = {
+				target = scope:attacker
+				modifier = pam_challenged_hof_opinion
+			}
+		}
+		if = {
+			limit = {
+				religion = religion:christianity_religion
+				exists = situation:the_christian_church
+				situation:the_christian_church = {
+					situation_top_has_catalyst = catalyst_challenge_hof_replaced
+				}
+			}
+			situation:the_christian_church = {
+				trigger_situation_catalyst = catalyst_challenge_hof_replaced
+			}
+		}
 	}
 }
 
@@ -717,7 +770,7 @@ pam_challenge_hof_defeat_cleanup_effect = {
 			}
 		}
 	}
-	pam_antipope_removed_catalyst_effect = yes
+	pam_antipope_removed_catalyst_effect = { FAITH = scope:defender.faith }
 }
 
 pam_challenge_hof_war_notify_victim_fate_effect = {
@@ -928,5 +981,29 @@ pam_antiking_victory_effect = {
 			change_spiritual_fulfillment = medium_spiritual_fulfillment_value
 		}
 	}
-	pam_antipope_removed_catalyst_effect = yes
+	pam_antipope_removed_catalyst_effect = { FAITH = scope:defender.faith }
+}
+
+# Christian Situation participation management
+pam_conversion_christian_church_participation_effect = {
+	if = {
+		limit = {
+			is_ruler = yes
+			religion = religion:christianity_religion
+			NOT = {
+				any_character_situation = { this = situation:the_christian_church }
+			}
+		}
+		situation:the_christian_church ?= { add_manual_participant = prev }
+	}
+	else_if = {
+		limit = {
+			religion != religion:christianity_religion
+			any_character_situation = {
+				this = situation:the_christian_church
+				is_manual_participant = prev
+			}
+		}
+		situation:the_christian_church ?= { remove_manual_participant = prev }
+	}
 }

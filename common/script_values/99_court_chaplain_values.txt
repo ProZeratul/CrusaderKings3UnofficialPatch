@@ -96,12 +96,30 @@ court_chaplain_religious_relations_celestial_hierarchy_bonus_modifier = {
 # Total gain calculation
 court_chaplain_religious_relations_total_piety_gain = {
 	add = court_chaplain_religious_relations_modifier
-	add = court_chaplain_religious_relations_perk_bonus_modifier
-	add = court_chaplain_religious_relations_erudition_legacy_5_bonus_modifier
-	add = court_chaplain_religious_relations_family_business_bonus_modifier
-	add = court_chaplain_religious_relations_consulted_house_bonus_modifier
-	add = court_chaplain_religious_relations_cultural_tradition_bonus_modifier
-	add = court_chaplain_religious_relations_celestial_hierarchy_bonus_modifier
+	if = {
+		limit = { scope:councillor_liege = { has_perk = clerical_justifications_perk } }
+		add = court_chaplain_religious_relations_perk_bonus_modifier
+	}
+	if = {
+		limit = { councillor_liege_has_erudition_legacy_5_perk = yes }
+		add = court_chaplain_religious_relations_erudition_legacy_5_bonus_modifier
+	}
+	if = {
+		limit = { councillor_liege_has_family_business_bonus = yes }
+		add = court_chaplain_religious_relations_family_business_bonus_modifier
+	}
+	if = {
+		limit = { councillor_liege_has_consulted_house_bonus = yes }
+		add = court_chaplain_religious_relations_consulted_house_bonus_modifier
+	}
+	if = {
+		limit = { scope:councillor_liege.culture = { has_cultural_parameter = religious_relations_is_empowered } }
+		add = court_chaplain_religious_relations_cultural_tradition_bonus_modifier
+	}
+	if = {
+		limit = { scope:councillor_liege.rite ?= { rite_has_parameter = tenet_celestial_hierarchy_religious_relations_bonus } }
+		add = court_chaplain_religious_relations_celestial_hierarchy_bonus_modifier
+	}
 }
 
 # Opinion:
@@ -245,13 +263,13 @@ court_chaplain_religious_relations_no_hof_opinion_modifier = {
 	add = 0
 	if = {
 		limit = { 
+			scope:councillor.rite = { rite_has_doctrine = doctrine_theocracy_lay_clergy }
 			scope:councillor.faith = {
 				OR = {
 					has_doctrine_parameter = no_head_of_faith
 					NOT = { exists = religious_head }
 				}
 			}
-			scope:councillor.rite = { rite_has_doctrine = doctrine_theocracy_lay_clergy }
 		}
 		add = court_chaplain_religious_relations_opinion_modifier
 		divide = court_chaplain_religious_relations_no_hof_balance
@@ -390,16 +408,12 @@ court_chaplain_fabricate_claim_monthly_increase_nemesis_bonus = {
 }
 
 court_chaplain_fabricate_claim_county_base = 3
-court_chaplain_fabricate_claim_county_min_cost = {
-	value = { 40 60 }
-}
+court_chaplain_fabricate_claim_county_min_cost = 30
 
 court_chaplain_fabricate_claim_duchy_base = 7
-court_chaplain_fabricate_claim_duchy_min_cost = {
-	value = { 80 100 }
-}
+court_chaplain_fabricate_claim_duchy_min_cost = 60
 
-court_chaplain_fabricate_claim_factor = 1
+court_chaplain_fabricate_claim_factor = 0.6
 
 court_chaplain_fabricate_claim_struggle_penalty_multiplier_value = {
 	if = {
@@ -429,6 +443,9 @@ court_chaplain_fabricate_claim_county_cost = {
 	# Struggle Factors
 	multiply = court_chaplain_fabricate_claim_struggle_penalty_multiplier_value
 
+	divide = 5
+	round = yes
+	multiply = 5
 	min = court_chaplain_fabricate_claim_county_min_cost
 }
 
@@ -442,6 +459,9 @@ court_chaplain_fabricate_claim_duchy_cost = {
 	# Struggle Factors
 	multiply = court_chaplain_fabricate_claim_struggle_penalty_multiplier_value
 
+	divide = 5
+	round = yes
+	multiply = 5
 	min = court_chaplain_fabricate_claim_duchy_min_cost
 }
 
@@ -576,50 +596,61 @@ court_chaplain_conversion_contextual_bonuses = {
 		}
 	}
 	# Relation Bonuses/Penalties
-	if = { # Friend
+	if = {
 		limit = {
+			# Best friends and nemeses also count as friends and rivals
 			scope:councillor_liege = {
-				has_relation_friend = scope:councillor
-				NOT = { has_relation_best_friend = scope:councillor }
+				OR = {
+					has_relation_friend = scope:councillor
+					has_relation_rival = scope:councillor
+				}
 			}
 		}
-		add = {
-			value = scope:councillor.court_chaplain_conversion_monthly_increase_friend_bonus
-			desc = COUNCILLOR_IS_YOUR_FRIEND
-		}
-	}
-	if = { # Best Friend
-		limit = {
-			scope:councillor_liege = {
-				has_relation_best_friend = scope:councillor
+		if = { # Friend
+			limit = {
+				scope:councillor_liege = {
+					has_relation_friend = scope:councillor
+					NOT = { has_relation_best_friend = scope:councillor }
+				}
+			}
+			add = {
+				value = scope:councillor.court_chaplain_conversion_monthly_increase_friend_bonus
+				desc = COUNCILLOR_IS_YOUR_FRIEND
 			}
 		}
-		add = {
-			value = scope:councillor.court_chaplain_conversion_monthly_increase_best_friend_bonus
-			desc = COUNCILLOR_IS_YOUR_BEST_FRIEND
-		}
-	}
-	if = { # Rival
-		limit = {
-			scope:councillor_liege = {
-				has_relation_rival = scope:councillor
-				NOT = { has_relation_nemesis = scope:councillor }
+		if = { # Best Friend
+			limit = {
+				scope:councillor_liege = {
+					has_relation_best_friend = scope:councillor
+				}
+			}
+			add = {
+				value = scope:councillor.court_chaplain_conversion_monthly_increase_best_friend_bonus
+				desc = COUNCILLOR_IS_YOUR_BEST_FRIEND
 			}
 		}
-		add = {
-			value = scope:councillor.court_chaplain_conversion_monthly_increase_rival_bonus
-			desc = COUNCILLOR_IS_YOUR_RIVAL
-		}
-	}
-	if = { # Nemesis
-		limit = {
-			scope:councillor_liege = {
-				has_relation_nemesis = scope:councillor
+		if = { # Rival
+			limit = {
+				scope:councillor_liege = {
+					has_relation_rival = scope:councillor
+					NOT = { has_relation_nemesis = scope:councillor }
+				}
+			}
+			add = {
+				value = scope:councillor.court_chaplain_conversion_monthly_increase_rival_bonus
+				desc = COUNCILLOR_IS_YOUR_RIVAL
 			}
 		}
-		add = {
-			value = scope:councillor.court_chaplain_conversion_monthly_increase_nemesis_bonus
-			desc = COUNCILLOR_IS_YOUR_NEMESIS
+		if = { # Nemesis
+			limit = {
+				scope:councillor_liege = {
+					has_relation_nemesis = scope:councillor
+				}
+			}
+			add = {
+				value = scope:councillor.court_chaplain_conversion_monthly_increase_nemesis_bonus
+				desc = COUNCILLOR_IS_YOUR_NEMESIS
+			}
 		}
 	}
 	#Conversion modifiers from where the Faith is on the Pluralism spectrum.
@@ -1232,6 +1263,138 @@ court_chaplain_conversion_contextual_bonuses = {
 court_chaplain_conversion_factors = {
 	value = 1
 	if = {
+		limit = { exists = scope:county.title_province }
+		multiply = {
+			value = 1
+			subtract = {
+				value = scope:county.title_province.province_size_level
+				multiply = convert_faith_settlement_size_penalty_step
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_SETTLEMENT_SIZE
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:county.faith
+			exists = scope:councillor.faith
+			scope:councillor.faith = {
+				faith_hostility_level = {
+					target = scope:county.faith
+					value >= faith_evil_level
+				}
+			}
+		}
+		multiply = {
+			value = convert_faith_hostility_evil_mult
+			desc = COURT_CHAPLAIN_CONVERSION_HOSTILITY
+		}
+	}
+	else_if = {
+		limit = {
+			exists = scope:county.faith
+			exists = scope:councillor.faith
+			scope:councillor.faith = {
+				faith_hostility_level = {
+					target = scope:county.faith
+					value >= faith_hostile_level
+				}
+			}
+		}
+		multiply = {
+			value = convert_faith_hostility_hostile_mult
+			desc = COURT_CHAPLAIN_CONVERSION_HOSTILITY
+		}
+	}
+	else_if = {
+		limit = {
+			exists = scope:county.faith
+			exists = scope:councillor.faith
+			scope:councillor.faith = {
+				faith_hostility_level = {
+					target = scope:county.faith
+					value >= faith_astray_level
+				}
+			}
+		}
+		multiply = {
+			value = convert_faith_hostility_astray_mult
+			desc = COURT_CHAPLAIN_CONVERSION_HOSTILITY
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:county
+			scope:county.culture = {
+				OR = {
+					is_divergent_culture = yes
+					is_hybrid_culture = yes
+				}
+			}
+			scope:councillor_liege.culture = { has_same_culture_heritage = scope:county.culture }
+		}
+		multiply = {
+			value = convert_faith_divergence_shared_root_mult
+			desc = COURT_CHAPLAIN_CONVERSION_DIVERGENCE
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:county
+			scope:county.culture = scope:councillor_liege.culture
+		}
+		multiply = {
+			value = convert_faith_cultural_same_culture_mult
+			desc = COURT_CHAPLAIN_CONVERSION_CULTURAL_SIMILARITY
+		}
+	}
+	else_if = {
+		limit = {
+			exists = scope:county
+			scope:councillor_liege.culture = { has_same_culture_heritage = scope:county.culture }
+		}
+		multiply = {
+			value = convert_faith_cultural_same_heritage_mult
+			desc = COURT_CHAPLAIN_CONVERSION_CULTURAL_SIMILARITY
+		}
+	}
+	else_if = {
+		limit = {
+			exists = scope:county
+			scope:councillor_liege.culture = {
+				cultural_acceptance = { target = scope:county.culture value < 25 }
+			}
+		}
+		multiply = {
+			value = convert_faith_cultural_acceptance_alien_mult
+			desc = COURT_CHAPLAIN_CONVERSION_CULTURAL_SIMILARITY
+		}
+	}
+	else_if = {
+		limit = {
+			exists = scope:county
+			scope:councillor_liege.culture = {
+				cultural_acceptance = { target = scope:county.culture value < 50 }
+			}
+		}
+		multiply = {
+			value = convert_faith_cultural_acceptance_low_mult
+			desc = COURT_CHAPLAIN_CONVERSION_CULTURAL_SIMILARITY
+		}
+	}
+	else_if = {
+		limit = {
+			exists = scope:county
+			scope:councillor_liege.culture = {
+				cultural_acceptance = { target = scope:county.culture value < 75 }
+			}
+		}
+		multiply = {
+			value = convert_faith_cultural_acceptance_mid_mult
+			desc = COURT_CHAPLAIN_CONVERSION_CULTURAL_SIMILARITY
+		}
+	}
+
+	if = {
 		limit = {
 			scope:councillor.rite = { #Unop: Check rite, not faith (main rite only)
 				rite_has_parameter = unreformed #Unop: Rite check
@@ -1548,38 +1711,22 @@ rite_conversion_fervor_mult = {
 	}
 }
 
-# Development penalty
-convert_faith_development_penalty = {
-	value = 0
-	if = {
-		limit = { exists = scope:county }
-		add = scope:councillor.court_chaplain_conversion_base
-		add = scope:councillor.court_chaplain_conversion_monthly_increase
-		#add = scope:councillor.court_chaplain_conversion_monthly_increase_perk_bonus #Unop: This is included in the court_chaplain_conversion_contextual_bonuses
-		add = {
-			add = {
-				add = scope:councillor.court_chaplain_progress_percentage
-				multiply = scope:councillor.faith.fervor
-			}
-			subtract = {
-				add = scope:councillor.court_chaplain_progress_percentage
-				multiply = scope:county.faith.fervor
-			}
-			if = {
-				limit = {
-					scope:councillor_liege = { has_perk = religious_icon_perk }
-				}
-				min = 0
-			}
-		}
-		add = scope:councillor.court_chaplain_conversion_contextual_bonuses
-		multiply = {
-			subtract = scope:county.development_level
-			divide = 100
-			min = -0.9
-		}
-	}
-}
+convert_faith_settlement_size_penalty_step = 0.03
+
+# Faith hostility of the converting Faith toward the local one.
+convert_faith_hostility_astray_mult = 0.9   # astray (heresy of same religion)
+convert_faith_hostility_hostile_mult = 0.8  # hostile Faith
+convert_faith_hostility_evil_mult = 0.7     # evil Faith
+
+# Divergent/hybrid local culture that still shares the converting culture's heritage.
+convert_faith_divergence_shared_root_mult = 1.15
+
+# Cultural similarity between the converting (Liege) culture and the local culture.
+convert_faith_cultural_same_culture_mult = 1.15  # identical culture
+convert_faith_cultural_same_heritage_mult = 1.05 # same heritage, different culture
+convert_faith_cultural_acceptance_mid_mult = 0.9  # cultural acceptance 50..74
+convert_faith_cultural_acceptance_low_mult = 0.85 # cultural acceptance 25..49
+convert_faith_cultural_acceptance_alien_mult = 0.8 # cultural acceptance < 25
 
 # Zealous Proselytizer bonus
 court_chaplain_conversion_monthly_increase_perk_bonus = {
@@ -2176,8 +2323,7 @@ court_chaplain_reliable_house_scale = {
 	value = 0
 	if = {
 		limit = {
-			exists = liege.dynasty
-			liege.dynasty = { has_dynasty_perk = fp2_coterie_legacy_2 }
+			liege.dynasty ?= { has_dynasty_perk = fp2_coterie_legacy_2 }
 			house = liege.house
 		}
 		add = learning

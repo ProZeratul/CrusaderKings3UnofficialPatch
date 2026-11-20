@@ -3853,6 +3853,29 @@ elector_voting_pattern_confederation_modifier = {
 }
 
 elector_voting_pattern_theocratic_elective_modifier = {
+	modifier = {
+		desc = ghibelline_ecclesiastical_succession_desc
+		is_guelph_trigger = yes
+		scope:candidate = {
+			is_ghibelline_trigger = yes
+		}
+		add = {
+			value = gdp_ghibelline_ecclesiastical_succession_penalty_value
+			multiply = -1
+		}
+	}
+	modifier = {
+		desc = ghibelline_family_ecclesiastical_succession_desc
+		is_guelph_trigger = yes
+		scope:candidate = {
+			is_ghibelline_trigger = no
+			is_family_of_ghibelline_leader_trigger = yes
+		}
+		add = {
+			value = gdp_ghibelline_family_ecclesiastical_succession_penalty_value
+			multiply = -1
+		}
+	}
 	modifier = { # Piety level
 		desc = tooltip_feudal_elector_vote_piety_positive
 		add = {

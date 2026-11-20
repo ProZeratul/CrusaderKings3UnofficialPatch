@@ -1328,16 +1328,12 @@ common_faction_modifiers = {
 			confederation.leading_house.house_head.joined_faction ?= scope:actor.joined_faction
 			scope:actor.joined_faction.faction_leader ?= confederation.leading_house.house_head
 		}
-		trigger_else_if = { #Unop Check scope:faction
-			limit = {
-				exists = scope:faction
-			}
+		trigger_else_if = {
+			limit = { exists = scope:faction }
 			confederation.leading_house.house_head.joined_faction ?= scope:faction
 			scope:faction.faction_leader ?= confederation.leading_house.house_head
 		}
-		trigger_else = {
-			always = no
-		}
+		trigger_else = { always = no }
 		desc = "FACTION_REASON_BLOC_LEADER"
 	}
 	modifier = {
@@ -1401,6 +1397,10 @@ independence_faction_create_blockers = {
 				}
 			}
 	  	}
+	}
+	modifier = {
+		add = -2000
+		government_has_flag = government_is_merchant
 	}
 }
 
@@ -2159,6 +2159,7 @@ claimant_faction_blockers = {
 			OR = {
 				has_trait = incapable
 				government_has_flag = government_is_theocracy
+				government_has_flag = government_is_herder
 			}
 		}
 	}
@@ -2348,9 +2349,7 @@ claimant_faction_modifiers = {
 		OR = {
 			has_secret_relation_lover = $FACTION_TARGET$
 			has_relation_lover = $FACTION_TARGET$
-			has_relation_soulmate = $FACTION_TARGET$
 			has_relation_friend = $FACTION_TARGET$
-			has_relation_best_friend = $FACTION_TARGET$
 		}
 	}
 	# Friends & Lovers want to support their claimants!
@@ -2360,9 +2359,7 @@ claimant_faction_modifiers = {
 		OR = {
 			has_secret_relation_lover = $FACTION_CLAIMANT$
 			has_relation_lover = $FACTION_CLAIMANT$
-			has_relation_soulmate = $FACTION_CLAIMANT$
 			has_relation_friend = $FACTION_CLAIMANT$
-			has_relation_best_friend = $FACTION_CLAIMANT$
 		}
 	}
 	# Best Friends & Soulmates really want to support their claimants!
@@ -3932,9 +3929,7 @@ ceremonial_claimant_faction_modifiers = {
 		OR = {
 			has_secret_relation_lover = $FACTION_TARGET$
 			has_relation_lover = $FACTION_TARGET$
-			has_relation_soulmate = $FACTION_TARGET$
 			has_relation_friend = $FACTION_TARGET$
-			has_relation_best_friend = $FACTION_TARGET$
 		}
 	}
 	# Friends & Lovers want to support their claimants!
@@ -3945,9 +3940,7 @@ ceremonial_claimant_faction_modifiers = {
 		OR = {
 			has_secret_relation_lover = $FACTION_CLAIMANT$
 			has_relation_lover = $FACTION_CLAIMANT$
-			has_relation_soulmate = $FACTION_CLAIMANT$
 			has_relation_friend = $FACTION_CLAIMANT$
-			has_relation_best_friend = $FACTION_CLAIMANT$
 		}
 	}
 	# Best Friends & Soulmates really want to support their claimants!

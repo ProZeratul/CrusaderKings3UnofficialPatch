@@ -133,7 +133,7 @@ scripted_effect tax_rivalry_0011_reconciliation_success = {
 				scope:forgiving_rival.house = scope:liege.house
 			}
 		}
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:forgiving_rival
 			TARGET = root
 			VALUE = minor_unity_gain
@@ -1076,7 +1076,7 @@ tax_rivalry.3003 = {
 scripted_effect tax_rivalry_4000_unity_loss_effect = {
 	if = {
 		limit = { exists = scope:tax_rivalry_4000_steward_weakened_unity }
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:steward
 			TARGET = scope:tax_collector
 			VALUE = minor_unity_loss
@@ -1086,7 +1086,7 @@ scripted_effect tax_rivalry_4000_unity_loss_effect = {
 	}
 	else_if = {
 		limit = { exists = scope:tax_rivalry_4000_tax_collector_weakened_unity }
-		add_clan_unity_interaction_effect = {
+		add_house_unity_interaction_effect = {
 			CHARACTER = scope:tax_collector
 			TARGET = scope:steward
 			VALUE = minor_unity_loss
@@ -1185,10 +1185,7 @@ scripted_effect tax_rivalry_4010_deepen_rivalry_effect = {
 	scope:steward = {
 		# Add an opinion malus if the two are nemeses and their relationship cannot deteriorate any further
 		if = {
-			limit = {
-				has_relation_nemesis = scope:tax_collector
-
-			}
+			limit = { has_relation_nemesis = scope:tax_collector }
 			add_opinion = {
 				target = scope:tax_collector
 				modifier = fp3_hostile_opinion
@@ -1201,16 +1198,14 @@ scripted_effect tax_rivalry_4010_deepen_rivalry_effect = {
 		else_if = {
 			limit = {
 				has_relation_rival = scope:tax_collector
-				NOT = { has_relation_nemesis = scope:tax_collector }
+				can_set_relation_nemesis_trigger = { CHARACTER = scope:tax_collector }
 			}
-			set_relation_nemesis = {
-				reason = rival_escalated_tax_disputes
-				copy_reason = rival
-				target = scope:tax_collector
+			set_relation_nemesis_effect = {
+				TARGET = scope:tax_collector
+				REASON = rival_escalated_tax_disputes
 			}
 		}
-		else_if = {
-			limit = { NOT = { has_relation_rival = scope:tax_collector } }
+		else = {
 			progress_towards_rival_effect = {
 				REASON = rival_escalated_tax_disputes
 				CHARACTER = scope:tax_collector
@@ -1368,9 +1363,9 @@ scripted_effect tax_rivalry_4011_weaken_rivalry_effect = {
 			limit = { has_relation_nemesis = scope:tax_collector }
 			remove_relation_nemesis = scope:tax_collector
 			hidden_effect = {
-				set_relation_rival = {
-					target = scope:tax_collector
-					reason = rival_escalated_tax_disputes
+				set_relation_rival_effect = {
+				    TARGET = scope:tax_collector
+				    REASON = rival_escalated_tax_disputes
 				}
 			}
 		}
