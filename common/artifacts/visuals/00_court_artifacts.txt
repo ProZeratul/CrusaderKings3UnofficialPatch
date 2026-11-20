@@ -655,6 +655,7 @@ large_animal_hide = {
 	asset = {	#grey #Unop The wolf pelt of mpo_hunt.0020 for a ruler without a royal court has no scope:legendary and no hide feature, so it had no asset
 		trigger = {
 			NOT = { exists = scope:legendary }
+			scope:artifact = { NOT = { has_variable = animal_type } } # Not for reforged creature hides, which have an animal_type asset
 		}
 		reference = ep1_generic_animal_hide_big_01_b_entity
 	}
