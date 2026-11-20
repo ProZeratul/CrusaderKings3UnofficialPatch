@@ -2609,11 +2609,6 @@ favored_movement_consults_heaven_decision = {
 		top_participant_group:dynastic_cycle ?= {
 			NOT = { participant_group_type = other_rulers }
 		}
-		#Unop AI is charged influence in effect, not the cost block, so still require it can afford it
-		trigger_if = {
-			limit = { is_ai = yes }
-			influence >= monumental_influence_value
-		}
 	}
 
 	is_valid_showing_failures_only = {
@@ -3055,18 +3050,12 @@ favored_movement_consults_heaven_decision = {
 	}
 
 	cost = {
-		#Unop AI never budgets cost-block influence; charge it via is_shown/effect below
 		influence = {
-			value = 0
-			if = {
-				limit = { is_ai = no }
-				add = monumental_influence_value
-			}
+			value = monumental_influence_value
 		}
 	}
 
 	effect = {
-		debug_log = "unop_475 favored_movement_consults_heaven_decision" #Unop debug log to confirm issue #475
 		top_participant_group:dynastic_cycle ?= {
 	        if = {
 	        	limit = {
@@ -3178,11 +3167,6 @@ favored_movement_consults_heaven_decision = {
 				}
 			}
 		}
-		#Unop AI pays the influence here since the cost block is free for it
-		if = {
-			limit = { is_ai = yes }
-			change_influence = monumental_influence_loss
-		}
 	}
 
 	ai_potential = {
@@ -3222,11 +3206,6 @@ house_head_consults_heaven_decision = {
 		top_participant_group:dynastic_cycle ?= {
 			NOT = { participant_group_type = other_rulers }
 		}
-		#Unop AI is charged influence in effect, not the cost block, so still require it can afford it
-		trigger_if = {
-			limit = { is_ai = yes }
-			influence >= unop_house_head_consults_heaven_influence_cost
-		}
 	}
 
 	is_valid_showing_failures_only = {
@@ -3245,13 +3224,35 @@ house_head_consults_heaven_decision = {
 	cooldown = { years = 10 }
 
 	cost = {
-		#Unop AI never budgets cost-block influence; charge it via is_shown/effect below
 		influence = {
-			value = 0
-			if = {
-				limit = { is_ai = no }
-				add = unop_house_head_consults_heaven_influence_cost
+			value = 2000
+			add = {
+				value = 0
+				every_close_or_extended_family_member = {
+					limit = {
+						is_governor = yes
+					}
+					add = 10
 				}
+				multiply = -1
+			}
+			add = {
+				value = 0
+				every_close_or_extended_family_member = {
+					limit = {
+						merit_level >= 4
+					}
+					add = 10
+				}
+				multiply = -1
+			}
+			if = {
+				limit = {
+					scope:discount_none ?= yes
+				}
+				multiply = 0.5
+			}
+			min = 100
 		}
 		piety = {
 			value = 0
@@ -3341,7 +3342,6 @@ house_head_consults_heaven_decision = {
 	}
 
 	effect = {
-		debug_log = "unop_475 house_head_consults_heaven_decision" #Unop debug log to confirm issue #475
 		top_participant_group:dynastic_cycle ?= {
 	        if = {
 	        	limit = {
@@ -3386,11 +3386,6 @@ house_head_consults_heaven_decision = {
 					tgp_catalyst_from_decision_effect = yes
 				}
 			}
-		}
-		#Unop AI pays the influence here since the cost block is free for it
-		if = {
-			limit = { is_ai = yes }
-			change_influence = { subtract = unop_house_head_consults_heaven_influence_cost }
 		}
 	}
 
