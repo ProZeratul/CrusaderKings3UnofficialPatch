@@ -1,0 +1,1310 @@
+﻿@minspec_skill_rating = decent_skill_rating
+@base_position_score = 500
+@base_candidate_score = 500
+
+# Have a look at _court_positions.info for documentation
+
+## MERCHANT ASSOCIATE POSITIONS
+# partner_court_position
+# translator_court_position
+# market_agent_court_position
+# bailiff_court_position
+
+partner_court_position = {
+	sort_order = 398
+	max_available_positions = 1
+	skill = stewardship
+
+	court_position_asset = {
+		trigger = { culture_has_east_asian_heritage_pillar_trigger = yes }
+		animation = steward
+		background = "gfx/interface/illustrations/event_scenes/tgp_asia_estate.dds"
+	}
+
+	court_position_asset = {
+		animation = steward
+		background = "gfx/interface/illustrations/event_scenes/ep3_medi_estate.dds"
+	}
+
+	opinion = {
+		value = regular_court_position_opinion
+	}
+
+	# How high the aptitude has to be to reach the 5 different modifier levels
+	aptitude_level_breakpoints = { 20 40 60 80 }
+
+	# How good is this character in this position? root scope is the holder of the court position
+	aptitude = {
+		value = 25
+		add = court_position_aptitude_boon_voyager_trait
+		add = {
+			value = stewardship
+			multiply = 2.5
+			max = 50
+			desc = court_position_skill_stewardship
+		}
+		if = {
+			limit = {
+				has_trait = administrator
+			}
+			add = {
+				value = 20
+				desc = court_position_administrator_trait
+			}
+		}
+		if = {
+			limit = {
+				has_trait = overseer
+			}
+			add = {
+				value = 20
+				desc = court_position_overseer_trait
+			}
+		}
+		if = {
+			limit = {
+				has_trait = organizer
+			}
+			add = {
+				value = 20
+				desc = court_position_organizer_trait
+			}
+		}
+		add = court_position_aptitude_traveling_friends_value
+		add = court_position_aptitude_eunuch_tradition_value
+		add = court_position_aptitude_family_business_value
+		add = court_position_aptitude_low_penalty_value
+		if = {
+			limit = {
+				exists = employer
+				is_spouse_of = employer
+			}
+			add = {
+				value = merchant_partner_spouse_aptitude_value
+				desc = partner_spouse_aptitude
+			}
+		}
+		if = {
+			limit = { employer.domicile ?= { has_domicile_parameter = company_increase_partner_aptitude_05 } }
+			add = {
+				value = company_study_capstone_court_position_aptitude_05_value
+				desc = domicile_building_parameter_company_increase_partner_aptitude_05
+			}
+		}
+		else_if = {
+			limit = { employer.domicile ?= { has_domicile_parameter = company_increase_partner_aptitude_04 } }
+			add = {
+				value = company_study_capstone_court_position_aptitude_04_value
+				desc = domicile_building_parameter_company_increase_partner_aptitude_04
+			}
+		}
+		# Bonus from court.8311
+		if = {
+			limit = { var:bonus_aptitude_role ?= flag:partner }
+			add = {
+				value = cp_bonus_aptitude_value
+				desc = cp_bonus_aptitude
+			}
+		}
+		# Japan
+		if = {
+			limit = {
+				liege.house ?= { has_house_aspiration_parameter = improved_stewardship_court_position_efficiency }
+			}
+			add = {
+				value = cp_bonus_aptitude_value
+				desc = improved_stewardship_court_position_efficiency_desc
+			}
+		}
+		# Seneschal
+		if = {
+			limit = {
+				liege.court_position:seneschal_court_position ?= {
+					has_variable = performing_improve_court
+				}
+			}
+			add = {
+				value = liege.court_position:seneschal_court_position.seneschal_improve_court_value
+				desc = seneschal_improve_court_aptitude_desc
+			}
+		}
+		# House Unity
+		if = {
+			limit = { court_position_liege_has_consulted_house_bonus = yes }
+			add = {
+				value = court_position_consulted_house_bonus_aptitude_value
+				desc = unity_consulted_house_member_desc
+			}
+		}
+		if = {
+			limit = {
+				exists = employer
+				employer = {
+					government_has_flag = government_is_merchant
+					has_perk = honored_to_serve_perk
+				}
+			}
+			add = {
+				value = merchant_honored_to_serve_partner_aptitude_value
+				desc = merchant_honored_to_serve_partner_aptitude_desc
+			}
+		}
+		#Merchant childhood
+		if = {
+			limit = {
+				exists = employer
+				var:merchant_childhood_partner_aptitude ?= employer
+			}
+			add = {
+				value = 20
+				desc = merchant_childhood_desc
+			}
+		}
+		add = merchant_inspiring_rule_court_position_aptitude_value
+	}
+
+	is_shown = {
+		government_has_flag = government_is_merchant
+	}
+
+	# Is this an available position for this court? (root is court owner)
+	valid_position = {
+		custom_tooltip = {
+			text = merchant_government_tt
+			government_has_flag = government_is_merchant
+		}
+	}
+
+	is_shown_character = {
+		scope:employee = {
+			court_position_employee_shown_trigger = yes
+		}
+	}
+
+	valid_character = {
+		scope:employee = {
+			partner_validity_trigger = { EMPLOYER = scope:liege }
+		}
+	}
+
+	salary = {
+		gold = partner_total_salary_value
+		round = no
+	}
+
+	received_salary = {
+		gold = {
+			value = partner_total_salary_value
+		}
+		round = no
+	}
+
+	# These modifiers are employed based on what level the aptitude reaches (levels are defined as breakpoints)
+	scaling_employer_modifiers = {
+		terrible = {
+			trade_expertise_growth_mult = 0.01
+		}
+		poor = {
+			trade_expertise_growth_mult = 0.02
+		}
+		average = {
+			trade_expertise_growth_mult = 0.05
+		}
+		good = {
+			trade_expertise_growth_mult = 0.10
+		}
+		excellent = {
+			trade_expertise_growth_mult = 0.20
+		}
+	}
+
+	modifier = {
+		general_opinion = 5
+		monthly_stewardship_lifestyle_xp_gain_mult = 0.2
+	}
+
+	on_court_position_received = {
+		seneschal_title_accepted_effect = yes
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+	on_court_position_revoked = {
+		seneschal_title_revoked_effect = yes
+		trade_opportunity_partner_invalidated_effect = { PARTNER = scope:employee }
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+	on_court_position_invalidated = {
+		seneschal_title_invalidated_effect = yes
+		trade_opportunity_partner_invalidated_effect = { PARTNER = scope:employee }
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+	on_court_position_vacated = {
+		court_position_vacated_event_effect = {
+			COURT_POSITION_TYPE = partner_court_position
+		}
+		trade_opportunity_partner_invalidated_effect = { PARTNER = scope:employee }
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+	# Scripted value to determine whether an AI will hire/fire a position or not. Hires over 0, fires under -50. Look in _court_positions.info for more extensive documentation!
+	ai_position_score = {
+		value = 150
+	}
+	ai_candidate_score = {
+		value = 150
+		# Always have this position if you can, regardless of income or what the other positions cost
+		scope:liege = {
+			if = {
+				limit = { has_relation_rival = scope:employee }
+				add = -1000
+			}
+			if = {
+				limit = {
+					NOT = { exists = scope:firing_court_position }
+					scope:employee = { has_any_court_position = yes }
+				}
+				add = -150
+			}
+		}
+		add = court_position_candidate_aptitude_value
+        if = { # To stop petitioned positions immediately being fired by the AI
+			limit = {
+				court_position_petition_ai_weight_trigger = { ROLE = partner }
+			}
+			add = 1000
+		}
+	}
+}
+
+fixer_court_position = {
+	sort_order = 180
+	max_available_positions = 1
+	minimum_rank = county
+	skill = intrigue
+
+	court_position_asset = {
+		trigger = { culture_has_east_asian_heritage_pillar_trigger = yes }
+		animation = spymaster
+		background = "gfx/interface/illustrations/event_scenes/tgp_asia_estate.dds"
+	}
+
+	court_position_asset = {
+		animation = spymaster
+		background = "gfx/interface/illustrations/event_scenes/ep3_medi_estate.dds"
+	}
+
+	opinion = {
+		value = regular_court_position_opinion
+	}
+
+	# How high the aptitude has to be to reach the 5 different modifier levels
+	aptitude_level_breakpoints = { 20 40 60 80 }
+
+	# How good is this character in this position? root scope is the holder of the court position
+	aptitude = {
+		value = 1
+		if = {
+			limit = { employer.domicile ?= { has_domicile_parameter = company_increase_fixer_aptitude_05 } }
+			add = {
+				value = company_study_capstone_court_position_aptitude_05_value
+				desc = domicile_building_parameter_company_increase_fixer_aptitude_05
+			}
+		}
+		else_if = {
+			limit = { employer.domicile ?= { has_domicile_parameter = company_increase_fixer_aptitude_04 } }
+			add = {
+				value = company_study_capstone_court_position_aptitude_04_value
+				desc = domicile_building_parameter_company_increase_fixer_aptitude_04
+			}
+		}
+		add = court_position_aptitude_boon_voyager_trait
+		add = {
+			value = intrigue
+			multiply = 2.5
+			max = 50
+			desc = court_position_skill_intrigue
+		}
+		add = {
+			value = prowess
+			multiply = 2
+			max = 50
+			desc = court_position_skill_prowess
+		}
+		if = {
+			limit = {
+				has_trait = torturer
+			}
+			add = {
+				value = 25
+				desc = court_position_torturer_trait
+			}
+		}
+		if = {
+			limit = {
+				has_trait = sadistic
+			}
+			add = {
+				value = 20
+				desc = court_position_sadistic_trait
+			}
+		}
+		add = court_position_aptitude_traveling_friends_value
+		add = court_position_aptitude_eunuch_tradition_value
+		add = court_position_aptitude_family_business_value
+		add = court_position_aptitude_high_penalty_value
+		# Bonus from court.8311
+		if = {
+			limit = { var:bonus_aptitude_role ?= flag:fixer }
+			add = {
+				value = cp_bonus_aptitude_value
+				desc = cp_bonus_aptitude
+			}
+		}
+		# House Unity
+		if = {
+			limit = { court_position_liege_has_consulted_house_bonus = yes }
+			add = {
+				value = court_position_consulted_house_bonus_aptitude_value
+				desc = unity_consulted_house_member_desc
+			}
+		}
+		add = merchant_inspiring_rule_court_position_aptitude_value
+	}
+
+	is_shown = {
+		government_has_flag = government_is_merchant
+		trigger_if = {
+			limit = {
+				is_ai = yes
+				highest_held_title_tier <= tier_county
+			}
+			always = no
+		}
+	}
+
+	valid_position = {
+		custom_tooltip = {
+			text = merchant_government_tt
+			government_has_flag = government_is_merchant
+		}
+	}
+
+	is_shown_character = {
+		scope:employee = {
+			court_position_employee_shown_trigger = yes
+		}
+	}
+
+	valid_character = {
+		scope:employee = {
+			fixer_validity_trigger = { EMPLOYER = scope:liege }
+		}
+	}
+
+	salary = {
+		gold = fixer_total_salary_value
+		round = no
+	}
+
+	received_salary = {
+		gold = fixer_total_salary_value
+		round = no
+	}
+
+	# These modifiers are employed based on what level the aptitude reaches (levels are defined as breakpoints)
+	scaling_employer_modifiers = {
+		terrible = {
+			enemy_hostile_scheme_success_chance_add = -2
+		}
+		poor = {
+			enemy_hostile_scheme_success_chance_add = -4
+		}
+		average = {
+			enemy_hostile_scheme_success_chance_add = -6
+		}
+		good = {
+			enemy_hostile_scheme_success_chance_add = -8
+		}
+		excellent = {
+			enemy_hostile_scheme_success_chance_add = -10
+		}
+	}
+
+	modifier = {
+		monthly_intrigue_lifestyle_xp_gain_mult = 0.05
+		dread_baseline_add = 10
+	}
+
+	on_court_position_received = {
+		basic_gained_court_position_effect = yes
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+	on_court_position_revoked = {
+		basic_gained_court_position_effect = yes
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+	on_court_position_invalidated = {
+		basic_gained_court_position_effect = yes
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+	on_court_position_vacated = {
+		court_position_vacated_event_effect = {
+			COURT_POSITION_TYPE = fixer_court_position
+		}
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+
+	# Scripted value to determine whether an AI will hire/fire a position or not. Hires over 0, fires under -50. Look in _court_positions.info for more extensive documentation!
+	ai_position_score = {
+		value = 50
+		scope:liege = {
+			# More likely for very generous characters
+			if = {
+				limit = {
+					ai_greed <= -75
+				}
+				add = 25
+			}
+			# Lots of gold to spend!
+			if = {
+				limit = {
+					gold >= 500
+					monthly_character_income > monthly_character_expenses_plus_fourty_percent
+				}
+				add = 50
+			}
+		}
+		add = court_position_debt_considerations_value
+	}
+	ai_candidate_score = {
+		value = 50
+		scope:employee = {
+			# Does the liege have a better candidate that they should be hiring instead?
+			if = {
+				limit = {
+					scope:highest_available_aptitude > scope:employee_aptitude
+				}
+				add = -125
+			}
+			# More likely to pick a courtier with a high aptitude, less likely to pick one with low
+			add = {
+				value = scope:employee_aptitude
+				multiply = 4
+			}
+		}
+
+		add = scope:base_value
+		add = court_position_candidate_score_base_value
+		if = { # To stop petitioned positions immediately being fired by the AI
+			limit = {
+				court_position_petition_ai_weight_trigger = { ROLE = fixer }
+			}
+			add = 1000
+		}
+	}
+}
+
+translator_court_position = {
+	sort_order = 180
+	max_available_positions = 1
+	minimum_rank = county
+	skill = diplomacy
+
+	court_position_asset = {
+		trigger = { culture_has_east_asian_heritage_pillar_trigger = yes }
+		animation = reading
+		background = "gfx/interface/illustrations/event_scenes/tgp_asia_estate.dds"
+	}
+
+	court_position_asset = {
+		animation = reading
+		background = "gfx/interface/illustrations/event_scenes/ep3_medi_estate.dds"
+	}
+
+	opinion = {
+		value = regular_court_position_opinion
+	}
+
+	# How high the aptitude has to be to reach the 5 different modifier levels
+	aptitude_level_breakpoints = { 20 40 60 80 }
+
+	# How good is this character in this position? root scope is the holder of the court position
+	aptitude = {
+		value = 25
+		add = court_position_aptitude_boon_voyager_trait
+		add = {
+			value = diplomacy
+			multiply = 2.5
+			max = 50
+			desc = court_position_skill_diplomacy
+		}
+		add = {
+			value = intrigue
+			multiply = 1.5
+			max = 50
+			desc = court_position_skill_intrigue
+		}
+		if = {
+			limit = {
+				num_of_known_languages > 1
+			}
+			add = {
+				value = 15
+				multiply = num_of_known_languages
+				desc = court_position_known_languages
+			}
+		}
+		if = {
+			limit = {
+				has_trait = erudite
+			}
+			add = {
+				value = 25
+				desc = court_position_erudite_trait
+			}
+		}
+		if = {
+			limit = {
+				has_trait = education_learning
+			}
+			add = {
+				value = 20
+				desc = court_position_education_learning_trait
+			}
+		}
+		add = court_position_aptitude_traveling_friends_value
+		add = court_position_aptitude_eunuch_tradition_value
+		add = court_position_aptitude_family_business_value
+		add = court_position_aptitude_high_penalty_value
+		if = {
+			limit = { employer.domicile ?= { has_domicile_parameter = company_increase_translator_aptitude_05 } }
+			add = {
+				value = company_study_capstone_court_position_aptitude_05_value
+				desc = domicile_building_parameter_company_increase_translator_aptitude_05
+			}
+		}
+		else_if = {
+			limit = { employer.domicile ?= { has_domicile_parameter = company_increase_translator_aptitude_04 } }
+			add = {
+				value = company_study_capstone_court_position_aptitude_04_value
+				desc = domicile_building_parameter_company_increase_translator_aptitude_04
+			}
+		}
+		# Bonus from court.8311
+		if = {
+			limit = { var:bonus_aptitude_role ?= flag:translator }
+			add = {
+				value = cp_bonus_aptitude_value
+				desc = cp_bonus_aptitude
+			}
+		}
+		# Seneschal
+		if = {
+			limit = {
+				liege.court_position:seneschal_court_position ?= {
+					has_variable = performing_improve_court
+				}
+			}
+			add = {
+				value = liege.court_position:seneschal_court_position.seneschal_improve_court_value
+				desc = seneschal_improve_court_aptitude_desc
+			}
+		}
+		# House Unity
+		if = {
+			limit = { court_position_liege_has_consulted_house_bonus = yes }
+			add = {
+				value = court_position_consulted_house_bonus_aptitude_value
+				desc = unity_consulted_house_member_desc
+			}
+		}
+		add = merchant_inspiring_rule_court_position_aptitude_value
+	}
+
+	is_shown = {
+		government_has_flag = government_is_merchant
+		trigger_if = {
+			limit = {
+				is_ai = yes
+				highest_held_title_tier <= tier_county
+			}
+			always = no
+		}
+	}
+
+	valid_position = {
+		custom_tooltip = {
+			text = merchant_government_tt
+			government_has_flag = government_is_merchant
+		}
+	}
+
+	is_shown_character = {
+		scope:employee = {
+			court_position_employee_shown_trigger = yes
+		}
+	}
+
+	valid_character = {
+		scope:employee = {
+			translator_validity_trigger = { EMPLOYER = scope:liege }
+		}
+	}
+
+	salary = {
+		gold = translator_total_salary_value
+		round = no
+	}
+
+	received_salary = {
+		gold = translator_total_salary_value
+		round = no
+	}
+
+	# These modifiers are employed based on what level the aptitude reaches (levels are defined as breakpoints)
+	scaling_employer_modifiers = {
+		terrible = {
+			different_culture_opinion = 5
+		}
+		poor = {
+			different_culture_opinion = 10
+		}
+		average = {
+			different_culture_opinion = 15
+		}
+		good = {
+			different_culture_opinion = 20
+		}
+		excellent = {
+			different_culture_opinion = 25
+		}
+	}
+
+	modifier = {
+		learn_language_scheme_phase_duration_add = -10
+	}
+
+	on_court_position_received = {
+		basic_gained_court_position_effect = yes
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+	on_court_position_revoked = {
+		basic_gained_court_position_effect = yes
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+	on_court_position_invalidated = {
+		basic_gained_court_position_effect = yes
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+	on_court_position_vacated = {
+		court_position_vacated_event_effect = {
+			COURT_POSITION_TYPE = translator_court_position
+		}
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+
+	# Scripted value to determine whether an AI will hire/fire a position or not. Hires over 0, fires under -50. Look in _court_positions.info for more extensive documentation!
+	ai_position_score = {
+		value = 50
+		scope:liege = {
+			# More likely for very generous characters
+			if = {
+				limit = {
+					ai_greed <= -75
+				}
+				add = 25
+			}
+			# Lots of gold to spend!
+			if = {
+				limit = {
+					gold >= 500
+					monthly_character_income > monthly_character_expenses_plus_fourty_percent
+				}
+				add = 50
+			}
+		}
+		add = court_position_debt_considerations_value
+	}
+	ai_candidate_score = {
+		value = 50
+		scope:employee = {
+			# Does the liege have a better candidate that they should be hiring instead?
+			if = {
+				limit = {
+					scope:highest_available_aptitude > scope:employee_aptitude
+				}
+				add = -125
+			}
+			# More likely to pick a courtier with a high aptitude, less likely to pick one with low
+			add = {
+				value = scope:employee_aptitude
+				multiply = 4
+			}
+		}
+
+		add = scope:base_value
+		add = court_position_candidate_score_base_value
+		if = { # To stop petitioned positions immediately being fired by the AI
+			limit = {
+				court_position_petition_ai_weight_trigger = { ROLE = translator }
+			}
+			add = 1000
+		}
+	}
+}
+
+market_agent_court_position = {
+	sort_order = 180
+	max_available_positions = 1
+	minimum_rank = county
+	skill = stewardship
+
+	court_position_asset = {
+		trigger = { culture ?= { has_graphical_japanese_culture_group_trigger = yes } }
+		animation = writing
+		background = "gfx/interface/illustrations/event_scenes/tgp_japanese_city.dds"
+	}
+
+	court_position_asset = {
+		trigger = {
+			OR = {
+				culture_has_east_asian_heritage_pillar_trigger = yes
+				culture_has_south_asian_heritage_pillar_trigger = yes
+			}
+		}
+		animation = writing
+		background = "gfx/interface/illustrations/event_scenes/tgp_market_asia.dds"
+	}
+
+	court_position_asset = {
+		trigger = { location ?= { steppe_building_gfx_use_southeast_asian_trigger = yes } }
+		animation = writing
+		background = "gfx/interface/illustrations/event_scenes/tgp_village_sea.dds"
+	}
+
+	court_position_asset = {
+		trigger = { culture ?= { has_graphical_mediterranean_culture_group_trigger = yes } }
+		animation = writing
+		background = "gfx/interface/illustrations/event_scenes/ep3_medi_market.dds"
+	}
+
+	court_position_asset = {
+		trigger = { culture ?= { has_building_gfx = mediterranean_building_gfx } }
+		animation = writing
+		background = "gfx/interface/illustrations/event_scenes/gdp_italian_market.dds"
+	}
+
+	court_position_asset = {
+		trigger = {
+			culture ?= {
+				OR = {
+					has_building_gfx = iranian_building_gfx
+					has_building_gfx = indian_building_gfx
+					has_building_gfx = tibetan_building_gfx
+				}
+			}
+		}
+		animation = writing
+		background = "gfx/interface/illustrations/event_scenes/market_east.dds"
+	}
+
+	court_position_asset = {
+		trigger = { culture_has_south_european_heritage_pillar_trigger = yes }
+		animation = writing
+		background = "gfx/interface/illustrations/event_scenes/market_tribal.dds"
+	}
+
+	court_position_asset = {
+		animation = writing
+		background = "gfx/interface/illustrations/event_scenes/market_west.dds"
+	}
+
+	opinion = {
+		value = regular_court_position_opinion
+	}
+
+	# How high the aptitude has to be to reach the 5 different modifier levels
+	aptitude_level_breakpoints = { 20 40 60 80 }
+
+	# How good is this character in this position? root scope is the holder of the court position
+	aptitude = {
+		value = 25
+		add = court_position_aptitude_boon_voyager_trait
+		add = {
+			value = stewardship
+			multiply = 2.5
+			max = 50
+			desc = court_position_skill_stewardship
+		}
+		add = {
+			value = diplomacy
+			multiply = 2
+			max = 50
+			desc = court_position_skill_diplomacy
+		}
+		if = {
+			limit = {
+				has_trait = diligent
+			}
+			add = {
+				value = 15
+				desc = court_position_diligent_trait
+			}
+		}
+		if = {
+			limit = { has_trait = administrator }
+			add = {
+				value = 15
+				desc = court_position_administrator_trait
+			}
+		}
+		if = {
+			limit = { has_trait = honest }
+			add = {
+				value = 15
+				desc = court_position_honest_trait
+			}
+		}
+		add = court_position_aptitude_traveling_friends_value
+		add = court_position_aptitude_eunuch_tradition_value
+		add = court_position_aptitude_family_business_value
+		add = court_position_aptitude_high_penalty_value
+		# Bonus from court.8311
+		if = {
+			limit = { var:bonus_aptitude_role ?= flag:market_agent }
+			add = {
+				value = cp_bonus_aptitude_value
+				desc = cp_bonus_aptitude
+			}
+		}
+		# Seneschal
+		if = {
+			limit = {
+				liege.court_position:seneschal_court_position ?= {
+					has_variable = performing_improve_court
+				}
+			}
+			add = {
+				value = liege.court_position:seneschal_court_position.seneschal_improve_court_value
+				desc = seneschal_improve_court_aptitude_desc
+			}
+		}
+		# House Unity
+		if = {
+			limit = { court_position_liege_has_consulted_house_bonus = yes }
+			add = {
+				value = court_position_consulted_house_bonus_aptitude_value
+				desc = unity_consulted_house_member_desc
+			}
+		}
+		add = merchant_inspiring_rule_court_position_aptitude_value
+	}
+
+	is_shown = {
+		government_has_flag = government_is_merchant
+	}
+
+	valid_position = {
+		custom_tooltip = {
+			text = merchant_government_tt
+			government_has_flag = government_is_merchant
+		}
+		custom_tooltip = {
+			text = market_agent_court_position_parameter_tt
+			has_realm_law = company_purpose_caravaneer
+		}
+	}
+
+	is_shown_character = {
+		scope:employee = {
+			court_position_employee_shown_trigger = yes
+		}
+	}
+
+	valid_character = {
+		scope:employee = {
+			market_agent_validity_trigger = { EMPLOYER = scope:liege }
+		}
+	}
+
+	salary = {
+		prestige = market_agent_total_salary_value
+		round = no
+	}
+
+	received_salary = {
+		gold = market_agent_total_salary_value
+		round = no
+	}
+
+	# These modifiers are employed based on what level the aptitude reaches (levels are defined as breakpoints)
+	scaling_employer_modifiers = {
+		terrible = {
+			trade_category_all_sell_price_mult = 0.001
+		}
+		poor = {
+			trade_category_all_sell_price_mult = 0.002
+		}
+		average = {
+			trade_category_all_sell_price_mult = 0.003
+		}
+		good = {
+			trade_category_all_sell_price_mult = 0.005
+		}
+		excellent = {
+			trade_category_all_sell_price_mult = 0.008
+		}
+	}
+
+	modifier = {
+		monthly_stewardship_lifestyle_xp_gain_mult = 0.1
+	}
+
+	on_court_position_received = {
+		basic_gained_court_position_effect = yes
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+	on_court_position_revoked = {
+		basic_gained_court_position_effect = yes
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+	on_court_position_invalidated = {
+		basic_gained_court_position_effect = yes
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+	on_court_position_vacated = {
+		court_position_vacated_event_effect = {
+			COURT_POSITION_TYPE = market_agent_court_position
+		}
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+
+	# Scripted value to determine whether an AI will hire/fire a position or not. Hires over 0, fires under -50. Look in _court_positions.info for more extensive documentation!
+	ai_position_score = {
+		value = 50
+		scope:liege = {
+			# More likely for very generous characters
+			if = {
+				limit = {
+					ai_greed <= -75
+				}
+				add = 25
+			}
+			# Lots of gold to spend!
+			if = {
+				limit = {
+					gold >= 500
+					monthly_character_income > monthly_character_expenses_plus_fourty_percent
+				}
+				add = 50
+			}
+		}
+		add = court_position_debt_considerations_value
+	}
+	ai_candidate_score = {
+		value = 50
+		scope:employee = {
+			# Does the liege have a better candidate that they should be hiring instead?
+			if = {
+				limit = {
+					scope:highest_available_aptitude > scope:employee_aptitude
+				}
+				add = -125
+			}
+			# More likely to pick a courtier with a high aptitude, less likely to pick one with low
+			add = {
+				value = scope:employee_aptitude
+				multiply = 4
+			}
+		}
+
+		add = scope:base_value
+		add = court_position_candidate_score_base_value
+		if = { # To stop petitioned positions immediately being fired by the AI
+			limit = {
+				court_position_petition_ai_weight_trigger = { ROLE = market_agent }
+			}
+			add = 1000
+		}
+	}
+}
+
+bailiff_court_position = {
+	sort_order = 180
+	max_available_positions = 1
+	minimum_rank = county
+	skill = intrigue
+
+	court_position_asset = {
+		trigger = { culture ?= { has_graphical_japanese_culture_group_trigger = yes } }
+		animation = threatening
+		background = "gfx/interface/illustrations/event_scenes/tgp_japanese_city.dds"
+	}
+
+	court_position_asset = {
+		trigger = {
+			OR = {
+				culture_has_east_asian_heritage_pillar_trigger = yes
+				culture_has_south_asian_heritage_pillar_trigger = yes
+			}
+		}
+		animation = threatening
+		background = "gfx/interface/illustrations/event_scenes/tgp_market_asia.dds"
+	}
+
+	court_position_asset = {
+		trigger = { location ?= { steppe_building_gfx_use_southeast_asian_trigger = yes } }
+		animation = threatening
+		background = "gfx/interface/illustrations/event_scenes/tgp_village_sea.dds"
+	}
+
+	court_position_asset = {
+		trigger = { culture ?= { has_graphical_mediterranean_culture_group_trigger = yes } }
+		animation = threatening
+		background = "gfx/interface/illustrations/event_scenes/ep3_medi_market.dds"
+	}
+
+	court_position_asset = {
+		trigger = { culture ?= { has_building_gfx = mediterranean_building_gfx } }
+		animation = threatening
+		background = "gfx/interface/illustrations/event_scenes/gdp_italian_market.dds"
+	}
+
+	court_position_asset = {
+		trigger = {
+			culture ?= {
+				OR = {
+					has_building_gfx = iranian_building_gfx
+					has_building_gfx = indian_building_gfx
+					has_building_gfx = tibetan_building_gfx
+				}
+			}
+		}
+		animation = threatening
+		background = "gfx/interface/illustrations/event_scenes/market_east.dds"
+	}
+
+	court_position_asset = {
+		trigger = { culture_has_south_european_heritage_pillar_trigger = yes }
+		animation = threatening
+		background = "gfx/interface/illustrations/event_scenes/market_tribal.dds"
+	}
+
+	court_position_asset = {
+		animation = threatening
+		background = "gfx/interface/illustrations/event_scenes/market_west.dds"
+	}
+
+	opinion = {
+		value = regular_court_position_opinion
+	}
+
+	# How high the aptitude has to be to reach the 5 different modifier levels
+	aptitude_level_breakpoints = { 20 40 60 80 }
+
+	# How good is this character in this position? root scope is the holder of the court position
+	aptitude = {
+		value = 25
+		add = court_position_aptitude_boon_voyager_trait
+		add = {
+			value = intrigue
+			multiply = 2.5
+			max = 50
+			desc = court_position_skill_intrigue
+		}
+		add = {
+			value = stewardship
+			multiply = 2
+			max = 50
+			desc = court_position_skill_stewardship
+		}
+		if = {
+			limit = {
+				has_trait = callous
+			}
+			add = {
+				value = 15
+				desc = court_position_callous_trait
+			}
+		}
+		if = {
+			limit = { has_trait = torturer }
+			add = {
+				value = 15
+				desc = court_position_torturer_trait
+			}
+		}
+		if = {
+			limit = { has_trait = deceitful }
+			add = {
+				value = 15
+				desc = court_position_deceitful_trait
+			}
+		}
+		add = court_position_aptitude_traveling_friends_value
+		add = court_position_aptitude_eunuch_tradition_value
+		add = court_position_aptitude_family_business_value
+		add = court_position_aptitude_high_penalty_value
+		# Bonus from court.8311
+		if = {
+			limit = { var:bonus_aptitude_role ?= flag:bailiff }
+			add = {
+				value = cp_bonus_aptitude_value
+				desc = cp_bonus_aptitude
+			}
+		}
+		# Seneschal
+		if = {
+			limit = {
+				liege.court_position:seneschal_court_position ?= {
+					has_variable = performing_improve_court
+				}
+			}
+			add = {
+				value = liege.court_position:seneschal_court_position.seneschal_improve_court_value
+				desc = seneschal_improve_court_aptitude_desc
+			}
+		}
+		# House Unity
+		if = {
+			limit = { court_position_liege_has_consulted_house_bonus = yes }
+			add = {
+				value = court_position_consulted_house_bonus_aptitude_value
+				desc = unity_consulted_house_member_desc
+			}
+		}
+		add = merchant_inspiring_rule_court_position_aptitude_value
+	}
+
+	is_shown = {
+		government_has_flag = government_is_merchant
+	}
+
+	valid_position = {
+		custom_tooltip = {
+			text = merchant_government_tt
+			government_has_flag = government_is_merchant
+		}
+		custom_tooltip = {
+			text = bailiff_court_position_parameter_tt
+			has_realm_law = company_purpose_creditor	
+		}
+	}
+
+	is_shown_character = {
+		scope:employee = {
+			court_position_employee_shown_trigger = yes
+		}
+	}
+
+	valid_character = {
+		scope:employee = {
+			bailiff_validity_trigger = { EMPLOYER = scope:liege }
+		}
+	}
+
+	salary = {
+		gold = bailiff_total_salary_value
+		round = no
+	}
+
+	received_salary = {
+		gold = bailiff_total_salary_value
+		round = no
+	}
+
+	# These modifiers are employed based on what level the aptitude reaches (levels are defined as breakpoints)
+	scaling_employer_modifiers = {
+		terrible = {
+			trade_competitiveness_mult = 0.01
+			dread_gain_mult = 0.05
+		}
+		poor = {
+			trade_competitiveness_mult = 0.02
+			dread_gain_mult = 0.075
+		}
+		average = {
+			trade_competitiveness_mult = 0.03
+			dread_gain_mult = 0.1
+		}
+		good = {
+			trade_competitiveness_mult = 0.04
+			dread_gain_mult = 0.125
+		}
+		excellent = {
+			trade_competitiveness_mult = 0.05
+			dread_gain_mult = 0.15
+		}
+	}
+
+	modifier = {
+		intrigue = 1
+		monthly_intrigue_lifestyle_xp_gain_mult = 0.05
+	}
+
+	on_court_position_received = {
+		basic_gained_court_position_effect = yes
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+	on_court_position_revoked = {
+		basic_gained_court_position_effect = yes
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+	on_court_position_invalidated = {
+		basic_gained_court_position_effect = yes
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+	on_court_position_vacated = {
+		court_position_vacated_event_effect = {
+			COURT_POSITION_TYPE = bailiff_court_position
+		}
+		scope:liege = { update_merchant_learn_on_the_job_effect = yes }
+	}
+
+	# Scripted value to determine whether an AI will hire/fire a position or not. Hires over 0, fires under -50. Look in _court_positions.info for more extensive documentation!
+	ai_position_score = {
+		value = 50
+		scope:liege = {
+			# More likely for very generous characters
+			if = {
+				limit = {
+					ai_greed <= -75
+				}
+				add = 25
+			}
+			# Lots of gold to spend!
+			if = {
+				limit = {
+					gold >= 500
+					monthly_character_income > monthly_character_expenses_plus_fourty_percent
+				}
+				add = 50
+			}
+		}
+		add = court_position_debt_considerations_value
+	}
+	ai_candidate_score = {
+		value = 50
+		scope:employee = {
+			# Does the liege have a better candidate that they should be hiring instead?
+			if = {
+				limit = {
+					scope:highest_available_aptitude > scope:employee_aptitude
+				}
+				add = -125
+			}
+			# More likely to pick a courtier with a high aptitude, less likely to pick one with low
+			add = {
+				value = scope:employee_aptitude
+				multiply = 4
+			}
+		}
+
+		add = scope:base_value
+		add = court_position_candidate_score_base_value
+		if = { # To stop petitioned positions immediately being fired by the AI
+			limit = {
+				court_position_petition_ai_weight_trigger = { ROLE = bailiff }
+			}
+			add = 1000
+		}
+	}
+}
