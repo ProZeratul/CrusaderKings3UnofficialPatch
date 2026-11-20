@@ -152,7 +152,7 @@ keeper_of_the_harem_court_position_task_attend_to_wellness = {
 				random_consort = {
 					limit = {
 						health <= poor_health
-						has_character_modifier = tgp_harem_medical_treatment_modifier
+						NOT = { has_character_modifier = tgp_harem_medical_treatment_modifier } #Unop Was missing the NOT of the limit above, so only consorts already treated were picked
 					}
 					save_scope_as = ailing_consort
 				}
