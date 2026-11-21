@@ -2837,6 +2837,7 @@ ep3_contract_event.0012 = {
 				OR = {
 					scope:task_contract_invalidation_reason = flag:employer_dead
 					scope:task_contract_invalidation_reason = flag:target_dead
+					scope:task_contract_invalidation_reason = flag:target_has_pet #Unop: New reason for the A Living Gift contract
 					scope:task_contract_invalidation_reason = flag:prisoner_free
 					scope:task_contract_invalidation_reason = flag:not_vassal
 					scope:task_contract_invalidation_reason = flag:unlanded_employer_is_imprisoned
@@ -2855,6 +2856,10 @@ ep3_contract_event.0012 = {
 			triggered_desc = {
 				trigger = { scope:task_contract_invalidation_reason = flag:target_dead	}
 				desc = ep3_contract_event.0012.desc_target_dead
+			}
+			triggered_desc = { #Unop: New reason for the A Living Gift contract
+				trigger = { scope:task_contract_invalidation_reason = flag:target_has_pet }
+				desc = ep3_contract_event.0012.desc_target_has_pet
 			}
 			triggered_desc = {
 				trigger = { scope:task_contract_invalidation_reason = flag:escortee_dead }
@@ -2955,6 +2960,7 @@ ep3_contract_event.0012 = {
 			#employer or target died, get gold compensation
 			flag:employer_dead = { add_gold = task_contract_invalidated_gold_gain_value }
 			flag:target_dead = { add_gold = task_contract_invalidated_gold_gain_value }
+			flag:target_has_pet = { add_gold = task_contract_invalidated_gold_gain_value } #Unop: New reason for the A Living Gift contract
 			#character or pet you were suppose to escort died
 			flag:escortee_dead = {
 				add_prestige = task_contract_failure_prestige_loss_full_value
@@ -2995,6 +3001,7 @@ ep3_contract_event.0012 = {
 				OR = {
 					scope:task_contract_invalidation_reason = flag:employer_dead
 					scope:task_contract_invalidation_reason = flag:target_dead
+					scope:task_contract_invalidation_reason = flag:target_has_pet #Unop: New reason for the A Living Gift contract
 					scope:task_contract_invalidation_reason = flag:prisoner_free
 					scope:task_contract_invalidation_reason = flag:not_vassal
 					scope:task_contract_invalidation_reason = flag:faction_disbanded

@@ -1866,6 +1866,14 @@ laamp_transport_animal = {
 		var:task_contract_target ?= {
 			is_alive = yes
 		}
+		trigger_if = { #Unop: The target must not have gained a pet of the escorted kind, as the pet name and modifiers are kept on the owner
+			limit = { var:escorted_story ?= { story_type = story_cycle_pet_dog } }
+			var:task_contract_target ?= { has_dog_trigger = no }
+		}
+		trigger_else_if = {
+			limit = { var:escorted_story ?= { story_type = story_cycle_pet_cat } }
+			var:task_contract_target ?= { has_cat_trigger = no }
+		}
 		valid_laamp_basic_trigger = {
 			EMPLOYER = root.task_contract_employer
 			LAAMP = root.task_contract_taker
@@ -2072,6 +2080,27 @@ laamp_transport_animal = {
 					save_scope_value_as = {
 						name = task_contract_invalidation_reason
 						value = flag:target_dead
+					}
+					trigger_event = ep3_contract_event.0012
+				}
+			}
+			else_if = { #Unop: The target gained a pet of the escorted kind, see valid_to_continue
+				limit = {
+					trigger_if = {
+						limit = { var:escorted_story = { story_type = story_cycle_pet_dog } }
+						var:task_contract_target ?= { has_dog_trigger = yes }
+					}
+					trigger_else = {
+						var:task_contract_target ?= { has_cat_trigger = yes }
+					}
+				}
+				var:task_contract_target = {
+					save_scope_as = task_contract_target
+				}
+				task_contract_taker = {
+					save_scope_value_as = {
+						name = task_contract_invalidation_reason
+						value = flag:target_has_pet
 					}
 					trigger_event = ep3_contract_event.0012
 				}
