@@ -298,42 +298,58 @@ chronicler_espouse_legend = {
 		custom_tooltip = yearly_legend_spread_tt
 	}
 	on_yearly = {
+		#Unop: Use the aptitude of the position the employee holds
+		if = {
+			limit = { has_court_position = court_musician_court_position }
+			save_temporary_scope_value_as = {
+				name = unop_espouse_legend_aptitude
+				value = "aptitude(court_musician_court_position)"
+			}
+		}
+		else_if = {
+			limit = { has_court_position = court_poet_court_position }
+			save_temporary_scope_value_as = {
+				name = unop_espouse_legend_aptitude
+				value = "aptitude(court_poet_court_position)"
+			}
+		}
+		else_if = {
+			limit = { has_court_position = cultural_emissary_court_position }
+			save_temporary_scope_value_as = {
+				name = unop_espouse_legend_aptitude
+				value = "aptitude(cultural_emissary_court_position)"
+			}
+		}
+		else = {
+			save_temporary_scope_value_as = {
+				name = unop_espouse_legend_aptitude
+				value = "aptitude(chronicler_court_position)"
+			}
+		}
 		random = {
 			chance = {
 				value = 20
 				if = {
 					limit = {
-						aptitude = {
-							court_position = chronicler_court_position
-							value >= 1 #Unop: Aptitude levels are 0-4, not 1-5
-						}
+						scope:unop_espouse_legend_aptitude >= 1 #Unop: Aptitude levels are 0-4, not 1-5. Was the chronicler aptitude for every position
 					}
 					add = 5
 				}
 				if = {
 					limit = {
-						aptitude = {
-							court_position = chronicler_court_position
-							value >= 2 #Unop: Aptitude levels are 0-4, not 1-5
-						}
+						scope:unop_espouse_legend_aptitude >= 2 #Unop: Aptitude levels are 0-4, not 1-5. Was the chronicler aptitude for every position
 					}
 					add = 10
 				}
 				if = {
 					limit = {
-						aptitude = {
-							court_position = chronicler_court_position
-							value >= 3 #Unop: Aptitude levels are 0-4, not 1-5
-						}
+						scope:unop_espouse_legend_aptitude >= 3 #Unop: Aptitude levels are 0-4, not 1-5. Was the chronicler aptitude for every position
 					}
 					add = 20
 				}
 				if = {
 					limit = {
-						aptitude = {
-							court_position = chronicler_court_position
-							value >= 4 #Unop: Aptitude levels are 0-4, not 1-5
-						}
+						scope:unop_espouse_legend_aptitude >= 4 #Unop: Aptitude levels are 0-4, not 1-5. Was the chronicler aptitude for every position
 					}
 					add = 30
 				}
