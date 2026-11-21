@@ -247,3 +247,61 @@ unop_apply_maimed_in_battle_effect = {
 		epilepsy_brain_trauma_risk_effect = { CHANCE = 5 }
 	}
 }
+
+#Unop A character who gives up all titles is briefly non-playable, and the engine then drops the tenets and doctrines they learned and their personal tenets
+# Call unop_save_tenet_knowledge_effect before the titles are transferred, and unop_restore_tenet_knowledge_effect once the character holds a title again, in the same effect
+unop_save_tenet_knowledge_effect = {
+	every_character_tenet = {
+		knowledge_filter = known
+		add_to_list = unop_known_tenets
+	}
+	every_character_doctrine = {
+		knowledge_filter = known
+		add_to_list = unop_known_doctrines
+	}
+	every_personal_tenet = {
+		add_to_list = unop_personal_tenets
+	}
+}
+
+unop_restore_tenet_knowledge_effect = {
+	save_scope_as = unop_tenet_knower
+	hidden_effect = {
+		every_in_list = {
+			list = unop_known_tenets
+			save_scope_as = unop_tenet
+			scope:unop_tenet_knower = {
+				if = {
+					limit = {
+						NOT = { knows_tenet = scope:unop_tenet }
+					}
+					add_known_tenet = scope:unop_tenet
+				}
+			}
+		}
+		every_in_list = {
+			list = unop_known_doctrines
+			save_scope_as = unop_doctrine
+			scope:unop_tenet_knower = {
+				if = {
+					limit = {
+						NOT = { knows_doctrine = scope:unop_doctrine }
+					}
+					add_known_doctrine = scope:unop_doctrine
+				}
+			}
+		}
+		every_in_list = {
+			list = unop_personal_tenets
+			save_scope_as = unop_tenet
+			scope:unop_tenet_knower = {
+				if = {
+					limit = {
+						NOT = { has_personal_tenet = scope:unop_tenet }
+					}
+					force_set_personal_tenet = scope:unop_tenet
+				}
+			}
+		}
+	}
+}
