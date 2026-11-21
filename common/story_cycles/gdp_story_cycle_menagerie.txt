@@ -1,0 +1,150 @@
+﻿story_cycle_menagerie = {
+	visible = yes
+	icon = {
+		trigger = { var:animal_type ?= flag:lion }
+		reference = "gfx/interface/icons/artifact/artifact_asian_lion.dds"
+	}
+	icon = {
+		trigger = { var:animal_type ?= flag:tiger }
+		reference = "gfx/interface/icons/artifact/artifact_tiger.dds"
+	}
+	icon = {
+		trigger = {
+			var:animal_type ?= flag:leopard
+			exists = var:creature_location
+			var:creature_location = {
+				OR = {
+					geographical_region = world_tibet
+					geographical_region = world_steppe_tarim
+					geographical_region = world_steppe_central
+					geographical_region = world_steppe_east
+				}
+			}
+		}
+		reference = "gfx/interface/icons/artifact/artifact_snow_leopard.dds"
+	}
+	icon = {
+		trigger = {
+			var:animal_type ?= flag:leopard
+			OR = {
+				NOT = { exists = var:creature_location }
+				var:creature_location = {
+					NOR = {
+						geographical_region = world_tibet
+						geographical_region = world_steppe_tarim
+						geographical_region = world_steppe_central
+						geographical_region = world_steppe_east
+					}
+				}
+			}
+		}
+		reference = "gfx/interface/icons/artifact/artifact_leopard.dds"
+	}
+	icon = {
+		trigger = { var:animal_type ?= flag:caracal }
+		reference = "gfx/interface/icons/artifact/artifact_caracal.dds"
+	}
+	icon = {
+		trigger = { var:animal_type ?= flag:lynx }
+		reference = "gfx/interface/icons/artifact/artifact_lynx.dds"
+	}
+	icon = {
+		trigger = { var:animal_type ?= flag:bear }
+		reference = "gfx/interface/icons/artifact/artifact_black_bear.dds"
+	}
+	icon = {
+		trigger = { var:animal_type ?= flag:elephant }
+		reference = "gfx/interface/icons/artifact/artifact_asian_elephant.dds"
+	}
+	icon = {
+		trigger = { var:animal_type ?= flag:monkey }
+		reference = "gfx/interface/icons/artifact/artifact_gibbon_ape.dds"
+	}
+	icon = {
+		trigger = { var:animal_type ?= flag:parrot }
+		reference = "gfx/interface/icons/artifact/artifact_african_parrot.dds"
+	}
+	icon = {
+		trigger = { var:animal_type ?= flag:cockatoo }
+		reference = "gfx/interface/icons/artifact/artifact_cockatoo.dds"
+	}
+	icon = {
+		trigger = { var:animal_type ?= flag:crane }
+		reference = "gfx/interface/icons/artifact/artifact_crane.dds"
+	}
+	icon = {
+		trigger = { var:animal_type ?= flag:peacock }
+		reference = "gfx/interface/icons/artifact/artifact_peacock.dds"
+	}
+	background = {
+		reference = "gfx/interface/illustrations/event_scenes/garden.dds"
+	}
+
+	visualization = {
+		custom_string_key = "CREATURE_INFORMATION_STRING"
+	}
+
+	on_setup = {
+		# Used for setting correct icons
+		set_variable = {
+			name = animal_type
+			value = story_owner.var:animal_type
+		}
+		# Used for fetching the artifact itself
+		set_variable = {
+			name = artifact_type
+			value = story_owner.var:menagerie_pending_creature_artifact
+		}
+		story_owner = { remove_variable = menagerie_pending_creature_artifact }
+		# Age
+		set_variable = {
+			name = creature_age_variable
+			value = { 3 5 }
+		}
+		# Let's set up the creature's gender
+		assign_creature_gender_effect = yes
+	}
+
+	on_owner_death = {
+		scope:story = { end_story = yes }
+	}
+
+	# Age the creature
+	effect_group = {
+		days = 365
+
+		trigger = { exists = var:creature_age_variable }
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				change_variable = {
+					name = creature_age_variable
+					add = 1
+				}
+			}
+		}
+	}
+
+	# The creature dies
+	effect_group = {
+		days = { 5000 7000 }
+		chance = 100
+
+		trigger = { exists = scope:story.var:artifact_type }
+	
+		triggered_effect = {
+			effect = {
+				story_owner = {
+					send_interface_toast = {
+						type = event_toast_effect_bad
+						title = creature_story_cycle_death
+						left_icon = scope:story.var:artifact_type
+						destroy_artifact = scope:story.var:artifact_type
+					}
+				}
+				scope:story = { end_story = yes }
+			}
+		}
+	}
+}
