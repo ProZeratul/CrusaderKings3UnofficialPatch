@@ -96,21 +96,26 @@ court_jester_court_position_task_entertain_court = {
 			random = {
 				chance = {
 					value = 5
-					switch = {
-						trigger = "aptitude(court_jester_court_position)"
-						4 = { add = 40 } #Unop: Aptitude levels are 0-4, not 1-5
-						3 = { add = 30 } #Unop: Aptitude levels are 0-4, not 1-5
-						2 = { add = 25 } #Unop: Aptitude levels are 0-4, not 1-5
-						1 = { add = 15 } #Unop: Aptitude levels are 0-4, not 1-5
-						0 = { add = 5 } #Unop: Aptitude levels are 0-4, not 1-5
+					if = { #Unop: Use the aptitude of the position the employee holds, rather than adding both
+						limit = { has_court_position = court_jester_court_position }
+						switch = {
+							trigger = "aptitude(court_jester_court_position)"
+							4 = { add = 40 } #Unop: Aptitude levels are 0-4, not 1-5
+							3 = { add = 30 } #Unop: Aptitude levels are 0-4, not 1-5
+							2 = { add = 25 } #Unop: Aptitude levels are 0-4, not 1-5
+							1 = { add = 15 } #Unop: Aptitude levels are 0-4, not 1-5
+							0 = { add = 5 } #Unop: Aptitude levels are 0-4, not 1-5
+						}
 					}
-					switch = {
-						trigger = "aptitude(foreign_emissary_court_position)"
-						4 = { add = 40 } #Unop: Aptitude levels are 0-4, not 1-5
-						3 = { add = 30 } #Unop: Aptitude levels are 0-4, not 1-5
-						2 = { add = 25 } #Unop: Aptitude levels are 0-4, not 1-5
-						1 = { add = 15 } #Unop: Aptitude levels are 0-4, not 1-5
-						0 = { add = 5 } #Unop: Aptitude levels are 0-4, not 1-5
+					else = {
+						switch = {
+							trigger = "aptitude(foreign_emissary_court_position)"
+							4 = { add = 40 } #Unop: Aptitude levels are 0-4, not 1-5
+							3 = { add = 30 } #Unop: Aptitude levels are 0-4, not 1-5
+							2 = { add = 25 } #Unop: Aptitude levels are 0-4, not 1-5
+							1 = { add = 15 } #Unop: Aptitude levels are 0-4, not 1-5
+							0 = { add = 5 } #Unop: Aptitude levels are 0-4, not 1-5
+						}
 					}
 				}
 				save_scope_as = jester_from_task
@@ -125,28 +130,33 @@ court_jester_court_position_task_entertain_court = {
 				limit = {
 					exists = scope:second_de_stress_target
 					OR = { 
-						"aptitude(court_jester_court_position)" >= 3 
-						"aptitude(foreign_emissary_court_position)" >= 3 
+						AND = { has_court_position = court_jester_court_position "aptitude(court_jester_court_position)" >= 3 } #Unop: Check the aptitude of the position the employee holds
+						AND = { has_court_position = foreign_emissary_court_position "aptitude(foreign_emissary_court_position)" >= 3 } #Unop: Check the aptitude of the position the employee holds
 					}
 				}
 				random = {
 					chance = {
 						value = 5
-						switch = {
-							trigger = "aptitude(court_jester_court_position)"
-							4 = { add = 40 } #Unop: Aptitude levels are 0-4, not 1-5
-							3 = { add = 30 } #Unop: Aptitude levels are 0-4, not 1-5
-							2 = { add = 25 } #Unop: Aptitude levels are 0-4, not 1-5
-							1 = { add = 15 } #Unop: Aptitude levels are 0-4, not 1-5
-							0 = { add = 5 } #Unop: Aptitude levels are 0-4, not 1-5
+						if = { #Unop: Use the aptitude of the position the employee holds, rather than adding both
+							limit = { has_court_position = court_jester_court_position }
+							switch = {
+								trigger = "aptitude(court_jester_court_position)"
+								4 = { add = 40 } #Unop: Aptitude levels are 0-4, not 1-5
+								3 = { add = 30 } #Unop: Aptitude levels are 0-4, not 1-5
+								2 = { add = 25 } #Unop: Aptitude levels are 0-4, not 1-5
+								1 = { add = 15 } #Unop: Aptitude levels are 0-4, not 1-5
+								0 = { add = 5 } #Unop: Aptitude levels are 0-4, not 1-5
+							}
 						}
-						switch = {
-							trigger = "aptitude(foreign_emissary_court_position)"
-							4 = { add = 40 } #Unop: Aptitude levels are 0-4, not 1-5
-							3 = { add = 30 } #Unop: Aptitude levels are 0-4, not 1-5
-							2 = { add = 25 } #Unop: Aptitude levels are 0-4, not 1-5
-							1 = { add = 15 } #Unop: Aptitude levels are 0-4, not 1-5
-							0 = { add = 5 } #Unop: Aptitude levels are 0-4, not 1-5
+						else = {
+							switch = {
+								trigger = "aptitude(foreign_emissary_court_position)"
+								4 = { add = 40 } #Unop: Aptitude levels are 0-4, not 1-5
+								3 = { add = 30 } #Unop: Aptitude levels are 0-4, not 1-5
+								2 = { add = 25 } #Unop: Aptitude levels are 0-4, not 1-5
+								1 = { add = 15 } #Unop: Aptitude levels are 0-4, not 1-5
+								0 = { add = 5 } #Unop: Aptitude levels are 0-4, not 1-5
+							}
 						}
 					}
 					save_scope_as = jester_from_task
