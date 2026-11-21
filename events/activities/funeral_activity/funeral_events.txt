@@ -1625,6 +1625,7 @@ funeral.1030 = {
 
 	option = { # Adopt the pupper
 		name = funeral.1030.a
+		trigger = { has_dog_trigger = no } #Unop: A second dog story would share the name and modifiers kept on the owner
 		custom_tooltip = {
 			text = funeral_1030_adopt_tt
 			var:dead_dog_story = {
@@ -1633,6 +1634,13 @@ funeral.1030 = {
 		}
 		add_character_modifier = {
 			modifier = dog_story_modifier
+		}
+		if = { #Unop: Give the dog its name, which is kept on the owner
+			limit = { exists = var:dead_dog_story.var:story_cycle_dog_name }
+			set_variable = {
+				name = story_cycle_dog_name
+				value = var:dead_dog_story.var:story_cycle_dog_name
+			}
 		}
 		add_character_flag = had_dog_story
 		stress_and_fulfillment_impact = {
