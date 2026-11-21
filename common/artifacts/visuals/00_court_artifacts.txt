@@ -2988,7 +2988,7 @@ crown_court = {
 	# Muslim
 	asset = {
 		trigger = {
-			has_dlc_feature = the_fate_of_iberia #Unop Reminder: without Fate of Iberia, Iberian cultures get no court crown, as no other entry covers them; the DLC gate is kept on purpose
+			has_dlc_feature = the_fate_of_iberia
 			artifact_use_iberian_muslim_unit_visuals_trigger = yes
 		}
 		reference = male_headgear_secular_fp2_iberian_muslim_royalty_01_artifact_entity
@@ -3191,7 +3191,13 @@ crown_court = {
 	#MENA
 	asset = {		
 		trigger = {
-			artifact_use_mena_building_visuals_trigger = yes #this trigger cuts out the maker
+			OR = { #Unop Iberian Muslim unit gfx had no court crown without Fate of Iberia
+				artifact_use_mena_building_visuals_trigger = yes #this trigger cuts out the maker
+				AND = {
+					artifact_use_iberian_muslim_unit_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_fate_of_iberia }
+				}
+			}
 			scope:owner = {
 				highest_held_title_tier <= tier_kingdom
 			}
@@ -3200,7 +3206,13 @@ crown_court = {
 	}
 	asset = {		
 		trigger = {
-			artifact_use_mena_building_visuals_trigger = yes #this trigger cuts out the maker
+			OR = { #Unop Iberian Muslim unit gfx had no court crown without Fate of Iberia
+				artifact_use_mena_building_visuals_trigger = yes #this trigger cuts out the maker
+				AND = {
+					artifact_use_iberian_muslim_unit_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_fate_of_iberia }
+				}
+			}
 			scope:owner = {
 				highest_held_title_tier <= tier_kingdom
 			}
@@ -3209,7 +3221,13 @@ crown_court = {
 	}
 	asset = {		
 		trigger = {
-			artifact_use_mena_building_visuals_trigger = yes #this trigger cuts out the maker
+			OR = { #Unop Iberian Muslim unit gfx had no court crown without Fate of Iberia
+				artifact_use_mena_building_visuals_trigger = yes #this trigger cuts out the maker
+				AND = {
+					artifact_use_iberian_muslim_unit_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_fate_of_iberia }
+				}
+			}
 			scope:owner = {
 				highest_held_title_tier >= tier_empire
 			}
@@ -3232,6 +3250,10 @@ crown_court = {
 				AND = { #Unop Norse building gfx had no crown without Northern Lords
 					artifact_use_norse_building_visuals_trigger = yes
 					NOT = { has_dlc_feature = the_northern_lords }
+				}
+				AND = { #Unop Iberian Christian unit gfx had no court crown without Fate of Iberia
+					artifact_use_iberian_christian_unit_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_fate_of_iberia }
 				}
 			}
 			scope:owner = {
@@ -3256,6 +3278,10 @@ crown_court = {
 					artifact_use_norse_building_visuals_trigger = yes
 					NOT = { has_dlc_feature = the_northern_lords }
 				}
+				AND = { #Unop Iberian Christian unit gfx had no court crown without Fate of Iberia
+					artifact_use_iberian_christian_unit_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_fate_of_iberia }
+				}
 			}
 			scope:owner = {
 				culture = {
@@ -3278,6 +3304,10 @@ crown_court = {
 				AND = { #Unop Norse building gfx had no crown without Northern Lords
 					artifact_use_norse_building_visuals_trigger = yes
 					NOT = { has_dlc_feature = the_northern_lords }
+				}
+				AND = { #Unop Iberian Christian unit gfx had no court crown without Fate of Iberia
+					artifact_use_iberian_christian_unit_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_fate_of_iberia }
 				}
 			}
 			scope:owner = {
@@ -3302,6 +3332,10 @@ crown_court = {
 					artifact_use_norse_building_visuals_trigger = yes
 					NOT = { has_dlc_feature = the_northern_lords }
 				}
+				AND = { #Unop Iberian Christian unit gfx had no court crown without Fate of Iberia
+					artifact_use_iberian_christian_unit_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_fate_of_iberia }
+				}
 			}
 			scope:owner = {
 				culture = {
@@ -3324,6 +3358,10 @@ crown_court = {
 				AND = { #Unop Norse building gfx had no crown without Northern Lords
 					artifact_use_norse_building_visuals_trigger = yes
 					NOT = { has_dlc_feature = the_northern_lords }
+				}
+				AND = { #Unop Iberian Christian unit gfx had no court crown without Fate of Iberia
+					artifact_use_iberian_christian_unit_visuals_trigger = yes
+					NOT = { has_dlc_feature = the_fate_of_iberia }
 				}
 			}
 			scope:owner = {
