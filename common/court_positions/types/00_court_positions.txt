@@ -1361,18 +1361,18 @@ antiquarian_court_position = {
 			}
 		}
 		add = court_position_aptitude_low_penalty_value
-		if = {
-			limit = {
-				liege_or_court_owner ?= {
-					has_perk = chains_of_loyalty_perk
-					government_has_flag = government_is_settled_non_tribal
-				}
-			}
-			add = {
-				value = 10
-				desc = chains_of_loyalty_perk_name
-			}
-		}
+		#if = { #Unop Chains of Loyalty gives this bonus to the Seneschal, not the Antiquarian
+		#	limit = {
+		#		liege_or_court_owner ?= {
+		#			has_perk = chains_of_loyalty_perk
+		#			government_has_flag = government_is_settled_non_tribal
+		#		}
+		#	}
+		#	add = {
+		#		value = 10
+		#		desc = chains_of_loyalty_perk_name
+		#	}
+		#}
 		add = general_aptitude_bonus
 	}
 
@@ -1672,6 +1672,18 @@ seneschal_court_position = {
 			}
 		}
 		add = court_position_aptitude_low_penalty_value
+		if = { #Unop Moved from the Antiquarian, to which vanilla gave the Chains of Loyalty bonus by mistake
+			limit = {
+				liege_or_court_owner ?= {
+					has_perk = chains_of_loyalty_perk
+					government_has_flag = government_is_settled_non_tribal
+				}
+			}
+			add = {
+				value = 10
+				desc = chains_of_loyalty_perk_name
+			}
+		}
 		add = general_aptitude_bonus_exclude_other_court_position
 	}
 
