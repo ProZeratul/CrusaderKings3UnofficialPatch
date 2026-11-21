@@ -17742,7 +17742,8 @@ scripted_trigger hold_court_8100_child_trigger = {
 	is_available_ai_child = yes # Children only
 	age < 14 # Not already almost done with education, sets time which must be invested to get rewards
 	NOT = { is_child_of = root } # Is not your child
-	NOT = { has_relation_ward = root } # Is not already a ward of the player
+	#NOT = { has_relation_ward = root } # Is not already a ward of the player #Unop Inverted, never true; covered by the check below
+	num_of_relation_guardian = 0 #Unop Has no guardian, so that the event doesn't give the child a second one
 	NOT = {
 		root = { has_strong_hook = prev } # prev = scope:ward
 	}
