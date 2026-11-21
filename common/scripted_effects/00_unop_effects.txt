@@ -170,3 +170,49 @@ unop_update_governor_fallback_succession_effect = {
 		remove_character_flag = unop_governor_fallback_succession
 	}
 }
+
+#Unop Flip the given personality trait to its opposite, with the same pairs as flip_sinful_trait_effect, regardless of rite
+# TRAIT: the trait to flip, e.g. scope:sinful_trait
+unop_flip_personality_trait_effect = {
+	if = {
+		limit = { has_trait = $TRAIT$ }
+		switch = {
+			trigger = $TRAIT$
+			trait:lustful = { remove_trait = lustful add_trait_force_tooltip = chaste }
+			trait:chaste = { remove_trait = chaste add_trait_force_tooltip = lustful }
+			trait:temperate = { remove_trait = temperate add_trait_force_tooltip = gluttonous }
+			trait:gluttonous = { remove_trait = gluttonous add_trait_force_tooltip = temperate }
+			trait:greedy = { remove_trait = greedy add_trait_force_tooltip = generous }
+			trait:generous = { remove_trait = generous add_trait_force_tooltip = greedy }
+			trait:lazy = { remove_trait = lazy add_trait_force_tooltip = diligent }
+			trait:diligent = { remove_trait = diligent add_trait_force_tooltip = lazy }
+			trait:wrathful = { remove_trait = wrathful add_trait_force_tooltip = calm }
+			trait:calm = { remove_trait = calm add_trait_force_tooltip = wrathful }
+			trait:humble = { remove_trait = humble add_trait_force_tooltip = arrogant }
+			trait:arrogant = { remove_trait = arrogant add_trait_force_tooltip = humble }
+			trait:impatient = { remove_trait = impatient add_trait_force_tooltip = patient }
+			trait:patient = { remove_trait = patient add_trait_force_tooltip = impatient }
+			trait:craven = { remove_trait = craven add_trait_force_tooltip = brave }
+			trait:brave = { remove_trait = brave add_trait_force_tooltip = craven }
+			trait:shy = { remove_trait = shy add_trait_force_tooltip = gregarious }
+			trait:gregarious = { remove_trait = gregarious add_trait_force_tooltip = shy }
+			trait:ambitious = { remove_trait = ambitious add_trait_force_tooltip = content }
+			trait:content = { remove_trait = content add_trait_force_tooltip = ambitious }
+			trait:arbitrary = { remove_trait = arbitrary add_trait_force_tooltip = just }
+			trait:just = { remove_trait = just add_trait_force_tooltip = arbitrary }
+			trait:zealous = { remove_trait = zealous add_trait_force_tooltip = cynical }
+			trait:cynical = { remove_trait = cynical add_trait_force_tooltip = zealous }
+			trait:trusting = { remove_trait = trusting add_trait_force_tooltip = paranoid }
+			trait:paranoid = { remove_trait = paranoid add_trait_force_tooltip = trusting }
+			trait:callous = { remove_trait = callous add_trait_force_tooltip = compassionate }
+			trait:sadistic = { remove_trait = sadistic add_trait_force_tooltip = compassionate }
+			trait:compassionate = { remove_trait = compassionate add_trait_force_tooltip = callous }
+			trait:stubborn = { remove_trait = stubborn add_trait_force_tooltip = fickle }
+			trait:fickle = { remove_trait = fickle add_trait_force_tooltip = stubborn }
+			trait:vengeful = { remove_trait = vengeful add_trait_force_tooltip = forgiving }
+			trait:forgiving = { remove_trait = forgiving add_trait_force_tooltip = vengeful }
+			trait:honest = { remove_trait = honest add_trait_force_tooltip = deceitful }
+			trait:deceitful = { remove_trait = deceitful add_trait_force_tooltip = honest }
+		}
+	}
+}
