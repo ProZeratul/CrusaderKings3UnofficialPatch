@@ -309,9 +309,11 @@ is_below_ai_lover_soft_cap_trigger = {
 
 		trigger_if = {
 			limit = {
-				has_trait = lustful
-				has_trait = seducer
-				has_focus = intrigue_temptation_focus
+				OR = { #Unop: Any of these raises the cap, not all of them together
+					has_trait = lustful
+					has_trait = seducer
+					has_focus = intrigue_temptation_focus
+				}
 			}
 			num_of_relation_lover < 3
 		}
