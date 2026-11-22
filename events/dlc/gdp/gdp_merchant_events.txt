@@ -5684,54 +5684,54 @@ gdp_merchant.3040 = { # Antiquarian
 	option = {
 		name = gdp_merchant.3040.b
 		add_short_term_gold = {
-			gold = {
-				value = 0
-				if = {
-					limit = {
-						scope:artifact = { rarity = illustrious }
-					}
-					add = 25
+			#gold = { #Unop add_short_term_gold takes the value directly, so the wrapper paid nothing
+			value = 0
+			if = {
+				limit = {
+					scope:artifact = { rarity = illustrious }
 				}
-				else_if = {
-					limit = {
-						scope:artifact = { rarity = famed }
-					}
-					add = 15
-				}
-				else_if = {
-					limit = {
-						scope:artifact = { rarity = masterwork }
-					}
-					add = 8
-				}
-				else = {
-					add = 4
-				}
-
-				# Boost the value up to something meaningful (merchants)
-				multiply = {
-					value = 5
-				}
-
-				# multiply by durability percentage
-				multiply = {
-					add = scope:artifact.artifact_durability
-					divide = scope:artifact.artifact_max_durability
-					divide = 2
-					add = 0.5
-				}
-
-				# More than just destroying
-				if = {
-					limit = { "scope:antiquarian.aptitude(antiquarian_court_position)" = 4 }
-					multiply = 2
-				}
-				else_if = {
-					limit = { "scope:antiquarian.aptitude(antiquarian_court_position)" = 3 }
-					multiply = 1.75
-				}
-				else = { multiply = 1.5 }
+				add = 25
 			}
+			else_if = {
+				limit = {
+					scope:artifact = { rarity = famed }
+				}
+				add = 15
+			}
+			else_if = {
+				limit = {
+					scope:artifact = { rarity = masterwork }
+				}
+				add = 8
+			}
+			else = {
+				add = 4
+			}
+
+			# Boost the value up to something meaningful (merchants)
+			multiply = {
+				value = 5
+			}
+
+			# multiply by durability percentage
+			multiply = {
+				add = scope:artifact.artifact_durability
+				divide = scope:artifact.artifact_max_durability
+				divide = 2
+				add = 0.5
+			}
+
+			# More than just destroying
+			if = {
+				limit = { "scope:antiquarian.aptitude(antiquarian_court_position)" = 4 }
+				multiply = 2
+			}
+			else_if = {
+				limit = { "scope:antiquarian.aptitude(antiquarian_court_position)" = 3 }
+				multiply = 1.75
+			}
+			else = { multiply = 1.5 }
+			#}
 		}
 		if = {
 			limit = {
