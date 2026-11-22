@@ -18,6 +18,12 @@
 				has_trait = herald
 			}
 		}
+		trigger_if = { #Unop No heirs for lay clergy, since clergy are skipped when inheriting
+			limit = {
+				rite = { rite_has_parameter = lay_clergy }
+			}
+			NOT = { any_heir_title = { } }
+		}
 
 		# No charioteers
 		has_any_charioteer_trait = no 
