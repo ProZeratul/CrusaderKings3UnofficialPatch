@@ -489,6 +489,13 @@ ach_maintenance_events.0002 = { # ACH Oath synergy culture rewards
 					tier = tier_county
 					culture = root.var:mend_the_fracture_oath_target_culture
 				}
+				OR = { # Only if a reward line below applies to this player
+					exists = scope:county_reward
+					AND = {
+						exists = scope:army_reward
+						root.var:mend_the_fracture_oath_target_culture.culture_head ?= this
+					}
+				}
 			}
 			send_interface_message = {
 				title = ach_maintenance_events.0002.title
