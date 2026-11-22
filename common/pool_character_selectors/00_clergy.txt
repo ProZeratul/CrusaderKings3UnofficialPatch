@@ -1,0 +1,122 @@
+﻿pool_court_chaplain = {
+	valid_character = {
+		is_valid_auto_title_holder = yes
+		is_valid_auto_title_holder_clergy = yes
+		rite = { rite_has_allowed_gender_for_clergy = root }
+		
+		# No close family members for temporal religions unless they have relevant traits
+		trigger_if = {
+			limit = {
+				scope:base.rite = {
+					NOT = { rite_has_parameter = lay_clergy }
+				}
+			}
+			OR = {
+				NOT = { is_close_family_of = scope:base }
+				has_trait = devoted
+				has_trait = saint
+				has_trait = herald
+			}
+		}
+
+		# No charioteers
+		has_any_charioteer_trait = no 
+	}
+	
+	character_score = {
+		base = 1
+		
+		modifier = {
+			add = 100
+			has_same_culture_as = scope:base
+		}
+		modifier = {
+			add = 100
+			rite = scope:base.rite
+		}
+		modifier = {
+			add = 15
+			culture = { has_same_culture_heritage = scope:base.culture }
+		}
+		modifier = {
+			add = 10
+			culture = { has_same_culture_language = scope:base.culture }
+		}
+		modifier = {
+			add = 5
+			culture = { has_same_culture_ethos = scope:base.culture }
+		}
+
+		modifier = {
+			factor = 1.5
+			age > 40
+		}
+		modifier = {
+			factor = 3
+			scope:base.rite = { rite_has_preferred_gender_for_clergy = root }
+		}
+	}
+	
+	config = {
+		background = clergy
+		age = { 25 55 }
+	}
+	
+	selection_count = 25
+	
+	pool = faith
+	gender = clergy
+}
+
+
+# Referenced in code for granting titles to clergy
+pool_theocratic_succession = {
+	valid_character = {
+		is_valid_auto_title_holder = yes
+		is_valid_auto_title_holder_clergy = yes
+	}
+	
+	character_score = {
+		base = 1
+		
+		modifier = {
+			add = 100
+			has_same_culture_as = scope:base
+		}
+		modifier = {
+			add = 15
+			culture = { has_same_culture_heritage = scope:base.culture }
+		}
+		modifier = {
+			add = 10
+			culture = { has_same_culture_language = scope:base.culture }
+		}
+		modifier = {
+			add = 5
+			culture = { has_same_culture_ethos = scope:base.culture }
+		}
+
+		modifier = {
+			factor = 1.5
+			age > 40
+		}
+		modifier = {
+			factor = 1.5
+			age > 60
+		}
+		modifier = {
+			factor = 3
+			scope:base.rite = { rite_has_preferred_gender_for_clergy = root }
+		}
+	}
+	
+	config = {
+		background = clergy
+		age = { 35 65 }
+	}
+	
+	selection_count = 25
+	
+	pool = faith
+	gender = clergy
+}
