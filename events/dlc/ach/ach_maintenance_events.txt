@@ -482,15 +482,12 @@ ach_maintenance_events.0002 = { # ACH Oath synergy culture rewards
 			}
 		}
 
-		if = {
+		every_player = { #Unop: Send this message to the target culture players who hold one of its counties, not to root a second time, and read root's variable
 			limit = {
-				var:mend_the_fracture_oath_target_culture = {
-					any_culture_county = {
-						holder = {
-							culture = var:mend_the_fracture_oath_target_culture
-							is_ai = no
-						}
-					}
+				culture = root.var:mend_the_fracture_oath_target_culture
+				any_held_title = {
+					tier = tier_county
+					culture = root.var:mend_the_fracture_oath_target_culture
 				}
 			}
 			send_interface_message = {
@@ -498,15 +495,16 @@ ach_maintenance_events.0002 = { # ACH Oath synergy culture rewards
 				if = {
 					limit = {
 						exists = scope:army_reward
+						root.var:mend_the_fracture_oath_target_culture.culture_head ?= this #Unop: Of the target culture, only its culture head gets troops
 					}
 					custom_tooltip = ach_maintenance_events.0002.army_reward
 				}
-				if = {
-					limit = {
-						exists = scope:opinion_reward
-					}
-					custom_tooltip = ach_maintenance_events.0002.opinion_reward
-				}
+				#if = { #Unop: The opinion is root's, not this player's
+				#	limit = {
+				#		exists = scope:opinion_reward
+				#	}
+				#	custom_tooltip = ach_maintenance_events.0002.opinion_reward
+				#}
 				if = {
 					limit = {
 						exists = scope:county_reward
