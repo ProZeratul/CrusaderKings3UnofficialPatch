@@ -1136,6 +1136,14 @@ ep3_laamps.0030 = {
 			add_to_list = target_titles
 		}
 		hidden_effect = {
+			#Unop Hold a temporary landless title until the adventurer title exists, so the character stays a ruler and the engine doesn't auto-select perks again
+			create_dynamic_title = {
+				type = title_type_ecclesiastical
+				tier = county
+				name = unop_temporary_title_name
+				holder = root
+				save_scope_as = unop_temporary_title
+			}
 			if = {
 				limit = { list_size:target_titles >= 1 }
 				create_title_and_vassal_change = {
@@ -1164,6 +1172,13 @@ ep3_laamps.0030 = {
 		create_landless_adventurer_title_effect = {
 			REASON = flag:voluntary
 			FLAVOR_CHAR = scope:laamp_inheritor
+		}
+		#Unop Destroy the temporary title
+		hidden_effect = {
+			if = {
+				limit = { exists = scope:unop_temporary_title }
+				destroy_title = scope:unop_temporary_title
+			}
 		}
 		unop_restore_tenet_knowledge_effect = yes #Unop Keep learned and personal tenets through the titleless gap
 		gdp_merchant_restore_voluntary_laamp_associates_from_list_effect = yes
