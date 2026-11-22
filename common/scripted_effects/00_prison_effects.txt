@@ -2282,20 +2282,22 @@ rightfully_imprison_character_less_verbose_effect = {
 				type = house_arrest
 			}
 			#Close family get closer to rivalling you
-			if = {
-				limit = {
-					is_close_family_of = $IMPRISONER$
-					NOR = {
-						has_trait = forgiving
-						has_trait = craven
-						#Just characters know they deserve this
-						ai_honor >= low_positive_ai_value
+			scope:new_target = { #Unop Check and set the rivalry in the prisoner's scope, as in rightfully_imprison_character_effect
+				if = {
+					limit = {
+						is_close_family_of = $IMPRISONER$
+						NOR = {
+							has_trait = forgiving
+							has_trait = craven
+							#Just characters know they deserve this
+							ai_honor >= low_positive_ai_value
+						}
 					}
-				}
-				progress_towards_rival_effect = {
-					CHARACTER = scope:new_target
-					REASON = rival_imprisoned_family
-					OPINION = 0
+					progress_towards_rival_effect = {
+						CHARACTER = scope:imprisoner #Unop Was scope:new_target
+						REASON = rival_imprisoned_family
+						OPINION = 0
+					}
 				}
 			}
 			hidden_effect = {
@@ -2338,20 +2340,22 @@ rightfully_imprison_character_less_verbose_effect = {
 				type = dungeon
 			}
 			#Close family get closer to rivalling you
-			if = {
-				limit = {
-					is_close_family_of = $IMPRISONER$
-					NOR = {
-						has_trait = forgiving
-						has_trait = craven
-						#Just characters know they deserve this
-						ai_honor >= low_positive_ai_value
+			scope:new_target = { #Unop Check and set the rivalry in the prisoner's scope, as in rightfully_imprison_character_effect
+				if = {
+					limit = {
+						is_close_family_of = $IMPRISONER$
+						NOR = {
+							has_trait = forgiving
+							has_trait = craven
+							#Just characters know they deserve this
+							ai_honor >= low_positive_ai_value
+						}
 					}
-				}
-				progress_towards_rival_effect = {
-					CHARACTER = scope:new_target
-					REASON = rival_imprisoned_family
-					OPINION = 0
+					progress_towards_rival_effect = {
+						CHARACTER = scope:imprisoner #Unop Was scope:new_target
+						REASON = rival_imprisoned_family
+						OPINION = 0
+					}
 				}
 			}
 			hidden_effect = {
