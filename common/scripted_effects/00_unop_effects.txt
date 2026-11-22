@@ -247,3 +247,11 @@ unop_apply_maimed_in_battle_effect = {
 		epilepsy_brain_trauma_risk_effect = { CHANCE = 5 }
 	}
 }
+
+#Unop Removes Clouded Eyes before adding Blind, its opposite, which add_trait would otherwise refuse
+unop_remove_clouded_eyes_effect = {
+	if = {
+		limit = { has_trait = clouded_eyes }
+		remove_trait = clouded_eyes
+	}
+}
