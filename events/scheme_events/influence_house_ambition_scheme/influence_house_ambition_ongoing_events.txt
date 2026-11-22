@@ -1,0 +1,959 @@
+﻿
+namespace = influence_house_ambition_ongoing
+
+##########################################
+# Influence House Ambition Ongoing Events #
+##########################################
+# Bjorn Sundstrom (2026) #
+
+# A Sympathetic Ear				influence_house_ambition_ongoing.1001	
+# Harsh Negotiations			influence_house_ambition_ongoing.1002	 
+
+## Standard reward for succeeding in influencing the target?
+scripted_effect influence_house_ambition_success_bonus_effect = {
+	scope:scheme = {
+		add_scheme_modifier = { type = gdp_sympathetic_ear_scheme_modifier }
+	}
+}
+## What if the character has a trait that would make it easier/harder for them to convince the target?
+scripted_effect influence_house_ambition_trait_bonus_effect = {
+	## Character hears voices and rambles insanely
+	if = {
+		limit = { 
+			OR = { 
+				has_trait = possessed_1
+				has_trait = lunatic_1
+			} 
+		}
+		scope:scheme = {
+			add_scheme_progress = {
+				value = scheme_progress_loss
+				multiply = -30
+			}
+			add_scheme_modifier = { type = gdp_insane_arguments_modifier }
+		}
+	}
+	## Character is depressed
+	if = {
+		limit = { has_trait = depressed_1 }
+		scope:scheme = {
+			add_scheme_modifier = { type = gdp_fatalistic_arguments_modifier }
+		}
+	}
+	## Character is easy to look at
+	if = {
+		limit = { has_trait = beauty_good_1 }
+		scope:scheme = {
+			add_scheme_modifier = { type = gdp_beautiful_arguments_modifier }
+		}
+	}
+	## Character is hard to look at
+	if = {
+		limit = { has_trait = beauty_bad_1 }
+		scope:scheme = {
+			add_scheme_modifier = { type = gdp_ugly_arguments_modifier }
+		}
+	}
+	## Character is Smart!
+	if = {
+		limit = { has_trait = intellect_good_1 }
+		scope:scheme = {
+			add_scheme_progress = {
+				value = scheme_progress_loss
+				multiply = -30
+			}
+			add_scheme_modifier = { type = gdp_intellectual_debate_modifier }
+		}
+
+	}
+	## Character is kind of dumb
+	if = {
+		limit = { has_trait = intellect_bad_1 }
+		scope:scheme = {
+			add_scheme_modifier = { type = gdp_advise_of_a_fool_modifier }
+		}
+	}
+	## Character has a way with words
+	if = {
+		limit = { 
+			OR = { 
+				has_trait = lifestyle_mystic
+				has_trait = theologian
+				has_trait = erudite
+			} 
+		}
+		scope:scheme = {
+			add_scheme_modifier = { type = gdp_a_way_with_words_modifier }
+		}
+	}
+}
+## What do they want in return?
+scripted_effect influence_house_ambition_prize_effect = {
+	this = {
+		save_scope_as = payed_agent_01
+	}
+	if = {
+		limit = {
+			has_trait = greedy
+		}
+		root = {
+			pay_short_term_gold = {
+				target = scope:payed_agent_01
+				gold = medium_gold_value
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			OR = {
+				has_relation_friend = root
+				has_relation_lover = root
+				is_close_family_of = root
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			OR = {
+				has_trait = lustful
+				has_trait = seducer
+			}
+			is_attracted_to_gender_of = root
+			might_cheat_on_every_partner_trigger = yes
+		}
+		progress_towards_lover_effect = {
+			CHARACTER = root
+			REASON = seduced_at_competition
+			OPINION = default_lover_opinion
+		}
+		had_sex_with_effect = {
+			CHARACTER = root
+			PREGNANCY_CHANCE = pregnancy_chance
+		}
+	}
+	else = {
+		add_hook = {
+			target = root
+			type = favor_hook
+		}
+	}
+}
+
+influence_house_ambition_ongoing.1001 = {
+	type = character_event
+	title = influence_house_ambition_ongoing.1001.tt
+	desc = influence_house_ambition_ongoing.1001.desc
+	theme = republic_intrigue_scheme
+	left_portrait = { 
+		character = scope:target_associate_01
+		camera = camera_event_crowd
+		triggered_animation = {
+			trigger = { scope:target_associate_01 = { has_trait = greedy } }
+			animation = biting_coin
+		}
+		triggered_animation = {
+			trigger = { 
+				scope:target_associate_01 = { 
+					OR = {
+						has_relation_friend = root
+						has_relation_lover = root
+						is_close_family_of = root
+					} 
+				}
+			}
+			animation = ecstasy
+		}
+		triggered_animation = {
+			trigger = { 
+				scope:target_associate_01 = { 
+					OR = {
+						has_trait = lustful
+						has_trait = seducer
+					}
+					is_attracted_to_gender_of = root
+					might_cheat_on_every_partner_trigger = yes 
+				} 
+			}
+			animation = flirtation
+		}
+		triggered_animation = {
+			trigger = { always = yes }
+			animation = deliberation
+		}
+	}
+	right_portrait = {
+		character = scope:target_associate_02
+		camera = camera_event_right
+		triggered_animation = {
+			trigger = { scope:target_associate_02 = { has_trait = greedy } }
+			animation = biting_coin
+		}
+		triggered_animation = {
+			trigger = { 
+				scope:target_associate_02 = { 
+					OR = {
+						has_relation_friend = root
+						has_relation_lover = root
+						is_close_family_of = root
+					} 
+				}
+			}
+			animation = happiness
+		}
+		triggered_animation = {
+			trigger = { 
+				scope:target_associate_02 = { 
+					has_trait = lustful
+					is_attracted_to_gender_of = root
+					might_cheat_on_every_partner_trigger = yes 
+				} 
+			}
+			animation = interested
+		}
+		triggered_animation = {
+			trigger = { always = yes }
+			animation = eccentric
+		}
+	}
+	lower_center_portrait = scope:target
+	widget = {
+		gui = "event_window_widget_scheme"
+		container = "custom_widgets_container"
+	}
+	
+	trigger = {
+		scope:target = {
+			any_courtier = {
+				this != root
+				is_available_quick = {
+					activity = no
+					adult = yes
+					ai = yes
+				}
+				opinion = {
+					target = root
+					value > 0
+				}
+				save_temporary_scope_as = first_associate
+			}
+		}
+		scope:target = {
+			any_courtier = {
+				this != scope:first_associate
+				this != root
+				is_available_quick = {
+					activity = no
+					adult = yes
+					ai = yes
+				}
+				opinion = {
+					target = root
+					value > 0
+				}
+			}
+		}
+	}
+
+	immediate = {
+		random_scheme = {
+			limit = {
+				scheme_type = influence_house_ambition
+			}
+			save_scope_as = scheme
+		}
+		scope:target = {
+			random_courtier = {
+				limit = {
+					this != root
+					is_available_quick = {
+						activity = no
+						adult = yes
+						ai = yes
+					}
+					opinion = {
+						target = root
+						value > 0
+					}
+				}
+				save_scope_as = target_associate_01
+			}
+			random_courtier = {
+				limit = {
+					this != root
+					this != scope:target_associate_01
+					is_available_quick = {
+						activity = no
+						adult = yes
+						ai = yes
+					}
+					opinion = {
+						target = root
+						value > 0
+					}
+				}
+				save_scope_as = target_associate_02
+			}
+		}
+	}
+	## [target_associate_01.GetFirstNamePossessiveNoTooltip] is a good choice."
+	option = { 
+		name = influence_house_ambition_ongoing.1001.a
+		flavor = {
+			first_valid = {
+				triggered_desc = {
+					trigger = {
+						scope:target_associate_01 = { 
+							has_trait = greedy 
+						}
+					}
+					desc = influence_house_ambition_ongoing.1001.cooltip.greedy
+				}
+				triggered_desc = {
+					trigger = {
+						scope:target_associate_01 = { 
+							OR = {
+								has_relation_friend = root
+								has_relation_lover = root
+								is_close_family_of = root
+							} 
+						}
+					}
+					desc = influence_house_ambition_ongoing.1001.cooltip.relation
+				}
+				triggered_desc = {
+					trigger = {
+						scope:target_associate_01 = { 
+							OR = {
+								has_trait = lustful
+								has_trait = seducer
+							}
+							is_attracted_to_gender_of = root
+							might_cheat_on_every_partner_trigger = yes
+						}
+					}
+					desc = influence_house_ambition_ongoing.1001.cooltip.lewd
+				}
+				desc = influence_house_ambition_ongoing.1001.cooltip.ambition
+			}
+		}
+		scope:target_associate_01 = {
+			save_scope_as = chosen_agent
+			duel = {
+				skill = diplomacy
+				target = scope:target
+				60 = {
+					compare_modifier = {
+						value = scope:duel_value
+						multiplier = 3.5
+						min = -49
+					}
+					min = 10
+					desc = influence_house_ambition_ongoing.1001_1_success.desc
+					root = {
+						send_interface_toast = {
+							title = influence_house_ambition_ongoing.1001_1_success.toast
+							type = event_toast_effect_good
+							left_icon = scope:target_associate_01
+							right_icon = scope:target
+							scope:target_associate_01 = {
+								influence_house_ambition_success_bonus_effect = yes
+								influence_house_ambition_trait_bonus_effect = yes
+							}
+						}
+					}
+				}
+				40 = {
+					compare_modifier = {
+						value = scope:duel_value
+						multiplier = -3.5
+						min = -49
+					}
+					min = 10
+					desc = influence_house_ambition_ongoing.1001_1_failure.desc
+					root = {
+						send_interface_toast = {
+							title = influence_house_ambition_ongoing.1001_1_failure.toast
+							type = event_toast_effect_bad
+							left_icon = scope:target_associate_01
+							right_icon = scope:target
+							scope:scheme = {
+								add_scheme_progress = {
+									value = scheme_progress_gain
+									multiply = -10
+								}
+							}
+						}
+					}
+				}
+			}
+			influence_house_ambition_prize_effect = yes
+		}
+		stress_and_fulfillment_impact = {
+			# Stress Gain #
+			shy = miniscule_stress_impact_gain
+			arrogant = miniscule_stress_impact_gain
+		}
+		ai_chance = {
+			base = 100
+			modifier = {
+				scope:target_associate_01 = { has_trait = greedy }
+				factor = 0
+				
+			}
+			modifier = {
+				scope:target_associate_01 = { 
+					has_trait = lustful
+					is_attracted_to_gender_of = root
+					might_cheat_on_every_partner_trigger = yes
+				}
+				NOR = { 
+					is_attracted_to_gender_of = scope:target_associate_02
+					might_cheat_on_every_partner_trigger = yes
+				}
+				factor = 0
+				
+			}
+			modifier = {
+				scope:target_associate_01 = { 
+					has_trait = lustful
+					is_attracted_to_gender_of = root
+					might_cheat_on_every_partner_trigger = yes
+				}
+					is_attracted_to_gender_of = scope:target_associate_02
+					might_cheat_on_every_partner_trigger = yes
+					has_trait = lustful
+				factor = 5
+				
+			}
+			modifier = {
+				scope:target_associate_01 = { diplomacy >= good_skill_level }
+				factor = 1.5
+				
+			}
+			modifier = {
+				scope:target_associate_01 = { diplomacy <= average_skill_level }
+				factor = 0.5
+				
+			}
+		}
+	}
+	## [target_associate_02.GetFirstNamePossessiveNoTooltip] might get through to [target_associate_02.GetHerHis] master." 
+	option = { 
+		name = influence_house_ambition_ongoing.1001.b
+		flavor = {
+			first_valid = {
+				triggered_desc = {
+					trigger = {
+						scope:target_associate_02 = { 
+							has_trait = greedy 
+						}
+					}
+					desc = influence_house_ambition_ongoing.1001.cooltip.greedy
+				}
+				triggered_desc = {
+					trigger = {
+						scope:target_associate_02 = { 
+							OR = {
+								has_relation_friend = root
+								has_relation_lover = root
+								is_close_family_of = root
+							} 
+						}
+					}
+					desc = influence_house_ambition_ongoing.1001.cooltip.relation
+				}
+				triggered_desc = {
+					trigger = {
+						scope:target_associate_02 = { 
+							OR = {
+								has_trait = lustful
+								has_trait = seducer
+							}
+							is_attracted_to_gender_of = root
+							might_cheat_on_every_partner_trigger = yes
+						}
+					}
+					desc = influence_house_ambition_ongoing.1001.cooltip.lewd
+				}
+				desc = influence_house_ambition_ongoing.1001.cooltip.ambition
+			}
+		}
+		scope:target_associate_02 = {
+			save_scope_as = chosen_agent
+			duel = {
+				skill = diplomacy
+				target = scope:target
+				60 = {
+					compare_modifier = {
+						value = scope:duel_value
+						multiplier = 3.5
+						min = -49
+					}
+					min = 10
+					desc = influence_house_ambition_ongoing.1001_2_success.desc
+					root = {
+						send_interface_toast = {
+							title = influence_house_ambition_ongoing.1001_2_success.toast
+							type = event_toast_effect_good
+							left_icon = scope:target_associate_01
+							right_icon = scope:target
+							scope:target_associate_02 = {
+								influence_house_ambition_success_bonus_effect = yes
+								influence_house_ambition_trait_bonus_effect = yes
+							}
+						}
+					}
+				}
+				40 = {
+					compare_modifier = {
+						value = scope:duel_value
+						multiplier = -3.5
+						min = -49
+					}
+					min = 10
+					desc = influence_house_ambition_ongoing.1001_2_failure.desc
+					root = {
+						send_interface_toast = {
+							title = influence_house_ambition_ongoing.1001_2_failure.toast
+							type = event_toast_effect_bad
+							left_icon = scope:target_associate_02
+							right_icon = scope:target
+							scope:scheme = {
+								add_scheme_progress = {
+									value = scheme_progress_gain
+									multiply = -10
+								}
+							}
+						}
+
+					}
+				}
+			}
+			influence_house_ambition_prize_effect = yes
+		}
+		stress_and_fulfillment_impact = {
+			# Stress Gain #
+			shy = miniscule_stress_impact_gain
+			arrogant = miniscule_stress_impact_gain
+		}
+		ai_chance = {
+			base = 100
+			modifier = {
+				scope:target_associate_02 = { has_trait = greedy }
+				factor = 0
+				
+			}
+			modifier = {
+				scope:target_associate_02 = { 
+					has_trait = lustful
+					is_attracted_to_gender_of = root
+					might_cheat_on_every_partner_trigger = yes
+				}
+				NOR = { 
+					is_attracted_to_gender_of = scope:target_associate_02
+					might_cheat_on_every_partner_trigger = yes
+				}
+				factor = 0
+				
+			}
+			modifier = {
+				scope:target_associate_02 = { 
+					has_trait = lustful
+					is_attracted_to_gender_of = root
+					might_cheat_on_every_partner_trigger = yes
+				}
+					is_attracted_to_gender_of = scope:target_associate_02
+					might_cheat_on_every_partner_trigger = yes
+					has_trait = lustful
+				factor = 5
+				
+			}
+			modifier = {
+				scope:target_associate_02 = { diplomacy >= good_skill_level }
+				factor = 1.5
+				
+			}
+			modifier = {
+				scope:target_associate_02 = { diplomacy <= average_skill_level }
+				factor = 0.5
+				
+			}
+		}
+	}
+	## "No. My words alone are enough."
+	option = { 
+		name = influence_house_ambition_ongoing.1001.c
+		add_prestige = medium_prestige_gain
+		stress_and_fulfillment_impact = {
+			# Stress loss #
+			shy = minor_stress_impact_loss
+			arrogant = minor_stress_impact_loss
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+scripted_effect influence_house_ambition_intimidation_response_effect = {
+	if = {
+		limit = {
+			has_trait = vengeful
+		}
+		set_relation_rival_effect = {
+		    TARGET = root
+		    REASON = rival_intimidation
+		}
+	}
+	else_if = {
+		limit = {
+			has_trait = brave
+		}
+		scope:scheme = { add_scheme_modifier = { type = gdp_hardened_position_modifier } }
+		progress_towards_rival_effect = {
+			REASON = rival_clothes_stolen
+			CHARACTER = root
+			OPINION = -15
+		}
+	}
+	else_if = {
+		limit = {
+			has_trait = craven
+		}
+		scope:scheme = { add_scheme_modifier = { type = gdp_intimidated_modifier } }
+		add_opinion = {
+			modifier = threatened_opinion
+			target = root
+			opinion = -5
+		}
+	}
+	else = {
+		add_opinion = {
+			modifier = threatened_opinion
+			target = root
+			opinion = -10
+		}	
+	}
+}
+
+influence_house_ambition_ongoing.1002 = {
+	type = character_event
+	title = influence_house_ambition_ongoing.1002.tt
+	desc = influence_house_ambition_ongoing.1002.desc
+	theme = republic_intrigue_scheme
+	lower_left_portrait = { 
+		character = root
+		animation = anger
+	}
+	lower_center_portrait = { 
+		character = scope:house_member
+		animation = fear
+	}
+	lower_right_portrait = { 
+		character = scope:house_client
+		animation = fear
+	}
+	right_portrait = { 
+		character = scope:target
+		animation = fear
+	}
+	widget = {
+		gui = "event_window_widget_scheme"
+		container = "custom_widgets_container"
+	}
+	
+	trigger = {
+		scope:target = {
+			is_ai = yes
+		}
+		NOR = {
+			has_trait = forgiving
+			has_trait = trusting
+			has_trait = patient
+		}
+		scope:target = {
+			any_courtier = {
+				this != root
+				is_available_quick = {
+					activity = no
+					adult = yes
+					ai = yes
+				}
+				save_temporary_scope_as = first_associate
+			}
+			any_close_or_extended_family_member = {
+				this != scope:target
+				this != scope:first_associate
+				NOR = {
+						has_trait = reclusive
+						has_trait = irritable
+						has_trait = lunatic
+				}
+				is_available_quick = {
+					activity = no
+					adult = yes
+					ai = yes
+				}
+			}
+		}
+	}
+
+	immediate = {
+		random_scheme = {
+			limit = {
+				scheme_type = influence_house_ambition
+			}
+			save_scope_as = scheme
+		}
+		scope:target = {
+			random_courtier = {
+				limit = {
+					this != root
+					is_available_quick = {
+						activity = no
+						adult = yes
+						ai = yes
+					}
+				}
+				save_scope_as = house_client
+			}
+			random_close_or_extended_family_member = {
+				limit = {
+					this != scope:target
+					NOR = {
+						has_trait = reclusive
+						has_trait = irritable
+						has_trait = lunatic
+					}
+					is_available_quick = {
+						activity = no
+						adult = yes
+						ai = yes
+					}
+				}
+				save_scope_as = house_member
+			}
+		}
+	}
+	## "Sabotage [target.GetHerHis] business interests."
+	option = { 
+		name = influence_house_ambition_ongoing.1002.a
+		scope:target = {
+			add_character_modifier = gdp_business_sabotage_modifier
+			add_opinion = {
+				modifier = annoyed_opinion
+				target = root
+				opinion = -10
+			}
+		}
+		add_dread = miniscule_dread_gain
+		scope:scheme = {
+			add_scheme_progress = {
+				value = scheme_progress_gain
+				multiply = 5
+			}
+		}
+		stress_and_fulfillment_impact = {
+			# Stress Gain #
+			compassionate = miniscule_stress_impact_gain
+			just = miniscule_stress_impact_gain
+			craven = miniscule_stress_impact_gain
+			calm = miniscule_stress_impact_gain
+			
+			# Stress Loss #
+			callous = miniscule_stress_impact_loss
+			impatient = miniscule_stress_impact_loss
+			wrathful = miniscule_stress_impact_loss
+		}
+		ai_chance = {
+			base = 100
+			ai_value_modifier = {
+				ai_vengefulness = 1
+				ai_compassion = 0.6
+				ai_rationality = 0.6
+				ai_sociability = 0.6
+				ai_honor = 0.6
+			}
+		}
+	}
+	## "Have thugs ambush and beat [target.GetHerHis] courtiers."
+	option = { 
+		name = influence_house_ambition_ongoing.1002.b
+		trigger = {
+			NOR = { 
+				has_trait = sadistic
+				has_trait = wrathful
+			} 
+		}
+		add_dread = minor_dread_gain
+		scope:scheme = {
+			add_scheme_progress = {
+				value = scheme_progress_gain
+				multiply = 10
+			}
+		}
+		scope:house_client = {
+			increase_wounds_no_death_effect = { REASON = beaten }
+		}
+		scope:target = {
+			influence_house_ambition_intimidation_response_effect = yes
+		}
+		add_piety = minor_piety_loss
+		stress_and_fulfillment_impact = {
+			# Stress Gain #
+			just = medium_stress_impact_gain
+			compassionate = minor_stress_impact_gain
+			craven = miniscule_stress_impact_gain
+			calm = minor_stress_impact_gain
+			
+			# Stress Loss #
+			callous = miniscule_stress_impact_loss
+			impatient = miniscule_stress_impact_loss
+			wrathful = minor_stress_impact_loss
+		}
+		ai_chance = {
+			base = 100
+			ai_value_modifier = {
+				ai_vengefulness = 1.1
+				ai_compassion = 0.5
+				ai_rationality = 0.5
+				ai_sociability = 0.5
+				ai_honor = 0.5
+			}
+		}
+	}
+	## "Set fire to [target.GetHerHis] home."
+	option = { 
+		name = influence_house_ambition_ongoing.1002.c
+		trigger = {
+			has_trait = wrathful
+			NOT = {
+				has_trait = sadistic
+			}
+		}
+		scope:target = {
+			add_character_modifier = gdp_arson_modifier
+			influence_house_ambition_intimidation_response_effect = yes
+		}
+		add_dread = medium_dread_gain
+		scope:scheme = {
+			add_scheme_progress = {
+				value = scheme_progress_gain
+				multiply = 15
+			}
+		}
+		add_piety = medium_piety_loss
+		random = {
+			chance = 25
+			scope:house_member = {
+				increase_wounds_no_death_effect = { REASON = wounded }
+			}
+		}
+		stress_and_fulfillment_impact = {
+			# Stress Gain #
+			just = medium_stress_impact_gain
+			compassionate = minor_stress_impact_gain
+			craven = miniscule_stress_impact_gain
+			calm = minor_stress_impact_gain
+			
+			# Stress Loss #
+			callous = minor_stress_impact_loss
+			wrathful = minor_stress_impact_loss
+			impatient = miniscule_stress_impact_loss
+		}
+		ai_chance = {
+			base = 100
+			ai_value_modifier = {
+				ai_vengefulness = 1.2
+				ai_compassion = 0.4
+				ai_rationality = 0.4
+				ai_sociability = 0.4
+				ai_honor = 0.4
+			}
+		}
+	}
+	## "I will teach him TERROR!"
+	option = { 
+		name = influence_house_ambition_ongoing.1002.d
+		trigger = { 
+			has_trait = sadistic
+		}
+		add_dread = major_dread_gain
+		add_piety = major_piety_loss
+		scope:target = {
+			influence_house_ambition_intimidation_response_effect = yes
+		}
+		scope:scheme = {
+			add_scheme_progress = {
+				value = scheme_progress_gain
+				multiply = 15
+			}
+		}
+		scope:house_member = {
+			increase_wounds_no_death_effect = { REASON = wounded }
+			random_list = { 
+				1 = { add_trait = eunuch_1 }
+				1 = { add_trait = blind }
+				1 = { add_trait = disfigured }
+			}
+		}
+		stress_and_fulfillment_impact = {
+			# Stress Gain #
+			just = medium_stress_impact_gain
+			compassionate = medium_stress_impact_gain
+			craven = miniscule_stress_impact_gain
+			calm = minor_stress_impact_gain
+
+			# Stress Loss #
+			callous = medium_stress_impact_loss
+			wrathful = medium_stress_impact_loss
+			impatient = miniscule_stress_impact_loss
+		}
+		ai_chance = {
+			base = 100
+			ai_value_modifier = {
+				ai_vengefulness = 1
+				ai_compassion = 0.1
+				ai_rationality = 0.1
+				ai_sociability = 0.1
+				ai_honor = 0.1
+			}
+			modifier = {
+				has_trait = compassionate
+				factor = 0	
+			}
+			modifier = {
+				has_trait = sadistic
+				factor = 1.5	
+			}
+		}
+	}
+	## "I will be patient a while longer."
+	option = { 
+		name = influence_house_ambition_ongoing.1002.e
+		stress_and_fulfillment_impact = {
+			# Stress Gain
+			wrathful = miniscule_stress_impact_gain
+			impatient = medium_stress_impact_gain
+			
+			# Stress Loss 
+			compassionate = miniscule_stress_impact_loss 
+			calm = medium_stress_impact_loss
+			stubborn = minor_stress_impact_loss
+		}
+		ai_chance = {
+			base = 100
+			ai_value_modifier = {
+				ai_vengefulness = 0.5
+				ai_compassion = 2
+				ai_rationality = 1.1
+				ai_sociability = 1.1
+				ai_honor = 1.1
+			}
+			modifier = {
+				has_trait = compassionate
+				factor = 1.5	
+			}
+		}
+	}
+}
