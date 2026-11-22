@@ -390,23 +390,23 @@ ach_maintenance_events.0002 = { # ACH Oath synergy culture rewards
 						inheritable = yes
 					}
 					var:mend_the_fracture_oath_target_culture = {
-						if = {
+						if = { #Unop: The culture head army was outside this if, so it also spawned when root is that culture head
 							limit = {
 								NOT = {
 									culture_head ?= root
 								}
 							}
-						}
-						culture_head ?= {
-							spawn_army = {
-								name = ach_culture_synergy_troops
-								men_at_arms = {
-									type = accolade_maa_skirmishers
-									stacks = 1
+							culture_head ?= {
+								spawn_army = {
+									name = ach_culture_synergy_troops
+									men_at_arms = {
+										type = accolade_maa_skirmishers
+										stacks = 1
+									}
+									location = root.capital_province
+									uses_supply = no
+									inheritable = yes
 								}
-								location = root.capital_province
-								uses_supply = no
-								inheritable = yes
 							}
 						}
 					}
@@ -464,9 +464,18 @@ ach_maintenance_events.0002 = { # ACH Oath synergy culture rewards
 				every_in_list = {
 					list = synergy_culture_counties
 					show_as_tooltip = {
-						add_county_modifier = {
-							modifier = oath_mend_the_fracture_county
-							years = 2
+						if = { #Unop: Counties of the target culture get the modifier for 3 years, not 2
+							limit = { culture = root.var:mend_the_fracture_oath_target_culture }
+							add_county_modifier = {
+								modifier = oath_mend_the_fracture_county
+								years = 3
+							}
+						}
+						else = {
+							add_county_modifier = {
+								modifier = oath_mend_the_fracture_county
+								years = 2
+							}
 						}
 					}	
 				}
@@ -505,9 +514,18 @@ ach_maintenance_events.0002 = { # ACH Oath synergy culture rewards
 					every_in_list = {
 						list = synergy_culture_counties
 						show_as_tooltip = {
-							add_county_modifier = {
-								modifier = oath_mend_the_fracture_county
-								years = 2
+							if = { #Unop: Counties of the target culture get the modifier for 3 years, not 2
+								limit = { culture = root.var:mend_the_fracture_oath_target_culture }
+								add_county_modifier = {
+									modifier = oath_mend_the_fracture_county
+									years = 3
+								}
+							}
+							else = {
+								add_county_modifier = {
+									modifier = oath_mend_the_fracture_county
+									years = 2
+								}
 							}
 						}	
 					}

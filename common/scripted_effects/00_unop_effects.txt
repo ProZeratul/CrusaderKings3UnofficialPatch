@@ -216,3 +216,80 @@ unop_flip_personality_trait_effect = {
 		}
 	}
 }
+   
+#Unop Rolls the injury of maimed_in_battle_effect, with the same weights, into scope:unop_maimed_in_battle_injury
+#Roll it outside a toast and apply it inside with unop_apply_maimed_in_battle_effect, so that the toast names the injury applied, not one of a separate roll
+unop_roll_maimed_in_battle_effect = {
+	random_list = {
+		4 = {
+			trigger = {
+				NOT = {
+					has_trait = one_legged
+				}
+			}
+			save_scope_value_as = {
+				name = unop_maimed_in_battle_injury
+				value = flag:one_legged
+			}
+		}
+		2 = {
+			trigger = {
+				NOT = {
+					has_trait = disfigured
+				}
+			}
+			save_scope_value_as = {
+				name = unop_maimed_in_battle_injury
+				value = flag:disfigured
+			}
+		}
+		4 = {
+			trigger = {
+				NOT = {
+					has_trait = one_eyed
+				}
+			}
+			save_scope_value_as = {
+				name = unop_maimed_in_battle_injury
+				value = flag:one_eyed
+			}
+		}
+		4 = {
+			trigger = {
+				NOT = {
+					has_trait = maimed
+				}
+			}
+			save_scope_value_as = {
+				name = unop_maimed_in_battle_injury
+				value = flag:maimed
+			}
+		}
+	}
+}
+
+#Unop Applies the injury rolled by unop_roll_maimed_in_battle_effect, as maimed_in_battle_effect does
+unop_apply_maimed_in_battle_effect = {
+	if = {
+		limit = { scope:unop_maimed_in_battle_injury ?= flag:one_legged }
+		add_trait_force_tooltip = one_legged
+		increase_wounds_effect = { REASON = fight }
+	}
+	else_if = {
+		limit = { scope:unop_maimed_in_battle_injury ?= flag:disfigured }
+		add_trait_force_tooltip = disfigured
+		increase_wounds_effect = { REASON = fight }
+		epilepsy_brain_trauma_risk_effect = { CHANCE = 5 }
+	}
+	else_if = {
+		limit = { scope:unop_maimed_in_battle_injury ?= flag:one_eyed }
+		add_trait_force_tooltip = one_eyed
+		increase_wounds_effect = { REASON = fight }
+		epilepsy_brain_trauma_risk_effect = { CHANCE = 5 }
+	}
+	else_if = {
+		limit = { scope:unop_maimed_in_battle_injury ?= flag:maimed }
+		apply_maimed_trait_and_modifier_effect = yes
+		epilepsy_brain_trauma_risk_effect = { CHANCE = 5 }
+	}
+}
