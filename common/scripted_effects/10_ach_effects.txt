@@ -5711,14 +5711,16 @@ ach_artifact_boost_host_reward_effect = {
 	}
 	save_scope_as = liege
 	save_scope_as = antiquarian_from_task
-	add_character_flag = {
-		flag = ach_intent_artifact_boost_flag
-		days = 6
-	}
-	every_in_list = {
-		list = artifact_rewards
-		save_scope_as = artifact_target
-		antiquarian_improve_artifact_effect = yes
+	#add_character_flag = { #Unop Keep the artifact toasts, which name the modifier actually added, unlike the event window
+	#	flag = ach_intent_artifact_boost_flag
+	#	days = 6
+	#}
+	hidden_effect = { #Unop Hide the modifier roll, which the event window resolves separately and names a different modifier
+		every_in_list = {
+			list = artifact_rewards
+			save_scope_as = artifact_target
+			antiquarian_improve_artifact_effect = yes
+		}
 	}
 }
 
