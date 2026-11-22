@@ -67,7 +67,7 @@ wet_nurse_instill_virtue = {
 					chance = {
 						value = 1
 						add = {
-							value = "scope:wetnurse_trait_giver.aptitude(court_tutor_court_position)"
+							value = "scope:wetnurse_trait_giver.aptitude(wet_nurse_court_position)" #Unop: Was court_tutor_court_position
 							multiply = 0.5 # Unop: Was 1 wich seems high, you'll still get your virtues, just not as quickly
 						}
 					}
@@ -116,7 +116,7 @@ wet_nurse_promote_relationships = {
 				chance = {
 					value = 2
 					add = {
-						value = "aptitude(wet_nurse_court_position)"
+						value = "root.aptitude(wet_nurse_court_position)" #Unop: We want the aptitude of the actual wet nurse, not the liege or court_owner aptitude as a wet nurse
 						multiply = 0.3
 					}
 				}
@@ -206,7 +206,7 @@ wet_nurse_promote_competition = {
 				chance = {
 					value = 1
 					add = {
-						value = "aptitude(wet_nurse_court_position)"
+						value = "root.aptitude(wet_nurse_court_position)" #Unop: We want the aptitude of the actual wet nurse, not the liege or court_owner aptitude as a wet nurse
 						multiply = 0.4
 					}
 				}
