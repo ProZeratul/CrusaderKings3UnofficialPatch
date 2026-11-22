@@ -3538,9 +3538,12 @@ on_game_start_after_lobby = {
 			else_if = {
 				limit = {
 					government_has_flag = government_is_herder
-					gold > 0
+					#gold > 0 #Unop Guard only the gold removal, not the player conversion to nomad
 				}
-				remove_short_term_gold = gold
+				if = { #Unop
+					limit = { gold > 0 }
+					remove_short_term_gold = gold
+				}
 				add_gold = { 1 10 }
 				# We're fine with them having 10 gold max
 
