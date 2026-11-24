@@ -104,6 +104,41 @@ faith_conversion.0002 = {
 			}
 			remove_trait = pilgrim
 		}
+		if = { #Unop Holy sites visited as another faith count for the new one only if they are its holy sites too
+			limit = { has_variable_list = visited_unique_holy_sites_list }
+			set_variable = {
+				name = visited_unique_holy_sites_count
+				value = 0
+			}
+			every_in_list = {
+				variable = visited_unique_holy_sites_list
+				if = {
+					limit = {
+						barony ?= { is_holy_site_of = root.faith }
+					}
+					root = {
+						change_variable = {
+							name = visited_unique_holy_sites_count
+							add = 1
+						}
+					}
+				}
+				else = {
+					save_temporary_scope_as = unop_visited_holy_site
+					root = {
+						remove_list_variable = {
+							name = visited_unique_holy_sites_list
+							target = scope:unop_visited_holy_site
+						}
+					}
+				}
+			}
+			if = {
+				limit = { var:visited_unique_holy_sites_count = 0 }
+				clear_variable_list = visited_unique_holy_sites_list
+				remove_variable = visited_unique_holy_sites_count
+			}
+		}
 		if = {
 			limit = {
 				NOR = {
