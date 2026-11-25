@@ -1,0 +1,4164 @@
+﻿##################
+# Republic Effects
+##################
+
+# Effect for founding and becoming a republic
+# Use on founder or character scope
+# NOTE: Order of operation is important here
+gdp_found_a_republic_effect = {
+	## Pre-setup
+	add_character_flag = gdp_founding_republic
+	# Save scopes for later use
+	save_scope_as = republican_founder
+	if = {
+		limit = {
+			is_landed = yes
+		}
+		primary_title ?= { save_scope_as = old_title }
+	}
+	if = {
+		limit = {
+			OR = {
+				NOT = { exists = domicile }
+				domicile ?= {
+					NOT = { is_domicile_type = merchant_company }
+				}
+			}
+		}
+		save_temporary_scope_as = create_merchant_title
+	}
+
+	# Let's save your current base income, to use as a base for how big your starting treasury will be
+	save_scope_value_as = {
+		name = income_treasury_conversion
+		value = monthly_character_income
+	}
+
+	## Base setup
+	# 1. Are we already landed and do we have a higher tier title?
+	if = {
+		limit = {
+			exists = scope:old_title
+			scope:old_title.tier > tier_county
+		}
+		custom_tooltip = {
+			text = found_a_republic_new_title_desc
+
+			# Then create a new republican title of the corresponding tier
+			random_list = {
+				10 = {
+					trigger = {
+						scope:old_title.tier = tier_kingdom
+					}
+					create_dynamic_title = {
+						type = title_type_republic
+						tier = kingdom
+						holder = scope:republican_founder
+						name = NEW_REPUBLIC_TITLE_NAME
+						adj = NEW_REPUBLIC_TITLE_ADJ
+						save_scope_as = new_republic_title
+					}
+				}
+				10 = {
+					trigger = {
+						scope:old_title.tier = tier_duchy
+					}
+					create_dynamic_title = {
+						type = title_type_republic
+						tier = duchy
+						holder = scope:republican_founder
+						name = NEW_REPUBLIC_TITLE_NAME
+						adj = NEW_REPUBLIC_TITLE_ADJ
+						save_scope_as = new_republic_title
+					}
+				}
+			}
+
+			# Set up the new title
+			if = {
+				limit = {
+					exists = scope:new_republic_title
+				}
+				scope:new_republic_title ?= {
+					set_coa = scope:republican_founder.capital_county
+					set_color_from_title = scope:republican_founder.capital_county
+					set_capital_county = scope:republican_founder.capital_county
+					set_no_automatic_claims = yes
+				}
+				set_primary_title_to = scope:new_republic_title
+			}
+		}
+	}
+	# Fallback: county-only purchases and landless founders have no higher title, so we still make a duchy-tier republic title
+	else_if = {
+		limit = {
+			NOT = {
+				exists = scope:new_republic_title
+			}
+		}
+		hidden_effect = {
+			create_dynamic_title = {
+				type = title_type_republic
+				tier = duchy
+				holder = scope:republican_founder
+				name = NEW_REPUBLIC_TITLE_NAME
+				adj = NEW_REPUBLIC_TITLE_ADJ
+				save_scope_as = new_republic_title
+			}
+			if = {
+				limit = { exists = scope:new_republic_title }
+				scope:new_republic_title ?= {
+					set_coa = scope:republican_founder.capital_county
+					set_color_from_title = scope:republican_founder.capital_county
+					set_capital_county = scope:republican_founder.capital_county
+					set_no_automatic_claims = yes
+				}
+				set_primary_title_to = scope:new_republic_title
+			}
+		}
+	}
+
+	# 2. Are we house head? If not, form a cadet branch
+	if = {
+		limit = {
+			exists = house.house_head
+			house.house_head != scope:republican_founder
+		}
+		custom_tooltip = {
+			text = found_a_republic_form_cadet_branch_desc
+			create_cadet_branch = {}
+		}
+	}
+
+	# 3. Become a republic
+	change_government = republic_government
+
+	# 4. Create a Merchant/Patrician family title
+	if = {
+		limit = {
+			exists = scope:create_merchant_title
+			NOT = {
+				domicile ?= {
+					is_domicile_type = merchant_company
+				}
+			}
+		}
+		# Merchant titles also count as noble family titles and do not need to be destroyed, but real noble family titles do
+		# We destroy them here, or the new merchant title is not given
+		if = {
+			limit = {
+				any_held_title = {
+					is_noble_family_title = yes
+				}
+			}
+			every_held_title = {
+				limit = {
+					is_noble_family_title = yes
+				}
+				scope:republican_founder = { #Unop Was root, which isn't the founder when a casus belli, situation or interaction calls this
+					destroy_title = prev
+				}
+			}
+		}
+		custom_tooltip = {
+			text = found_a_republic_new_merchant_title_desc
+			create_dynamic_title = {
+				name = NEW_PATRICIAN_TITLE_NAME
+				tier = county
+				type = title_type_merchant_family
+				holder = scope:republican_founder
+				article = DEFAULT_TITLE_NAME_ARTICLE
+				save_scope_as = new_patrician_title
+			}
+			scope:new_patrician_title ?= {
+				add_title_law = noble_family_succession_law
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			domicile ?= {
+				is_domicile_type = merchant_company
+			}
+		}
+		custom_tooltip = {
+			text = found_a_republic_new_merchant_title_desc
+			gdp_republic_restore_family_succession_law_effect = yes
+		}
+	}
+
+	# 5. Destroy our old titles
+	if = {
+		limit = {
+			any_held_title = {
+				tier > tier_county
+				trigger_if = {
+					limit = {
+						exists = scope:new_republic_title
+					}
+					this != scope:new_republic_title
+				}
+			}
+		}
+		every_held_title = {
+			limit = {
+				tier > tier_county
+				trigger_if = {
+					limit = {
+						exists = scope:new_republic_title
+					}
+					this != scope:new_republic_title
+				}
+			}
+			scope:republican_founder = {
+				destroy_title = prev
+			}
+		}
+	}
+
+	# 6. Extra patricians only at duchy tier, matching republic_tier_duchy
+	if = {
+		limit = {
+			OR = {
+				scope:old_title ?= { tier >= tier_duchy }
+				scope:new_republic_title ?= { tier >= tier_duchy }
+			}
+		}
+		custom_tooltip = {
+			text = found_a_republic_joining_patricians_desc
+			new_republic_population_effect = yes
+		}
+	}
+
+	## Final setup
+	# Add a founder bonus
+	add_character_modifier = {
+		modifier = gdp_founded_republic_modifier
+	}
+
+	# Add starting treasury, so it is never empty
+	add_treasury = {
+		value = scope:income_treasury_conversion
+		round = yes
+		multiply = 36 # 3 years worth of income
+		multiply = { # Scaled further with tier
+			value = primary_title.tier
+			subtract = 1 # So that count tier is 1
+		}
+		min = 100
+	}
+	# GDP music cue, only plays for the local player
+	scope:republican_founder = { play_music_cue = mx_cue_the_rise_of_a_nation }
+	remove_character_flag = gdp_founding_republic
+
+	# Move Domicile
+	domicile ?= {
+		if = {
+			limit = { domicile_location != scope:republican_founder.capital_province }
+			move_domicile = scope:republican_founder.capital_province
+		}
+	}
+
+	# Warning of elector loss
+	gdp_hre_elector_loss_warning_effect = yes
+
+	# Make sure we don't found a republic multiple times
+	add_character_flag = { flag = gdp_recently_founded_republic days = 1 }
+}
+
+# Starts the scoped republic head and every patrician family of their republic at level 2
+# Call right after gdp_found_a_republic_effect for republics the game spawns, not for rulers choosing to become one
+gdp_republic_patricians_start_at_level_2_effect = {
+	hidden_effect = {
+		domicile ?= {
+			if = {
+				limit = { is_domicile_type = merchant_company }
+				gdp_patrician_domicile_level_2_effect = yes
+			}
+		}
+		every_vassal = {
+			limit = {
+				government_has_flag = government_is_republic
+				domicile ?= { is_domicile_type = merchant_company }
+			}
+			domicile = { gdp_patrician_domicile_level_2_effect = yes }
+		}
+	}
+}
+
+# Domicile scope
+# Raises a merchant company to main and external level 2 and fills every internal slot with level 2 buildings
+# Never lowers a building that is already higher
+gdp_patrician_domicile_level_2_effect = {
+	gdp_patrician_domicile_level_2_parent_effect = { BUILDING = main }
+	gdp_patrician_domicile_level_2_parent_effect = { BUILDING = building_trade }
+	gdp_patrician_domicile_level_2_parent_effect = { BUILDING = building_warehouse }
+	gdp_patrician_domicile_level_2_parent_effect = { BUILDING = building_civic }
+	gdp_patrician_domicile_level_2_parent_effect = { BUILDING = building_production }
+
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = main BUILDING = ledger_room }
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = main BUILDING = ballroom }
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = main BUILDING = common_chest }
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = main BUILDING = storage_room }
+
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = building_trade BUILDING = staple_rights }
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = building_trade BUILDING = trade_mission }
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = building_trade BUILDING = market_stalls }
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = building_trade BUILDING = exchange }
+
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = building_warehouse BUILDING = harbor_registry }
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = building_warehouse BUILDING = sample_room }
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = building_warehouse BUILDING = storehouse }
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = building_warehouse BUILDING = charter_hall }
+
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = building_civic BUILDING = moneychangers_row }
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = building_civic BUILDING = caucus_room }
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = building_civic BUILDING = gatehouse_scales }
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = building_civic BUILDING = pedlars_court }
+
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = building_production BUILDING = craft_shop }
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = building_production BUILDING = accounting_office }
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = building_production BUILDING = contractors_lodge }
+	gdp_patrician_domicile_level_2_internal_effect = { PARENT = building_production BUILDING = master_craftsmens_charter }
+}
+
+gdp_patrician_domicile_level_2_parent_effect = {
+	if = {
+		limit = { NOT = { has_domicile_building_or_higher = merchant_company_$BUILDING$_01 } }
+		add_domicile_building = merchant_company_$BUILDING$_01
+	}
+	if = {
+		limit = { NOT = { has_domicile_building_or_higher = merchant_company_$BUILDING$_02 } }
+		add_domicile_building = merchant_company_$BUILDING$_02
+	}
+}
+
+# We only fill free slots, so a company that already has buildings keeps them
+gdp_patrician_domicile_level_2_internal_effect = {
+	if = {
+		limit = {
+			NOT = { has_domicile_building_or_higher = merchant_company_$BUILDING$_01 }
+			domicile_building_has_free_internal_slot = merchant_company_$PARENT$_02
+		}
+		add_domicile_building = merchant_company_$BUILDING$_01
+	}
+	if = {
+		limit = { has_domicile_building = merchant_company_$BUILDING$_01 }
+		add_domicile_building = merchant_company_$BUILDING$_02
+	}
+}
+
+# New independent republic in $COUNTY$, enrolled in $LEAGUE_HEAD$'s league after gdp_found_a_republic_effect creates the primary title
+gdp_trade_league_proclaim_commune_effect = {
+	$COUNTY$ = { save_scope_as = commune_county }
+	$LEAGUE_HEAD$ = { save_scope_as = commune_patron }
+
+	# Tooltip is written by hand: the new ruler does not exist in preview
+	custom_tooltip = league_commune_cb_proclaimed_tt
+	custom_tooltip = league_commune_cb_joins_league_tt
+
+	hidden_effect = {
+		create_character = {
+			location = scope:commune_county.title_province
+			template = burgher_faction_leader_template
+			faith = scope:commune_county.faith
+			culture = scope:commune_county.culture
+			gender_female_chance = {
+				if = {
+					limit = {
+						scope:commune_county.rite = {
+							rite_has_doctrine = doctrine_gender_male_dominated
+						}
+					}
+					add = 0
+				}
+				else_if = {
+					limit = {
+						scope:commune_county.rite = {
+							rite_has_doctrine = doctrine_gender_female_dominated
+						}
+					}
+					add = 100
+				}
+				else = {
+					add = 50
+				}
+			}
+			save_scope_as = commune_patrician
+		}
+
+		if = {
+			limit = { exists = scope:commune_patrician }
+
+			scope:commune_patrician = {
+				set_character_rite = scope:commune_county.rite
+			}
+
+			create_title_and_vassal_change = {
+				type = conquest
+				save_scope_as = commune_change
+				add_claim_on_loss = yes
+			}
+
+			scope:commune_county = {
+				change_title_holder = {
+					holder = scope:commune_patrician
+					change = scope:commune_change
+				}
+			}
+
+			# Grant independence: create_character leaves them in the old owner's court
+			scope:commune_patrician = {
+				becomes_independent = { change = scope:commune_change }
+			}
+
+			resolve_title_and_vassal_change = scope:commune_change
+
+			burgher_found_city_republic_effect = { RULER = scope:commune_patrician }
+
+			scope:commune_county = {
+				if = {
+					limit = { NOT = { has_variable = civic_league_charter } }
+					set_variable = civic_league_charter
+				}
+			}
+
+			scope:commune_patron.confederation ?= {
+				add_confederation_member_title = scope:commune_patrician.primary_title
+			}
+
+			scope:commune_patrician = {
+				add_opinion = {
+					modifier = league_commune_founder_opinion
+					target = scope:commune_patron
+				}
+			}
+		}
+	}
+}
+
+# Complete monopoly in $COUNTY$'s market for $LEAGUE_HEAD$'s league
+gdp_trade_league_enforce_monopoly_effect = {
+	$COUNTY$ = { save_scope_as = monopoly_county }
+	$LEAGUE_HEAD$ = { save_scope_as = monopoly_enforcer }
+	$LEAGUE_HEAD$.confederation = { save_scope_as = trade_league_monopoly }
+	$COUNTY$.title_province.barony.trade_market = { save_scope_as = trade_market }
+
+	custom_tooltip = request_monopoly_trade_league_tt_complete_normal
+
+	hidden_effect = {
+		create_trade_monopoly = {
+			owning_confederation = scope:trade_league_monopoly
+			trade_market = scope:trade_market
+			type = normal
+			is_complete = yes
+		}
+		scope:monopoly_enforcer = {
+			save_scope_as = actor
+			save_scope_as = monopoly_creator
+		}
+		scope:trade_market = {
+			save_scope_as = monopolized_market
+			every_character_in_market = {
+				limit = {
+					is_ai = no
+					NOR = {
+						this = scope:monopoly_enforcer
+						is_member_of_confederation = scope:trade_league_monopoly
+						any_liege_or_above = {
+							is_member_of_confederation = scope:trade_league_monopoly
+						}
+					}
+				}
+				send_interface_toast = {
+					title = trade_monopoly_created_against_you_toast_title
+					type = msg_trade_monopoly
+					left_icon = scope:monopoly_enforcer
+					desc = trade_monopoly_created_against_you_complete_toast_desc
+				}
+			}
+		}
+	}
+}
+
+# Contested assets for the trade war victory effect
+gdp_league_collect_contested_trade_assets_effect = {
+	every_owned_trade_post_district = {
+		limit = {
+			district_province = {
+				NOT = { is_in_list = surrendered_trade_posts }
+				barony.trade_market ?= {
+					gdp_league_contested_market_trigger = {
+						LEAGUE = scope:victorious_league
+						RIVAL_LEAGUE = scope:defeated_league
+					}
+				}
+			}
+		}
+		district_province = { add_to_list = surrendered_trade_posts }
+	}
+
+	every_trade_monopoly_for_character = {
+		limit = {
+			NOT = { is_in_list = surrendered_monopolies }
+			monopoly_trade_market ?= {
+				gdp_league_contested_market_trigger = {
+					LEAGUE = scope:victorious_league
+					RIVAL_LEAGUE = scope:defeated_league
+				}
+			}
+		}
+		add_to_list = surrendered_monopolies
+	}
+
+	# Republic and city titles hold monopolies in their own right
+	every_held_title = {
+		every_trade_monopoly_for_title = {
+			limit = {
+				NOT = { is_in_list = surrendered_monopolies }
+				monopoly_trade_market ?= {
+					gdp_league_contested_market_trigger = {
+						LEAGUE = scope:victorious_league
+						RIVAL_LEAGUE = scope:defeated_league
+					}
+				}
+			}
+			add_to_list = surrendered_monopolies
+		}
+	}
+}
+
+# Strip $RIVAL_LEAGUE_HEAD$'s league from markets contested with $LEAGUE_HEAD$
+gdp_trade_league_win_trade_war_effect = {
+	$LEAGUE_HEAD$.confederation = { save_scope_as = victorious_league }
+	$RIVAL_LEAGUE_HEAD$.confederation = { save_scope_as = defeated_league }
+
+	custom_tooltip = league_trade_war_posts_tt
+	custom_tooltip = league_trade_war_monopolies_tt
+
+	hidden_effect = {
+		scope:defeated_league = {
+			every_confederation_member = {
+				gdp_league_collect_contested_trade_assets_effect = yes
+
+				# Patrician families hold posts and monopolies on their republic's behalf
+				every_vassal_or_below = {
+					gdp_league_collect_contested_trade_assets_effect = yes
+				}
+			}
+
+			every_trade_monopoly_for_confederation = {
+				limit = {
+					monopoly_trade_market ?= {
+						gdp_league_contested_market_trigger = {
+							LEAGUE = scope:victorious_league
+							RIVAL_LEAGUE = scope:defeated_league
+						}
+					}
+				}
+				add_to_list = surrendered_monopolies
+			}
+		}
+
+		# Remove after the loops, or iteration stops early
+		every_in_list = {
+			list = surrendered_trade_posts
+			remove_district_type = trade_post_location_district
+		}
+		every_in_list = {
+			list = surrendered_monopolies
+			destroy_trade_monopoly = yes
+		}
+	}
+}
+
+# Adds the trade league the scoped character trades on behalf of to $LIST$
+gdp_league_add_affiliated_league_to_list_effect = {
+	if = {
+		limit = { gdp_is_trade_league_member_trigger = yes }
+		confederation = {
+			if = {
+				limit = { NOT = { is_in_list = $LIST$ } }
+				add_to_list = $LIST$
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			any_liege_or_above = { gdp_is_trade_league_member_trigger = yes }
+		}
+		# Nearest league-member liege
+		ordered_liege_or_above = {
+			limit = { gdp_is_trade_league_member_trigger = yes }
+			order_by = {
+				value = 0
+				subtract = highest_held_title_tier
+			}
+			confederation = {
+				if = {
+					limit = { NOT = { is_in_list = $LIST$ } }
+					add_to_list = $LIST$
+				}
+			}
+		}
+	}
+}
+
+# Adds the trade league behind the scoped monopoly to $LIST$
+gdp_monopoly_add_league_to_list_effect = {
+	if = {
+		limit = {
+			confederation_owner ?= {
+				confederation_type = confederation_type:trade_league
+			}
+		}
+		confederation_owner = {
+			if = {
+				limit = { NOT = { is_in_list = $LIST$ } }
+				add_to_list = $LIST$
+			}
+		}
+	}
+	else_if = {
+		limit = { exists = character_owner }
+		character_owner = { gdp_league_add_affiliated_league_to_list_effect = { LIST = $LIST$ } }
+	}
+	else_if = {
+		limit = { exists = title_owner.holder }
+		title_owner.holder = { gdp_league_add_affiliated_league_to_list_effect = { LIST = $LIST$ } }
+	}
+}
+
+# Strip rival leagues from $MARKET$ within $REALM_HEAD$'s realm
+gdp_league_expel_rivals_from_market_effect = {
+	$LEAGUE_HEAD$ = { save_scope_as = expulsion_demander }
+	$LEAGUE_HEAD$.confederation = { save_scope_as = expelling_league }
+	$REALM_HEAD$ = { save_scope_as = expulsion_host }
+	$MARKET$ = { save_scope_as = expulsion_market }
+
+	custom_tooltip = league_expulsion_posts_tt
+	custom_tooltip = league_expulsion_cohesion_shift_tt
+
+	hidden_effect = {
+		# Collect before removing
+		scope:expulsion_host = {
+			every_realm_province = {
+				limit = {
+					exists = trade_post_district
+					barony.trade_market ?= scope:expulsion_market
+					trade_post_owner = {
+						gdp_league_foreign_competitor_trigger = {
+							LEAGUE = scope:expelling_league
+							REALM_HEAD = scope:expulsion_host
+						}
+					}
+				}
+				add_to_list = expelled_trade_posts
+				trade_post_owner = {
+					gdp_league_add_affiliated_league_to_list_effect = { LIST = expelled_leagues }
+				}
+			}
+		}
+
+		scope:expulsion_market = {
+			every_trade_monopoly_for_market = {
+				limit = {
+					gdp_monopoly_held_for_rival_league_trigger = {
+						LEAGUE = scope:expelling_league
+						REALM_HEAD = scope:expulsion_host
+					}
+				}
+				add_to_list = expelled_monopolies
+				gdp_monopoly_add_league_to_list_effect = { LIST = expelled_leagues }
+			}
+		}
+
+		every_in_list = {
+			list = expelled_trade_posts
+			remove_district_type = trade_post_location_district
+		}
+		every_in_list = {
+			list = expelled_monopolies
+			destroy_trade_monopoly = yes
+		}
+
+		every_in_list = {
+			list = expelled_leagues
+			change_cohesion = gdp_league_expulsion_cohesion_value
+
+			every_confederation_member = {
+				add_opinion = {
+					modifier = league_expelled_from_market_opinion
+					target = scope:expulsion_demander
+				}
+				add_opinion = {
+					modifier = league_expelled_from_market_opinion
+					target = scope:expulsion_host
+				}
+				if = {
+					limit = { is_ai = no }
+					send_interface_message = {
+						type = msg_trade_monopoly
+						title = league_expelled_from_market_message_title
+						desc = league_expelled_from_market_message_desc
+						left_icon = scope:expulsion_demander
+					}
+				}
+			}
+		}
+	}
+}
+
+# Opinion lines for the interaction tooltip. Not executed.
+gdp_league_expulsion_shown_opinion_effect = {
+	if = {
+		limit = {
+			NOT = { any_in_list = { list = expelled_leagues } }
+		}
+		scope:expulsion_host = {
+			every_realm_province = {
+				limit = {
+					exists = trade_post_district
+					barony.trade_market ?= scope:expulsion_market
+					trade_post_owner = {
+						gdp_league_foreign_competitor_trigger = {
+							LEAGUE = scope:expelling_league
+							REALM_HEAD = scope:expulsion_host
+						}
+					}
+				}
+				trade_post_owner = {
+					gdp_league_add_affiliated_league_to_list_effect = { LIST = expelled_leagues }
+				}
+			}
+		}
+		scope:expulsion_market = {
+			every_trade_monopoly_for_market = {
+				limit = {
+					gdp_monopoly_held_for_rival_league_trigger = {
+						LEAGUE = scope:expelling_league
+						REALM_HEAD = scope:expulsion_host
+					}
+				}
+				gdp_monopoly_add_league_to_list_effect = { LIST = expelled_leagues }
+			}
+		}
+	}
+	every_in_list = {
+		list = expelled_leagues
+		every_confederation_member = {
+			add_opinion = {
+				modifier = league_expelled_from_market_opinion
+				target = scope:expulsion_demander
+			}
+			add_opinion = {
+				modifier = league_expelled_from_market_opinion
+				target = scope:expulsion_host
+			}
+		}
+	}
+}
+
+# Saves this character's republic head as scope:patrician_liege, if they have one
+# A republic can be a vassal of a non-republic, so we do not use top liege
+gdp_save_patrician_liege_effect = {
+	if = {
+		limit = { gdp_is_assembly_head_trigger = yes }
+		save_scope_as = patrician_liege
+	}
+	else_if = {
+		limit = {
+			any_liege_or_above = { gdp_is_assembly_head_trigger = yes }
+		}
+		ordered_liege_or_above = {
+			limit = { gdp_is_assembly_head_trigger = yes }
+			order_by = {
+				value = 0
+				subtract = highest_held_title_tier
+			}
+			save_scope_as = patrician_liege
+		}
+	}
+}
+
+gdp_republic_restore_family_succession_law_effect = {
+	every_held_title = {
+		limit = {
+			is_noble_family_title = yes
+			NOT = { has_title_law = noble_family_succession_law }
+		}
+		add_title_law = noble_family_succession_law
+	}
+}
+
+# Sets up a Ruler Designer character as a new patrician family of an existing republic.
+gdp_create_patrician_family_effect = {
+	save_scope_as = new_patrician
+	save_scope_as = republican_founder # NEW_PATRICIAN_TITLE_NAME reads the house off this scope
+
+	# The family belongs to the republic that holds the county it was created in
+	location.county.holder ?= { gdp_save_patrician_liege_effect = yes }
+
+	# House titles require every potential successor to share the holder's house.
+	house = { save_scope_as = patrician_title_house }
+	every_close_family_member = {
+		limit = {
+			is_alive = yes
+			NOT = { exists = house }
+		}
+		set_house = scope:patrician_title_house
+	}
+
+	create_dynamic_title = {
+		name = NEW_PATRICIAN_TITLE_NAME
+		tier = county
+		type = title_type_merchant_family
+		holder = scope:new_patrician
+		article = DEFAULT_TITLE_NAME_ARTICLE
+		save_scope_as = new_patrician_title
+	}
+	scope:new_patrician_title ?= {
+		add_title_law = noble_family_succession_law
+		set_coa = scope:new_patrician.house
+	}
+
+	# Join the republic
+	if = {
+		limit = {
+			NOT = { liege ?= scope:patrician_liege }
+		}
+		create_title_and_vassal_change = {
+			type = swear_fealty
+			save_scope_as = patrician_vassal_change
+		}
+		change_liege = {
+			liege = scope:patrician_liege
+			change = scope:patrician_vassal_change
+		}
+		resolve_title_and_vassal_change = scope:patrician_vassal_change
+	}
+	if = {
+		limit = {
+			NOT = { has_government = republic_government }
+		}
+		change_government = republic_government
+	}
+
+	# Join the assembly now so the succession recalculation at game start builds the electors with this family
+	scope:patrician_liege ?= { update_assembly = yes }
+
+	# Republicans that hold land use treasury, give them a small starting pool
+	if = {
+		limit = {
+			has_treasury = yes
+		}
+		add_treasury = 100
+	}
+
+	# The merchant company domicile comes with the government; put it where the family actually lives
+	domicile ?= {
+		if = {
+			limit = { domicile_location != scope:new_patrician.location }
+			move_domicile = scope:new_patrician.location
+		}
+	}
+}
+
+# Tribal reform into a republic: convert holdings, found the republic, then settle tribal vassals
+gdp_convert_tribal_realm_to_republic_effect = {
+	custom_tooltip = {
+		text = gdp_tribal_capital_becomes_city_tt
+	}
+	custom_tooltip = {
+		text = gdp_other_tribal_holdings_become_castles_tt
+	}
+	if = {
+		limit = {
+			any_vassal_or_below = {
+				government_has_flag = government_is_tribal
+			}
+		}
+		custom_tooltip = {
+			text = gdp_tribal_vassals_will_feudalize_tt
+		}
+	}
+	if = {
+		limit = {
+			any_sub_realm_county = {
+				OR = {
+					has_county_modifier = mpo_siberian_permafrost_modifier
+					has_county_modifier = mpo_siberian_permafrost_modifier_bad
+				}
+			}
+		}
+		custom_tooltip = {
+			text = all_permafrost_will_clear
+		}
+	}
+
+	hidden_effect = {
+		save_scope_as = actor
+		gdp_convert_tribal_holdings_for_republic_effect = yes
+	}
+
+	gdp_found_a_republic_effect = yes
+
+	hidden_effect = {
+		gdp_feudalize_tribal_vassals_for_republic_effect = yes
+		gdp_remove_tribal_authority_laws_effect = yes
+	}
+}
+
+gdp_convert_tribal_holdings_for_republic_effect = {
+	capital_province ?= { save_scope_as = republic_capital_province }
+
+	every_realm_province = {
+		limit = {
+			has_holding_type = tribal_holding
+			NOT = { is_in_list = republic_conversion }
+		}
+		add_to_list = republic_conversion
+	}
+	every_vassal_or_below = {
+		every_realm_province = {
+			limit = {
+				has_holding_type = tribal_holding
+				NOT = { is_in_list = republic_conversion }
+			}
+			add_to_list = republic_conversion
+		}
+	}
+	every_in_list = {
+		list = republic_conversion
+		if = {
+			limit = {
+				exists = scope:republic_capital_province
+				this = scope:republic_capital_province
+			}
+			holding_convert_tribal_keeping_buildings_effect = { HOLDING = city_holding }
+		}
+		else = {
+			holding_convert_tribal_keeping_buildings_effect = { HOLDING = castle_holding }
+		}
+		remove_from_list = republic_conversion
+	}
+}
+
+gdp_feudalize_tribal_vassals_for_republic_effect = {
+	every_vassal_or_below = {
+		limit = { government_has_flag = government_is_tribal }
+		if = {
+			limit = { ep3_is_clan_inclined_trigger = yes }
+			change_government = clan_government
+		}
+		else = {
+			change_government = feudal_government
+		}
+		gdp_remove_tribal_authority_laws_effect = yes
+		if = {
+			limit = {
+				NOT = { has_realm_law = crown_authority_0 }
+			}
+			add_realm_law_skip_effects = crown_authority_0
+		}
+	}
+}
+
+gdp_remove_tribal_authority_laws_effect = {
+	if = {
+		limit = { has_realm_law = tribal_authority_0 }
+		remove_realm_law = tribal_authority_0
+	}
+	if = {
+		limit = { has_realm_law = tribal_authority_1 }
+		remove_realm_law = tribal_authority_1
+	}
+	if = {
+		limit = { has_realm_law = tribal_authority_2 }
+		remove_realm_law = tribal_authority_2
+	}
+	if = {
+		limit = { has_realm_law = tribal_authority_3 }
+		remove_realm_law = tribal_authority_3
+	}
+}
+
+# Rank up Republic - Use on the ruler of the republic
+gdp_rank_up_republic_effect = {
+	save_scope_as = republican_founder
+	primary_title = {
+		save_scope_as = old_republic_title
+		title_confederation ?= {
+			if = {
+				limit = { confederation_type = confederation_type:trade_league }
+				save_scope_as = trade_league
+				leading_title = { save_scope_as = old_league_leader }
+			}
+		}
+	}
+
+	# Create a title of your next tier
+	if = {
+		limit = {
+			primary_title.tier = tier_kingdom
+		}
+		create_dynamic_title = {
+			type = title_type_republic
+			tier = empire
+			holder = scope:republican_founder
+			name = NEW_REPUBLIC_TITLE_TIER_NAME
+			adj = NEW_REPUBLIC_TITLE_TIER_ADJ
+			save_scope_as = new_republic_title
+		}
+		custom_tooltip = republic_rank_up_empire_title_desc
+	}
+	else_if = {
+		limit = {
+			primary_title.tier = tier_duchy
+		}
+		create_dynamic_title = {
+			type = title_type_republic
+			tier = kingdom
+			holder = scope:republican_founder
+			name = NEW_REPUBLIC_TITLE_TIER_NAME
+			adj = NEW_REPUBLIC_TITLE_TIER_ADJ
+			save_scope_as = new_republic_title
+		}
+		custom_tooltip = republic_rank_up_kingdom_title_desc
+	}
+	else_if = { # I.e. county
+		limit = {
+			primary_title.tier = tier_county
+		}
+		create_dynamic_title = {
+			type = title_type_republic
+			tier = duchy
+			holder = scope:republican_founder
+			name = NEW_REPUBLIC_TITLE_TIER_NAME
+			adj = NEW_REPUBLIC_TITLE_TIER_ADJ
+			save_scope_as = new_republic_title
+		}
+		custom_tooltip = republic_rank_up_duchy_title_desc
+	}
+
+	# We'll hide the following effects for clarity - the important part above use already custom tooltips
+	hidden_effect = {
+		if = {
+			limit = { exists = scope:new_republic_title }
+			# Set up the new title
+			scope:new_republic_title ?= {
+				# CoA and color
+				set_coa = scope:old_republic_title
+				set_color_from_title = scope:old_republic_title
+				# Copy old title history
+				copy_title_history = scope:old_republic_title
+				# Set capital
+				set_capital_county = scope:old_republic_title.title_capital_county
+				set_no_automatic_claims = yes
+			}
+			# Move Title MaAs to new title
+			if = {
+				limit = {
+					scope:old_republic_title = {
+						any_title_maa_regiment = { }
+					}
+				}
+				scope:old_republic_title = { transfer_title_maa_ownership = scope:new_republic_title }
+			}
+			# Update Trade League member/leader if relevant
+			scope:trade_league ?= {
+				# For blocking on_member_join/leave effects
+				add_to_variable_list = {
+					name = rank_change_members
+					target = scope:republican_founder
+				}
+				add_to_variable_list = {
+					name = rank_change_titles
+					target = scope:old_republic_title
+				}
+				add_to_variable_list = {
+					name = rank_change_titles
+					target = scope:new_republic_title
+				}
+				# Must remove first or code blocks holder from 'joining' again
+				remove_confederation_member_title = scope:old_republic_title
+				add_confederation_member_title = scope:new_republic_title
+				if = {
+					limit = { scope:old_league_leader ?= scope:old_republic_title }
+					scope:republican_founder = { save_scope_as = league_creator }
+					set_leading_title = scope:new_republic_title
+					if = { # For safety, as title member changes can mess things up
+						limit = { exists = var:is_hanseatic_league }
+						set_coa = k_hansa
+						set_confederation_name = HANSEATIC_LEAGUE_NAME
+					}
+					else = {
+						set_coa = scope:new_republic_title
+						set_confederation_name = TRADE_LEAGUE_BASE_NAME
+					}
+				}
+				clear_variable_list = rank_change_members
+				clear_variable_list = rank_change_titles
+			}
+			# Transfer existing monopolies to the new title
+			if = {
+				limit = {
+					scope:old_republic_title = {
+						title_has_trade_monopoly = yes
+					}
+				}
+				scope:old_republic_title = {
+					every_trade_monopoly_for_title = {
+						# Set up what we need for creating a new monopoly
+						# Trade Good
+						if = {
+							limit = { is_complete_monopoly = no }
+							monopoly_trade_good_category = { save_scope_as = trade_good_category_type }
+							scope:republican_founder = {
+								set_variable = { name = new_monopoly_trade_good_category_type value = scope:trade_good_category_type }
+							}
+						}
+						# Complete Monopoly
+						else = {
+							scope:republican_founder = {
+								set_variable = { name = is_complete_monopoly value = yes }
+							}
+						}
+						# Exploitative Monopoly
+						if = {
+							limit = {
+								monopoly_type = exploitative
+							}
+							scope:republican_founder = {
+								set_variable = { name = is_exploitative_monopoly value = yes }
+							}
+						}
+						# Trade Market
+						monopoly_trade_market = {
+							save_scope_as = trade_market
+							scope:republican_founder = {
+								set_variable = { name = new_monopoly_trade_market value = scope:trade_market }
+							}
+						}
+
+						# First, destroy the old monopoly
+						destroy_trade_monopoly = yes
+
+						# Then create the new monopoly
+						scope:republican_founder = {
+							if = {
+								limit = {
+									exists = var:is_complete_monopoly
+									exists = var:is_exploitative_monopoly
+								}
+								create_trade_monopoly = {
+									owning_title = scope:new_republic_title
+									trade_market = var:new_monopoly_trade_market
+									type = exploitative
+									is_complete = yes
+								}
+							}
+							else_if = {
+								limit = {
+									exists = var:is_complete_monopoly
+								}
+								create_trade_monopoly = {
+									owning_title = scope:new_republic_title
+									trade_market = var:new_monopoly_trade_market
+									type = normal
+									is_complete = yes
+								}
+							}
+							else_if = {
+								limit = {
+									exists = var:is_exploitative_monopoly
+								}
+								create_trade_monopoly = {
+									owning_title = scope:new_republic_title
+									trade_market = var:new_monopoly_trade_market
+									trade_good_category = var:new_monopoly_trade_good_category_type
+									type = exploitative
+								}
+							}
+							else = {
+								create_trade_monopoly = {
+									owning_title = scope:new_republic_title
+									trade_market = var:new_monopoly_trade_market
+									trade_good_category = var:new_monopoly_trade_good_category_type
+									type = normal
+								}
+							}
+							scope:new_republic_title = {
+								random_trade_monopoly_for_title = {
+									limit = {
+										NOT = { is_in_list = new_title_monopolies }
+									}
+									save_scope_as = new_monopoly_scope
+									if = {
+										limit = { is_complete_monopoly = yes }
+										set_trade_monopoly_name = new_complete_title_monopoly_name
+									}
+									else = {
+										set_trade_monopoly_name = new_good_title_monopoly_name
+									}
+									add_to_list = new_title_monopolies
+								}
+							}
+
+							# Finally, clear the variables
+							remove_variable = new_monopoly_trade_good_category_type
+							remove_variable = new_monopoly_trade_market
+							remove_variable = is_complete_monopoly
+							remove_variable = is_exploitative_monopoly
+						}
+					}
+				}
+			}
+			# Destroy old title if needed
+			if = {
+				limit = { scope:old_republic_title.tier > tier_county }
+				scope:republican_founder = { destroy_title = scope:old_republic_title }
+			}
+		}
+	}
+}
+
+# Restore the Roman Republic effect
+gdp_restore_the_roman_republic_effect = {
+	# Save scopes for later use
+	save_scope_as = roman_republic_ruler
+	primary_title = { save_scope_as = old_primary_title }
+
+	# Appoint current assembly members as senators so the senate is not empty
+	hidden_effect = {
+		scope:old_primary_title = {
+			every_full_assembly_member = {
+				limit = {
+					this != scope:roman_republic_ruler
+					government_has_flag = government_is_republic
+				}
+				add_to_list = assembly_member_list
+				add_character_flag = republic_appointed_senator
+			}
+		}
+	}
+
+	# Create the Roman Republic hegemony title
+	create_title_and_vassal_change = {
+		type = created
+		save_scope_as = change
+		add_claim_on_loss = no
+	}
+	title:h_roman_republic = {
+		change_title_holder = {
+			holder = root
+			change = scope:change
+		}
+	}
+	resolve_title_and_vassal_change = scope:change
+
+	# Adopt new laws
+	add_realm_law_skip_effects = republic_type_roman
+	add_realm_law_skip_effects = republic_assembly_composition_roman_senate
+
+	# Tooltip for appointing existing assembly members as senators, we group it with the law changes for clarity
+	custom_tooltip = assembly_members_appointed_as_senators_desc
+	
+	hidden_effect = {
+		# Increase the size of the senate if needed
+		if = {
+			limit = {
+				any_in_list = {
+					list = assembly_member_list
+					count > { value = republic_senate_size_2_value multiply = 1.5 }
+				}
+			}
+			add_realm_law_skip_effects = republic_senate_size_3
+		}
+		else_if = {
+			limit = {
+				any_in_list = {
+					list = assembly_member_list
+					count > { value = republic_senate_size_1_value multiply = 1.5 }
+				}
+			}
+			add_realm_law_skip_effects = republic_senate_size_2
+		}
+		# Move your Title MaAs to your new title if you have any
+		if = {
+			limit = {
+				scope:old_primary_title = {
+					any_title_maa_regiment = { }
+				}
+			}
+			scope:old_primary_title = { transfer_title_maa_ownership = title:h_roman_republic }
+		}
+
+		update_assembly = yes
+
+		# Let's destroy the old title
+		destroy_title = scope:old_primary_title
+	}
+
+	# Personal rewards
+	# TODO add modifier to house - increasing patrican rating and renown
+}
+
+# Effect for whenever a decree is successfully approved and enacted
+gdp_enacted_decree_effect = {
+	if = {
+		limit = {
+			has_variable_list = decree_approvers
+			variable_list_size = {
+				name = decree_approvers
+				value > 0
+			}
+		}
+		custom_tooltip = {
+			text = spend_pledged_decree_approvers_desc
+			clear_variable_list = decree_approvers
+		}
+	}
+
+	send_interface_toast = {
+		type = event_toast_text_good
+		title = gdp_enacted_decree_toast
+		desc = gdp_enacted_decree_desc
+		left_icon = root
+		right_icon = highest_liege_matching_rule:uses_assembly.primary_title
+	}
+}
+
+gdp_consume_banishment_approval_effect = {
+	if = {
+		limit = {
+			var:has_assembly_approval_banishment ?= $TARGET$
+		}
+		remove_variable = has_assembly_approval_banishment
+	}
+	gdp_clear_indicted_character_effect = { TARGET = $TARGET$ }
+}
+
+gdp_consume_proscription_approval_effect = {
+	if = {
+		limit = {
+			var:has_assembly_approval_proscription ?= $TARGET$
+		}
+		remove_variable = has_assembly_approval_proscription
+	}
+	gdp_clear_indicted_character_effect = { TARGET = $TARGET$ }
+}
+
+gdp_consume_execution_approval_effect = {
+	if = {
+		limit = {
+			var:has_assembly_approval_execution ?= $TARGET$
+		}
+		remove_variable = has_assembly_approval_execution
+	}
+	gdp_clear_indicted_character_effect = { TARGET = $TARGET$ }
+}
+
+gdp_clear_indicted_character_effect = {
+	if = {
+		limit = {
+			var:gdp_indicted_character ?= $TARGET$
+		}
+		remove_variable = gdp_indicted_character
+	}
+}
+
+# Effect for a patrician pledging to vote with the scoped character in the next voting session
+gdp_pledge_assembly_vote_effect = {
+	$PLEDGER$ = { save_scope_as = vote_pledger }
+	custom_tooltip = {
+		text = gdp_pledge_assembly_vote_desc
+		add_to_variable_list = {
+			name = law_approvers
+			target = scope:vote_pledger
+			years = gdp_pledged_assembly_vote_duration_value
+		}
+		# Marker so the pledge stays legible until a vote is called, refreshed by each new pledge
+		if = {
+			limit = {
+				has_character_modifier = gdp_pledged_assembly_vote_modifier
+			}
+			remove_character_modifier = gdp_pledged_assembly_vote_modifier
+		}
+		add_character_modifier = {
+			modifier = gdp_pledged_assembly_vote_modifier
+			years = gdp_pledged_assembly_vote_duration_value
+		}
+	}
+}
+
+# Effect for whenever a realm law is passed - pledged assembly votes have been called in
+gdp_spend_pledged_law_approvers_effect = {
+	if = {
+		limit = {
+			exists = scope:proposer
+		}
+		scope:proposer = {
+			gdp_clear_pledged_law_approvers_effect = yes
+		}
+	}
+	else = {
+		gdp_clear_pledged_law_approvers_effect = yes
+	}
+}
+
+gdp_clear_pledged_law_approvers_effect = {
+	if = {
+		limit = {
+			has_variable_list = law_approvers
+			variable_list_size = {
+				name = law_approvers
+				value > 0
+			}
+		}
+		custom_tooltip = {
+			text = spend_pledged_law_approvers_desc
+			clear_variable_list = law_approvers
+			remove_character_modifier = gdp_pledged_assembly_vote_modifier
+		}
+	}
+}
+
+# Effect for one patrician to lend house support to another
+gdp_provide_patrician_house_support_effect = {
+	# Save scopes
+	$SUPPORT_PROVIDER$ = { save_scope_as = support_provider }
+	$SUPPORT_GAINEE$ = { save_scope_as = support_gainee }
+	# Tooltip
+	custom_tooltip = gdp_provide_patrician_house_support_desc
+	# Update variable lists for the patrician rating to take effect
+	scope:support_provider.house ?= {
+		add_to_variable_list = {
+			name = patrician_house_support_provided
+			target = scope:support_gainee
+			years = provide_patrician_house_support_duration_value
+		}
+	}
+	scope:support_gainee.house ?= {
+		add_to_variable_list = {
+			name = patrician_house_support_gained
+			target = scope:support_provider
+			years = provide_patrician_house_support_duration_value
+		}
+	}
+}
+
+# Patrician families maintenance effect, adjusts the number of families as needed
+gdp_adjust_number_of_patrician_families_effect = {
+	save_scope_as = republican
+	# First, let's figure out our limits
+	save_scope_value_as = { # Note: the ruler is not in the vassal count, so the real number is usually one higher
+		name = number_of_expected_families
+		value = {
+			value = 0
+			# Tier
+			if = {
+				limit = { highest_held_title_tier >= tier_empire }
+				add = 9
+			}
+			else_if = {
+				limit = { highest_held_title_tier = tier_kingdom }
+				add = 7
+			}
+			else = {
+				add = 4
+			}
+			# Realm size
+			if = {
+				limit = { realm_size >= 50 }
+				add = 3
+			}
+			else_if = {
+				limit = { realm_size >= 25 }
+				add = 2
+			}
+			else_if = {
+				limit = { realm_size >= 10 }
+				add = 1
+			}
+		}
+	}
+
+	# Let's start by checking if we have enough families for our tier
+	if = {
+		limit = {
+			scope:republican = {
+				gdp_is_assembly_head_trigger = yes
+				highest_held_title_tier >= tier_duchy
+				any_vassal = {
+					government_has_flag = government_is_republic
+					exists = domicile
+					domicile = {
+						is_domicile_type = merchant_company
+					}
+					count < scope:number_of_expected_families
+				}
+			}
+		}
+
+		# We have too few families, let's introduce one
+		hidden_effect = {
+			scope:republican.capital_county.culture = {
+				save_scope_as = culture
+			}
+			scope:republican.capital_county.faith = {
+				save_scope_as = faith
+			}
+			random = {
+				chance = 75
+				scope:republican.culture = {
+					save_scope_as = culture
+				}
+				scope:republican.faith = {
+					save_scope_as = faith
+				}
+			}
+			create_character = {
+				template = merchant_template
+				culture = scope:culture
+				faith = scope:faith
+				employer = scope:republican
+				gender_female_chance = location_faith_dominant_gender_female_chance
+				age = {
+					integer_range = {
+						min = 30
+						max = 60
+					}
+				}
+				dynasty = generate
+				save_scope_as = vassal
+			}
+			scope:vassal = {
+				add_character_flag = { flag = gdp_becoming_patrician days = 1 }
+			}
+			create_dynamic_title = {
+				name = NEW_VASSAL_PATRICIAN_TITLE_NAME
+				tier = county
+				type = title_type_merchant_family
+				holder = scope:vassal
+				article = DEFAULT_TITLE_NAME_ARTICLE
+				save_scope_as = new_patrician_title
+			}
+			scope:new_patrician_title ?= {
+				add_title_law = noble_family_succession_law
+			}
+			scope:vassal = {
+				create_title_and_vassal_change = {
+					type = swear_fealty
+					save_scope_as = vassal_change
+				}
+				change_liege = {
+					liege = scope:republican
+					change = scope:vassal_change
+				}
+				resolve_title_and_vassal_change = scope:vassal_change
+				change_government = republic_government
+				remove_character_flag = gdp_becoming_patrician
+				domicile ?= {
+					if = {
+						limit = { is_domicile_type = merchant_company }
+						gdp_patrician_domicile_level_2_effect = yes
+					}
+				}
+				save_scope_as = joining_patrician # For message scope
+				scope:republican ?= {
+					send_interface_message = {
+						type = msg_patrician_joined
+						title = msg_patrician_joined_republic_title
+						desc = msg_patrician_joined_republic_desc
+						left_icon = scope:joining_patrician
+					}
+				}
+				every_player = {
+					limit = {
+						liege = scope:republican
+						this != scope:republican
+					}
+					send_interface_message = {
+						type = msg_patrician_joined
+						title = msg_patrician_joined_republic_title
+						desc = msg_patrician_joined_republic_desc
+						left_icon = scope:joining_patrician
+					}
+				}
+				save_scope_value_as = {
+					name = child_count
+					value = {
+						integer_range = {
+							min = 2
+							max = {
+								value = 2
+								if = {
+									limit = { age > 35 }
+									add = 1
+								}
+								if = {
+									limit = { age > 40 }
+									add = 1
+								}
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						scope:child_count >= 1
+					}
+					while = {
+						count = scope:child_count
+						create_character = {
+							template = merchant_template
+							culture = scope:vassal.culture
+							faith = scope:vassal.faith
+							employer = scope:vassal
+							age = {
+								integer_range = {
+									min = 10
+									max = { value = scope:vassal.age subtract = 16 }
+								}
+							}
+							gender_female_chance = 50
+							dynasty = inherit
+							dynasty_house = scope:vassal.house
+							save_scope_as = child
+						}
+						scope:child = {
+							add_to_list = children
+						}
+						switch = {
+							trigger = is_female
+							yes = {
+								scope:child = {
+									set_mother = scope:vassal
+								}
+							}
+							no = {
+								scope:child = {
+									set_father = scope:vassal
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+gdp_consume_republic_assembly_preparation_effect = {
+	if = {
+		limit = {
+			exists = scope:proposer
+		}
+		scope:proposer = {
+			if = {
+				limit = {
+					has_variable = republic_assembly_preparation_value
+				}
+				set_variable = {
+					name = republic_assembly_preparation_value
+					value = 0
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			has_variable = republic_assembly_preparation_value
+		}
+		set_variable = {
+			name = republic_assembly_preparation_value
+			value = 0
+		}
+	}
+}
+
+# Effect for applying a modifier scaling with the level of a selected trade good category
+# $TRADE_CATEGORY$	the category the modifier should scale with
+# $MODIFIER$		the modifier that should be applied
+# $DOMICILE_TITLE$	the title to get the trade experience level from
+# $DURATION$		how long the modifier should last
+add_scaling_trade_modifier_to_char_effect = {
+	$DOMICILE_TITLE$ = { save_scope_as = domicile_title_for_trade_xp_level }
+	trade_good_category:$TRADE_CATEGORY$ = { save_scope_as = target_trade_category_for_modifier }
+	add_character_modifier = {
+		modifier = $MODIFIER$
+		years = $DURATION$
+	}
+}
+
+# Applies a tax penalty modifier to the capital county based on which district is shut down
+gdp_republic_unrest_district_shutdown_modifier_effect = {
+	capital_county = {
+		switch = {
+			trigger = scope:closed_district.district_type
+			district_type:guild_district = { add_county_modifier = { modifier = gdp_republic_unrest_guild_district_shutdown years = 5 } }
+			district_type:market_district = { add_county_modifier = { modifier = gdp_republic_unrest_market_district_shutdown years = 5 } }
+			district_type:port_district = { add_county_modifier = { modifier = gdp_republic_unrest_port_district_shutdown years = 5 } }
+			district_type:bureaucratic_district = { add_county_modifier = { modifier = gdp_republic_unrest_bureaucratic_district_shutdown years = 5 } }
+			district_type:temple_district = { add_county_modifier = { modifier = gdp_republic_unrest_temple_district_shutdown years = 5 } }
+			district_type:entertainment_district = { add_county_modifier = { modifier = gdp_republic_unrest_entertainment_district_shutdown years = 5 } }
+			district_type:urban_housing_district = { add_county_modifier = { modifier = gdp_republic_unrest_urban_housing_district_shutdown years = 5 } }
+		}
+	}
+}
+
+gdp_republic_unrest_resolve_full_effect = {
+	add_faction_discontent = -100
+}
+
+# Partial resolution — disperse. Drops below threshold but not a real fix.
+gdp_republic_unrest_resolve_partial_effect = {
+	add_faction_discontent = -75
+}
+
+# Failed resolution — duel loss. Barely halts progress, fires again very soon.
+gdp_republic_unrest_resolve_fail_effect = {
+	add_faction_discontent = -50
+}
+
+# Domicile scope
+# Lowers one building tier if it exists, and refunds the cost
+gdp_republic_unrest_lower_building_if_exists_effect = {
+	if = {
+		limit = { has_domicile_building = $BUILDING$ }
+		lower_domicile_building = $BUILDING$
+	}
+}
+
+# Severity 4 escape aftermath, runs from the 0303 new-life-as-merchant option
+# Strips external domicile buildings back to level 1 with a refund per tier, then removes all internal ones
+gdp_republic_unrest_flee_reset_domicile_effect = {
+	gdp_republic_unrest_clear_internal_buildings_effect = yes
+	domicile = {
+		# Main (strip to _01)
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_main_06 }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_main_05 }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_main_04 }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_main_03 }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_main_02 }
+		# Trade (strip to _01)
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_trade_06_competition }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_trade_06_revenue }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_trade_05_competition }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_trade_05_revenue }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_trade_04 }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_trade_03 }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_trade_02 }
+		# Warehouse (strip to _01)
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_warehouse_06_goods }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_warehouse_06_markets }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_warehouse_05_goods }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_warehouse_05_markets }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_warehouse_04 }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_warehouse_03 }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_warehouse_02 }
+		# Civic (strip to _01)
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_civic_06_knights }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_civic_06_stress }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_civic_05_knights }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_civic_05_stress }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_civic_04 }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_civic_03 }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_civic_02 }
+		# Production (strip to _01)
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_production_06_income }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_production_06_prestige }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_production_05_income }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_production_05_prestige }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_production_04 }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_production_03 }
+		gdp_republic_unrest_lower_building_if_exists_effect = { BUILDING = merchant_company_building_production_02 }
+	}
+}
+
+# Removes all internal domicile buildings, one switch per building track
+gdp_republic_unrest_clear_internal_buildings_effect = {
+	domicile = {
+		# === Main internal slots ===
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_ledger_room_06 = { remove_domicile_building = merchant_company_ledger_room_06 }
+			merchant_company_ledger_room_05 = { remove_domicile_building = merchant_company_ledger_room_05 }
+			merchant_company_ledger_room_04 = { remove_domicile_building = merchant_company_ledger_room_04 }
+			merchant_company_ledger_room_03 = { remove_domicile_building = merchant_company_ledger_room_03 }
+			merchant_company_ledger_room_02 = { remove_domicile_building = merchant_company_ledger_room_02 }
+			merchant_company_ledger_room_01 = { remove_domicile_building = merchant_company_ledger_room_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_storage_room_06 = { remove_domicile_building = merchant_company_storage_room_06 }
+			merchant_company_storage_room_05 = { remove_domicile_building = merchant_company_storage_room_05 }
+			merchant_company_storage_room_04 = { remove_domicile_building = merchant_company_storage_room_04 }
+			merchant_company_storage_room_03 = { remove_domicile_building = merchant_company_storage_room_03 }
+			merchant_company_storage_room_02 = { remove_domicile_building = merchant_company_storage_room_02 }
+			merchant_company_storage_room_01 = { remove_domicile_building = merchant_company_storage_room_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_library_06_prestige = { remove_domicile_building = merchant_company_library_06_prestige }
+			merchant_company_library_06_archive = { remove_domicile_building = merchant_company_library_06_archive }
+			merchant_company_library_05_prestige = { remove_domicile_building = merchant_company_library_05_prestige }
+			merchant_company_library_05_archive = { remove_domicile_building = merchant_company_library_05_archive }
+			merchant_company_library_04_prestige = { remove_domicile_building = merchant_company_library_04_prestige }
+			merchant_company_library_04_archive = { remove_domicile_building = merchant_company_library_04_archive }
+			merchant_company_library_03 = { remove_domicile_building = merchant_company_library_03 }
+			merchant_company_library_02 = { remove_domicile_building = merchant_company_library_02 }
+			merchant_company_library_01 = { remove_domicile_building = merchant_company_library_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_cabinet_06_prestige = { remove_domicile_building = merchant_company_cabinet_06_prestige }
+			merchant_company_cabinet_06_opinion = { remove_domicile_building = merchant_company_cabinet_06_opinion }
+			merchant_company_cabinet_05_prestige = { remove_domicile_building = merchant_company_cabinet_05_prestige }
+			merchant_company_cabinet_05_opinion = { remove_domicile_building = merchant_company_cabinet_05_opinion }
+			merchant_company_cabinet_04_prestige = { remove_domicile_building = merchant_company_cabinet_04_prestige }
+			merchant_company_cabinet_04_opinion = { remove_domicile_building = merchant_company_cabinet_04_opinion }
+			merchant_company_cabinet_03 = { remove_domicile_building = merchant_company_cabinet_03 }
+			merchant_company_cabinet_02 = { remove_domicile_building = merchant_company_cabinet_02 }
+			merchant_company_cabinet_01 = { remove_domicile_building = merchant_company_cabinet_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_menagerie_06_prestige = { remove_domicile_building = merchant_company_menagerie_06_prestige }
+			merchant_company_menagerie_06_stress = { remove_domicile_building = merchant_company_menagerie_06_stress }
+			merchant_company_menagerie_05_prestige = { remove_domicile_building = merchant_company_menagerie_05_prestige }
+			merchant_company_menagerie_05_stress = { remove_domicile_building = merchant_company_menagerie_05_stress }
+			merchant_company_menagerie_04_prestige = { remove_domicile_building = merchant_company_menagerie_04_prestige }
+			merchant_company_menagerie_04_stress = { remove_domicile_building = merchant_company_menagerie_04_stress }
+			merchant_company_menagerie_03 = { remove_domicile_building = merchant_company_menagerie_03 }
+			merchant_company_menagerie_02 = { remove_domicile_building = merchant_company_menagerie_02 }
+			merchant_company_menagerie_01 = { remove_domicile_building = merchant_company_menagerie_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_study_06_diplomacy = { remove_domicile_building = merchant_company_study_06_diplomacy }
+			merchant_company_study_06_intrigue = { remove_domicile_building = merchant_company_study_06_intrigue }
+			merchant_company_study_06_stewardship = { remove_domicile_building = merchant_company_study_06_stewardship }
+			merchant_company_study_05_diplomacy = { remove_domicile_building = merchant_company_study_05_diplomacy }
+			merchant_company_study_05_intrigue = { remove_domicile_building = merchant_company_study_05_intrigue }
+			merchant_company_study_05_stewardship = { remove_domicile_building = merchant_company_study_05_stewardship }
+			merchant_company_study_04_diplomacy = { remove_domicile_building = merchant_company_study_04_diplomacy }
+			merchant_company_study_04_intrigue = { remove_domicile_building = merchant_company_study_04_intrigue }
+			merchant_company_study_04_stewardship = { remove_domicile_building = merchant_company_study_04_stewardship }
+			merchant_company_study_03 = { remove_domicile_building = merchant_company_study_03 }
+			merchant_company_study_02 = { remove_domicile_building = merchant_company_study_02 }
+			merchant_company_study_01 = { remove_domicile_building = merchant_company_study_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_garden_06_personal = { remove_domicile_building = merchant_company_garden_06_personal }
+			merchant_company_garden_06_hostile = { remove_domicile_building = merchant_company_garden_06_hostile }
+			merchant_company_garden_05_personal = { remove_domicile_building = merchant_company_garden_05_personal }
+			merchant_company_garden_05_hostile = { remove_domicile_building = merchant_company_garden_05_hostile }
+			merchant_company_garden_04_personal = { remove_domicile_building = merchant_company_garden_04_personal }
+			merchant_company_garden_04_hostile = { remove_domicile_building = merchant_company_garden_04_hostile }
+			merchant_company_garden_03 = { remove_domicile_building = merchant_company_garden_03 }
+			merchant_company_garden_02 = { remove_domicile_building = merchant_company_garden_02 }
+			merchant_company_garden_01 = { remove_domicile_building = merchant_company_garden_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_chapel_06_piety = { remove_domicile_building = merchant_company_chapel_06_piety }
+			merchant_company_chapel_06_spiritual = { remove_domicile_building = merchant_company_chapel_06_spiritual }
+			merchant_company_chapel_05_piety = { remove_domicile_building = merchant_company_chapel_05_piety }
+			merchant_company_chapel_05_spiritual = { remove_domicile_building = merchant_company_chapel_05_spiritual }
+			merchant_company_chapel_04_piety = { remove_domicile_building = merchant_company_chapel_04_piety }
+			merchant_company_chapel_04_spiritual = { remove_domicile_building = merchant_company_chapel_04_spiritual }
+			merchant_company_chapel_03 = { remove_domicile_building = merchant_company_chapel_03 }
+			merchant_company_chapel_02 = { remove_domicile_building = merchant_company_chapel_02 }
+			merchant_company_chapel_01 = { remove_domicile_building = merchant_company_chapel_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_notariate_06 = { remove_domicile_building = merchant_company_notariate_06 }
+			merchant_company_notariate_05 = { remove_domicile_building = merchant_company_notariate_05 }
+			merchant_company_notariate_04 = { remove_domicile_building = merchant_company_notariate_04 }
+			merchant_company_notariate_03 = { remove_domicile_building = merchant_company_notariate_03 }
+			merchant_company_notariate_02 = { remove_domicile_building = merchant_company_notariate_02 }
+			merchant_company_notariate_01 = { remove_domicile_building = merchant_company_notariate_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_towers_06 = { remove_domicile_building = merchant_company_towers_06 }
+			merchant_company_towers_05 = { remove_domicile_building = merchant_company_towers_05 }
+			merchant_company_towers_04 = { remove_domicile_building = merchant_company_towers_04 }
+			merchant_company_towers_03 = { remove_domicile_building = merchant_company_towers_03 }
+			merchant_company_towers_02 = { remove_domicile_building = merchant_company_towers_02 }
+			merchant_company_towers_01 = { remove_domicile_building = merchant_company_towers_01 }
+		}
+		# === Trade internal slots ===
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_perfumers_row_06 = { remove_domicile_building = merchant_company_perfumers_row_06 }
+			merchant_company_perfumers_row_05 = { remove_domicile_building = merchant_company_perfumers_row_05 }
+			merchant_company_perfumers_row_04 = { remove_domicile_building = merchant_company_perfumers_row_04 }
+			merchant_company_perfumers_row_03 = { remove_domicile_building = merchant_company_perfumers_row_03 }
+			merchant_company_perfumers_row_02 = { remove_domicile_building = merchant_company_perfumers_row_02 }
+			merchant_company_perfumers_row_01 = { remove_domicile_building = merchant_company_perfumers_row_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_incense_traders_06 = { remove_domicile_building = merchant_company_incense_traders_06 }
+			merchant_company_incense_traders_05 = { remove_domicile_building = merchant_company_incense_traders_05 }
+			merchant_company_incense_traders_04 = { remove_domicile_building = merchant_company_incense_traders_04 }
+			merchant_company_incense_traders_03 = { remove_domicile_building = merchant_company_incense_traders_03 }
+			merchant_company_incense_traders_02 = { remove_domicile_building = merchant_company_incense_traders_02 }
+			merchant_company_incense_traders_01 = { remove_domicile_building = merchant_company_incense_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_books_traders_06 = { remove_domicile_building = merchant_company_books_traders_06 }
+			merchant_company_books_traders_05 = { remove_domicile_building = merchant_company_books_traders_05 }
+			merchant_company_books_traders_04 = { remove_domicile_building = merchant_company_books_traders_04 }
+			merchant_company_books_traders_03 = { remove_domicile_building = merchant_company_books_traders_03 }
+			merchant_company_books_traders_02 = { remove_domicile_building = merchant_company_books_traders_02 }
+			merchant_company_books_traders_01 = { remove_domicile_building = merchant_company_books_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_medicaments_traders_06 = { remove_domicile_building = merchant_company_medicaments_traders_06 }
+			merchant_company_medicaments_traders_05 = { remove_domicile_building = merchant_company_medicaments_traders_05 }
+			merchant_company_medicaments_traders_04 = { remove_domicile_building = merchant_company_medicaments_traders_04 }
+			merchant_company_medicaments_traders_03 = { remove_domicile_building = merchant_company_medicaments_traders_03 }
+			merchant_company_medicaments_traders_02 = { remove_domicile_building = merchant_company_medicaments_traders_02 }
+			merchant_company_medicaments_traders_01 = { remove_domicile_building = merchant_company_medicaments_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_clothes_traders_06 = { remove_domicile_building = merchant_company_clothes_traders_06 }
+			merchant_company_clothes_traders_05 = { remove_domicile_building = merchant_company_clothes_traders_05 }
+			merchant_company_clothes_traders_04 = { remove_domicile_building = merchant_company_clothes_traders_04 }
+			merchant_company_clothes_traders_03 = { remove_domicile_building = merchant_company_clothes_traders_03 }
+			merchant_company_clothes_traders_02 = { remove_domicile_building = merchant_company_clothes_traders_02 }
+			merchant_company_clothes_traders_01 = { remove_domicile_building = merchant_company_clothes_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_alum_traders_06 = { remove_domicile_building = merchant_company_alum_traders_06 }
+			merchant_company_alum_traders_05 = { remove_domicile_building = merchant_company_alum_traders_05 }
+			merchant_company_alum_traders_04 = { remove_domicile_building = merchant_company_alum_traders_04 }
+			merchant_company_alum_traders_03 = { remove_domicile_building = merchant_company_alum_traders_03 }
+			merchant_company_alum_traders_02 = { remove_domicile_building = merchant_company_alum_traders_02 }
+			merchant_company_alum_traders_01 = { remove_domicile_building = merchant_company_alum_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_dyes_traders_06 = { remove_domicile_building = merchant_company_dyes_traders_06 }
+			merchant_company_dyes_traders_05 = { remove_domicile_building = merchant_company_dyes_traders_05 }
+			merchant_company_dyes_traders_04 = { remove_domicile_building = merchant_company_dyes_traders_04 }
+			merchant_company_dyes_traders_03 = { remove_domicile_building = merchant_company_dyes_traders_03 }
+			merchant_company_dyes_traders_02 = { remove_domicile_building = merchant_company_dyes_traders_02 }
+			merchant_company_dyes_traders_01 = { remove_domicile_building = merchant_company_dyes_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_silk_traders_06 = { remove_domicile_building = merchant_company_silk_traders_06 }
+			merchant_company_silk_traders_05 = { remove_domicile_building = merchant_company_silk_traders_05 }
+			merchant_company_silk_traders_04 = { remove_domicile_building = merchant_company_silk_traders_04 }
+			merchant_company_silk_traders_03 = { remove_domicile_building = merchant_company_silk_traders_03 }
+			merchant_company_silk_traders_02 = { remove_domicile_building = merchant_company_silk_traders_02 }
+			merchant_company_silk_traders_01 = { remove_domicile_building = merchant_company_silk_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_pepper_traders_06 = { remove_domicile_building = merchant_company_pepper_traders_06 }
+			merchant_company_pepper_traders_05 = { remove_domicile_building = merchant_company_pepper_traders_05 }
+			merchant_company_pepper_traders_04 = { remove_domicile_building = merchant_company_pepper_traders_04 }
+			merchant_company_pepper_traders_03 = { remove_domicile_building = merchant_company_pepper_traders_03 }
+			merchant_company_pepper_traders_02 = { remove_domicile_building = merchant_company_pepper_traders_02 }
+			merchant_company_pepper_traders_01 = { remove_domicile_building = merchant_company_pepper_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_sugar_traders_06 = { remove_domicile_building = merchant_company_sugar_traders_06 }
+			merchant_company_sugar_traders_05 = { remove_domicile_building = merchant_company_sugar_traders_05 }
+			merchant_company_sugar_traders_04 = { remove_domicile_building = merchant_company_sugar_traders_04 }
+			merchant_company_sugar_traders_03 = { remove_domicile_building = merchant_company_sugar_traders_03 }
+			merchant_company_sugar_traders_02 = { remove_domicile_building = merchant_company_sugar_traders_02 }
+			merchant_company_sugar_traders_01 = { remove_domicile_building = merchant_company_sugar_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_precious_metals_traders_06 = { remove_domicile_building = merchant_company_precious_metals_traders_06 }
+			merchant_company_precious_metals_traders_05 = { remove_domicile_building = merchant_company_precious_metals_traders_05 }
+			merchant_company_precious_metals_traders_04 = { remove_domicile_building = merchant_company_precious_metals_traders_04 }
+			merchant_company_precious_metals_traders_03 = { remove_domicile_building = merchant_company_precious_metals_traders_03 }
+			merchant_company_precious_metals_traders_02 = { remove_domicile_building = merchant_company_precious_metals_traders_02 }
+			merchant_company_precious_metals_traders_01 = { remove_domicile_building = merchant_company_precious_metals_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_jewelry_materials_traders_06 = { remove_domicile_building = merchant_company_jewelry_materials_traders_06 }
+			merchant_company_jewelry_materials_traders_05 = { remove_domicile_building = merchant_company_jewelry_materials_traders_05 }
+			merchant_company_jewelry_materials_traders_04 = { remove_domicile_building = merchant_company_jewelry_materials_traders_04 }
+			merchant_company_jewelry_materials_traders_03 = { remove_domicile_building = merchant_company_jewelry_materials_traders_03 }
+			merchant_company_jewelry_materials_traders_02 = { remove_domicile_building = merchant_company_jewelry_materials_traders_02 }
+			merchant_company_jewelry_materials_traders_01 = { remove_domicile_building = merchant_company_jewelry_materials_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_amber_ivory_traders_06 = { remove_domicile_building = merchant_company_amber_ivory_traders_06 }
+			merchant_company_amber_ivory_traders_05 = { remove_domicile_building = merchant_company_amber_ivory_traders_05 }
+			merchant_company_amber_ivory_traders_04 = { remove_domicile_building = merchant_company_amber_ivory_traders_04 }
+			merchant_company_amber_ivory_traders_03 = { remove_domicile_building = merchant_company_amber_ivory_traders_03 }
+			merchant_company_amber_ivory_traders_02 = { remove_domicile_building = merchant_company_amber_ivory_traders_02 }
+			merchant_company_amber_ivory_traders_01 = { remove_domicile_building = merchant_company_amber_ivory_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_exchange_06 = { remove_domicile_building = merchant_company_exchange_06 }
+			merchant_company_exchange_05 = { remove_domicile_building = merchant_company_exchange_05 }
+			merchant_company_exchange_04 = { remove_domicile_building = merchant_company_exchange_04 }
+			merchant_company_exchange_03 = { remove_domicile_building = merchant_company_exchange_03 }
+			merchant_company_exchange_02 = { remove_domicile_building = merchant_company_exchange_02 }
+			merchant_company_exchange_01 = { remove_domicile_building = merchant_company_exchange_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_trade_mission_06 = { remove_domicile_building = merchant_company_trade_mission_06 }
+			merchant_company_trade_mission_05 = { remove_domicile_building = merchant_company_trade_mission_05 }
+			merchant_company_trade_mission_04 = { remove_domicile_building = merchant_company_trade_mission_04 }
+			merchant_company_trade_mission_03 = { remove_domicile_building = merchant_company_trade_mission_03 }
+			merchant_company_trade_mission_02 = { remove_domicile_building = merchant_company_trade_mission_02 }
+			merchant_company_trade_mission_01 = { remove_domicile_building = merchant_company_trade_mission_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_market_stalls_06 = { remove_domicile_building = merchant_company_market_stalls_06 }
+			merchant_company_market_stalls_05 = { remove_domicile_building = merchant_company_market_stalls_05 }
+			merchant_company_market_stalls_04 = { remove_domicile_building = merchant_company_market_stalls_04 }
+			merchant_company_market_stalls_03 = { remove_domicile_building = merchant_company_market_stalls_03 }
+			merchant_company_market_stalls_02 = { remove_domicile_building = merchant_company_market_stalls_02 }
+			merchant_company_market_stalls_01 = { remove_domicile_building = merchant_company_market_stalls_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_brokers_bench_06 = { remove_domicile_building = merchant_company_brokers_bench_06 }
+			merchant_company_brokers_bench_05 = { remove_domicile_building = merchant_company_brokers_bench_05 }
+			merchant_company_brokers_bench_04 = { remove_domicile_building = merchant_company_brokers_bench_04 }
+			merchant_company_brokers_bench_03 = { remove_domicile_building = merchant_company_brokers_bench_03 }
+			merchant_company_brokers_bench_02 = { remove_domicile_building = merchant_company_brokers_bench_02 }
+			merchant_company_brokers_bench_01 = { remove_domicile_building = merchant_company_brokers_bench_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_food_stores_06_alcohol = { remove_domicile_building = merchant_company_food_stores_06_alcohol }
+			merchant_company_food_stores_06_cereals = { remove_domicile_building = merchant_company_food_stores_06_cereals }
+			merchant_company_food_stores_06_comforts = { remove_domicile_building = merchant_company_food_stores_06_comforts }
+			merchant_company_food_stores_06_meat = { remove_domicile_building = merchant_company_food_stores_06_meat }
+			merchant_company_food_stores_05_alcohol = { remove_domicile_building = merchant_company_food_stores_05_alcohol }
+			merchant_company_food_stores_05_cereals = { remove_domicile_building = merchant_company_food_stores_05_cereals }
+			merchant_company_food_stores_05_comforts = { remove_domicile_building = merchant_company_food_stores_05_comforts }
+			merchant_company_food_stores_05_meat = { remove_domicile_building = merchant_company_food_stores_05_meat }
+			merchant_company_food_stores_04_alcohol = { remove_domicile_building = merchant_company_food_stores_04_alcohol }
+			merchant_company_food_stores_04_cereals = { remove_domicile_building = merchant_company_food_stores_04_cereals }
+			merchant_company_food_stores_04_comforts = { remove_domicile_building = merchant_company_food_stores_04_comforts }
+			merchant_company_food_stores_04_meat = { remove_domicile_building = merchant_company_food_stores_04_meat }
+			merchant_company_food_stores_03_alcohol = { remove_domicile_building = merchant_company_food_stores_03_alcohol }
+			merchant_company_food_stores_03_cereals = { remove_domicile_building = merchant_company_food_stores_03_cereals }
+			merchant_company_food_stores_03_comforts = { remove_domicile_building = merchant_company_food_stores_03_comforts }
+			merchant_company_food_stores_03_meat = { remove_domicile_building = merchant_company_food_stores_03_meat }
+			merchant_company_food_stores_02 = { remove_domicile_building = merchant_company_food_stores_02 }
+			merchant_company_food_stores_01 = { remove_domicile_building = merchant_company_food_stores_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_mineral_stalls_06_base_metals = { remove_domicile_building = merchant_company_mineral_stalls_06_base_metals }
+			merchant_company_mineral_stalls_06_jewelry_materials = { remove_domicile_building = merchant_company_mineral_stalls_06_jewelry_materials }
+			merchant_company_mineral_stalls_06_precious_metals = { remove_domicile_building = merchant_company_mineral_stalls_06_precious_metals }
+			merchant_company_mineral_stalls_06_salt = { remove_domicile_building = merchant_company_mineral_stalls_06_salt }
+			merchant_company_mineral_stalls_05_base_metals = { remove_domicile_building = merchant_company_mineral_stalls_05_base_metals }
+			merchant_company_mineral_stalls_05_jewelry_materials = { remove_domicile_building = merchant_company_mineral_stalls_05_jewelry_materials }
+			merchant_company_mineral_stalls_05_precious_metals = { remove_domicile_building = merchant_company_mineral_stalls_05_precious_metals }
+			merchant_company_mineral_stalls_05_salt = { remove_domicile_building = merchant_company_mineral_stalls_05_salt }
+			merchant_company_mineral_stalls_04_base_metals = { remove_domicile_building = merchant_company_mineral_stalls_04_base_metals }
+			merchant_company_mineral_stalls_04_jewelry_materials = { remove_domicile_building = merchant_company_mineral_stalls_04_jewelry_materials }
+			merchant_company_mineral_stalls_04_precious_metals = { remove_domicile_building = merchant_company_mineral_stalls_04_precious_metals }
+			merchant_company_mineral_stalls_04_salt = { remove_domicile_building = merchant_company_mineral_stalls_04_salt }
+			merchant_company_mineral_stalls_03_base_metals = { remove_domicile_building = merchant_company_mineral_stalls_03_base_metals }
+			merchant_company_mineral_stalls_03_jewelry_materials = { remove_domicile_building = merchant_company_mineral_stalls_03_jewelry_materials }
+			merchant_company_mineral_stalls_03_precious_metals = { remove_domicile_building = merchant_company_mineral_stalls_03_precious_metals }
+			merchant_company_mineral_stalls_03_salt = { remove_domicile_building = merchant_company_mineral_stalls_03_salt }
+			merchant_company_mineral_stalls_02 = { remove_domicile_building = merchant_company_mineral_stalls_02 }
+			merchant_company_mineral_stalls_01 = { remove_domicile_building = merchant_company_mineral_stalls_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_cloth_stalls_06_alum = { remove_domicile_building = merchant_company_cloth_stalls_06_alum }
+			merchant_company_cloth_stalls_06_clothes = { remove_domicile_building = merchant_company_cloth_stalls_06_clothes }
+			merchant_company_cloth_stalls_06_dyes = { remove_domicile_building = merchant_company_cloth_stalls_06_dyes }
+			merchant_company_cloth_stalls_06_luxury_items = { remove_domicile_building = merchant_company_cloth_stalls_06_luxury_items }
+			merchant_company_cloth_stalls_05_alum = { remove_domicile_building = merchant_company_cloth_stalls_05_alum }
+			merchant_company_cloth_stalls_05_clothes = { remove_domicile_building = merchant_company_cloth_stalls_05_clothes }
+			merchant_company_cloth_stalls_05_dyes = { remove_domicile_building = merchant_company_cloth_stalls_05_dyes }
+			merchant_company_cloth_stalls_05_luxury_items = { remove_domicile_building = merchant_company_cloth_stalls_05_luxury_items }
+			merchant_company_cloth_stalls_04_alum = { remove_domicile_building = merchant_company_cloth_stalls_04_alum }
+			merchant_company_cloth_stalls_04_clothes = { remove_domicile_building = merchant_company_cloth_stalls_04_clothes }
+			merchant_company_cloth_stalls_04_dyes = { remove_domicile_building = merchant_company_cloth_stalls_04_dyes }
+			merchant_company_cloth_stalls_04_luxury_items = { remove_domicile_building = merchant_company_cloth_stalls_04_luxury_items }
+			merchant_company_cloth_stalls_03_alum = { remove_domicile_building = merchant_company_cloth_stalls_03_alum }
+			merchant_company_cloth_stalls_03_clothes = { remove_domicile_building = merchant_company_cloth_stalls_03_clothes }
+			merchant_company_cloth_stalls_03_dyes = { remove_domicile_building = merchant_company_cloth_stalls_03_dyes }
+			merchant_company_cloth_stalls_03_luxury_items = { remove_domicile_building = merchant_company_cloth_stalls_03_luxury_items }
+			merchant_company_cloth_stalls_02 = { remove_domicile_building = merchant_company_cloth_stalls_02 }
+			merchant_company_cloth_stalls_01 = { remove_domicile_building = merchant_company_cloth_stalls_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_luxury_stalls_06_books = { remove_domicile_building = merchant_company_luxury_stalls_06_books }
+			merchant_company_luxury_stalls_06_incense = { remove_domicile_building = merchant_company_luxury_stalls_06_incense }
+			merchant_company_luxury_stalls_06_luxury_consumption = { remove_domicile_building = merchant_company_luxury_stalls_06_luxury_consumption }
+			merchant_company_luxury_stalls_06_medicaments = { remove_domicile_building = merchant_company_luxury_stalls_06_medicaments }
+			merchant_company_luxury_stalls_05_books = { remove_domicile_building = merchant_company_luxury_stalls_05_books }
+			merchant_company_luxury_stalls_05_incense = { remove_domicile_building = merchant_company_luxury_stalls_05_incense }
+			merchant_company_luxury_stalls_05_luxury_consumption = { remove_domicile_building = merchant_company_luxury_stalls_05_luxury_consumption }
+			merchant_company_luxury_stalls_05_medicaments = { remove_domicile_building = merchant_company_luxury_stalls_05_medicaments }
+			merchant_company_luxury_stalls_04_books = { remove_domicile_building = merchant_company_luxury_stalls_04_books }
+			merchant_company_luxury_stalls_04_incense = { remove_domicile_building = merchant_company_luxury_stalls_04_incense }
+			merchant_company_luxury_stalls_04_luxury_consumption = { remove_domicile_building = merchant_company_luxury_stalls_04_luxury_consumption }
+			merchant_company_luxury_stalls_04_medicaments = { remove_domicile_building = merchant_company_luxury_stalls_04_medicaments }
+			merchant_company_luxury_stalls_03_books = { remove_domicile_building = merchant_company_luxury_stalls_03_books }
+			merchant_company_luxury_stalls_03_incense = { remove_domicile_building = merchant_company_luxury_stalls_03_incense }
+			merchant_company_luxury_stalls_03_luxury_consumption = { remove_domicile_building = merchant_company_luxury_stalls_03_luxury_consumption }
+			merchant_company_luxury_stalls_03_medicaments = { remove_domicile_building = merchant_company_luxury_stalls_03_medicaments }
+			merchant_company_luxury_stalls_02 = { remove_domicile_building = merchant_company_luxury_stalls_02 }
+			merchant_company_luxury_stalls_01 = { remove_domicile_building = merchant_company_luxury_stalls_01 }
+		}
+		# === Warehouse internal slots ===
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_sample_room_06 = { remove_domicile_building = merchant_company_sample_room_06 }
+			merchant_company_sample_room_05 = { remove_domicile_building = merchant_company_sample_room_05 }
+			merchant_company_sample_room_04 = { remove_domicile_building = merchant_company_sample_room_04 }
+			merchant_company_sample_room_03 = { remove_domicile_building = merchant_company_sample_room_03 }
+			merchant_company_sample_room_02 = { remove_domicile_building = merchant_company_sample_room_02 }
+			merchant_company_sample_room_01 = { remove_domicile_building = merchant_company_sample_room_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_curing_house_06 = { remove_domicile_building = merchant_company_curing_house_06 }
+			merchant_company_curing_house_05 = { remove_domicile_building = merchant_company_curing_house_05 }
+			merchant_company_curing_house_04 = { remove_domicile_building = merchant_company_curing_house_04 }
+			merchant_company_curing_house_03 = { remove_domicile_building = merchant_company_curing_house_03 }
+			merchant_company_curing_house_02 = { remove_domicile_building = merchant_company_curing_house_02 }
+			merchant_company_curing_house_01 = { remove_domicile_building = merchant_company_curing_house_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_builders_yard_06 = { remove_domicile_building = merchant_company_builders_yard_06 }
+			merchant_company_builders_yard_05 = { remove_domicile_building = merchant_company_builders_yard_05 }
+			merchant_company_builders_yard_04 = { remove_domicile_building = merchant_company_builders_yard_04 }
+			merchant_company_builders_yard_03 = { remove_domicile_building = merchant_company_builders_yard_03 }
+			merchant_company_builders_yard_02 = { remove_domicile_building = merchant_company_builders_yard_02 }
+			merchant_company_builders_yard_01 = { remove_domicile_building = merchant_company_builders_yard_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_tally_house_06 = { remove_domicile_building = merchant_company_tally_house_06 }
+			merchant_company_tally_house_05 = { remove_domicile_building = merchant_company_tally_house_05 }
+			merchant_company_tally_house_04 = { remove_domicile_building = merchant_company_tally_house_04 }
+			merchant_company_tally_house_03 = { remove_domicile_building = merchant_company_tally_house_03 }
+			merchant_company_tally_house_02 = { remove_domicile_building = merchant_company_tally_house_02 }
+			merchant_company_tally_house_01 = { remove_domicile_building = merchant_company_tally_house_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_salt_traders_06 = { remove_domicile_building = merchant_company_salt_traders_06 }
+			merchant_company_salt_traders_05 = { remove_domicile_building = merchant_company_salt_traders_05 }
+			merchant_company_salt_traders_04 = { remove_domicile_building = merchant_company_salt_traders_04 }
+			merchant_company_salt_traders_03 = { remove_domicile_building = merchant_company_salt_traders_03 }
+			merchant_company_salt_traders_02 = { remove_domicile_building = merchant_company_salt_traders_02 }
+			merchant_company_salt_traders_01 = { remove_domicile_building = merchant_company_salt_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_base_metals_traders_06 = { remove_domicile_building = merchant_company_base_metals_traders_06 }
+			merchant_company_base_metals_traders_05 = { remove_domicile_building = merchant_company_base_metals_traders_05 }
+			merchant_company_base_metals_traders_04 = { remove_domicile_building = merchant_company_base_metals_traders_04 }
+			merchant_company_base_metals_traders_03 = { remove_domicile_building = merchant_company_base_metals_traders_03 }
+			merchant_company_base_metals_traders_02 = { remove_domicile_building = merchant_company_base_metals_traders_02 }
+			merchant_company_base_metals_traders_01 = { remove_domicile_building = merchant_company_base_metals_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_quayside_stores_06 = { remove_domicile_building = merchant_company_quayside_stores_06 }
+			merchant_company_quayside_stores_05 = { remove_domicile_building = merchant_company_quayside_stores_05 }
+			merchant_company_quayside_stores_04 = { remove_domicile_building = merchant_company_quayside_stores_04 }
+			merchant_company_quayside_stores_03 = { remove_domicile_building = merchant_company_quayside_stores_03 }
+			merchant_company_quayside_stores_02 = { remove_domicile_building = merchant_company_quayside_stores_02 }
+			merchant_company_quayside_stores_01 = { remove_domicile_building = merchant_company_quayside_stores_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_river_landing_06 = { remove_domicile_building = merchant_company_river_landing_06 }
+			merchant_company_river_landing_05 = { remove_domicile_building = merchant_company_river_landing_05 }
+			merchant_company_river_landing_04 = { remove_domicile_building = merchant_company_river_landing_04 }
+			merchant_company_river_landing_03 = { remove_domicile_building = merchant_company_river_landing_03 }
+			merchant_company_river_landing_02 = { remove_domicile_building = merchant_company_river_landing_02 }
+			merchant_company_river_landing_01 = { remove_domicile_building = merchant_company_river_landing_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_caravan_yard_06 = { remove_domicile_building = merchant_company_caravan_yard_06 }
+			merchant_company_caravan_yard_05 = { remove_domicile_building = merchant_company_caravan_yard_05 }
+			merchant_company_caravan_yard_04 = { remove_domicile_building = merchant_company_caravan_yard_04 }
+			merchant_company_caravan_yard_03 = { remove_domicile_building = merchant_company_caravan_yard_03 }
+			merchant_company_caravan_yard_02 = { remove_domicile_building = merchant_company_caravan_yard_02 }
+			merchant_company_caravan_yard_01 = { remove_domicile_building = merchant_company_caravan_yard_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_alcohol_traders_06 = { remove_domicile_building = merchant_company_alcohol_traders_06 }
+			merchant_company_alcohol_traders_05 = { remove_domicile_building = merchant_company_alcohol_traders_05 }
+			merchant_company_alcohol_traders_04 = { remove_domicile_building = merchant_company_alcohol_traders_04 }
+			merchant_company_alcohol_traders_03 = { remove_domicile_building = merchant_company_alcohol_traders_03 }
+			merchant_company_alcohol_traders_02 = { remove_domicile_building = merchant_company_alcohol_traders_02 }
+			merchant_company_alcohol_traders_01 = { remove_domicile_building = merchant_company_alcohol_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_comforts_traders_06 = { remove_domicile_building = merchant_company_comforts_traders_06 }
+			merchant_company_comforts_traders_05 = { remove_domicile_building = merchant_company_comforts_traders_05 }
+			merchant_company_comforts_traders_04 = { remove_domicile_building = merchant_company_comforts_traders_04 }
+			merchant_company_comforts_traders_03 = { remove_domicile_building = merchant_company_comforts_traders_03 }
+			merchant_company_comforts_traders_02 = { remove_domicile_building = merchant_company_comforts_traders_02 }
+			merchant_company_comforts_traders_01 = { remove_domicile_building = merchant_company_comforts_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_cereals_traders_06 = { remove_domicile_building = merchant_company_cereals_traders_06 }
+			merchant_company_cereals_traders_05 = { remove_domicile_building = merchant_company_cereals_traders_05 }
+			merchant_company_cereals_traders_04 = { remove_domicile_building = merchant_company_cereals_traders_04 }
+			merchant_company_cereals_traders_03 = { remove_domicile_building = merchant_company_cereals_traders_03 }
+			merchant_company_cereals_traders_02 = { remove_domicile_building = merchant_company_cereals_traders_02 }
+			merchant_company_cereals_traders_01 = { remove_domicile_building = merchant_company_cereals_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_meat_traders_06 = { remove_domicile_building = merchant_company_meat_traders_06 }
+			merchant_company_meat_traders_05 = { remove_domicile_building = merchant_company_meat_traders_05 }
+			merchant_company_meat_traders_04 = { remove_domicile_building = merchant_company_meat_traders_04 }
+			merchant_company_meat_traders_03 = { remove_domicile_building = merchant_company_meat_traders_03 }
+			merchant_company_meat_traders_02 = { remove_domicile_building = merchant_company_meat_traders_02 }
+			merchant_company_meat_traders_01 = { remove_domicile_building = merchant_company_meat_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_beasts_of_burden_traders_06 = { remove_domicile_building = merchant_company_beasts_of_burden_traders_06 }
+			merchant_company_beasts_of_burden_traders_05 = { remove_domicile_building = merchant_company_beasts_of_burden_traders_05 }
+			merchant_company_beasts_of_burden_traders_04 = { remove_domicile_building = merchant_company_beasts_of_burden_traders_04 }
+			merchant_company_beasts_of_burden_traders_03 = { remove_domicile_building = merchant_company_beasts_of_burden_traders_03 }
+			merchant_company_beasts_of_burden_traders_02 = { remove_domicile_building = merchant_company_beasts_of_burden_traders_02 }
+			merchant_company_beasts_of_burden_traders_01 = { remove_domicile_building = merchant_company_beasts_of_burden_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_stone_traders_06 = { remove_domicile_building = merchant_company_stone_traders_06 }
+			merchant_company_stone_traders_05 = { remove_domicile_building = merchant_company_stone_traders_05 }
+			merchant_company_stone_traders_04 = { remove_domicile_building = merchant_company_stone_traders_04 }
+			merchant_company_stone_traders_03 = { remove_domicile_building = merchant_company_stone_traders_03 }
+			merchant_company_stone_traders_02 = { remove_domicile_building = merchant_company_stone_traders_02 }
+			merchant_company_stone_traders_01 = { remove_domicile_building = merchant_company_stone_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_fabrics_traders_06 = { remove_domicile_building = merchant_company_fabrics_traders_06 }
+			merchant_company_fabrics_traders_05 = { remove_domicile_building = merchant_company_fabrics_traders_05 }
+			merchant_company_fabrics_traders_04 = { remove_domicile_building = merchant_company_fabrics_traders_04 }
+			merchant_company_fabrics_traders_03 = { remove_domicile_building = merchant_company_fabrics_traders_03 }
+			merchant_company_fabrics_traders_02 = { remove_domicile_building = merchant_company_fabrics_traders_02 }
+			merchant_company_fabrics_traders_01 = { remove_domicile_building = merchant_company_fabrics_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_carpentry_supplies_traders_06 = { remove_domicile_building = merchant_company_carpentry_supplies_traders_06 }
+			merchant_company_carpentry_supplies_traders_05 = { remove_domicile_building = merchant_company_carpentry_supplies_traders_05 }
+			merchant_company_carpentry_supplies_traders_04 = { remove_domicile_building = merchant_company_carpentry_supplies_traders_04 }
+			merchant_company_carpentry_supplies_traders_03 = { remove_domicile_building = merchant_company_carpentry_supplies_traders_03 }
+			merchant_company_carpentry_supplies_traders_02 = { remove_domicile_building = merchant_company_carpentry_supplies_traders_02 }
+			merchant_company_carpentry_supplies_traders_01 = { remove_domicile_building = merchant_company_carpentry_supplies_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_factors_lodge_06 = { remove_domicile_building = merchant_company_factors_lodge_06 }
+			merchant_company_factors_lodge_05 = { remove_domicile_building = merchant_company_factors_lodge_05 }
+			merchant_company_factors_lodge_04 = { remove_domicile_building = merchant_company_factors_lodge_04 }
+			merchant_company_factors_lodge_03 = { remove_domicile_building = merchant_company_factors_lodge_03 }
+			merchant_company_factors_lodge_02 = { remove_domicile_building = merchant_company_factors_lodge_02 }
+			merchant_company_factors_lodge_01 = { remove_domicile_building = merchant_company_factors_lodge_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_freight_yard_06 = { remove_domicile_building = merchant_company_freight_yard_06 }
+			merchant_company_freight_yard_05 = { remove_domicile_building = merchant_company_freight_yard_05 }
+			merchant_company_freight_yard_04 = { remove_domicile_building = merchant_company_freight_yard_04 }
+			merchant_company_freight_yard_03 = { remove_domicile_building = merchant_company_freight_yard_03 }
+			merchant_company_freight_yard_02 = { remove_domicile_building = merchant_company_freight_yard_02 }
+			merchant_company_freight_yard_01 = { remove_domicile_building = merchant_company_freight_yard_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_goods_stores_06_carpentry_supplies = { remove_domicile_building = merchant_company_goods_stores_06_carpentry_supplies }
+			merchant_company_goods_stores_06_beasts_of_burden = { remove_domicile_building = merchant_company_goods_stores_06_beasts_of_burden }
+			merchant_company_goods_stores_06_fabrics = { remove_domicile_building = merchant_company_goods_stores_06_fabrics }
+			merchant_company_goods_stores_06_stone = { remove_domicile_building = merchant_company_goods_stores_06_stone }
+			merchant_company_goods_stores_05_carpentry_supplies = { remove_domicile_building = merchant_company_goods_stores_05_carpentry_supplies }
+			merchant_company_goods_stores_05_beasts_of_burden = { remove_domicile_building = merchant_company_goods_stores_05_beasts_of_burden }
+			merchant_company_goods_stores_05_fabrics = { remove_domicile_building = merchant_company_goods_stores_05_fabrics }
+			merchant_company_goods_stores_05_stone = { remove_domicile_building = merchant_company_goods_stores_05_stone }
+			merchant_company_goods_stores_04_carpentry_supplies = { remove_domicile_building = merchant_company_goods_stores_04_carpentry_supplies }
+			merchant_company_goods_stores_04_beasts_of_burden = { remove_domicile_building = merchant_company_goods_stores_04_beasts_of_burden }
+			merchant_company_goods_stores_04_fabrics = { remove_domicile_building = merchant_company_goods_stores_04_fabrics }
+			merchant_company_goods_stores_04_stone = { remove_domicile_building = merchant_company_goods_stores_04_stone }
+			merchant_company_goods_stores_03_carpentry_supplies = { remove_domicile_building = merchant_company_goods_stores_03_carpentry_supplies }
+			merchant_company_goods_stores_03_beasts_of_burden = { remove_domicile_building = merchant_company_goods_stores_03_beasts_of_burden }
+			merchant_company_goods_stores_03_fabrics = { remove_domicile_building = merchant_company_goods_stores_03_fabrics }
+			merchant_company_goods_stores_03_stone = { remove_domicile_building = merchant_company_goods_stores_03_stone }
+			merchant_company_goods_stores_02 = { remove_domicile_building = merchant_company_goods_stores_02 }
+			merchant_company_goods_stores_01 = { remove_domicile_building = merchant_company_goods_stores_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_storehouse_06 = { remove_domicile_building = merchant_company_storehouse_06 }
+			merchant_company_storehouse_05 = { remove_domicile_building = merchant_company_storehouse_05 }
+			merchant_company_storehouse_04 = { remove_domicile_building = merchant_company_storehouse_04 }
+			merchant_company_storehouse_03 = { remove_domicile_building = merchant_company_storehouse_03 }
+			merchant_company_storehouse_02 = { remove_domicile_building = merchant_company_storehouse_02 }
+			merchant_company_storehouse_01 = { remove_domicile_building = merchant_company_storehouse_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_route_office_06 = { remove_domicile_building = merchant_company_route_office_06 }
+			merchant_company_route_office_05 = { remove_domicile_building = merchant_company_route_office_05 }
+			merchant_company_route_office_04 = { remove_domicile_building = merchant_company_route_office_04 }
+			merchant_company_route_office_03 = { remove_domicile_building = merchant_company_route_office_03 }
+			merchant_company_route_office_02 = { remove_domicile_building = merchant_company_route_office_02 }
+			merchant_company_route_office_01 = { remove_domicile_building = merchant_company_route_office_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_charter_hall_06 = { remove_domicile_building = merchant_company_charter_hall_06 }
+			merchant_company_charter_hall_05 = { remove_domicile_building = merchant_company_charter_hall_05 }
+			merchant_company_charter_hall_04 = { remove_domicile_building = merchant_company_charter_hall_04 }
+			merchant_company_charter_hall_03 = { remove_domicile_building = merchant_company_charter_hall_03 }
+			merchant_company_charter_hall_02 = { remove_domicile_building = merchant_company_charter_hall_02 }
+			merchant_company_charter_hall_01 = { remove_domicile_building = merchant_company_charter_hall_01 }
+		}
+		# === Civic internal slots ===
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_market_cross_06 = { remove_domicile_building = merchant_company_market_cross_06 }
+			merchant_company_market_cross_05 = { remove_domicile_building = merchant_company_market_cross_05 }
+			merchant_company_market_cross_04 = { remove_domicile_building = merchant_company_market_cross_04 }
+			merchant_company_market_cross_03 = { remove_domicile_building = merchant_company_market_cross_03 }
+			merchant_company_market_cross_02 = { remove_domicile_building = merchant_company_market_cross_02 }
+			merchant_company_market_cross_01 = { remove_domicile_building = merchant_company_market_cross_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_taverners_row_06 = { remove_domicile_building = merchant_company_taverners_row_06 }
+			merchant_company_taverners_row_05 = { remove_domicile_building = merchant_company_taverners_row_05 }
+			merchant_company_taverners_row_04 = { remove_domicile_building = merchant_company_taverners_row_04 }
+			merchant_company_taverners_row_03 = { remove_domicile_building = merchant_company_taverners_row_03 }
+			merchant_company_taverners_row_02 = { remove_domicile_building = merchant_company_taverners_row_02 }
+			merchant_company_taverners_row_01 = { remove_domicile_building = merchant_company_taverners_row_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_pilgrims_stalls_06 = { remove_domicile_building = merchant_company_pilgrims_stalls_06 }
+			merchant_company_pilgrims_stalls_05 = { remove_domicile_building = merchant_company_pilgrims_stalls_05 }
+			merchant_company_pilgrims_stalls_04 = { remove_domicile_building = merchant_company_pilgrims_stalls_04 }
+			merchant_company_pilgrims_stalls_03 = { remove_domicile_building = merchant_company_pilgrims_stalls_03 }
+			merchant_company_pilgrims_stalls_02 = { remove_domicile_building = merchant_company_pilgrims_stalls_02 }
+			merchant_company_pilgrims_stalls_01 = { remove_domicile_building = merchant_company_pilgrims_stalls_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_gatehouse_scales_06 = { remove_domicile_building = merchant_company_gatehouse_scales_06 }
+			merchant_company_gatehouse_scales_05 = { remove_domicile_building = merchant_company_gatehouse_scales_05 }
+			merchant_company_gatehouse_scales_04 = { remove_domicile_building = merchant_company_gatehouse_scales_04 }
+			merchant_company_gatehouse_scales_03 = { remove_domicile_building = merchant_company_gatehouse_scales_03 }
+			merchant_company_gatehouse_scales_02 = { remove_domicile_building = merchant_company_gatehouse_scales_02 }
+			merchant_company_gatehouse_scales_01 = { remove_domicile_building = merchant_company_gatehouse_scales_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_notice_boards_06 = { remove_domicile_building = merchant_company_notice_boards_06 }
+			merchant_company_notice_boards_05 = { remove_domicile_building = merchant_company_notice_boards_05 }
+			merchant_company_notice_boards_04 = { remove_domicile_building = merchant_company_notice_boards_04 }
+			merchant_company_notice_boards_03 = { remove_domicile_building = merchant_company_notice_boards_03 }
+			merchant_company_notice_boards_02 = { remove_domicile_building = merchant_company_notice_boards_02 }
+			merchant_company_notice_boards_01 = { remove_domicile_building = merchant_company_notice_boards_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_runners_post_06 = { remove_domicile_building = merchant_company_runners_post_06 }
+			merchant_company_runners_post_05 = { remove_domicile_building = merchant_company_runners_post_05 }
+			merchant_company_runners_post_04 = { remove_domicile_building = merchant_company_runners_post_04 }
+			merchant_company_runners_post_03 = { remove_domicile_building = merchant_company_runners_post_03 }
+			merchant_company_runners_post_02 = { remove_domicile_building = merchant_company_runners_post_02 }
+			merchant_company_runners_post_01 = { remove_domicile_building = merchant_company_runners_post_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_porters_guild_06 = { remove_domicile_building = merchant_company_porters_guild_06 }
+			merchant_company_porters_guild_05 = { remove_domicile_building = merchant_company_porters_guild_05 }
+			merchant_company_porters_guild_04 = { remove_domicile_building = merchant_company_porters_guild_04 }
+			merchant_company_porters_guild_03 = { remove_domicile_building = merchant_company_porters_guild_03 }
+			merchant_company_porters_guild_02 = { remove_domicile_building = merchant_company_porters_guild_02 }
+			merchant_company_porters_guild_01 = { remove_domicile_building = merchant_company_porters_guild_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_wayfinders_hall_06 = { remove_domicile_building = merchant_company_wayfinders_hall_06 }
+			merchant_company_wayfinders_hall_05 = { remove_domicile_building = merchant_company_wayfinders_hall_05 }
+			merchant_company_wayfinders_hall_04 = { remove_domicile_building = merchant_company_wayfinders_hall_04 }
+			merchant_company_wayfinders_hall_03 = { remove_domicile_building = merchant_company_wayfinders_hall_03 }
+			merchant_company_wayfinders_hall_02 = { remove_domicile_building = merchant_company_wayfinders_hall_02 }
+			merchant_company_wayfinders_hall_01 = { remove_domicile_building = merchant_company_wayfinders_hall_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_caravan_hostel_06 = { remove_domicile_building = merchant_company_caravan_hostel_06 }
+			merchant_company_caravan_hostel_05 = { remove_domicile_building = merchant_company_caravan_hostel_05 }
+			merchant_company_caravan_hostel_04 = { remove_domicile_building = merchant_company_caravan_hostel_04 }
+			merchant_company_caravan_hostel_03 = { remove_domicile_building = merchant_company_caravan_hostel_03 }
+			merchant_company_caravan_hostel_02 = { remove_domicile_building = merchant_company_caravan_hostel_02 }
+			merchant_company_caravan_hostel_01 = { remove_domicile_building = merchant_company_caravan_hostel_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_moneychangers_row_06 = { remove_domicile_building = merchant_company_moneychangers_row_06 }
+			merchant_company_moneychangers_row_05 = { remove_domicile_building = merchant_company_moneychangers_row_05 }
+			merchant_company_moneychangers_row_04 = { remove_domicile_building = merchant_company_moneychangers_row_04 }
+			merchant_company_moneychangers_row_03 = { remove_domicile_building = merchant_company_moneychangers_row_03 }
+			merchant_company_moneychangers_row_02 = { remove_domicile_building = merchant_company_moneychangers_row_02 }
+			merchant_company_moneychangers_row_01 = { remove_domicile_building = merchant_company_moneychangers_row_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_criers_corner_06 = { remove_domicile_building = merchant_company_criers_corner_06 }
+			merchant_company_criers_corner_05 = { remove_domicile_building = merchant_company_criers_corner_05 }
+			merchant_company_criers_corner_04 = { remove_domicile_building = merchant_company_criers_corner_04 }
+			merchant_company_criers_corner_03 = { remove_domicile_building = merchant_company_criers_corner_03 }
+			merchant_company_criers_corner_02 = { remove_domicile_building = merchant_company_criers_corner_02 }
+			merchant_company_criers_corner_01 = { remove_domicile_building = merchant_company_criers_corner_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_carters_yard_06 = { remove_domicile_building = merchant_company_carters_yard_06 }
+			merchant_company_carters_yard_05 = { remove_domicile_building = merchant_company_carters_yard_05 }
+			merchant_company_carters_yard_04 = { remove_domicile_building = merchant_company_carters_yard_04 }
+			merchant_company_carters_yard_03 = { remove_domicile_building = merchant_company_carters_yard_03 }
+			merchant_company_carters_yard_02 = { remove_domicile_building = merchant_company_carters_yard_02 }
+			merchant_company_carters_yard_01 = { remove_domicile_building = merchant_company_carters_yard_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_pedlars_court_06 = { remove_domicile_building = merchant_company_pedlars_court_06 }
+			merchant_company_pedlars_court_05 = { remove_domicile_building = merchant_company_pedlars_court_05 }
+			merchant_company_pedlars_court_04 = { remove_domicile_building = merchant_company_pedlars_court_04 }
+			merchant_company_pedlars_court_03 = { remove_domicile_building = merchant_company_pedlars_court_03 }
+			merchant_company_pedlars_court_02 = { remove_domicile_building = merchant_company_pedlars_court_02 }
+			merchant_company_pedlars_court_01 = { remove_domicile_building = merchant_company_pedlars_court_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_grand_hall_06 = { remove_domicile_building = merchant_company_grand_hall_06 }
+			merchant_company_grand_hall_05 = { remove_domicile_building = merchant_company_grand_hall_05 }
+			merchant_company_grand_hall_04 = { remove_domicile_building = merchant_company_grand_hall_04 }
+			merchant_company_grand_hall_03 = { remove_domicile_building = merchant_company_grand_hall_03 }
+			merchant_company_grand_hall_02 = { remove_domicile_building = merchant_company_grand_hall_02 }
+			merchant_company_grand_hall_01 = { remove_domicile_building = merchant_company_grand_hall_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_retinue_quarter_06_competitiveness = { remove_domicile_building = merchant_company_retinue_quarter_06_competitiveness }
+			merchant_company_retinue_quarter_06_prestige = { remove_domicile_building = merchant_company_retinue_quarter_06_prestige }
+			merchant_company_retinue_quarter_06_piety = { remove_domicile_building = merchant_company_retinue_quarter_06_piety }
+			merchant_company_retinue_quarter_05_competitiveness = { remove_domicile_building = merchant_company_retinue_quarter_05_competitiveness }
+			merchant_company_retinue_quarter_05_prestige = { remove_domicile_building = merchant_company_retinue_quarter_05_prestige }
+			merchant_company_retinue_quarter_05_piety = { remove_domicile_building = merchant_company_retinue_quarter_05_piety }
+			merchant_company_retinue_quarter_04_competitiveness = { remove_domicile_building = merchant_company_retinue_quarter_04_competitiveness }
+			merchant_company_retinue_quarter_04_prestige = { remove_domicile_building = merchant_company_retinue_quarter_04_prestige }
+			merchant_company_retinue_quarter_04_piety = { remove_domicile_building = merchant_company_retinue_quarter_04_piety }
+			merchant_company_retinue_quarter_03_competitiveness = { remove_domicile_building = merchant_company_retinue_quarter_03_competitiveness }
+			merchant_company_retinue_quarter_03_prestige = { remove_domicile_building = merchant_company_retinue_quarter_03_prestige }
+			merchant_company_retinue_quarter_03_piety = { remove_domicile_building = merchant_company_retinue_quarter_03_piety }
+			merchant_company_retinue_quarter_02 = { remove_domicile_building = merchant_company_retinue_quarter_02 }
+			merchant_company_retinue_quarter_01 = { remove_domicile_building = merchant_company_retinue_quarter_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_guardhouse_06 = { remove_domicile_building = merchant_company_guardhouse_06 }
+			merchant_company_guardhouse_05 = { remove_domicile_building = merchant_company_guardhouse_05 }
+			merchant_company_guardhouse_04 = { remove_domicile_building = merchant_company_guardhouse_04 }
+			merchant_company_guardhouse_03 = { remove_domicile_building = merchant_company_guardhouse_03 }
+			merchant_company_guardhouse_02 = { remove_domicile_building = merchant_company_guardhouse_02 }
+			merchant_company_guardhouse_01 = { remove_domicile_building = merchant_company_guardhouse_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_infirmary_06 = { remove_domicile_building = merchant_company_infirmary_06 }
+			merchant_company_infirmary_05 = { remove_domicile_building = merchant_company_infirmary_05 }
+			merchant_company_infirmary_04 = { remove_domicile_building = merchant_company_infirmary_04 }
+			merchant_company_infirmary_03 = { remove_domicile_building = merchant_company_infirmary_03 }
+			merchant_company_infirmary_02 = { remove_domicile_building = merchant_company_infirmary_02 }
+			merchant_company_infirmary_01 = { remove_domicile_building = merchant_company_infirmary_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_information_network_06_charm = { remove_domicile_building = merchant_company_information_network_06_charm }
+			merchant_company_information_network_06_defense = { remove_domicile_building = merchant_company_information_network_06_defense }
+			merchant_company_information_network_05_charm = { remove_domicile_building = merchant_company_information_network_05_charm }
+			merchant_company_information_network_05_defense = { remove_domicile_building = merchant_company_information_network_05_defense }
+			merchant_company_information_network_04_charm = { remove_domicile_building = merchant_company_information_network_04_charm }
+			merchant_company_information_network_04_defense = { remove_domicile_building = merchant_company_information_network_04_defense }
+			merchant_company_information_network_03 = { remove_domicile_building = merchant_company_information_network_03 }
+			merchant_company_information_network_02 = { remove_domicile_building = merchant_company_information_network_02 }
+			merchant_company_information_network_01 = { remove_domicile_building = merchant_company_information_network_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_speakers_corner_06_civic = { remove_domicile_building = merchant_company_speakers_corner_06_civic }
+			merchant_company_speakers_corner_06_envoys = { remove_domicile_building = merchant_company_speakers_corner_06_envoys }
+			merchant_company_speakers_corner_05_civic = { remove_domicile_building = merchant_company_speakers_corner_05_civic }
+			merchant_company_speakers_corner_05_envoys = { remove_domicile_building = merchant_company_speakers_corner_05_envoys }
+			merchant_company_speakers_corner_04_civic = { remove_domicile_building = merchant_company_speakers_corner_04_civic }
+			merchant_company_speakers_corner_04_envoys = { remove_domicile_building = merchant_company_speakers_corner_04_envoys }
+			merchant_company_speakers_corner_03 = { remove_domicile_building = merchant_company_speakers_corner_03 }
+			merchant_company_speakers_corner_02 = { remove_domicile_building = merchant_company_speakers_corner_02 }
+			merchant_company_speakers_corner_01 = { remove_domicile_building = merchant_company_speakers_corner_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_rumor_mill_06_agents = { remove_domicile_building = merchant_company_rumor_mill_06_agents }
+			merchant_company_rumor_mill_06_hidden = { remove_domicile_building = merchant_company_rumor_mill_06_hidden }
+			merchant_company_rumor_mill_05_agents = { remove_domicile_building = merchant_company_rumor_mill_05_agents }
+			merchant_company_rumor_mill_05_hidden = { remove_domicile_building = merchant_company_rumor_mill_05_hidden }
+			merchant_company_rumor_mill_04_agents = { remove_domicile_building = merchant_company_rumor_mill_04_agents }
+			merchant_company_rumor_mill_04_hidden = { remove_domicile_building = merchant_company_rumor_mill_04_hidden }
+			merchant_company_rumor_mill_03 = { remove_domicile_building = merchant_company_rumor_mill_03 }
+			merchant_company_rumor_mill_02 = { remove_domicile_building = merchant_company_rumor_mill_02 }
+			merchant_company_rumor_mill_01 = { remove_domicile_building = merchant_company_rumor_mill_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_innkeepers_row_06_lodgings = { remove_domicile_building = merchant_company_innkeepers_row_06_lodgings }
+			merchant_company_innkeepers_row_06_wayfarers = { remove_domicile_building = merchant_company_innkeepers_row_06_wayfarers }
+			merchant_company_innkeepers_row_05_lodgings = { remove_domicile_building = merchant_company_innkeepers_row_05_lodgings }
+			merchant_company_innkeepers_row_05_wayfarers = { remove_domicile_building = merchant_company_innkeepers_row_05_wayfarers }
+			merchant_company_innkeepers_row_04_lodgings = { remove_domicile_building = merchant_company_innkeepers_row_04_lodgings }
+			merchant_company_innkeepers_row_04_wayfarers = { remove_domicile_building = merchant_company_innkeepers_row_04_wayfarers }
+			merchant_company_innkeepers_row_03 = { remove_domicile_building = merchant_company_innkeepers_row_03 }
+			merchant_company_innkeepers_row_02 = { remove_domicile_building = merchant_company_innkeepers_row_02 }
+			merchant_company_innkeepers_row_01 = { remove_domicile_building = merchant_company_innkeepers_row_01 }
+		}
+		# === Production internal slots ===
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_amber_house_06 = { remove_domicile_building = merchant_company_amber_house_06 }
+			merchant_company_amber_house_05 = { remove_domicile_building = merchant_company_amber_house_05 }
+			merchant_company_amber_house_04 = { remove_domicile_building = merchant_company_amber_house_04 }
+			merchant_company_amber_house_03 = { remove_domicile_building = merchant_company_amber_house_03 }
+			merchant_company_amber_house_02 = { remove_domicile_building = merchant_company_amber_house_02 }
+			merchant_company_amber_house_01 = { remove_domicile_building = merchant_company_amber_house_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_ivory_hall_06 = { remove_domicile_building = merchant_company_ivory_hall_06 }
+			merchant_company_ivory_hall_05 = { remove_domicile_building = merchant_company_ivory_hall_05 }
+			merchant_company_ivory_hall_04 = { remove_domicile_building = merchant_company_ivory_hall_04 }
+			merchant_company_ivory_hall_03 = { remove_domicile_building = merchant_company_ivory_hall_03 }
+			merchant_company_ivory_hall_02 = { remove_domicile_building = merchant_company_ivory_hall_02 }
+			merchant_company_ivory_hall_01 = { remove_domicile_building = merchant_company_ivory_hall_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_ropewalk_06 = { remove_domicile_building = merchant_company_ropewalk_06 }
+			merchant_company_ropewalk_05 = { remove_domicile_building = merchant_company_ropewalk_05 }
+			merchant_company_ropewalk_04 = { remove_domicile_building = merchant_company_ropewalk_04 }
+			merchant_company_ropewalk_03 = { remove_domicile_building = merchant_company_ropewalk_03 }
+			merchant_company_ropewalk_02 = { remove_domicile_building = merchant_company_ropewalk_02 }
+			merchant_company_ropewalk_01 = { remove_domicile_building = merchant_company_ropewalk_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_orchard_house_06 = { remove_domicile_building = merchant_company_orchard_house_06 }
+			merchant_company_orchard_house_05 = { remove_domicile_building = merchant_company_orchard_house_05 }
+			merchant_company_orchard_house_04 = { remove_domicile_building = merchant_company_orchard_house_04 }
+			merchant_company_orchard_house_03 = { remove_domicile_building = merchant_company_orchard_house_03 }
+			merchant_company_orchard_house_02 = { remove_domicile_building = merchant_company_orchard_house_02 }
+			merchant_company_orchard_house_01 = { remove_domicile_building = merchant_company_orchard_house_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_oil_press_06 = { remove_domicile_building = merchant_company_oil_press_06 }
+			merchant_company_oil_press_05 = { remove_domicile_building = merchant_company_oil_press_05 }
+			merchant_company_oil_press_04 = { remove_domicile_building = merchant_company_oil_press_04 }
+			merchant_company_oil_press_03 = { remove_domicile_building = merchant_company_oil_press_03 }
+			merchant_company_oil_press_02 = { remove_domicile_building = merchant_company_oil_press_02 }
+			merchant_company_oil_press_01 = { remove_domicile_building = merchant_company_oil_press_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_apiarists_hall_06 = { remove_domicile_building = merchant_company_apiarists_hall_06 }
+			merchant_company_apiarists_hall_05 = { remove_domicile_building = merchant_company_apiarists_hall_05 }
+			merchant_company_apiarists_hall_04 = { remove_domicile_building = merchant_company_apiarists_hall_04 }
+			merchant_company_apiarists_hall_03 = { remove_domicile_building = merchant_company_apiarists_hall_03 }
+			merchant_company_apiarists_hall_02 = { remove_domicile_building = merchant_company_apiarists_hall_02 }
+			merchant_company_apiarists_hall_01 = { remove_domicile_building = merchant_company_apiarists_hall_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_clothworkers_hall_06 = { remove_domicile_building = merchant_company_clothworkers_hall_06 }
+			merchant_company_clothworkers_hall_05 = { remove_domicile_building = merchant_company_clothworkers_hall_05 }
+			merchant_company_clothworkers_hall_04 = { remove_domicile_building = merchant_company_clothworkers_hall_04 }
+			merchant_company_clothworkers_hall_03 = { remove_domicile_building = merchant_company_clothworkers_hall_03 }
+			merchant_company_clothworkers_hall_02 = { remove_domicile_building = merchant_company_clothworkers_hall_02 }
+			merchant_company_clothworkers_hall_01 = { remove_domicile_building = merchant_company_clothworkers_hall_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_mordant_house_06 = { remove_domicile_building = merchant_company_mordant_house_06 }
+			merchant_company_mordant_house_05 = { remove_domicile_building = merchant_company_mordant_house_05 }
+			merchant_company_mordant_house_04 = { remove_domicile_building = merchant_company_mordant_house_04 }
+			merchant_company_mordant_house_03 = { remove_domicile_building = merchant_company_mordant_house_03 }
+			merchant_company_mordant_house_02 = { remove_domicile_building = merchant_company_mordant_house_02 }
+			merchant_company_mordant_house_01 = { remove_domicile_building = merchant_company_mordant_house_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_wrights_hall_06 = { remove_domicile_building = merchant_company_wrights_hall_06 }
+			merchant_company_wrights_hall_05 = { remove_domicile_building = merchant_company_wrights_hall_05 }
+			merchant_company_wrights_hall_04 = { remove_domicile_building = merchant_company_wrights_hall_04 }
+			merchant_company_wrights_hall_03 = { remove_domicile_building = merchant_company_wrights_hall_03 }
+			merchant_company_wrights_hall_02 = { remove_domicile_building = merchant_company_wrights_hall_02 }
+			merchant_company_wrights_hall_01 = { remove_domicile_building = merchant_company_wrights_hall_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_jewelry_traders_06 = { remove_domicile_building = merchant_company_jewelry_traders_06 }
+			merchant_company_jewelry_traders_05 = { remove_domicile_building = merchant_company_jewelry_traders_05 }
+			merchant_company_jewelry_traders_04 = { remove_domicile_building = merchant_company_jewelry_traders_04 }
+			merchant_company_jewelry_traders_03 = { remove_domicile_building = merchant_company_jewelry_traders_03 }
+			merchant_company_jewelry_traders_02 = { remove_domicile_building = merchant_company_jewelry_traders_02 }
+			merchant_company_jewelry_traders_01 = { remove_domicile_building = merchant_company_jewelry_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_glass_traders_06 = { remove_domicile_building = merchant_company_glass_traders_06 }
+			merchant_company_glass_traders_05 = { remove_domicile_building = merchant_company_glass_traders_05 }
+			merchant_company_glass_traders_04 = { remove_domicile_building = merchant_company_glass_traders_04 }
+			merchant_company_glass_traders_03 = { remove_domicile_building = merchant_company_glass_traders_03 }
+			merchant_company_glass_traders_02 = { remove_domicile_building = merchant_company_glass_traders_02 }
+			merchant_company_glass_traders_01 = { remove_domicile_building = merchant_company_glass_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_porcelain_traders_06 = { remove_domicile_building = merchant_company_porcelain_traders_06 }
+			merchant_company_porcelain_traders_05 = { remove_domicile_building = merchant_company_porcelain_traders_05 }
+			merchant_company_porcelain_traders_04 = { remove_domicile_building = merchant_company_porcelain_traders_04 }
+			merchant_company_porcelain_traders_03 = { remove_domicile_building = merchant_company_porcelain_traders_03 }
+			merchant_company_porcelain_traders_02 = { remove_domicile_building = merchant_company_porcelain_traders_02 }
+			merchant_company_porcelain_traders_01 = { remove_domicile_building = merchant_company_porcelain_traders_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_moneylenders_books_06 = { remove_domicile_building = merchant_company_moneylenders_books_06 }
+			merchant_company_moneylenders_books_05 = { remove_domicile_building = merchant_company_moneylenders_books_05 }
+			merchant_company_moneylenders_books_04 = { remove_domicile_building = merchant_company_moneylenders_books_04 }
+			merchant_company_moneylenders_books_03 = { remove_domicile_building = merchant_company_moneylenders_books_03 }
+			merchant_company_moneylenders_books_02 = { remove_domicile_building = merchant_company_moneylenders_books_02 }
+			merchant_company_moneylenders_books_01 = { remove_domicile_building = merchant_company_moneylenders_books_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_guild_treasury_06 = { remove_domicile_building = merchant_company_guild_treasury_06 }
+			merchant_company_guild_treasury_05 = { remove_domicile_building = merchant_company_guild_treasury_05 }
+			merchant_company_guild_treasury_04 = { remove_domicile_building = merchant_company_guild_treasury_04 }
+			merchant_company_guild_treasury_03 = { remove_domicile_building = merchant_company_guild_treasury_03 }
+			merchant_company_guild_treasury_02 = { remove_domicile_building = merchant_company_guild_treasury_02 }
+			merchant_company_guild_treasury_01 = { remove_domicile_building = merchant_company_guild_treasury_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_hallmarks_office_06 = { remove_domicile_building = merchant_company_hallmarks_office_06 }
+			merchant_company_hallmarks_office_05 = { remove_domicile_building = merchant_company_hallmarks_office_05 }
+			merchant_company_hallmarks_office_04 = { remove_domicile_building = merchant_company_hallmarks_office_04 }
+			merchant_company_hallmarks_office_03 = { remove_domicile_building = merchant_company_hallmarks_office_03 }
+			merchant_company_hallmarks_office_02 = { remove_domicile_building = merchant_company_hallmarks_office_02 }
+			merchant_company_hallmarks_office_01 = { remove_domicile_building = merchant_company_hallmarks_office_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_prize_works_06 = { remove_domicile_building = merchant_company_prize_works_06 }
+			merchant_company_prize_works_05 = { remove_domicile_building = merchant_company_prize_works_05 }
+			merchant_company_prize_works_04 = { remove_domicile_building = merchant_company_prize_works_04 }
+			merchant_company_prize_works_03 = { remove_domicile_building = merchant_company_prize_works_03 }
+			merchant_company_prize_works_02 = { remove_domicile_building = merchant_company_prize_works_02 }
+			merchant_company_prize_works_01 = { remove_domicile_building = merchant_company_prize_works_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_weighhouse_06 = { remove_domicile_building = merchant_company_weighhouse_06 }
+			merchant_company_weighhouse_05 = { remove_domicile_building = merchant_company_weighhouse_05 }
+			merchant_company_weighhouse_04 = { remove_domicile_building = merchant_company_weighhouse_04 }
+			merchant_company_weighhouse_03 = { remove_domicile_building = merchant_company_weighhouse_03 }
+			merchant_company_weighhouse_02 = { remove_domicile_building = merchant_company_weighhouse_02 }
+			merchant_company_weighhouse_01 = { remove_domicile_building = merchant_company_weighhouse_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_repair_benches_06 = { remove_domicile_building = merchant_company_repair_benches_06 }
+			merchant_company_repair_benches_05 = { remove_domicile_building = merchant_company_repair_benches_05 }
+			merchant_company_repair_benches_04 = { remove_domicile_building = merchant_company_repair_benches_04 }
+			merchant_company_repair_benches_03 = { remove_domicile_building = merchant_company_repair_benches_03 }
+			merchant_company_repair_benches_02 = { remove_domicile_building = merchant_company_repair_benches_02 }
+			merchant_company_repair_benches_01 = { remove_domicile_building = merchant_company_repair_benches_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_grain_exchange_06 = { remove_domicile_building = merchant_company_grain_exchange_06 }
+			merchant_company_grain_exchange_05 = { remove_domicile_building = merchant_company_grain_exchange_05 }
+			merchant_company_grain_exchange_04 = { remove_domicile_building = merchant_company_grain_exchange_04 }
+			merchant_company_grain_exchange_03 = { remove_domicile_building = merchant_company_grain_exchange_03 }
+			merchant_company_grain_exchange_02 = { remove_domicile_building = merchant_company_grain_exchange_02 }
+			merchant_company_grain_exchange_01 = { remove_domicile_building = merchant_company_grain_exchange_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_fish_market_06 = { remove_domicile_building = merchant_company_fish_market_06 }
+			merchant_company_fish_market_05 = { remove_domicile_building = merchant_company_fish_market_05 }
+			merchant_company_fish_market_04 = { remove_domicile_building = merchant_company_fish_market_04 }
+			merchant_company_fish_market_03 = { remove_domicile_building = merchant_company_fish_market_03 }
+			merchant_company_fish_market_02 = { remove_domicile_building = merchant_company_fish_market_02 }
+			merchant_company_fish_market_01 = { remove_domicile_building = merchant_company_fish_market_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_butchers_hall_06 = { remove_domicile_building = merchant_company_butchers_hall_06 }
+			merchant_company_butchers_hall_05 = { remove_domicile_building = merchant_company_butchers_hall_05 }
+			merchant_company_butchers_hall_04 = { remove_domicile_building = merchant_company_butchers_hall_04 }
+			merchant_company_butchers_hall_03 = { remove_domicile_building = merchant_company_butchers_hall_03 }
+			merchant_company_butchers_hall_02 = { remove_domicile_building = merchant_company_butchers_hall_02 }
+			merchant_company_butchers_hall_01 = { remove_domicile_building = merchant_company_butchers_hall_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_vintners_row_06 = { remove_domicile_building = merchant_company_vintners_row_06 }
+			merchant_company_vintners_row_05 = { remove_domicile_building = merchant_company_vintners_row_05 }
+			merchant_company_vintners_row_04 = { remove_domicile_building = merchant_company_vintners_row_04 }
+			merchant_company_vintners_row_03 = { remove_domicile_building = merchant_company_vintners_row_03 }
+			merchant_company_vintners_row_02 = { remove_domicile_building = merchant_company_vintners_row_02 }
+			merchant_company_vintners_row_01 = { remove_domicile_building = merchant_company_vintners_row_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_brewers_hall_06 = { remove_domicile_building = merchant_company_brewers_hall_06 }
+			merchant_company_brewers_hall_05 = { remove_domicile_building = merchant_company_brewers_hall_05 }
+			merchant_company_brewers_hall_04 = { remove_domicile_building = merchant_company_brewers_hall_04 }
+			merchant_company_brewers_hall_03 = { remove_domicile_building = merchant_company_brewers_hall_03 }
+			merchant_company_brewers_hall_02 = { remove_domicile_building = merchant_company_brewers_hall_02 }
+			merchant_company_brewers_hall_01 = { remove_domicile_building = merchant_company_brewers_hall_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_cheesemongers_hall_06 = { remove_domicile_building = merchant_company_cheesemongers_hall_06 }
+			merchant_company_cheesemongers_hall_05 = { remove_domicile_building = merchant_company_cheesemongers_hall_05 }
+			merchant_company_cheesemongers_hall_04 = { remove_domicile_building = merchant_company_cheesemongers_hall_04 }
+			merchant_company_cheesemongers_hall_03 = { remove_domicile_building = merchant_company_cheesemongers_hall_03 }
+			merchant_company_cheesemongers_hall_02 = { remove_domicile_building = merchant_company_cheesemongers_hall_02 }
+			merchant_company_cheesemongers_hall_01 = { remove_domicile_building = merchant_company_cheesemongers_hall_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_tea_merchants_house_06 = { remove_domicile_building = merchant_company_tea_merchants_house_06 }
+			merchant_company_tea_merchants_house_05 = { remove_domicile_building = merchant_company_tea_merchants_house_05 }
+			merchant_company_tea_merchants_house_04 = { remove_domicile_building = merchant_company_tea_merchants_house_04 }
+			merchant_company_tea_merchants_house_03 = { remove_domicile_building = merchant_company_tea_merchants_house_03 }
+			merchant_company_tea_merchants_house_02 = { remove_domicile_building = merchant_company_tea_merchants_house_02 }
+			merchant_company_tea_merchants_house_01 = { remove_domicile_building = merchant_company_tea_merchants_house_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_horse_market_06 = { remove_domicile_building = merchant_company_horse_market_06 }
+			merchant_company_horse_market_05 = { remove_domicile_building = merchant_company_horse_market_05 }
+			merchant_company_horse_market_04 = { remove_domicile_building = merchant_company_horse_market_04 }
+			merchant_company_horse_market_03 = { remove_domicile_building = merchant_company_horse_market_03 }
+			merchant_company_horse_market_02 = { remove_domicile_building = merchant_company_horse_market_02 }
+			merchant_company_horse_market_01 = { remove_domicile_building = merchant_company_horse_market_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_cattle_pens_06 = { remove_domicile_building = merchant_company_cattle_pens_06 }
+			merchant_company_cattle_pens_05 = { remove_domicile_building = merchant_company_cattle_pens_05 }
+			merchant_company_cattle_pens_04 = { remove_domicile_building = merchant_company_cattle_pens_04 }
+			merchant_company_cattle_pens_03 = { remove_domicile_building = merchant_company_cattle_pens_03 }
+			merchant_company_cattle_pens_02 = { remove_domicile_building = merchant_company_cattle_pens_02 }
+			merchant_company_cattle_pens_01 = { remove_domicile_building = merchant_company_cattle_pens_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_timber_yard_06 = { remove_domicile_building = merchant_company_timber_yard_06 }
+			merchant_company_timber_yard_05 = { remove_domicile_building = merchant_company_timber_yard_05 }
+			merchant_company_timber_yard_04 = { remove_domicile_building = merchant_company_timber_yard_04 }
+			merchant_company_timber_yard_03 = { remove_domicile_building = merchant_company_timber_yard_03 }
+			merchant_company_timber_yard_02 = { remove_domicile_building = merchant_company_timber_yard_02 }
+			merchant_company_timber_yard_01 = { remove_domicile_building = merchant_company_timber_yard_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_stoneyard_06 = { remove_domicile_building = merchant_company_stoneyard_06 }
+			merchant_company_stoneyard_05 = { remove_domicile_building = merchant_company_stoneyard_05 }
+			merchant_company_stoneyard_04 = { remove_domicile_building = merchant_company_stoneyard_04 }
+			merchant_company_stoneyard_03 = { remove_domicile_building = merchant_company_stoneyard_03 }
+			merchant_company_stoneyard_02 = { remove_domicile_building = merchant_company_stoneyard_02 }
+			merchant_company_stoneyard_01 = { remove_domicile_building = merchant_company_stoneyard_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_cloth_hall_06 = { remove_domicile_building = merchant_company_cloth_hall_06 }
+			merchant_company_cloth_hall_05 = { remove_domicile_building = merchant_company_cloth_hall_05 }
+			merchant_company_cloth_hall_04 = { remove_domicile_building = merchant_company_cloth_hall_04 }
+			merchant_company_cloth_hall_03 = { remove_domicile_building = merchant_company_cloth_hall_03 }
+			merchant_company_cloth_hall_02 = { remove_domicile_building = merchant_company_cloth_hall_02 }
+			merchant_company_cloth_hall_01 = { remove_domicile_building = merchant_company_cloth_hall_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_silk_house_06 = { remove_domicile_building = merchant_company_silk_house_06 }
+			merchant_company_silk_house_05 = { remove_domicile_building = merchant_company_silk_house_05 }
+			merchant_company_silk_house_04 = { remove_domicile_building = merchant_company_silk_house_04 }
+			merchant_company_silk_house_03 = { remove_domicile_building = merchant_company_silk_house_03 }
+			merchant_company_silk_house_02 = { remove_domicile_building = merchant_company_silk_house_02 }
+			merchant_company_silk_house_01 = { remove_domicile_building = merchant_company_silk_house_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_spice_exchange_06 = { remove_domicile_building = merchant_company_spice_exchange_06 }
+			merchant_company_spice_exchange_05 = { remove_domicile_building = merchant_company_spice_exchange_05 }
+			merchant_company_spice_exchange_04 = { remove_domicile_building = merchant_company_spice_exchange_04 }
+			merchant_company_spice_exchange_03 = { remove_domicile_building = merchant_company_spice_exchange_03 }
+			merchant_company_spice_exchange_02 = { remove_domicile_building = merchant_company_spice_exchange_02 }
+			merchant_company_spice_exchange_01 = { remove_domicile_building = merchant_company_spice_exchange_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_sugar_house_06 = { remove_domicile_building = merchant_company_sugar_house_06 }
+			merchant_company_sugar_house_05 = { remove_domicile_building = merchant_company_sugar_house_05 }
+			merchant_company_sugar_house_04 = { remove_domicile_building = merchant_company_sugar_house_04 }
+			merchant_company_sugar_house_03 = { remove_domicile_building = merchant_company_sugar_house_03 }
+			merchant_company_sugar_house_02 = { remove_domicile_building = merchant_company_sugar_house_02 }
+			merchant_company_sugar_house_01 = { remove_domicile_building = merchant_company_sugar_house_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_incense_house_06 = { remove_domicile_building = merchant_company_incense_house_06 }
+			merchant_company_incense_house_05 = { remove_domicile_building = merchant_company_incense_house_05 }
+			merchant_company_incense_house_04 = { remove_domicile_building = merchant_company_incense_house_04 }
+			merchant_company_incense_house_03 = { remove_domicile_building = merchant_company_incense_house_03 }
+			merchant_company_incense_house_02 = { remove_domicile_building = merchant_company_incense_house_02 }
+			merchant_company_incense_house_01 = { remove_domicile_building = merchant_company_incense_house_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_apothecaries_hall_06 = { remove_domicile_building = merchant_company_apothecaries_hall_06 }
+			merchant_company_apothecaries_hall_05 = { remove_domicile_building = merchant_company_apothecaries_hall_05 }
+			merchant_company_apothecaries_hall_04 = { remove_domicile_building = merchant_company_apothecaries_hall_04 }
+			merchant_company_apothecaries_hall_03 = { remove_domicile_building = merchant_company_apothecaries_hall_03 }
+			merchant_company_apothecaries_hall_02 = { remove_domicile_building = merchant_company_apothecaries_hall_02 }
+			merchant_company_apothecaries_hall_01 = { remove_domicile_building = merchant_company_apothecaries_hall_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_jade_carvers_06 = { remove_domicile_building = merchant_company_jade_carvers_06 }
+			merchant_company_jade_carvers_05 = { remove_domicile_building = merchant_company_jade_carvers_05 }
+			merchant_company_jade_carvers_04 = { remove_domicile_building = merchant_company_jade_carvers_04 }
+			merchant_company_jade_carvers_03 = { remove_domicile_building = merchant_company_jade_carvers_03 }
+			merchant_company_jade_carvers_02 = { remove_domicile_building = merchant_company_jade_carvers_02 }
+			merchant_company_jade_carvers_01 = { remove_domicile_building = merchant_company_jade_carvers_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_gem_cutters_06 = { remove_domicile_building = merchant_company_gem_cutters_06 }
+			merchant_company_gem_cutters_05 = { remove_domicile_building = merchant_company_gem_cutters_05 }
+			merchant_company_gem_cutters_04 = { remove_domicile_building = merchant_company_gem_cutters_04 }
+			merchant_company_gem_cutters_03 = { remove_domicile_building = merchant_company_gem_cutters_03 }
+			merchant_company_gem_cutters_02 = { remove_domicile_building = merchant_company_gem_cutters_02 }
+			merchant_company_gem_cutters_01 = { remove_domicile_building = merchant_company_gem_cutters_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_furriers_hall_06 = { remove_domicile_building = merchant_company_furriers_hall_06 }
+			merchant_company_furriers_hall_05 = { remove_domicile_building = merchant_company_furriers_hall_05 }
+			merchant_company_furriers_hall_04 = { remove_domicile_building = merchant_company_furriers_hall_04 }
+			merchant_company_furriers_hall_03 = { remove_domicile_building = merchant_company_furriers_hall_03 }
+			merchant_company_furriers_hall_02 = { remove_domicile_building = merchant_company_furriers_hall_02 }
+			merchant_company_furriers_hall_01 = { remove_domicile_building = merchant_company_furriers_hall_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_salt_office_06 = { remove_domicile_building = merchant_company_salt_office_06 }
+			merchant_company_salt_office_05 = { remove_domicile_building = merchant_company_salt_office_05 }
+			merchant_company_salt_office_04 = { remove_domicile_building = merchant_company_salt_office_04 }
+			merchant_company_salt_office_03 = { remove_domicile_building = merchant_company_salt_office_03 }
+			merchant_company_salt_office_02 = { remove_domicile_building = merchant_company_salt_office_02 }
+			merchant_company_salt_office_01 = { remove_domicile_building = merchant_company_salt_office_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_minters_hall_06 = { remove_domicile_building = merchant_company_minters_hall_06 }
+			merchant_company_minters_hall_05 = { remove_domicile_building = merchant_company_minters_hall_05 }
+			merchant_company_minters_hall_04 = { remove_domicile_building = merchant_company_minters_hall_04 }
+			merchant_company_minters_hall_03 = { remove_domicile_building = merchant_company_minters_hall_03 }
+			merchant_company_minters_hall_02 = { remove_domicile_building = merchant_company_minters_hall_02 }
+			merchant_company_minters_hall_01 = { remove_domicile_building = merchant_company_minters_hall_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_alum_office_06 = { remove_domicile_building = merchant_company_alum_office_06 }
+			merchant_company_alum_office_05 = { remove_domicile_building = merchant_company_alum_office_05 }
+			merchant_company_alum_office_04 = { remove_domicile_building = merchant_company_alum_office_04 }
+			merchant_company_alum_office_03 = { remove_domicile_building = merchant_company_alum_office_03 }
+			merchant_company_alum_office_02 = { remove_domicile_building = merchant_company_alum_office_02 }
+			merchant_company_alum_office_01 = { remove_domicile_building = merchant_company_alum_office_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_pattern_books_06 = { remove_domicile_building = merchant_company_pattern_books_06 }
+			merchant_company_pattern_books_05 = { remove_domicile_building = merchant_company_pattern_books_05 }
+			merchant_company_pattern_books_04 = { remove_domicile_building = merchant_company_pattern_books_04 }
+			merchant_company_pattern_books_03 = { remove_domicile_building = merchant_company_pattern_books_03 }
+			merchant_company_pattern_books_02 = { remove_domicile_building = merchant_company_pattern_books_02 }
+			merchant_company_pattern_books_01 = { remove_domicile_building = merchant_company_pattern_books_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_apprentices_row_06 = { remove_domicile_building = merchant_company_apprentices_row_06 }
+			merchant_company_apprentices_row_05 = { remove_domicile_building = merchant_company_apprentices_row_05 }
+			merchant_company_apprentices_row_04 = { remove_domicile_building = merchant_company_apprentices_row_04 }
+			merchant_company_apprentices_row_03 = { remove_domicile_building = merchant_company_apprentices_row_03 }
+			merchant_company_apprentices_row_02 = { remove_domicile_building = merchant_company_apprentices_row_02 }
+			merchant_company_apprentices_row_01 = { remove_domicile_building = merchant_company_apprentices_row_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_toolmakers_bench_06 = { remove_domicile_building = merchant_company_toolmakers_bench_06 }
+			merchant_company_toolmakers_bench_05 = { remove_domicile_building = merchant_company_toolmakers_bench_05 }
+			merchant_company_toolmakers_bench_04 = { remove_domicile_building = merchant_company_toolmakers_bench_04 }
+			merchant_company_toolmakers_bench_03 = { remove_domicile_building = merchant_company_toolmakers_bench_03 }
+			merchant_company_toolmakers_bench_02 = { remove_domicile_building = merchant_company_toolmakers_bench_02 }
+			merchant_company_toolmakers_bench_01 = { remove_domicile_building = merchant_company_toolmakers_bench_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_glassblowers_showroom_06 = { remove_domicile_building = merchant_company_glassblowers_showroom_06 }
+			merchant_company_glassblowers_showroom_05 = { remove_domicile_building = merchant_company_glassblowers_showroom_05 }
+			merchant_company_glassblowers_showroom_04 = { remove_domicile_building = merchant_company_glassblowers_showroom_04 }
+			merchant_company_glassblowers_showroom_03 = { remove_domicile_building = merchant_company_glassblowers_showroom_03 }
+			merchant_company_glassblowers_showroom_02 = { remove_domicile_building = merchant_company_glassblowers_showroom_02 }
+			merchant_company_glassblowers_showroom_01 = { remove_domicile_building = merchant_company_glassblowers_showroom_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_potters_hall_06 = { remove_domicile_building = merchant_company_potters_hall_06 }
+			merchant_company_potters_hall_05 = { remove_domicile_building = merchant_company_potters_hall_05 }
+			merchant_company_potters_hall_04 = { remove_domicile_building = merchant_company_potters_hall_04 }
+			merchant_company_potters_hall_03 = { remove_domicile_building = merchant_company_potters_hall_03 }
+			merchant_company_potters_hall_02 = { remove_domicile_building = merchant_company_potters_hall_02 }
+			merchant_company_potters_hall_01 = { remove_domicile_building = merchant_company_potters_hall_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_lacquer_workshop_06 = { remove_domicile_building = merchant_company_lacquer_workshop_06 }
+			merchant_company_lacquer_workshop_05 = { remove_domicile_building = merchant_company_lacquer_workshop_05 }
+			merchant_company_lacquer_workshop_04 = { remove_domicile_building = merchant_company_lacquer_workshop_04 }
+			merchant_company_lacquer_workshop_03 = { remove_domicile_building = merchant_company_lacquer_workshop_03 }
+			merchant_company_lacquer_workshop_02 = { remove_domicile_building = merchant_company_lacquer_workshop_02 }
+			merchant_company_lacquer_workshop_01 = { remove_domicile_building = merchant_company_lacquer_workshop_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_goldsmiths_row_06 = { remove_domicile_building = merchant_company_goldsmiths_row_06 }
+			merchant_company_goldsmiths_row_05 = { remove_domicile_building = merchant_company_goldsmiths_row_05 }
+			merchant_company_goldsmiths_row_04 = { remove_domicile_building = merchant_company_goldsmiths_row_04 }
+			merchant_company_goldsmiths_row_03 = { remove_domicile_building = merchant_company_goldsmiths_row_03 }
+			merchant_company_goldsmiths_row_02 = { remove_domicile_building = merchant_company_goldsmiths_row_02 }
+			merchant_company_goldsmiths_row_01 = { remove_domicile_building = merchant_company_goldsmiths_row_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_tanners_row_06 = { remove_domicile_building = merchant_company_tanners_row_06 }
+			merchant_company_tanners_row_05 = { remove_domicile_building = merchant_company_tanners_row_05 }
+			merchant_company_tanners_row_04 = { remove_domicile_building = merchant_company_tanners_row_04 }
+			merchant_company_tanners_row_03 = { remove_domicile_building = merchant_company_tanners_row_03 }
+			merchant_company_tanners_row_02 = { remove_domicile_building = merchant_company_tanners_row_02 }
+			merchant_company_tanners_row_01 = { remove_domicile_building = merchant_company_tanners_row_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_weavers_hall_06 = { remove_domicile_building = merchant_company_weavers_hall_06 }
+			merchant_company_weavers_hall_05 = { remove_domicile_building = merchant_company_weavers_hall_05 }
+			merchant_company_weavers_hall_04 = { remove_domicile_building = merchant_company_weavers_hall_04 }
+			merchant_company_weavers_hall_03 = { remove_domicile_building = merchant_company_weavers_hall_03 }
+			merchant_company_weavers_hall_02 = { remove_domicile_building = merchant_company_weavers_hall_02 }
+			merchant_company_weavers_hall_01 = { remove_domicile_building = merchant_company_weavers_hall_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_dyers_yard_06 = { remove_domicile_building = merchant_company_dyers_yard_06 }
+			merchant_company_dyers_yard_05 = { remove_domicile_building = merchant_company_dyers_yard_05 }
+			merchant_company_dyers_yard_04 = { remove_domicile_building = merchant_company_dyers_yard_04 }
+			merchant_company_dyers_yard_03 = { remove_domicile_building = merchant_company_dyers_yard_03 }
+			merchant_company_dyers_yard_02 = { remove_domicile_building = merchant_company_dyers_yard_02 }
+			merchant_company_dyers_yard_01 = { remove_domicile_building = merchant_company_dyers_yard_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_scriptorium_06 = { remove_domicile_building = merchant_company_scriptorium_06 }
+			merchant_company_scriptorium_05 = { remove_domicile_building = merchant_company_scriptorium_05 }
+			merchant_company_scriptorium_04 = { remove_domicile_building = merchant_company_scriptorium_04 }
+			merchant_company_scriptorium_03 = { remove_domicile_building = merchant_company_scriptorium_03 }
+			merchant_company_scriptorium_02 = { remove_domicile_building = merchant_company_scriptorium_02 }
+			merchant_company_scriptorium_01 = { remove_domicile_building = merchant_company_scriptorium_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_foundry_office_06 = { remove_domicile_building = merchant_company_foundry_office_06 }
+			merchant_company_foundry_office_05 = { remove_domicile_building = merchant_company_foundry_office_05 }
+			merchant_company_foundry_office_04 = { remove_domicile_building = merchant_company_foundry_office_04 }
+			merchant_company_foundry_office_03 = { remove_domicile_building = merchant_company_foundry_office_03 }
+			merchant_company_foundry_office_02 = { remove_domicile_building = merchant_company_foundry_office_02 }
+			merchant_company_foundry_office_01 = { remove_domicile_building = merchant_company_foundry_office_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_packing_house_06 = { remove_domicile_building = merchant_company_packing_house_06 }
+			merchant_company_packing_house_05 = { remove_domicile_building = merchant_company_packing_house_05 }
+			merchant_company_packing_house_04 = { remove_domicile_building = merchant_company_packing_house_04 }
+			merchant_company_packing_house_03 = { remove_domicile_building = merchant_company_packing_house_03 }
+			merchant_company_packing_house_02 = { remove_domicile_building = merchant_company_packing_house_02 }
+			merchant_company_packing_house_01 = { remove_domicile_building = merchant_company_packing_house_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_contractors_lodge_06 = { remove_domicile_building = merchant_company_contractors_lodge_06 }
+			merchant_company_contractors_lodge_05 = { remove_domicile_building = merchant_company_contractors_lodge_05 }
+			merchant_company_contractors_lodge_04 = { remove_domicile_building = merchant_company_contractors_lodge_04 }
+			merchant_company_contractors_lodge_03 = { remove_domicile_building = merchant_company_contractors_lodge_03 }
+			merchant_company_contractors_lodge_02 = { remove_domicile_building = merchant_company_contractors_lodge_02 }
+			merchant_company_contractors_lodge_01 = { remove_domicile_building = merchant_company_contractors_lodge_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_patronage_workshop_06 = { remove_domicile_building = merchant_company_patronage_workshop_06 }
+			merchant_company_patronage_workshop_05 = { remove_domicile_building = merchant_company_patronage_workshop_05 }
+			merchant_company_patronage_workshop_04 = { remove_domicile_building = merchant_company_patronage_workshop_04 }
+			merchant_company_patronage_workshop_03 = { remove_domicile_building = merchant_company_patronage_workshop_03 }
+			merchant_company_patronage_workshop_02 = { remove_domicile_building = merchant_company_patronage_workshop_02 }
+			merchant_company_patronage_workshop_01 = { remove_domicile_building = merchant_company_patronage_workshop_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_workshop_06_build = { remove_domicile_building = merchant_company_workshop_06_build }
+			merchant_company_workshop_06_domicile = { remove_domicile_building = merchant_company_workshop_06_domicile }
+			merchant_company_workshop_05_build = { remove_domicile_building = merchant_company_workshop_05_build }
+			merchant_company_workshop_05_domicile = { remove_domicile_building = merchant_company_workshop_05_domicile }
+			merchant_company_workshop_04_build = { remove_domicile_building = merchant_company_workshop_04_build }
+			merchant_company_workshop_04_domicile = { remove_domicile_building = merchant_company_workshop_04_domicile }
+			merchant_company_workshop_03 = { remove_domicile_building = merchant_company_workshop_03 }
+			merchant_company_workshop_02 = { remove_domicile_building = merchant_company_workshop_02 }
+			merchant_company_workshop_01 = { remove_domicile_building = merchant_company_workshop_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_accounting_office_06_cost = { remove_domicile_building = merchant_company_accounting_office_06_cost }
+			merchant_company_accounting_office_06_gold = { remove_domicile_building = merchant_company_accounting_office_06_gold }
+			merchant_company_accounting_office_05_cost = { remove_domicile_building = merchant_company_accounting_office_05_cost }
+			merchant_company_accounting_office_05_gold = { remove_domicile_building = merchant_company_accounting_office_05_gold }
+			merchant_company_accounting_office_04_cost = { remove_domicile_building = merchant_company_accounting_office_04_cost }
+			merchant_company_accounting_office_04_gold = { remove_domicile_building = merchant_company_accounting_office_04_gold }
+			merchant_company_accounting_office_03 = { remove_domicile_building = merchant_company_accounting_office_03 }
+			merchant_company_accounting_office_02 = { remove_domicile_building = merchant_company_accounting_office_02 }
+			merchant_company_accounting_office_01 = { remove_domicile_building = merchant_company_accounting_office_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_showroom_06_prestige = { remove_domicile_building = merchant_company_showroom_06_prestige }
+			merchant_company_showroom_06_renown = { remove_domicile_building = merchant_company_showroom_06_renown }
+			merchant_company_showroom_05_prestige = { remove_domicile_building = merchant_company_showroom_05_prestige }
+			merchant_company_showroom_05_renown = { remove_domicile_building = merchant_company_showroom_05_renown }
+			merchant_company_showroom_04_prestige = { remove_domicile_building = merchant_company_showroom_04_prestige }
+			merchant_company_showroom_04_renown = { remove_domicile_building = merchant_company_showroom_04_renown }
+			merchant_company_showroom_03 = { remove_domicile_building = merchant_company_showroom_03 }
+			merchant_company_showroom_02 = { remove_domicile_building = merchant_company_showroom_02 }
+			merchant_company_showroom_01 = { remove_domicile_building = merchant_company_showroom_01 }
+		}
+		switch = {
+			trigger = has_domicile_building
+			merchant_company_craft_shop_06 = { remove_domicile_building = merchant_company_craft_shop_06 }
+			merchant_company_craft_shop_05 = { remove_domicile_building = merchant_company_craft_shop_05 }
+			merchant_company_craft_shop_04 = { remove_domicile_building = merchant_company_craft_shop_04 }
+			merchant_company_craft_shop_03 = { remove_domicile_building = merchant_company_craft_shop_03 }
+			merchant_company_craft_shop_02 = { remove_domicile_building = merchant_company_craft_shop_02 }
+			merchant_company_craft_shop_01 = { remove_domicile_building = merchant_company_craft_shop_01 }
+		}
+	}
+}
+
+# Severity 4 aftermath — always fires regardless of how the event ends.
+gdp_republic_unrest_0301_aftermath_effect = {
+	set_prestige_level = 0
+	scope:faction = { destroy_faction = yes }
+	scope:republic_capital = {
+		add_popular_opinion = 75
+		add_county_modifier = {
+			modifier = gdp_republic_uprising_aftermath
+			years = 5
+		}
+	}
+	house ?= {
+		add_house_modifier = {
+			modifier = gdp_republic_disgraced_patrician_house_modifier
+			years = 25
+		}
+	}
+}
+
+# Saves the three capital scopes and fills the notification target list
+# Run once at the start of each tier on_action, before any other effects
+gdp_republic_popular_opinion_setup_effect = {
+	capital_county = { save_scope_as = gdp_republic_capital }
+	capital_province = { save_scope_as = gdp_republic_capital_province }
+	capital_province.barony.trade_market ?= { save_scope_as = gdp_republic_market }
+
+	if = {
+		limit = { is_ai = no }
+		add_to_list = gdp_republic_notification_targets
+	}
+	every_vassal_or_below = {
+		limit = {
+			is_ai = no
+			any_held_title = { is_noble_family_title = yes }
+		}
+		add_to_list = gdp_republic_notification_targets
+	}
+}
+
+# Popular Opinion notification helpers
+# $STATE$    = bad | good
+# $SEVERITY$ = mild_negative | severe_negative | mild_positive | strong_positive
+# $MODIFIER$ = modifier key (county and market variants)
+# $VALUE$    = numeric or named constant (direct effect variants)
+
+gdp_republic_popular_opinion_county_modifier_effect = {
+	scope:gdp_republic_capital = {
+		add_county_modifier = {
+			modifier = $MODIFIER$
+			years = 5
+		}
+	}
+	every_in_list = {
+		list = gdp_republic_notification_targets
+		send_interface_message = {
+			type = event_republic_popular_opinion_$STATE$
+			title = gdp_popular_opinion_$SEVERITY$_title
+
+			left_icon = root
+			show_as_tooltip = {
+				scope:gdp_republic_capital = {
+					add_county_modifier = {
+						modifier = $MODIFIER$
+						years = 5
+					}
+				}
+			}
+		}
+	}
+}
+
+gdp_republic_popular_opinion_market_modifier_effect = {
+	scope:gdp_republic_market ?= {
+		add_trade_market_modifier = {
+			modifier = $MODIFIER$
+			years = 5
+		}
+	}
+	every_in_list = {
+		list = gdp_republic_notification_targets
+		send_interface_message = {
+			type = event_republic_popular_opinion_$STATE$
+			title = gdp_popular_opinion_$SEVERITY$_title
+
+			left_icon = root
+			show_as_tooltip = {
+				scope:gdp_republic_market ?= {
+					add_trade_market_modifier = {
+						modifier = $MODIFIER$
+						years = 5
+					}
+				}
+			}
+		}
+	}
+}
+
+gdp_republic_popular_opinion_prosperity_progress_effect = {
+	scope:gdp_republic_capital = { change_prosperity_progress = $VALUE$ }
+	every_in_list = {
+		list = gdp_republic_notification_targets
+		send_interface_message = {
+			type = event_republic_popular_opinion_$STATE$
+			title = gdp_popular_opinion_$SEVERITY$_title
+
+			left_icon = root
+			show_as_tooltip = {
+				scope:gdp_republic_capital = { change_prosperity_progress = $VALUE$ }
+			}
+		}
+	}
+}
+
+gdp_republic_popular_opinion_prosperity_level_effect = {
+	scope:gdp_republic_capital = { change_prosperity_level = $VALUE$ }
+	every_in_list = {
+		list = gdp_republic_notification_targets
+		send_interface_message = {
+			type = event_republic_popular_opinion_$STATE$
+			title = gdp_popular_opinion_$SEVERITY$_title
+
+			left_icon = root
+			show_as_tooltip = {
+				scope:gdp_republic_capital = { change_prosperity_level = $VALUE$ }
+			}
+		}
+	}
+}
+
+gdp_republic_popular_opinion_county_control_effect = {
+	scope:gdp_republic_capital = { change_county_control = $VALUE$ }
+	every_in_list = {
+		list = gdp_republic_notification_targets
+		send_interface_message = {
+			type = event_republic_popular_opinion_$STATE$
+			title = gdp_popular_opinion_$SEVERITY$_title
+
+			left_icon = root
+			show_as_tooltip = {
+				scope:gdp_republic_capital = { change_county_control = $VALUE$ }
+			}
+		}
+	}
+}
+
+gdp_republic_popular_opinion_province_size_effect = {
+	scope:gdp_republic_capital_province = { change_province_size_progress = $VALUE$ }
+	every_in_list = {
+		list = gdp_republic_notification_targets
+		send_interface_message = {
+			type = event_republic_popular_opinion_$STATE$
+			title = gdp_popular_opinion_$SEVERITY$_title
+
+			left_icon = root
+			show_as_tooltip = {
+				scope:gdp_republic_capital_province = { change_province_size_progress = $VALUE$ }
+			}
+		}
+	}
+}
+
+gdp_incite_unrest_apply_effect = {
+	capital_county = {
+		add_county_modifier = {
+			modifier = gdp_incite_unrest_county_modifier
+			years = 10
+		}
+	}
+}
+
+gdp_clear_league_focused_category_modifiers_effect = {
+	switch = {
+		trigger = has_character_modifier
+		league_focused_category_alcohol_modifier = {
+			remove_character_modifier = league_focused_category_alcohol_modifier
+		}
+		league_focused_category_comforts_modifier = {
+			remove_character_modifier = league_focused_category_comforts_modifier
+		}
+		league_focused_category_cereals_modifier = {
+			remove_character_modifier = league_focused_category_cereals_modifier
+		}
+		league_focused_category_meat_modifier = {
+			remove_character_modifier = league_focused_category_meat_modifier
+		}
+		league_focused_category_beasts_of_burden_modifier = {
+			remove_character_modifier = league_focused_category_beasts_of_burden_modifier
+		}
+		league_focused_category_salt_modifier = {
+			remove_character_modifier = league_focused_category_salt_modifier
+		}
+		league_focused_category_clothes_modifier = {
+			remove_character_modifier = league_focused_category_clothes_modifier
+		}
+		league_focused_category_fabrics_modifier = {
+			remove_character_modifier = league_focused_category_fabrics_modifier
+		}
+		league_focused_category_dyes_modifier = {
+			remove_character_modifier = league_focused_category_dyes_modifier
+		}
+		league_focused_category_alum_modifier = {
+			remove_character_modifier = league_focused_category_alum_modifier
+		}
+		league_focused_category_stone_modifier = {
+			remove_character_modifier = league_focused_category_stone_modifier
+		}
+		league_focused_category_carpentry_supplies_modifier = {
+			remove_character_modifier = league_focused_category_carpentry_supplies_modifier
+		}
+		league_focused_category_base_metals_modifier = {
+			remove_character_modifier = league_focused_category_base_metals_modifier
+		}
+		league_focused_category_luxury_items_modifier = {
+			remove_character_modifier = league_focused_category_luxury_items_modifier
+		}
+		league_focused_category_jewelry_materials_modifier = {
+			remove_character_modifier = league_focused_category_jewelry_materials_modifier
+		}
+		league_focused_category_precious_metals_modifier = {
+			remove_character_modifier = league_focused_category_precious_metals_modifier
+		}
+		league_focused_category_medicaments_modifier = {
+			remove_character_modifier = league_focused_category_medicaments_modifier
+		}
+		league_focused_category_incense_modifier = {
+			remove_character_modifier = league_focused_category_incense_modifier
+		}
+		league_focused_category_luxury_consumption_modifier = {
+			remove_character_modifier = league_focused_category_luxury_consumption_modifier
+		}
+		league_focused_category_books_modifier = {
+			remove_character_modifier = league_focused_category_books_modifier
+		}
+	}
+}
+
+gdp_apply_league_focused_category_modifier_effect = {
+	$CATEGORY$ = { save_temporary_scope_as = league_focus_category }
+	$CHARACTER$ = {
+		gdp_clear_league_focused_category_modifiers_effect = yes
+		switch = {
+			trigger = scope:league_focus_category
+			trade_good_category:trade_category_alcohol = {
+				add_character_modifier = league_focused_category_alcohol_modifier
+			}
+			trade_good_category:trade_category_comforts = {
+				add_character_modifier = league_focused_category_comforts_modifier
+			}
+			trade_good_category:trade_category_cereals = {
+				add_character_modifier = league_focused_category_cereals_modifier
+			}
+			trade_good_category:trade_category_meat = {
+				add_character_modifier = league_focused_category_meat_modifier
+			}
+			trade_good_category:trade_category_beasts_of_burden = {
+				add_character_modifier = league_focused_category_beasts_of_burden_modifier
+			}
+			trade_good_category:trade_category_salt = {
+				add_character_modifier = league_focused_category_salt_modifier
+			}
+			trade_good_category:trade_category_clothes = {
+				add_character_modifier = league_focused_category_clothes_modifier
+			}
+			trade_good_category:trade_category_fabrics = {
+				add_character_modifier = league_focused_category_fabrics_modifier
+			}
+			trade_good_category:trade_category_dyes = {
+				add_character_modifier = league_focused_category_dyes_modifier
+			}
+			trade_good_category:trade_category_alum = {
+				add_character_modifier = league_focused_category_alum_modifier
+			}
+			trade_good_category:trade_category_stone = {
+				add_character_modifier = league_focused_category_stone_modifier
+			}
+			trade_good_category:trade_category_carpentry_supplies = {
+				add_character_modifier = league_focused_category_carpentry_supplies_modifier
+			}
+			trade_good_category:trade_category_base_metals = {
+				add_character_modifier = league_focused_category_base_metals_modifier
+			}
+			trade_good_category:trade_category_luxury_items = {
+				add_character_modifier = league_focused_category_luxury_items_modifier
+			}
+			trade_good_category:trade_category_jewelry_materials = {
+				add_character_modifier = league_focused_category_jewelry_materials_modifier
+			}
+			trade_good_category:trade_category_precious_metals = {
+				add_character_modifier = league_focused_category_precious_metals_modifier
+			}
+			trade_good_category:trade_category_medicaments = {
+				add_character_modifier = league_focused_category_medicaments_modifier
+			}
+			trade_good_category:trade_category_incense = {
+				add_character_modifier = league_focused_category_incense_modifier
+			}
+			trade_good_category:trade_category_luxury_consumption = {
+				add_character_modifier = league_focused_category_luxury_consumption_modifier
+			}
+			trade_good_category:trade_category_books = {
+				add_character_modifier = league_focused_category_books_modifier
+			}
+		}
+	}
+}
+
+gdp_set_league_focused_category_effect = {
+	$LEAGUE$ = {
+		set_variable = {
+			name = league_focused_category
+			value = $CATEGORY$
+		}
+		every_confederation_member = {
+			custom = custom.every_trade_league_member
+			gdp_apply_league_focused_category_modifier_effect = {
+				CHARACTER = this
+				CATEGORY = $CATEGORY$
+			}
+		}
+	}
+}
+
+gdp_trade_league_replace_missing_leader_effect = {
+	if = {
+		limit = {
+			has_leading_title = no
+			any_confederation_member = {
+				count >= 1
+			}
+		}
+		save_scope_as = confederation
+		scope:title.holder ?= { save_scope_as = former_league_leader }
+
+		ordered_confederation_member = {
+			limit = {
+				is_alive = yes
+				government_has_flag = government_is_republic
+				OR = {
+					primary_title ?= {
+						title_confederation ?= scope:confederation
+					}
+					any_held_title = {
+						title_confederation ?= scope:confederation
+					}
+				}
+			}
+			order_by = gdp_trade_league_automatic_leader_score_value
+			max = 1
+			check_range_bounds = no
+			save_scope_as = new_league_leader
+		}
+
+		if = {
+			limit = { exists = scope:new_league_leader }
+			gdp_set_trade_league_leading_title_from_character_effect = yes
+		}
+	}
+}
+
+# Needs scope:confederation and scope:new_league_leader.
+gdp_set_trade_league_leading_title_from_character_effect = {
+	if = {
+		limit = {
+			scope:new_league_leader.primary_title ?= {
+				title_confederation ?= scope:confederation
+			}
+		}
+		scope:new_league_leader.primary_title = { save_scope_as = new_leading_title }
+	}
+	else = {
+		scope:new_league_leader = {
+			random_held_title = {
+				limit = { title_confederation ?= scope:confederation }
+				save_scope_as = new_leading_title
+			}
+		}
+	}
+
+	if = {
+		limit = { exists = scope:new_leading_title }
+		set_leading_title = scope:new_leading_title
+		if = {
+			limit = {
+				NOT = { has_variable = is_hanseatic_league }
+			}
+			scope:new_league_leader = { save_scope_as = league_creator }
+			set_coa = scope:new_leading_title
+			set_confederation_name = TRADE_LEAGUE_BASE_NAME
+		}
+
+		every_player = {
+			limit = { confederation ?= scope:confederation }
+			if = {
+				limit = { exists = scope:former_league_leader }
+				send_interface_message = {
+					type = msg_trade_league_leadership_changed
+					title = msg_trade_league_leader_succeeded
+					desc = msg_trade_league_leader_succeeded_desc
+					left_icon = scope:new_league_leader
+					right_icon = scope:former_league_leader
+				}
+			}
+			else = {
+				send_interface_message = {
+					type = msg_trade_league_leadership_changed
+					title = msg_trade_league_leader_succeeded
+					desc = msg_trade_league_leader_succeeded_no_predecessor_desc
+					left_icon = scope:new_league_leader
+				}
+			}
+		}
+	}
+}
+
+gdp_hre_elector_loss_warning_effect = {
+	if = {
+		limit = {
+			save_temporary_scope_as = elector_temp
+			title:e_hre = {
+				exists = holder
+				any_elector = { this = scope:elector_temp }
+			}
+			any_held_title = {
+				tier > tier_county
+				is_target_in_global_variable_list = {
+					name = hre_elector_list
+					target = this
+				}
+			}
+			NOT = {
+				any_held_title = {
+					tier = tier_county
+					is_target_in_global_variable_list = {
+						name = hre_elector_list
+						target = this
+					}
+				}
+			}
+		}
+		custom_tooltip = gdp_adopt_republic_government_decision_hre_warning_tt
+	}
+}
+
+gdp_republic_patricians_become_merchants_warning_effect = {
+	$DESTROYER$ = { save_scope_as = destroyer }
+	random_held_title = {
+		limit = { gdp_is_republic_title_trigger = yes }
+		save_scope_as = republic_title
+		custom_tooltip = republic_families_become_merchants_tt
+	}
+	hidden_effect = {
+		every_vassal = {
+			limit = {
+				is_landed = no
+				government_has_flag = government_is_republic
+				any_held_title = { is_noble_family_title = yes }
+			}
+			# Trackers for messages
+			set_variable = {
+				name = republic_destroyer
+				value = scope:destroyer
+				weeks = 1
+			}
+			# Apply opinion
+			add_opinion = {
+				target = scope:destroyer
+				modifier = gdp_destroyed_republic_opinion
+			}
+			# Force independence early to cover wars
+			create_title_and_vassal_change = {
+				type = conquest
+				save_scope_as = change
+				add_claim_on_loss = no
+			}
+			becomes_independent = { change = scope:change }
+			resolve_title_and_vassal_change = scope:change
+		}
+	}
+	show_as_tooltip = {
+		scope:destroyer ?= { destroy_title = scope:republic_title }
+	}
+}
+
+## Scripted effect that randomize artifact types depending on house ambition
+random_gift_artifact_commerce_effect = {
+	create_library_artifact_effect = {
+		OWNER = $OWNER$
+		CREATOR = $CREATOR$
+		SUBJECT = $SUBJECT$
+		TOPIC = $TOPIC$
+	}
+}
+
+random_gift_artifact_aggrandizement_effect = {
+	random_list = {
+		40 = {
+			create_artifact_goblet_effect = {
+				OWNER = $OWNER$
+				SMITH = $CREATOR$
+			}
+			hidden_effect_new_object = {
+				scope:newly_created_artifact = {
+					reforge_artifact = { type = curio }
+				}
+			}
+			custom_tooltip = create_curio_artifact
+		}
+		30 = {
+			create_artifact_sculpture_effect = {
+				OWNER = $OWNER$
+				SCULPTER = $CREATOR$
+			}
+			hidden_effect_new_object = {
+				scope:newly_created_artifact = {
+					reforge_artifact = { type = curio }
+				}
+			}
+			custom_tooltip = create_curio_artifact
+		}
+		30 = {
+			create_artifact_ring_effect = {
+				OWNER = $OWNER$
+				SMITH = $CREATOR$
+			}
+			hidden_effect_new_object = {
+				scope:newly_created_artifact = {
+					reforge_artifact = { type = curio }
+				}
+			}
+			custom_tooltip = create_curio_artifact
+		}
+		30 = {
+			create_artifact_icon_effect = {
+				OWNER = $OWNER$
+				CREATOR = $CREATOR$
+			}
+			hidden_effect_new_object = {
+				scope:newly_created_artifact = {
+					reforge_artifact = { type = curio }
+				}
+			}
+			custom_tooltip = create_curio_artifact
+		}
+	}
+}
+
+random_gift_artifact_communal_effect = {
+	random_list = {
+		40 = {
+			create_artifact_sculpture_religious_effect = {
+				OWNER = $OWNER$
+				CREATOR = $CREATOR$
+			}
+			hidden_effect_new_object = {
+				scope:newly_created_artifact = {
+					reforge_artifact = { type = curio }
+				}
+			}
+			custom_tooltip = create_curio_artifact
+		}
+		30 = {
+			create_artifact_sculpture_effect = {
+				OWNER = $OWNER$
+				SCULPTER = $CREATOR$
+			}
+			hidden_effect_new_object = {
+				scope:newly_created_artifact = {
+					reforge_artifact = { type = curio }
+				}
+			}
+			custom_tooltip = create_curio_artifact
+		}
+		30 = {
+			create_artifact_bowl_effect = {
+				OWNER = $OWNER$
+				SMITH = $CREATOR$
+			}
+			hidden_effect_new_object = {
+				scope:newly_created_artifact = {
+					reforge_artifact = { type = curio }
+				}
+			}
+			custom_tooltip = create_curio_artifact
+		}
+		30 = {
+			create_library_artifact_effect = {
+				OWNER = $OWNER$
+				CREATOR = $CREATOR$
+				SUBJECT = $SUBJECT$
+				TOPIC = $TOPIC$
+			}
+		}
+	}
+}
+
+random_gift_artifact_signorial_effect = {
+	random_list = {
+		10 = {
+			create_artifact_sculpture_religious_effect = {
+				OWNER = $OWNER$
+				CREATOR = $CREATOR$
+			}
+			hidden_effect_new_object = {
+				scope:newly_created_artifact = {
+					reforge_artifact = { type = curio }
+				}
+			}
+			custom_tooltip = create_curio_artifact
+		}
+		30 = {
+			create_artifact_sculpture_effect = {
+				OWNER = $OWNER$
+				SCULPTER = $CREATOR$
+			}
+			hidden_effect_new_object = {
+				scope:newly_created_artifact = {
+					reforge_artifact = { type = curio }
+				}
+			}
+			custom_tooltip = create_curio_artifact
+		}
+		30 = {
+			create_artifact_chest_effect = {
+				OWNER = $OWNER$
+				CARPENTER = $CREATOR$
+			}
+			hidden_effect_new_object = {
+				scope:newly_created_artifact = {
+					reforge_artifact = { type = curio }
+				}
+			}
+			custom_tooltip = create_curio_artifact
+		}
+		30 = {
+			create_artifact_tapestry_effect = {
+				OWNER = $OWNER$
+				WEAVER = $CREATOR$
+			}
+			hidden_effect_new_object = {
+				scope:newly_created_artifact = {
+					reforge_artifact = { type = curio }
+				}
+			}
+			custom_tooltip = create_curio_artifact
+		}
+	}
+}
+
+random_gift_artifact_agitation_effect = {
+	random_list = {
+		40 = {
+			create_artifact_sculpture_religious_effect = {
+				OWNER = $OWNER$
+				CREATOR = $CREATOR$
+			}
+			hidden_effect_new_object = {
+				scope:newly_created_artifact = {
+					reforge_artifact = { type = curio }
+				}
+			}
+			custom_tooltip = create_curio_artifact
+		}
+		30 = {
+			create_artifact_sculpture_effect = {
+				OWNER = $OWNER$
+				SCULPTER = $CREATOR$
+			}
+			hidden_effect_new_object = {
+				scope:newly_created_artifact = {
+					reforge_artifact = { type = curio }
+				}
+			}
+			custom_tooltip = create_curio_artifact
+		}
+		30 = {
+			create_artifact_armor_effect = {
+				OWNER = $OWNER$
+				CREATOR = $CREATOR$
+				SET_ARMOR_TYPE = flag:armor_type_scale
+			}
+			hidden_effect_new_object = {
+				scope:newly_created_artifact = {
+					reforge_artifact = { type = curio }
+				}
+			}
+			custom_tooltip = create_curio_artifact
+		}
+	}
+}
+
+## random selection of animal flag for animal_type variable - used for creating domicile animal artifacts.
+random_gift_creature_selection_effect = {
+	# DEBUG creature_location check
+	if = {
+		limit = {
+			NOT = { exists = scope:creature_location }
+			exists = location
+		}
+		location = { save_scope_as = creature_location }
+	}
+	hidden_effect = {
+		if = {
+			limit = {
+				NOT = { exists = scope:creature_type }
+			}
+			random_list = {
+						10 = { # Lion, Tiger, Leopard
+							random_list = {
+								5 = { # Lion
+									set_variable = { name = animal_type value = flag:lion years = 3 }
+								}
+								5 = { # Tiger
+									set_variable = { name = animal_type value = flag:tiger years = 3 }
+								}
+								5 = { # Leopard
+									set_variable = { name = animal_type value = flag:leopard years = 3 }
+								}
+							}
+						}
+						10 = { # Caracal, Lynx
+							random_list = {
+								5 = { # Caracal
+									set_variable = { name = animal_type value = flag:caracal years = 3 }
+								}
+								5 = { # Lynx
+									set_variable = { name = animal_type value = flag:lynx years = 3 }
+								}
+							}
+						}
+						10 = { # Bear, Elephant
+							random_list = {
+								5 = { # Bear
+									set_variable = { name = animal_type value = flag:bear years = 3 }
+								}
+								5 = { # Elephant
+									set_variable = { name = animal_type value = flag:elephant years = 3 }
+								}
+							}
+						}
+						10 = { # Birds ( peacock, parrot, cockatoo, crane )
+							random_list = {
+								5 = {
+									set_variable = { name = animal_type value = flag:peacock years = 3 }
+								}
+								5 = {
+									set_variable = { name = animal_type value = flag:parrot years = 3 }
+								}
+								5 = {
+									set_variable = { name = animal_type value = flag:cockatoo years = 3 }
+								}
+								5 = {
+									set_variable = { name = animal_type value = flag:crane years = 3 }
+								}
+							}
+						}
+						5 = { # Monkey
+							set_variable = { name = animal_type value = flag:monkey years = 3 }
+						}
+					}
+		}
+		else = {
+			set_variable = { name = animal_type value = scope:creature_type years = 3 }
+		}
+	}
+}
+
+gdp_ambition_execute_and_banish_bonus_effect = {
+	add_prestige = {
+		value = miniscule_prestige_value
+	}
+	add_character_modifier = {
+		modifier = gdp_signorial_execute_and_banish_modifier
+		years = 8
+	}
+}
+
+gdp_add_ambition_promote_scheme_bonus_effect = {
+	add_character_modifier = {
+		modifier = gdp_ambition_promote_scheme_bonus_modifier
+		years = 12
+	}
+}
+
+# Run on a patrician whose republic is gone
+# Over the headroom only notable families become merchants, or every family if a player destroyed the republic
+# The rest go to the pool
+gdp_destroyed_republic_patrician_effect = {
+	if = {
+		limit = {
+			OR = {
+				gdp_merchant_companies_below_republic_headroom_trigger = yes
+				$DESTROYER$ ?= { is_ai = no }
+				gdp_merchant_company_keep_trigger = yes
+			}
+		}
+		create_merchant_title_effect = {
+			REASON = flag:republic_destroyed
+			FLAVOR_CHAR = $DESTROYER$
+		}
+	}
+	else = {
+		save_temporary_scope_as = dissolved_patrician
+		every_held_title = {
+			limit = { is_noble_family_title = yes }
+			scope:dissolved_patrician = { destroy_title = prev }
+		}
+		if = {
+			limit = { is_pool_character = no }
+			move_to_pool = yes
+		}
+	}
+}
+
+# Effect for converting to feudal from republic
+convert_to_feudalism_from_republic_effect = {
+	# Change government
+	if = {
+		limit = { ep3_is_clan_inclined_trigger = yes }
+		change_government = clan_government
+
+		every_vassal = {
+			limit = {
+				primary_title.tier >= tier_county
+				is_landed = yes
+				NOR = {
+					government_has_flag = government_is_clan
+					government_has_flag = government_is_theocracy
+				}
+			}
+			hidden_effect = { change_government = clan_government }
+		}
+	}
+	else = {
+		change_government = feudal_government
+
+		every_vassal = {
+			limit = {
+				primary_title.tier >= tier_county
+				is_landed = yes
+				NOR = {
+					government_has_flag = government_is_feudal
+					government_has_flag = government_is_theocracy
+				}
+			}
+			hidden_effect = { change_government = feudal_government }
+		}
+	}
+	
+	# Turn patricians into merchants
+	if = {
+		limit = {
+			any_vassal = {
+				government_has_flag = government_is_republic
+				is_landed = no
+				NOT = { has_character_flag = government_republic_conversion_protection }
+				any_held_title = { is_noble_family_title = yes }
+			}
+		}
+		save_scope_as = destroyer
+		custom_tooltip = {
+			text = patricians_becomes_merchants_desc
+			every_vassal = {
+				limit = {
+					government_has_flag = government_is_republic
+					is_landed = no
+					NOT = { has_character_flag = government_republic_conversion_protection }
+					any_held_title = { is_noble_family_title = yes }
+				}
+				# Create Merchant
+				set_variable = {
+					name = republic_destroyer
+					value = scope:destroyer
+					weeks = 1
+				}
+				gdp_destroyed_republic_patrician_effect = { DESTROYER = scope:destroyer }
+			}
+		}
+	}
+}
+
+gdp_find_deposed_republic_successor_effect = {
+	scope:despot = {
+		if = { # Next non-house in-line
+			limit = {
+				primary_title = {
+					any_title_heir = {
+						NOT = { house = scope:despot.house }
+					}
+				}
+			}
+			primary_title = {
+				ordered_title_heir = {
+					limit = { NOT = { house = scope:despot.house } }
+					max = 1
+					save_scope_as = republic_heir
+				}
+			}
+		}
+		else_if = { # Random other noble family
+			limit = {
+				any_noble_family = {
+					holder = {
+						house != scope:despot.house
+						is_available_quick = {
+							adult = yes
+							imprisoned = no
+							incapable = no
+						}
+					}
+				}
+			}
+			random_noble_family = {
+				limit = {
+					holder = {
+						house != scope:despot.house
+						is_powerful_vassal = yes
+						is_available_quick = {
+							adult = yes
+							imprisoned = no
+							incapable = no
+						}
+					}
+				}
+				alternative_limit = {
+					holder = {
+						house != scope:despot.house
+						is_available_quick = {
+							adult = yes
+							imprisoned = no
+							incapable = no
+						}
+					}
+				}
+				weight = {
+					base = 100
+					modifier = {
+						add = {
+							value = "holder.opinion(scope:despot)"
+							multiply = -1
+						}
+					}
+					modifier = {
+						holder = { has_relation_rival = scope:despot }
+						add = 100
+					}
+					modifier = {
+						holder = {
+							OR = {
+								is_close_family_of = scope:despot
+								is_spouse_of = scope:despot
+							}
+						}
+						add = -100
+					}
+					modifier = {
+						exists = holder.joined_faction
+						add = 100
+					}
+					house_relation_ai_accept_modifiers = {
+						HOUSE_1_MEMBER = holder
+			 			HOUSE_2_MEMBER = scope:despot
+		 				MULTIPLIER = -1
+					}
+				}
+				holder = { save_scope_as = republic_heir }
+			}
+		}
+		else = { # Upstart
+			create_character = {
+				template = peasant_leader_stewardship_character
+				dynasty = generate
+				culture = scope:despot.capital_county.culture
+				rite = scope:despot.capital_county.rite
+				location = scope:despot.capital_province
+				save_scope_as = republic_heir
+			}
+			scope:republic_heir = { add_character_flag = generated_character }
+		}
+	}
+}
+
+gdp_restore_republic_elections_effect = {
+	show_as_tooltip = { # More helpful tooltip, but actually a realm law change
+		scope:republic_title = {
+			add_title_law = republican_elective_succession_law
+			if = {
+				limit = { scope:despot = { has_realm_law = republic_assembly_authority_ceremonial } }
+				add_title_law = republic_assembly_authority_legislative
+			}
+			if = {
+				limit = { scope:despot = { has_realm_law = republic_assembly_term_length_indefinite } }
+				add_title_law = republic_assembly_term_length_5
+			}
+		}
+	}
+	scope:despot = {
+		hidden_effect = {
+			add_realm_law = republican_elective_succession_law
+			if = {
+				limit = { has_realm_law = republic_assembly_authority_ceremonial }
+				add_realm_law = republic_assembly_authority_legislative
+			}
+			if = {
+				limit = { has_realm_law = republic_assembly_term_length_indefinite }
+				add_realm_law = republic_assembly_term_length_5
+			}
+		}
+		depose = yes
+	}
+	scope:republic_heir ?= {
+		if = {
+			limit = {
+				has_character_flag = generated_character
+				is_ruler = no
+			}
+			silent_disappearance_effect = yes
+		}
+	}
+}
+
+gdp_restore_republic_elections_merchant_effect = {
+	show_as_tooltip = { # More helpful tooltip, but actually a realm law change
+		scope:republic_title = { add_title_law = republican_elective_succession_law }
+	}
+	scope:despot = {
+		add_character_flag = deposed_despot
+		hidden_effect = {
+			add_realm_law = republican_elective_succession_law
+			create_title_and_vassal_change = {
+				type = faction_demand
+				save_scope_as = title_handover
+				add_claim_on_loss = no
+			}
+			every_held_title = {
+				limit = {
+					is_landless_type_title = no
+					tier >= tier_county
+					is_noble_family_title = no
+				}
+				change_title_holder_include_vassals = {
+					holder = scope:republic_heir
+					change = scope:title_handover
+				}
+			}
+			resolve_title_and_vassal_change = scope:title_handover
+		}
+		change_government = merchant_government
+	}
+}

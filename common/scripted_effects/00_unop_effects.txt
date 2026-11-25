@@ -170,3 +170,184 @@ unop_update_governor_fallback_succession_effect = {
 		remove_character_flag = unop_governor_fallback_succession
 	}
 }
+
+#Unop Flip the given personality trait to its opposite, with the same pairs as flip_sinful_trait_effect, regardless of rite
+# TRAIT: the trait to flip, e.g. scope:sinful_trait
+unop_flip_personality_trait_effect = {
+	if = {
+		limit = { has_trait = $TRAIT$ }
+		switch = {
+			trigger = $TRAIT$
+			trait:lustful = { remove_trait = lustful add_trait_force_tooltip = chaste }
+			trait:chaste = { remove_trait = chaste add_trait_force_tooltip = lustful }
+			trait:temperate = { remove_trait = temperate add_trait_force_tooltip = gluttonous }
+			trait:gluttonous = { remove_trait = gluttonous add_trait_force_tooltip = temperate }
+			trait:greedy = { remove_trait = greedy add_trait_force_tooltip = generous }
+			trait:generous = { remove_trait = generous add_trait_force_tooltip = greedy }
+			trait:lazy = { remove_trait = lazy add_trait_force_tooltip = diligent }
+			trait:diligent = { remove_trait = diligent add_trait_force_tooltip = lazy }
+			trait:wrathful = { remove_trait = wrathful add_trait_force_tooltip = calm }
+			trait:calm = { remove_trait = calm add_trait_force_tooltip = wrathful }
+			trait:humble = { remove_trait = humble add_trait_force_tooltip = arrogant }
+			trait:arrogant = { remove_trait = arrogant add_trait_force_tooltip = humble }
+			trait:impatient = { remove_trait = impatient add_trait_force_tooltip = patient }
+			trait:patient = { remove_trait = patient add_trait_force_tooltip = impatient }
+			trait:craven = { remove_trait = craven add_trait_force_tooltip = brave }
+			trait:brave = { remove_trait = brave add_trait_force_tooltip = craven }
+			trait:shy = { remove_trait = shy add_trait_force_tooltip = gregarious }
+			trait:gregarious = { remove_trait = gregarious add_trait_force_tooltip = shy }
+			trait:ambitious = { remove_trait = ambitious add_trait_force_tooltip = content }
+			trait:content = { remove_trait = content add_trait_force_tooltip = ambitious }
+			trait:arbitrary = { remove_trait = arbitrary add_trait_force_tooltip = just }
+			trait:just = { remove_trait = just add_trait_force_tooltip = arbitrary }
+			trait:zealous = { remove_trait = zealous add_trait_force_tooltip = cynical }
+			trait:cynical = { remove_trait = cynical add_trait_force_tooltip = zealous }
+			trait:trusting = { remove_trait = trusting add_trait_force_tooltip = paranoid }
+			trait:paranoid = { remove_trait = paranoid add_trait_force_tooltip = trusting }
+			trait:callous = { remove_trait = callous add_trait_force_tooltip = compassionate }
+			trait:sadistic = { remove_trait = sadistic add_trait_force_tooltip = compassionate }
+			trait:compassionate = { remove_trait = compassionate add_trait_force_tooltip = callous }
+			trait:stubborn = { remove_trait = stubborn add_trait_force_tooltip = fickle }
+			trait:fickle = { remove_trait = fickle add_trait_force_tooltip = stubborn }
+			trait:vengeful = { remove_trait = vengeful add_trait_force_tooltip = forgiving }
+			trait:forgiving = { remove_trait = forgiving add_trait_force_tooltip = vengeful }
+			trait:honest = { remove_trait = honest add_trait_force_tooltip = deceitful }
+			trait:deceitful = { remove_trait = deceitful add_trait_force_tooltip = honest }
+		}
+	}
+}
+   
+#Unop Rolls the injury of maimed_in_battle_effect, with the same weights, into scope:unop_maimed_in_battle_injury
+#Roll it outside a toast and apply it inside with unop_apply_maimed_in_battle_effect, so that the toast names the injury applied, not one of a separate roll
+unop_roll_maimed_in_battle_effect = {
+	random_list = {
+		4 = {
+			trigger = {
+				NOT = {
+					has_trait = one_legged
+				}
+			}
+			save_scope_value_as = {
+				name = unop_maimed_in_battle_injury
+				value = flag:one_legged
+			}
+		}
+		2 = {
+			trigger = {
+				NOT = {
+					has_trait = disfigured
+				}
+			}
+			save_scope_value_as = {
+				name = unop_maimed_in_battle_injury
+				value = flag:disfigured
+			}
+		}
+		4 = {
+			trigger = {
+				NOT = {
+					has_trait = one_eyed
+				}
+			}
+			save_scope_value_as = {
+				name = unop_maimed_in_battle_injury
+				value = flag:one_eyed
+			}
+		}
+		4 = {
+			trigger = {
+				NOT = {
+					has_trait = maimed
+				}
+			}
+			save_scope_value_as = {
+				name = unop_maimed_in_battle_injury
+				value = flag:maimed
+			}
+		}
+	}
+}
+
+#Unop Applies the injury rolled by unop_roll_maimed_in_battle_effect, as maimed_in_battle_effect does
+unop_apply_maimed_in_battle_effect = {
+	if = {
+		limit = { scope:unop_maimed_in_battle_injury ?= flag:one_legged }
+		add_trait_force_tooltip = one_legged
+		increase_wounds_effect = { REASON = fight }
+	}
+	else_if = {
+		limit = { scope:unop_maimed_in_battle_injury ?= flag:disfigured }
+		add_trait_force_tooltip = disfigured
+		increase_wounds_effect = { REASON = fight }
+		epilepsy_brain_trauma_risk_effect = { CHANCE = 5 }
+	}
+	else_if = {
+		limit = { scope:unop_maimed_in_battle_injury ?= flag:one_eyed }
+		add_trait_force_tooltip = one_eyed
+		increase_wounds_effect = { REASON = fight }
+		epilepsy_brain_trauma_risk_effect = { CHANCE = 5 }
+	}
+	else_if = {
+		limit = { scope:unop_maimed_in_battle_injury ?= flag:maimed }
+		apply_maimed_trait_and_modifier_effect = yes
+		epilepsy_brain_trauma_risk_effect = { CHANCE = 5 }
+	}
+}
+
+#Unop A character who gives up all titles is briefly non-playable, and the engine then drops the tenets and doctrines they learned and their personal tenets
+# Call unop_save_tenet_knowledge_effect before the titles are transferred, and unop_restore_tenet_knowledge_effect once the character holds a title again, in the same effect
+unop_save_tenet_knowledge_effect = {
+	every_character_tenet = {
+		knowledge_filter = known
+		add_to_list = unop_known_tenets
+	}
+	every_character_doctrine = {
+		knowledge_filter = known
+		add_to_list = unop_known_doctrines
+	}
+	every_personal_tenet = {
+		add_to_list = unop_personal_tenets
+	}
+}
+
+unop_restore_tenet_knowledge_effect = {
+	save_scope_as = unop_tenet_knower
+	hidden_effect = {
+		every_in_list = {
+			list = unop_known_tenets
+			save_scope_as = unop_tenet
+			scope:unop_tenet_knower = {
+				if = {
+					limit = {
+						NOT = { knows_tenet = scope:unop_tenet }
+					}
+					add_known_tenet = scope:unop_tenet
+				}
+			}
+		}
+		every_in_list = {
+			list = unop_known_doctrines
+			save_scope_as = unop_doctrine
+			scope:unop_tenet_knower = {
+				if = {
+					limit = {
+						NOT = { knows_doctrine = scope:unop_doctrine }
+					}
+					add_known_doctrine = scope:unop_doctrine
+				}
+			}
+		}
+		every_in_list = {
+			list = unop_personal_tenets
+			save_scope_as = unop_tenet
+			scope:unop_tenet_knower = {
+				if = {
+					limit = {
+						NOT = { has_personal_tenet = scope:unop_tenet }
+					}
+					force_set_personal_tenet = scope:unop_tenet
+				}
+			}
+		}
+	}
+}
