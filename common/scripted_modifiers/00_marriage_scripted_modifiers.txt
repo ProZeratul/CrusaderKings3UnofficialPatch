@@ -1848,8 +1848,10 @@ marriage_ai_accept_modifier = { ###MARRIAGE SCRIPTED MODIFIERS###
 	################
 
 	modifier = { # Inspired people will be _very_ hesitant
-		exists = scope:secondary_recipient.inspiration
-		has_completed_inspiration = no
+		scope:secondary_recipient = { #Unop: Check both on the inspired candidate; has_completed_inspiration was checked on root
+			exists = inspiration
+			has_completed_inspiration = no
+		}
 		add = -100
 		desc = IS_FOCUSING_ON_INSPIRATION_MODIFIER
 	}
@@ -2116,7 +2118,7 @@ marriage_ai_accept_modifier = { ###MARRIAGE SCRIPTED MODIFIERS###
 	}
 	# Having already organized a good Grand Wedding increases acceptance
 	modifier = {
-		has_character_modifier = gwedding_magnificent_host_modifier
+		scope:puppet_or_actor = { has_character_modifier = gwedding_magnificent_host_modifier } #Unop: The bonus is for the host's proposals, was checked on root (recipient)
 		add = 25
 		desc = GRAND_WEDDING_MAGNIFICENT_HOST_REASON
 	}
