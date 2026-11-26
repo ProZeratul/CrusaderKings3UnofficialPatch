@@ -7339,7 +7339,7 @@ ep3_laamp_decision_event.1025 = {
 		trigger = { 1000_is_a_nomadic_holding_trigger = yes }
 		reference = mpo_camp_steppe
 	}
-	override_background = { reference = garden_location }
+	override_background = { reference = market_crowd }
 	left_portrait = {
 		trigger = { exists = scope:visiting_partner }
 		character = scope:visiting_partner
@@ -13515,12 +13515,16 @@ scripted_effect 1041_healed_effect = {
 
 #Determine the variable effect based on their aptitude, one for the healer and one for the physician-partner
 scripted_effect 1041_calculate_aptitude_modifier_effect = {
+	change_variable = {
+		name = $VARIABLE$
+		add = 1
+	}
 	if = {
 		limit = {
 			$CHARACTER$ = {
 				aptitude = {
 					court_position = court_physician_court_position
-					value >= 0 #Unop: Aptitude levels are 0-4, not 1-5
+					value >= 1
 				}
 			}	
 		}
@@ -13534,7 +13538,7 @@ scripted_effect 1041_calculate_aptitude_modifier_effect = {
 			$CHARACTER$ = {
 				aptitude = {
 					court_position = court_physician_court_position
-					value >= 1 #Unop: Aptitude levels are 0-4, not 1-5
+					value >= 2
 				}
 			}	
 		}
@@ -13548,7 +13552,7 @@ scripted_effect 1041_calculate_aptitude_modifier_effect = {
 			$CHARACTER$ = {
 				aptitude = {
 					court_position = court_physician_court_position
-					value >= 2 #Unop: Aptitude levels are 0-4, not 1-5
+					value >= 3
 				}
 			}	
 		}
@@ -13562,21 +13566,7 @@ scripted_effect 1041_calculate_aptitude_modifier_effect = {
 			$CHARACTER$ = {
 				aptitude = {
 					court_position = court_physician_court_position
-					value >= 3 #Unop: Aptitude levels are 0-4, not 1-5
-				}
-			}	
-		}
-		change_variable = {
-			name = $VARIABLE$
-			add = 1
-		}
-	}
-	if = {
-		limit = {
-			$CHARACTER$ = {
-				aptitude = {
-					court_position = court_physician_court_position
-					value >= 4 #Unop: Aptitude levels are 0-4, not 1-5
+					value >= 4
 				}
 			}	
 		}
@@ -20437,8 +20427,8 @@ ep3_laamp_decision_event.1100 = {
 		remove_character_flag = had_seasoned_visitor_decision
 
 		hidden_effect = {
-			add_prestige_no_experience = 1500
-			add_gold = 500
+			add_prestige_no_experience = seasoned_visitor_decision_prestige_cost_value
+			add_gold = seasoned_visitor_decision_gold_cost_value
 		}
 
 		ai_chance = {

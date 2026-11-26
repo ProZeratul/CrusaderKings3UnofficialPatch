@@ -10642,7 +10642,10 @@ accolade_create_squire_effect = {
 
 			scope:chosen_knight = {
 				if = {
-					limit = { is_potential_knight = yes }
+					limit = {
+						exists = liege
+						is_potential_knight = yes
+					}
 					set_knight_status = force
 				}
 			}

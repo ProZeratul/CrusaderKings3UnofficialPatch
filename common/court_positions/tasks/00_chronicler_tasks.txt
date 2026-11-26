@@ -57,33 +57,10 @@ chronicler_generate_seeds = {
 			chance = 20 #Unop: Was 10, so that the inner chance stays within 100 with the excellent tier below
 			random = {
 				chance = {
-					value = 1
-					if = {
-						limit = {
-							aptitude = {
-								court_position = chronicler_court_position
-								value >= 1 #Unop: Aptitude levels are 0-4, not 1-5
-							}
-						}
-						add = 1
-					}
-					if = {
-						limit = {
-							aptitude = {
-								court_position = chronicler_court_position
-								value >= 2 #Unop: Aptitude levels are 0-4, not 1-5
-							}
-						}
-						add = 2
-					}
-					if = {
-						limit = {
-							aptitude = {
-								court_position = chronicler_court_position
-								value >= 3 #Unop: Aptitude levels are 0-4, not 1-5
-							}
-						}
-						add = 4
+					value = 2
+					add = {
+						value = "aptitude(chronicler_court_position)"
+						multiply = 2
 					}
 					if = { #Unop: Restore the excellent tier, which was dropped as unreachable with the wrong 1-5 levels
 						limit = {
@@ -327,38 +304,22 @@ chronicler_espouse_legend = {
 			}
 		}
 		random = {
-			chance = {
-				value = 20
-				if = {
-					limit = {
-						scope:unop_espouse_legend_aptitude >= 1 #Unop: Aptitude levels are 0-4, not 1-5. Was the chronicler aptitude for every position
+			chance = 50
+			random = {
+				chance = {
+					value = 10
+					add = {
+						value = scope:unop_espouse_legend_aptitude #Unop: Was the chronicler aptitude for every position
+						multiply = 10
 					}
-					add = 5
+					multiply = 2
 				}
-				if = {
-					limit = {
-						scope:unop_espouse_legend_aptitude >= 2 #Unop: Aptitude levels are 0-4, not 1-5. Was the chronicler aptitude for every position
+				save_scope_as = chronicler
+				scope:liege = {
+					trigger_event = {
+						id = legend_events.0010
+						months = { 0 6 } # To avoid triggering on January every year
 					}
-					add = 10
-				}
-				if = {
-					limit = {
-						scope:unop_espouse_legend_aptitude >= 3 #Unop: Aptitude levels are 0-4, not 1-5. Was the chronicler aptitude for every position
-					}
-					add = 20
-				}
-				if = {
-					limit = {
-						scope:unop_espouse_legend_aptitude >= 4 #Unop: Aptitude levels are 0-4, not 1-5. Was the chronicler aptitude for every position
-					}
-					add = 30
-				}
-			}
-			save_scope_as = chronicler
-			scope:liege = {
-				trigger_event = {
-					id = legend_events.0010
-					months = { 0 6 } # To avoid triggering on January every year
 				}
 			}
 		}

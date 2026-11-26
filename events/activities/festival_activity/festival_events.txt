@@ -5238,6 +5238,25 @@ festival.107 = {
 	}
 }
 
+scripted_trigger festival_108_courtable_spouse_trigger = {
+	is_ai = yes
+	is_married = yes
+	primary_spouse = {
+		is_physically_able_ai_adult = yes
+		age < define:NCharacter|FEMALE_ATTRACTION_CUTOFF_AGE
+	}
+}
+
+scripted_trigger festival_108_target_trigger = {
+	OR = {
+		house.house_confederation.leading_house.house_head ?= { festival_108_courtable_spouse_trigger = yes }
+		liege ?= {
+			house.house_head = this
+			festival_108_courtable_spouse_trigger = yes
+		}
+	}
+}
+
 festival.108 = {
 	type = activity_event
 	title = festival.108.t
@@ -5320,27 +5339,7 @@ festival.108 = {
 				}
 			}
 		}
-		scope:target = {
-			OR = {
-				house.house_confederation.leading_house.house_head ?= {
-					is_ai = yes
-					is_married = yes
-					primary_spouse = {
-						is_physically_able_ai_adult = yes
-						age < define:NCharacter|FEMALE_ATTRACTION_CUTOFF_AGE # we just default to the lower of the two
-					}
-				}
-				liege ?= {
-					is_ai = yes
-					house.house_head = this
-					is_married = yes
-					primary_spouse = {
-						is_physically_able_ai_adult = yes
-						age < define:NCharacter|FEMALE_ATTRACTION_CUTOFF_AGE # we just default to the lower of the two
-					}
-				}
-			}
-		}
+		scope:target = { festival_108_target_trigger = yes }
 	}
 
 	immediate = {
@@ -5358,6 +5357,7 @@ festival.108 = {
 						}
 						is_ai = yes
 						house.house_head = this
+						festival_108_target_trigger = yes
 					}
 					save_scope_as = target_character
 				}
@@ -5385,6 +5385,7 @@ festival.108 = {
 						}
 						is_ai = yes
 						house.house_head = this
+						festival_108_target_trigger = yes
 					}
 					save_scope_as = target_character
 				}
@@ -5404,7 +5405,7 @@ festival.108 = {
 		scope:target_character = {
 			if = {
 				limit = {
-					exists = house.house_confederation.leading_house.house_head
+					house.house_confederation.leading_house.house_head ?= { festival_108_courtable_spouse_trigger = yes }
 				}
 				house.house_confederation.leading_house.house_head = {
 					save_scope_as = target_character3
@@ -6185,9 +6186,9 @@ festival.1000 = {
 				random_confederation_member_house = {
 					limit = { # Prefer leading house
 						this = scope:bloc.leading_house
-						house_head ?= { festival_1000_bloc_member_house_trigger = yes }
+						festival_1000_bloc_member_house_trigger = yes
 					}
-					alternative_limit = { house_head ?= { festival_1000_bloc_member_house_trigger = yes } }
+					alternative_limit = { festival_1000_bloc_member_house_trigger = yes }
 					house_head = { save_scope_as = bloc_member_head_2 }
 				}
 			}
@@ -6201,9 +6202,9 @@ festival.1000 = {
 					random_confederation_member_house = {
 						limit = { # Prefer leading house
 							this = root.intent_target.house.house_confederation.leading_house
-							house_head ?= { festival_1000_bloc_member_house_trigger = yes }
+							festival_1000_bloc_member_house_trigger = yes
 						}
-						alternative_limit = { house_head ?= { festival_1000_bloc_member_house_trigger = yes } }
+						alternative_limit = { festival_1000_bloc_member_house_trigger = yes }
 						house_head = { save_scope_as = bloc_member_head_2 }
 					}
 				}

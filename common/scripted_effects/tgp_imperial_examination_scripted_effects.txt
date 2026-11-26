@@ -67,7 +67,7 @@ imperial_examination_cheat_washing_effect = {
 
 #Rewards
 imperial_examination_disburse_activity_host_rewards = {
-	involved_activity = {
+	scope:activity = {
 		add_activity_log_entry = {
 			key = imperial_examination_host_rewards
 			score = 100
@@ -153,7 +153,7 @@ imperial_examination_disburse_activity_host_rewards = {
 }
 
 local_examination_disburse_activity_host_rewards = {
-	involved_activity = {
+	scope:activity = {
 		add_activity_log_entry = {
 			key = imperial_examination_host_rewards
 			score = 100
@@ -752,8 +752,8 @@ imperial_examination_create_appropriate_examiner_effect = {
 	scope:activity.activity_location = { save_scope_as = location }
 	if = {
 		limit = {
-			scope:host = {
-				involved_activity = { has_activity_type = activity_imperial_examination }
+			scope:activity = {
+				has_activity_type = activity_imperial_examination
 			}
 		}
 		if = {

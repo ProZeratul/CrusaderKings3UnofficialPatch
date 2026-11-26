@@ -297,7 +297,7 @@ scripted_effect add_to_gift_pool_effect = {
         flag:herd = {
             change_variable = {
                 name = feast_herd_total
-                add = scope:giver.domicile.$AMOUNT$_herd_value #Unop Use the giver's domicile value, which is what is paid
+                add = scope:giver.domicile.$AMOUNT$_herd_value
             }
             scope:giver = { pay_herd = { target = scope:recipient value = domicile.$AMOUNT$_herd_value } }
         }
@@ -1741,7 +1741,15 @@ feast_tsagaan_sar_events.0101 = {
                     left_icon = root
                     right_icon = scope:horse_haver
                     pay_short_term_gold = { target = scope:horse_haver gold = medium_gold_value }
-                    scope:horse_haver = { pay_herd = { target = root value = domicile.miniscule_herd_value } }
+                    if = {
+                        limit = { has_domicile = yes }
+                        scope:horse_haver = {
+                            pay_herd = {
+                                target = root
+                                value = domicile.miniscule_herd_value
+                            }
+                        }
+                    }
                     add_character_modifier = {
                         modifier = mpo_horse_ride_modifier
                         years = 3
@@ -1800,7 +1808,15 @@ feast_tsagaan_sar_events.0101 = {
                             CHARACTER = root
                             OPINION = -25
                         }
-                        pay_herd = { target = root value = domicile.miniscule_herd_value }
+                    }
+                    if = {
+                        limit = { has_domicile = yes }
+                        scope:horse_haver = {
+                            pay_herd = {
+                                target = root
+                                value = domicile.miniscule_herd_value
+                            }
+                        }
                     }
                     add_character_modifier = {
                         modifier = mpo_horse_ride_modifier

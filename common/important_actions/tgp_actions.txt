@@ -144,6 +144,18 @@ action_hegemonic_tributary_has_low_subject_standing_tributary = {
 			limit = { suzerain.primary_title = title:h_india }
 			decision:tribute_mission_decision_india = { open_view_data = decision_detail }
 		}
+		else_if = {
+			limit = { suzerain.primary_title = title:h_roman_republic }
+			decision:tribute_mission_decision_roman_republic = { open_view_data = decision_detail }
+		}
+		else_if = {
+			limit = { suzerain.primary_title = title:h_carolingian }
+			decision:tribute_mission_decision_carolingian = { open_view_data = decision_detail }
+		}
+		else_if = {
+			limit = { suzerain.primary_title = title:h_kingdom_of_heaven }
+			decision:tribute_mission_decision_kingdom_of_heaven = { open_view_data = decision_detail }
+		}
 	}
 }
 
@@ -790,6 +802,7 @@ action_missing_elder = {
 	check_create_action = {
 		if = {
 			limit = {
+				government_allows = merit
 				is_independent_ruler = no
 				num_of_relation_elder = 0
 				trigger_if = {
@@ -1052,6 +1065,7 @@ action_can_request_treasury = {
 			if = {
 				limit = {
 					root = {
+						government_has_flag = government_is_celestial
 						is_character_interaction_potentially_accepted = {
 							recipient = prev
 							interaction = celestial_request_treasury_interaction
@@ -1069,6 +1083,7 @@ action_can_request_treasury = {
 			if = {
 				limit = {
 					root = {
+						government_has_flag = government_is_celestial
 						is_character_interaction_potentially_accepted = {
 							recipient = prev
 							interaction = celestial_request_treasury_interaction
@@ -1101,6 +1116,7 @@ action_can_request_examination_support = {
 			if = {
 				limit = {
 					root = {
+						government_has_flag = government_is_celestial
 						is_character_interaction_potentially_accepted = {
 							recipient = prev
 							interaction = celestial_request_examination_support_interaction
@@ -1476,6 +1492,7 @@ action_minister_can_pay_treasury_debt = {
 	check_create_action = {
 		if = {
 			limit = {
+				government_has_flag = government_is_celestial
 				has_treasury = yes
 				treasury < 0
 				NOT = { vassal_contract_has_flag = celestial_military_appointment }
@@ -1497,6 +1514,7 @@ action_minister_can_pay_treasury_debt = {
 		}
 		else_if = {
 			limit = {
+				government_has_flag = government_is_celestial
 				has_treasury = yes
 				treasury < 0
 				vassal_contract_has_flag = celestial_military_appointment

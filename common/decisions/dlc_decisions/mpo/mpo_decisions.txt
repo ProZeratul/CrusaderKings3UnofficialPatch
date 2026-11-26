@@ -488,6 +488,10 @@ leave_confederation_decision = {
 
 	is_valid_showing_failures_only = {
 		is_available = yes
+		custom_tooltip = {
+			text = trade_league_actor_bound_commune_tt
+			gdp_is_bound_league_commune_trigger = no
+		}
 	}
 
 	cost = {
@@ -802,8 +806,11 @@ leave_confederation_decision = {
 		modifier = { #All Bankrupt
 			confederation = {
 				any_confederation_member = {
-					this != root
-					gold <= -1
+					filter = {
+						this != root
+					}
+					gold < -1
+					count = all
 				}
 			}
 			add = 50
@@ -6730,6 +6737,7 @@ settle_the_steppe_decision = {
 								}
 							}
 							set_holding_type = city_holding
+							remove_preserved_wilderness_effect = yes
 						}
 					}
 					random_county_province = {
@@ -6760,6 +6768,7 @@ settle_the_steppe_decision = {
 								}
 							}
 							set_holding_type = church_holding
+							remove_preserved_wilderness_effect = yes
 						}
 					}
 				}

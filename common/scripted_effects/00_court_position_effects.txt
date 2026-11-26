@@ -2228,11 +2228,54 @@ camp_officer_generator_assignment_effect = {
 	}
 }
 
+# Candidate flags read by distribute_determined_court_position_effect. Keep in sync with has_any_court_position_flag_trigger
+clear_court_position_flags_effect = {
+	remove_character_flag = akolouthos_flag
+	remove_character_flag = almoner_flag
+	remove_character_flag = antiquarian_flag
+	remove_character_flag = architect_flag
+	remove_character_flag = bodyguard_flag
+	remove_character_flag = boyan_flag
+	remove_character_flag = champion_flag
+	remove_character_flag = court_astrologer_flag
+	remove_character_flag = court_brahmin_flag
+	remove_character_flag = cupbearer_flag
+	remove_character_flag = executioner_flag
+	remove_character_flag = fire_dragon_engineer_flag
+	remove_character_flag = foreign_emissary_flag
+	remove_character_flag = gardener_flag
+	remove_character_flag = garuda_flag
+	remove_character_flag = grand_guardian_flag
+	remove_character_flag = grand_mentor_flag
+	remove_character_flag = grand_preceptor_flag
+	remove_character_flag = horse_flag
+	remove_character_flag = hunt_flag
+	remove_character_flag = jester_flag
+	remove_character_flag = keeper_of_the_harem_flag
+	remove_character_flag = keeper_of_the_horses_flag
+	remove_character_flag = khlon_glan_flag
+	remove_character_flag = lady_in_waiting_flag
+	remove_character_flag = musician_flag
+	remove_character_flag = physician_flag
+	remove_character_flag = poet_flag
+	remove_character_flag = qadi_flag
+	remove_character_flag = seneschal_flag
+	remove_character_flag = siege_engineer_flag
+	remove_character_flag = swan_flag
+	remove_character_flag = taster_flag
+	remove_character_flag = travel_leader_flag
+	remove_character_flag = tutor_flag
+	remove_character_flag = wet_nurse_flag
+	remove_character_flag = yeke_jarquchi_flag
+	remove_character_flag = yurtchi_flag
+}
+
 # Giving out generic court positions
 decide_court_position_to_give_effect = {
 	$EMPLOYER$ = {
 		if = {
 			limit = { exists = $CANDIDATE$ }
+			$CANDIDATE$ = { clear_court_position_flags_effect = yes }
 			if = {
 				limit = {
 					$CANDIDATE$ = {
@@ -2715,6 +2758,7 @@ decide_court_position_to_give_effect = {
 
 ### This effect does NOT care if you are already employing someone in that position
 assign_appropriate_court_position_effect = {
+	$CANDIDATE$ ?= { clear_court_position_flags_effect = yes }
 	if = {
 		limit = {
 			$CANDIDATE$ = {

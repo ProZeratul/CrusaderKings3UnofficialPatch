@@ -1054,25 +1054,6 @@ mpo_nomad_invasion_cb = {
 			}
 		}
 
-		#Change attacker's government
-		scope:attacker = {
-			if = {
-				limit = {
-					exists = scope:becoming_tribal
-				}
-				nomad_convert_people_to_tribe_effect = yes
-			}
-			else_if = {
-				limit = {
-					exists = scope:becoming_clan
-				}
-				nomad_convert_people_to_clan_effect = yes
-			}
-			else = {
-				nomad_convert_people_to_feudal_effect = yes
-			}
-		}
-
 		#Change capital to somewhere in new lands
 		scope:target = {
 			custom_tooltip = overrunning_move_capital_tt
@@ -1176,6 +1157,25 @@ mpo_nomad_invasion_cb = {
 				capital_county.duchy = {
 					save_scope_as = new_capital_duchy
 				}
+			}
+		}
+
+		#Change attacker's government
+		scope:attacker = {
+			if = {
+				limit = {
+					exists = scope:becoming_tribal
+				}
+				nomad_convert_people_to_tribe_effect = yes
+			}
+			else_if = {
+				limit = {
+					exists = scope:becoming_clan
+				}
+				nomad_convert_people_to_clan_effect = yes
+			}
+			else = {
+				nomad_convert_people_to_feudal_effect = yes
 			}
 		}
 
@@ -2147,25 +2147,6 @@ mpo_nomad_duchy_invasion_cb = {
 			}
 		}
 
-		#Change attacker's government
-		scope:attacker = {
-			if = {
-				limit = {
-					exists = scope:becoming_tribal
-				}
-				nomad_convert_people_to_tribe_effect = yes
-			}
-			else_if = {
-				limit = {
-					exists = scope:becoming_clan
-				}
-				nomad_convert_people_to_clan_effect = yes
-			}
-			else = {
-				nomad_convert_people_to_feudal_effect = yes
-			}
-		}
-
 		#Change capital to somewhere in new lands
 		scope:target = {
 			custom_tooltip = overrunning_move_capital_tt
@@ -2200,7 +2181,7 @@ mpo_nomad_duchy_invasion_cb = {
 					ordered_realm_county = {
 						order_by = prosperity_level
 						limit = {
-							kingdom = scope:target
+							duchy = scope:target
 							NOT = {
 								any_county_province = {
 									OR = {
@@ -2219,6 +2200,25 @@ mpo_nomad_duchy_invasion_cb = {
 				capital_county.duchy = {
 					save_scope_as = new_capital_duchy
 				}
+			}
+		}
+
+		#Change attacker's government
+		scope:attacker = {
+			if = {
+				limit = {
+					exists = scope:becoming_tribal
+				}
+				nomad_convert_people_to_tribe_effect = yes
+			}
+			else_if = {
+				limit = {
+					exists = scope:becoming_clan
+				}
+				nomad_convert_people_to_clan_effect = yes
+			}
+			else = {
+				nomad_convert_people_to_feudal_effect = yes
 			}
 		}
 

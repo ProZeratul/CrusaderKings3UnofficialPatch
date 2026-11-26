@@ -1109,7 +1109,7 @@ create_hof_decision = {
 	}
 	picture = {
 		trigger = { religion = religion:judaism_religion }
-		reference = "gfx/interface/illustrations/holding_types/temple_generic_arid.dds"
+		reference = "gfx/interface/illustrations/holding_types/gdp_temple_synagogue.dds"
 	}
 	picture = {
 		trigger = {
@@ -3093,6 +3093,16 @@ pam_cause_great_schism_decision = {
  			}
 		}
 		highest_held_title_tier >= tier_kingdom
+		custom_tooltip = {
+			text = pam_cause_great_schism_decision_head_of_rite_title_tt
+			trigger_if = {
+				limit = {
+					exists = title:k_papal_state.holder
+					exists = title:k_orthodox.holder
+				}
+				title:k_orthodox.holder.rite != title:k_papal_state.holder.rite
+			}
+		}
 		calc_true_if = {
 			amount >= 4
 			piety_level >= very_high_piety_level
@@ -3488,7 +3498,7 @@ pam_promulgate_word_of_pious_deeds_decision = {
 	sort_order = 110
 
 	is_shown = {
-		domicile ?= { has_domicile_parameter = unlocks_pam_promulgate_word_of_pious_deeds_decision } #Unop Check the parameter that the chancery buildings define, as is_valid does
+		domicile ?= { has_domicile_parameter = unlocks_pam_promulgate_word_of_pious_deeds_decision }
 		pam_can_hold_cardinalate_trigger = yes
 		is_clergy = yes
 		has_spiritual_fulfillment_type = christian_fulfillment

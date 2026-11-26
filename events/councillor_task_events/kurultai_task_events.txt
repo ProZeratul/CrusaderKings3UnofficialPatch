@@ -415,10 +415,7 @@ kurultai_task.1105 = {
 		scope:councillor = { 
 			kurultai_task_1105_character_trigger = yes 
 			councillor_task_target.county = {
-				NOR = {
-					has_county_modifier = kurultai_task_increase_popular_opinion_modifier
-					has_county_modifier = kurultai_task_decrease_popular_opinion_modifier
-				}
+				NOT = { has_variable = kurultai_task_popular_opinion_cooldown }
 			}	
 		}
 	}
@@ -440,8 +437,9 @@ kurultai_task.1105 = {
 
 scripted_effect kurultai_task_1106_effect = {
 	scope:county = {
-		add_county_modifier = {
-			modifier = kurultai_task_increase_popular_opinion_modifier
+		add_popular_opinion = 6
+		set_variable = {
+			name = kurultai_task_popular_opinion_cooldown
 			years = 5
 		}
 	}
@@ -1054,10 +1052,7 @@ kurultai_task.1355 = {
 		scope:councillor = { 
 			kurultai_task_1355_character_trigger = yes 
 			councillor_task_target.county = {
-				NOR = {
-					has_county_modifier = kurultai_task_increase_popular_opinion_modifier
-					has_county_modifier = kurultai_task_decrease_popular_opinion_modifier
-				}
+				NOT = { has_variable = kurultai_task_popular_opinion_cooldown }
 			}	
 		}
 	}
@@ -1079,8 +1074,9 @@ kurultai_task.1355 = {
 
 scripted_effect kurultai_task_1356_effect = {
 	scope:county = {
-		add_county_modifier = {
-			modifier = kurultai_task_decrease_popular_opinion_modifier
+		add_popular_opinion = -10
+		set_variable = {
+			name = kurultai_task_popular_opinion_cooldown
 			years = 5
 		}
 	}

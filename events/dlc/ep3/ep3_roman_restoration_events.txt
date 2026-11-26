@@ -66,9 +66,19 @@ ep3_roman_restoration.0100 = {
 		custom_tooltip = ep3_roman_restoration.invasion_cb
 		every_held_title = {
 			limit = {
-				is_head_of_faith = yes
+				OR = {
+					is_head_of_faith = yes
+					has_clerical_region = yes
+				}
 			}
 			root = {
+				if = {
+					limit = {
+						primary_title = prev
+						has_treasury = yes
+					}
+					empty_treasury_effect = yes
+				}
 				destroy_title = prev
 			}
 		}
@@ -143,9 +153,19 @@ ep3_roman_restoration.0100 = {
 		custom_tooltip = ep3_roman_restoration.easy_mode
 		every_held_title = {
 			limit = {
-				is_head_of_faith = yes
+				OR = {
+					is_head_of_faith = yes
+					has_clerical_region = yes
+				}
 			}
 			root = {
+				if = {
+					limit = {
+						primary_title = prev
+						has_treasury = yes
+					}
+					empty_treasury_effect = yes
+				}
 				destroy_title = prev
 			}
 		}
@@ -327,10 +347,7 @@ ep3_roman_restoration.0300 = {
 					scope:inefficient_governor = {
 						every_sub_realm_county = {
 							custom = ep3_roman_restoration.0300.every_sub_realm_county
-							add_county_modifier = {
-								modifier = restore_rome_recuperated_popular_opinion_modifier
-								years = 10
-							}
+							add_popular_opinion = 10
 						}
 					}
 				}
@@ -350,10 +367,7 @@ ep3_roman_restoration.0300 = {
 					scope:inefficient_governor = {
 						every_sub_realm_county = {
 							custom = ep3_roman_restoration.0300.every_sub_realm_county
-							add_county_modifier = {
-								modifier = restore_rome_devastated_popular_opinion_modifier
-								years = 10
-							}
+							add_popular_opinion = -15
 						}
 					}
 				}
@@ -376,10 +390,7 @@ ep3_roman_restoration.0300 = {
 		scope:inefficient_governor = {
 			every_sub_realm_county = {
 				custom = ep3_roman_restoration.0300.every_sub_realm_county
-				add_county_modifier = {
-					modifier = restore_rome_recuperated_popular_opinion_modifier
-					years = 10
-				}
+				add_popular_opinion = 10
 			}
 			force_step_down_landed_titles = yes
 		}
@@ -391,10 +402,7 @@ ep3_roman_restoration.0300 = {
 		scope:inefficient_governor = {
 			every_sub_realm_county = {
 				custom = ep3_roman_restoration.0300.every_sub_realm_county
-				add_county_modifier = {
-					modifier = restore_rome_lowered_popular_opinion_modifier
-					years = 10
-				}
+				add_popular_opinion = -10
 			}
 		}
 

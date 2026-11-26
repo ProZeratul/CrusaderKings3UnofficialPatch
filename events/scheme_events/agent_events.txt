@@ -811,7 +811,15 @@ agent_events.0012 = {
 					agent_events_0012_extra_requirements_for_lovers_trigger = yes
 				}
 				save_scope_as = char_1
-				scope:char_temp = { save_scope_as = char_2 }
+				random_relation = {
+					type = potential_lover
+					limit = {
+						save_temporary_scope_as = char_temp
+						scope:scheme = { scheme_is_character_agent = scope:char_temp }
+						scope:char_1 = { agent_events_0012_extra_requirements_for_lovers_trigger = yes }
+					}
+					save_scope_as = char_2
+				}
 			}
 		}
 	}
@@ -3834,10 +3842,13 @@ agent_events.3031 = {
 				send_interface_toast = {
 					title = agent_events.3031.a.tt.success
 					left_icon = scope:relation
-					reverse_add_opinion = {
-						target = scope:relation
-						modifier = pity_opinion
-						opinion = -15
+					if = {
+						limit = { scope:relation = { is_alive = yes } } # They can die before the option is chosen
+						reverse_add_opinion = {
+							target = scope:relation
+							modifier = pity_opinion
+							opinion = -15
+						}
 					}
 				}
 			}
@@ -3853,10 +3864,13 @@ agent_events.3031 = {
 				send_interface_toast = {
 					title = agent_events.3031.a.tt.failure
 					left_icon = scope:relation
-					reverse_add_opinion = {
-						target = scope:relation
-						modifier = frustrated_opinion
-						opinion = -50
+					if = {
+						limit = { scope:relation = { is_alive = yes } } # They can die before the option is chosen
+						reverse_add_opinion = {
+							target = scope:relation
+							modifier = frustrated_opinion
+							opinion = -50
+						}
 					}
 				}
 			}
@@ -3873,10 +3887,13 @@ agent_events.3031 = {
 	option = {
 		name = agent_events.3031.b
 		
-		reverse_add_opinion = {
-			target = scope:relation
-			modifier = frustrated_opinion
-			opinion = -35
+		if = {
+			limit = { scope:relation = { is_alive = yes } } # They can die before the option is chosen
+			reverse_add_opinion = {
+				target = scope:relation
+				modifier = frustrated_opinion
+				opinion = -35
+			}
 		}
 
 		# No stress here.

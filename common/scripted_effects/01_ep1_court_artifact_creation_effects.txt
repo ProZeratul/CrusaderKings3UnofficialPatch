@@ -884,12 +884,15 @@ create_artifact_wall_narwhal_horn_effect = {
 	}
 	scope:newly_created_artifact = {
 		if = {
-			limit = { scope:quality >= 66 }
-			add_artifact_modifier = artifact_court_grandeur_baseline_add_2_modifier
-		}
-		else_if = {
-			limit = { scope:quality >= 33 }
-			add_artifact_modifier = artifact_court_grandeur_baseline_add_1_modifier
+			limit = { court_artifact_modifier_trigger = yes }
+			if = {
+				limit = { scope:quality >= 66 }
+				add_artifact_modifier = artifact_court_grandeur_baseline_add_2_modifier
+			}
+			else_if = {
+				limit = { scope:quality >= 33 }
+				add_artifact_modifier = artifact_court_grandeur_baseline_add_1_modifier
+			}
 		}
 
 		# Wealth determines prestige
@@ -1777,6 +1780,9 @@ create_artifact_wall_banner_effect = {
 								}
 							}
 							10 = { # Prestige per Knight
+								trigger = {
+									short_reign_artifact_modifier_trigger = yes
+								}
 								random_list = {
 									10 = {
 										add_artifact_modifier = artifact_monthly_prestige_gain_per_knight_add_1_modifier
@@ -1787,6 +1793,9 @@ create_artifact_wall_banner_effect = {
 								}
 							}
 							10 = { # Prestige per Dread
+								trigger = {
+									short_reign_artifact_modifier_trigger = yes
+								}
 								random_list = {
 									10 = {
 										add_artifact_modifier = artifact_monthly_prestige_gain_per_dread_add_1_modifier
@@ -2114,6 +2123,9 @@ create_artifact_wall_banner_effect = {
 					}
 					# glory_hound_opinion
 					10 = {
+						trigger = {
+							vassal_artifact_modifier_trigger = yes
+						}
 						if = {
 							limit = { rarity = common }
 							add_artifact_modifier = artifact_glory_hound_vassal_opinion_1_modifier
@@ -2133,6 +2145,9 @@ create_artifact_wall_banner_effect = {
 					}
 					# glory_hound_levy_mult
 					10 = {
+						trigger = {
+							vassal_artifact_modifier_trigger = yes
+						}
 						if = {
 							limit = { rarity = common }
 							add_artifact_modifier = artifact_glory_hound_levy_contribution_mult_1_modifier
@@ -2152,6 +2167,9 @@ create_artifact_wall_banner_effect = {
 					}
 					# belligerent_opinion
 					10 = {
+						trigger = {
+							vassal_artifact_modifier_trigger = yes
+						}
 						if = {
 							limit = { rarity = common }
 							add_artifact_modifier = artifact_belligerent_vassal_opinion_1_modifier
@@ -2171,6 +2189,9 @@ create_artifact_wall_banner_effect = {
 					}
 					# belligerent_levy_mult
 					10 = {
+						trigger = {
+							vassal_artifact_modifier_trigger = yes
+						}
 						if = {
 							limit = { rarity = common }
 							add_artifact_modifier = artifact_belligerent_levy_contribution_mult_1_modifier
@@ -2455,7 +2476,10 @@ create_artifact_pedestal_scroll_effect = {
 	}
 	scope:newly_created_artifact = {
 		add_artifact_modifier = artifact_stewardship_per_stress_level_2_modifier
-		add_artifact_modifier = artifact_parochial_vassal_opinion_3_modifier
+		if = {
+			limit = { vassal_artifact_modifier_trigger = yes }
+			add_artifact_modifier = artifact_parochial_vassal_opinion_3_modifier
+		}
 	}
 }
 
@@ -2652,7 +2676,7 @@ create_artifact_pedestal_diamond_effect = {
 	}
 	scope:newly_created_artifact = {
 		if = {
-			limit = { scope:owner = { has_royal_court = yes } }
+			limit = { court_artifact_modifier_trigger = yes }
 			add_scaled_artifact_modifier_grandeur_big_effect = yes
 		}
 		add_scaled_artifact_modifier_prestige_effect = yes
@@ -2683,7 +2707,7 @@ create_artifact_pedestal_gold_effect = {
 
 	scope:newly_created_artifact = {
 		if = {
-			limit = { scope:owner = { has_royal_court = yes } }
+			limit = { court_artifact_modifier_trigger = yes }
 			add_scaled_artifact_modifier_grandeur_small_effect = yes
 		}
 		add_2_scaled_artifact_modifier_majesty_effect = yes
@@ -3571,6 +3595,7 @@ get_book_content_quality_effect = {
 			if = { # relationship - score based on the authors opinion of the subject
 				limit = {
 					has_artifact_feature = book_subject_relationship
+					exists = scope:owner.var:book_topic_relationship
 					scope:skill_base = {
 						save_temporary_opinion_value_as = {
 							name = opinion_of_subject
@@ -4179,7 +4204,7 @@ create_artifact_book_effect = {
 				}
 				add_artifact_modifier = artifact_dynasty_opinion_2_modifier
 				if = {
-					limit = { scope:owner = { has_royal_court = yes } artifact_not_luxury_contract_trigger = yes }
+					limit = { court_artifact_modifier_trigger = yes artifact_not_luxury_contract_trigger = yes }
 					add_artifact_modifier = artifact_court_grandeur_baseline_add_1_modifier
 				}
 			}
@@ -4215,7 +4240,7 @@ create_artifact_book_effect = {
 				}
 				add_artifact_modifier = artifact_dynasty_opinion_2_modifier
 				if = {
-					limit = { scope:owner = { has_royal_court = yes } artifact_not_luxury_contract_trigger = yes }
+					limit = { court_artifact_modifier_trigger = yes artifact_not_luxury_contract_trigger = yes }
 					add_artifact_modifier = artifact_court_grandeur_baseline_add_1_modifier
 				}
 			}
@@ -4494,7 +4519,7 @@ create_artifact_book_effect = {
 				if = {
 					limit = {
 						artifact_type = book
-						scope:owner = { has_royal_court = yes }
+						court_artifact_modifier_trigger = yes
 						artifact_not_luxury_contract_trigger = yes
 					}
 					add_artifact_modifier = artifact_court_grandeur_baseline_add_1_modifier
@@ -5117,7 +5142,10 @@ create_artifact_book_effect = {
 					}
 					add_artifact_modifier = artifact_courtier_and_guest_opinion_1_modifier
 				}
-				add_artifact_modifier = artifact_monthly_tyranny_2_modifier
+				if = {
+					limit = { vassal_artifact_modifier_trigger = yes }
+					add_artifact_modifier = artifact_monthly_tyranny_2_modifier
+				}
 			}
 			else_if = {
 				limit = {
@@ -5551,28 +5579,31 @@ create_artifact_book_effect = {
 				}
 				add_artifact_modifier = artifact_monthly_learning_lifestyle_xp_1_modifier
 				if = {
-					limit = {
-						rarity = illustrious
+					limit = { vassal_artifact_modifier_trigger = yes }
+					if = {
+						limit = {
+							rarity = illustrious
+						}
+						add_artifact_modifier = artifact_monthly_tyranny_7_modifier
 					}
-					add_artifact_modifier = artifact_monthly_tyranny_7_modifier
-				}
-				else_if = {
-					limit = {
-						rarity = famed
+					else_if = {
+						limit = {
+							rarity = famed
+						}
+						add_artifact_modifier = artifact_monthly_tyranny_5_modifier
 					}
-					add_artifact_modifier = artifact_monthly_tyranny_5_modifier
-				}
-				else_if = {
-					limit = {
-						rarity = masterwork
+					else_if = {
+						limit = {
+							rarity = masterwork
+						}
+						add_artifact_modifier = artifact_monthly_tyranny_3_modifier
+					} 
+					else_if = {
+						limit = {
+							rarity = common
+						}
+						add_artifact_modifier = artifact_monthly_tyranny_1_modifier
 					}
-					add_artifact_modifier = artifact_monthly_tyranny_3_modifier
-				} 
-				else_if = {
-					limit = {
-						rarity = common
-					}
-					add_artifact_modifier = artifact_monthly_tyranny_1_modifier
 				}
 			}
 			else_if = {

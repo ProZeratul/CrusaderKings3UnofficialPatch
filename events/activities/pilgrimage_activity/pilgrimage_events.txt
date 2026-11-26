@@ -9606,6 +9606,10 @@ pilgrimage.4100 = {
 		position = lower_right_portrait
 		trigger = { exists = scope:badge_to_buy }
 	}
+	trigger = {
+		exists = involved_activity
+		location = involved_activity.activity_location
+	}
 	immediate = {
 		#Find a bystander
 		random_pool_character = {
@@ -13747,11 +13751,9 @@ pilgrimage.6800 = {
 		}
 		else_if = {
 			limit = { can_set_relation_friend_trigger = { CHARACTER = scope:holy_site_owner } }
-			scope:holy_site_owner = {
-				set_relation_friend = {
-					reason = friend_holy_site_monk_monk
-					target = scope:bishop_pilgrim
-				}
+			set_relation_friend = {
+				reason = friend_holy_site_monk_monk
+				target = scope:holy_site_owner
 			}
 		}
 		else = {

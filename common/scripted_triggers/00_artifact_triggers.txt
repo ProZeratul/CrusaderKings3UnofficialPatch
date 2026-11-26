@@ -2484,6 +2484,24 @@ merchant_artifact_modifier_trigger = {
 	}
 }
 
+court_artifact_modifier_trigger = {
+	trigger_if = {
+		limit = { exists = scope:owner }
+		scope:owner = { has_royal_court = yes }
+	}
+	trigger_else = {
+		artifact_owner ?= { has_royal_court = yes }
+	}
+}
+
+domicile_artifact_modifier_trigger = {
+	trigger_if = {
+		limit = { exists = scope:owner }
+		exists = scope:owner.domicile
+	}
+	trigger_else = { exists = artifact_owner.domicile }
+}
+
 # Slot 1 of each type is always available; company_unlock_*_slot_N unlocks slots 2 to N+1.
 has_free_domicile_curio_slot_trigger = {
 	exists = domicile

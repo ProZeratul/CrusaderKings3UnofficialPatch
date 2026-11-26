@@ -730,6 +730,38 @@ sons_of_lothbrok_invasion_cb = {
 	on_victory_desc = {
 		first_valid = {
 			triggered_desc = {
+				trigger = {
+					any_in_list = {
+						list = target_titles
+						OR = {
+							this = title:d_lothian
+							this = title:d_galloway
+						}
+					}
+					scope:war = {
+						any_war_attacker = {
+							has_title = title:d_western_isles
+						}
+					}
+					scope:attacker = {
+						NOT = { has_title = title:d_western_isles }
+					}
+				}
+				desc = {
+					first_valid = {
+						triggered_desc = {
+							trigger = { scope:attacker = { is_local_player = yes } }
+							desc = sons_of_lothbrok_invasion_cb_victory_desc_western_isles_attacker
+						}
+						triggered_desc = {
+							trigger = { scope:defender = { is_local_player = yes } }
+							desc = sons_of_lothbrok_invasion_cb_victory_desc_western_isles_defender
+						}
+						desc = sons_of_lothbrok_invasion_cb_victory_desc_western_isles
+					}
+				}
+			}
+			triggered_desc = {
 				trigger = { scope:attacker = { is_local_player = yes } }
 				desc = sons_of_lothbrok_invasion_cb_victory_desc_attacker
 			}
@@ -753,6 +785,27 @@ sons_of_lothbrok_invasion_cb = {
 			add_claim_on_loss = yes
 		}
 
+		# Lothian and Galloway go to the Western Isles holder when they fight alongside the war leader
+		if = {
+			limit = {
+				any_in_list = {
+					list = target_titles
+					OR = {
+						this = title:d_lothian
+						this = title:d_galloway
+					}
+				}
+				scope:war = {
+					any_war_attacker = {
+						has_title = title:d_western_isles
+					}
+				}
+			}
+			title:d_western_isles.holder ?= {
+				save_scope_as = western_isles_holder
+			}
+		}
+
 		# go through the dejure hierarchy under target titles, transfer eligible vassals and seize counties from ineligible ones
 		every_in_list = {
 			list = target_titles
@@ -765,28 +818,63 @@ sons_of_lothbrok_invasion_cb = {
 
 		every_in_list = {
 			list = titles_taken
-			change_title_holder = {
-				holder = scope:attacker
-				change = scope:change
-				take_baronies = yes
+			if = {
+				limit = {
+					exists = scope:western_isles_holder
+					OR = {
+						target_is_de_jure_liege_or_above = title:d_lothian
+						target_is_de_jure_liege_or_above = title:d_galloway
+					}
+				}
+				change_title_holder = {
+					holder = scope:western_isles_holder
+					change = scope:change
+					take_baronies = yes
+				}
+			}
+			else = {
+				change_title_holder = {
+					holder = scope:attacker
+					change = scope:change
+					take_baronies = yes
+				}
 			}
 		}
 
 		every_in_list = {
 			list = vassals_taken
-			change_liege = {
-				liege = scope:attacker
-				change = scope:change
+			if = {
+				limit = {
+					exists = scope:western_isles_holder
+					capital_county ?= {
+						OR = {
+							target_is_de_jure_liege_or_above = title:d_lothian
+							target_is_de_jure_liege_or_above = title:d_galloway
+						}
+					}
+				}
+				change_liege = {
+					liege = scope:western_isles_holder
+					change = scope:change
+				}
+			}
+			else = {
+				change_liege = {
+					liege = scope:attacker
+					change = scope:change
+				}
 			}
 		}
 
 		resolve_title_and_vassal_change = scope:change
 
 		# Prestige Progress for the Attacker
-		every_in_list = {
-			list = target_titles
-			scope:attacker = {
-				add_prestige_experience = medium_prestige_value
+		scope:attacker = {
+			add_prestige_experience = {
+				every_in_list = {
+					list = target_titles
+					add = medium_prestige_value
+				}
 			}
 		}
 
@@ -2247,6 +2335,8 @@ fp1_scandi_adventurer_conquest = {
 			WINNER_ALLY_FAME_SCALE = 1
 			LOSER_ALLY_FAME_SCALE = 1
 		}
+
+		scope:attacker = { clean_scandinavian_adventurer_effect = yes }
 	}
 
 	on_white_peace_desc = {
@@ -2311,11 +2401,6 @@ fp1_scandi_adventurer_conquest = {
 	on_defeat = {
 		on_defeat_aggressive_war_effect = yes
 
-		scope:defender = {
-			#EP2 accolade glory gain for winning against higher ranked enemy
-			accolade_defender_war_end_glory_gain_med_effect = yes
-		}
-
 		# Prestige loss for the attacker
 		scope:attacker = {
 			if = {
@@ -2328,65 +2413,73 @@ fp1_scandi_adventurer_conquest = {
 			}
 		}
 
-		# Prestige for Defender
-		scope:defender = {
-			add_prestige_war_defender_effect = {
-				PRESTIGE_VALUE = major_prestige_value
+		if = {
+			limit = { scope:war ?= { NOT = { has_variable = no_gold_reparations } } }
+			scope:defender = {
+				#EP2 accolade glory gain for winning against higher ranked enemy
+				accolade_defender_war_end_glory_gain_med_effect = yes
 			}
-		}
 
-		# Allies on both sides get full prestige value for helping in the war, based on their war participation.
-		modify_allies_of_participants_fame_values = {
-			WINNER = scope:defender
-			FAME_BASE = medium_prestige_value
-			IS_RELIGIOUS_WAR = no
-			WINNER_ALLY_FAME_SCALE = 1
-			LOSER_ALLY_FAME_SCALE = 1
-		}
+			# Prestige for Defender
+			scope:defender = {
+				add_prestige_war_defender_effect = {
+					PRESTIGE_VALUE = major_prestige_value
+				}
+			}
 
-		# Give scope:defender some goodies.
-		scope:defender = {
-			# Including a break from the fighting.
-			fp1_add_realm_size_appropriate_sa_reprieve_effect = yes
-			# And a tally towards a nickname.
-			## Which starts...
-			if = {
-				limit = {
-					NOT = { has_variable = fp1_has_beaten_sa_progress }
-				}
-				set_variable = {
-					name = fp1_has_beaten_sa_progress
-					value = 1
-				}
+			# Allies on both sides get full prestige value for helping in the war, based on their war participation.
+			modify_allies_of_participants_fame_values = {
+				WINNER = scope:defender
+				FAME_BASE = medium_prestige_value
+				IS_RELIGIOUS_WAR = no
+				WINNER_ALLY_FAME_SCALE = 1
+				LOSER_ALLY_FAME_SCALE = 1
 			}
-			## ... and grows...
-			else_if = {
-				limit = {
-					has_variable = fp1_has_beaten_sa_progress
-					## If <9 adventurers has already been defeated, add +1 otherwise...
-					var:fp1_has_beaten_sa_progress <= 8
-				}
-				change_variable = {
-					name = fp1_has_beaten_sa_progress
-					add = 1
-				}
-			}
-			## ... towards a pay-off.
-			## if >8 adventures has already been defeated give nickname
-			else_if = {
-				limit = {
-					OR = {
-						has_bad_nickname = yes
-						has_any_nickname = no
+
+			# Give scope:defender some goodies.
+			scope:defender = {
+				# Including a break from the fighting.
+				fp1_add_realm_size_appropriate_sa_reprieve_effect = yes
+				# And a tally towards a nickname.
+				## Which starts...
+				if = {
+					limit = {
+						NOT = { has_variable = fp1_has_beaten_sa_progress }
+					}
+					set_variable = {
+						name = fp1_has_beaten_sa_progress
+						value = 1
 					}
 				}
-				hidden_effect = {
-					random_list = {
-						20 = { give_nickname = nick_the_bane_of_danes }
-						20 = { give_nickname = nick_the_culture_wall }
-						20 = { give_nickname = nick_nord_foe }
-						20 = { give_nickname = nick_the_scourge_of_the_northerners }
-						20 = { give_nickname = nick_the_burner_of_ash }
+				## ... and grows...
+				else_if = {
+					limit = {
+						has_variable = fp1_has_beaten_sa_progress
+						## If <9 adventurers has already been defeated, add +1 otherwise...
+						var:fp1_has_beaten_sa_progress <= 8
+					}
+					change_variable = {
+						name = fp1_has_beaten_sa_progress
+						add = 1
+					}
+				}
+				## ... towards a pay-off.
+				## if >8 adventures has already been defeated give nickname
+				else_if = {
+					limit = {
+						OR = {
+							has_bad_nickname = yes
+							has_any_nickname = no
+						}
+					}
+					hidden_effect = {
+						random_list = {
+							20 = { give_nickname = nick_the_bane_of_danes }
+							20 = { give_nickname = nick_the_culture_wall }
+							20 = { give_nickname = nick_nord_foe }
+							20 = { give_nickname = nick_the_scourge_of_the_northerners }
+							20 = { give_nickname = nick_the_burner_of_ash }
+						}
 					}
 				}
 			}

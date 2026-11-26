@@ -733,25 +733,213 @@ tgp_silk_road_phase_message_effect = {
 			send_interface_message = {
 				type = msg_silk_road_good
 				title = msg_silk_road_phase_change_title
-				custom_tooltip = msg_silk_road_phase_change_tt
+				desc = msg_silk_road_phase_change_tt
+				if = {
+					limit = { government_allows = profit_trade_routes }
+					custom_description_no_bullet = { text = msg_silk_road_exceptional_bounty_trade_tt }
+				}
 			}
 		}
 		else_if = {
 			limit = {
-				scope:situation_sub_region = { sub_region_current_phase = phase_hardship}
+				scope:situation_sub_region = { sub_region_current_phase = phase_hardship }
 			}
 			send_interface_message = {
 				type = msg_silk_road_bad
 				title = msg_silk_road_phase_change_title
-				custom_tooltip = msg_silk_road_phase_change_tt
+				desc = msg_silk_road_phase_change_tt
+				if = {
+					limit = { government_allows = profit_trade_routes }
+					custom_description_no_bullet = { text = msg_silk_road_hardship_trade_tt }
+				}
 			}
 		}
 		else = {
 			send_interface_message = {
 				type = msg_silk_road_neutral
 				title = msg_silk_road_phase_change_title
-				custom_tooltip = msg_silk_road_phase_change_tt
+				desc = msg_silk_road_phase_change_tt
+				if = {
+					limit = { government_allows = profit_trade_routes }
+					custom_description_no_bullet = { text = msg_silk_road_neutral_trade_tt }
+				}
 			}
 		}
 	}
+}
+
+# The road between the FROM and TO markets follows the phase of the sub-region holding FROM
+tgp_silk_road_refresh_road_modifier_effect = {
+	province:$FROM$ = {
+		every_road_in_province = {
+			limit = {
+				any_road_province = { this = province:$TO$ }
+			}
+			save_temporary_scope_as = silk_road_road_temp
+			remove_road_modifier = silk_road_exceptional_bounty_road_modifier
+			remove_road_modifier = silk_road_steady_trading_road_modifier
+			remove_road_modifier = silk_road_hardship_road_modifier
+			situation:silk_road_situation = {
+				random_situation_sub_region = {
+					limit = { situation_sub_region_has_province = province:$FROM$ }
+					if = {
+						limit = { sub_region_current_phase = phase_exceptional_bounty }
+						scope:silk_road_road_temp = { add_road_modifier = silk_road_exceptional_bounty_road_modifier }
+					}
+					else_if = {
+						limit = { sub_region_current_phase = phase_steady_trading }
+						scope:silk_road_road_temp = { add_road_modifier = silk_road_steady_trading_road_modifier }
+					}
+					else_if = {
+						limit = { sub_region_current_phase = phase_hardship }
+						scope:silk_road_road_temp = { add_road_modifier = silk_road_hardship_road_modifier }
+					}
+				}
+			}
+		}
+	}
+}
+
+# Keep in sync with the roads in silk_road_road_modifiers and silk_road_branch_road_modifiers
+tgp_silk_road_refresh_road_modifiers_effect = {
+	# Chang'an to Dunhuang
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 10132 TO = 10430 } # fengxiang_to_jingzhao_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 10132 TO = 12357 } # fengxiang_to_qinzhou_1_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9418 TO = 12357 } # xiningzhou_to_qinzhou_1_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9521 TO = 9418 } # liangzhou_to_xiningzhou_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9513 TO = 9521 } # ganzhou_to_liangzhou_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9513 TO = 9476 } # ganzhou_to_shazhou_road
+	# Dunhuang to Kashgar, southern route
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1442 TO = 9476 } # charkliq_to_shazhou_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1442 TO = 1440 } # charkliq_to_khotan_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1439 TO = 1440 } # kashgar_to_khotan_road
+	# Dunhuang to Kashgar, northern route
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9476 TO = 1446 } # shazhou_to_kara_khoja_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1443 TO = 1446 } # kara_khoja_to_karashar_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1443 TO = 1439 } # karashar_to_kashgar_road
+	# Kashgar to Gurganj
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4438 TO = 1439 } # ferghana_to_kashgar_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4438 TO = 4414 } # ferghana_to_oshrusana_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4414 TO = 4404 } # oshrusana_to_bukhara_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4456 TO = 4404 } # gurganj_to_bukhara_road
+	# Samarkand to Merv
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4238 TO = 4404 } # merv_to_bukhara_road
+	# Gurganj to Herat
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4456 TO = 4238 } # gurganj_to_merv_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4215 TO = 4238 } # herat_to_merv_road
+	# Herat to Tabriz
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4215 TO = 4017 } # herat_to_nishapur_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4017 TO = 4319 } # nishapur_to_rayy_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4333 TO = 4319 } # hamadan_to_rayy_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4537 TO = 4333 } # tabriz_to_hamadan_road
+	# Herat to Lahur
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4225 TO = 4215 } # ghur_to_herat_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4225 TO = 4504 } # ghur_to_kabul_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1180 TO = 4504 } # udabhanda_to_kabul_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1180 TO = 1362 } # udabhanda_to_lahur_road
+	# Lahur to Lhasa
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9050 TO = 1362 } # kamru_to_lahur_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9050 TO = 9052 } # kamru_to_tsaparang_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9052 TO = 9068 } # tsaparang_to_purang_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9068 TO = 9190 } # purang_to_sagya_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9190 TO = 9194 } # sagya_to_xigaze_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9238 TO = 9194 } # lhasa_to_xigaze_road
+	# Lhasa to Chang'an
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9238 TO = 9255 } # lhasa_to_nagchu_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9255 TO = 9302 } # nagchu_to_qamdo_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9303 TO = 9302 } # lhatok_to_qamdo_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9343 TO = 9303 } # dege_to_lhatok_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9330 TO = 9343 } # chakla_to_dege_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9330 TO = 10220 } # chakla_to_qiongzhou_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 10220 TO = 10216 } # qiongzhou_to_chengdu_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9718 TO = 10216 } # tongchuan_to_chengdu_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9718 TO = 13107 } # tongchuan_to_lizhou_2_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 13107 TO = 9767 } # lizhou_2_to_xingyuan_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9767 TO = 10430 } # xingyuan_to_jingzhao_road
+	# Beijing to Chang'an
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9710 TO = 9702 } # hejian_to_youzhou_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 10187 TO = 9710 } # zhenzhou_to_hejian_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 10187 TO = 10358 } # zhenzhou_to_weizhou_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 10358 TO = 8877 } # weizhou_to_yunzhou_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 8877 TO = 9819 } # yunzhou_to_huazhou_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9822 TO = 9819 } # bianzhou_to_huazhou_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9780 TO = 9819 } # henan_to_huazhou_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9780 TO = 10259 } # henan_to_shanzhou_2_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 10259 TO = 10430 } # shanzhou_2_to_jingzhao_road
+	# Suzhou to Kaifeng
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 8933 TO = 10331 } # yangzhou_to_jiangning_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 8933 TO = 10249 } # yangzhou_to_shouzhou_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9822 TO = 10249 } # bianzhou_to_shouzhou_road
+	# Nanhai to Chengdu
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 12989 TO = 8892 } # tanzhou_to_guangzhou_1_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 10395 TO = 12989 } # ezhou_to_tanzhou_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 10395 TO = 10022 } # ezhou_to_jiangling_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 10022 TO = 9763 } # jiangling_to_kuizhou_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9763 TO = 9734 } # kuizhou_to_suining_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9734 TO = 10216 } # suining_to_chengdu_road
+	# Dali to Lhatok
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 10869 TO = 10875 } # dali_to_jianchuan_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9323 TO = 10875 } # batang_to_jianchuan_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9323 TO = 9303 } # batang_to_lhatok_road
+	# Sagya to Lahur, via Kathmandu and Pataliputra
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9116 TO = 9190 } # kathmandu_to_sagya_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 9116 TO = 1419 } # kathmandu_to_mithila_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1154 TO = 1419 } # magadha_to_mithila_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1166 TO = 1419 } # jaunpur_to_mithila_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1356 TO = 1166 } # kanyakubja_to_jaunpur_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1356 TO = 1359 } # kanyakubja_to_mathura_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1365 TO = 1359 } # delhi_to_mathura_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1365 TO = 1362 } # delhi_to_lahur_road
+	# Pataliputra to Chatigama
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1151 TO = 1154 } # laksmanavati_to_magadha_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1151 TO = 828 } # laksmanavati_to_bikrampur_road
+	# Kanyakubja to Khambhat
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1170 TO = 1356 } # vidisa_to_kanyakubja_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1170 TO = 1288 } # vidisa_to_ujjayini_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1288 TO = 3375 } # ujjayini_to_sarasvata_mandala_road
+	# Lahur to Debul
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1362 TO = 1338 } # lahur_to_multan_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1138 TO = 1338 } # bhakkar_to_multan_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1138 TO = 1297 } # bhakkar_to_debul_road
+	# Hamadan to Cairo
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4333 TO = 4781 } # hamadan_to_kermanshah_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4828 TO = 4781 } # baghdad_to_kermanshah_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4828 TO = 4889 } # baghdad_to_rahba_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4889 TO = 5948 } # rahba_to_palmyra_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 5934 TO = 5948 } # aleppo_to_palmyra_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 5934 TO = 5929 } # aleppo_to_homs_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 5924 TO = 5929 } # damascus_to_homs_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 5924 TO = 5921 } # damascus_to_tiberias_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 5962 TO = 5921 } # jerusalem_to_tiberias_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 5962 TO = 6038 } # jerusalem_to_farama_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 6042 TO = 6038 } # cairo_to_farama_road
+	# Aleppo to Sebasteia
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 5934 TO = 4869 } # aleppo_to_edessa_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4869 TO = 5602 } # edessa_to_sebasteia_road
+	# Tabriz to Constantinople
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 4537 TO = 681 } # tabriz_to_hayk_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 681 TO = 5737 } # hayk_to_tao_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 704 TO = 5737 } # theodosiopolis_to_tao_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 704 TO = 5602 } # theodosiopolis_to_sebasteia_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 5617 TO = 5602 } # charsianon_to_sebasteia_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 740 TO = 5617 } # honorias_to_charsianon_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 740 TO = 5565 } # honorias_to_bithynia_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 5565 TO = 496 } # bithynia_to_byzantion_road
+	# Gurganj to Ani, via the Caspian steppe
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 900 TO = 4456 } # yangikent_to_gurganj_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 900 TO = 7096 } # yangikent_to_barsuki_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 618 TO = 7096 } # atyrau_to_barsuki_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 618 TO = 620 } # atyrau_to_itil_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 620 TO = 595 } # sarysyn_to_itil_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 607 TO = 595 } # sarysyn_to_sarkel_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 598 TO = 607 } # tmutarakan_to_sarkel_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 5299 TO = 598 } # maghas_to_tmutarakan_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 5746 TO = 5299 } # abkhazia_to_maghas_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 5746 TO = 5737 } # abkhazia_to_tao_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 5759 TO = 5737 } # tbilisi_to_tao_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 5759 TO = 681 } # tbilisi_to_hayk_road
+	# Bunjiket to Yangikent, along the Syr Darya
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1186 TO = 4414 } # chah_to_oshrusana_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 1186 TO = 901 } # chah_to_jend_road
+	tgp_silk_road_refresh_road_modifier_effect = { FROM = 900 TO = 901 } # yangikent_to_jend_road
 }

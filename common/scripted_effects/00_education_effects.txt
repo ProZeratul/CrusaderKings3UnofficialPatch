@@ -2412,7 +2412,7 @@ results_of_university_education_points_effect = {
 					culture = {
 						has_cultural_tradition = tradition_scholar_officials
 					}
-					scope:educator = {
+					scope:educator ?= {
 						has_trait = confucian_education
 					}
 				}
@@ -2424,9 +2424,12 @@ results_of_university_education_points_effect = {
 					trait = confucian_education
 					value = {
 						value = 20
-						add = {
-							value = "scope:educator.has_trait_xp(confucian_education)"
-							multiply = 0.15
+						if = {
+							limit = { exists = scope:educator }
+							add = {
+								value = "scope:educator.has_trait_xp(confucian_education)"
+								multiply = 0.15
+							}
 						}
 						if = {
 							limit = {
@@ -2444,9 +2447,12 @@ results_of_university_education_points_effect = {
 					trait = confucian_education
 					value = {
 						value = 20
-						add = {
-							value = "scope:educator.has_trait_xp(confucian_education)"
-							multiply = 0.1
+						if = {
+							limit = { exists = scope:educator }
+							add = {
+								value = "scope:educator.has_trait_xp(confucian_education)"
+								multiply = 0.1
+							}
 						}
 						if = {
 							limit = {
