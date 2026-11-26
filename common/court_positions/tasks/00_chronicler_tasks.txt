@@ -54,7 +54,7 @@ chronicler_generate_seeds = {
 		# Aptitude is expensive, so only work it out on the max possible chance. Outer chance x inner multiply must be 100
 		# See "Chance gates" in _court_position_tasks.info
 		random = {
-			chance = 20 #Unop: Was 10, so that the inner chance stays within 100 with the excellent tier below
+			chance = 10
 			random = {
 				chance = {
 					value = 2
@@ -62,16 +62,7 @@ chronicler_generate_seeds = {
 						value = "aptitude(chronicler_court_position)"
 						multiply = 2
 					}
-					if = { #Unop: Restore the excellent tier, which was dropped as unreachable with the wrong 1-5 levels
-						limit = {
-							aptitude = {
-								court_position = chronicler_court_position
-								value >= 4
-							}
-						}
-						add = 10
-					}
-					multiply = 5 #Unop: Was 10, outer chance x inner multiply must be 100
+					multiply = 10
 				}
 				save_scope_as = chronicler
 				scope:liege = {
