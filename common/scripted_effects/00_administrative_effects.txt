@@ -392,7 +392,10 @@ give_new_noble_family_title_effect = {
 
 set_up_domicile_estate_effect = {
 	if = {
-		limit = { is_domicile_type = estate }
+		limit = {
+			is_domicile_type = estate
+			has_ongoing_domicile_construction = no
+		}
 		# Intentionally one level lower than what you can get
 		if = {
 			limit = {
@@ -426,7 +429,10 @@ set_up_domicile_estate_effect = {
 		fill_external_estate_building_effect = yes
 	}
 	else_if = {
-		limit = { is_domicile_type = japanese_manor }
+		limit = {
+			is_domicile_type = japanese_manor
+			has_ongoing_domicile_construction = no
+		}
 		# Intentionally one level lower than what you can get
 		if = {
 			limit = {
@@ -460,7 +466,10 @@ set_up_domicile_estate_effect = {
 		fill_external_japanese_manor_building_effect = yes
 	}
 	else_if = {
-		limit = { is_domicile_type = east_asian_estate }
+		limit = {
+			is_domicile_type = east_asian_estate
+			has_ongoing_domicile_construction = no
+		}
 		# Intentionally one level lower than what you can get
 		if = {
 			limit = {
@@ -483,11 +492,17 @@ set_up_domicile_estate_effect = {
 				east_asian_estate_main_03 = {
 					while = {
 						count = 2
-						add_random_internal_east_asian_estate_building = yes
+						if = {
+							limit = { domicile_building_has_free_internal_slot = east_asian_estate_main_01 }
+							add_random_internal_east_asian_estate_building = yes
+						}
 					}
 				}
 				east_asian_estate_main_02 = {
-					add_random_internal_east_asian_estate_building = yes
+					if = {
+						limit = { domicile_building_has_free_internal_slot = east_asian_estate_main_01 }
+						add_random_internal_east_asian_estate_building = yes
+					}
 				}
 			}
 		}

@@ -2080,9 +2080,13 @@ doctrine_no_anointment = {
 	index = 0
 	piety_cost = {
 		value = faith_doctrine_cost_mid
-		if = { #Unop Apply the unchanged doctrine discount, like all other doctrines
+		if = {
 			limit = { rite_has_doctrine = doctrine_no_anointment }
 			multiply = faith_unchanged_doctrine_cost_mult
+		}
+		else_if = {
+			limit = { rite_has_doctrine = doctrine_imperial_anointment }
+			multiply = faith_changed_doctrine_cost_mult_two_step
 		}
 	}
 
@@ -2098,7 +2102,7 @@ doctrine_anointment_permitted = {
 	index = 1
 	piety_cost = {
 		value = faith_doctrine_cost_mid
-		if = { #Unop Apply the unchanged doctrine discount, like all other doctrines
+		if = {
 			limit = { rite_has_doctrine = doctrine_anointment_permitted }
 			multiply = faith_unchanged_doctrine_cost_mult
 		}
@@ -2125,9 +2129,13 @@ doctrine_imperial_anointment = {
 	index = 2
 	piety_cost = {
 		value = faith_doctrine_cost_mid
-		if = { #Unop Apply the unchanged doctrine discount, like all other doctrines
+		if = {
 			limit = { rite_has_doctrine = doctrine_imperial_anointment }
 			multiply = faith_unchanged_doctrine_cost_mult
+		}
+		else_if = {
+			limit = { rite_has_doctrine = doctrine_no_anointment }
+			multiply = faith_changed_doctrine_cost_mult_two_step
 		}
 	}
 

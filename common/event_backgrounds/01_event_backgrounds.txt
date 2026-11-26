@@ -7173,6 +7173,14 @@ market = {
 					}
 				}
 			}
+			trigger_else = {
+				location ?= {
+					county.holder ?= {
+						government_has_flag = government_is_republic
+					}
+					geographical_region = world_europe_south_italy
+				}
+			}
 		}
 		reference = "gfx/interface/illustrations/event_scenes/gdp_italian_market.dds" 
 		environment = "environment_bp2_courtyard" # TODO_GDP
@@ -7557,6 +7565,14 @@ market_crowd = {
 						}
 						geographical_region = world_europe_south_italy
 					}
+				}
+			}
+			trigger_else = {
+				location ?= {
+					county.holder ?= {
+						government_has_flag = government_is_republic
+					}
+					geographical_region = world_europe_south_italy
 				}
 			}
 		}
@@ -13760,7 +13776,7 @@ ep2_travel_settlement = {
 				location ?= { graphical_hills_trigger = yes }
 			}
 		}
-		reference = "gfx/interface/illustrations/event_scenes/ep2_travel_settlement_hills.dds"
+		reference = "gfx/interface/illustrations/event_scenes/ep2_travel_hills.dds"
 		environment = "environment_travel_hills_settlement"
 		ambience = "event:/SFX/Events/Backgrounds/fields_farms_day"
 	}
@@ -13793,7 +13809,7 @@ ep2_travel_settlement = {
 		ambience = "event:/SFX/Events/Backgrounds/steppe_day"
 	}
 	background = {
-		reference = "gfx/interface/illustrations/event_scenes/ep2_travel_settlement_hills.dds"
+		reference = "gfx/interface/illustrations/event_scenes/ep2_travel_hills.dds"
 		environment = "environment_travel_hills_settlement"
 		ambience = "event:/SFX/Events/Backgrounds/fields_farms_day"
 	}
@@ -19807,6 +19823,38 @@ gdp_mena_merchant_domicile = {
 }
 
 gdp_merchant_domicile = { 
+	background = { # Steppe
+		trigger = {
+			trigger_if = {
+				limit = { exists = scope:bg_override_char }
+				scope:bg_override_char.location ?= {
+					culture ?= { has_graphical_steppe_culture_group_trigger = yes }
+					NOR = {
+						steppe_building_gfx_use_indian_trigger = yes
+						AND = {
+							steppe_building_gfx_use_mena_trigger = yes
+							NOT = { geographical_region = graphical_steppe }
+						}
+					}
+				}
+			}
+			trigger_else = {
+				location ?= {
+					culture ?= { has_graphical_steppe_culture_group_trigger = yes }
+					NOR = {
+						steppe_building_gfx_use_indian_trigger = yes
+						AND = {
+							steppe_building_gfx_use_mena_trigger = yes
+							NOT = { geographical_region = graphical_steppe }
+						}
+					}
+				}
+			}
+		}
+		reference = "gfx/interface/illustrations/event_scenes/mpo_city_steppe.dds"
+		environment = "environment_mpo_city_steppe"
+		ambience = "event:/DLC/CE2/Events/Event_Images/mpo_city_steppe"
+	}
 	background = { # East & Southeast Asia
 		trigger = {
 			trigger_if = {
@@ -19869,6 +19917,64 @@ gdp_merchant_domicile = {
 		environment = "environment_event_bp1_courtyard_indian" # TODO_GDP
 		ambience = "event:/DLC/EP5/SFX/Events/Event_Backgrounds/ep5_evn_mena_merchant_domicile"
 	}
+	background = { # Tribal
+		trigger = {
+			trigger_if = {
+				limit = { exists = scope:bg_override_char }
+				scope:bg_override_char.location ?= {
+					county.holder ?= { government_has_flag = government_is_tribal }
+					culture ?= {
+						OR = {
+							has_graphical_western_culture_group_trigger = yes
+							has_graphical_norse_culture_group_trigger = yes
+						}
+					}
+				}
+			}
+			trigger_else = {
+				location ?= {
+					county.holder ?= { government_has_flag = government_is_tribal }
+					culture ?= {
+						OR = {
+							has_graphical_western_culture_group_trigger = yes
+							has_graphical_norse_culture_group_trigger = yes
+						}
+					}
+				}
+			}
+		}
+		reference = "gfx/interface/illustrations/event_scenes/market_tribal.dds"
+		environment = "environment_event_market_tribal"
+		ambience = "event:/SFX/Events/Backgrounds/townmarket_day_tribal_pagan"
+	}
+	background = { # Northern Europe
+		trigger = {
+			trigger_if = {
+				limit = { exists = scope:bg_override_char }
+				scope:bg_override_char.location ?= {
+					culture ?= {
+						OR = {
+							has_graphical_western_culture_group_trigger = yes
+							has_graphical_norse_culture_group_trigger = yes
+						}
+					}
+				}
+			}
+			trigger_else = {
+				location ?= {
+					culture ?= {
+						OR = {
+							has_graphical_western_culture_group_trigger = yes
+							has_graphical_norse_culture_group_trigger = yes
+						}
+					}
+				}
+			}
+		}
+		reference = "gfx/interface/illustrations/event_scenes/gdp_artisans_street_western.dds"
+		environment = "environment_event_alley_day"
+		ambience = "event:/DLC/EP5/SFX/Events/Event_Backgrounds/ep5_evn_artisans_street_western"
+	}
 	background = { # Italy
 		reference = "gfx/interface/illustrations/event_scenes/gdp_merchant_domicile.dds"
 		environment = "environment_event_feast" # TODO_GDP
@@ -19908,6 +20014,38 @@ gdp_artisan_street = {
 		reference = "gfx/interface/illustrations/event_scenes/gdp_artisans_street_india.dds"
 		environment = "environment_event_bp1_courtyard_indian" # TODO_GDP
 		ambience = "event:/DLC/EP5/SFX/Events/Event_Backgrounds/ep5_evn_artisans_street_india"
+	}
+	background = { # Steppe
+		trigger = {
+			trigger_if = {
+				limit = { exists = scope:bg_override_char }
+				scope:bg_override_char.location ?= {
+					culture ?= { has_graphical_steppe_culture_group_trigger = yes }
+					NOR = {
+						steppe_building_gfx_use_indian_trigger = yes
+						AND = {
+							steppe_building_gfx_use_mena_trigger = yes
+							NOT = { geographical_region = graphical_steppe }
+						}
+					}
+				}
+			}
+			trigger_else = {
+				location ?= {
+					culture ?= { has_graphical_steppe_culture_group_trigger = yes }
+					NOR = {
+						steppe_building_gfx_use_indian_trigger = yes
+						AND = {
+							steppe_building_gfx_use_mena_trigger = yes
+							NOT = { geographical_region = graphical_steppe }
+						}
+					}
+				}
+			}
+		}
+		reference = "gfx/interface/illustrations/event_scenes/mpo_city_steppe.dds"
+		environment = "environment_mpo_city_steppe"
+		ambience = "event:/DLC/CE2/Events/Event_Images/mpo_city_steppe"
 	}
 	background = { # East & Southeast Asia
 		trigger = {
@@ -19965,6 +20103,36 @@ gdp_artisan_street = {
 		environment = "environment_event_market_east" # TODO_GDP
 		ambience = "event:/DLC/EP5/SFX/Events/Event_Backgrounds/ep5_evn_artisans_street_mena"
 	}
+	background = { # Tribal
+		trigger = {
+			trigger_if = {
+				limit = { exists = scope:bg_override_char }
+				scope:bg_override_char.location ?= {
+					county.holder ?= { government_has_flag = government_is_tribal }
+					culture ?= {
+						OR = {
+							has_graphical_western_culture_group_trigger = yes
+							has_graphical_norse_culture_group_trigger = yes
+						}
+					}
+				}
+			}
+			trigger_else = {
+				location ?= {
+					county.holder ?= { government_has_flag = government_is_tribal }
+					culture ?= {
+						OR = {
+							has_graphical_western_culture_group_trigger = yes
+							has_graphical_norse_culture_group_trigger = yes
+						}
+					}
+				}
+			}
+		}
+		reference = "gfx/interface/illustrations/event_scenes/market_tribal.dds"
+		environment = "environment_event_market_tribal"
+		ambience = "event:/SFX/Events/Backgrounds/townmarket_day_tribal_pagan"
+	}
 	background = {
 		reference = "gfx/interface/illustrations/event_scenes/gdp_artisans_street_western.dds"
 		environment = "environment_event_alley_day" # TODO_GDP
@@ -19995,6 +20163,38 @@ gdp_artisan_street_crowd = {
 		reference = "gfx/interface/illustrations/event_scenes/gdp_artisans_street_india_crowd.dds"
 		environment = "environment_event_bp1_courtyard_indian" # TODO_GDP
 		ambience = "event:/DLC/EP5/SFX/Events/Event_Backgrounds/ep5_evn_artisans_street_india_crowd"
+	}
+	background = { # Steppe
+		trigger = {
+			trigger_if = {
+				limit = { exists = scope:bg_override_char }
+				scope:bg_override_char.location ?= {
+					culture ?= { has_graphical_steppe_culture_group_trigger = yes }
+					NOR = {
+						steppe_building_gfx_use_indian_trigger = yes
+						AND = {
+							steppe_building_gfx_use_mena_trigger = yes
+							NOT = { geographical_region = graphical_steppe }
+						}
+					}
+				}
+			}
+			trigger_else = {
+				location ?= {
+					culture ?= { has_graphical_steppe_culture_group_trigger = yes }
+					NOR = {
+						steppe_building_gfx_use_indian_trigger = yes
+						AND = {
+							steppe_building_gfx_use_mena_trigger = yes
+							NOT = { geographical_region = graphical_steppe }
+						}
+					}
+				}
+			}
+		}
+		reference = "gfx/interface/illustrations/event_scenes/mpo_city_steppe.dds"
+		environment = "environment_mpo_city_steppe"
+		ambience = "event:/DLC/CE2/Events/Event_Images/mpo_city_steppe"
 	}
 	background = { # East & Southeast Asia
 		trigger = {
@@ -20051,6 +20251,36 @@ gdp_artisan_street_crowd = {
 		reference = "gfx/interface/illustrations/event_scenes/gdp_artisans_street_mena_crowd.dds"
 		environment = "environment_event_market_east" # TODO_GDP
 		ambience = "event:/DLC/EP5/SFX/Events/Event_Backgrounds/ep5_evn_artisans_street_mena_crowd"
+	}
+	background = { # Tribal
+		trigger = {
+			trigger_if = {
+				limit = { exists = scope:bg_override_char }
+				scope:bg_override_char.location ?= {
+					county.holder ?= { government_has_flag = government_is_tribal }
+					culture ?= {
+						OR = {
+							has_graphical_western_culture_group_trigger = yes
+							has_graphical_norse_culture_group_trigger = yes
+						}
+					}
+				}
+			}
+			trigger_else = {
+				location ?= {
+					county.holder ?= { government_has_flag = government_is_tribal }
+					culture ?= {
+						OR = {
+							has_graphical_western_culture_group_trigger = yes
+							has_graphical_norse_culture_group_trigger = yes
+						}
+					}
+				}
+			}
+		}
+		reference = "gfx/interface/illustrations/event_scenes/market_tribal_crowd.dds"
+		environment = "environment_event_market_tribal"
+		ambience = "event:/SFX/Events/Backgrounds/townmarket_day_tribal_pagan"
 	}
 	background = {
 		reference = "gfx/interface/illustrations/event_scenes/gdp_artisans_street_western_crowd.dds"

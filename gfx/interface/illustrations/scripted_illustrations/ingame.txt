@@ -2205,7 +2205,7 @@ character_view_bg = {
 					exists = betrothed
 					betrothed = {
 						involved_activity ?= { has_activity_type = activity_pilgrimage }
-						involved_activity.activity_location.county = title:c_jerusalem
+						involved_activity.activity_location.county = title:c_mecca
 						location ?= involved_activity.activity_location
 					}
 				}
@@ -2213,7 +2213,7 @@ character_view_bg = {
 					liege.diarch ?= this
 					liege ?= {
 						involved_activity ?= { has_activity_type = activity_pilgrimage }
-						involved_activity.activity_location.county = title:c_jerusalem
+						involved_activity.activity_location.county = title:c_mecca
 						location ?= involved_activity.activity_location
 					}
 				}
@@ -6486,6 +6486,172 @@ character_view_bg = {
 	}
 
 	###
+	# steppe unlanded merchant domicile
+	#
+	texture = {
+		reference = "event_scenes/mpo_city_steppe.dds"
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			OR = {
+				AND = {
+					is_landless_merchant = yes
+					location ?= {
+						culture ?= { has_graphical_steppe_culture_group_trigger = yes }
+						NOR = {
+							steppe_building_gfx_use_indian_trigger = yes
+							AND = {
+								steppe_building_gfx_use_mena_trigger = yes
+								NOT = { geographical_region = graphical_steppe }
+							}
+						}
+					}
+				}
+				liege ?= {
+					is_landless_merchant = yes
+					location ?= {
+						culture ?= { has_graphical_steppe_culture_group_trigger = yes }
+						NOR = {
+							steppe_building_gfx_use_indian_trigger = yes
+							AND = {
+								steppe_building_gfx_use_mena_trigger = yes
+								NOT = { geographical_region = graphical_steppe }
+							}
+						}
+					}
+				}
+				primary_spouse ?= { # Primary Spouse
+					is_landless_merchant = yes
+					location ?= {
+						culture ?= { has_graphical_steppe_culture_group_trigger = yes }
+						NOR = {
+							steppe_building_gfx_use_indian_trigger = yes
+							AND = {
+								steppe_building_gfx_use_mena_trigger = yes
+								NOT = { geographical_region = graphical_steppe }
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	environment = {
+		reference = "environment_mpo_city_steppe"
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			OR = {
+				AND = {
+					is_landless_merchant = yes
+					location ?= {
+						culture ?= { has_graphical_steppe_culture_group_trigger = yes }
+						NOR = {
+							steppe_building_gfx_use_indian_trigger = yes
+							AND = {
+								steppe_building_gfx_use_mena_trigger = yes
+								NOT = { geographical_region = graphical_steppe }
+							}
+						}
+					}
+				}
+				liege ?= {
+					is_landless_merchant = yes
+					location ?= {
+						culture ?= { has_graphical_steppe_culture_group_trigger = yes }
+						NOR = {
+							steppe_building_gfx_use_indian_trigger = yes
+							AND = {
+								steppe_building_gfx_use_mena_trigger = yes
+								NOT = { geographical_region = graphical_steppe }
+							}
+						}
+					}
+				}
+				primary_spouse ?= { # Primary Spouse
+					is_landless_merchant = yes
+					location ?= {
+						culture ?= { has_graphical_steppe_culture_group_trigger = yes }
+						NOR = {
+							steppe_building_gfx_use_indian_trigger = yes
+							AND = {
+								steppe_building_gfx_use_mena_trigger = yes
+								NOT = { geographical_region = graphical_steppe }
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	environment = {
+		reference = "environment_mpo_city_steppe"
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			OR = {
+				primary_spouse ?= { # Primary Spouse
+					is_landless_merchant = yes
+					location ?= {
+						culture ?= { has_graphical_steppe_culture_group_trigger = yes }
+						NOR = {
+							steppe_building_gfx_use_indian_trigger = yes
+							AND = {
+								steppe_building_gfx_use_mena_trigger = yes
+								NOT = { geographical_region = graphical_steppe }
+							}
+						}
+					}
+				}
+				betrothed ?= {
+					is_landless_merchant = yes
+					location ?= {
+						culture ?= { has_graphical_steppe_culture_group_trigger = yes }
+						NOR = {
+							steppe_building_gfx_use_indian_trigger = yes
+							AND = {
+								steppe_building_gfx_use_mena_trigger = yes
+								NOT = { geographical_region = graphical_steppe }
+							}
+						}
+					}
+				}
+				AND = {
+					liege.diarch ?= this
+					liege ?= {
+						is_landless_merchant = yes
+						location ?= {
+							culture ?= { has_graphical_steppe_culture_group_trigger = yes }
+							NOR = {
+								steppe_building_gfx_use_indian_trigger = yes
+								AND = {
+									steppe_building_gfx_use_mena_trigger = yes
+									NOT = { geographical_region = graphical_steppe }
+								}
+							}
+						}
+					}
+				}
+			}
+			is_character_window_main_character = no
+		}
+	}
+
+	###
 	# mena unlanded merchant domicile
 	#
 	texture = {
@@ -6655,6 +6821,293 @@ character_view_bg = {
 								has_graphical_india_culture_group_trigger = yes
 								has_graphical_iberian_culture_group_trigger = yes
 								has_graphical_iranian_culture_group_trigger = yes
+							}
+						}
+					}
+				}
+			}
+			is_character_window_main_character = no
+		}
+	}
+
+	###
+	# tribal unlanded merchant domicile
+	#
+	texture = {
+		reference = "event_scenes/market_tribal.dds"
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			OR = {
+				AND = {
+					is_landless_merchant = yes
+					location ?= {
+						county.holder ?= { government_has_flag = government_is_tribal }
+						culture ?= {
+							OR = {
+								has_graphical_western_culture_group_trigger = yes
+								has_graphical_norse_culture_group_trigger = yes
+							}
+						}
+					}
+				}
+				liege ?= {
+					is_landless_merchant = yes
+					location ?= {
+						county.holder ?= { government_has_flag = government_is_tribal }
+						culture ?= {
+							OR = {
+								has_graphical_western_culture_group_trigger = yes
+								has_graphical_norse_culture_group_trigger = yes
+							}
+						}
+					}
+				}
+				primary_spouse ?= { # Primary Spouse
+					is_landless_merchant = yes
+					location ?= {
+						county.holder ?= { government_has_flag = government_is_tribal }
+						culture ?= {
+							OR = {
+								has_graphical_western_culture_group_trigger = yes
+								has_graphical_norse_culture_group_trigger = yes
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	environment = {
+		reference = "environment_event_market_tribal"
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			OR = {
+				AND = {
+					is_landless_merchant = yes
+					location ?= {
+						county.holder ?= { government_has_flag = government_is_tribal }
+						culture ?= {
+							OR = {
+								has_graphical_western_culture_group_trigger = yes
+								has_graphical_norse_culture_group_trigger = yes
+							}
+						}
+					}
+				}
+				liege ?= {
+					is_landless_merchant = yes
+					location ?= {
+						county.holder ?= { government_has_flag = government_is_tribal }
+						culture ?= {
+							OR = {
+								has_graphical_western_culture_group_trigger = yes
+								has_graphical_norse_culture_group_trigger = yes
+							}
+						}
+					}
+				}
+				primary_spouse ?= { # Primary Spouse
+					is_landless_merchant = yes
+					location ?= {
+						county.holder ?= { government_has_flag = government_is_tribal }
+						culture ?= {
+							OR = {
+								has_graphical_western_culture_group_trigger = yes
+								has_graphical_norse_culture_group_trigger = yes
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	environment = {
+		reference = "environment_event_market_tribal"
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			OR = {
+				primary_spouse ?= { # Primary Spouse
+					is_landless_merchant = yes
+					location ?= {
+						county.holder ?= { government_has_flag = government_is_tribal }
+						culture ?= {
+							OR = {
+								has_graphical_western_culture_group_trigger = yes
+								has_graphical_norse_culture_group_trigger = yes
+							}
+						}
+					}
+				}
+				betrothed ?= {
+					is_landless_merchant = yes
+					location ?= {
+						county.holder ?= { government_has_flag = government_is_tribal }
+						culture ?= {
+							OR = {
+								has_graphical_western_culture_group_trigger = yes
+								has_graphical_norse_culture_group_trigger = yes
+							}
+						}
+					}
+				}
+				AND = {
+					liege.diarch ?= this
+					liege ?= {
+						is_landless_merchant = yes
+						location ?= {
+							county.holder ?= { government_has_flag = government_is_tribal }
+							culture ?= {
+								OR = {
+									has_graphical_western_culture_group_trigger = yes
+									has_graphical_norse_culture_group_trigger = yes
+								}
+							}
+						}
+					}
+				}
+			}
+			is_character_window_main_character = no
+		}
+	}
+
+	###
+	# northern european unlanded merchant domicile
+	#
+	texture = {
+		reference = "event_scenes/gdp_artisans_street_western.dds"
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			OR = {
+				AND = {
+					is_landless_merchant = yes
+					location.culture ?= {
+						OR = {
+							has_graphical_western_culture_group_trigger = yes
+							has_graphical_norse_culture_group_trigger = yes
+						}
+					}
+				}
+				liege ?= {
+					is_landless_merchant = yes
+					location.culture ?= {
+						OR = {
+							has_graphical_western_culture_group_trigger = yes
+							has_graphical_norse_culture_group_trigger = yes
+						}
+					}
+				}
+				primary_spouse ?= { # Primary Spouse
+					is_landless_merchant = yes
+					location.culture ?= {
+						OR = {
+							has_graphical_western_culture_group_trigger = yes
+							has_graphical_norse_culture_group_trigger = yes
+						}
+					}
+				}
+			}
+		}
+	}
+
+	environment = {
+		reference = "environment_event_alley_day"
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			OR = {
+				AND = {
+					is_landless_merchant = yes
+					location.culture ?= {
+						OR = {
+							has_graphical_western_culture_group_trigger = yes
+							has_graphical_norse_culture_group_trigger = yes
+						}
+					}
+				}
+				liege ?= {
+					is_landless_merchant = yes
+					location.culture ?= {
+						OR = {
+							has_graphical_western_culture_group_trigger = yes
+							has_graphical_norse_culture_group_trigger = yes
+						}
+					}
+				}
+				primary_spouse ?= { # Primary Spouse
+					is_landless_merchant = yes
+					location.culture ?= {
+						OR = {
+							has_graphical_western_culture_group_trigger = yes
+							has_graphical_norse_culture_group_trigger = yes
+						}
+					}
+				}
+			}
+		}
+	}
+
+	environment = {
+		reference = "environment_event_alley_day"
+
+		trigger = {
+			NOR = {
+				is_imprisoned = yes
+				is_travelling = yes
+				exists = involved_activity
+			}
+			OR = {
+				primary_spouse ?= { # Primary Spouse
+					is_landless_merchant = yes
+					location.culture ?= {
+						OR = {
+							has_graphical_western_culture_group_trigger = yes
+							has_graphical_norse_culture_group_trigger = yes
+						}
+					}
+				}
+				betrothed ?= {
+					is_landless_merchant = yes
+					location.culture ?= {
+						OR = {
+							has_graphical_western_culture_group_trigger = yes
+							has_graphical_norse_culture_group_trigger = yes
+						}
+					}
+				}
+				AND = {
+					liege.diarch ?= this
+					liege ?= {
+						is_landless_merchant = yes
+						location.culture ?= {
+							OR = {
+								has_graphical_western_culture_group_trigger = yes
+								has_graphical_norse_culture_group_trigger = yes
 							}
 						}
 					}

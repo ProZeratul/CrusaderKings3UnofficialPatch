@@ -42,6 +42,27 @@ scripted_effect save_natural_disaster_wilderness_scope_effect = {
 
 scripted_effect natural_disaster_remove_realm_effect = {
 	scope:situation = {
+		if = {
+			limit = {
+				situation_type = natural_disaster_flood
+				exists = var:river_region
+				NOT = { has_variable = flood_area_split_into_counties }
+			}
+			set_variable = flood_area_split_into_counties
+			hidden_effect = {
+				var:river_region = { save_scope_as = flood_river_region }
+				every_county_in_region = {
+					region = scope:flood_river_region
+					save_scope_as = flood_region_county
+					scope:situation.situation_sub_region:disaster_area = {
+						add_dejure_title_to_sub_region = scope:flood_region_county
+					}
+				}
+				situation_sub_region:disaster_area = {
+					remove_geographical_region = scope:flood_river_region
+				}
+			}
+		}
 		every_situation_county = {
 			limit = { holder.top_liege = scope:ruler }
 			custom = every_realm_disaster_county_custom
@@ -97,15 +118,41 @@ scripted_effect attempt_delete_natural_disaster_situation_effect = {
 	scope:situation ?= {
 		if = {
 			limit = {
-				any_participant_group = {
-					participant_group_type = affected_ruler
-					any_situation_group_participant = {
-						count = 0
-						NOT = { this = root }
+				is_target_in_variable_list = {
+					name = natural_disaster_pending_recovery_events
+					target = root
+				}
+			}
+			remove_list_variable = {
+				name = natural_disaster_pending_recovery_events
+				target = root
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					has_variable = natural_disaster_recovery_complete
+					any_participant_group = {
+						participant_group_type = affected_ruler
+						any_situation_group_participant = {
+							count = 0
+							NOT = { this = root }
+						}
 					}
 				}
 			}
-			end_situation = yes
+			if = {
+				limit = {
+					any_in_list = {
+						variable = natural_disaster_pending_recovery_events
+						is_alive = yes
+					}
+				}
+				set_variable = natural_disaster_recovery_complete
+			}
+			else = {
+				end_situation = yes
+			}
 		}
 	}
 }
@@ -141,7 +188,13 @@ natural_disaster.0110 = {
 			limit = { capital_province ?= location }
 			add_legitimacy_effect = { LEGITIMACY = minor_legitimacy_loss }
 		}
-		add_prestige = major_prestige_loss
+		if = {
+			limit = { is_landed = yes }
+			add_prestige = {
+				value = tier_scaled_prestige_value
+				multiply = -1
+			}
+		}
 		isolate_family_decision_effect = yes
 	}
 
@@ -272,7 +325,7 @@ natural_disaster.4002 = { # Vassals
 	}
 
 	immediate = {
-		scope:owner = { save_scope_as = ruler } #Unop Needed by natural_disaster_remove_realm_effect, as in natural_disaster.4001
+		top_liege = { save_scope_as = ruler }
 		show_as_tooltip = {
 			natural_disaster_remove_realm_effect = yes
 		}

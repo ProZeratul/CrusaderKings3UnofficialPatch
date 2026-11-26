@@ -1490,7 +1490,7 @@ az_tour.0006 = {
         	popular_opinion < 0
         	county_control <= 90
         	NOT = {
-        		has_county_modifier = tgp_heard_complaints_modifier
+        		has_variable = tgp_heard_complaints_cooldown
         	}
         }
     }
@@ -1513,8 +1513,9 @@ az_tour.0006 = {
         name = az_tour.0006.a # "This will be looked into. You have my word."
 
         scope:local_county = {
-        	add_county_modifier = {
-				modifier = tgp_heard_complaints_modifier
+        	add_popular_opinion = 10
+        	set_variable = {
+				name = tgp_heard_complaints_cooldown
 				years = 15
 			}
         }
@@ -1566,10 +1567,7 @@ az_tour.0006 = {
         add_dread = minor_dread_gain
 
         scope:local_county = {
-        	add_county_modifier = {
-				modifier = tgp_dismissed_complaints_modifier
-				years = 15
-			}
+        	add_popular_opinion = -5
         }
 
         stress_and_fulfillment_impact = {
@@ -2831,10 +2829,7 @@ az_tour.1009 = {
                     }
                     show_as_tooltip = {
                     	scope:local_county = {
-				            add_county_modifier = {
-				                modifier = tgp_popular_festival_performance_modifier
-				                years = 5
-				            }
+				            add_popular_opinion = 10
 				        }
                     }
                 }
@@ -2843,10 +2838,7 @@ az_tour.1009 = {
 
 
         scope:local_county = {
-            add_county_modifier = {
-                modifier = tgp_popular_festival_performance_modifier
-                years = 5
-            }
+            add_popular_opinion = 10
         }
 
         stress_and_fulfillment_impact = {

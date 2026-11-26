@@ -5174,6 +5174,12 @@ ep3_decisions_event.4060 = {
 
 
 	immediate = {
+		hidden_effect = {
+			random_held_title = {
+				limit = { is_noble_family_title = yes }
+				save_scope_as = admin_noble_family_title
+			}
+		}
 		show_as_tooltip = {
 			change_government = government_type
 			if = {
@@ -5185,8 +5191,8 @@ ep3_decisions_event.4060 = {
 			}
 			# NF tooltip
 			if = {
-				limit = { exists = scope:new_title } # some gov types don't need to create a new title
-				get_title = scope:new_title
+				limit = { exists = scope:admin_noble_family_title } # some gov types don't need to create a new title
+				get_title = scope:admin_noble_family_title
 			}
 			# Adopting vassal tooltip
 			every_powerful_vassal = {

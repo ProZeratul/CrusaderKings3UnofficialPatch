@@ -9,6 +9,7 @@ feudal_government = {
 		dynasty_named_realms = yes
 		legitimacy = yes
 		allow_accolades = yes
+		distribution_trade_routes = yes
 	}
 
 	royal_court = any
@@ -28,6 +29,7 @@ feudal_government = {
 	# Use flags instead of has_government for moddability if possible (i.e., wherever not visible to the player).
 	flags = {
 		government_is_feudal
+		government_has_regal_household_district
 		government_is_settled
 		government_is_settled_non_tribal
 		may_elevate_co_monarch
@@ -35,7 +37,6 @@ feudal_government = {
 		government_uses_domain_limit
 		government_uses_legitimacy
 		government_uses_royal_court
-		distribution_trade_routes = yes
 	}
 
 	mechanic_type = feudal
@@ -101,8 +102,6 @@ republic_government = {
 	min_appointment_tier = county
 	
 	can_move_realm_capital = {
-		# Not allowed to move the capital if it's in the de jure capital
-		capital_county != primary_title.title_capital_county
 	}
 
 	vassal_contract_group = republic_vassal
@@ -111,7 +110,7 @@ republic_government = {
 		men_at_arms_cap = -1
 		men_at_arms_limit = -2
 		mercenary_hire_limit = 2
-		monthly_popular_opinion_change = 0.1
+		monthly_popular_opinion_change_when_below_baseline_add = 0.1
 		prestige_standalone_gain_mult = -0.5
 		title_creation_cost_mult = 0.5
 		
@@ -217,6 +216,7 @@ clan_government = {
 	# Use flags instead of has_government for moddability if possible (i.e., wherever not visible to the player).
 	flags = {
 		government_is_clan
+		government_has_regal_household_district
 		government_has_tax_slot
 		may_appoint_viziers
 		government_is_settled
@@ -645,6 +645,8 @@ administrative_government = {
 	# Use flags instead of has_government for moddability if possible (i.e., wherever not visible to the player).
 	flags = {
 		government_is_administrative
+		government_has_regal_household_district
+		government_regal_household_district_independent_rulers_only
 		government_has_influence
 		government_has_treasury
 		government_has_powerful_families
@@ -1027,6 +1029,8 @@ celestial_government = {
 	# Use flags instead of has_government for moddability if possible (i.e., wherever not visible to the player).
 	flags = {
 		government_is_celestial
+		government_has_regal_household_district
+		government_regal_household_district_independent_rulers_only
 
 		government_has_merit
 		government_has_influence
@@ -1505,6 +1509,8 @@ meritocratic_government = { # e.g. Korea, Dai Viet
 	# Use flags instead of has_government for moddability if possible (i.e., wherever not visible to the player).
 	flags = {
 		government_is_meritocratic
+		government_has_regal_household_district
+		government_regal_household_district_independent_rulers_only
 		government_has_merit
 		government_has_influence
 		government_has_treasury

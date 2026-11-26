@@ -10,13 +10,13 @@ mandala_owner_reward_01_effect = {
 
 mandala_contributor_reward_effect = {
 	add_prestige = major_prestige_value
-	add_legitimacy = miniscule_legitimacy_gain
+	add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_gain }
 }
 
 mandala_contributor_opinion_reward_effect = {
 	$OVERLORD$ = { save_scope_as = overlord_scope }
 	add_prestige = major_prestige_value
-	add_legitimacy = miniscule_legitimacy_gain
+	add_legitimacy_effect = { LEGITIMACY = miniscule_legitimacy_gain }
 }
 
 gather_contributors_in_list_effect = {
@@ -77,7 +77,7 @@ determine_if_contributed_and_save_scope_effect = {
 
 ### Capital 01 Breakdown Effects ###
 mandala_contributor_minor_rite_reward_effect = {
-	add_legitimacy = mandala_contribution_minor_legitimacy_reward
+	add_legitimacy_effect = { LEGITIMACY = mandala_contribution_minor_legitimacy_reward }
 	add_piety_experience = mandala_contribution_medium_piety_reward
 }
 contributed_rites_of_worthiness_effect = {
@@ -118,14 +118,17 @@ contributed_work_force_effect = {
 }
 
 mandala_contributor_woodcarvings_reward_effect = { 
-	add_legitimacy = {
-		value = {
-			add = mandala_contribution_minor_legitimacy_reward 
-			multiply = 1.5
-			#Rounds up to the closest number divisible by 5
-			divide = 5
-			ceiling = yes
-			multiply = 5
+	if = {
+		limit = { is_valid_for_legitimacy_change = yes }
+		add_legitimacy = {
+			value = {
+				add = mandala_contribution_minor_legitimacy_reward 
+				multiply = 1.5
+				#Rounds up to the closest number divisible by 5
+				divide = 5
+				ceiling = yes
+				multiply = 5
+			}
 		}
 	}
 }
@@ -303,14 +306,17 @@ contributed_shallow_pools_effect = {
 #contributed_work_force_effect Reused from Capital 01
 
 mandala_contributor_decorative_tiles_reward_effect = {
-	add_legitimacy = {
-		value = {
-			add = mandala_contribution_minor_legitimacy_reward 
-			multiply = 1.5
-			#Rounds up to the closest number divisible by 5
-			divide = 5
-			ceiling = yes
-			multiply = 5
+	if = {
+		limit = { is_valid_for_legitimacy_change = yes }
+		add_legitimacy = {
+			value = {
+				add = mandala_contribution_minor_legitimacy_reward 
+				multiply = 1.5
+				#Rounds up to the closest number divisible by 5
+				divide = 5
+				ceiling = yes
+				multiply = 5
+			}
 		}
 	}
 }
@@ -396,7 +402,7 @@ check_and_reward_contributions_02_effect = {
 
 ### Capital 03 Breakdown Effects ###
 mandala_contributor_medium_rite_reward_effect = {
-	add_legitimacy = mandala_contribution_medium_legitimacy_reward
+	add_legitimacy_effect = { LEGITIMACY = mandala_contribution_medium_legitimacy_reward }
 	add_piety_experience = mandala_contribution_major_piety_reward
 }
 contributed_rites_of_worthiness_02_effect = {
@@ -892,7 +898,7 @@ mandala_contributor_marble_foundation_reward_effect = {
 			multiply = 5
 		}
 	}
-	add_legitimacy = mandala_contribution_medium_legitimacy_reward
+	add_legitimacy_effect = { LEGITIMACY = mandala_contribution_medium_legitimacy_reward }
 }
 contributed_marble_foundation_effect = {
 	custom_description_no_bullet = { text = contributed_marble_foundation }
@@ -1727,9 +1733,12 @@ mandala_built_piety_building_effect = {
 				this = scope:character
 				government_has_flag = government_is_mandala
 			}
-			add_piety = {
-				value = minor_piety_value
-				multiply = 1.5
+			if = {
+				limit = { is_alive = yes }
+				add_piety = {
+					value = minor_piety_value
+					multiply = 1.5
+				}
 			}
 			root.county.holder = {
 				if = {
@@ -2408,7 +2417,6 @@ mandala_reset_increment_of_peace_effect = {
 			desc = mandala_increments_of_peace_broken_desc
 			left_icon = root
 			remove_character_modifier = mandala_increments_of_peace_modifier
-			remove_variable = mandala_house_power_accumulated_increments_of_peace
 		}
 		add_character_modifier = mandala_increments_of_peace_modifier
 	}

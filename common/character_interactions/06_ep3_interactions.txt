@@ -3828,6 +3828,7 @@ request_council_interaction = {
 			desc = AI_OPINION_REASON
 		}
 		opinion_modifier = { # Opinion of the current councillor
+			trigger = { exists = scope:target.councillor }
 			who = scope:recipient
 			opinion_target = scope:target.councillor
 			multiplier = -0.8
@@ -3983,6 +3984,7 @@ request_council_interaction = {
 		}
 		#You are more influential
 		modifier = {
+			exists = scope:target.councillor
 			scope:actor.influence_level != scope:target.councillor.influence_level
 			add = {
 				value = scope:actor.influence_level
@@ -9634,6 +9636,7 @@ request_emperor_title_troops_interaction = {
 			exists = holder
 			holder.top_liege = scope:recipient
 			holder != scope:actor
+			holder ?= { government_has_mechanic = administrative }
 			any_title_maa_regiment = {
 				exists = this
 			}
