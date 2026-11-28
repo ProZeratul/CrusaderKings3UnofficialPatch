@@ -27,6 +27,37 @@ on_faith_created = {
 				add_sanctified_for_faith = root
 			}
 		}
+		#Unop Carry over the old faith's used holy site kingdoms in which the new faith still has a holy site
+		scope:old_faith ?= {
+			if = {
+				limit = { has_variable_list = dynamic_holy_site_kingdoms }
+				every_in_list = {
+					variable = dynamic_holy_site_kingdoms
+					save_temporary_scope_as = unop_old_faith_holy_site_kingdom
+					if = {
+						limit = {
+							root = {
+								any_holy_site = {
+									holy_site_barony.kingdom ?= scope:unop_old_faith_holy_site_kingdom
+								}
+								NOT = {
+									is_target_in_variable_list = {
+										name = dynamic_holy_site_kingdoms
+										target = scope:unop_old_faith_holy_site_kingdom
+									}
+								}
+							}
+						}
+						root = {
+							add_to_variable_list = {
+								name = dynamic_holy_site_kingdoms
+								target = scope:unop_old_faith_holy_site_kingdom
+							}
+						}
+					}
+				}
+			}
+		}
 		# Remove Antipopes
 		if = {
 			limit = {
