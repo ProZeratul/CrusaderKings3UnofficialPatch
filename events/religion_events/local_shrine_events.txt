@@ -31,9 +31,11 @@ scripted_effect local_shrine_at_location_effect = {
 		on_arrival_event = local_rites.2
 		on_arrival_destinations = all_but_last
 	}
-	add_character_modifier = {
-		modifier = visit_local_shrine_modifier
-		days = local_shrine_duration
+	show_as_tooltip = { #Unop Add the modifier on arrival in local_rites.2, when the ritual starts
+		add_character_modifier = {
+			modifier = visit_local_shrine_modifier
+			days = local_shrine_duration
+		}
 	}
 	add_character_flag = {
 		flag = local_shrine_rite
@@ -410,6 +412,10 @@ local_rites.2 = {
 			left_icon = root
 			current_travel_plan = {
 				delay_travel_plan = { days = local_shrine_duration }
+			}
+			add_character_modifier = { #Unop Moved from local_shrine_at_location_effect, so that it lasts as long as the ritual
+				modifier = visit_local_shrine_modifier
+				days = local_shrine_duration
 			}
 		}
 		trigger_event = {

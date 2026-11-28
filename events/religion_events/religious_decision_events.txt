@@ -1252,9 +1252,11 @@ scripted_effect meditate_at_location_effect = {
 		on_arrival_event = religious_decision.0210
 		on_arrival_destinations = all_but_last
 	}
-	add_character_modifier = {
-		modifier = meditating_in_seclusion_modifier
-		days = meditation_duration
+	show_as_tooltip = { #Unop Add the modifier on arrival in religious_decision.0210, when the meditation starts
+		add_character_modifier = {
+			modifier = meditating_in_seclusion_modifier
+			days = meditation_duration
+		}
 	}
 	add_character_flag = meditation_character_flag
 }
@@ -1526,6 +1528,10 @@ religious_decision.0210 = {
 			left_icon = root
 			current_travel_plan = {
 				delay_travel_plan = { days = meditation_duration }
+			}
+			add_character_modifier = { #Unop Moved from meditate_at_location_effect, so that it lasts as long as the meditation
+				modifier = meditating_in_seclusion_modifier
+				days = meditation_duration
 			}
 		}
 		trigger_event = {
