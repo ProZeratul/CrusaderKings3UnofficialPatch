@@ -1,0 +1,950 @@
+﻿namespace = gdp_decision
+
+# abuse_charter_authority_decision
+
+gdp_decision.1000 = { # consequences
+	type = character_event
+	theme = merchant
+	title = gdp_decision.1000.t
+	desc = gdp_decision.1000.desc
+	right_portrait = {
+		character = scope:patron
+		animation = war_over_win
+	}
+	artifact = {
+		target = scope:charter_artifact
+		position = lower_center_portrait
+	}
+	override_background = { reference = throne_room }
+
+	immediate = {
+		random_equipped_character_artifact = {
+			limit = {
+				root = { can_benefit_from_artifact = prev }
+				var:charter_patron ?= {
+					is_alive = yes
+					root.suzerain ?= this
+				}
+			}
+			save_scope_as = charter_artifact
+			var:charter_patron ?= { save_scope_as = patron }
+		}
+		scope:patron = { save_scope_as = bg_override_char }
+	}
+
+	option = { #whoooops
+		name = gdp_decision.1000.a
+		add_character_flag = no_more_charter_abuse
+		reverse_add_opinion = {
+			target = scope:patron
+			modifier = abused_charter_authority_patron_opinion
+		}
+		custom_tooltip = charter_destroyed_upon_imprisonment_tt
+		reveal_dealbreaker_secret_effect = { REVEAL_TO = scope:patron }
+	}
+
+	option = { #its a prank bro
+		name = gdp_decision.1000.b
+		trigger = {
+			scope:patron = { is_ai = yes }
+		}
+		add_prestige_level = -1
+		duel = {
+			skill = diplomacy
+			target = scope:patron
+			30 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = 3.5
+					min = -49
+				}
+				min = 10
+				desc = gdp_decision.1000.b.success
+				send_interface_toast = {
+					type = event_toast_effect_neutral
+					title = gdp_decision.1000.b.success
+					left_icon = scope:patron
+					custom_tooltip = gdp_decision.1000.a.survived_patrons_wrath
+					reverse_add_opinion = {
+						target = scope:patron
+						modifier = angry_opinion
+						opinion = -30
+					}
+				}
+			}
+			70 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = -3.5
+					min = -49
+				}
+				min = 10
+				desc = gdp_decision.1000.b.failure
+				send_interface_toast = {
+					type = event_toast_effect_neutral
+					title = gdp_decision.1000.b.failure
+					left_icon = scope:patron
+					add_character_flag = no_more_charter_abuse
+					reverse_add_opinion = {
+						target = scope:patron
+						modifier = gravely_abused_charter_authority_opinion
+					}
+					custom_tooltip = charter_destroyed_upon_imprisonment_tt
+					reveal_dealbreaker_secret_effect = { REVEAL_TO = scope:patron }
+					every_close_family_member = {
+						custom = yearly_persian.1101.every_family
+						reverse_add_opinion = {
+							target = scope:patron
+							modifier = abused_charter_authority_family_opinion
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+gdp_decision.1010 = { # consequences decision for a player
+	type = character_event
+	theme = merchant
+	title = gdp_decision.1010.t
+	desc = gdp_decision.1010.desc
+	left_portrait = {
+		character = root
+		animation = anger
+	}
+	lower_right_portrait = scope:merchant
+	artifact = {
+		target = scope:charter_artifact
+		position = lower_center_portrait
+	}
+	override_background = { reference = throne_room }
+
+	trigger = {
+		NOT = { has_character_flag = refused_charter_abuse_notifications }
+	}
+
+	immediate = {
+		scope:market_county = {
+			merchant_charter_abuse_authority_county_effect = {
+				MERCHANT = scope:merchant
+				CUT = flag:no
+			}
+		}
+		scope:merchant = {
+			reveal_dealbreaker_secret_effect = { REVEAL_TO = scope:patron }
+		}
+	}
+
+	option = { #take action
+		name = gdp_decision.1010.a
+		custom_tooltip = gdp_decision.1010.a.tt
+		custom_tooltip = charter_destroyed_upon_imprisonment_tt
+		reveal_dealbreaker_secret_effect = { REVEAL_TO = scope:patron }
+		scope:merchant = {
+			send_interface_toast = {
+				type = event_toast_effect_good
+				title = gdp_decision.1010.t
+				left_icon = scope:patron
+				reverse_add_opinion = {
+					target = scope:patron
+					modifier = gravely_abused_charter_authority_opinion
+				}
+				if = {
+					limit = { is_ai = yes }
+					add_opinion = {
+						target = scope:patron
+						modifier = angry_opinion
+						opinion = -15
+					}
+				}
+			}
+		}
+	}
+
+	option = { #not for now
+		name = gdp_decision.1010.b
+		hidden_effect = {
+			scope:merchant = {
+				send_interface_toast = {
+					type = event_toast_effect_neutral
+					title = gdp_decision.1010.t
+					left_icon = scope:patron
+					custom_tooltip = merchant_charter_abuse_counter_indifferent
+				}
+			}
+		}
+	}
+
+	option = { #forgery!
+		name = gdp_decision.1010.d
+		trigger = {
+			scope:charter_artifact.var:forger ?= scope:merchant
+		}
+		reveal_dealbreaker_secret_effect = { REVEAL_TO = scope:patron }
+		send_interface_toast = {
+			type = event_toast_effect_neutral
+			title = forgery_detected_title
+			scope:merchant = {
+				send_interface_toast = {
+					type = event_toast_effect_bad
+					title = forgery_detected_title
+					left_icon = scope:patron
+					scope:patron = {
+						add_prestige = medium_prestige_loss
+						add_opinion = {
+							modifier = forged_charter_opinion
+							target = scope:merchant
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = { #do not notify me ever again (ever for like, 10 years)
+		name = gdp_decision.1010.c
+		flavor = gdp_decision.1010.c.flavor
+		add_character_flag = {
+			flag = refused_charter_abuse_notifications
+			years = 10
+		}
+	}
+}
+
+gdp_decision.1020 = { # abuse opening
+	type = character_event
+	theme = merchant
+	title = gdp_decision.1020.t
+	desc = {
+		desc = gdp_decision.1020.opening
+		triggered_desc = {
+			trigger = { exists = scope:market_holder }
+			desc = gdp_decision.1020.market_holder
+		}
+		desc = gdp_decision.1020.closing
+	}
+	left_portrait = {
+		character = root
+		animation = dismissal
+	}
+	right_portrait = {
+		character = scope:market_holder
+		animation = anger
+	}
+	lower_right_portrait = scope:patron
+	artifact = {
+		target = scope:charter_artifact
+		position = lower_center_portrait
+	}
+	override_background = { reference = market }
+
+	option = { #yeah, go for it
+		name = gdp_decision.1020.a
+		merchant_charter_abuse_counter_effect = {
+			PATRON = scope:patron
+			MERCHANT = root
+		}
+		scope:market_county = {
+			merchant_charter_abuse_authority_county_effect = {
+				MERCHANT = root
+				CUT = flag:no
+			}
+		}
+		ai_chance = {
+			base = 10
+			ai_value_modifier = {
+				ai_boldness = 1
+			}
+		}
+	}
+
+	option = { #try to be sneaky about it
+		name = gdp_decision.1020.b
+		trigger = {
+			exists = scope:market_holder
+			NOT = {
+				has_any_bad_relationship_with_character_trigger = { CHARACTER = scope:market_holder }
+			}
+		}
+		show_as_unavailable = { exists = scope:market_holder }
+		save_scope_value_as = {
+			name = pseudo_duel_value
+			value = {
+				value = scope:market_holder.ai_greed
+				add = "scope:market_holder.opinion(root)"
+				subtract = scope:market_holder.ai_honor
+				divide = 10
+			}
+		}
+		random_list = {
+			50 = {
+				compare_modifier = {
+					value = scope:pseudo_duel_value
+					multiplier = 3.5
+					min = -49
+				}
+				min = 5
+				desc = gdp_decision.1020.b.success
+				send_interface_toast = {
+					type = event_toast_effect_good
+					title = mpo_decisions_events.0110.b.success
+					left_icon = root
+					right_icon = scope:charter_patron
+					scope:market_county = {
+						merchant_charter_abuse_authority_county_effect = {
+							MERCHANT = root
+							CUT = flag:yes
+						}
+					}
+				}
+			}
+			50 = {
+				compare_modifier = {
+					value = scope:pseudo_duel_value
+					multiplier = -3.5
+					min = -49
+				}
+				min = 10
+				desc = gdp_decision.1020.b.failure
+				send_interface_toast = {
+					type = event_toast_effect_bad
+					title = gdp_decision.1020.b.failure
+					left_icon = root
+					right_icon = scope:patron
+					scope:market_holder ?= {
+						add_opinion = {
+							target = scope:merchant_temp
+							modifier = abused_charter_authority_opinion
+							opinion = -30
+						}
+					}
+					merchant_charter_abuse_counter_effect = {
+						PATRON = scope:patron
+						MERCHANT = root
+					}
+				}       	
+			}
+		}
+		ai_chance = {
+			base = 10
+			ai_value_modifier = {
+				ai_boldness = -1
+			}
+		}
+	}
+}
+
+# benevolent_charter_authority_decision
+
+scripted_effect merchant_charter_benevolent_reward_effect = {
+	if = {
+		limit = {
+			has_hook_of_type = {
+				target = scope:patron
+				type = indebted_hook
+			}
+		}
+		hidden_effect = {
+			remove_hook = {
+				target = scope:patron
+				type = indebted_hook
+			}
+		}
+		add_hook = {
+			target = scope:patron
+			type = strong_indebted_hook
+		}
+	}
+	else_if = {
+		limit = {
+			can_add_hook = {
+				target = scope:patron
+				type = indebted_hook
+			}
+		}
+		add_hook = {
+			target = scope:patron
+			type = indebted_hook
+		}
+	}
+	else = { add_gold = medium_gold_value }
+	if = {
+		limit = { is_ai = yes }
+		add_opinion = {
+			target = scope:patron
+			modifier = grateful_opinion
+			opinion = 15
+		}
+	}
+}
+
+gdp_decision.1200 = { # consequences
+	type = character_event
+	theme = merchant
+	title = gdp_decision.1200.t
+	desc = gdp_decision.1200.desc
+	right_portrait = {
+		character = scope:patron
+		animation = war_over_tie
+		camera = camera_event_very_right
+	}
+	artifact = {
+		target = scope:charter_artifact
+		position = lower_center_portrait
+	}
+	override_background = { reference = throne_room }
+
+	immediate = {
+		random_equipped_character_artifact = {
+			limit = {
+				save_temporary_scope_as = charter_temp
+				root = { can_benefit_from_artifact = scope:charter_temp }
+				var:charter_patron ?= {
+					is_alive = yes
+					root.suzerain ?= this
+				}
+			}
+			save_scope_as = charter_artifact
+			var:charter_patron ?= { save_scope_as = patron }
+		}
+		scope:patron = { save_scope_as = bg_override_char }
+		add_prestige = medium_prestige_value
+	}
+
+	option = { #cheers boss
+		name = gdp_decision.1200.a
+		reverse_add_opinion = {
+			target = scope:patron
+			modifier = charitable_charter_authority_opinion
+			opinion = 15
+		}
+		ai_chance = {
+			base = 25
+			ai_value_modifier = {
+				ai_greed = -0.5
+				ai_boldness = -0.5
+			}
+		}
+	}
+
+	option = { #senpai uwu
+		name = gdp_decision.1200.b
+		flavor = gdp_decision.1200.b.flavor
+		duel = {
+			skill = diplomacy
+			target = scope:patron
+			40 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = 3.5
+					min = -49
+				}
+				modifier = {
+					"scope:patron.opinion(root)" > 0
+					add = {
+						value = "scope:patron.opinion(root)" 
+						multiply = 0.3
+					}
+				}
+				min = 10
+				desc = gdp_decision.1200.b.success
+				send_interface_toast = {
+					type = event_toast_effect_neutral
+					title = gdp_decision.1200.b.success
+					left_icon = scope:patron
+					merchant_charter_benevolent_reward_effect = yes
+				}
+			}
+			60 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = -3.5
+					min = -49
+				}
+				modifier = {
+					"scope:patron.opinion(root)" < 0
+					add = {
+						value = "scope:patron.opinion(root)" 
+						multiply = 0.3
+					}
+				}
+				min = 10
+				desc = gdp_decision.1200.b.failure
+				send_interface_toast = {
+					type = event_toast_effect_neutral
+					title = gdp_decision.1200.b.failure
+					left_icon = scope:patron
+					reverse_add_opinion = {
+						target = scope:patron
+						modifier = disrespect_opinion
+						opinion = -15
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 25
+			ai_value_modifier = {
+				ai_greed = 0.5
+				ai_boldness = 0.5
+			}
+		}
+	}
+}
+
+gdp_decision.1210 = { # consequences decision for a player
+	type = character_event
+	theme = merchant
+	title = gdp_decision.1210.t
+	desc = gdp_decision.1210.desc
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	lower_right_portrait = scope:merchant
+	artifact = {
+		target = scope:charter_artifact
+		position = lower_center_portrait
+	}
+	override_background = { reference = throne_room }
+
+	trigger = {
+		NOT = { has_character_flag = refused_charter_benevolent_notifications }
+	}
+
+	immediate = {
+		show_as_tooltip = {
+			scope:market_county = {
+				merchant_charter_benevolent_authority_county_effect = { MERCHANT = scope:merchant }
+			}
+		}
+	}
+
+	option = { #reward
+		name = gdp_decision.1210.a
+		custom_tooltip = gdp_decision.1210.a.tt
+		add_character_flag = {
+			flag = merchant_charter_benevolent_rewarded
+			years = 10
+		}
+		scope:merchant = {
+			send_interface_toast = {
+				type = event_toast_effect_good
+				title = gdp_decision.1210.t
+				left_icon = scope:patron
+				merchant_charter_benevolent_reward_effect = yes
+			}
+		}
+	}
+
+	option = { #do nothing
+		name = gdp_decision.1210.b
+		hidden_effect = {
+			scope:merchant = {
+				send_interface_toast = {
+					type = event_toast_effect_good
+					title = gdp_decision.1210.t
+					left_icon = scope:patron
+					custom_tooltip = merchant_charter_benefit_counter_indifferent
+				}
+			}
+		}
+	}
+
+	option = { #do not notify me ever again (ever for like, 10 years)
+		name = gdp_decision.1210.c
+		flavor = gdp_decision.1210.c.flavor
+		add_character_flag = {
+			flag = refused_charter_benevolent_notifications
+			years = 10
+		}
+	}
+}
+
+gdp_decision.1220 = { # intervention opening
+	type = character_event
+	theme = merchant
+	title = gdp_decision.1220.t
+	desc = {
+		desc = gdp_decision.1220.opening
+		triggered_desc = {
+			trigger = { exists = scope:market_holder }
+			desc = gdp_decision.1220.market_holder
+		}
+		desc = gdp_decision.1220.closing
+	}
+	left_portrait = {
+		character = root
+		animation = survey
+	}
+	right_portrait = {
+		character = scope:market_holder
+		animation = interested
+	}
+	lower_right_portrait = scope:patron
+	artifact = {
+		target = scope:charter_artifact
+		position = lower_center_portrait
+	}
+	override_background = { reference = market }
+
+	option = { #yeah, go for it
+		name = gdp_decision.1220.a
+		merchant_charter_benefit_counter_effect = {
+			PATRON = scope:patron
+			MERCHANT = root
+		}
+		scope:market_county = {
+			merchant_charter_benevolent_authority_county_effect = { MERCHANT = root }
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+# forge_charter_decision
+
+gdp_decision.2000 = { # forgery
+	type = character_event
+	theme = merchant
+	title = gdp_decision.2000.t
+	desc = gdp_decision.2000.desc
+	left_portrait = {
+		character = scope:merchant
+		animation = chancellor
+	}
+	lower_right_portrait = scope:patron
+	artifact = {
+		target = scope:created_charter
+		position = lower_center_portrait
+	}
+	override_background = { reference = study }
+	override_sound = { reference = "event:/DLC/EP5/SFX/Stingers/ep5_mx_sting_obtaining_charter" }
+
+	immediate = {
+		save_scope_as = merchant
+		suzerain = { save_scope_as = patron }
+		create_merchant_charter_artifact_effect = {
+			PATRON = scope:patron
+			MERCHANT = scope:merchant
+		}
+		add_dealbreaker_secret_effect = yes
+		scope:created_charter = {
+			set_variable = {
+				name = forger
+				value = scope:merchant
+			}
+			hidden_effect = {
+				set_max_durability = {
+					value = {
+						value = 5
+						if = {
+							limit = { scope:merchant = { has_perk = accomplished_forger_perk } }
+							add = 5
+						}
+						if = {
+							limit = { scope:merchant = { has_perk = digging_for_dirt_perk } }
+							add = 5
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = gdp_decision.2000.a
+	}
+}
+
+# invite_merchants_decision
+
+gdp_decision.3000 = {
+	type = letter_event
+	opening = gdp_decision.3000.opening
+	desc = gdp_decision.3000.desc
+	sender = scope:new_patron
+
+	trigger = {
+		exists = domicile
+		government_has_flag = government_is_merchant
+		trigger_if = {
+			limit = { var:enticed_merchant ?= var:enticed_merchant } # error suppression
+		}
+	}
+
+	immediate = {
+		save_scope_as = new_client
+		add_to_variable_list = {
+			name = entice_merchant_cooldown
+			target = scope:new_patron
+			years = 10
+		}
+		if = {
+			limit = { is_ai = no }
+			add_character_flag = {
+				flag = entice_merchant_invited
+				months = 4
+			}
+		}
+		# Select arrival location
+		scope:new_patron ?= {
+			capital_province ?= {
+				save_scope_as = new_domicile_location
+				barony.trade_market ?= { save_scope_as = new_market }
+			}
+		}
+	}
+
+	option = {
+		name = gdp_decision.3000.a
+		# Move warnings
+		if = {
+			limit = {
+				exists = scope:new_market
+				scope:new_market = {
+					any_character_in_market = {
+						NOR = {
+							this = root
+							house ?= root.house
+						}
+						trade_competitiveness > root.trade_competitiveness
+					}
+				}
+			}
+			custom_tooltip = move_company_interaction.low_competitiveness
+		}
+		gdp_move_company_invalidate_trade_effect = yes
+		if = {
+			limit = {
+				exists = scope:new_patron
+				NOT = { suzerain ?= scope:new_patron }
+			}
+			custom_tooltip = move_company_interaction.patron_alert
+		}
+		if = {
+			limit = {
+				exists = scope:new_patron
+				trigger_if = {
+					limit = { has_realm_law = company_size_huge }
+					scope:new_patron.highest_held_title_tier < tier_kingdom
+				}
+				trigger_else_if = {
+					limit = { has_realm_law = company_size_large }
+					scope:new_patron.highest_held_title_tier < tier_duchy
+				}
+				trigger_else = { always = no }
+			}
+			custom_tooltip = move_company_interaction.size_alert
+		}
+		add_internal_flag = special
+		# Add cooldown
+		add_character_flag = {
+			flag = entice_merchant_cooldown
+			years = 10
+		}
+		# End Patron relationship and send message if relevant
+		suzerain = {
+			save_scope_as = old_patron
+			if = {
+				limit = {
+					is_ai = no
+					NOT = { this = scope:new_patron }
+				}
+				send_interface_toast = {
+					type = event_merchant_bad
+					title = merchant_enticed_title
+					left_icon = scope:new_client
+					right_icon = scope:new_client.primary_title
+					scope:new_client = { end_tributary = yes }
+				}
+			}
+		}
+		# Inform new Patron and grant enticements
+		if = {
+			limit = {
+				exists = scope:new_client
+				exists = scope:new_domicile_location
+			}
+			scope:new_client = {
+				send_interface_message = {
+					type = msg_merchant_enticed
+					title = merchant_enticed_title 
+					left_icon = scope:new_patron
+					right_icon = scope:new_domicile_location.county
+					scope:new_patron ?= {
+						send_interface_message = {
+							type = msg_merchant_enticed
+							title = merchant_enticed_title 
+							left_icon = scope:new_client
+							right_icon = scope:new_client.primary_title
+							scope:new_client = {
+								add_short_term_gold = scope:new_patron.minor_gold_value
+								add_prestige = medium_prestige_value
+								domicile = { move_domicile = scope:new_domicile_location }
+								# Start new Patron relationship
+								hidden_effect = {
+									start_tributary_interaction_effect = {
+										TRIBUTARY = scope:new_client
+										SUZERAIN = scope:new_patron
+									}
+								}
+								scope:new_market = {
+									add_competitiveness_modifier_for_character = {
+										character = scope:new_client
+										modifier = gdp_enticed_merchant_market_modifier
+										years = 5
+									}
+								}
+							}
+							if = {
+								limit = {
+									scope:old_patron = {
+										is_ai = yes
+										is_alive = yes
+									}
+									NOT = { this = scope:old_patron }
+								}
+								reverse_add_opinion = {
+									target = scope:old_patron
+									modifier = annoyed_opinion
+									opinion = -15
+								}
+							}
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					scope:old_patron = {
+						is_ai = yes
+						is_alive = yes
+					}
+					NOT = { scope:new_patron = scope:old_patron }
+					NOT = { this = scope:old_patron }
+				}
+				reverse_add_opinion = {
+					target = scope:old_patron
+					modifier = annoyed_opinion
+					opinion = -15
+				}
+			}
+		}
+	}
+
+	option = {
+		name = gdp_decision.3000.b
+		trigger = { is_ai = no }
+		reverse_add_opinion = {
+			target = scope:new_patron
+			modifier = annoyed_opinion
+			opinion = -15
+		}
+	}
+
+	option = {
+		name = gdp_decision.3000.c
+		trigger = { is_ai = no }
+		add_character_flag = entice_merchant_permanent_refusal
+		custom_tooltip = gdp_decision.3000.c.tt
+		reverse_add_opinion = {
+			target = scope:new_patron
+			modifier = annoyed_opinion
+			opinion = -15
+		}
+	}
+}
+
+gdp_decision.3001 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		create_character = {
+			template = merchant_template
+			culture = root.culture
+			faith = root.faith
+			location = root.capital_province
+			dynasty = generate
+			save_temporary_scope_as = merchant_temp
+		}
+		scope:merchant_temp = {
+			add_character_flag = {
+				flag = entice_merchant_blocker
+				months = 2
+			}
+			set_variable = {
+				name = enticed_merchant
+				value = scope:new_patron
+			}
+			create_merchant_title_effect = {
+				REASON = flag:historical
+				FLAVOR_CHAR = root 
+			}
+			trigger_event = gdp_decision.3000
+		}
+	}
+}
+
+# gdp_sponsor_merchant_company_decision
+
+gdp_decision.3010 = {
+	type = character_event
+	title = gdp_decision.3010.t
+	desc = gdp_decision.3010.desc
+	theme = merchant
+	left_portrait = {
+		character = root
+		animation = steward
+	}
+	right_portrait = {
+		character = scope:sponsored_courtier
+		animation = happiness
+	}
+
+	trigger = {
+		scope:sponsored_courtier ?= {
+			gdp_sponsor_merchant_company_candidate_trigger = { SPONSOR = root }
+		}
+	}
+
+	option = { # Aspiring Business
+		name = gdp_decision.3010.a
+		trigger = { gold >= gdp_sponsor_merchant_company_cost_small_value }
+		show_as_unavailable = { always = yes }
+		gdp_sponsor_merchant_company_effect = { SIZE = small }
+		ai_chance = { base = 10 }
+	}
+
+	option = { # Trade Establishment
+		name = gdp_decision.3010.b
+		trigger = { gold >= gdp_sponsor_merchant_company_cost_medium_value }
+		show_as_unavailable = { always = yes }
+		gdp_sponsor_merchant_company_effect = { SIZE = medium }
+		ai_chance = { base = 20 }
+	}
+
+	option = { # Prominent Company
+		name = gdp_decision.3010.c
+		trigger = { gold >= gdp_sponsor_merchant_company_cost_large_value }
+		show_as_unavailable = { always = yes }
+		gdp_sponsor_merchant_company_effect = { SIZE = large }
+		ai_chance = { base = 30 }
+	}
+
+	option = { # Trade Empire
+		name = gdp_decision.3010.d
+		trigger = { gold >= gdp_sponsor_merchant_company_cost_huge_value }
+		show_as_unavailable = { always = yes }
+		gdp_sponsor_merchant_company_effect = { SIZE = huge }
+		ai_chance = { base = 40 }
+	}
+
+	option = { # Change of mind, no cost or cooldown
+		name = gdp_decision.3010.e
+		ai_chance = { base = 0 }
+	}
+}

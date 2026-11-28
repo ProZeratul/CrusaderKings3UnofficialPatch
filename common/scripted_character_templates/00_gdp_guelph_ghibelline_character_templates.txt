@@ -1,0 +1,35 @@
+﻿################################
+# Guelphs & Ghibellines
+################################
+### New Counts
+gg_ruler_template = {
+	age = { 20 50 }
+	random_traits = yes
+	culture = scope:target_title.title_capital_county.title_province.culture
+	faith = scope:target_title.title_capital_county.title_province.faith
+	gender_female_chance = {
+		if = {
+			limit = { scope:target_title.title_capital_county.title_province.faith = { has_doctrine = doctrine_gender_male_dominated } }
+			add = 0
+		}
+		else_if = {
+			limit = { scope:target_title.title_capital_county.title_province.faith = { has_doctrine = doctrine_gender_female_dominated } }
+			add = 100
+		}
+		else = {
+			add = 50
+		}
+	}
+	diplomacy = {
+		min_template_decent_skill
+		max_template_decent_skill
+	}
+	stewardship = {
+		min_template_decent_skill
+		max_template_decent_skill
+	}
+	intrigue = {
+		min_template_decent_skill
+		max_template_decent_skill
+	}
+}

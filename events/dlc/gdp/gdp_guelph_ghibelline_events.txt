@@ -1,0 +1,863 @@
+﻿namespace = gdp_guelph_ghibelline
+
+############ INTRO
+# gdp_guelph_ghibelline.0500 - Hello World!
+#
+############ INTERACTIONS
+# gdp_guelph_ghibelline.5000 - Denied Recruit Partisan
+#
+############ HISTORY
+# gdp_guelph_ghibelline.6500 - Pope initiates Concordat of Worms
+# gdp_guelph_ghibelline.6505 - HRE gets a letter from the Pope
+#
+####
+# gdp_guelph_ghibelline.7000 - Want to start the Lombard League?
+# gdp_guelph_ghibelline.7005 - Want to join the Lombard League?
+# gdp_guelph_ghibelline.7010 - HRE is a player: Do you want to start a war against the Lombard League?
+#
+############ END DECISION/S
+# gdp_guelph_ghibelline.8500 - Compromise!
+# gdp_guelph_ghibelline.8510 - The other party declined
+# gdp_guelph_ghibelline.8520 - Notify players
+#
+###
+# gdp_guelph_ghibelline.9000 - End the Situation!
+# gdp_guelph_ghibelline.9010 - Notify players
+#
+###
+
+
+########### INTRO
+
+#Hello World!
+gdp_guelph_ghibelline.0500 = {
+	type = character_event
+	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/situation_types/guelph_ghibelline.dds"
+	queue_name = guelph_ghibelline
+	title = gdp_guelph_ghibelline.0500.t
+	desc = {
+		triggered_desc = {
+			trigger = { 
+				is_guelph_leader_trigger = no
+				is_ghibelline_leader_trigger = no
+			}
+			desc = gdp_guelph_ghibelline.0500.intro.all
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = { is_guelph_leader_trigger = yes }
+				desc = gdp_guelph_ghibelline.0500.desc.guelph_leader
+			}
+			triggered_desc = {
+				trigger = { is_ghibelline_leader_trigger = yes }
+				desc = gdp_guelph_ghibelline.0500.desc.ghibelline_leader
+			}
+			triggered_desc = {
+				trigger = { is_guelph_trigger = yes }
+				desc = gdp_guelph_ghibelline.0500.desc.guelph_member
+			}
+			triggered_desc = {
+				trigger = { is_ghibelline_trigger = yes }
+				desc = gdp_guelph_ghibelline.0500.desc.ghibelline_member
+			}
+			desc = gdp_guelph_ghibelline.0500.desc.unaligned
+		}
+	}
+	theme = guelph_ghibelline
+	override_background = { reference = gdp_fullscreen_gg_start }
+	cooldown = { days = 1 }
+
+	widgets = {
+		widget = {
+ 			gui = "event_window_widget_situation_info_guelph_ghibelline"
+ 			container = "dynamic_content_widget"
+ 			controller = situation_info
+ 			setup_scope = { situation:guelph_ghibelline = { save_scope_as = situation } }
+		}
+	}
+
+	trigger = {
+		is_ai = no
+		NOT = { has_character_flag = had_gg_intro_event }
+		OR = {
+			has_variable = ghibelline_leader
+			has_variable = guelph_leader
+			any_held_title = {
+				OR = {
+					this = title:k_venice
+					title_province = { geographical_region = gdp_guelph_ghibelline_northern_italy_region }
+				}
+			}
+			top_overlord ?= {
+				any_held_title = {
+					OR = {
+						this = title:k_venice
+						title_province = { geographical_region = gdp_guelph_ghibelline_northern_italy_region }
+					}
+				}
+			}
+		}
+	}
+
+	immediate = {
+		add_character_flag = had_gg_intro_event
+		situation:guelph_ghibelline ?= {
+			#Popero
+			random_situation_participant = {
+				limit = { 
+					any_held_title = { this = title:k_papal_state }
+				}
+				save_scope_as = pope_scope
+			}
+			#Guelph Leader
+			random_situation_participant = {
+				limit = { has_variable = guelph_leader }
+				save_scope_as = guelph_leader
+			}
+			#Ghibelline Leader
+			random_situation_participant = {
+				limit = { has_variable = ghibelline_leader }
+				save_scope_as = ghibelline_leader
+			}
+		}
+	}
+	#:ohok:
+	option = {
+		name = gdp_guelph_ghibelline.0500.a
+	}
+}
+
+########### FLAVOR
+
+#You have recruited a bunch of people to your side
+gdp_guelph_ghibelline.1000 = {
+	type = letter_event
+	opening = gdp_guelph_ghibelline.1000.opening
+	desc = gdp_guelph_ghibelline.1000.desc
+	sender = {
+		character = scope:gg_leader
+		animation = admiration
+	}
+
+	immediate = {
+		if = {
+			limit = { is_guelph_trigger = yes }
+			situation:guelph_ghibelline ?= { 
+				random_situation_participant = {
+					limit = { is_guelph_leader_trigger = yes }
+					save_scope_as = gg_leader
+				}
+			}
+		}
+		else = {
+			situation:guelph_ghibelline ?= { 
+				random_situation_participant = {
+					limit = { is_ghibelline_leader_trigger = yes }
+					save_scope_as = gg_leader
+				}
+			}
+		}
+		#Randomize reward somewhat
+		random_list = {
+			10 = {
+				dynasty = { 
+					add_dynasty_prestige = {
+						value = minor_dynasty_prestige_gain
+						multiply = {
+							add = {
+								value = root.var:gg_involvement
+								divide = 25
+							}
+						}
+					}
+				}
+			}
+			10 = {
+				add_gold = {
+					value = medium_gold_value
+					multiply = {
+						add = {
+							value = var:gg_involvement
+							divide = 25
+						}
+					}
+				}
+			}
+			10 = {
+				add_prestige = {
+					value = medium_prestige_gain
+					multiply = {
+						add = {
+							value = var:gg_involvement
+							divide = 25
+						}
+					}
+				}
+			}
+			10 = {
+				trigger = { gg_has_medium_involvement_trigger = yes }
+				if = {
+					limit = { is_guelph_trigger = yes }
+					add_character_modifier = {
+						modifier = guelph_efforts_recognized_modifier
+						years = 10
+					}
+				}
+				else = {
+					add_character_modifier = {
+						modifier = ghibelline_efforts_recognized_modifier
+						years = 10
+					}
+				}
+			}
+		}
+	}
+	#Yes, I did good didn't I!
+	option = {
+		name = gdp_guelph_ghibelline.1000.a
+		scope:gg_leader = {
+			add_hook = {
+				target = root
+				type = loyalty_hook
+				years = 5
+			}
+		}
+		if = {
+			limit = { is_ai = yes }
+			add_opinion = {
+				target = scope:gg_leader
+				modifier = feeling_appreciated_opinion
+				opinion = 30
+			}
+		}
+		if = {
+			limit = {
+				scope:gg_leader = { is_ai = yes }
+			}
+			scope:gg_leader = {
+				add_opinion = {
+					target = root
+					modifier = appreciation_opinion
+					opinion = 30
+				}
+			}
+		}
+		#And reset the counter
+		remove_variable = recruited_guelphs_num
+		remove_variable = recruited_ghibelline_num
+	}
+}
+
+########### INTERACTIONS
+
+#Denied Recruit Partisan
+gdp_guelph_ghibelline.5000 = {
+	type = letter_event
+	opening = gdp_guelph_ghibelline.5000.opening
+	desc = gdp_guelph_ghibelline.5000.desc
+	sender = {
+		character = scope:recipient
+		animation = dismissal
+	}
+
+	immediate = {
+		show_as_tooltip = { 
+			scope:recipient = {
+				add_opinion = {
+					modifier = gg_recruit_partisan_denied_opinion # this opinion also acts as a built-in cooldown
+					target = scope:actor
+				}
+				custom_tooltip = gg_recruit_partisan_interaction_cooldown_tt
+			}
+		}
+	}
+
+	option = {
+		name = gdp_guelph_ghibelline.5000.a
+	}
+}
+
+#Banishment cleanup
+gdp_guelph_ghibelline.5010 = {
+	hidden = yes
+	immediate = {
+		remove_character_flag = is_currently_being_banished
+	}
+}
+
+
+########### HISTORY
+
+#Pope initiates Concordat of Worms
+gdp_guelph_ghibelline.6500 = {
+	type = character_event
+	title = gdp_guelph_ghibelline.6500.t
+	desc = gdp_guelph_ghibelline.6500.desc
+	theme = guelph_ghibelline
+	override_background = { reference = council_chamber }
+	left_portrait = {
+		character = root
+		animation = contemplating
+	}
+	lower_right_portrait = {
+		character = scope:ghibelline_leader
+		animation = dismissal
+	}
+	immediate = {
+		situation:guelph_ghibelline ?= { 
+			random_situation_participant = {
+				limit = { has_variable = ghibelline_leader }
+				save_scope_as = ghibelline_leader
+			}
+			set_variable = had_concordat_of_worms
+		}
+	}
+	#Alright, let's peace out
+	option = {
+		name = gdp_guelph_ghibelline.6500.a
+		scope:ghibelline_leader = {
+			if = {
+				limit = { is_ai = no }
+				custom_tooltip = {
+					text = hre_decides_the_outcome.tt
+					trigger_event = gdp_guelph_ghibelline.6505
+				}
+			}
+			else = {
+				fulfill_concordat_of_worms_effect = { NEW_PHASE = repose }
+			}
+		}
+	}
+	#NEVER
+	option = {
+		name = gdp_guelph_ghibelline.6500.b
+		#Actual effect
+		actual_abandon_concordat_of_worms_effect = yes
+		#Notification effect
+		abandon_concordat_of_worms_effect = yes
+	}
+}
+
+#HRE gets a letter from the Pope
+gdp_guelph_ghibelline.6505 = {
+	type = letter_event
+	opening = gdp_guelph_ghibelline.6505.opening
+	desc = gdp_guelph_ghibelline.6505.desc
+	sender = scope:guelph_leader
+	immediate = {
+		situation:guelph_ghibelline ?= { 
+			random_situation_participant = {
+				limit = { has_variable = guelph_leader }
+				save_scope_as = guelph_leader
+			}
+			set_variable = had_concordat_of_worms
+		}
+	}
+	#Alright, let's peace out
+	option = {
+		name = gdp_guelph_ghibelline.6505.a
+		fulfill_concordat_of_worms_effect = { NEW_PHASE = repose }
+	}
+	#NEVER
+	option = {
+		name = gdp_guelph_ghibelline.6505.b
+		#Actual effect
+		actual_abandon_concordat_of_worms_effect = yes
+		#Notification effect
+		abandon_concordat_of_worms_effect = yes
+	}
+}
+
+###
+
+#♬ Do you want to build a trade lee-ague? ♪
+gdp_guelph_ghibelline.7000 = {
+	type = character_event
+	title = gdp_guelph_ghibelline.7000.t
+	desc = {
+		desc = gdp_guelph_ghibelline.7000.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:new_confederation = {
+						any_confederation_member = { count > num_lombard_league_members }
+					}
+				}
+				desc = gdp_guelph_ghibelline.7000.desc.all
+			}
+			triggered_desc = {
+				trigger = {
+					scope:new_confederation = {
+						any_confederation_member = { count > num_half_lombard_league_titles }
+					}
+				}
+				desc = gdp_guelph_ghibelline.7000.desc.more_than_half
+			}
+			desc = gdp_guelph_ghibelline.7000.desc.less_than_half
+		}
+	}
+	theme = guelph_ghibelline
+	override_background = { reference = council_chamber }
+	left_portrait = {
+		character = root
+		animation = personality_bold
+	}
+	lower_right_portrait = {
+		character = scope:hre_kaiser
+	}
+	immediate = {
+		title:e_hre.holder ?= { save_scope_as = hre_kaiser }
+		#These need to match whatever is in the form_lombard_league_decision-effect
+		add_character_modifier = lombard_founder_modifier
+		#We save the league_creator scope/identifier in the Situation before we call this event
+		create_lombard_league_effect = yes
+		gg_involvement_decision_effect = yes
+	}
+	#LET'S GOOOO ... and I'll have a Republic, thank you
+	option = {
+		name = gdp_guelph_ghibelline.7000.a
+		trigger = {
+			NOT = { government_has_flag = government_is_republic }
+		}
+		gdp_found_a_republic_effect = yes
+	}
+	#LET'S GOOOO
+	option = {
+		name = gdp_guelph_ghibelline.7000.b
+	}
+}
+
+#♬ Come on let's go out and pla-ay ♪
+gdp_guelph_ghibelline.7005 = {
+	type = character_event
+	title = gdp_guelph_ghibelline.7005.t
+	desc = gdp_guelph_ghibelline.7005.desc
+	theme = guelph_ghibelline
+	override_background = { reference = council_chamber }
+	left_portrait = {
+		character = root
+		animation = contemplating
+	}
+	lower_center_portrait = {
+		character = scope:league_creator
+	}
+	lower_right_portrait = {
+		character = scope:hre_kaiser
+	}
+	immediate = {
+		title:e_hre.holder ?= { save_scope_as = hre_kaiser }
+		random_confederation = {
+			limit = { has_variable = is_lombard_league }
+			save_scope_as = lombard_league_conf
+		}
+	}
+	#I'll join ... and I'll have a Republic, thank you
+	option = {
+		name = gdp_guelph_ghibelline.7005.a
+		trigger = {
+			NOT = { government_has_flag = government_is_republic }
+		}
+		gdp_found_a_republic_effect = yes
+		scope:lombard_league_conf = { 
+			actual_add_to_lombard_league_effect = { TITLE = root.primary_title }
+		}
+	}
+	#I'll join
+	option = {
+		name = gdp_guelph_ghibelline.7005.b
+		scope:lombard_league_conf = { 
+			actual_add_to_lombard_league_effect = { TITLE = root.primary_title }
+		}
+	}
+	#Nah, I'm good
+	option = {
+		name = gdp_guelph_ghibelline.7005.c
+	}
+}
+
+#HRE is a player: Do you want to start a war against the Lombard League?
+gdp_guelph_ghibelline.7010 = {
+	type = character_event
+	title = gdp_guelph_ghibelline.7010.t
+	desc = gdp_guelph_ghibelline.7010.desc
+	theme = guelph_ghibelline
+	override_background = { reference = council_chamber }
+	left_portrait = {
+		character = root
+		animation = rage
+	}
+	lower_right_portrait = {
+		character = scope:league_creator
+	}
+	immediate = {
+		random_confederation = {
+			limit = { has_variable = is_lombard_league }
+			save_scope_as = lombard_league_conf
+		}
+		custom_tooltip = league_creator_created_lombard_league.tt
+	}
+	#I'll crush them once and for all!
+	option = {
+		name = gdp_guelph_ghibelline.7010.a
+		add_prestige = major_prestige_gain
+		start_war = {
+			casus_belli = "dissolve_lombard_league_cb"
+			target = scope:league_creator
+		}
+	}
+	#Nah, I'm good
+	option = {
+		name = gdp_guelph_ghibelline.7010.b
+		stress_impact = {
+			base = minor_stress_impact_loss
+			lazy = major_stress_impact_loss
+			arbitrary = minor_stress_impact_loss
+			craven = minor_stress_impact_loss
+			paranoid = major_stress_impact_gain
+			vengeful = major_stress_impact_gain
+		}
+	}
+}
+
+#Request to join LL rejected
+gdp_guelph_ghibelline.7015 = {
+	type = letter_event
+	sender = scope:recipient
+	opening = {
+		desc = gdp_guelph_ghibelline.7015.opening
+	}
+	desc = gdp_guelph_ghibelline.7015.desc
+	immediate = {
+		set_variable = {
+			name = rejected_from_lombard_league
+			years = 5
+		}
+	}
+	#Accept
+	option = {
+		name = gdp_guelph_ghibelline.7015.a
+	}
+}
+
+########### END DECISION/S
+
+# Compromise!
+gdp_guelph_ghibelline.8500 = {
+	type = character_event
+	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/situation_types/guelph_ghibelline.dds"
+	title = gdp_guelph_ghibelline.8500.t
+	desc = gdp_guelph_ghibelline.8500.desc
+	theme = guelph_ghibelline
+	override_background = { reference = gdp_fullscreen_gg_compromise }
+
+	immediate = {
+		if = {
+			limit = {
+				scope:actor = { has_variable = guelph_leader }
+			}
+			scope:actor = { save_scope_as = guelph_leader }
+			scope:recipient = { save_scope_as = ghibelline_leader }
+		}
+		else = {
+			scope:actor = { save_scope_as = ghibelline_leader }
+			scope:recipient = { save_scope_as = guelph_leader }
+		}
+		if = {
+			limit = { scope:actor = this }
+			if = {
+				limit = { has_variable = guelph_leader }
+				gg_situation_compromise_actual_effect = { GUELPH_LEADER = scope:actor GHIBELLINE_LEADER = scope:recipient }
+			}
+			else = {
+				gg_situation_compromise_actual_effect = { GUELPH_LEADER = scope:recipient GHIBELLINE_LEADER = scope:actor }
+			}
+			custom_description_no_bullet = {
+				text = gg_end_situation_tt
+				situation:guelph_ghibelline = { end_situation = yes }
+			}
+		}
+		else = {
+			show_as_tooltip = {
+				if = {
+					limit = { has_variable = guelph_leader }
+					gg_situation_compromise_actual_effect = { GUELPH_LEADER = scope:actor GHIBELLINE_LEADER = scope:recipient }
+				}
+				else = {
+					gg_situation_compromise_actual_effect = { GUELPH_LEADER = scope:recipient GHIBELLINE_LEADER = scope:actor }
+				}
+			}
+			custom_description_no_bullet = { text = gg_end_situation_tt }
+		}
+	}
+	#:ohok:
+	option = {
+		name = gdp_guelph_ghibelline.8500.a
+		custom_description_no_bullet = {
+			text = gg_compromise_leader_involvement_effect
+			dynasty ?= { add_dynasty_prestige = root.gg_compromise_leader_involvement_renown }
+		}
+	}
+	after = {
+		if = {
+			limit = { scope:actor = this }
+			#Actually end the situation
+			trigger_event = {
+				id = gdp_guelph_ghibelline.9001
+				days = 1
+			}
+		}
+	}
+}
+
+# The other party declined
+gdp_guelph_ghibelline.8510 = {
+	type = letter_event
+	opening = gdp_guelph_ghibelline.8510.opening
+	desc = gdp_guelph_ghibelline.8510.desc
+	sender = {
+		character = scope:recipient
+		animation = dismissal
+	}
+	immediate = {
+		custom_tooltip = gdp_guelph_ghibelline.8510.tt
+	}
+	#How can this be!
+	option = {
+		name = gdp_guelph_ghibelline.8510.a
+	}
+}
+
+#Notify players
+gdp_guelph_ghibelline.8520 = {
+	type = character_event
+	title = gdp_guelph_ghibelline.8520.t
+	desc = gdp_guelph_ghibelline.8520.desc
+	theme = guelph_ghibelline
+	left_portrait = {
+		character = root
+		animation = contemplating
+	}
+	override_background = { reference = council_chamber }
+	immediate = {
+		scope:actor = {
+			if = {
+				limit = { has_variable = guelph_leader }
+				save_scope_as = guelph_leader
+				scope:recipient = { save_scope_as = ghibelline_leader }
+			}
+			else = {
+				save_scope_as = ghibelline_leader
+				scope:recipient = { save_scope_as = guelph_leader }
+			}
+			show_as_tooltip = {
+				if = {
+					limit = { has_variable = guelph_leader }
+					gg_situation_compromise_actual_effect = { GUELPH_LEADER = scope:actor GHIBELLINE_LEADER = scope:recipient }
+				}
+				else = {
+					gg_situation_compromise_actual_effect = { GUELPH_LEADER = scope:recipient GHIBELLINE_LEADER = scope:actor }
+				}
+			}
+		}
+	}
+	#:seemsgood:
+	option = {
+		name = gdp_guelph_ghibelline.8520.a
+		custom_description_no_bullet = {
+			text = gg_victory_member_involvement_effect
+			dynasty ?= { add_dynasty_prestige = root.gg_supporter_involvement_renown }
+		}
+	}
+}
+
+###
+
+# End the Situation!
+gdp_guelph_ghibelline.9000 = {
+	type = character_event
+	window = fullscreen_event
+	queue_icon = "gfx/interface/icons/situation_types/guelph_ghibelline.dds"
+	title = gdp_guelph_ghibelline.9000.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { is_guelph_trigger = yes }
+				desc = gdp_guelph_ghibelline.9000.desc.guelph
+			}
+			desc = gdp_guelph_ghibelline.9000.desc.ghibelline
+		}
+	}
+	theme = guelph_ghibelline
+	override_background = {
+		trigger = { is_guelph_trigger = yes }
+		reference = gdp_fullscreen_guelph_victory
+	}
+	override_background = { reference = gdp_fullscreen_ghibelline_victory }
+	override_effect_2d = { reference = legend_glow }
+
+	immediate = {
+		if = {
+			limit = { is_guelph_trigger = yes }
+			gg_guelph_situation_victory_effect = yes
+			create_character_memory = { type = guelph_won_gg_memory }
+		}
+		else = {
+			gg_ghibelline_situation_victory_effect = yes
+			create_character_memory = { type = ghibelline_won_gg_memory }
+		}
+	}
+
+	option = {
+		name = gdp_guelph_ghibelline.9000.a
+
+	}
+
+	after = {
+		# Notify & End Struggle
+		#save_scope_as = fp2_loc_struggle_ender # Loc used to use root, this fixes it
+		#every_player = {
+		#	limit = { fp2_does_this_player_care_about_the_fate_of_iberia = yes } # Needs to be checked before the struggle ends due to race condition #issues
+		#	add_to_list = player_to_notify # Making a list so stuff is tiggered after the struggle ends, to make extra sure I don't break anything.
+		#}
+
+		#Actually end the situation
+		trigger_event = {
+			id = gdp_guelph_ghibelline.9001
+			days = 1
+		}
+	}
+}
+
+gdp_guelph_ghibelline.9001 = {
+	hidden = yes
+	immediate = {
+		situation:guelph_ghibelline = { end_situation = yes }
+		if = {
+			limit = { exists = scope:guelph_win }
+			remove_global_variable = processing_guelph_win
+		}
+		if = {
+			limit = { exists = scope:ghibelline_win }
+			remove_global_variable = processing_ghibelline_win
+		}
+	}
+}
+
+#Notify players
+gdp_guelph_ghibelline.9010 = {
+	type = character_event
+	title = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					OR = {
+						AND = {
+							is_guelph_trigger = yes
+							exists = scope:guelph_win
+						}
+						AND = {
+							is_ghibelline_trigger = yes
+							exists = scope:ghibelline_win
+						}
+					}
+				}
+				desc = gdp_guelph_ghibelline.9010.t
+			}
+			desc = gdp_guelph_ghibelline.9010.t.defeat
+		}
+	}
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					OR = {
+						AND = {
+							is_guelph_trigger = yes
+							exists = scope:guelph_win
+						}
+						AND = {
+							is_ghibelline_trigger = yes
+							exists = scope:ghibelline_win
+						}
+					}
+				}
+				desc = gdp_guelph_ghibelline.9010.desc.win
+			}
+			desc = gdp_guelph_ghibelline.9010.desc.lose
+		}
+	}
+	theme = guelph_ghibelline
+	left_portrait = {
+		character = root
+		triggered_animation = {
+			trigger = {
+				is_guelph_trigger = yes
+				exists = scope:guelph_win
+			}
+			animation = personality_zealous
+		}
+		triggered_animation = {
+			trigger = {
+				is_ghibelline_trigger = yes
+				exists = scope:ghibelline_win
+			}
+			animation = happiness
+		}
+		animation = stress
+	}
+	lower_left_portrait = {
+		character = scope:victorious_leader
+	}
+	override_background = {
+		trigger = { is_guelph_trigger = yes }
+		reference = temple
+	}
+	override_background = { reference = council_chamber }
+
+	immediate = {
+		if = {
+			limit = { exists = scope:guelph_win }
+			situation:guelph_ghibelline = {
+				situation_participant_group:guelph_leader = {
+					random_situation_group_participant = { save_scope_as = victorious_leader }
+				}
+			}
+			show_as_tooltip = { gg_guelph_situation_victory_effect = yes }
+		}
+		else = {
+			situation:guelph_ghibelline = {
+				situation_participant_group:ghibelline_leader = {
+					random_situation_group_participant = { save_scope_as = victorious_leader }
+				}
+			}
+			show_as_tooltip = { gg_ghibelline_situation_victory_effect = yes }
+		}
+	}
+	#:seemsgood:
+	option = {
+		name = {
+			text = {
+				first_valid = {
+					triggered_desc = {
+						trigger = {
+							OR = {
+								AND = {
+									is_guelph_trigger = yes
+									exists = scope:guelph_win
+								}
+								AND = {
+									is_ghibelline_trigger = yes
+									exists = scope:ghibelline_win
+								}
+							}
+						}
+						desc = gdp_guelph_ghibelline.9010.a.win
+					}
+					desc = gdp_guelph_ghibelline.9010.a.lose
+				}
+			}
+		}
+	}
+}
