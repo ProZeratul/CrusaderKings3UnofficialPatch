@@ -452,6 +452,7 @@ gdp_visit_holding_decision_event.1111 = {
 		 		location = root.location
 		        culture = root.location.culture
 		        faith = root.location.faith
+		        rite = root.location.rite #Unop Copy the rite along with the faith
 				save_scope_as = curator
 		 	}
 		}
@@ -663,6 +664,7 @@ gdp_visit_holding_decision_event.1112 = {
 		        dynasty = none 
 		        culture = root.location.culture
 		        faith = root.location.faith
+		        rite = root.location.rite #Unop Copy the rite along with the faith
 				save_scope_as = blacksmith
 				after_creation = { remove_character_flag = peasant_outfit }
 			}
@@ -849,6 +851,7 @@ gdp_visit_holding_decision_event.1113 = {
 		        dynasty = none 
 		        culture = root.location.culture
 		        faith = root.location.faith
+		        rite = root.location.rite #Unop Copy the rite along with the faith
 				save_scope_as = guild_master
 		 	}
 		}
@@ -972,6 +975,7 @@ scripted_effect visit_holding_try_spawn_monk_effect = {
 						dynasty = none
 						culture = scope:visiting_location.culture
 						faith = scope:visiting_location.faith
+						rite = scope:visiting_location.rite #Unop Copy the rite along with the faith
 						learning = { high_skill_rating very_high_skill_rating }
 						save_scope_as = monk
 						after_creation = {
@@ -1032,6 +1036,7 @@ scripted_effect visit_holding_try_spawn_caravaneer_effect = {
 						dynasty = none
 						culture = scope:carvaneer_origin.culture
 						faith = scope:carvaneer_origin.faith
+						rite = scope:carvaneer_origin.rite #Unop Copy the rite along with the faith
 						gender_female_chance = 50
 						save_scope_as = caravaneer
 						after_creation = {
@@ -1111,6 +1116,7 @@ scripted_effect visit_holding_try_spawn_sea_captain_effect = {
 						dynasty = none
 						culture = scope:visiting_location.culture
 						faith = scope:visiting_location.faith
+						rite = scope:visiting_location.rite #Unop Copy the rite along with the faith
 						trait = education_stewardship_2
 						stewardship = { high_skill_rating very_high_skill_rating }
 						save_scope_as = sea_captain
@@ -1167,6 +1173,7 @@ scripted_effect visit_holding_try_spawn_carnival_jester_effect = {
 						dynasty = none
 						culture = scope:visiting_location.culture
 						faith = scope:visiting_location.faith
+						rite = scope:visiting_location.rite #Unop Copy the rite along with the faith
 						gender_female_chance = 50
 						intrigue = { high_skill_rating very_high_skill_rating }
 						save_scope_as = carnival_jester
@@ -1227,6 +1234,7 @@ scripted_effect visit_holding_try_spawn_cook_effect = {
 						dynasty = none
 						culture = scope:visiting_location.culture
 						faith = scope:visiting_location.faith
+						rite = scope:visiting_location.rite #Unop Copy the rite along with the faith
 						stewardship = { high_skill_rating very_high_skill_rating }
 						gender_female_chance = 50
 						save_scope_as = cook
@@ -2016,6 +2024,7 @@ gdp_visit_holding_decision_event.1310 = {
 		        dynasty = none 
 		        culture = scope:foreign_trader_home.culture
 		        faith = scope:foreign_trader_home.faith
+		        rite = scope:foreign_trader_home.rite #Unop Copy the rite along with the faith
 				save_scope_as = foreigner
 				after_creation = {
 					remove_character_flag = peasant_outfit
@@ -2033,6 +2042,7 @@ gdp_visit_holding_decision_event.1310 = {
 		        dynasty = none 
 		        culture = root.location.culture
 		        faith = root.location.faith
+		        rite = root.location.rite #Unop Copy the rite along with the faith
 				save_scope_as = local_trader
 				after_creation = {
 					remove_character_flag = peasant_outfit
@@ -2228,6 +2238,7 @@ scripted_effect 1320_character_creation_type_effect = {
         dynasty = none 
         culture = $CULTURE$
         faith = $FAITH$
+        rite = $RITE$ #Unop Copy the rite along with the faith
         save_scope_as = 1320_new_character
         after_creation = { add_character_flag = is_$ARCHETYPE$_recruit }
     }
@@ -2249,6 +2260,7 @@ scripted_effect 1320_generate_character_effect = {
 	            ARCHETYPE = charlatan 
 	            CULTURE = root.location.culture
 	            FAITH = root.location.faith
+	            RITE = root.location.rite #Unop Copy the rite along with the faith
             }
         }
         #Hired Muscle
@@ -2260,6 +2272,7 @@ scripted_effect 1320_generate_character_effect = {
             	ARCHETYPE = hired_muscle
             	CULTURE = root.location.culture
 	            FAITH = root.location.faith
+	            RITE = root.location.rite #Unop Copy the rite along with the faith
             }
         }
         #Numerate
@@ -2271,6 +2284,7 @@ scripted_effect 1320_generate_character_effect = {
             	ARCHETYPE = numerate
             	CULTURE = root.location.culture
 	            FAITH = root.location.faith            	
+	            RITE = root.location.rite #Unop Copy the rite along with the faith
             }
         }
         #Traveler
@@ -2283,6 +2297,7 @@ scripted_effect 1320_generate_character_effect = {
             	ARCHETYPE = traveler
             	CULTURE = scope:foreign_traveler_origin.culture
 	            FAITH = scope:foreign_traveler_origin.faith
+	            RITE = scope:foreign_traveler_origin.rite #Unop Copy the rite along with the faith
             }
         }
         #Urchin
@@ -2294,6 +2309,7 @@ scripted_effect 1320_generate_character_effect = {
             	ARCHETYPE = urchin
             	CULTURE = root.location.culture
 	            FAITH = root.location.faith
+	            RITE = root.location.rite #Unop Copy the rite along with the faith
             }
         }
         #Herbalist
@@ -2305,6 +2321,7 @@ scripted_effect 1320_generate_character_effect = {
             	ARCHETYPE = herbalist
             	CULTURE = root.location.culture
 	            FAITH = root.location.faith
+	            RITE = root.location.rite #Unop Copy the rite along with the faith
             }
         }
     }
@@ -3153,6 +3170,7 @@ gdp_visit_holding_decision_event.1324 = {
 		        dynasty = none 
 		        culture = root.location.culture
 		        faith = root.location.faith
+		        rite = root.location.rite #Unop Copy the rite along with the faith
 				save_scope_as = local
 				after_creation = { remove_character_flag = peasant_outfit }
 			}
@@ -4346,6 +4364,7 @@ gdp_visit_holding_decision_event.1335 = {
 				location = root.location
 				culture = root.location.culture
 				faith = root.location.faith
+				rite = root.location.rite #Unop Copy the rite along with the faith
 				gender_female_chance = 50
 				save_scope_as = carnival_spectator
 			}

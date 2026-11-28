@@ -148,6 +148,7 @@ become_merchant_decision = {
 							template = laamp_inheritor_template
 							culture = root.capital_county.culture
 							faith = root.capital_county.faith
+							rite = root.capital_county.rite #Unop Copy the rite along with the faith
 							dynasty = generate
 							location = root.capital_province
 							after_creation = {
@@ -198,7 +199,7 @@ become_merchant_decision = {
 		custom_tooltip = lose_all_prestige_tt
 		custom_tooltip = lose_all_prestige_level_tt
 		show_as_tooltip = {
-			stress_impact = {
+			stress_and_fulfillment_impact = { #Unop Vanilla uses stress_and_fulfillment_impact since 1.20
 				craven = minor_stress_impact_gain
 				content = minor_stress_impact_gain
 				lazy = minor_stress_impact_gain
@@ -2305,7 +2306,7 @@ merchant_spending_spree_decision = {
 
 				if = {
 					limit = { NOT = { has_trait = greedy } }
-					stress_impact = {
+					stress_and_fulfillment_impact = { #Unop Vanilla uses stress_and_fulfillment_impact since 1.20
 						base = medium_stress_impact_loss
 						generous = minor_stress_impact_loss
 					}
@@ -2314,7 +2315,7 @@ merchant_spending_spree_decision = {
 				custom_description = {
 					text = merchant_spending_spree_decision_associates_tt
 					every_courtier = {
-						stress_impact = {
+						stress_and_fulfillment_impact = { #Unop Vanilla uses stress_and_fulfillment_impact since 1.20
 							base = medium_stress_impact_loss
 						}
 					}
@@ -2333,7 +2334,7 @@ merchant_spending_spree_decision = {
 
 				if = {
 					limit = { NOT = { has_trait = greedy } }
-					stress_impact = {
+					stress_and_fulfillment_impact = { #Unop Vanilla uses stress_and_fulfillment_impact since 1.20
 						base = medium_stress_impact_loss
 						generous = minor_stress_impact_loss
 					}
@@ -2342,7 +2343,7 @@ merchant_spending_spree_decision = {
 				custom_description = {
 					text = merchant_spending_spree_decision_associates_tt
 					every_courtier = {
-						stress_impact = {
+						stress_and_fulfillment_impact = { #Unop Vanilla uses stress_and_fulfillment_impact since 1.20
 							base = medium_stress_impact_loss
 						}
 					}

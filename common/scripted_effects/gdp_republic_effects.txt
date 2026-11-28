@@ -362,6 +362,7 @@ gdp_trade_league_proclaim_commune_effect = {
 			location = scope:commune_county.title_province
 			template = burgher_faction_leader_template
 			faith = scope:commune_county.faith
+			rite = scope:commune_county.rite #Unop Copy the rite along with the faith
 			culture = scope:commune_county.culture
 			gender_female_chance = {
 				if = {
@@ -1509,6 +1510,9 @@ gdp_adjust_number_of_patrician_families_effect = {
 			scope:republican.capital_county.faith = {
 				save_scope_as = faith
 			}
+			scope:republican.capital_county.rite = { #Unop Save the rite along with the faith
+				save_scope_as = rite
+			}
 			random = {
 				chance = 75
 				scope:republican.culture = {
@@ -1517,11 +1521,15 @@ gdp_adjust_number_of_patrician_families_effect = {
 				scope:republican.faith = {
 					save_scope_as = faith
 				}
+				scope:republican.rite = { #Unop Save the rite along with the faith
+					save_scope_as = rite
+				}
 			}
 			create_character = {
 				template = merchant_template
 				culture = scope:culture
 				faith = scope:faith
+				rite = scope:rite #Unop Copy the rite along with the faith
 				employer = scope:republican
 				gender_female_chance = location_faith_dominant_gender_female_chance
 				age = {
@@ -1615,6 +1623,7 @@ gdp_adjust_number_of_patrician_families_effect = {
 							template = merchant_template
 							culture = scope:vassal.culture
 							faith = scope:vassal.faith
+							rite = scope:vassal.rite #Unop Copy the rite along with the faith
 							employer = scope:vassal
 							age = {
 								integer_range = {

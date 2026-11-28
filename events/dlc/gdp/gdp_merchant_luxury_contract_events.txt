@@ -8,10 +8,12 @@ scripted_effect luxury_contract_save_spawn_culture_and_faith_effect = {
 		}
 		location.culture = { save_temporary_scope_as = lc_spawn_culture }
 		location.faith = { save_temporary_scope_as = lc_spawn_faith }
+		location.rite = { save_temporary_scope_as = lc_spawn_rite } #Unop Save the rite along with the faith
 	}
 	else = {
 		culture = { save_temporary_scope_as = lc_spawn_culture }
 		faith = { save_temporary_scope_as = lc_spawn_faith }
+		rite = { save_temporary_scope_as = lc_spawn_rite } #Unop Save the rite along with the faith
 	}
 }
 
@@ -1035,6 +1037,7 @@ scripted_effect luxury_contract_find_or_create_dealer_effect = {
 				location = location
 				culture = location.culture
 				faith = location.faith
+				rite = location.rite #Unop Copy the rite along with the faith
 				save_scope_as = dealer
 			}
 		}
@@ -1610,6 +1613,7 @@ scripted_effect luxury_contract_find_or_create_hunter_effect = {
 			location = location
 			culture = scope:lc_spawn_culture
 			faith = scope:lc_spawn_faith
+			rite = scope:lc_spawn_rite #Unop Copy the rite along with the faith
 			save_scope_as = hunter
 		}
 		scope:hunter = { add_character_flag = destroy_me }
@@ -3399,6 +3403,7 @@ scripted_effect luxury_contract_find_or_create_urchin_effect = {
 			location = location
 			culture = scope:lc_spawn_culture
 			faith = scope:lc_spawn_faith
+			rite = scope:lc_spawn_rite #Unop Copy the rite along with the faith
 			save_scope_as = urchin
 		}
 		scope:urchin = { add_character_flag = destroy_me }
@@ -3484,6 +3489,7 @@ scripted_effect luxury_contract_find_or_create_traveler_effect = {
 					}
 				}
 				faith = { save_scope_as = traveler_faith }
+				rite = { save_scope_as = traveler_rite } #Unop Save the rite along with the faith
 			}
 		}
 		if = {
@@ -3491,6 +3497,7 @@ scripted_effect luxury_contract_find_or_create_traveler_effect = {
 				NOT = { exists = scope:traveler_faith }
 			}
 			location.faith = { save_scope_as = traveler_faith }
+			location.rite = { save_scope_as = traveler_rite } #Unop Save the rite along with the faith
 		}
 		create_character = {
 			template = foreign_mercenary_template
@@ -3498,6 +3505,7 @@ scripted_effect luxury_contract_find_or_create_traveler_effect = {
 			location = location
 			culture = scope:traveler_culture_2
 			faith = scope:traveler_faith
+			rite = scope:traveler_rite #Unop Copy the rite along with the faith
 			save_scope_as = traveler
 		}
 		scope:traveler = { add_character_flag = destroy_me }
@@ -3542,6 +3550,7 @@ scripted_effect luxury_contract_find_or_create_gambler_effect = {
 			location = location
 			culture = scope:lc_spawn_culture
 			faith = scope:lc_spawn_faith
+			rite = scope:lc_spawn_rite #Unop Copy the rite along with the faith
 			save_scope_as = gambler
 		}
 		random = {
@@ -4285,7 +4294,7 @@ gdp_merchant_luxury_contract.1102 = { # End
 		name = gdp_merchant_luxury_contract.1102.b
 		trigger = { lc_curio_bad_success_option_trigger = yes }
 		lc_curio_success_option_effect = yes
-		stress_impact = {
+		stress_and_fulfillment_impact = { #Unop Vanilla uses stress_and_fulfillment_impact since 1.20
 			compassionate = minor_stress_impact_gain
 			just = minor_stress_impact_gain
 			greedy = minor_stress_impact_gain
@@ -6000,7 +6009,7 @@ gdp_merchant_luxury_contract.1502 = { # End
 		name = gdp_merchant_luxury_contract.1502.b
 		trigger = { lc_curio_bad_success_option_trigger = yes }
 		lc_curio_success_option_effect = yes
-		stress_impact = {
+		stress_and_fulfillment_impact = { #Unop Vanilla uses stress_and_fulfillment_impact since 1.20
 			compassionate = minor_stress_impact_gain
 			just = minor_stress_impact_gain
 			greedy = minor_stress_impact_gain
@@ -6795,6 +6804,7 @@ scripted_effect luxury_contract_find_or_create_scholar_effect = {
 			location = location
 			culture = scope:lc_spawn_culture
 			faith = scope:lc_spawn_faith
+			rite = scope:lc_spawn_rite #Unop Copy the rite along with the faith
 			save_scope_as = scholar
 		}
 		scope:scholar = { add_character_flag = destroy_me }
@@ -6847,6 +6857,7 @@ scripted_effect luxury_contract_find_or_create_physician_effect = {
 			location = location
 			culture = scope:lc_spawn_culture
 			faith = scope:lc_spawn_faith
+			rite = scope:lc_spawn_rite #Unop Copy the rite along with the faith
 			save_scope_as = physician
 		}
 		scope:physician = { add_character_flag = destroy_me }
@@ -6898,6 +6909,7 @@ scripted_effect luxury_contract_find_or_create_student_effect = {
 			location = location
 			culture = scope:lc_spawn_culture
 			faith = scope:lc_spawn_faith
+			rite = scope:lc_spawn_rite #Unop Copy the rite along with the faith
 			save_scope_as = student
 		}
 		scope:student = { add_character_flag = destroy_me }
@@ -6951,6 +6963,7 @@ scripted_effect luxury_contract_find_or_create_sage_effect = {
 			location = location
 			culture = scope:lc_spawn_culture
 			faith = scope:lc_spawn_faith
+			rite = scope:lc_spawn_rite #Unop Copy the rite along with the faith
 			save_scope_as = sage
 		}
 		scope:sage = { add_character_flag = destroy_me }
@@ -7003,6 +7016,7 @@ scripted_effect luxury_contract_find_or_create_botanist_effect = {
 			location = location
 			culture = scope:lc_spawn_culture
 			faith = scope:lc_spawn_faith
+			rite = scope:lc_spawn_rite #Unop Copy the rite along with the faith
 			save_scope_as = botanist
 		}
 		scope:botanist = { add_character_flag = destroy_me }
@@ -7625,7 +7639,7 @@ gdp_merchant_luxury_contract.1602 = { # End
 		name = gdp_merchant_luxury_contract.1602.b
 		trigger = { lc_curio_bad_success_option_trigger = yes }
 		lc_curio_success_option_effect = yes
-		stress_impact = {
+		stress_and_fulfillment_impact = { #Unop Vanilla uses stress_and_fulfillment_impact since 1.20
 			compassionate = minor_stress_impact_gain
 			just = minor_stress_impact_gain
 			greedy = minor_stress_impact_gain

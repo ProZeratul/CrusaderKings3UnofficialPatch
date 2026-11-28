@@ -102,7 +102,7 @@ gdp_merchant.0001 = {
 		scope:old_liege ?= { trigger_event = gdp_merchant.0002 }
 		adventurer_prestige_reset_effect = yes
 		trigger_event = gdp_merchant.1001
-		stress_impact = {
+		stress_and_fulfillment_impact = { #Unop Vanilla uses stress_and_fulfillment_impact since 1.20
 			craven = minor_stress_impact_gain
 			content = minor_stress_impact_gain
 			lazy = minor_stress_impact_gain
@@ -300,7 +300,7 @@ gdp_merchant.0010 = {
 				desc = merchant_unity_adoption_loss
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = { #Unop Vanilla uses stress_and_fulfillment_impact since 1.20
 			callous = minor_stress_impact_gain
 			arrogant = medium_stress_impact_gain
 			compassionate = medium_stress_impact_loss
@@ -346,7 +346,7 @@ gdp_merchant.0010 = {
 				desc = merchant_unity_adoption_loss
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = { #Unop Vanilla uses stress_and_fulfillment_impact since 1.20
 			ambitious = medium_stress_impact_loss
 		}
 		ai_chance = {
@@ -369,7 +369,7 @@ gdp_merchant.0010 = {
 			target = scope:associate
 			opinion = -5
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = { #Unop Vanilla uses stress_and_fulfillment_impact since 1.20
 			content = minor_stress_impact_loss
 		}
 		ai_chance = {
@@ -994,6 +994,7 @@ gdp_merchant.0025 = {
 			 	location = root.location
 			    culture = root.location.culture
 			    faith = root.location.faith
+			    rite = root.location.rite #Unop Copy the rite along with the faith
 				learning = { 5 8 }
 				prowess = { 5 10 }
 			    save_scope_as = traveler
@@ -1142,6 +1143,7 @@ gdp_merchant.0030 = {
 				location = root.location
 				culture = root.location.culture
 				faith = root.location.faith
+				rite = root.location.rite #Unop Copy the rite along with the faith
 				prowess = { 8 12 }
 				save_scope_as = traveler
 				after_creation = {
@@ -1274,6 +1276,7 @@ gdp_merchant.0035 = {
 			location = root.location
 			culture = scope:foreign_merchant_home.culture
 			faith = scope:foreign_merchant_home.faith
+			rite = scope:foreign_merchant_home.rite #Unop Copy the rite along with the faith
 			learning = { 5 8 }
 			prowess = { 5 10 }
 			save_scope_as = traveler
@@ -1720,6 +1723,7 @@ scripted_effect generate_stewardship_associates = {
 			employer = root
 			culture = root.culture
 			faith = root.faith
+			rite = root.rite #Unop Copy the rite along with the faith
 			diplomacy = {
 				min_template_average_skill
 				max_template_average_skill
@@ -1759,6 +1763,7 @@ scripted_effect generate_diplomacy_associates = {
 			employer = root
 			culture = root.culture
 			faith = root.faith
+			rite = root.rite #Unop Copy the rite along with the faith
 			diplomacy = {
 				min_template_decent_skill
 				max_template_decent_skill
@@ -1798,6 +1803,7 @@ scripted_effect generate_learning_associates = {
 			employer = root
 			culture = root.culture
 			faith = root.faith
+			rite = root.rite #Unop Copy the rite along with the faith
 			diplomacy = {
 				min_template_average_skill
 				max_template_average_skill
@@ -1837,6 +1843,7 @@ scripted_effect generate_intrigue_associates = {
 			employer = root
 			culture = root.culture
 			faith = root.faith
+			rite = root.rite #Unop Copy the rite along with the faith
 			diplomacy = {
 				min_template_average_skill
 				max_template_average_skill
@@ -1876,6 +1883,7 @@ scripted_effect generate_martial_associates = {
 			employer = root
 			culture = root.culture
 			faith = root.faith
+			rite = root.rite #Unop Copy the rite along with the faith
 			diplomacy = {
 				min_template_average_skill
 				max_template_average_skill
@@ -3113,6 +3121,7 @@ gdp_merchant.2000 = {
 				location = scope:starving_province
 				culture = scope:starving_province.culture
 				faith = scope:starving_province.faith
+				rite = scope:starving_province.rite #Unop Copy the rite along with the faith
 				save_scope_as = starving_citizen
 			}
 		}
@@ -3411,6 +3420,7 @@ gdp_merchant.2010 = {
 			location = scope:workshop_province
 			culture = scope:workshop_province.culture
 			faith = scope:workshop_province.faith
+			rite = scope:workshop_province.rite #Unop Copy the rite along with the faith
 			trait = shy
 			save_scope_as = craftsman
 		}
@@ -3776,7 +3786,7 @@ gdp_merchant.2015 = {
 				}
 			}
 		}
-		stress_impact = {
+		stress_and_fulfillment_impact = { #Unop Vanilla uses stress_and_fulfillment_impact since 1.20
 			honest = minor_stress_impact_gain
 		}
 		ai_chance = {
@@ -6292,6 +6302,7 @@ gdp_merchant.4010 = {
 				dynasty = none
 				location = root.location
 				faith = root.location.faith
+				rite = root.location.rite #Unop Copy the rite along with the faith
 				culture = root.location.culture
 				gender = male
 				save_scope_as = student
