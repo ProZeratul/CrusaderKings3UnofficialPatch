@@ -1892,7 +1892,7 @@ martial_authority_special.1501 = {
 				years = 5
 			}
 			hidden_effect = { # removes soldier_friend and adds them as a friend so that they will not be used in future warfare events
-				remove_relation_soldier_friend = root
+				root = { remove_relation_soldier_friend = scope:deserting_soldier } #Unop Root holds the relation, not the soldier
 				if = {
 					limit = {
 						can_set_relation_friend_trigger = { CHARACTER = root }
@@ -1940,7 +1940,7 @@ martial_authority_special.1501 = {
 				target = root
 			}
 			hidden_effect = { # removes soldier_friend and adds them as a friend so that they will not be used in future warfare events
-				remove_relation_soldier_friend = root
+				root = { remove_relation_soldier_friend = scope:deserting_soldier } #Unop Root holds the relation, not the soldier
 				if = {
 					limit = {
 						can_set_relation_friend_trigger = { CHARACTER = root }

@@ -1,0 +1,14 @@
+﻿# Negative recipient interaction, with the recipient as the warden and the actor as the home court (recall_hostage_interaction)
+# Copy of interaction_recipient_hostage_value, which has the actor as the warden
+unop_interaction_recipient_warden_hostage_value = {
+	value = 0
+	if = {
+		limit = { exists = scope:secondary_recipient }
+		scope:actor = { save_temporary_scope_as = home_court }
+		scope:recipient = { save_temporary_scope_as = warden }
+		scope:secondary_recipient = { save_temporary_scope_as = hostage }
+		add = scope:hostage.hostage_value
+		floor = yes
+		multiply = -1 # Negative as hostage value makes the warden more reluctant
+	}
+}

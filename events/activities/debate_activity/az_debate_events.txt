@@ -918,9 +918,11 @@ az_debate.0004 = {
         trigger = { 
             diplomacy >= high_skill_rating
             scope:freethinker_friend = {
-                eligible_for_elder_trigger = {
-					DISCIPLE = root
-				}
+                root = { #Unop Root becomes the elder, not the disciple
+                    eligible_for_elder_trigger = {
+                        DISCIPLE = scope:freethinker_friend
+                    }
+                }
                 any_relation = {
                     type = elder
                     NOT = { is_ai = no }
