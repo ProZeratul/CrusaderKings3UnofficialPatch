@@ -25,7 +25,8 @@
 			try_create_important_action = {
 				important_action_type = action_send_child_to_university
 				actor = root
-				recipient = scope:child
+				recipient = scope:vassal #Unop Fill the slots as offer_ward_interaction expects, was scope:child
+				secondary_actor = scope:child
 				secondary_recipient = scope:vassal
 			}
 		}
@@ -36,6 +37,7 @@
 			interaction = offer_ward_interaction
 			actor = scope:actor
 			recipient = scope:recipient
+			secondary_actor = scope:secondary_actor #Unop Pass the ward
 			secondary_recipient = scope:secondary_recipient
 		}
 	}

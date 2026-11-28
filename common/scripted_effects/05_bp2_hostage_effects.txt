@@ -691,11 +691,13 @@ ward_travel_invalidation_effect = {
 				is_playable_character = yes
 
 				var:ward_travelling_to_guardian = {
-					is_alive = no
-					# Guardian is jailed
-					is_imprisoned = yes
-					# Guardian has wards already
-					num_of_relation_ward >= 2
+					OR = { #Unop Any of these invalidates the travel, not all of them together
+						is_alive = no
+						# Guardian is jailed
+						is_imprisoned = yes
+						# Guardian has wards already
+						num_of_relation_ward >= 2
+					}
 				}
 				NOT = { exists = var:ward_travelling_to_guardian }
 				NOT = { exists = var:character_making_education_request }
@@ -762,11 +764,13 @@ guardian_travel_invalidation_effect = {
 				is_playable_character = yes
 
 				var:guardian_travelling_to_ward = {
-					is_alive = no
-					# Ward is jailed
-					is_imprisoned = yes
-					# Ward has a guardian already
-					any_relation = { type = guardian }
+					OR = { #Unop Any of these invalidates the travel, not all of them together
+						is_alive = no
+						# Ward is jailed
+						is_imprisoned = yes
+						# Ward has a guardian already
+						any_relation = { type = guardian }
+					}
 				}
 				NOT = { exists = var:guardian_travelling_to_ward }
 			}

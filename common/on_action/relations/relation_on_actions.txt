@@ -1603,7 +1603,7 @@ on_remove_relation_ward = {
 		#Remove guardian opinions when ward is removed from guardian or when the guardian is about to die
 		if = { #Commented out because this shouldn't be needed but if we get errors something weird might be going on
 			limit = { exists = liege }
-			liege = { save_scope_as = ward_liege }
+			scope:target.liege ?= { save_scope_as = ward_liege } #Unop Use the ward's liege, not the guardian's
 			guardian_remove_opinion_effect = {
 				WARD = scope:target
 				GUARDIAN = root
@@ -1636,7 +1636,7 @@ on_death_relation_ward = {
 		#Remove guardian opinions when ward is removed from guardian or when the guardian is about to die
 		if = { #Commented out because this shouldn't be needed but if we get errors something weird might be going on
 			limit = { exists = liege }
-			liege = { save_scope_as = ward_liege }
+			scope:target.liege ?= { save_scope_as = ward_liege } #Unop Use the ward's liege, not the guardian's
 			guardian_remove_opinion_effect = {
 				WARD = scope:target
 				GUARDIAN = root

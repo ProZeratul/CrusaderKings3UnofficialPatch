@@ -2827,15 +2827,19 @@ imprison_remove_ward_guardian_effect = {
 			limit = {
 				exists = scope:imprisonment_target
 				any_courtier = {
-					has_relation_guardian = scope:imprisonment_target
-					has_relation_ward = scope:imprisonment_target
+					OR = { #Unop Either relation, not both
+						has_relation_guardian = scope:imprisonment_target
+						has_relation_ward = scope:imprisonment_target
+					}
 				}
 			}
 			#Save all those with a ward/guardian relation to the person being imprisoned
 			every_courtier = {
 				limit = {
-					has_relation_guardian = scope:imprisonment_target
-					has_relation_ward = scope:imprisonment_target
+					OR = { #Unop Either relation, not both
+						has_relation_guardian = scope:imprisonment_target
+						has_relation_ward = scope:imprisonment_target
+					}
 				}
 				add_to_list = ward_or_guardian_list
 			}
