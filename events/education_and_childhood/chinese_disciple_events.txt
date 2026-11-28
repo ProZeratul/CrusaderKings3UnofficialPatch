@@ -11,23 +11,31 @@ chinese_students.0001 = {
 		government_allows = merit
 		is_available_at_peace_adult = yes
 
-        any_relation = {
-            type = disciple
-		    is_available_at_peace_adult = yes
-            NOT = { has_character_modifier = tgp_harsh_cultivation_modifier }
-            add_to_temporary_list = mentees
-        }
-        any_relation = {
-            type = student
-		    is_available_at_peace_adult = yes
-            NOT = {
-                has_character_modifier = tgp_harsh_cultivation_modifier
-                any_in_list = {
-                    list = mentees
-                    this = prev
-                }
+        OR = { #Unop Only build the list without requiring a disciple, and add up to two of them
+            any_relation = {
+                type = disciple
+                count >= 2
+                is_available_at_peace_adult = yes
+                NOT = { has_character_modifier = tgp_harsh_cultivation_modifier }
+                add_to_temporary_list = mentees
             }
-            add_to_temporary_list = mentees
+            always = yes
+        }
+        OR = { #Unop Only build the list without requiring a student, and add up to two of them
+            any_relation = {
+                type = student
+                count >= 2
+                is_available_at_peace_adult = yes
+                NOT = {
+                    has_character_modifier = tgp_harsh_cultivation_modifier
+                    any_in_list = {
+                        list = mentees
+                        this = prev
+                    }
+                }
+                add_to_temporary_list = mentees
+            }
+            always = yes
         }
         top_participant_group:dynastic_cycle = {
             trigger_if = {
@@ -38,17 +46,21 @@ chinese_students.0001 = {
                         count < 3 # only include movement members in the list of mentees if you have less than 3
                     }
                 }
-                any_situation_group_participant = {
-                    this != root
-		            is_available_at_peace_adult = yes
-                    NOT = {
-                        has_character_modifier = tgp_harsh_cultivation_modifier
-                        any_in_list = {
-                            list = mentees
-                            this = prev
+                OR = { #Unop Only build the list without requiring a movement member, and add up to two of them
+                    any_situation_group_participant = {
+                        count >= 2
+                        this != root
+                        is_available_at_peace_adult = yes
+                        NOT = {
+                            has_character_modifier = tgp_harsh_cultivation_modifier
+                            any_in_list = {
+                                list = mentees
+                                this = prev
+                            }
                         }
+                        add_to_temporary_list = mentees
                     }
-                    add_to_temporary_list = mentees
+                    always = yes
                 }
             }
         }

@@ -515,10 +515,17 @@ debate_event.2000 = {
                     }
                     NOR = {
                         has_relation_disciple = root
+                        # Is already an Elder
+                        any_relation = { type = disciple } #Unop Match the trigger
                         # Let's avoid having the player get their kids stolen.
                         any_parent = { is_ai = no }
                         # This char is rowdy
                         has_personality_levelheaded_trigger = yes
+                        # Is disciple of a player character
+                        any_relation = { #Unop Match the trigger
+                            type = elder
+                            is_ai = no
+                        }
                     }
                     opinion = {
                         target = root
