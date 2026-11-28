@@ -574,47 +574,65 @@ tgp_chaos_shattering_effect = {
 				limit = {
 					any_held_title = { is_noble_family_title = yes }
 					is_landed = no
-					this = top_liege
+					top_liege != capital_province.county.holder.top_liege # independent, or not vassal of location's new top liege
+				}
+				clear_saved_scope = unlanded_new_liege
+				domicile.domicile_location.county.holder.top_liege = {
+					if = { # Save the top liege of the domicile's location - If ruler's tier is above county
+						limit = {
+							NOT = { this = scope:old_emperor_temp }
+							highest_held_title_tier > tier_county
+						}
+						save_temporary_scope_as = unlanded_new_liege
+					}
+					else_if = { # Otherwise - Try and find a neighboring ruler
+						limit = {
+							any_neighboring_top_liege_realm_owner = {
+								NOT = { this = scope:old_emperor_temp }
+								highest_held_title_tier > tier_county
+							}
+						}
+						random_neighboring_top_liege_realm_owner = {
+							limit = {
+								NOT = { this = scope:old_emperor_temp }
+								highest_held_title_tier > tier_county
+							}
+							save_temporary_scope_as = unlanded_new_liege
+						}
+					}
+					else = { # Fallback - Find a random shattered realm, preferring higher tiers
+						random_in_list = {
+							list = former_vassals
+							limit = {
+								is_landed = yes
+								highest_held_title_tier >= tier_empire
+							}
+							alternative_limit = {
+								is_landed = yes
+								highest_held_title_tier >= tier_kingdom
+							}
+							alternative_limit = {
+								is_landed = yes
+								highest_held_title_tier >= tier_duchy
+							}
+							save_temporary_scope_as = unlanded_new_liege
+						}
+					}
 				}
 				create_title_and_vassal_change = {
 					type = swear_fealty
 					save_scope_as = unlanded_liege_change
 					add_claim_on_loss = no
 				}
-				# Save the top liege of the domicile's location - If ruler's tier is above county
-				if = {
-					limit = {
-						domicile.domicile_location.county.holder.top_liege = {
-							highest_held_title_tier > tier_county
-						}
-					}
-					domicile.domicile_location.county.holder.top_liege = {
-						save_temporary_scope_as = unlanded_new_liege
-					}
-				}
-				# Otherwise - Try and find a neighboring ruler
-				else_if = {
-					limit = {
-						domicile.domicile_location.county.holder = {
-							any_neighboring_top_liege_realm_owner = {
-								highest_held_title_tier > tier_county
-							}
-						}
-					}
-					domicile.domicile_location.county.holder = {
-						random_neighboring_top_liege_realm_owner = {
-							limit = {
-								highest_held_title_tier > tier_county
-							}
-							save_temporary_scope_as = unlanded_new_liege
-						}
-					}
-				}
 				change_liege = {
 					liege = scope:unlanded_new_liege
 					change = scope:unlanded_liege_change
 				}
 				resolve_title_and_vassal_change = scope:unlanded_liege_change
+				if = { # Move noble families who fell outside new liege's realm
+					limit = { capital_province.county.holder.top_liege != liege }
+					domicile = { move_domicile = prev.liege.capital_province }
+				}
 			}
 		}
 		# create a story that will make characters pursue taking the mandate
@@ -659,6 +677,61 @@ tgp_chaos_shattering_effect = {
 	#depose the previous hegemon from all landed titles
 	scope:old_emperor_temp = {
 		force_step_down_landed_titles = yes
+		if = {
+			limit = { is_ruler = yes }
+			domicile.domicile_location.county.holder.top_liege = {
+				# Save the top liege of the domicile's location - If ruler's tier is above county
+				if = {
+					limit = { highest_held_title_tier > tier_county }
+					save_temporary_scope_as = huangdi_new_liege
+				}
+				# Otherwise - Try and find a neighboring ruler
+				else_if = {
+					limit = {
+						any_neighboring_top_liege_realm_owner = { highest_held_title_tier > tier_county }
+					}
+					random_neighboring_top_liege_realm_owner = {
+						limit = { highest_held_title_tier > tier_county }
+						save_temporary_scope_as = huangdi_new_liege
+					}
+				}
+				# Fallback - Find a random shattered realm, preferring higher tiers
+				else = {
+					random_in_list = {
+						list = former_vassals
+						limit = {
+							is_landed = yes
+							highest_held_title_tier >= tier_empire
+						}
+						alternative_limit = {
+							is_landed = yes
+							highest_held_title_tier >= tier_kingdom
+						}
+						alternative_limit = {
+							is_landed = yes
+							highest_held_title_tier >= tier_duchy
+						}
+						save_temporary_scope_as = huangdi_new_liege
+					}
+				}
+			}
+			hidden_effect = {
+				create_title_and_vassal_change = {
+					type = swear_fealty
+					save_scope_as = huangdi_liege_change
+					add_claim_on_loss = no
+				}
+				change_liege = {
+					liege = scope:huangdi_new_liege
+					change = scope:huangdi_liege_change
+				}
+				resolve_title_and_vassal_change = scope:huangdi_liege_change
+				if = { # Move noble families who fell outside new liege's realm
+					limit = { capital_province.county.holder.top_liege != liege }
+					domicile = { move_domicile = prev.liege.capital_province }
+				}
+			}
+		}
 	}
 	hidden_effect = {
 		situation:dynastic_cycle = {
@@ -2598,7 +2671,10 @@ tgp_catalyst_from_decision_effect = {
 		}
 		undecided_movement = {
 			situation:dynastic_cycle = {
-				trigger_situation_catalyst = catalyst_house_head_consulted_heaven_chaos_negative
+				if = {
+					limit = { situation_has_catalyst = catalyst_house_head_consulted_heaven_chaos_negative }
+					trigger_situation_catalyst = catalyst_house_head_consulted_heaven_chaos_negative
+				}
 			}
 		}
 	}

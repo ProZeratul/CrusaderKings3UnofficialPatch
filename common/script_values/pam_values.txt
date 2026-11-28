@@ -9704,6 +9704,18 @@ de_jure_counties_held_by_recipient_value = {
 	}
 }
 
+de_jure_counties_held_by_secondary_recipient_value = {
+	value = 0
+	every_de_jure_county = {
+		limit = {
+			holder ?= {
+				target_is_same_character_or_above = scope:secondary_recipient
+			}
+		}
+		add = 1
+	}
+}
+
 kingdom_of_heaven_lower_vassals_gained_value = {
 	value = 0
 	every_in_list = {
@@ -10027,10 +10039,10 @@ pam_ecclesiastic_incite_holy_war_inspire_realm_value = {
 	value = medium_piety_value
 	if = {
 		limit = {
-			exists = scope:secondary_recipient
+			exists = scope:recipient
 		}
 		multiply = {
-			value = scope:secondary_recipient.highest_held_title_tier
+			value = scope:recipient.highest_held_title_tier
 			subtract = 1
 			multiply = 2
 		}
@@ -10049,6 +10061,50 @@ pam_ecclesiastic_incite_claim_war_cost_value = {
 			multiply = 2
 		}
 	}
+}
+
+pam_ecclesiastic_incite_war_cost_multiplier_value = {
+	value = 1
+	if = {
+		limit = {
+			scope:puppet_or_actor ?= {
+				domicile ?= { has_domicile_parameter = estate_cheaper_incite_war_1 }
+			}
+		}
+		multiply = ecclesiastical_domicile_cheaper_incite_war_mult_1
+	}
+	if = {
+		limit = {
+			scope:puppet_or_actor ?= {
+				domicile ?= { has_domicile_parameter = estate_cheaper_incite_war_2 }
+			}
+		}
+		multiply = ecclesiastical_domicile_cheaper_incite_war_mult_2
+	}
+	if = {
+		limit = {
+			scope:puppet_or_actor ?= {
+				domicile ?= { has_domicile_parameter = estate_cheaper_incite_war_3 }
+			}
+		}
+		multiply = ecclesiastical_domicile_cheaper_incite_war_mult_3
+	}
+	if = {
+		limit = {
+			scope:puppet_or_actor ?= { has_perk = chivalric_dominance_perk }
+		}
+		multiply = 0.75
+	}
+}
+
+pam_ecclesiastic_incite_holy_war_discounted_cost_value = {
+	value = pam_ecclesiastic_incite_holy_war_cost_value
+	multiply = pam_ecclesiastic_incite_war_cost_multiplier_value
+}
+
+pam_ecclesiastic_incite_claim_war_discounted_cost_value = {
+	value = pam_ecclesiastic_incite_claim_war_cost_value
+	multiply = pam_ecclesiastic_incite_war_cost_multiplier_value
 }
 
 pam_request_white_peace_cost_value = {

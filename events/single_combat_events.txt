@@ -9721,7 +9721,12 @@ single_combat.0031 = {
 				}
 			}
 			scope:sc_loser = {
-				set_designated_heir = scope:sc_victor
+				if = {
+					limit = {
+						scope:sc_victor = { is_child_of = scope:sc_loser } # the effect only accepts children, the rowdy relative can be a sibling
+					}
+					set_designated_heir = scope:sc_victor
+				}
 				remove_character_flag = duelling_defecting_family_flag
 			}
 		}

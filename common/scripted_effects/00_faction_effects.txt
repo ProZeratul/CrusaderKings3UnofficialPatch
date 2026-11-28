@@ -1049,6 +1049,7 @@ successful_nomadic_revolt_outcome_effect = {
 				every_held_title = {
 					limit = {
 						tier = tier_county
+						is_landless_type_title = no
 					}
 					if = {
 						limit = {
@@ -1060,17 +1061,7 @@ successful_nomadic_revolt_outcome_effect = {
 							set_holding_type = nomad_holding
 						}
 					}
-					add_county_modifier = {
-						modifier = county_increased_opinion_modifier
-						years = 25
-					}
-					if = {
-						limit = {
-							has_county_modifier = peasant_war_lost_county_modifier
-						}
-						remove_county_modifier = peasant_war_lost_county_modifier
-					}
-					peasant_war_popular_opinion_to_baseline_effect = yes
+					peasant_war_pacify_county_effect = yes
 				}
 				if = {
 					limit = {
@@ -1516,22 +1507,36 @@ spawn_nomadic_revolt_troops = {
 	}
 }
 
-# County scope. Run after adding or removing the peasant war opinion modifiers
-# They only raise the baseline, so this applies them immediately
-peasant_war_popular_opinion_to_baseline_effect = {
+# County scope. Raises popular opinion to at least peasant_war_pacified_popular_opinion_floor_value
+peasant_war_pacified_popular_opinion_floor_effect = {
 	save_temporary_scope_value_as = {
-		name = peasant_war_opinion_to_baseline
+		name = peasant_war_opinion_to_floor
 		value = {
-			value = base_popular_opinion
+			value = peasant_war_pacified_popular_opinion_floor_value
 			subtract = popular_opinion
 		}
 	}
 	if = {
 		limit = {
-			scope:peasant_war_opinion_to_baseline > 0
+			scope:peasant_war_opinion_to_floor > 0
 		}
-		add_popular_opinion = scope:peasant_war_opinion_to_baseline
+		add_popular_opinion = scope:peasant_war_opinion_to_floor
 	}
+}
+
+# County scope. Adds Locals Pacified, removes Increased Autonomy and applies the popular opinion floor
+peasant_war_pacify_county_effect = {
+	add_county_modifier = {
+		modifier = county_increased_opinion_modifier
+		years = peasant_war_pacified_years_value
+	}
+	if = {
+		limit = {
+			has_county_modifier = peasant_war_lost_county_modifier
+		}
+		remove_county_modifier = peasant_war_lost_county_modifier
+	}
+	peasant_war_pacified_popular_opinion_floor_effect = yes
 }
 
 peasant_faction_demands_enforced = {
@@ -1575,7 +1580,7 @@ peasant_faction_demands_enforced = {
 					modifier = peasant_war_lost_county_modifier
 					years = 10
 				}
-				peasant_war_popular_opinion_to_baseline_effect = yes
+				peasant_war_pacified_popular_opinion_floor_effect = yes
 			}
 			destroy_faction = yes
 		}
@@ -1674,7 +1679,7 @@ peasant_faction_demands_enforced = {
 					modifier = peasant_war_lost_county_modifier
 					years = 10
 				}
-				peasant_war_popular_opinion_to_baseline_effect = yes
+				peasant_war_pacified_popular_opinion_floor_effect = yes
 			}
 			hidden_effect = {
 				clean_revolt_county_modifiers_from_faction_members_effect = yes
@@ -1758,6 +1763,7 @@ setup_nomadic_leader_effect = {
 	create_dynamic_title = {
 		tier = duchy
 		name = FACTION_NOMADIC_REVOLT_TITLE_NAME
+		article = FACTION_NOMADIC_REVOLT_TITLE_ARTICLE
 	}
 	create_title_and_vassal_change = {
 		type = created
@@ -1921,6 +1927,7 @@ setup_populist_leader_effect = {
 		create_dynamic_title = {
 			tier = duchy
 			name = FACTION_POPULIST_REVOLT_TITLE_NAME
+			article = FACTION_POPULIST_REVOLT_TITLE_ARTICLE
 		}
 		create_title_and_vassal_change = {
 			type = created

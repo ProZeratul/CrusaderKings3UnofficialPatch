@@ -277,6 +277,7 @@ assimilate_to_mandala_decision = {
 	is_shown = {
 		is_landed = yes
 		highest_held_title_tier > tier_barony
+		NOT = { government_has_flag = government_is_merchant }
 		overlord ?= { government_has_flag = government_is_mandala }
 		NAND = {
 			government_has_flag = government_is_mandala
@@ -438,6 +439,7 @@ assimilate_to_mandala_decision = {
 	}
 
 	ai_potential = {
+		is_landed = yes
 		this != top_overlord
 		overlord = { government_has_flag = government_is_mandala }
 		primary_title.tier > tier_barony
@@ -458,7 +460,8 @@ assimilate_to_mandala_decision = {
 			}
 			overlord.mandala_radiance_value >= 10
 		}
-		NOT = {
+		NOR = {
+			government_has_flag = government_is_merchant
 			any_owned_story = {
 				OR = {
 					story_type = story_mongol_invasion

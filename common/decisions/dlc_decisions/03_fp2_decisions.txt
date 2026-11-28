@@ -1576,7 +1576,7 @@ improve_city_province_decision = {
 	}
 	desc = improve_city_province_decision_desc
 	selection_tooltip = improve_city_province_decision_tooltip
-	cooldown = { years = 50 }
+	cooldown = { years = 10 }
 	sort_order = 90
 
 	is_shown = {
@@ -1584,134 +1584,86 @@ improve_city_province_decision = {
 			has_dynasty_perk = fp2_urbanism_legacy_5
 		}
 		is_landless_adventurer = no
+		any_directly_owned_province = {
+			improve_city_province_decision_valid_holding_trigger = yes
+		}
 	}
 
 	is_valid_showing_failures_only = {
 		custom_tooltip = {
 			text = improve_city_province_decision_at_least_one_city_tt
-			any_sub_realm_county = {
-				count > 0
-				holder = root
-				any_county_province = {
-					building_slots <= 5
-					has_holding_type = city_holding
+			any_directly_owned_province = {
+				improve_city_province_decision_can_expand_trigger = yes
+			}
+		}
+		trigger_if = {
+			limit = { exists = scope:selected_item }
+			custom_tooltip = {
+				text = improve_city_province_decision_already_expanded_tt
+				scope:selected_item.title_province = {
+					barony.holder = root
+					improve_city_province_decision_can_expand_trigger = yes
+				}
+			}
+		}
+	}
+
+	widget = {
+		gui = "decision_view_widget_select_realm_county"
+		controller = select_scope_object
+
+		setup_items = {
+			scope:actor = {
+				every_directly_owned_province = {
+					limit = { improve_city_province_decision_valid_holding_trigger = yes }
+					barony = { add_to_list = item_list }
+				}
+			}
+		}
+
+		default_item = {
+			scope:actor = {
+				if = {
+					limit = {
+						capital_province ?= {
+							barony.holder = scope:actor
+							improve_city_province_decision_can_expand_trigger = yes
+						}
+					}
+					capital_province.barony = { save_scope_as = selected_item }
+				}
+				else = {
+					random_directly_owned_province = {
+						limit = { improve_city_province_decision_can_expand_trigger = yes }
+						barony = { save_scope_as = selected_item }
+					}
+				}
+			}
+		}
+
+		is_item_valid = {
+			custom_tooltip = {
+				text = improve_city_province_decision_already_expanded_tt
+				title_province = {
+					NOT = { has_province_modifier = expanded_city_province_modifier }
 				}
 			}
 		}
 	}
 
 	effect = {
-
-		#Generate intelligible effect
-		if = {
-			limit = {
-				any_sub_realm_county = {
-					count > 0
-					holder = root
-					any_county_province = {
-						building_slots <= 5
-						has_holding_type = city_holding
-					}
-				}
-			}
-			every_sub_realm_county = {
-				# only county directly owned by the character
-				limit = { holder = root }
-				every_county_province = {
-					limit = {
-						has_holding_type = city_holding
-						building_slots <= 5
-					}
-					save_scope_as = current_province
-					prev.holder = {
-						send_interface_toast = {
-							type = event_toast_effect_good
-							title = city_gained_building_slots
-							left_icon = scope:current_province.barony
-
-							scope:current_province = {
-								add_province_modifier = extra_building_slot
-							}
-						}
-					}
-
-				}
-			}
-		}
-		else = {
-			custom_tooltip = improve_city_province_decision_decision_no_effect
+		scope:selected_item.title_province = {
+			add_province_modifier = expanded_city_province_modifier
 		}
 	}
 
 	cost = {
-		gold = {
-			value = 0
-			if = {
-				limit = {
-					has_treasury = no
-				}
-				add = improve_city_province_decision_cost
-				multiply = {
-					value = 1
-					every_sub_realm_county = {
-						# only county directly owned by the character
-						limit = { holder = root }
-						every_county_province = {
-							limit = {
-								building_slots <= 5
-								has_holding_type = city_holding
-							}
-							add = 1
-						}
-					}
-				}
-			}
-		}
-		treasury = {
-			value = 0
-			if = {
-				limit = {
-					has_treasury = yes
-				}
-				add = improve_city_province_decision_cost
-				multiply = {
-					value = 1
-					every_sub_realm_county = {
-						# only county directly owned by the character
-						limit = { holder = root }
-						every_county_province = {
-							limit = {
-								building_slots <= 5
-								has_holding_type = city_holding
-							}
-							add = 1
-						}
-					}
-				}
-			}
-		}
+		treasury_or_gold = improve_city_province_decision_cost
 	}
 
-	ai_check_interval_by_tier = {
-		barony = 0
-		county = 0
-		duchy = 120
-		kingdom = 120
-		empire = 120
-		hegemony = 120
-	}
-
-	ai_potential = {
-		is_at_war = no
-		# Has enough gold.
-		short_term_gold >= ai_war_chest_desired_gold_value
-		NOR = {
-			has_trait = lazy
-			has_trait = callous
-		}
-	}
+	ai_check_interval = 0
 
 	ai_will_do = {
-		base = 100
+		base = 0
 	}
 }

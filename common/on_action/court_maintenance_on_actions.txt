@@ -86,6 +86,17 @@ on_leave_court = {
 					modifier = trader_assigned_opinion
 				}
 			}
+			if = {
+				limit = {
+					has_character_modifier = natural_primitivism_court_naturism_modifier
+					NOT = { has_character_flag = natural_primitivism_promoted_naturism_active }
+				}
+				remove_character_modifier = natural_primitivism_court_naturism_modifier
+			}
+			if = {
+				limit = { has_character_flag = natural_primitivism_rejected_court_naturism }
+				remove_character_flag = natural_primitivism_rejected_court_naturism
+			}
 		}
 		remove_variable = court_8311_cooldown
 	}

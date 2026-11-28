@@ -319,7 +319,7 @@ found_capital_of_rus_scripted_effect = {
 fp1_apply_generic_stele_bonuses_effect = {
 	add_piety = major_piety_gain
 	add_prestige = major_prestige_gain
-	add_legitimacy = medium_legitimacy_gain
+	add_legitimacy_effect = { LEGITIMACY = medium_legitimacy_gain }
 	every_vassal = {
 		limit = { fp1_can_raise_stele_trigger = yes }
 		custom = fp1_raise_runestone_vassals
@@ -504,6 +504,7 @@ forge_the_jomsvikings_scripted_effect = {
 			random_county_province = {
 				limit = { has_holding = no }
 				set_holding_type = castle_holding
+				remove_preserved_wilderness_effect = yes
 				barony = { save_scope_as = leased_barony }
 			}
 		}
@@ -543,10 +544,6 @@ forge_the_jomsvikings_scripted_effect = {
 	## Give it some buildings.
 	hidden_effect = {
 		scope:leased_barony.title_province = {
-			if = {
-				limit = { free_building_slots = 0 }
-				add_province_modifier = extra_building_slot
-			}
 			add_random_fortification_building_effect = yes
 			add_random_military_building_effect = yes
 		}

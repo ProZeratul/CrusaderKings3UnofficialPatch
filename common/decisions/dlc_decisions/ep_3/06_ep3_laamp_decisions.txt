@@ -1772,8 +1772,16 @@ reject_inheritance_decision = {
 		# Standard filter checks.
 		is_playable_character = yes
 		exists = dynasty
-		# And naturally, you can't do this if you've already got the trait.
-		NOT = { has_trait = gallivanter }
+		NOR = {
+			# And naturally, you can't do this if you've already got the trait.
+			has_trait = gallivanter
+			# Merit governments refuse appointments via tgp_refuse_appointments_decision instead.
+			AND = {
+				government_has_flag = government_has_merit
+				this != top_liege
+				has_tgp_dlc_trigger = yes
+			}
+		}
 	}
 
 	is_valid = {
@@ -2527,8 +2535,8 @@ seasoned_visitor_decision = {
 	}
 
 	cost = {
-		prestige = 500
-		gold = 250
+		prestige = seasoned_visitor_decision_prestige_cost_value
+		gold = seasoned_visitor_decision_gold_cost_value
 	}
 
 	effect = {

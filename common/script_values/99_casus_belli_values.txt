@@ -41,11 +41,11 @@ common_cb_cost_multiplier_core = {
 					government_has_flag = government_is_herder
 				}
 			}
-			scope:attacker.top_liege = {
+			scope:attacker.top_liege ?= {
 				is_confederation_member = yes
 			}
-			scope:defender.top_liege = {
-				this = scope:attacker.top_liege
+			scope:defender.top_liege ?= {
+				scope:attacker.top_liege ?= this
 			}
 		}
 		multiply = {
@@ -280,9 +280,9 @@ common_cb_cost_multiplier_core = {
 	# Imperial Policy Japan
 	if = {
 		limit = {
-			scope:attacker.top_liege = {
+			scope:attacker.top_liege ?= {
 				has_realm_law_flag = vassal_internal_wars_cost_doubled
-				this = scope:defender.top_liege
+				scope:defender.top_liege ?= this
 			}
 		}
 		multiply = {
@@ -833,51 +833,49 @@ vassalization_cb_prestige_cost_mulitiplier = {
 }
 
 claim_cb_cost_multiplier_legitimacy = {
+	value = 1
 	scope:attacker = {
 		if = {
 			limit = { has_legitimacy_flag = reduced_claim_cb_cost }
-			add = {
+			multiply = {
 				value = 0.5
 				desc = legitimacy_high_modifier_tt
 			}
 		}
 		else_if = {
 			limit = { has_legitimacy_flag = very_reduced_claim_cb_cost }
-			add = {
+			multiply = {
 				value = 0.25
 				desc = legitimacy_high_modifier_tt
 			}
 		}
 		else_if = {
 			limit = { has_legitimacy_flag = extra_reduced_claim_cb_cost }
-			add = {
+			multiply = {
 				value = 0.15
 				desc = legitimacy_high_modifier_tt
 			}
 		}
 		else_if = {
 			limit = { has_legitimacy_flag = increased_claim_cb_cost }
-			add = {
+			multiply = {
 				value = 1.5
 				desc = legitimacy_low_modifier_tt
 			}
 		}
 		else_if = {
 			limit = { has_legitimacy_flag = very_increased_claim_cb_cost }
-			add = {
+			multiply = {
 				value = 2
 				desc = legitimacy_low_modifier_tt
 			}
 		}
 		else_if = {
 			limit = { has_legitimacy_flag = massively_increased_claim_cb_cost }
-			add = {
+			multiply = {
 				value = 2.5
 				desc = legitimacy_low_modifier_tt
 			}
-		}
-		else = {
-			add = 1
 		}
 	}
 }

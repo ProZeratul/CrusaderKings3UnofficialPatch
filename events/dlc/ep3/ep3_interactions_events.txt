@@ -1256,7 +1256,10 @@ scripted_effect ep3_rent_knight_effect = {
 		add_courtier = $KNIGHT_TO_RENT$
 		$KNIGHT_TO_RENT$ = {
 			add_character_flag = blocked_from_leaving
-			set_knight_status = force
+			if = {
+				limit = { is_potential_knight = yes }
+				set_knight_status = force
+			}
 		}
 		#return event
 		trigger_event = {
@@ -1327,6 +1330,7 @@ ep3_interactions_events.0101 = {
 			every_knight = {
 				limit = {
 					is_landed = no
+					can_be_knight_trigger = { ARMY_OWNER = root }
 				}
 				add_to_list = potential_knights
 			}
@@ -1372,7 +1376,7 @@ ep3_interactions_events.0101 = {
 		}
 		if = {
 			limit = {
-				scope:knight_to_rent_3 = {
+				scope:knight_to_rent_3 ?= {
 					any_character_trait = {
 						has_trait_category = commander
 					}

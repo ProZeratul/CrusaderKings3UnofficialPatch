@@ -12,6 +12,18 @@ scripted_trigger disobedient_kurultai_member_trigger = {
 	}
 }
 
+scripted_effect mpo_chaotic_kurultai_save_dead_parent_effect = {
+	primary_title = {
+		if = {
+			limit = {
+				any_past_holder = { count >= 2 }
+				previous_holder = { is_alive = no }
+			}
+			previous_holder = { save_scope_as = dead_parent }
+		}
+	}
+}
+
 mpo_chaotic_kurultai_succession.0001 = { # Siblings become your rivals
 	type = character_event
 	title = mpo_chaotic_kurultai_succession.0001.t
@@ -76,14 +88,7 @@ mpo_chaotic_kurultai_succession.0001 = { # Siblings become your rivals
 	}
 	
 	immediate = {
-		primary_title.previous_holder = {
-			if = {
-				limit = {
-					is_alive = no
-				}
-				save_scope_as = dead_parent
-			}
-		}
+		mpo_chaotic_kurultai_save_dead_parent_effect = yes
 		random_sibling = {
 			limit = {
 				is_physically_able_ai = yes
@@ -238,14 +243,7 @@ mpo_chaotic_kurultai_succession.0002 = { # Sibling seizes tributary lands and le
 	}
 	
 	immediate = {
-		primary_title.previous_holder = {
-			if = {
-				limit = {
-					is_alive = no
-				}
-				save_scope_as = dead_parent
-			}
-		}
+		mpo_chaotic_kurultai_save_dead_parent_effect = yes
 		random_tributary = {
 			limit = {
 				is_ai = yes
@@ -336,7 +334,10 @@ mpo_chaotic_kurultai_succession.0002 = { # Sibling seizes tributary lands and le
 			}
 			scope:sibling_rival_1 = {
 				domicile ?= {
-					add_domicile_building = yurt_main_02
+					if = {
+						limit = { has_domicile_building = yurt_main_01 }
+						add_domicile_building = yurt_main_02
+					}
 					add_random_yurt_external_building_effect = yes
 					add_random_yurt_external_building_effect = yes
 					upgrade_random_yurt_external_building_effect = yes
@@ -448,14 +449,7 @@ mpo_chaotic_kurultai_succession.0003 = { # Tributary leaves
 	}
 	
 	immediate = {
-		primary_title.previous_holder = {
-			if = {
-				limit = {
-					is_alive = no
-				}
-				save_scope_as = dead_parent
-			}
-		}
+		mpo_chaotic_kurultai_save_dead_parent_effect = yes
 		random_tributary = {
 			limit = {
 				is_physically_able_ai_adult = yes
@@ -562,14 +556,7 @@ mpo_chaotic_kurultai_succession.0004 = { # County Control loss
 	}
 	
 	immediate = {
-		primary_title.previous_holder = {
-			if = {
-				limit = {
-					is_alive = no
-				}
-				save_scope_as = dead_parent
-			}
-		}
+		mpo_chaotic_kurultai_save_dead_parent_effect = yes
 		random_pool_character = {
 			province = root.location
 			limit = { is_physically_able_ai = yes }
@@ -663,14 +650,7 @@ mpo_chaotic_kurultai_succession.0005 = { # Loss of Prestige Level
 	}
 	
 	immediate = {
-		primary_title.previous_holder ?= { # A newly created title has no previous holder
-			if = {
-				limit = {
-					is_alive = no
-				}
-				save_scope_as = dead_parent
-			}
-		}
+		mpo_chaotic_kurultai_save_dead_parent_effect = yes
 		random_in_list = {
 			list = disobedient_kurultai
 			limit = {
@@ -751,14 +731,7 @@ mpo_chaotic_kurultai_succession.0006 = { # 10% of Herd defects to Neighboring re
 	
 	immediate = {
 		save_scope_as = ruler_rustled
-		primary_title.previous_holder = {
-			if = {
-				limit = {
-					is_alive = no
-				}
-				save_scope_as = dead_parent
-			}
-		}
+		mpo_chaotic_kurultai_save_dead_parent_effect = yes
 		random_land_neighboring_realm_with_tributaries_owner = {
 			limit = {
 				is_physically_able_ai_adult = yes
@@ -992,14 +965,7 @@ mpo_chaotic_kurultai_succession.0007 = { # Good Courtiers defect to Neighbor
 	
 	immediate = {
 		save_scope_as = ruler_rustled
-		primary_title.previous_holder = {
-			if = {
-				limit = {
-					is_alive = no
-				}
-				save_scope_as = dead_parent
-			}
-		}
+		mpo_chaotic_kurultai_save_dead_parent_effect = yes
 		random_land_neighboring_realm_with_tributaries_owner = {
 			limit = {
 				is_physically_able_ai_adult = yes
@@ -1212,14 +1178,7 @@ mpo_chaotic_kurultai_succession.0008 = { # MaA Regiment defects to neighbor
 	
 	immediate = {
 		save_scope_as = ruler_rustled
-		primary_title.previous_holder = {
-			if = {
-				limit = {
-					is_alive = no
-				}
-				save_scope_as = dead_parent
-			}
-		}
+		mpo_chaotic_kurultai_save_dead_parent_effect = yes
 		random_land_neighboring_realm_with_tributaries_owner = {
 			limit = {
 				is_physically_able_ai_adult = yes
@@ -1466,14 +1425,7 @@ mpo_chaotic_kurultai_succession.0009 = { # Some Gold divided by Siblings
 	}
 	
 	immediate = {
-		primary_title.previous_holder = {
-			if = {
-				limit = {
-					is_alive = no
-				}
-				save_scope_as = dead_parent
-			}
-		}
+		mpo_chaotic_kurultai_save_dead_parent_effect = yes
 		random_sibling = {
 			limit = {
 				is_physically_able_ai = yes
@@ -1679,14 +1631,7 @@ mpo_chaotic_kurultai_succession.0010 = { # Legitimacy -500
 	}
 	
 	immediate = {
-		primary_title.previous_holder = {
-			if = {
-				limit = {
-					is_alive = no
-				}
-				save_scope_as = dead_parent
-			}
-		}
+		mpo_chaotic_kurultai_save_dead_parent_effect = yes
 		random_in_list = {
 			list = disobedient_kurultai
 			limit = {
@@ -1767,14 +1712,7 @@ mpo_chaotic_kurultai_succession.0011 = { # 20% of Herd defects to Neighboring re
 	
 	immediate = {
 		save_scope_as = ruler_rustled
-		primary_title.previous_holder = {
-			if = {
-				limit = {
-					is_alive = no
-				}
-				save_scope_as = dead_parent
-			}
-		}
+		mpo_chaotic_kurultai_save_dead_parent_effect = yes
 		random_land_neighboring_realm_with_tributaries_owner = {
 			limit = {
 				is_physically_able_ai_adult = yes
@@ -1923,14 +1861,7 @@ mpo_chaotic_kurultai_succession.0012 = { # 50% Realm Split
 
 	immediate = {
 		hidden_effect = {
-			primary_title.previous_holder = {
-				if = {
-					limit = {
-						is_alive = no
-					}
-					save_scope_as = dead_parent
-				}
-			}
+			mpo_chaotic_kurultai_save_dead_parent_effect = yes
 			every_sibling = {
 				limit = {
 					is_physically_able_ai_adult = yes
@@ -2134,14 +2065,7 @@ mpo_chaotic_kurultai_succession.0013 = { # 20% Realm Split
 	
 	immediate = {
 		hidden_effect = {
-			primary_title.previous_holder = {
-				if = {
-					limit = {
-						is_alive = no
-					}
-					save_scope_as = dead_parent
-				}
-			}
+			mpo_chaotic_kurultai_save_dead_parent_effect = yes
 			every_sibling = {
 				limit = {
 					is_physically_able_ai_adult = yes
@@ -2349,14 +2273,7 @@ mpo_chaotic_kurultai_succession.0014 = { # Extreme kurultai disapproval: shatter
 			remove_variable = guaranteed_disastrous_succession
 		}
 		custom_tooltip = title_chaos_dissolved_tt
-		primary_title.previous_holder = {
-			if = {
-				limit = {
-					is_alive = no
-				}
-				save_scope_as = dead_parent
-			}
-		}
+		mpo_chaotic_kurultai_save_dead_parent_effect = yes
 		random_in_list = {
 			list = disobedient_kurultai
 			limit = {
@@ -2567,14 +2484,7 @@ mpo_chaotic_kurultai_succession.0015 = { # 40% of Herd defects to Neighboring re
 	
 	immediate = {
 		save_scope_as = ruler_rustled
-		primary_title.previous_holder = {
-			if = {
-				limit = {
-					is_alive = no
-				}
-				save_scope_as = dead_parent
-			}
-		}
+		mpo_chaotic_kurultai_save_dead_parent_effect = yes
 		random_land_neighboring_realm_with_tributaries_owner = {
 			limit = {
 				is_physically_able_ai_adult = yes
@@ -2690,14 +2600,7 @@ mpo_chaotic_kurultai_succession.0016 = { # 3 Tributaries leave
 	}
 	
 	immediate = {
-		primary_title.previous_holder = {
-			if = {
-				limit = {
-					is_alive = no
-				}
-				save_scope_as = dead_parent
-			}
-		}
+		mpo_chaotic_kurultai_save_dead_parent_effect = yes
 		random_tributary = {
 			limit = {
 				is_physically_able_ai_adult = yes
@@ -2894,14 +2797,7 @@ mpo_chaotic_kurultai_succession.0017 = { # All Tributaries leave
 	}
 	
 	immediate = {
-		primary_title.previous_holder = {
-			if = {
-				limit = {
-					is_alive = no
-				}
-				save_scope_as = dead_parent
-			}
-		}
+		mpo_chaotic_kurultai_save_dead_parent_effect = yes
 		random_tributary = {
 			limit = {
 				is_physically_able_ai_adult = yes

@@ -3880,17 +3880,53 @@
 	}
 	865.1.1 = {
 		effect = {
-			spawn_army = {
-				name = event_troop_default_name
-				levies = 1000
-				location = province:1596
-				origin = province:1689
+			refund_all_perks = yes
+			remove_all_perk_lifestyle_traits_effect = yes
+			add_martial_lifestyle_perk_points = -5
+			add_perk = bellum_justum_perk
+			add_perk = engineered_for_destruction_perk
+			add_perk = living_off_the_land_perk
+			add_perk = organized_retreat_perk
+			add_perk = stalwart_leader_perk
+			if = {
+				limit = { has_fp1_dlc_trigger = yes }
+				spawn_army = {
+					name = event_troop_default_name
+					men_at_arms = {
+						type = vigmen
+						stacks = 3
+					}
+					men_at_arms = {
+						type = huscarl
+						stacks = 2
+					}
+					location = province:1596
+					origin = province:1689
+				}
+				spawn_army = {
+					name = event_troop_default_name
+					levies = 400
+					men_at_arms = {
+						type = bondi
+						stacks = 3
+					}
+					location = province:1596
+					origin = province:1689
+				}
 			}
-			spawn_army = {
-				name = event_troop_default_name
-				levies = 1000
-				location = province:1596
-				origin = province:1689
+			else = {
+				spawn_army = {
+					name = event_troop_default_name
+					levies = 1000
+					location = province:1596
+					origin = province:1689
+				}
+				spawn_army = {
+					name = event_troop_default_name
+					levies = 1000
+					location = province:1596
+					origin = province:1689
+				}
 			}
 		}
 	}
@@ -4031,17 +4067,58 @@
 	}
 	865.1.1 = {
 		effect = {
-			spawn_army = {
-				name = event_troop_default_name
-				levies = 1000
-				location = province:1595
-				origin = province:1595
+			refund_all_perks = yes
+			remove_all_perk_lifestyle_traits_effect = yes
+			add_martial_lifestyle_perk_points = -10
+			add_perk = bellum_justum_perk
+			add_perk = parthian_tactics_perk
+			add_perk = envelopment_perk
+			add_perk = engineered_for_destruction_perk
+			add_perk = living_off_the_land_perk
+			add_perk = organized_retreat_perk
+			add_perk = hit_and_run_perk
+			add_perk = sappers_perk
+			add_perk = stalwart_leader_perk
+			create_alliance = character:163111
+			if = {
+				limit = { has_fp1_dlc_trigger = yes }
+				spawn_army = {
+					name = event_troop_default_name
+					men_at_arms = {
+						type = vigmen
+						stacks = 3
+					}
+					men_at_arms = {
+						type = huscarl
+						stacks = 2
+					}
+					location = province:1595
+					origin = province:1595
+				}
+				spawn_army = {
+					name = event_troop_default_name
+					levies = 400
+					men_at_arms = {
+						type = bondi
+						stacks = 3
+					}
+					location = province:1595
+					origin = province:1595
+				}
 			}
-			spawn_army = {
-				name = event_troop_default_name
-				levies = 1000
-				location = province:1595
-				origin = province:1595
+			else = {
+				spawn_army = {
+					name = event_troop_default_name
+					levies = 1000
+					location = province:1595
+					origin = province:1595
+				}
+				spawn_army = {
+					name = event_troop_default_name
+					levies = 1000
+					location = province:1595
+					origin = province:1595
+				}
 			}
 		}
 	}

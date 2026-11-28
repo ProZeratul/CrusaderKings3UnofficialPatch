@@ -1142,9 +1142,9 @@ imperial_examination.1060 = {
 		scope:entrant_to_meet = {
 			imperial_examination_adjust_advantage_variable_effect = yes
 		}
-		add_hook = {
-			type = obligation_hook
-			target = scope:entrant_to_meet
+		add_hook_if_possible_default_length_effect = {
+			TYPE = obligation_hook
+			TARGET = scope:entrant_to_meet
 		}
 		ai_chance = {
 			base = 100
@@ -2240,7 +2240,7 @@ imperial_examination.2040 = {
 			imperial_examination_create_appropriate_examiner_effect = yes
 			if = {
 				limit = { exists = scope:activity }
-				add_courtier = scope:new_examiner #Unop Like in imperial_examination_set_up_examiners_effect, needed to be able to join
+				add_courtier = scope:new_examiner
 				scope:new_examiner = { add_to_activity = scope:activity }
 				scope:activity = {
 					add_to_guest_subset = {
@@ -2796,7 +2796,6 @@ imperial_examination.3010 = {
 				scope:examiner = { is_imprisoned = yes }
 			}
 			imperial_examination_create_appropriate_examiner_effect = yes
-			#add_to_activity = scope:activity #Unop The new examiner should join, not the host
 			add_courtier = scope:new_examiner
 			scope:new_examiner = { add_to_activity = scope:activity }
 			scope:activity = {
@@ -4359,6 +4358,7 @@ imperial_examination.4080 = {
 				name = imperial_examiners
 				count >= 2
 				is_ai = yes
+				this != root
 			}
 		}
 	}
@@ -4367,7 +4367,10 @@ imperial_examination.4080 = {
 		scope:activity = {
 			random_guest_subset = {
 				name = imperial_examiners
-				limit = { is_ai = yes }
+				limit = {
+					is_ai = yes
+					this != root
+				}
 				save_scope_as = examiner_1
 			}
 			random_guest_subset = {
@@ -4375,6 +4378,7 @@ imperial_examination.4080 = {
 				limit = {
 					is_ai = yes
 					NOT = { this = scope:examiner_1 }
+					this != root
 				}
 				save_scope_as = examiner_2
 			}

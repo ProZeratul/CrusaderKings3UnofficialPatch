@@ -150,6 +150,7 @@ pam_establish_antipope_effect = {
 				save_scope_as = pam_antipope_title
 				# Faith challenger list is dropped by code if the rite detaches into its own faith
 				set_variable = { name = pam_antipope_office }
+				set_variable = { name = pam_antipope_original_sponsor value = scope:sponsor }
 				set_destroy_if_invalid_heir = yes
 				set_no_automatic_claims = yes
 				set_definitive_form = yes
@@ -243,10 +244,13 @@ pam_establish_antipope_effect = {
 			}
 		}
 		scope:antipope = {
-			add_opinion = {
-				modifier = grateful_opinion
-				target = scope:sponsor
-				opinion = 25
+			if = {
+				limit = { is_ai = yes }
+				add_opinion = {
+					modifier = pam_declared_me_antipope_opinion
+					target = scope:sponsor
+					opinion = 25
+				}
 			}
 		}
 		pam_antipope_sponsored_catalyst_effect = yes
@@ -982,28 +986,4 @@ pam_antiking_victory_effect = {
 		}
 	}
 	pam_antipope_removed_catalyst_effect = { FAITH = scope:defender.faith }
-}
-
-# Christian Situation participation management
-pam_conversion_christian_church_participation_effect = {
-	if = {
-		limit = {
-			is_ruler = yes
-			religion = religion:christianity_religion
-			NOT = {
-				any_character_situation = { this = situation:the_christian_church }
-			}
-		}
-		situation:the_christian_church ?= { add_manual_participant = prev }
-	}
-	else_if = {
-		limit = {
-			religion != religion:christianity_religion
-			any_character_situation = {
-				this = situation:the_christian_church
-				is_manual_participant = prev
-			}
-		}
-		situation:the_christian_church ?= { remove_manual_participant = prev }
-	}
 }

@@ -273,7 +273,7 @@ gdp_republic_patricians_start_at_level_2_effect = {
 		domicile ?= {
 			if = {
 				limit = { is_domicile_type = merchant_company }
-				gdp_patrician_domicile_level_2_effect = yes
+				gdp_patrician_domicile_level_2_or_defer_effect = yes
 			}
 		}
 		every_vassal = {
@@ -281,7 +281,34 @@ gdp_republic_patricians_start_at_level_2_effect = {
 				government_has_flag = government_is_republic
 				domicile ?= { is_domicile_type = merchant_company }
 			}
-			domicile = { gdp_patrician_domicile_level_2_effect = yes }
+			domicile = { gdp_patrician_domicile_level_2_or_defer_effect = yes }
+		}
+	}
+}
+
+# Domicile scope
+# add_domicile_building fails while a construction is under way, so invited families get level 2 once it ends
+gdp_patrician_domicile_level_2_or_defer_effect = {
+	if = {
+		limit = { has_ongoing_domicile_construction = yes }
+		set_variable = gdp_patrician_domicile_level_2_pending
+	}
+	else = {
+		gdp_patrician_domicile_level_2_effect = yes
+	}
+}
+
+# Domicile scope
+gdp_patrician_domicile_level_2_pending_effect = {
+	if = {
+		limit = { has_variable = gdp_patrician_domicile_level_2_pending }
+		remove_variable = gdp_patrician_domicile_level_2_pending
+		if = {
+			limit = {
+				is_domicile_type = merchant_company
+				owner ?= { government_has_flag = government_is_republic }
+			}
+			gdp_patrician_domicile_level_2_or_defer_effect = yes
 		}
 	}
 }
@@ -425,6 +452,19 @@ gdp_trade_league_proclaim_commune_effect = {
 
 			scope:commune_patron.confederation ?= {
 				add_confederation_member_title = scope:commune_patrician.primary_title
+				save_scope_as = commune_league
+			}
+
+			# Stored on the county, so the binding outlives republican elections
+			if = {
+				limit = { exists = scope:commune_league }
+				scope:commune_county = {
+					set_variable = {
+						name = league_commune_bound
+						value = scope:commune_league
+						years = gdp_league_commune_bound_years_value
+					}
+				}
 			}
 
 			scope:commune_patrician = {
@@ -992,7 +1032,6 @@ gdp_rank_up_republic_effect = {
 			if = {
 				limit = { confederation_type = confederation_type:trade_league }
 				save_scope_as = trade_league
-				leading_title = { save_scope_as = old_league_leader }
 			}
 		}
 	}
@@ -1067,152 +1106,17 @@ gdp_rank_up_republic_effect = {
 			}
 			# Update Trade League member/leader if relevant
 			scope:trade_league ?= {
-				# For blocking on_member_join/leave effects
-				add_to_variable_list = {
-					name = rank_change_members
-					target = scope:republican_founder
+				gdp_update_trade_league_membership_effect = {
+					OLD_LEAGUE_TITLE = scope:old_republic_title
+					NEW_LEAGUE_TITLE = scope:new_republic_title
+					OLD_LEAGUE_TITLE_HOLDER = scope:republican_founder
 				}
-				add_to_variable_list = {
-					name = rank_change_titles
-					target = scope:old_republic_title
-				}
-				add_to_variable_list = {
-					name = rank_change_titles
-					target = scope:new_republic_title
-				}
-				# Must remove first or code blocks holder from 'joining' again
-				remove_confederation_member_title = scope:old_republic_title
-				add_confederation_member_title = scope:new_republic_title
-				if = {
-					limit = { scope:old_league_leader ?= scope:old_republic_title }
-					scope:republican_founder = { save_scope_as = league_creator }
-					set_leading_title = scope:new_republic_title
-					if = { # For safety, as title member changes can mess things up
-						limit = { exists = var:is_hanseatic_league }
-						set_coa = k_hansa
-						set_confederation_name = HANSEATIC_LEAGUE_NAME
-					}
-					else = {
-						set_coa = scope:new_republic_title
-						set_confederation_name = TRADE_LEAGUE_BASE_NAME
-					}
-				}
-				clear_variable_list = rank_change_members
-				clear_variable_list = rank_change_titles
 			}
 			# Transfer existing monopolies to the new title
-			if = {
-				limit = {
-					scope:old_republic_title = {
-						title_has_trade_monopoly = yes
-					}
-				}
-				scope:old_republic_title = {
-					every_trade_monopoly_for_title = {
-						# Set up what we need for creating a new monopoly
-						# Trade Good
-						if = {
-							limit = { is_complete_monopoly = no }
-							monopoly_trade_good_category = { save_scope_as = trade_good_category_type }
-							scope:republican_founder = {
-								set_variable = { name = new_monopoly_trade_good_category_type value = scope:trade_good_category_type }
-							}
-						}
-						# Complete Monopoly
-						else = {
-							scope:republican_founder = {
-								set_variable = { name = is_complete_monopoly value = yes }
-							}
-						}
-						# Exploitative Monopoly
-						if = {
-							limit = {
-								monopoly_type = exploitative
-							}
-							scope:republican_founder = {
-								set_variable = { name = is_exploitative_monopoly value = yes }
-							}
-						}
-						# Trade Market
-						monopoly_trade_market = {
-							save_scope_as = trade_market
-							scope:republican_founder = {
-								set_variable = { name = new_monopoly_trade_market value = scope:trade_market }
-							}
-						}
-
-						# First, destroy the old monopoly
-						destroy_trade_monopoly = yes
-
-						# Then create the new monopoly
-						scope:republican_founder = {
-							if = {
-								limit = {
-									exists = var:is_complete_monopoly
-									exists = var:is_exploitative_monopoly
-								}
-								create_trade_monopoly = {
-									owning_title = scope:new_republic_title
-									trade_market = var:new_monopoly_trade_market
-									type = exploitative
-									is_complete = yes
-								}
-							}
-							else_if = {
-								limit = {
-									exists = var:is_complete_monopoly
-								}
-								create_trade_monopoly = {
-									owning_title = scope:new_republic_title
-									trade_market = var:new_monopoly_trade_market
-									type = normal
-									is_complete = yes
-								}
-							}
-							else_if = {
-								limit = {
-									exists = var:is_exploitative_monopoly
-								}
-								create_trade_monopoly = {
-									owning_title = scope:new_republic_title
-									trade_market = var:new_monopoly_trade_market
-									trade_good_category = var:new_monopoly_trade_good_category_type
-									type = exploitative
-								}
-							}
-							else = {
-								create_trade_monopoly = {
-									owning_title = scope:new_republic_title
-									trade_market = var:new_monopoly_trade_market
-									trade_good_category = var:new_monopoly_trade_good_category_type
-									type = normal
-								}
-							}
-							scope:new_republic_title = {
-								random_trade_monopoly_for_title = {
-									limit = {
-										NOT = { is_in_list = new_title_monopolies }
-									}
-									save_scope_as = new_monopoly_scope
-									if = {
-										limit = { is_complete_monopoly = yes }
-										set_trade_monopoly_name = new_complete_title_monopoly_name
-									}
-									else = {
-										set_trade_monopoly_name = new_good_title_monopoly_name
-									}
-									add_to_list = new_title_monopolies
-								}
-							}
-
-							# Finally, clear the variables
-							remove_variable = new_monopoly_trade_good_category_type
-							remove_variable = new_monopoly_trade_market
-							remove_variable = is_complete_monopoly
-							remove_variable = is_exploitative_monopoly
-						}
-					}
-				}
+			gdp_transfer_title_monopoly_effect = {
+				OLD_MONOPOLY_TITLE = scope:old_republic_title
+				NEW_MONOPOLY_TITLE = scope:new_republic_title
+				TITLE_HOLDER = scope:republican_founder
 			}
 			# Destroy old title if needed
 			if = {
@@ -1293,6 +1197,25 @@ gdp_restore_the_roman_republic_effect = {
 			}
 			scope:old_primary_title = { transfer_title_maa_ownership = title:h_roman_republic }
 		}
+		# Transfer existing monopolies to the new title
+		gdp_transfer_title_monopoly_effect = {
+			OLD_MONOPOLY_TITLE = scope:old_primary_title
+			NEW_MONOPOLY_TITLE = title:h_roman_republic
+			TITLE_HOLDER = scope:roman_republic_ruler
+		}
+		# Update Trade League member/leader if relevant
+		scope:old_primary_title = {
+			title_confederation ?= {
+				if = {
+					limit = { confederation_type = confederation_type:trade_league }
+					gdp_update_trade_league_membership_effect = {
+						OLD_LEAGUE_TITLE = scope:old_primary_title
+						NEW_LEAGUE_TITLE = title:h_roman_republic
+						OLD_LEAGUE_TITLE_HOLDER = scope:roman_republic_ruler
+					}
+				}
+			}
+		}
 
 		update_assembly = yes
 
@@ -1302,6 +1225,167 @@ gdp_restore_the_roman_republic_effect = {
 
 	# Personal rewards
 	# TODO add modifier to house - increasing patrican rating and renown
+}
+
+# Effect to transfer existing Trade Monopolies to a new title
+# OLD_MONOPOLY_TITLE - The title we want to take monopolies from
+# NEW_MONOPOLY_TITLE - The title we want to add the monopolies to
+# TITLE_HOLDER - The character that holds the titles
+gdp_transfer_title_monopoly_effect = {
+	if = {
+		limit = {
+			$OLD_MONOPOLY_TITLE$ = {
+				title_has_trade_monopoly = yes
+			}
+		}
+		$OLD_MONOPOLY_TITLE$ = {
+			every_trade_monopoly_for_title = {
+				# Set up what we need for creating a new monopoly
+				# Trade Good
+				if = {
+					limit = { is_complete_monopoly = no }
+					monopoly_trade_good_category = { save_scope_as = trade_good_category_type }
+					$TITLE_HOLDER$ = {
+						set_variable = { name = new_monopoly_trade_good_category_type value = scope:trade_good_category_type }
+					}
+				}
+				# Complete Monopoly
+				else = {
+					$TITLE_HOLDER$ = {
+						set_variable = { name = is_complete_monopoly value = yes }
+					}
+				}
+				# Exploitative Monopoly
+				if = {
+					limit = {
+						monopoly_type = exploitative
+					}
+					$TITLE_HOLDER$ = {
+						set_variable = { name = is_exploitative_monopoly value = yes }
+					}
+				}
+				# Trade Market
+				monopoly_trade_market = {
+					save_scope_as = trade_market
+					$TITLE_HOLDER$ = {
+						set_variable = { name = new_monopoly_trade_market value = scope:trade_market }
+					}
+				}
+
+				# First, destroy the old monopoly
+				destroy_trade_monopoly = yes
+
+				# Then create the new monopoly
+				$TITLE_HOLDER$ = {
+					if = {
+						limit = {
+							exists = var:is_complete_monopoly
+							exists = var:is_exploitative_monopoly
+						}
+						create_trade_monopoly = {
+							owning_title = $NEW_MONOPOLY_TITLE$
+							trade_market = var:new_monopoly_trade_market
+							type = exploitative
+							is_complete = yes
+						}
+					}
+					else_if = {
+						limit = {
+							exists = var:is_complete_monopoly
+						}
+						create_trade_monopoly = {
+							owning_title = $NEW_MONOPOLY_TITLE$
+							trade_market = var:new_monopoly_trade_market
+							type = normal
+							is_complete = yes
+						}
+					}
+					else_if = {
+						limit = {
+							exists = var:is_exploitative_monopoly
+						}
+						create_trade_monopoly = {
+							owning_title = $NEW_MONOPOLY_TITLE$
+							trade_market = var:new_monopoly_trade_market
+							trade_good_category = var:new_monopoly_trade_good_category_type
+							type = exploitative
+						}
+					}
+					else = {
+						create_trade_monopoly = {
+							owning_title = $NEW_MONOPOLY_TITLE$
+							trade_market = var:new_monopoly_trade_market
+							trade_good_category = var:new_monopoly_trade_good_category_type
+							type = normal
+						}
+					}
+					$NEW_MONOPOLY_TITLE$ = {
+						random_trade_monopoly_for_title = {
+							limit = {
+								NOT = { is_in_list = new_title_monopolies }
+							}
+							save_scope_as = new_monopoly_scope
+							if = {
+								limit = { is_complete_monopoly = yes }
+								set_trade_monopoly_name = new_complete_title_monopoly_name
+							}
+							else = {
+								set_trade_monopoly_name = new_good_title_monopoly_name
+							}
+							add_to_list = new_title_monopolies
+						}
+					}
+
+					# Finally, clear the variables
+					remove_variable = new_monopoly_trade_good_category_type
+					remove_variable = new_monopoly_trade_market
+					remove_variable = is_complete_monopoly
+					remove_variable = is_exploitative_monopoly
+				}
+			}
+		}
+	}
+}
+
+# Update trade league membership/leadership when changing title in the scoped title confederation (trade league)
+# OLD_LEAGUE_TITLE - The old primary title, who is a member of the league
+# NEW_LEAGUE_TITLE - The new title that should become a member of the league
+# OLD_LEAGUE_TITLE_HOLDER - Holder of OLD_LEAGUE_TITLE
+gdp_update_trade_league_membership_effect = {
+	leading_title = { save_scope_as = old_league_leader }
+
+	# For blocking on_member_join/leave effects
+	add_to_variable_list = {
+		name = rank_change_members
+		target = $OLD_LEAGUE_TITLE_HOLDER$
+	}
+	add_to_variable_list = {
+		name = rank_change_titles
+		target = $OLD_LEAGUE_TITLE$
+	}
+	add_to_variable_list = {
+		name = rank_change_titles
+		target = $NEW_LEAGUE_TITLE$
+	}
+	# Must remove first or code blocks holder from 'joining' again
+	remove_confederation_member_title = $OLD_LEAGUE_TITLE$
+	add_confederation_member_title = $NEW_LEAGUE_TITLE$
+	if = {
+		limit = { scope:old_league_leader ?= $OLD_LEAGUE_TITLE$ }
+		$OLD_LEAGUE_TITLE_HOLDER$ = { save_scope_as = league_creator }
+		set_leading_title = $NEW_LEAGUE_TITLE$
+		if = { # For safety, as title member changes can mess things up
+			limit = { exists = var:is_hanseatic_league }
+			set_coa = k_hansa
+			set_confederation_name = HANSEATIC_LEAGUE_NAME
+		}
+		else = {
+			set_coa = $NEW_LEAGUE_TITLE$
+			set_confederation_name = TRADE_LEAGUE_BASE_NAME
+		}
+	}
+	clear_variable_list = rank_change_members
+	clear_variable_list = rank_change_titles
 }
 
 # Effect for whenever a decree is successfully approved and enacted
@@ -3594,6 +3678,58 @@ gdp_republic_patricians_become_merchants_warning_effect = {
 	show_as_tooltip = {
 		scope:destroyer ?= { destroy_title = scope:republic_title }
 	}
+}
+
+# Province scope, from the Great Plaza project's on_complete before it replaces a Grand Cathedral
+# Notifies the owners of the local Cathedral Complex and the clerical region, and clears the cathedral's travel and tier data
+gdp_great_plaza_replace_cathedral_effect = {
+	every_province_domicile = {
+		limit = { is_domicile_type = ecclesiastical_domicile }
+		owner ?= {
+			if = {
+				limit = {
+					NOT = { is_in_list = cathedral_replaced_notify_list }
+				}
+				add_to_list = cathedral_replaced_notify_list
+			}
+		}
+	}
+	county.clerical_region_title ?= {
+		holder ?= {
+			if = {
+				limit = {
+					NOT = { is_in_list = cathedral_replaced_notify_list }
+				}
+				add_to_list = cathedral_replaced_notify_list
+			}
+		}
+	}
+	every_in_list = {
+		list = cathedral_replaced_notify_list
+		limit = { this != scope:founder }
+		send_interface_message = {
+			type = msg_great_plaza_replaced_cathedral
+			left_icon = scope:founder
+			right_icon = scope:province.county
+		}
+	}
+	if = {
+		limit = {
+			is_target_in_global_variable_list = {
+				name = grand_cathedral_poi_list
+				target = this
+			}
+		}
+		remove_list_global_variable = {
+			name = grand_cathedral_poi_list
+			target = this
+		}
+	}
+	if = {
+		limit = { has_travel_point_of_interest = poi_grand_cathedral }
+		remove_travel_point_of_interest = poi_grand_cathedral
+	}
+	remove_variable = grand_cathedral_tier
 }
 
 ## Scripted effect that randomize artifact types depending on house ambition

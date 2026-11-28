@@ -70,7 +70,7 @@
 		}
 		else = {
 			create_noble_family_effect = { GOVERNMENT_GIVER = this }
-			scope:new_title = {
+			scope:new_title ?= {
 				#set_title_name_dynamic = japanese_noble_family_name
 				set_coa = scope:new_house
 			}
@@ -2993,6 +2993,7 @@ tgp_japan_demand_administrative_refusal_effect = {
 		limit = {
 			scope:actor = { government_has_flag = government_is_japan_administrative }
 			scope:recipient = { government_has_flag = government_is_japan_feudal }
+			NOT = { scope:actor = { is_at_war_with = scope:recipient } }
 		}
 		scope:actor = {
 			start_war = {
@@ -3329,7 +3330,10 @@ tgp_liege_change_bloc_management_effect = {
 						}
 					}
 					else_if = {
-						limit = { scope:vassal_temp.confederation = scope:current_bloc_temp }
+						limit = {
+							scope:vassal_temp.confederation = scope:current_bloc_temp
+							is_house_based = no
+						}
 						remove_confederation_member = scope:vassal_temp
 					}
 				}
@@ -3346,10 +3350,6 @@ tgp_liege_change_bloc_management_effect = {
 				confederation ?= {
 					save_temporary_scope_as = current_bloc_temp
 					remove_confederation_member = scope:vassal_temp
-				}
-				house.house_confederation = {
-					save_temporary_scope_as = house_bloc_temp
-					add_confederation_member = scope:vassal_temp
 				}
 				debug_log = "Bloc liege change member join"
 				debug_log_scopes = yes
@@ -3912,6 +3912,10 @@ tgp_renounce_estate_effect = {
 		hidden_effect = {
 			if = {
 				limit = { government_has_flag = government_is_republic }
+				set_variable = {
+					name = retired_as_house_head
+					years = 1
+				}
 				depose = yes
 			}
 			else = {

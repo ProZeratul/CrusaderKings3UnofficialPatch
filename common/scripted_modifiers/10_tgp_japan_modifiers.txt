@@ -230,16 +230,6 @@ house_bloc_desire_to_join_modifiers = {
 		add = -200 # always bad
 		desc = AI_DIFFERENT_GOVERNMENT_REASON
 	}
-	modifier = { # Not same as top liege
-		scope:joiner_temp = {
-			NOR = {
-				exists = house.house_confederation
-				has_same_government = top_liege
-			}
-		}
-		add = 50
-		desc = AI_VULNERABLE_GOVERNMENT_REASON
-	}
 	# Family
 	modifier = { # Close dynasty house
 		exists = scope:inviter_temp.dynasty
@@ -516,36 +506,10 @@ house_bloc_desire_to_join_modifiers = {
 		DESC = AI_DISTANT_SORYO_BLOC_REASON
 	}
 	# Threat
-	modifier = {
-		NOT = { exists = scope:joiner_temp.house.house_confederation }
-		scope:inviter_temp = { government_has_mechanic = administrative }
-		scope:joiner_temp = {
-			government_has_mechanic = administrative
-			capital_county = {
-				any_title_to_title_neighboring_county = {
-					NOT = {
-						holder = { government_has_mechanic = administrative }
-					}
-				}
-			}
-		}
-		add = {
-			value = 1
-			scope:joiner_temp.capital_county = {
-				every_title_to_title_neighboring_county = {
-					limit = {
-	 					NOT = {
-							holder = { government_has_mechanic = administrative }
-						}
-	 				}
-	 				add = {
-	 					value = holder.military_power
-	 					divide = 1000
-	 				}
-				}
-			}
-		}
-		desc = AI_THREATENED_RITSURYO_REASON
+	house_bloc_alliance_modifiers = {
+		JOINER = scope:joiner_temp
+		INVITER = scope:inviter_temp
+		POWER_DIVISOR = 500
 	}
 	#Dynasty Legacy and Same Dynasty
 	modifier = {
@@ -559,6 +523,137 @@ house_bloc_desire_to_join_modifiers = {
 		scope:inviter_temp = { has_perk = forced_vassalage_perk }
 		add = tgp_join_bloc_interaction_lifestyle_perk_value
 		desc = AI_BLOCK_JOIN_LIFESTYLE_PERK
+	}
+}
+
+house_bloc_alliance_modifiers = { # Different government from Top Liege (base)
+	modifier = { # Not same as top liege
+		trigger = {
+			$INVITER$ = { save_temporary_scope_as = inviter_temp }
+			$JOINER$ = { save_temporary_scope_as = joiner_temp }
+			scope:inviter_temp.top_liege = scope:joiner_temp.top_liege
+			scope:inviter_temp = { government_has_flag = government_has_house_blocs }
+			scope:joiner_temp = { government_has_flag = government_has_house_blocs }
+		}
+		scope:joiner_temp = {
+			NOT = { has_same_government = top_liege }
+		}
+		add = 50
+		desc = AI_VULNERABLE_GOVERNMENT_REASON
+	}
+	modifier = { # Different government and can be imprisoned
+		trigger = {
+			scope:inviter_temp.top_liege = scope:joiner_temp.top_liege
+			scope:inviter_temp = { government_has_flag = government_has_house_blocs }
+			scope:joiner_temp = { government_has_flag = government_has_house_blocs }
+		}
+		scope:joiner_temp = {
+			NOT = { has_same_government = top_liege }
+			top_liege = {
+				OR = {
+					has_imprisonment_reason = scope:joiner_temp
+					has_banish_reason = scope:joiner_temp
+					has_execute_reason = scope:joiner_temp
+					has_revoke_title_reason = scope:joiner_temp
+				}
+			}
+		}
+		add = 50
+		desc = AI_VULNERABLE_CRIMINAL_REASON
+	}
+	modifier = { # Shared different government from Top Liege (military power)
+		trigger = {
+			scope:inviter_temp.top_liege = scope:joiner_temp.top_liege
+			scope:inviter_temp = { government_has_flag = government_has_house_blocs }
+			scope:joiner_temp = { government_has_flag = government_has_house_blocs }
+		}
+		scope:inviter_temp = {
+			has_same_government = scope:joiner_temp
+			NOT = { has_same_government = top_liege }
+		}
+		add = {
+			value = top_liege.military_power
+			divide = $POWER_DIVISOR$
+		}
+		desc = AI_THREATENED_BLOC_REASON
+	}
+	modifier = { # Soryo with Ritsuryo neighbours
+		trigger = {
+			$INVITER$ = { save_temporary_scope_as = inviter_temp }
+			$JOINER$ = { save_temporary_scope_as = joiner_temp }
+			scope:inviter_temp.top_liege = scope:joiner_temp.top_liege
+			scope:inviter_temp = { government_has_flag = government_has_house_blocs }
+			scope:joiner_temp = { government_has_flag = government_has_house_blocs }
+		}
+		scope:inviter_temp = {
+			government_has_mechanic = administrative # Ritsuryo
+			has_same_government = scope:joiner_temp
+		}
+		scope:joiner_temp.capital_county = {
+			any_title_to_title_neighboring_county = {
+				holder = {
+					top_liege = scope:joiner_temp.top_liege
+					NOT = { has_same_government = scope:joiner_temp }
+				}
+			}
+		}
+		add = {
+			value = 1
+			scope:joiner_temp.capital_county = {
+				every_title_to_title_neighboring_county = {
+					limit = {
+						holder = {
+							top_liege = scope:joiner_temp.top_liege
+							NOT = { has_same_government = scope:joiner_temp }
+						}
+	 				}
+	 				add = {
+	 					value = holder.military_power
+	 					divide = $POWER_DIVISOR$
+	 				}
+				}
+			}
+		}
+		desc = AI_THREATENED_SORYO_REASON
+	}
+	modifier = { # Ritsuryo with Soryo neighbours
+		trigger = {
+			$INVITER$ = { save_temporary_scope_as = inviter_temp }
+			$JOINER$ = { save_temporary_scope_as = joiner_temp }
+			scope:inviter_temp.top_liege = scope:joiner_temp.top_liege
+			scope:inviter_temp = { government_has_flag = government_has_house_blocs }
+			scope:joiner_temp = { government_has_flag = government_has_house_blocs }
+		}
+		scope:inviter_temp = {
+			NOT = { government_has_mechanic = administrative } # Soryo
+			has_same_government = scope:joiner_temp
+		}
+		scope:joiner_temp.capital_county = {
+			any_title_to_title_neighboring_county = {
+				holder = {
+					top_liege = scope:joiner_temp.top_liege
+					NOT = { has_same_government = scope:joiner_temp }
+				}
+			}
+		}
+		add = {
+			value = 1
+			scope:joiner_temp.capital_county = {
+				every_title_to_title_neighboring_county = {
+					limit = {
+						holder = {
+							top_liege = scope:joiner_temp.top_liege
+							NOT = { has_same_government = scope:joiner_temp }
+						}
+	 				}
+	 				add = {
+	 					value = holder.military_power
+	 					divide = $POWER_DIVISOR$
+	 				}
+				}
+			}
+		}
+		desc = AI_THREATENED_RITSURYO_REASON
 	}
 }
 

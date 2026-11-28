@@ -943,7 +943,17 @@ leave_confederation_membership_effect = {
 		}
 		if = {
 			limit = { is_title_based = yes }
-			remove_confederation_member_title = $LEAVER$.primary_title
+			save_temporary_scope_as = leaving_confederation
+			$LEAVER$ = {
+				every_held_title = {
+					limit = { title_confederation ?= scope:leaving_confederation }
+					add_to_temporary_list = leaving_member_titles
+				}
+			}
+			every_in_list = {
+				list = leaving_member_titles
+				scope:leaving_confederation = { remove_confederation_member_title = prev }
+			}
 		}
 		else = {
 			remove_confederation_member = $LEAVER$
@@ -2744,7 +2754,7 @@ mpo_heir_lifestyle_xp_gain_effect = {
 				this = trait:drunkard
 			}
 			scope:heir = {
-				has_trait = lifestyle_reveler
+				NOT = { has_trait = lifestyle_reveler }
 			}
 		}
 		scope:heir = {
@@ -2788,27 +2798,12 @@ mpo_heir_lifestyle_xp_gain_effect = {
 				this = trait:hashishiyah
 			}
 			scope:heir = {
-				has_trait = lifestyle_reveler
+				has_trait = lifestyle_herbalist
 			}
 		}
 		scope:heir = {
-			add_trait = lifestyle_reveler
-		}
-	}
-	else_if = {
-		limit = {
-			scope:lifestyle_trait = {
-				this = trait:hashishiyah
-			}
-			scope:heir = {
-				has_trait = lifestyle_reveler
-			}
-		}
-		scope:heir = {
-			add_trait_xp = {
-				trait = lifestyle_reveler
-				value = 30
-			}
+			add_stewardship_skill = 1
+			add_diplomacy_lifestyle_xp = medium_lifestyle_xp
 		}
 	}
 }
@@ -5277,6 +5272,7 @@ mpo_war_vassal_tributary_effect = {
 				holder = {
 					government_has_flag = government_is_herder
 					is_tributary = no
+					is_independent_ruler = yes
 				}
 			}
 			hidden_effect = {

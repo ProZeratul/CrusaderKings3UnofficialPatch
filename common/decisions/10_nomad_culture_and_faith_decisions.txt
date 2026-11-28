@@ -125,7 +125,7 @@ proselytize_to_your_people_decision = {
 				add = major_piety_value
 				if = { # Cost increases if you're trying to revert to unreformed
 					limit = {
-						domicile.domicile_faith = {
+						domicile.domicile_faith ?= {
 							NOT = { has_doctrine_parameter = unreformed }
 						}
 						rite = { #Unop: Check rite, not faith (main rite only)

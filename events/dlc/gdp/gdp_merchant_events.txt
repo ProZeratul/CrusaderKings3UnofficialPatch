@@ -410,10 +410,15 @@ scripted_effect gdp_merchant_event_0015_appoint_effect = {
 		}
 	}
 	hidden_effect = {
+		set_variable = { # used to ensure new contracts are placed properly
+			name = trade_route_to_populate
+			value = scope:trade_route
+		}
 		while = {
 			count = 3
 			trigger_event = { on_action = spawn_trade_opportunity_contract_on_action }
 		}
+		remove_variable = trade_route_to_populate
 	}
 }
 
@@ -992,8 +997,9 @@ gdp_merchant.0025 = {
 			create_character = {
 				template = trader_stewardship_template
 			 	location = root.location
-			    culture = root.location.culture
-			    faith = root.location.faith
+				culture = root.location.culture
+				faith = root.location.faith
+				rite = root.location.rite
 				learning = { 5 8 }
 				prowess = { 5 10 }
 			    save_scope_as = traveler
@@ -1142,6 +1148,7 @@ gdp_merchant.0030 = {
 				location = root.location
 				culture = root.location.culture
 				faith = root.location.faith
+				rite = root.location.rite
 				prowess = { 8 12 }
 				save_scope_as = traveler
 				after_creation = {
@@ -1274,6 +1281,7 @@ gdp_merchant.0035 = {
 			location = root.location
 			culture = scope:foreign_merchant_home.culture
 			faith = scope:foreign_merchant_home.faith
+			rite = scope:foreign_merchant_home.rite
 			learning = { 5 8 }
 			prowess = { 5 10 }
 			save_scope_as = traveler
@@ -3058,7 +3066,7 @@ gdp_merchant.2000 = {
 			any_trade_monopoly_for_character = {
 				gdp_merchant_starving_food_monopoly_trigger = yes
 				monopoly_trade_market = {
-					trade_market_owner.county ?= {
+					trade_market_capital.county ?= {
 						county_control < medium_county_control
 					}
 				}
@@ -3081,7 +3089,7 @@ gdp_merchant.2000 = {
 					}
 					save_scope_as = needed_good
 				}
-				trade_market_owner.title_province = {
+				trade_market_capital.title_province = {
 					save_scope_as = starving_province
 					county ?= {
 						save_scope_as = starving_county
@@ -3113,6 +3121,7 @@ gdp_merchant.2000 = {
 				location = scope:starving_province
 				culture = scope:starving_province.culture
 				faith = scope:starving_province.faith
+				rite = scope:starving_province.rite
 				save_scope_as = starving_citizen
 			}
 		}
@@ -3403,7 +3412,7 @@ gdp_merchant.2010 = {
 			save_scope_as = craft_monopoly
 			monopoly_trade_market = {
 				save_scope_as = craft_market
-				trade_market_owner.title_province = { save_scope_as = workshop_province }
+				trade_market_capital.title_province = { save_scope_as = workshop_province }
 			}
 		}
 		create_character = {
@@ -3411,6 +3420,7 @@ gdp_merchant.2010 = {
 			location = scope:workshop_province
 			culture = scope:workshop_province.culture
 			faith = scope:workshop_province.faith
+			rite = scope:workshop_province.rite
 			trait = shy
 			save_scope_as = craftsman
 		}
@@ -6292,6 +6302,7 @@ gdp_merchant.4010 = {
 				dynasty = none
 				location = root.location
 				faith = root.location.faith
+				rite = root.location.rite
 				culture = root.location.culture
 				gender = male
 				save_scope_as = student
@@ -6603,14 +6614,14 @@ gdp_merchant.4030 = {
 		ordered_in_list = {
 			list = rumourable_markets
 			order_by = { # Ordered lists take the highest value first, so invert the distance
-				value = "trade_market_owner.title_province.squared_distance(scope:company_location)"
+				value = "trade_market_capital.title_province.squared_distance(scope:company_location)"
 				multiply = -1
 			}
 			position = 0
 			check_range_bounds = no
 			save_scope_as = rumoured_market
-			trade_market_owner.title_province = { save_scope_as = rumoured_market_location }
-			trade_market_owner.holder ?= { save_scope_as = rumoured_market_owner }
+			trade_market_capital.title_province = { save_scope_as = rumoured_market_location }
+			trade_market_owner ?= { save_scope_as = rumoured_market_owner }
 			random_trade_good_with_surplus = {
 				limit = { is_interesting_entrepot_good_trigger = yes }
 				save_scope_as = rumoured_good
@@ -7347,6 +7358,7 @@ gdp_merchant.5000 = {
 				desc = gdp_merchant.5000.c.critical
 				if = {
 					limit = {
+						government_has_flag = government_is_merchant
 						NOT = { has_trait = dealbreaker }
 					}
 					add_trait = dealbreaker
@@ -9499,5 +9511,197 @@ gdp_merchant.9110 = {
 
 	option = {
 		name = gdp_merchant.9110.a
+	}
+}
+
+scripted_trigger gdp_merchant_9200_valid_domicile_trigger = {
+	is_domicile_type = merchant_company
+	owner ?= {
+		NOR = {
+			this = root
+			# Capital courts are already handled by siege.0001
+			capital_province ?= scope:barony.title_province
+		}
+	}
+}
+
+# A siege completed where merchant companies are located, their courts risk capture or wounds
+gdp_merchant.9200 = {
+	hidden = yes
+
+	trigger = {
+		scope:barony.title_province = {
+			any_province_domicile = {
+				gdp_merchant_9200_valid_domicile_trigger = yes
+			}
+		}
+	}
+
+	immediate = {
+		save_scope_as = occupant
+		scope:barony.title_province = {
+			every_province_domicile = {
+				limit = {
+					gdp_merchant_9200_valid_domicile_trigger = yes
+				}
+				owner = {
+					trigger_event = gdp_merchant.9201
+				}
+			}
+		}
+	}
+}
+
+scripted_trigger gdp_merchant_9201_can_be_harmed_trigger = {
+	location = scope:barony.title_province
+	is_travelling = no
+	NOR = {
+		this = scope:occupant
+		exists = commanding_army
+		exists = knight_army
+		is_imprisoned = yes
+	}
+}
+
+# Roll capture or wounds for the courtiers and guests of a merchant company owner in the fallen barony
+gdp_merchant.9201 = {
+	hidden = yes
+
+	immediate = {
+		save_scope_as = holder
+		every_courtier_or_guest = {
+			limit = {
+				gdp_merchant_9201_can_be_harmed_trigger = yes
+			}
+			random_list = {
+				15 = {
+					modifier = {
+						scope:occupant = { has_variable = rebel_leader_peasants }
+						factor = 0
+					}
+					compare_modifier = {
+						value = intrigue
+						multiplier = -1
+						min = -20
+					}
+					compare_modifier = {
+						value = prowess
+						multiplier = -0.5
+						min = -15
+					}
+					min = 0
+					add_to_list = captured_targets_effects
+				}
+				15 = {
+					modifier = {
+						is_adult = no
+						factor = 0
+					}
+					compare_modifier = {
+						value = prowess
+						multiplier = -0.5
+						min = -15
+					}
+					min = 0
+					add_to_list = merchant_siege_wounded
+				}
+				70 = {}
+			}
+		}
+
+		if = {
+			limit = {
+				any_in_list = {
+					list = captured_targets_effects
+					count >= 1
+				}
+			}
+			scope:occupant = {
+				trigger_event = siege.0002
+			}
+			trigger_event = siege.0003
+			if = {
+				limit = {
+					scope:occupant = {
+						NOR = {
+							any_war_enemy = { this = root }
+							any_war_enemy = { target_is_vassal_or_below = root }
+						}
+					}
+				}
+				add_opinion = {
+					target = scope:occupant
+					modifier = merchant_courtier_seized_in_siege_opinion
+				}
+			}
+			every_in_list = {
+				list = captured_targets_effects
+				# siege.0002 and siege.0003 replace the default imprisonment events
+				hidden_effect = {
+					add_character_flag = {
+						flag = block_imprisonment_event
+						days = 1
+					}
+				}
+				prisoner_of_war_capture_effect = {
+					TARGET = this
+					IMPRISONER = scope:occupant
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				is_ai = no
+				any_in_list = {
+					list = merchant_siege_wounded
+					count >= 1
+				}
+			}
+			send_interface_message = {
+				type = event_generic_bad
+				title = {
+					first_valid = {
+						triggered_desc = {
+							trigger = {
+								government_has_flag = government_is_merchant
+								any_in_list = {
+									list = merchant_siege_wounded
+									count = 1
+								}
+							}
+							desc = gdp_merchant.9201.one_wounded_associate.t
+						}
+						triggered_desc = {
+							trigger = {
+								government_has_flag = government_is_merchant
+							}
+							desc = gdp_merchant.9201.several_wounded_associate.t
+						}
+						triggered_desc = {
+							trigger = {
+								any_in_list = {
+									list = merchant_siege_wounded
+									count = 1
+								}
+							}
+							desc = gdp_merchant.9201.one_wounded.t
+						}
+						desc = gdp_merchant.9201.several_wounded.t
+					}
+				}
+				right_icon = scope:barony
+				every_in_list = {
+					list = merchant_siege_wounded
+					increase_wounds_no_death_effect = { REASON = battle }
+				}
+			}
+		}
+		else = {
+			every_in_list = {
+				list = merchant_siege_wounded
+				increase_wounds_no_death_effect = { REASON = battle }
+			}
+		}
 	}
 }

@@ -539,6 +539,115 @@ estate_increase_fabricate_speed = { #Chancery bonus
 }
 
 #######################
+# Grow Settlements
+#######################
+
+# Base progress value
+court_chaplain_grow_settlements_base = {
+	add = 0.1
+}
+
+court_chaplain_grow_settlements_monthly_increase = {
+	if = {
+		limit = { has_council_position = minister_works }
+		add = stewardship
+	}
+	else = {
+		add = learning
+	}
+	divide = 100
+}
+
+court_chaplain_grow_settlements_total = {
+	add = court_chaplain_grow_settlements_base
+	add = court_chaplain_grow_settlements_monthly_increase
+}
+
+court_chaplain_grow_settlements_baseline_sum = {
+	value = 0
+	if = {
+		limit = { exists = scope:county }
+		scope:county = {
+			every_county_province = {
+				limit = { has_holding = yes }
+				add = province_size_baseline
+			}
+		}
+	}
+}
+
+# Share (0-100) of the county's combined settlement size baseline that has been reached
+court_chaplain_grow_settlements_current_progress = {
+	value = 100
+	if = {
+		limit = { court_chaplain_grow_settlements_baseline_sum > 0 }
+		value = 0
+		scope:county = {
+			every_county_province = {
+				limit = { has_holding = yes }
+				add = {
+					value = province_size
+					max = province_size_baseline
+				}
+			}
+		}
+		multiply = 100
+		divide = court_chaplain_grow_settlements_baseline_sum
+	}
+}
+
+court_chaplain_grow_settlements_holdings_below_baseline = {
+	value = 0
+	if = {
+		limit = { exists = scope:county }
+		scope:county = {
+			every_county_province = {
+				limit = { province_settlement_below_baseline_trigger = yes }
+				add = 1
+			}
+		}
+	}
+}
+
+# Progress rates are in % of the county's combined settlement size baseline per month, to match court_chaplain_grow_settlements_current_progress
+court_chaplain_grow_settlements_base_progress = {
+	value = 0
+	if = {
+		limit = { court_chaplain_grow_settlements_baseline_sum > 0 }
+		add = court_chaplain_grow_settlements_base
+		multiply = court_chaplain_grow_settlements_holdings_below_baseline
+		multiply = 100
+		divide = court_chaplain_grow_settlements_baseline_sum
+	}
+}
+
+court_chaplain_grow_settlements_monthly_increase_progress = {
+	value = 0
+	if = {
+		limit = { court_chaplain_grow_settlements_baseline_sum > 0 }
+		add = court_chaplain_grow_settlements_monthly_increase
+		multiply = court_chaplain_grow_settlements_holdings_below_baseline
+		multiply = 100
+		divide = court_chaplain_grow_settlements_baseline_sum
+	}
+}
+
+court_chaplain_grow_settlements_full_progress = {
+	value = 0
+	if = {
+		limit = { court_chaplain_grow_settlements_baseline_sum > 0 }
+		scope:county = {
+			every_county_province = {
+				limit = { province_settlement_below_baseline_trigger = yes }
+				add = monthly_province_size_change
+			}
+		}
+		multiply = 100
+		divide = court_chaplain_grow_settlements_baseline_sum
+	}
+}
+
+#######################
 # Conversion
 #######################
 
