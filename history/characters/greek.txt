@@ -32,23 +32,28 @@
 		add_spouse = 1761
 	}
 	867.1.1 = { #Unop Grant once he is emperor (866.9.24), as title troops of e_byzantium so that they are kept
-		create_maa_regiment = {
-			type = cataphract
-			check_can_recruit = no
-			title = title:e_byzantium #Unop
-			size = 2
-		}
-		create_maa_regiment = {
-			type = ballistrai
-			check_can_recruit = no
-			title = title:e_byzantium #Unop
-			size = 2
-		}
-		create_maa_regiment = {
-			type = skoutatoi
-			check_can_recruit = no
-			title = title:e_byzantium #Unop
-			size = 2
+		effect = { #Unop Only at the 867 start, so that later emperors don't inherit them
+			if = {
+				limit = { game_start_date = 867.1.1 }
+				create_maa_regiment = {
+					type = cataphract
+					check_can_recruit = no
+					title = title:e_byzantium #Unop
+					size = 2
+				}
+				create_maa_regiment = {
+					type = ballistrai
+					check_can_recruit = no
+					title = title:e_byzantium #Unop
+					size = 2
+				}
+				create_maa_regiment = {
+					type = skoutatoi
+					check_can_recruit = no
+					title = title:e_byzantium #Unop
+					size = 2
+				}
+			}
 		}
 
 		effect = {
