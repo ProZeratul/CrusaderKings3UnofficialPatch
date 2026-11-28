@@ -270,7 +270,7 @@ pam_mentor_sp_decision = {
 				NOT = { has_variable = pam_mentor_sp_taken_var }
 				OR = {
 					root.primary_heir ?= this
-					has_relation_favorite_child = root
+					root = { has_relation_favorite_child = prev } #Unop Is root's favorite child, root holds the relation
 				}
 				spiritual_fulfillment < 75
 			}

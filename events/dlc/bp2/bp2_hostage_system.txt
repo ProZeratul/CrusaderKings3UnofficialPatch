@@ -1831,10 +1831,10 @@ bp2_hostage_system.0401 = {
 		scope:home_court = { save_scope_as = bg_override_char }
 		if = {
 			limit = {
-				any_home_court_hostage = { warden ?= scope:home_court }
+				any_warden_hostage = { home_court ?= scope:warden } #Unop Root is the home court here, not the warden
 			}
-			random_home_court_hostage = {
-				limit = { warden ?= scope:home_court }
+			random_warden_hostage = {
+				limit = { home_court ?= scope:warden }
 				save_scope_as = my_hostage
 			}
 		}

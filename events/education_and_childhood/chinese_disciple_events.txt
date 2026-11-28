@@ -3683,6 +3683,13 @@ chinese_students.0032 = {
 
     option = {
         name = chinese_students.0032.a
-        remove_relation_disciple = scope:mentor
+        if = { #Unop The mentor is root's elder or mentor, not root's disciple
+            limit = { has_relation_elder = scope:mentor }
+            remove_relation_elder = scope:mentor
+        }
+        else_if = {
+            limit = { has_relation_mentor = scope:mentor }
+            remove_relation_mentor = scope:mentor
+        }
     }
 }

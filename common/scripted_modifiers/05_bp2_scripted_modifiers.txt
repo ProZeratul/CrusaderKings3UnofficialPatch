@@ -159,7 +159,7 @@ bp2_hostage_vassals_lieges_modifier = {
 bp2_hostage_recall_vassals_lieges_modifier = {
 	modifier = { # Vassals are already protected
 		add = 50
-		$RECALLER$ = { top_liege != this }
+		$WARDEN$ = { top_liege != this } #Unop The warden is the recipient protected by their liege, not the recaller
 		NOR = {
 			$WARDEN$.liege ?= $RECALLER$
 			$RECALLER$.liege ?= $WARDEN$.liege

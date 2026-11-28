@@ -150,9 +150,21 @@ on_join_war_as_secondary = {
 				# BP2: Joining war and have an enemy's hostage
 				if = {
 					limit = { # Let attacker's go first
-						NOT = {
-							any_warden_hostage = { home_court ?= scope:war_joiner }
+						NAND = { #Unop Was always true, root being the war joiner; wait as in on_war_started, when an enemy and root hold each other's hostages, since bp2_hostage_system.0140/0141 then fire 0120 for an attacker
+							is_attacker_in_war = scope:war
+							any_home_court_hostage = {
+								warden ?= {
+									is_at_war_with = root
+									save_temporary_scope_as = unop_enemy_warden
+								}
+								root = {
+									any_warden_hostage = { home_court ?= scope:unop_enemy_warden }
+								}
+							}
 						}
+						#NOT = {
+						#	any_warden_hostage = { home_court ?= scope:war_joiner }
+						#}
 					}
 					trigger_event = { id = bp2_hostage_system.0120 days = 6 }
 				}

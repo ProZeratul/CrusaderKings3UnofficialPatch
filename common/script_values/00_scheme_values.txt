@@ -2703,7 +2703,7 @@ base_odds_prediction_guts_value = {
 	if = {
 		limit = {
 			scope:owner = {
-				has_relation_guardian = scope:temp_target
+				has_relation_ward = scope:temp_target #Unop Is the target's guardian, not the target's ward
 			}
 		}
 		add = {
@@ -3073,7 +3073,7 @@ hostile_scheme_base_odds_prediction_guts_value = {
 	if = {
 		limit = {
 			exists = scope:temp_target
-			scope:owner = { has_relation_guardian = scope:temp_target }
+			scope:owner = { has_relation_ward = scope:temp_target } #Unop Is the target's guardian, not the target's ward
 		}
 		add = {
 			value = 75

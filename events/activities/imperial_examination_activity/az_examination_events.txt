@@ -940,16 +940,28 @@ az_examination.0006 = {
 					has_activity_intent = local_exam_support_entrants_intent
 					has_activity_intent = imperial_exam_support_entrants_intent
 				}
-			}
-			any_guest_subset = {
-				name = entrants
-				this != root
-				is_physically_able_ai_adult = yes
-				OR = {
-					is_close_or_extended_family_of = root
-					has_relation_disciple = root
+				save_temporary_scope_as = temp_local_ruler #Unop The entrant is the local ruler's family or disciple, not root's
+				scope:activity = {
+					any_guest_subset = {
+						name = entrants
+						this != root
+						is_physically_able_ai_adult = yes
+						OR = {
+							is_close_or_extended_family_of = scope:temp_local_ruler
+							has_relation_elder = scope:temp_local_ruler
+						}
+					}
 				}
 			}
+			#any_guest_subset = { #Unop Checked above
+			#	name = entrants
+			#	this != root
+			#	is_physically_able_ai_adult = yes
+			#	OR = {
+			#		is_close_or_extended_family_of = root
+			#		has_relation_disciple = root
+			#	}
+			#}
 		}
 	}
 
@@ -964,6 +976,18 @@ az_examination.0006 = {
 						has_activity_intent = local_exam_support_entrants_intent
 						has_activity_intent = imperial_exam_support_entrants_intent
 					}
+					save_temporary_scope_as = temp_local_ruler #Unop The entrant is the local ruler's family or disciple, not root's
+					scope:activity = {
+						any_guest_subset = {
+							name = entrants
+							this != root
+							is_physically_able_ai_adult = yes
+							OR = {
+								is_close_or_extended_family_of = scope:temp_local_ruler
+								has_relation_elder = scope:temp_local_ruler
+							}
+						}
+					}
 				}
 				save_scope_as = local_ruler
 			}
@@ -973,8 +997,8 @@ az_examination.0006 = {
 					this != root
 					is_physically_able_ai_adult = yes
 					OR = {
-						is_close_or_extended_family_of = root
-						has_relation_disciple = root
+						is_close_or_extended_family_of = scope:local_ruler #Unop The local ruler's family or disciple, not root's
+						has_relation_elder = scope:local_ruler
 					}
 				}
 				save_scope_as = favored_entrant

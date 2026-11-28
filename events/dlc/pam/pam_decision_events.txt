@@ -780,7 +780,7 @@ pam_decision_events.0003 = {
 		name = pam_decision_events.0003.a
 		if = {
 			limit = {
-				NOT = { has_relation_grudge = scope:target_child }
+				NOT = { scope:target_child = { has_relation_grudge = root } } #Unop The child holds the grudge set below, not root
 			}
 			scope:target_child = {
 				set_relation_grudge_effect = { 

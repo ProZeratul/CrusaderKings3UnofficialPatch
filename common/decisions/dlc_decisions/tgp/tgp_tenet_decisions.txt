@@ -32,7 +32,7 @@ tgp_divine_reincarnation_decision = {
 				NOT = { has_trait = reincarnation }
 				OR = {
 					this = root.primary_heir
-					has_relation_favorite_child = root
+					root = { has_relation_favorite_child = prev } #Unop Is root's favorite child, root holds the relation
 				}
 				save_temporary_scope_as = child_check
 				any_close_or_extended_family_member = {

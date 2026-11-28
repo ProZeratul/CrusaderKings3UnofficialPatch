@@ -1060,8 +1060,8 @@ set_relation_debug = {
 					scope:actor = { set_relation_crush = scope:recipient } #You crush on the recipient
 				}
 				scope:crush_on_me = { set_relation_crush = scope:actor }
-				scope:bully = { set_relation_bully = scope:actor }
-				scope:victim = { set_relation_victim = scope:actor }
+				scope:bully = { set_relation_victim = scope:actor } #Unop Make the recipient the actor's bully, as is_shown checks
+				scope:victim = { set_relation_bully = scope:actor } #Unop Make the recipient the actor's victim, as is_shown checks
 				scope:grudge = {
 					scope:actor = {
 						set_relation_grudge_effect = {
@@ -1113,8 +1113,8 @@ set_relation_debug = {
 					scope:actor = { remove_relation_crush = scope:recipient } #You crush on the recipient
 				}
 				scope:remove_crush_on_me = { remove_relation_crush = scope:actor }
-				scope:remove_bully = { remove_relation_bully = scope:actor }
-				scope:remove_victim = { remove_relation_victim = scope:actor }
+				scope:remove_bully = { remove_relation_victim = scope:actor } #Unop Remove the recipient as the actor's bully, as is_shown checks
+				scope:remove_victim = { remove_relation_bully = scope:actor } #Unop Remove the recipient as the actor's victim, as is_shown checks
 				scope:remove_grudge = {
 					scope:actor = { remove_relation_grudge = scope:recipient }
 				}

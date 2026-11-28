@@ -765,12 +765,12 @@ demand_hostage_interaction = {
 			}
 			custom_description = {
 				text = "hostage_already_travelling_tt"
-				subject = scope:actor
-				object = scope:recipient
-				scope:actor = {
+				subject = scope:recipient #Unop The recipient's hostage travelling to the actor, not the other way round
+				object = scope:actor
+				scope:recipient = {
 					any_close_family_member = {
 						exists = var:hostage_travelling_to_warden
-						var:hostage_travelling_to_warden = scope:recipient
+						var:hostage_travelling_to_warden = scope:actor
 					}
 				}
 			}
@@ -2509,7 +2509,7 @@ recall_hostage_interaction = {
 
 		modifier = {
 			exists = scope:secondary_recipient
-			add = interaction_recipient_hostage_value
+			add = unop_interaction_recipient_warden_hostage_value #Unop The recipient is the warden here, not the home court
 			desc = HOSTAGE_VALUE_RECIPIENT_REASON
 		}
 
