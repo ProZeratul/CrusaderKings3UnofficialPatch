@@ -833,9 +833,11 @@ on_war_started = {
 							NOR = {
 								home_court = scope:attacker
 								home_court = {
-									is_allied_to = scope:attacker
-									is_allied_to = scope:defender
-									is_at_war_with = scope:defender
+									OR = { #Unop Was an implicit AND, never true as the home court isn't at war
+										is_allied_to = scope:attacker
+										is_allied_to = scope:defender
+										is_at_war_with = scope:defender
+									}
 								}
 							}
 						}
@@ -873,9 +875,11 @@ on_war_started = {
 							NOR = {
 								home_court ?= scope:attacker
 								home_court ?= {
-									is_allied_to = scope:attacker
-									is_allied_to = scope:defender
-									is_at_war_with = scope:defender
+									OR = { #Unop Was an implicit AND, never true as the home court isn't at war
+										is_allied_to = scope:attacker
+										is_allied_to = scope:defender
+										is_at_war_with = scope:defender
+									}
 								}
 							}
 						}

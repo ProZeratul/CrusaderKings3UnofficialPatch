@@ -1467,8 +1467,8 @@ exchange_hostage_interaction = {
 				}
 				custom_description = {
 					text = "hostage_already_travelling_tt"
-					subject = scope:recipient
-					object = scope:actor
+					subject = scope:actor #Unop Swapped subject and object, the actor's family member travelling to the recipient
+					object = scope:recipient
 					any_close_family_member = {
 						exists = var:hostage_travelling_to_warden
 						var:hostage_travelling_to_warden = scope:recipient
@@ -1476,8 +1476,8 @@ exchange_hostage_interaction = {
 				}
 				custom_description = {
 					text = "hostage_already_travelling_tt"
-					subject = scope:actor
-					object = scope:recipient
+					subject = scope:recipient #Unop Swapped subject and object, the recipient's family member travelling to the actor
+					object = scope:actor
 					scope:recipient = {
 						any_close_family_member = {
 							exists = var:hostage_travelling_to_warden
@@ -2287,7 +2287,7 @@ return_hostage_interaction = {
 			scope:recipient = {
 				OR = {
 					is_allied_to = scope:puppet_or_actor
-					is_spouse_of = scope:recipient
+					is_spouse_of = scope:puppet_or_actor #Unop Was scope:recipient, itself
 				}
 			}
 			add = 50
@@ -2322,7 +2322,7 @@ return_hostage_interaction = {
 		}
 		#DO NOT SEND BACK FRANKOKRATIA CLAIMANT
 		modifier = {
-			scope:hostage ?= {
+			scope:secondary_recipient ?= { #Unop Was scope:hostage, which is saved only in on_accept
 				has_character_flag = byz_claimant_flag
 			}
 			exists = global_var:byz_claimant_champion
@@ -2728,7 +2728,7 @@ recall_hostage_interaction = {
 		#DO NOT SEND BACK FRANKOKRATIA CLAIMANT
 		modifier = {
 			desc = crusading_claim_cb_reason
-			scope:hostage = {
+			scope:secondary_recipient = { #Unop Was scope:hostage, which is saved only in on_accept
 				has_character_flag = byz_claimant_flag
 			}
 			exists = global_var:byz_claimant_champion

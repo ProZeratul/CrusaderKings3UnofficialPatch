@@ -506,16 +506,22 @@ on_hostage_arrive_at_warden = {
 				set_location = var:hostage_travelling_to_warden.capital_province
 			}
 			scope:hostage_warden = { trigger_event = bp2_hostage_system.0500 }
+			scope:hostage_home_court ?= { #Unop Moved from below, where scope:home_court is set only for an invalidated hostage
+				trigger_event = {
+					id = bp2_yearly.6170 # your family mad that you sent a hostage to an uncivilized court
+					years = { 1 5 }
+				}
+			}
 		}
 		remove_variable = hostage_travelling_to_warden
 		debug_log = "Hostage arrived after travel"
 		debug_log_scopes = yes
-		scope:home_court ?= {
-			trigger_event = {
-				id = bp2_yearly.6170 # your family mad that you sent a hostage to an uncivilized court
-				years = { 1 5 }
-			}
-		}
+		#scope:home_court ?= { #Unop Moved above
+		#	trigger_event = {
+		#		id = bp2_yearly.6170 # your family mad that you sent a hostage to an uncivilized court
+		#		years = { 1 5 }
+		#	}
+		#}
 	}
 }
 
@@ -537,7 +543,7 @@ on_hostage_arrive_at_home_court = {
 				limit = { location != scope:hostage_home_court.capital_province }
 				set_location = scope:hostage_home_court.capital_province
 			}
-			scope:home_court = { trigger_event = bp2_hostage_system.0510 }
+			scope:hostage_home_court = { trigger_event = bp2_hostage_system.0510 } #Unop Was scope:home_court, which isn't set here
 		}
 		debug_log = "Hostage returned after travel"
 		debug_log_scopes = yes

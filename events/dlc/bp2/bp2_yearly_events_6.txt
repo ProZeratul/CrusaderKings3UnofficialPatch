@@ -6407,8 +6407,10 @@ bp2_yearly.6201 = {
 									liege = scope:attacker
 									top_liege = scope:attacker
 									any_vassal = {
-										this = scope:attacker
-										this = scope:hostage.warden
+										OR = { #Unop Was an implicit AND, true only if the attacker is the warden
+											this = scope:attacker
+											this = scope:hostage.warden
+										}
 									}
 								}
 							}
@@ -6806,7 +6808,7 @@ bp2_yearly.6203 = {
 	immediate = {
 		if = {
 			limit = {
-				scope:hostage.home_court = { is_ai = yes }
+				scope:hostage.home_court ?= { is_ai = yes } #Unop Empty if bp2_yearly.6205 released the hostage
 			}
 			switch = {
 				trigger = scope:hostage.var:home_court_response
@@ -6874,7 +6876,7 @@ bp2_yearly.6203 = {
 					# Keep money if you sent a gift
 					if = {
 						limit = { scope:hostage = { has_variable = hostage_aid_request_gold } }
-						scope:hostage.home_court = {
+						scope:recipient = { #Unop Was scope:hostage.home_court, empty after the release
 							add_gold = scope:hostage.var:hostage_aid_request_gold
 						}
 					}
@@ -6887,7 +6889,7 @@ bp2_yearly.6203 = {
 						random_list = {
 							75 = {}
 							25 = { # Home Court joins enemy
-								scope:war = { add_attacker = scope:hostage.home_court }
+								scope:war = { add_attacker = scope:recipient } #Unop Was scope:hostage.home_court, empty after the release
 								play_music_cue = mx_cue_war_declared
 								root = { save_scope_as = home_court_joins_as_attacker }
 							}
@@ -6941,7 +6943,7 @@ bp2_yearly.6203 = {
 					flag:keep = {
 						# Righteously imprison the knight with them if they are
 						save_scope_as = actor
-						scope:hostage.home_court = { save_scope_as = recipient }
+						scope:hostage.home_court ?= { save_scope_as = recipient } #Unop Empty here, as bp2_yearly.6205 released the hostage and saved the home court as scope:recipient
 						if = {
 							limit = { scope:hostage = { has_variable = hostage_aid_request_chaperone } }
 							hidden_effect = {
@@ -6956,7 +6958,7 @@ bp2_yearly.6203 = {
 							}
 							imprison_character_effect = {
 								TARGET = scope:hostage.var:hostage_aid_request_chaperone
-								IMPRISONER = scope:hostage.home_court
+								IMPRISONER = scope:recipient #Unop Was scope:hostage.home_court, empty after the release
 							}
 						}
 						# End hostageship
@@ -6964,7 +6966,7 @@ bp2_yearly.6203 = {
 						# Keep money if you sent a gift
 						if = {
 							limit = { scope:hostage = { has_variable = hostage_aid_request_gold } }
-							scope:hostage.home_court = {
+							scope:recipient = { #Unop Was scope:hostage.home_court, empty after the release
 								add_gold = scope:hostage.var:hostage_aid_request_gold
 							}
 						}
@@ -6972,7 +6974,7 @@ bp2_yearly.6203 = {
 							limit = {
 								exists = scope:home_court_joins_as_attacker
 							}
-							scope:war = { add_attacker = scope:hostage.home_court }
+							scope:war = { add_attacker = scope:recipient } #Unop Was scope:hostage.home_court, empty after the release
 							play_music_cue = mx_cue_war_declared
 						}
 					}
@@ -7244,8 +7246,10 @@ bp2_yearly.6204 = {
 				liege = scope:attacker
 				top_liege = scope:attacker
 				any_vassal = {
-					this = scope:attacker
-					this = scope:warden
+					OR = { #Unop Was an implicit AND, true only if the attacker is the warden
+						this = scope:attacker
+						this = scope:warden
+					}
 				}
 			}
 		}
@@ -7605,11 +7609,11 @@ bp2_yearly.6205 = {
 			}
 		}
 		reverse_add_opinion = {
-			target = scope:hostage.warden
+			target = scope:actor #Unop Was scope:hostage.warden, empty after the release
 			opinion = -30
 			modifier = stole_hostage_opinion
 		}
-		scope:hostage.warden = {
+		scope:actor = { #Unop Was scope:hostage.warden, empty after the release
 			trigger_event = bp2_yearly.6203
 		}
 		stress_and_fulfillment_impact = {
@@ -7643,8 +7647,10 @@ bp2_yearly.6205 = {
 				liege = scope:hostage.warden
 				top_liege = scope:hostage.warden
 				any_vassal = {
-					this = scope:hostage.warden
-					this = scope:attacker
+					OR = { #Unop Was an implicit AND, true only if the attacker is the warden
+						this = scope:hostage.warden
+						this = scope:attacker
+					}
 				}
 			}
 		}
@@ -7677,7 +7683,7 @@ bp2_yearly.6205 = {
 			remove_character_modifier = peace_over_honor_modifier
 		}
 		reverse_add_opinion = {
-			target = scope:hostage.warden
+			target = scope:actor #Unop Was scope:hostage.warden, empty after the release
 			opinion = -50
 			modifier = stole_hostage_opinion
 		}
@@ -12862,7 +12868,7 @@ scripted_trigger bp2_yearly_6170_hostage_trigger = {
 				#more developed capital
 				# Does this need to be a larger value...?
 				warden.capital_province.county = {
-					prosperity_level > root.capital_province.county.prosperity_level
+					prosperity_level < root.capital_province.county.prosperity_level #Unop Was >, root's capital being the less developed one
 				}
 			}
 		}
