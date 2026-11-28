@@ -1133,59 +1133,59 @@ ai_agent_join_chance_basic_suite_modifier = {
 		desc = SCHEME_NURSED_CHILD
 	}
 	## Nursed Child of scope:recipient
-	modifier = {
-		merchant_patron_hobnob_owner_courtier_skips_agent_suite_trigger = yes
-		add = -20
-		exists = scope:recipient
-		has_relation_nursed_child = scope:recipient
-		desc = SCHEME_NURSED_CHILD
-	}
+	#modifier = { #Unop Moved to ai_agent_join_chance_hostile_general_suite_modifier as a check of scope:target; scope:recipient is the agent itself or unset
+	#	merchant_patron_hobnob_owner_courtier_skips_agent_suite_trigger = yes
+	#	add = -20
+	#	exists = scope:recipient
+	#	has_relation_nursed_child = scope:recipient
+	#	desc = SCHEME_NURSED_CHILD
+	#}
 	## Wet Nurse of scope:owner
 	modifier = {
 		merchant_patron_hobnob_owner_courtier_skips_agent_suite_trigger = yes
 		add = 20
 		exists = scope:owner
 		has_relation_wet_nurse = scope:owner
-		desc = SCHEME_AGAINST_WET_NURSE
+		desc = unop_scheme_for_wet_nurse #Unop Was SCHEME_AGAINST_WET_NURSE, but the agent schemes for the wet nurse
 	}
 	## Wet Nurse of scope:recipient
-	modifier = {
-		merchant_patron_hobnob_owner_courtier_skips_agent_suite_trigger = yes
-		add = -20
-		exists = scope:recipient
-		has_relation_wet_nurse = scope:recipient
-		desc = SCHEME_AGAINST_WET_NURSE
-	}
+	#modifier = { #Unop Moved to ai_agent_join_chance_hostile_general_suite_modifier as a check of scope:target; scope:recipient is the agent itself or unset
+	#	merchant_patron_hobnob_owner_courtier_skips_agent_suite_trigger = yes
+	#	add = -20
+	#	exists = scope:recipient
+	#	has_relation_wet_nurse = scope:recipient
+	#	desc = SCHEME_AGAINST_WET_NURSE
+	#}
 	## elder of scope:owner
-	modifier = {
-		merchant_patron_hobnob_owner_courtier_skips_agent_suite_trigger = yes
-		add = -20
-		exists = scope:owner
-		has_relation_elder = scope:owner
-		desc = SCHEME_AGAINST_ELDER
-	}
+	#modifier = { #Unop Moved to ai_agent_join_chance_hostile_general_suite_modifier as a check of scope:target; the owner being my elder is handled below
+	#	merchant_patron_hobnob_owner_courtier_skips_agent_suite_trigger = yes
+	#	add = -20
+	#	exists = scope:owner
+	#	has_relation_elder = scope:owner
+	#	desc = SCHEME_AGAINST_ELDER
+	#}
 	## disciple of scope:recipient
-	modifier = {
-		merchant_patron_hobnob_owner_courtier_skips_agent_suite_trigger = yes
-		add = -20
-		exists = scope:recipient
-		has_relation_disciple = scope:recipient
-		desc = SCHEME_AGAINST_DISCIPLE
-	}
+	#modifier = { #Unop Moved to ai_agent_join_chance_hostile_general_suite_modifier as a check of scope:target; scope:recipient is the agent itself or unset
+	#	merchant_patron_hobnob_owner_courtier_skips_agent_suite_trigger = yes
+	#	add = -20
+	#	exists = scope:recipient
+	#	has_relation_disciple = scope:recipient
+	#	desc = SCHEME_AGAINST_DISCIPLE
+	#}
 	## disciple of scope:owner
 	modifier = {
 		merchant_patron_hobnob_owner_courtier_skips_agent_suite_trigger = yes
 		add = 20
 		exists = scope:owner
-		has_relation_disciple = scope:owner
+		has_relation_elder = scope:owner #Unop Was has_relation_disciple, but the desc is SCHEME_FOR_ELDER
 		desc = SCHEME_FOR_ELDER
 	}
 	## elder of scope:recipient
 	modifier = {
 		merchant_patron_hobnob_owner_courtier_skips_agent_suite_trigger = yes
 		add = 20
-		exists = scope:recipient
-		has_relation_elder = scope:recipient
+		exists = scope:owner #Unop Was scope:recipient, which is the agent itself or unset
+		has_relation_disciple = scope:owner #Unop Was has_relation_elder = scope:recipient
 		desc = SCHEME_FOR_DISCIPLE
 	}
 
@@ -1481,6 +1481,30 @@ ai_agent_join_chance_hostile_general_suite_modifier = {
 			value > 0
 		}
 		desc = "SCHEME_AGAINST_SPOUSE"
+	}
+	## scope:target is my nursed child
+	modifier = { #Unop Moved from ai_agent_join_chance_basic_suite_modifier, which checked the agent itself instead of scope:target
+		add = -20
+		has_relation_nursed_child = scope:target
+		desc = SCHEME_NURSED_CHILD
+	}
+	## scope:target is my wet nurse
+	modifier = { #Unop Moved from ai_agent_join_chance_basic_suite_modifier, which checked the agent itself instead of scope:target
+		add = -20
+		has_relation_wet_nurse = scope:target
+		desc = SCHEME_AGAINST_WET_NURSE
+	}
+	## scope:target is my elder
+	modifier = { #Unop Moved from ai_agent_join_chance_basic_suite_modifier, which checked scope:owner instead of scope:target
+		add = -20
+		has_relation_elder = scope:target
+		desc = SCHEME_AGAINST_ELDER
+	}
+	## scope:target is my disciple
+	modifier = { #Unop Moved from ai_agent_join_chance_basic_suite_modifier, which checked the agent itself instead of scope:target
+		add = -20
+		has_relation_disciple = scope:target
+		desc = SCHEME_AGAINST_DISCIPLE
 	}
 	# Faith
 	## Sacred Lies tenet
