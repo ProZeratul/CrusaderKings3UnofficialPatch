@@ -233,7 +233,7 @@ tgp_can_be_a_minister_trigger = {
 			$COURT_OWNER$ = { is_ai = yes }
 			NOT = { is_councillor_of = $COURT_OWNER$ }
 		}
-		appointment_timeout_days <= 0 #Unop Honor refusing appointments
+		appointment_timeout_days < 36500 #Unop Honor refusing appointments, not shorter timeouts such as the cooldown after an appointment
 		OR = {
 			merit_level >= merit_level_expected_empire_value
 			has_relation_friend = $COURT_OWNER$
@@ -258,7 +258,7 @@ tgp_can_be_grand_marshal_trigger = {
 			$COURT_OWNER$ = { is_ai = yes }
 			NOT = { is_councillor_of = $COURT_OWNER$ }
 		}
-		appointment_timeout_days <= 0
+		appointment_timeout_days < 36500 # Not shorter timeouts such as the cooldown after an appointment
 	}
 }
 
